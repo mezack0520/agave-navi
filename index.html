@@ -275,7 +275,7 @@
 
         function filterEvents(tag) {
             const cards = document.querySelectorAll('.event-card:not(.event-ended)');
-            const buttons = document.querySelectorAll('.filter-btn');
+            const buttons = document.querySelectorAll('.filter-tab');
 
             // Update active button
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -283,12 +283,12 @@
 
             // Filter events
             if (tag === 'all') {
-                cards.forEach(card => card.style.display = 'block');
+                cards.forEach(card => card.style.display = '');
             } else {
                 cards.forEach(card => {
                     const tags = card.getAttribute('data-tags').split(',');
                     if (tags.includes(tag)) {
-                        card.style.display = 'block';
+                        card.style.display = '';
                     } else {
                         card.style.display = 'none';
                     }

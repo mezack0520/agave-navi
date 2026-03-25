@@ -183,12 +183,13 @@ body.no-scroll {
 
 .filter-bar {
     position: sticky;
-    top: 44px;
+    top: 40px;
     z-index: 900;
     background-color: var(--white);
     border-bottom: 1px solid #ebebeb;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
 .filter-bar::-webkit-scrollbar {
@@ -205,22 +206,22 @@ body.no-scroll {
 
 .filter-tab {
     flex-shrink: 0;
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 1.1rem;
     background: none;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;
     color: var(--gray-dark);
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     font-family: inherit;
     white-space: nowrap;
 }
 
 .filter-tab:hover {
     color: var(--black);
-    border-bottom-color: #ddd;
+    background-color: rgba(0,0,0,0.03);
 }
 
 .filter-tab.active {
