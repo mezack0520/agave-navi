@@ -39,11 +39,16 @@
 
     <div class="filter-bar">
         <div class="filter-bar-inner">
-            <button class="filter-tab active" onclick="filterEvents('all')">すべて</button>
-            <button class="filter-tab" onclick="filterEvents('即売会')">即売会</button>
-            <button class="filter-tab" onclick="filterEvents('マルシェ')">マルシェ</button>
-            <button class="filter-tab" onclick="filterEvents('大型')">大型イベント</button>
-            <button class="filter-tab" onclick="filterEvents('展示会')">展示会</button>
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterEvents('all')">すべて</button>
+                <button class="filter-tab" onclick="filterEvents('即売会')">即売会</button>
+                <button class="filter-tab" onclick="filterEvents('マルシェ')">マルシェ</button>
+                <button class="filter-tab" onclick="filterEvents('大型')">大型イベント</button>
+                <button class="filter-tab" onclick="filterEvents('展示会')">展示会</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="イベント名・キーワードで検索" oninput="searchEvents(this.value)">
+            </div>
         </div>
     </div>
 
@@ -273,27 +278,44 @@
             });
         });
 
-        function filterEvents(tag) {
-            const cards = document.querySelectorAll('.event-card:not(.event-ended)');
-            const buttons = document.querySelectorAll('.filter-tab');
+        // Make entire event card clickable
+        document.querySelectorAll('.event-card:not(.event-ended)').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') return; // let normal links work
+                const link = this.querySelector('.event-link');
+                if (link) window.location.href = link.href;
+            });
+        });
 
-            // Update active button
+        let activeTag = 'all';
+
+        function filterEvents(tag) {
+            activeTag = tag;
+            const buttons = document.querySelectorAll('.filter-tab');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+            applyFilters();
+        }
 
-            // Filter events
-            if (tag === 'all') {
-                cards.forEach(card => card.style.display = '');
-            } else {
-                cards.forEach(card => {
-                    const tags = card.getAttribute('data-tags').split(',');
-                    if (tags.includes(tag)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
+        function searchEvents(query) {
+            applyFilters(query);
+        }
+
+        function applyFilters(query) {
+            const searchVal = (query !== undefined ? query : document.getElementById('searchInput').value).trim().toLowerCase();
+            const cards = document.querySelectorAll('.event-card:not(.event-ended)');
+
+            cards.forEach(card => {
+                const tags = card.getAttribute('data-tags').split(',');
+                const title = card.querySelector('.event-title').textContent.toLowerCase();
+                const desc = card.querySelector('.event-description').textContent.toLowerCase();
+                const date = card.querySelector('.event-date').textContent.toLowerCase();
+
+                const tagMatch = activeTag === 'all' || tags.includes(activeTag);
+                const searchMatch = !searchVal || title.includes(searchVal) || desc.includes(searchVal) || date.includes(searchVal);
+
+                card.style.display = (tagMatch && searchMatch) ? '' : 'none';
+            });
         }
     </script>
 </body>
