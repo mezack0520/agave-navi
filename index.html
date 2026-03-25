@@ -1,45 +1,399 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>アガベイベントナビ | 全国のアガベ・多肉植物イベント情報</title>
-<meta name="description" content="全国のアガベ・多肉植物・塊根植物のイベント、即売会、展示会情報を毎日更新。2026年最新版。">
-<meta name="keywords" content="アガベ,多肉植物,塊根植物,即売会,イベント,展示会,マルシェ,コーデックス">
-<!-- Google AdSense -->
-<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
-<meta property="og:title" content="アガベイベントナビ | 全国のアガベ・多肉植物イベント情報">
-<meta property="og:description" content="全国のアガベ・多肉植物・塊根植物のイベント・即売会情報を毎日更新中！">
-<meta property="og:type" content="website">
-<style>
-:root{--green-dark:#2d5016;--green-mid:#4a7c28;--green-light:#7ab648;--green-pale:#e8f5d8;--sand:#f5f0e8;--sand-dark:#e8dcc8;--text:#2c2c2c;--text-light:#666;--white:#fff;--shadow:0 2px 12px rgba(0,0,0,0.08);--radius:12px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',sans-serif;background:var(--sand);color:var(--text);line-height:1.7}header{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 50%,var(--green-light) 100%);color:var(--white);padding:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.15)}.header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:12px}.logo-icon{font-size:32px}.logo h1{font-size:22px;font-weight:700;letter-spacing:1px}.logo p{font-size:11px;opacity:0.85}.header-date{font-size:13px;opacity:0.9;text-align:right}.hero{background:linear-gradient(180deg,var(--green-pale) 0%,var(--sand) 100%);padding:40px 24px 24px;text-align:center}.hero h2{font-size:16px;color:var(--green-mid);font-weight:500;margin-bottom:16px}.filters{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.filter-btn{padding:8px 20px;border:2px solid var(--green-mid);border-radius:24px;background:var(--white);color:var(--green-mid);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s}.filter-btn:hover,.filter-btn.active{background:var(--green-mid);color:var(--white)}.ad-banner{max-width:1200px;margin:24px auto;padding:0 24px}.ad-placeholder{background:var(--sand-dark);border:2px dashed #ccc;border-radius:var(--radius);padding:20px;text-align:center;color:#999;font-size:13px}.main-layout{max-width:1200px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1fr 300px;gap:24px}@media(max-width:768px){.main-layout{grid-template-columns:1fr}}.events-section h3{font-size:18px;color:var(--green-dark);margin-bottom:16px;padding-bottom:8px;border-bottom:3px solid var(--green-light);display:flex;align-items:center;gap:8px}.month-group{margin-bottom:32px}.month-label{font-size:20px;font-weight:700;color:var(--green-dark);margin-bottom:16px;padding:8px 16px;background:var(--green-pale);border-radius:8px;border-left:4px solid var(--green-mid)}.event-card{background:var(--white);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;border-left:4px solid var(--green-light);position:relative}.event-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.12)}.event-card .date-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-pale);color:var(--green-dark);padding:4px 12px;border-radius:6px;font-size:13px;font-weight:600;margin-bottom:8px}.event-card .event-name{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px}.event-card .event-location{font-size:13px;color:var(--text-light);margin-bottom:8px;display:flex;align-items:center;gap:4px}.event-card .event-desc{font-size:14px;color:var(--text);line-height:1.6}.event-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.tag{font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600}.tag-sale{background:#fff3e0;color:#e65100}.tag-exhibition{background:#e3f2fd;color:#1565c0}.tag-workshop{background:#f3e5f5;color:#7b1fa2}.tag-big{background:#fce4ec;color:#c62828}.tag-market{background:#e8f5e9;color:#2e7d32}.status-upcoming{position:absolute;top:16px;right:16px;font-size:11px;padding:3px 10px;border-radius:10px;font-weight:700}.status-soon{background:#fff8e1;color:#f57f17;border:1px solid #ffe082}.status-open{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;animation:pulse 2s infinite}.status-future{background:#f5f5f5;color:#757575;border:1px solid #e0e0e0}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}.sidebar .widget{background:var(--white);border-radius:var(--radius);padding:20px;margin-bottom:20px;box-shadow:var(--shadow)}.sidebar .widget h4{font-size:15px;color:var(--green-dark);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--green-pale)}.sidebar .widget ul{list-style:none}.sidebar .widget ul li{padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}.sidebar .widget ul li:last-child{border-bottom:none}.sidebar .widget ul li a{color:var(--green-mid);text-decoration:none;font-weight:500}.sidebar .widget ul li a:hover{text-decoration:underline}.source-list li{display:flex;align-items:center;gap:8px}.stats-bar{display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap}.stat-item{background:var(--white);padding:12px 24px;border-radius:10px;box-shadow:var(--shadow);text-align:center;min-width:120px}.stat-item .num{font-size:28px;font-weight:800;color:var(--green-mid)}.stat-item .label{font-size:12px;color:var(--text-light)}footer{background:var(--green-dark);color:var(--white);padding:32px 24px;text-align:center;margin-top:40px}footer p{font-size:13px;opacity:0.8;margin-bottom:8px}footer .disclaimer{font-size:11px;opacity:0.6;max-width:600px;margin:12px auto 0;line-height:1.6}@media(max-width:768px){.header-inner{flex-direction:column;gap:8px;text-align:center}.header-date{text-align:center}.logo h1{font-size:18px}.event-card .event-name{font-size:15px}.stats-bar{gap:8px}.stat-item{padding:10px 16px;min-width:100px}.stat-item .num{font-size:22px}}
-</style>
-</head><body>
-<header><div class="header-inner"><div class="logo"><span class="logo-icon">🌵</span><div><h1>アガベイベントナビ</h1><p>AGAVE EVENT NAVI — 全国のアガベ・多肉イベント情報</p></div></div><div class="header-date">最終更新: 2026年3月25日<br><span style="font-size:11px;opacity:0.7;">毎日自動更新</span></div></div></header>
-<section class="hero"><h2>全国のアガベ・多肉植物・塊根植物のイベント情報を毎日お届け</h2><div class="stats-bar"><div class="stat-item"><div class="num">12</div><div class="label">掲載イベント数</div></div><div class="stat-item"><div class="num">8</div><div class="label">都道府県</div></div><div class="stat-item"><div class="num">3</div><div class="label">今月のイベント</div></div></div><div class="filters" style="margin-top:24px;"><button class="filter-btn active" onclick="filterEvents('all')">すべて</button><button class="filter-btn" onclick="filterEvents('sale')">即売会</button><button class="filter-btn" onclick="filterEvents('exhibition')">展示会</button><button class="filter-btn" onclick="filterEvents('market')">マルシェ</button><button class="filter-btn" onclick="filterEvents('big')">大型イベント</button></div></section>
-<div class="ad-banner"><div class="ad-placeholder">📢 広告スペース（Google AdSense）— 承認後にコードを挿入してください</div></div>
-<div class="main-layout"><main class="events-section"><h3>📅 これからのイベント一覧</h3>
-<div class="month-group"><div class="month-label">🗓 2026年3月</div><div class="event-card" data-type="market"><span class="status-upcoming status-soon">もうすぐ</span><div class="date-badge">📅 3月29日（日）</div><div class="event-name">和歌山グリーンマルシェ</div><div class="event-location">📍 和歌山県 ・ 本町公園 芝生エリア</div><div class="event-desc">アガベ・多肉植物・塊根植物を中心としたグリーンマルシェ。地元の植物ショップやナーセリーが出店予定。</div><div class="event-tags"><span class="tag tag-market">マルシェ</span><span class="tag tag-sale">即売会</span></div></div></div>
-<div class="month-group"><div class="month-label">🗓 2026年4月</div><div class="event-card" data-type="big exhibition"><span class="status-upcoming status-future">受付中</span><div class="date-badge">📅 4月4日（土）〜 5日（日）</div><div class="event-name">二子玉川ボタニカルフェスタ 2026春</div><div class="event-location">📍 東京都世田谷区 ・ 二子玉川ライズ</div><div class="event-desc">二子玉川ライズで開催される大型植物イベント。アガベ、多肉植物、観葉植物の販売、ワークショップなどを予定。</div><div class="event-tags"><span class="tag tag-big">大型イベント</span><span class="tag tag-exhibition">展示会</span><span class="tag tag-sale">即売会</span></div></div>
-<div class="event-card" data-type="sale market"><span class="status-upcoming status-future">開催予定</span><div class="date-badge">📅 4月中旬（3日間予定）</div><div class="event-name">多肉もろもろ市場 2026春</div><div class="event-location">📍 兵庫県西脇市 ・ 道の駅「北はりまエコミュージアム」</div><div class="event-desc">春と秋の年2回開催の人気即売会。アガベ、多肉植物、サボテンなど多彩な品揃え。毎回大盛況の3日間。</div><div class="event-tags"><span class="tag tag-sale">即売会</span><span class="tag tag-market">マルシェ</span></div></div>
-<div class="event-card" data-type="big exhibition sale"><span class="status-upcoming status-future">開催予定</span><div class="date-badge">📅 4月（日程調整中）</div><div class="event-name">モンスタープランツ 2026</div><div class="event-location">📍 開催地調整中</div><div class="event-desc">アガベをはじめとした多肉植物やサボテンなどが集まる大型展示・即売会。珍しい品種やレア株が多数出品。</div><div class="event-tags"><span class="tag tag-big">大型イベント</span><span class="tag tag-exhibition">展示会</span><span class="tag tag-sale">即売会</span></div></div>
-<div class="event-card" data-type="big"><span class="status-upcoming status-future">開催予定</span><div class="date-badge">📅 4月29日（水・祝）</div><div class="event-name">第8回 花友フェスタ 2026</div><div class="event-location">📍 千葉県千葉市 ・ 幕張メッセ</div><div class="event-desc">日本最大級のガーデニングイベント。多肉植物・アガベコーナーも充実。園芸資材、鉢、アクセサリーも多数。</div><div class="event-tags"><span class="tag tag-big">大型イベント</span><span class="tag tag-market">マルシェ</span></div></div></div>
-<div class="month-group"><div class="month-label">🗓 2026年5月</div><div class="event-card" data-type="sale market"><span class="status-upcoming status-future">開催予定</span><div class="date-badge">📅 5月3日（日）〜 4日（月）</div><div class="event-name">Plants Garage Market</div><div class="event-location">📍 大分県津久見市</div><div class="event-desc">塊根植物、アガベ、ビカクシダなどの珍しい植物や植物関連雑貨を扱う販売会。九州の人気ショップが集結。</div><div class="event-tags"><span class="tag tag-sale">即売会</span><span class="tag tag-market">マルシェ</span></div></div>
-<div class="event-card" data-type="sale big"><span class="status-upcoming status-future">開催予定</span><div class="date-badge">📅 5月9日（土）〜 10日（日）</div><div class="event-name">Collect Plants Vol.2</div><div class="event-location">📍 熊本県上益城郡益城町 ・ グランメッセ熊本</div><div class="event-desc">植物展示販売イベントの第2回。アガベ、塊根植物をはじめ多彩な植物が集まる九州注目のイベント。</div><div class="event-tags"><span class="tag tag-big">大型イベント</span><span class="tag tag-sale">即売会</span></div></div>
-<div class="event-card" data-type="big exhibition sale"><span class="status-upcoming status-future">開催予定</span><div class="date-badge">📅 5月23日（土）〜 24日（日）</div><div class="event-name">第6回 天下一植物界 BORDER BREAK BEYOND</div><div class="event-location">📍 大阪府大阪市 ・ 京セラドーム スカイホール A/Bブロック</div><div class="event-desc">西日本最大規模の植物イベント。アガベ、多肉植物、熱帯植物、蘭、古典園芸などジャンルの壁を超えた総合植物イベント。全国から有名ナーセリーや生産者が出店。毎回即完売の人気株も。</div><div class="event-tags"><span class="tag tag-big">大型イベント</span><span class="tag tag-exhibition">展示会</span><span class="tag tag-sale">即売会</span></div></div></div><div class="month-group" style="opacity:0.6;"><div class="month-label" style="background:#f0f0f0;border-left-color:#999;color:#777;">🗓 2026年2月（終了）</div>
-<div class="event-card" data-type="sale" style="border-left-color:#ccc;"><span class="status-upcoming" style="background:#f5f5f5;color:#999;border:1px solid #ddd;">終了</span><div class="date-badge" style="background:#f5f5f5;color:#999;">📅 2月14日（土）〜 15日（日）</div><div class="event-name">第2回 熊谷多肉フェス</div><div class="event-location">📍 埼玉県熊谷市</div><div class="event-desc">埼玉の多肉植物好きが一堂に会する地域密着型の多肉フェス。作家さんの鉢やハンドメイド雑貨も。</div><div class="event-tags"><span class="tag tag-sale">即売会</span></div></div>
-<div class="event-card" data-type="sale" style="border-left-color:#ccc;"><span class="status-upcoming" style="background:#f5f5f5;color:#999;border:1px solid #ddd;">終了</span><div class="date-badge" style="background:#f5f5f5;color:#999;">📅 2月18日 〜 3月1日</div><div class="event-name">MIYASHITA PARK Pop-Up Store</div><div class="event-location">📍 東京都渋谷区 ・ MIYASHITA PARK</div><div class="event-desc">植物ショップのポップアップストア。アガベ・塊根植物のセレクトショップが期間限定で出店。</div><div class="event-tags"><span class="tag tag-sale">即売会</span></div></div>
-<div class="event-card" data-type="sale" style="border-left-color:#ccc;"><span class="status-upcoming" style="background:#f5f5f5;color:#999;border:1px solid #ddd;">終了</span><div class="date-badge" style="background:#f5f5f5;color:#999;">📅 2月21日（土）</div><div class="event-name">いばらきスカイパレット 植物マルシェ</div><div class="event-location">📍 大阪府茨木市 ・ いばらきスカイパレット</div><div class="event-desc">関西エリアの植物マルシェ。アガベ・多肉植物の出店あり。</div><div class="event-tags"><span class="tag tag-market">マルシェ</span></div></div>
-<div class="event-card" data-type="sale" style="border-left-color:#ccc;"><span class="status-upcoming" style="background:#f5f5f5;color:#999;border:1px solid #ddd;">終了</span><div class="date-badge" style="background:#f5f5f5;color:#999;">📅 2月28日 〜 3月8日</div><div class="event-name">PLANT FREAKS</div><div class="event-location">📍 東京都（会場詳細は公式SNS参照）</div><div class="event-desc">植物好きのための展示・販売イベント。アガベ、多肉植物、観葉植物を中心にセレクト。</div><div class="event-tags"><span class="tag tag-sale">即売会</span><span class="tag tag-exhibition">展示会</span></div></div></div>
-<div class="ad-placeholder" style="margin:24px 0;">📢 広告スペース（Google AdSense インフィード広告）</div>
-<h3 style="margin-top:32px;">📆 2026年 アガベイベント年間見通し</h3>
-<div class="event-card" style="border-left-color:var(--green-mid);"><table style="width:100%;border-collapse:collapse;font-size:14px;"><tr style="background:var(--green-pale);"><th style="padding:10px;text-align:left;width:80px;">時期</th><th style="padding:10px;text-align:left;">傾向・注目ポイント</th></tr><tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:10px;font-weight:600;">1〜2月</td><td style="padding:10px;">冬の室内イベント中心。ポップアップ、小規模即売会が多い。</td></tr><tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:10px;font-weight:600;">3〜4月</td><td style="padding:10px;">春の植物シーズン開幕。マルシェ・即売会が増加。植え替えシーズン。</td></tr><tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:10px;font-weight:600;">5〜6月</td><td style="padding:10px;">大型イベントの最盛期。天下一植物界など全国規模の催事。</td></tr><tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:10px;font-weight:600;">7〜9月</td><td style="padding:10px;">猛暑で屋外イベントは減少。屋内・オンラインイベント中心。</td></tr><tr><td style="padding:10px;font-weight:600;">10〜12月</td><td style="padding:10px;">秋の植物フェス最盛期。関東は10月が年間最多。冬支度イベントも。</td></tr></table></div>
-</main>
-<aside class="sidebar"><div class="widget"><div class="ad-placeholder" style="border:none;padding:10px;">📢 広告（サイドバー）</div></div>
-<div class="widget"><h4>🔗 イベント情報源</h4><ul class="source-list"><li><span>📗</span><a href="https://pukubook.jp/events" target="_blank">PUKUBOOK イベント情報</a></li><li><span>📘</span><a href="https://daybook-botanical.com/2026-botanical-events/" target="_blank">ボタ日誌 2026年まとめ</a></li><li><span>📙</span><a href="https://leaf-laboratory.com/blogs/media/event-list" target="_blank">Leaf Laboratory</a></li><li><span>📕</span><a href="https://botanical-zone.tokyo/" target="_blank">BOTANICAL ZONE</a></li><li><span>📒</span><a href="https://hanaprime.jp/botanical-book/botanical-events/" target="_blank">HanaPrime 植物図鑑</a></li><li><span>📓</span><a href="https://no1plantae.com/" target="_blank">天下一植物界 公式</a></li></ul></div>
-<div class="widget"><h4>🏷 カテゴリ</h4><ul><li>🌵 即売会・販売イベント</li><li>🎪 展示会・博覧会</li><li>🛒 マルシェ・マーケット</li><li>🎓 ワークショップ</li><li>💻 オンラインイベント</li></ul></div>
-<div class="widget"><h4>📍 エリアから探す</h4><ul><li><a href="#">北海道・東北</a></li><li><a href="#">関東（東京・埼玉・千葉・神奈川）</a></li><li><a href="#">中部・北陸</a></li><li><a href="#">関西（大阪・兵庫・和歌山）</a></li><li><a href="#">中国・四国</a></li><li><a href="#">九州・沖縄</a></li></ul></div>
-<div class="widget"><div class="ad-placeholder" style="border:none;padding:10px;">📢 広告（サイドバー下部）</div></div></aside></div>
-<footer><p>🌵 アガベイベントナビ — AGAVE EVENT NAVI</p><p>© 2026 アガベイベントナビ All Rights Reserved.</p><p class="disclaimer">※ 掲載情報は各種Web情報源から自動収集しています。正確な開催情報は各イベント公式サイト・SNSでご確認ください。<br>※ イベント情報の掲載・修正依頼は管理者までお問い合わせください。</p></footer>
-<script>function filterEvents(type){const cards=document.querySelectorAll('.event-card');const buttons=document.querySelectorAll('.filter-btn');buttons.forEach(btn=>btn.classList.remove('active'));event.target.classList.add('active');cards.forEach(card=>{if(type==='all'){card.style.display='block';}else{const cardType=card.getAttribute('data-type')||'';card.style.display=cardType.includes(type)?'block':'none';}});}</script>
-</body></html>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NKY8V1H8HY');
+</script>
+<meta name="google-site-verification" content="23j_bxcczlGhWRVrlfh94HO0hYGk9qxQzfbew60oWB0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アガベイベントナビ - 全国のアガベ・多肉植物イベント情報</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">🌵 アガベイベントナビ</div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">ホーム</a></li>
+                    <li><a href="about.html">このサイトについて</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <span>ホーム</span>
+    </div>
+
+    <main class="container">
+
+        <section class="hero">
+            <h2>多肉植物・サボテンイベント情報サイト</h2>
+            <p>全国の最新イベント情報をチェック</p>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">イベント掲載</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">全国</span>
+                    <span class="stat-label">対応</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">毎週更新</span>
+                    <span class="stat-label">新情報</span>
+                </div>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterEvents('all')">すべて表示</button>
+                <button class="filter-btn" onclick="filterEvents('即売会')">即売会</button>
+                <button class="filter-btn" onclick="filterEvents('マルシェ')">マルシェ</button>
+                <button class="filter-btn" onclick="filterEvents('大型')">大型イベント</button>
+                <button class="filter-btn" onclick="filterEvents('展示会')">展示会</button>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <section id="events" class="events-section">
+                <h2 class="section-title">開催予定のイベント</h2>
+
+                <!-- Upcoming Events -->
+                <div class="events-grid" id="eventsGrid">
+                    <!-- March 2026 -->
+                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.03.29</span>
+                            <span class="event-status">もうすぐ</span>
+                        </div>
+                        <h3 class="event-title">和歌山グリーンマルシェ</h3>
+                        <p class="event-description">多肉植物やサボテンを中心とした青果品が集まる地域マルシェ。新鮮な植物の即売会です。</p>
+                        <div class="event-tags">
+                            <span class="tag">マルシェ</span>
+                            <span class="tag">即売会</span>
+                        </div>
+                        <a href="events/wakayama-green-marche.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <!-- April 2026 -->
+                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.04.4-5</span>
+                            <span class="event-status">受付中</span>
+                        </div>
+                        <h3 class="event-title">二子玉川ボタニカルフェスタ 2026春</h3>
+                        <p class="event-description">東京を代表するボタニカルイベント。大型の展示会と即売会が同時開催されます。</p>
+                        <div class="event-tags">
+                            <span class="tag">大型</span>
+                            <span class="tag">展示会</span>
+                            <span class="tag">即売会</span>
+                        </div>
+                        <a href="events/futakotamagawa-botanical-2026.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.04 中旬</span>
+                            <span class="event-status">開催予定</span>
+                        </div>
+                        <h3 class="event-title">多肉もろもろ市場 2026春</h3>
+                        <p class="event-description">多肉植物好きのための市場。様々なブリーダーや販売者が集まる春の開催です。</p>
+                        <div class="event-tags">
+                            <span class="tag">即売会</span>
+                            <span class="tag">マルシェ</span>
+                        </div>
+                        <a href="events/taniku-moromoro-2026-spring.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.04</span>
+                            <span class="event-status">開催予定</span>
+                        </div>
+                        <h3 class="event-title">モンスタープランツ 2026</h3>
+                        <p class="event-description">希少な植物種が集まる大規模展示会。全国から愛好家が集結するイベントです。</p>
+                        <div class="event-tags">
+                            <span class="tag">大型</span>
+                            <span class="tag">展示会</span>
+                            <span class="tag">即売会</span>
+                        </div>
+                        <a href="events/monster-plants-2026.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <div class="event-card" data-tags="大型,マルシェ" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.04.29</span>
+                            <span class="event-status">開催予定</span>
+                        </div>
+                        <h3 class="event-title">第8回 花友フェスタ 2026</h3>
+                        <p class="event-description">花と植物の愛好家が集まるマルシェイベント。多肉植物の最新品種が揃う開催となります。</p>
+                        <div class="event-tags">
+                            <span class="tag">大型</span>
+                            <span class="tag">マルシェ</span>
+                        </div>
+                        <a href="events/hanatomofesta-2026.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <!-- May 2026 -->
+                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.05.3-4</span>
+                            <span class="event-status">開催予定</span>
+                        </div>
+                        <h3 class="event-title">Plants Garage Market</h3>
+                        <p class="event-description">ガレージセール風の気軽な植物マーケット。初心者から愛好家まで楽しめるイベントです。</p>
+                        <div class="event-tags">
+                            <span class="tag">即売会</span>
+                            <span class="tag">マルシェ</span>
+                        </div>
+                        <a href="events/plants-garage-market.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <div class="event-card" data-tags="大型,即売会" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.05.9-10</span>
+                            <span class="event-status">開催予定</span>
+                        </div>
+                        <h3 class="event-title">Collect Plants Vol.2</h3>
+                        <p class="event-description">コレクターズアイテムとしての植物を集結させるイベント。希少品種の即売会です。</p>
+                        <div class="event-tags">
+                            <span class="tag">大型</span>
+                            <span class="tag">即売会</span>
+                        </div>
+                        <a href="events/collect-plants-vol2.html" class="event-link">詳細を見る →</a>
+                    </div>
+
+                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming">
+                        <div class="event-header">
+                            <span class="event-date">2026.05.23-24</span>
+                            <span class="event-status">開催予定</span>
+                        </div>
+                        <h3 class="event-title">第6回 天下一植物界</h3>
+                        <p class="event-description">植物の最高峰を目指すお祭り。全国の有名ブリーダーが集まる大型イベントです。</p>
+                        <div class="event-tags">
+                            <span class="tag">大型</span>
+                            <span class="tag">展示会</span>
+                            <span class="tag">即売会</span>
+                        </div>
+                        <a href="events/tenkaichi-2026.html" class="event-link">詳細を見る →</a>
+                    </div>
+                </div>
+
+                <!-- Past Events -->
+                <h3 class="section-subtitle">終了したイベント</h3>
+                <div class="events-grid past-events" id="pastEventsGrid">
+                    <div class="event-card event-ended">
+                        <div class="event-header">
+                            <span class="event-date">2026.02.14-15</span>
+                            <span class="event-status">終了</span>
+                        </div>
+                        <h3 class="event-title">第2回 熊谷多肉フェス</h3>
+                        <p class="event-description">埼玉県で開催された多肉植物の専門マーケット。</p>
+                    </div>
+
+                    <div class="event-card event-ended">
+                        <div class="event-header">
+                            <span class="event-date">2026.02.18-3.1</span>
+                            <span class="event-status">終了</span>
+                        </div>
+                        <h3 class="event-title">MIYASHITA PARK Pop-Up Store</h3>
+                        <p class="event-description">渋谷の大型商業施設での期間限定ポップアップストア。</p>
+                    </div>
+
+                    <div class="event-card event-ended">
+                        <div class="event-header">
+                            <span class="event-date">2026.02.21</span>
+                            <span class="event-status">終了</span>
+                        </div>
+                        <h3 class="event-title">いばらきスカイパレット 植物マルシェ</h3>
+                        <p class="event-description">茨城県の屋外施設で開催された植物マーケット。</p>
+                    </div>
+
+                    <div class="event-card event-ended">
+                        <div class="event-header">
+                            <span class="event-date">2026.02.28-3.8</span>
+                            <span class="event-status">終了</span>
+                        </div>
+                        <h3 class="event-title">PLANT FREAKS</h3>
+                        <p class="event-description">植物好きのための大型フェスティバル。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Schedule Table -->
+            <section class="schedule-section">
+                <h2 class="section-title">2026年 開催予定一覧</h2>
+                <div class="schedule-table-wrapper">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>月</th>
+                                <th>イベント名</th>
+                                <th>日程</th>
+                                <th>種類</th>
+                                <th>ステータス</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="1">3月</td>
+                                <td>和歌山グリーンマルシェ</td>
+                                <td>2026.03.29</td>
+                                <td>マルシェ</td>
+                                <td><span class="status-badge soon">もうすぐ</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">4月</td>
+                                <td>二子玉川ボタニカルフェスタ 2026春</td>
+                                <td>2026.04.4-5</td>
+                                <td>大型イベント</td>
+                                <td><span class="status-badge accepting">受付中</span></td>
+                            </tr>
+                            <tr>
+                                <td>多肉もろもろ市場 2026春</td>
+                                <td>2026.04 中旬</td>
+                                <td>即売会</td>
+                                <td><span class="status-badge planned">開催予定</span></td>
+                            </tr>
+                            <tr>
+                                <td>モンスタープランツ 2026</td>
+                                <td>2026.04</td>
+                                <td>大型イベント</td>
+                                <td><span class="status-badge planned">開催予定</span></td>
+                            </tr>
+                            <tr>
+                                <td>第8回 花友フェスタ 2026</td>
+                                <td>2026.04.29</td>
+                                <td>大型マルシェ</td>
+                                <td><span class="status-badge planned">開催予定</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">5月</td>
+                                <td>Plants Garage Market</td>
+                                <td>2026.05.3-4</td>
+                                <td>即売会</td>
+                                <td><span class="status-badge planned">開催予定</span></td>
+                            </tr>
+                            <tr>
+                                <td>Collect Plants Vol.2</td>
+                                <td>2026.05.9-10</td>
+                                <td>大型即売会</td>
+                                <td><span class="status-badge planned">開催予定</span></td>
+                            </tr>
+                            <tr>
+                                <td>第6回 天下一植物界</td>
+                                <td>2026.05.23-24</td>
+                                <td>大型イベント</td>
+                                <td><span class="status-badge planned">開催予定</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+            <!-- Category Widget -->
+            <div class="widget">
+                <h3 class="widget-title">📂 カテゴリ</h3>
+                <ul class="widget-list">
+                    <li><a href="#events">全てのイベント</a></li>
+                    <li><a href="#events" onclick="filterEvents('即売会'); return false;">即売会</a></li>
+                    <li><a href="#events" onclick="filterEvents('マルシェ'); return false;">マルシェ</a></li>
+                    <li><a href="#events" onclick="filterEvents('展示会'); return false;">展示会</a></li>
+                    <li><a href="#events" onclick="filterEvents('大型'); return false;">大型イベント</a></li>
+                </ul>
+            </div>
+
+            <!-- Area Widget -->
+            <div class="widget">
+                <h3 class="widget-title">🗺️ エリアから探す</h3>
+                <ul class="widget-list">
+                    <li><a href="#">関東地方</a></li>
+                    <li><a href="#">関西地方</a></li>
+                    <li><a href="#">中部地方</a></li>
+                    <li><a href="#">東北地方</a></li>
+                    <li><a href="#">中国・四国地方</a></li>
+                    <li><a href="#">九州・沖縄</a></li>
+                </ul>
+            </div>
+
+            <!-- SNS Widget -->
+            <div class="widget">
+                <h3 class="widget-title">📱 運営SNS</h3>
+                <div class="sns-links">
+                    <a href="https://www.instagram.com/m.z.plants/" target="_blank" rel="noopener noreferrer" class="sns-link instagram">
+                        <span>📷 Instagram</span>
+                    </a>
+                </div>
+                <p class="widget-note">最新情報をInstagramで配信中</p>
+            </div>
+
+            <!-- Ad Placeholder 1 -->
+            <div class="widget ad-widget">
+                <p class="ad-placeholder">広告スペース</p>
+                <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+                <!-- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> -->
+            </div>
+
+            <!-- Ad Placeholder 2 -->
+            <div class="widget ad-widget">
+                <p class="ad-placeholder">広告スペース</p>
+                <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+                <!-- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> -->
+            </div>
+            </aside>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="about.html">このサイトについて</a>
+                <a href="privacy.html">プライバシーポリシー</a>
+                <a href="terms.html">利用規約</a>
+                <a href="disclaimer.html">免責事項</a>
+                <a href="contact.html">お問い合わせ</a>
+                <a href="operator.html">運営者情報</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">Instagram</a>
+            </div>
+            <p class="footer-copyright">© 2026 アガベイベントナビ</p>
+        </div>
+    </footer>
+
+    <script>
+        function filterEvents(tag) {
+            const cards = document.querySelectorAll('.event-card:not(.event-ended)');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter events
+            if (tag === 'all') {
+                cards.forEach(card => card.style.display = 'block');
+            } else {
+                cards.forEach(card => {
+                    const tags = card.getAttribute('data-tags').split(',');
+                    if (tags.includes(tag)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
