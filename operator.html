@@ -17,17 +17,25 @@
 </head>
 <body>
     <header class="header">
-        <div class="header-container">
-            <div class="logo">🌵 アガベイベントナビ</div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">ホーム</a></li>
-                    <li><a href="about.html">このサイトについて</a></li>
-                    <li><a href="contact.html">お問い合わせ</a></li>
-                </ul>
-            </nav>
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+        </div>
+    </nav>
 
     <div class="breadcrumb">
         <a href="index.html">ホーム</a> > <span>運営者情報</span>
@@ -78,18 +86,38 @@
     </main>
 
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="about.html">このサイトについて</a>
-                <a href="privacy.html">プライバシーポリシー</a>
-                <a href="terms.html">利用規約</a>
-                <a href="disclaimer.html">免責事項</a>
-                <a href="contact.html">お問い合わせ</a>
-                <a href="operator.html">運営者情報</a>
-                <a href="https://www.instagram.com/m.z.plants/" target="_blank">Instagram</a>
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
             </div>
-            <p class="footer-copyright">© 2026 アガベイベントナビ</p>
+            <nav class="footer-nav">
+                <a href="about.html">ABOUT</a>
+                <a href="privacy.html">PRIVACY</a>
+                <a href="terms.html">TERMS</a>
+                <a href="disclaimer.html">DISCLAIMER</a>
+                <a href="operator.html">OPERATOR</a>
+                <a href="contact.html">CONTACT</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
         </div>
     </footer>
+
+    <script>
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+    </script>
 </body>
 </html>

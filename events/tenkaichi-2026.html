@@ -16,85 +16,145 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../">ホーム</a></li>
-                <li><a href="../about.html">このサイトについて</a></li>
-                <li><a href="../contact.html">お問い合わせ</a></li>
-            </ul>
-        </nav>
+    <header class="header">
+        <div class="header-inner">
+            <a href="../index.html" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </header>
 
-    <main>
-        <nav class="breadcrumb">
-            <a href="../">ホーム</a> > <a href="index.html">イベント一覧</a> > 第6回 天下一植物界 BORDER BREAK BEYOND
-        </nav>
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="../index.html">HOME</a>
+            <a href="../about.html">ABOUT</a>
+            <a href="../contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+        </div>
+    </nav>
 
-        <section class="event-hero">
-            <h1>第6回 天下一植物界 BORDER BREAK BEYOND</h1>
-            <div class="event-status">
-                <span class="status-badge">開催予定</span>
-            </div>
-        </section>
+    <div class="breadcrumb">
+        <a href="../index.html">ホーム</a> > <a href="../index.html">イベント一覧</a> > 第6回 天下一植物界 BORDER BREAK BEYOND
+    </div>
 
-        <section class="event-info">
-            <table class="info-table">
-                <tr>
-                    <th>開催日時</th>
-                    <td>2026年5月23日（土）〜 24日（日）</td>
-                </tr>
-                <tr>
-                    <th>会場</th>
-                    <td>京セラドーム大阪 スカイホール A/Bブロック</td>
-                </tr>
-                <tr>
-                    <th>住所</th>
-                    <td>大阪府大阪市西区千代崎3丁目中2-1</td>
-                </tr>
-                <tr>
-                    <th>カテゴリ</th>
-                    <td>大型イベント、展示会、即売会</td>
-                </tr>
-                <tr>
-                    <th>入場料</th>
-                    <td>前売券あり（詳細は公式サイト参照）</td>
-                </tr>
-                <tr>
-                    <th>公式情報</th>
-                    <td><a href="https://no1plantae.com/" target="_blank">https://no1plantae.com/</a></td>
-                </tr>
-            </table>
-        </section>
+    <main class="container">
+        <div class="main-content" style="padding: 2rem;">
+            <section class="event-detail-hero">
+                <h1>第6回 天下一植物界 BORDER BREAK BEYOND</h1>
+                <p style="margin-top: 1rem; font-size: 1.1rem;">2026年5月23日（土）〜 24日（日）</p>
+            </section>
 
-        <section class="event-map">
-            <h2>会場のご案内</h2>
-            <iframe src="https://maps.google.com/maps?q=大阪府大阪市西区千代崎3丁目中2-1&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </section>
+            <section class="event-info" style="margin: 3rem 0;">
+                <h2 style="border-bottom: 2px solid #4a7c28; padding-bottom: 0.5rem;">イベント情報</h2>
+                <table class="info-table">
+                    <tr>
+                        <th>開催日時</th>
+                        <td>2026年5月23日（土）〜 24日（日）</td>
+                    </tr>
+                    <tr>
+                        <th>会場</th>
+                        <td>京セラドーム大阪 スカイホール A/Bブロック</td>
+                    </tr>
+                    <tr>
+                        <th>住所</th>
+                        <td>大阪府大阪市西区千代崎3丁目中2-1</td>
+                    </tr>
+                    <tr>
+                        <th>カテゴリ</th>
+                        <td>大型イベント、展示会、即売会</td>
+                    </tr>
+                    <tr>
+                        <th>入場料</th>
+                        <td>前売券あり（詳細は公式サイト参照）</td>
+                    </tr>
+                    <tr>
+                        <th>公式情報</th>
+                        <td><a href="https://no1plantae.com/" target="_blank">https://no1plantae.com/</a></td>
+                    </tr>
+                </table>
+            </section>
 
-        <section class="event-description">
-            <h2>イベントについて</h2>
-            <p>第6回となる「天下一植物界 BORDER BREAK BEYOND」は、西日本最大級の植物イベントです。アガベやサボテン、多肉植物から熱帯植物、洋蘭、そして伝統園芸まで、あらゆる植物ジャンルの境界線を超えた大規模な展示・即売会となります。このイベントでは、異なる植物文化が一つの空間に集結し、新たな出会いと発見が生まれる場所となっています。</p>
+            <section class="event-map" style="margin: 3rem 0;">
+                <h2 style="border-bottom: 2px solid #4a7c28; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">会場のご案内</h2>
+                <iframe src="https://maps.google.com/maps?q=大阪府大阪市西区千代崎3丁目中2-1&output=embed" width="100%" height="400" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </section>
 
-            <p>全国各地の著名なナーサリーと生産者、育種家が参加予定となっており、通常では入手困難な希少植物から、初心者向けの人気種まで、幅広い品揃えが期待できます。各出展者のブースでは直接、植物の育成方法や品種の特性について相談することが可能であり、単なる買い物の場ではなく、植物文化を学び深める貴重な機会となっています。</p>
+            <section class="event-description" style="margin: 3rem 0;">
+                <h2 style="border-bottom: 2px solid #4a7c28; padding-bottom: 0.5rem; margin-bottom: 1rem;">イベントについて</h2>
+                <p>第6回となる「天下一植物界 BORDER BREAK BEYOND」は、西日本最大級の植物イベントです。アガベやサボテン、多肉植物から熱帯植物、洋蘭、そして伝統園芸まで、あらゆる植物ジャンルの境界線を超えた大規模な展示・即売会となります。このイベントでは、異なる植物文化が一つの空間に集結し、新たな出会いと発見が生まれる場所となっています。</p>
 
-            <p>ジャンルを越えた植物愛好家たちが集まるこのイベントを通じて、新しい植物世界への扉が開かれます。5月の京セラドーム大阪での開催は、関西を中心とした植物ファンにとって見逃せない2日間です。</p>
-        </section>
+                <p>全国各地の著名なナーサリーと生産者、育種家が参加予定となっており、通常では入手困難な希少植物から、初心者向けの人気種まで、幅広い品揃えが期待できます。各出展者のブースでは直接、植物の育成方法や品種の特性について相談することが可能であり、単なる買い物の場ではなく、植物文化を学び深める貴重な機会となっています。</p>
 
-        <section class="event-back">
-            <a href="index.html" class="back-link">イベント一覧に戻る</a>
-        </section>
+                <p>ジャンルを越えた植物愛好家たちが集まるこのイベントを通じて、新しい植物世界への扉が開かれます。5月の京セラドーム大阪での開催は、関西を中心とした植物ファンにとって見逃せない2日間です。</p>
+            </section>
+
+            <section class="event-back" style="margin: 3rem 0; text-align: center;">
+                <a href="../index.html" class="back-link">イベント一覧に戻る</a>
+            </section>
+        </div>
     </main>
 
-    <footer>
-        <ul>
-            <li><a href="../about.html">このサイトについて</a></li>
-            <li><a href="../privacy.html">プライバシーポリシー</a></li>
-            <li><a href="../terms.html">利用規約</a></li>
-            <li><a href="../disclaimer.html">免責事項</a></li>
-            <li><a href="../contact.html">お問い合わせ</a></li>
-            <li><a href="../operator.html">運営者情報</a></li>
-        </ul>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="../about.html">ABOUT</a>
+                <a href="../privacy.html">PRIVACY</a>
+                <a href="../terms.html">TERMS</a>
+                <a href="../disclaimer.html">DISCLAIMER</a>
+                <a href="../operator.html">OPERATOR</a>
+                <a href="../contact.html">CONTACT</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
+        </div>
     </footer>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "第6回 天下一植物界 BORDER BREAK BEYOND",
+        "description": "西日本最大級の植物イベント。アガベやサボテン、多肉植物から熱帯植物、洋蘭、伝統園芸まで、あらゆる植物ジャンルが集結。",
+        "startDate": "2026-05-23T10:00:00+09:00",
+        "endDate": "2026-05-24T18:00:00+09:00",
+        "location": {
+            "@type": "Place",
+            "name": "京セラドーム大阪",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "JP",
+                "addressRegion": "大阪府",
+                "addressLocality": "大阪市西区",
+                "streetAddress": "千代崎3丁目中2-1"
+            }
+        },
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+    }
+    </script>
+
+    <script>
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+    </script>
 </body>
 </html>

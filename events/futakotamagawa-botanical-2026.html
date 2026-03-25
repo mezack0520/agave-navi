@@ -22,90 +22,101 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <h1 class="site-title">アガベイベントナビ</h1>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="../index.html">ホーム</a></li>
-                    <li><a href="../about.html">このサイトについて</a></li>
-                    <li><a href="../index.html">イベント一覧</a></li>
-                </ul>
-            </nav>
+    <header class="header">
+        <div class="header-inner">
+            <a href="../index.html" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <main>
-        <div class="breadcrumb">
-            <a href="../index.html">ホーム</a> > <a href="../index.html">イベント一覧</a> > 二子玉川ボタニカルフェスタ 2026春
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="../index.html">HOME</a>
+            <a href="../about.html">ABOUT</a>
+            <a href="../contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
         </div>
+    </nav>
 
-        <section class="event-hero">
-            <div class="hero-content">
+    <div class="breadcrumb">
+        <a href="../index.html">ホーム</a> > <a href="../index.html">イベント一覧</a> > 二子玉川ボタニカルフェスタ 2026春
+    </div>
+
+    <main class="container">
+        <div class="main-content" style="padding: 2rem;">
+            <section class="event-detail-hero">
                 <h1>二子玉川ボタニカルフェスタ 2026春</h1>
-                <p class="event-date">2026年4月4日（土）～5日（日）</p>
-            </div>
-        </section>
+                <p style="margin-top: 1rem; font-size: 1.1rem;">2026年4月4日（土）～5日（日）</p>
+            </section>
 
-        <section class="event-info">
-            <table class="info-table">
-                <tr>
-                    <th>開催日時</th>
-                    <td>2026年4月4日（土）～5日（日） 10:00～18:00</td>
-                </tr>
-                <tr>
-                    <th>会場</th>
-                    <td>二子玉川ライズ<br>東京都世田谷区</td>
-                </tr>
-                <tr>
-                    <th>エリア</th>
-                    <td>東京都</td>
-                </tr>
-                <tr>
-                    <th>入場料</th>
-                    <td>500円（税込）</td>
-                </tr>
-                <tr>
-                    <th>カテゴリ</th>
-                    <td>大型イベント、展示会、即売会</td>
-                </tr>
-                <tr>
-                    <th>公式情報</th>
-                    <td><a href="#">公式ウェブサイト</a></td>
-                </tr>
-            </table>
-        </section>
+            <section class="event-info" style="margin: 3rem 0;">
+                <h2 style="border-bottom: 2px solid #4a7c28; padding-bottom: 0.5rem;">イベント情報</h2>
+                <table class="info-table">
+                    <tr>
+                        <th>開催日時</th>
+                        <td>2026年4月4日（土）～5日（日） 10:00～18:00</td>
+                    </tr>
+                    <tr>
+                        <th>会場</th>
+                        <td>二子玉川ライズ<br>東京都世田谷区</td>
+                    </tr>
+                    <tr>
+                        <th>エリア</th>
+                        <td>東京都</td>
+                    </tr>
+                    <tr>
+                        <th>入場料</th>
+                        <td>500円（税込）</td>
+                    </tr>
+                    <tr>
+                        <th>カテゴリ</th>
+                        <td>大型イベント、展示会、即売会</td>
+                    </tr>
+                    <tr>
+                        <th>公式情報</th>
+                        <td><a href="#">公式ウェブサイト</a></td>
+                    </tr>
+                </table>
+            </section>
 
-        <section class="event-description">
-            <h2>イベント概要</h2>
-            <p>二子玉川ボタニカルフェスタは、関東最大級の植物イベントとして知られる、春の注目イベントです。二子玉川ライズの広大なスペースに、100以上の出店者が集結。アガベの最新品種、世界的な稀少多肉植物、フローラル雑貨から園芸道具まで、植物にまつわるあらゆるアイテムが揃います。2日間開催されるため、ゆっくりと回ってお気に入りを探すことができます。</p>
-            <p>本イベントの特徴は、単なる販売だけではなく、業界の第一線で活躍する植物エキスパートによるトークショーやワークショップが随時開催される点です。アガベの育成テクニック、多肉植物の冬越しのコツ、寄せ植えの楽しみ方など、実践的な知識を直接学べます。初心者向けから上級者向けまでのセッションが用意されており、どのレベルの愛好家でも参加できます。</p>
-            <p>春の日差しを感じながら、新しい植物との出会いや、他の愛好家との交流を楽しめる空間です。立地の良さから、周辺のカフェやショップも利用できるため、一日かけてボタニカルライフを満喫できます。レアな品種は早期に売切れるため、早めの訪問がお勧めです。</p>
-        </section>
+            <section class="event-map" style="margin: 3rem 0;">
+                <h2 style="border-bottom: 2px solid #4a7c28; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">会場の地図</h2>
+                <iframe src="https://maps.google.com/maps?q=二子玉川ライズ,東京都世田谷区&output=embed" width="100%" height="400" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </section>
 
-        <section class="event-map">
-            <h2>会場の地図</h2>
-            <iframe src="https://maps.google.com/maps?q=二子玉川ライズ,東京都世田谷区&output=embed" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </section>
+            <section class="event-description" style="margin: 3rem 0;">
+                <h2 style="border-bottom: 2px solid #4a7c28; padding-bottom: 0.5rem; margin-bottom: 1rem;">イベント概要</h2>
+                <p>二子玉川ボタニカルフェスタは、関東最大級の植物イベントとして知られる、春の注目イベントです。二子玉川ライズの広大なスペースに、100以上の出店者が集結。アガベの最新品種、世界的な稀少多肉植物、フローラル雑貨から園芸道具まで、植物にまつわるあらゆるアイテムが揃います。2日間開催されるため、ゆっくりと回ってお気に入りを探すことができます。</p>
+                <p>本イベントの特徴は、単なる販売だけではなく、業界の第一線で活躍する植物エキスパートによるトークショーやワークショップが随時開催される点です。アガベの育成テクニック、多肉植物の冬越しのコツ、寄せ植えの楽しみ方など、実践的な知識を直接学べます。初心者向けから上級者向けまでのセッションが用意されており、どのレベルの愛好家でも参加できます。</p>
+                <p>春の日差しを感じながら、新しい植物との出会いや、他の愛好家との交流を楽しめる空間です。立地の良さから、周辺のカフェやショップも利用できるため、一日かけてボタニカルライフを満喫できます。レアな品種は早期に売切れるため、早めの訪問がお勧めです。</p>
+            </section>
 
-        <section class="event-actions">
-            <a href="../index.html" class="btn-back">イベント一覧に戻る</a>
-        </section>
-
-        <!-- AdSense Placeholder -->
-        <section class="adsense-placeholder">
-            <!-- Google AdSense advertisement space -->
-        </section>
+            <section class="event-back" style="margin: 3rem 0; text-align: center;">
+                <a href="../index.html" class="back-link">イベント一覧に戻る</a>
+            </section>
+        </div>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2026 アガベイベントナビ</p>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+            </div>
             <nav class="footer-nav">
-                <a href="../index.html">ホーム</a>
-                <a href="../about.html">このサイトについて</a>
-                <a href="../contact.html">お問い合わせ</a>
+                <a href="../about.html">ABOUT</a>
+                <a href="../privacy.html">PRIVACY</a>
+                <a href="../terms.html">TERMS</a>
+                <a href="../disclaimer.html">DISCLAIMER</a>
+                <a href="../operator.html">OPERATOR</a>
+                <a href="../contact.html">CONTACT</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
             </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
         </div>
     </footer>
 
@@ -136,6 +147,23 @@
             "priceCurrency": "JPY"
         }
     }
+    </script>
+
+    <script>
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
     </script>
 </body>
 </html>
