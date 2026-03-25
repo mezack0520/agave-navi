@@ -281,7 +281,7 @@
         // Make entire event card clickable
         document.querySelectorAll('.event-card:not(.event-ended)').forEach(card => {
             card.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') return; // let normal links work
+                if (e.target.tagName === 'A') return;
                 const link = this.querySelector('.event-link');
                 if (link) window.location.href = link.href;
             });
@@ -304,17 +304,34 @@
         function applyFilters(query) {
             const searchVal = (query !== undefined ? query : document.getElementById('searchInput').value).trim().toLowerCase();
             const cards = document.querySelectorAll('.event-card:not(.event-ended)');
+            let delay = 0;
 
             cards.forEach(card => {
                 const tags = card.getAttribute('data-tags').split(',');
                 const title = card.querySelector('.event-title').textContent.toLowerCase();
-                const desc = card.querySelector('.event-description').textContent.toLowerCase();
+                const desc = card.querySelector('.event-description') ? card.querySelector('.event-description').textContent.toLowerCase() : '';
                 const date = card.querySelector('.event-date').textContent.toLowerCase();
 
                 const tagMatch = activeTag === 'all' || tags.includes(activeTag);
                 const searchMatch = !searchVal || title.includes(searchVal) || desc.includes(searchVal) || date.includes(searchVal);
+                const shouldShow = tagMatch && searchMatch;
 
-                card.style.display = (tagMatch && searchMatch) ? '' : 'none';
+                if (shouldShow) {
+                    card.classList.remove('filter-hide');
+                    card.classList.add('filter-show');
+                    card.style.display = '';
+                    card.style.animationDelay = delay + 'ms';
+                    delay += 40;
+                } else {
+                    card.classList.remove('filter-show');
+                    card.classList.add('filter-hide');
+                    // After animation, hide from layout
+                    setTimeout(() => {
+                        if (card.classList.contains('filter-hide')) {
+                            card.style.display = 'none';
+                        }
+                    }, 200);
+                }
             });
         }
     </script>
