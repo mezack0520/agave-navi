@@ -37,43 +37,25 @@
         </div>
     </nav>
 
-    <main class="container">
-        <section class="hero">
-            <h1>AGAVE EVENT NAVI</h1>
-            <p>多肉植物・サボテンイベント情報サイト</p>
-            <p style="font-size: 0.95rem; color: #666;">全国の最新イベント情報をチェック</p>
+    <div class="filter-bar">
+        <div class="filter-bar-inner">
+            <button class="filter-tab active" onclick="filterEvents('all')">すべて</button>
+            <button class="filter-tab" onclick="filterEvents('即売会')">即売会</button>
+            <button class="filter-tab" onclick="filterEvents('マルシェ')">マルシェ</button>
+            <button class="filter-tab" onclick="filterEvents('大型')">大型イベント</button>
+            <button class="filter-tab" onclick="filterEvents('展示会')">展示会</button>
+        </div>
+    </div>
 
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number">50+</span>
-                    <span class="stat-label">イベント掲載</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">全国</span>
-                    <span class="stat-label">対応</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">毎週更新</span>
-                    <span class="stat-label">新情報</span>
-                </div>
-            </div>
-
-            <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterEvents('all')">すべて表示</button>
-                <button class="filter-btn" onclick="filterEvents('即売会')">即売会</button>
-                <button class="filter-btn" onclick="filterEvents('マルシェ')">マルシェ</button>
-                <button class="filter-btn" onclick="filterEvents('大型')">大型イベント</button>
-                <button class="filter-btn" onclick="filterEvents('展示会')">展示会</button>
-            </div>
-        </section>
-
-        <div class="main-content">
+    <main class="page-content">
+        <div class="content-inner">
             <section id="events" class="events-section">
-                <h2 class="section-title">開催予定のイベント</h2>
+                <h2 class="section-heading">開催予定のイベント<span class="event-count">8件</span></h2>
 
                 <div class="events-grid" id="eventsGrid">
                     <!-- March 2026 -->
                     <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.03.29</span>
                             <span class="event-status">もうすぐ</span>
@@ -85,10 +67,12 @@
                             <span class="tag">即売会</span>
                         </div>
                         <a href="events/wakayama-green-marche.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <!-- April 2026 -->
                     <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.04.4-5</span>
                             <span class="event-status">受付中</span>
@@ -101,9 +85,11 @@
                             <span class="tag">即売会</span>
                         </div>
                         <a href="events/futakotamagawa-botanical-2026.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.04 中旬</span>
                             <span class="event-status">開催予定</span>
@@ -115,9 +101,11 @@
                             <span class="tag">マルシェ</span>
                         </div>
                         <a href="events/taniku-moromoro-2026-spring.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.04</span>
                             <span class="event-status">開催予定</span>
@@ -130,9 +118,11 @@
                             <span class="tag">即売会</span>
                         </div>
                         <a href="events/monster-plants-2026.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <div class="event-card" data-tags="大型,マルシェ" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.04.29</span>
                             <span class="event-status">開催予定</span>
@@ -144,10 +134,12 @@
                             <span class="tag">マルシェ</span>
                         </div>
                         <a href="events/hanatomofesta-2026.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <!-- May 2026 -->
                     <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.05.3-4</span>
                             <span class="event-status">開催予定</span>
@@ -159,9 +151,11 @@
                             <span class="tag">マルシェ</span>
                         </div>
                         <a href="events/plants-garage-market.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <div class="event-card" data-tags="大型,即売会" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.05.9-10</span>
                             <span class="event-status">開催予定</span>
@@ -173,9 +167,11 @@
                             <span class="tag">即売会</span>
                         </div>
                         <a href="events/collect-plants-vol2.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
 
                     <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.05.23-24</span>
                             <span class="event-status">開催予定</span>
@@ -188,46 +184,55 @@
                             <span class="tag">即売会</span>
                         </div>
                         <a href="events/tenkaichi-2026.html" class="event-link">詳細を見る</a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Past Events -->
-                <h3 class="section-subtitle">終了したイベント</h3>
+                <h3 class="section-heading section-heading--sub">終了したイベント</h3>
                 <div class="events-grid past-events" id="pastEventsGrid">
                     <div class="event-card event-ended">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.02.14-15</span>
                             <span class="event-status">終了</span>
                         </div>
                         <h3 class="event-title">第2回 熊谷多肉フェス</h3>
                         <p class="event-description">埼玉県で開催された多肉植物の専門マーケット。</p>
+                        </div>
                     </div>
 
                     <div class="event-card event-ended">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.02.18-3.1</span>
                             <span class="event-status">終了</span>
                         </div>
                         <h3 class="event-title">MIYASHITA PARK Pop-Up Store</h3>
                         <p class="event-description">渋谷の大型商業施設での期間限定ポップアップストア。</p>
+                        </div>
                     </div>
 
                     <div class="event-card event-ended">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.02.21</span>
                             <span class="event-status">終了</span>
                         </div>
                         <h3 class="event-title">いばらきスカイパレット 植物マルシェ</h3>
                         <p class="event-description">茨城県の屋外施設で開催された植物マーケット。</p>
+                        </div>
                     </div>
 
                     <div class="event-card event-ended">
+                        <div class="event-card-body">
                         <div class="event-header">
                             <span class="event-date">2026.02.28-3.8</span>
                             <span class="event-status">終了</span>
                         </div>
                         <h3 class="event-title">PLANT FREAKS</h3>
                         <p class="event-description">植物好きのための大型フェスティバル。</p>
+                        </div>
                     </div>
                 </div>
             </section>
