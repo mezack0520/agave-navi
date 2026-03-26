@@ -54,6 +54,46 @@
       ]
     }
     </script>
+
+    <style>
+    /* Load More: 初回は8件表示、残りはhidden（SEO: HTML上は全件存在） */
+    .events-grid .event-card.load-more-hidden {
+        display: none !important;
+    }
+    .load-more-wrap {
+        text-align: center;
+        margin: 2rem 0 1rem;
+    }
+    .load-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 2.5rem;
+        border: 1.5px solid var(--gray-300);
+        border-radius: 30px;
+        background: var(--white);
+        color: var(--gray-600);
+        font-family: inherit;
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        letter-spacing: 0.02em;
+    }
+    .load-more-btn:hover {
+        border-color: var(--black);
+        color: var(--black);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .load-more-btn svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.25s;
+    }
+    .load-more-btn:hover svg {
+        transform: translateY(2px);
+    }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -727,6 +767,13 @@
                     </div>
                 </div>
 
+                <div class="load-more-wrap" id="loadMoreWrap">
+                    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreEvents()">
+                        <span>もっと見る</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                </div>
+
                 <!-- Past Events -->
                 <h3 class="section-heading section-heading--sub">終了したイベント</h3>
                 <div class="events-grid past-events" id="pastEventsGrid">
@@ -854,7 +901,7 @@
         // 地域の初期値: localStorage → なければ '関東'
         (function initRegion() {
             const sel = document.getElementById('regionFilter');
-            const saved = localStorage.getItem('aen_region') || '関東';
+            const saved = localStorage.getItem('aen_region') || 'all';
             if ([...sel.options].some(o => o.value === saved)) {
                 sel.value = saved;
             }
