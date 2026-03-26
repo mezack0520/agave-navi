@@ -152,6 +152,19 @@
                     btn.classList.remove('favorited');
                 }
             });
+            updateBadgeCount(favs);
+        }
+        function updateBadgeCount(favs) {
+            var b = document.getElementById('ikitaiBadge');
+            if (b) {
+                if (favs.length > 0) {
+                    b.textContent = favs.length;
+                    b.classList.add('has-count');
+                } else {
+                    b.textContent = '';
+                    b.classList.remove('has-count');
+                }
+            }
         }
         syncFavUI();
 
@@ -211,6 +224,7 @@
             let favs = getFavs();
             favs = favs.filter(s => s !== slug);
             localStorage.setItem('aen_favs', JSON.stringify(favs));
+            updateBadgeCount(favs);
             // Remove card with animation
             const card = e.target.closest('.event-card');
             if (card) {

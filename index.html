@@ -1120,6 +1120,26 @@
                     btn.classList.remove('favorited');
                 }
             });
+            // Update header badge count in real-time
+            var b = document.getElementById('ikitaiBadge');
+            if (b) {
+                if (favs.length > 0) {
+                    b.textContent = favs.length;
+                    b.classList.add('has-count');
+                } else {
+                    b.textContent = '';
+                    b.classList.remove('has-count');
+                }
+            }
+            // Update mobile fav bar text
+            document.querySelectorAll('.card-fav-bar').forEach(function(bar) {
+                var card = bar.closest('.event-card');
+                var slug = card?.getAttribute('data-slug');
+                var span = bar.querySelector('span');
+                if (slug && span) {
+                    span.textContent = favs.includes(slug) ? '行きたい登録済み' : '行きたい';
+                }
+            });
         }
 
         // ========== もっと見る (Load More) ==========

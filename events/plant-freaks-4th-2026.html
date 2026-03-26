@@ -241,13 +241,25 @@
             const btn = document.getElementById('favBtn');
             const label = document.getElementById('favLabel');
             if (!btn || !label) return;
-            const isFav = getFavs().includes(slug);
+            const favs = getFavs();
+            const isFav = favs.includes(slug);
             if (isFav) {
                 btn.classList.add('is-fav');
                 label.textContent = '行きたい登録済み';
             } else {
                 btn.classList.remove('is-fav');
                 label.textContent = '行きたい';
+            }
+            // Real-time badge count update
+            var b = document.getElementById('ikitaiBadge');
+            if (b) {
+                if (favs.length > 0) {
+                    b.textContent = favs.length;
+                    b.classList.add('has-count');
+                } else {
+                    b.textContent = '';
+                    b.classList.remove('has-count');
+                }
             }
         }
         updateFavBtn();
