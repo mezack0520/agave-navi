@@ -177,8 +177,8 @@ body.no-scroll {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 1rem 0.45rem 0.75rem;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem 0.35rem 0.65rem;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -194,7 +194,7 @@ body.no-scroll {
 /* Liquid / blob background */
 .ikitai-blob-btn .blob-bg {
     position: absolute;
-    inset: -4px -6px;
+    inset: -3px -4px;
     z-index: -1;
     border-radius: 50%;
     background: linear-gradient(135deg, #e63946, #ff6b81);
@@ -218,8 +218,8 @@ body.no-scroll {
 }
 
 .ikitai-blob-btn .ikitai-heart {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     fill: var(--white);
     filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
     transition: transform 0.3s;
@@ -1550,8 +1550,8 @@ main {
         inset: -3px;
     }
     .ikitai-blob-btn .ikitai-heart {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
 
     /* Nav overlay ikitai link */
