@@ -1525,11 +1525,15 @@ main {
 
 @media (max-width: 768px) {
     .header-inner {
-        padding: 0.5rem 1rem;
+        padding: 0.3rem 1rem;
     }
 
     .logo-en {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .logo-jp {
+        font-size: 0.55rem;
     }
 
     /* Mobile: show compact heart icon only, hide label */
@@ -1537,14 +1541,14 @@ main {
         display: none;
     }
     .ikitai-blob-btn {
-        padding: 0.4rem;
+        padding: 0.3rem;
     }
     .ikitai-blob-btn .blob-bg {
-        inset: -3px;
+        inset: -2px;
     }
     .ikitai-blob-btn .ikitai-heart {
-        width: 15px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
     }
 
     /* Nav overlay ikitai link */
@@ -1572,7 +1576,7 @@ main {
     }
 
     .filter-bar {
-        top: 38px;
+        top: 34px;
         background-color: var(--white, #fff);
         border-bottom: none;
     }
@@ -1670,15 +1674,15 @@ main {
 
 @media (max-width: 480px) {
     .header-inner {
-        padding: 0.5rem 0.75rem;
+        padding: 0.25rem 0.75rem;
     }
 
     .logo-en {
-        font-size: 0.75rem;
+        font-size: 0.72rem;
     }
 
     .logo-jp {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
     }
 
     .breadcrumb {
