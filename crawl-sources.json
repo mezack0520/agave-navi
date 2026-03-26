@@ -1,0 +1,159 @@
+{
+  "description": "イベント情報の巡回元サイト一覧 - agave-navi.com",
+  "lastUpdated": "2026-03-26",
+  "sources": [
+    {
+      "name": "AGAVE MANIACS",
+      "url": "https://agavemaniacs.com/%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88/",
+      "type": "database",
+      "coverage": "全国",
+      "focus": "アガベ専門",
+      "frequency": "weekly",
+      "notes": "ユーザー投稿型。イベント検索ページから日付順で取得可能。JSレンダリングのため要ブラウザ。"
+    },
+    {
+      "name": "ボタ日誌（daybook-botanical）",
+      "url": "https://daybook-botanical.com/2026-botanical-events/",
+      "type": "blog-summary",
+      "coverage": "全国",
+      "focus": "アガベ・塊根植物全般",
+      "frequency": "weekly",
+      "notes": "年間まとめ記事形式。月別に整理されており網羅性が高い。自称「掲載数No.1」。"
+    },
+    {
+      "name": "Leaf Laboratory（リーフラ）",
+      "url": "https://leaf-laboratory.com/pages/events-agave",
+      "type": "database",
+      "coverage": "全国",
+      "focus": "アガベ・ワークショップ",
+      "frequency": "daily",
+      "notes": "143件掲載（2026/3時点）。エリア・期間フィルタあり。小規模ショップイベントも多数。要ブラウザ。"
+    },
+    {
+      "name": "PUKUBOOK（多肉植物図鑑）",
+      "url": "https://pukubook.jp/events",
+      "type": "database",
+      "coverage": "全国（地域別あり）",
+      "focus": "多肉植物全般",
+      "frequency": "weekly",
+      "notes": "公式リリース情報＋過去開催履歴からの予測も掲載。関西版は /events/area/関西 。信頼性高い。"
+    },
+    {
+      "name": "Takez Plants",
+      "url": "https://takez.jp/kanto-engei-event-calendar-2026/",
+      "type": "blog-summary",
+      "coverage": "関東中心（関西・東海・九州もあり）",
+      "focus": "観葉・アガベ・塊根・珍奇植物",
+      "frequency": "monthly",
+      "notes": "月別一覧形式。公式SNSリンク付き。見どころ解説あり。"
+    },
+    {
+      "name": "BOTANICAL ZONE",
+      "url": "https://botanical-zone.tokyo/",
+      "type": "blog-summary",
+      "coverage": "東京・関東圏",
+      "focus": "植物イベント全般",
+      "frequency": "monthly",
+      "notes": "月別まとめ記事。URLパターン: /YYYYMM-tokyoevent/"
+    },
+    {
+      "name": "NextMeet",
+      "url": "https://nextmeet.app/plants",
+      "type": "database",
+      "coverage": "全国",
+      "focus": "植物イベント全般",
+      "frequency": "weekly",
+      "notes": "地域・テーマ検索可能。新しめのサービス。"
+    },
+    {
+      "name": "HanaPrime（ハナプライム）",
+      "url": "https://hanaprime.jp/botanical-book/botanical-events/",
+      "type": "blog-summary",
+      "coverage": "全国",
+      "focus": "植物イベント全般",
+      "frequency": "monthly",
+      "notes": "花のサブスクサービスが運営。大型イベント中心。"
+    },
+    {
+      "name": "和黒柴な日々",
+      "url": "https://kuro-shiba.net/succulentplant-043/",
+      "type": "blog-summary",
+      "coverage": "全国",
+      "focus": "サボテン・多肉植物",
+      "frequency": "monthly",
+      "notes": "フリマ情報も含む。随時更新。"
+    },
+    {
+      "name": "yurupu",
+      "url": "https://yurupu.com/category/plant-events/",
+      "type": "blog-summary",
+      "coverage": "全国",
+      "focus": "多肉植物中心",
+      "frequency": "monthly",
+      "notes": "参加レポートもあり。"
+    },
+    {
+      "name": "succulabo",
+      "url": "https://succulabo.com/tanikuevent_kantou2026/",
+      "type": "blog-summary",
+      "coverage": "関東・福岡",
+      "focus": "多肉植物",
+      "frequency": "monthly",
+      "notes": "地域別ガイド形式。関東版・福岡版あり。"
+    },
+    {
+      "name": "gagaplnt",
+      "url": "https://gagaplnt.com/",
+      "type": "blog-summary",
+      "coverage": "全国",
+      "focus": "植物イベント全般",
+      "frequency": "monthly",
+      "notes": "月別まとめ記事。随時更新。"
+    },
+    {
+      "name": "国際多肉植物協会（ISIJ）",
+      "url": "http://isij.net/",
+      "type": "official",
+      "coverage": "五反田ビッグバザール",
+      "focus": "サボテン・多肉植物",
+      "frequency": "bimonthly",
+      "notes": "ビッグバザール（奇数月開催）の公式情報源。"
+    },
+    {
+      "name": "日本多肉植物の会（JSS）Instagram",
+      "url": "https://www.instagram.com/jss_event_info/",
+      "type": "sns",
+      "coverage": "全国",
+      "focus": "多肉植物",
+      "frequency": "weekly",
+      "notes": "JSS主催・参加イベント。Instagram経由での情報発信。"
+    },
+    {
+      "name": "プランツワールド（幕張）",
+      "url": "https://makuhari.plantsworld.jp/",
+      "type": "official",
+      "coverage": "幕張・岡山",
+      "focus": "珍奇植物・ビザールプランツ",
+      "frequency": "annually",
+      "notes": "日本最大級の珍奇植物即売会。年1-2回開催。"
+    },
+    {
+      "name": "Collect Plants",
+      "url": "https://collect-plants.com/event/",
+      "type": "official",
+      "coverage": "九州",
+      "focus": "植物全般",
+      "frequency": "annually",
+      "notes": "九州最大の植物イベント公式サイト。"
+    },
+    {
+      "name": "ジモティー（多肉植物イベント）",
+      "url": "https://jmty.jp/all/eve-kw-%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9",
+      "type": "classifieds",
+      "coverage": "全国",
+      "focus": "多肉植物（マルシェ・フリマ含む）",
+      "frequency": "daily",
+      "notes": "1300件超。小規模マルシェやフリマが多い。ノイズも多め。"
+    }
+  ]
+}
