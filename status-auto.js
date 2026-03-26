@@ -46,6 +46,7 @@
   }
 
   // index / category ページ: .event-card の .event-status を更新
+  var endedCards = [];
   document.querySelectorAll('.event-card').forEach(function (card) {
     var dateStr = card.getAttribute('data-date');
     if (!dateStr) return;
@@ -55,7 +56,40 @@
     var status = getStatus(dateStr);
     statusEl.textContent = status.label;
     statusEl.className = 'event-status ' + status.cls;
+
+    // 終了したイベントを記録
+    if (status === STATUS.ended) {
+      endedCards.push(card);
+    }
   });
+
+  // 終了イベントを自動で「終了したイベント」セクションに移動
+  var pastGrid = document.getElementById('pastEventsGrid');
+  if (pastGrid && endedCards.length > 0) {
+    endedCards.forEach(function (card) {
+      // 既に終了セクションにある場合はスキップ
+      if (card.closest('#pastEventsGrid')) return;
+      // カードを開催中グリッドから終了グリッドに移動
+      card.classList.add('event-ended');
+      pastGrid.insertBefore(card, pastGrid.firstChild);
+    });
+
+    // 終了セクションの見出しを表示（非表示の場合）
+    var pastHeading = pastGrid.previousElementSibling;
+    if (pastHeading && pastHeading.style) {
+      pastHeading.style.display = '';
+    }
+
+    // 開催予定の件数を更新
+    var countBadge = document.querySelector('.section-heading .count-badge, .event-count');
+    if (countBadge) {
+      var activeGrid = document.getElementById('eventsGrid');
+      if (activeGrid) {
+        var activeCards = activeGrid.querySelectorAll('.event-card');
+        countBadge.textContent = activeCards.length + '件';
+      }
+    }
+  }
 
   // detail ページ: .detail-status-badge を更新
   var badge = document.querySelector('.detail-status-badge');
