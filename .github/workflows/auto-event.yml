@@ -1,0 +1,51 @@
+name: Auto Generate Event Page
+
+on:
+  repository_dispatch:
+    types: [new-event]
+
+permissions:
+  contents: write
+
+jobs:
+  generate-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install Pillow
+
+      - name: Save event data
+        run: |
+          cat > /tmp/event_data.json << 'EVENTEOF'
+          ${{ toJson(github.event.client_payload) }}
+          EVENTEOF
+          echo "Event data saved:"
+          cat /tmp/event_data.json
+
+      - name: Generate event page
+        run: python scripts/generate_event_page.py /tmp/event_data.json
+
+      - name: Update sitemap
+        run: python scripts/generate_sitemap.py
+
+      - name: Generate OGP image
+        run: |
+          sudo apt-get install -y fonts-noto-cjk || true
+          python scripts/generate_ogp.py || echo "OGP generation skipped"
+
+      - name: Commit and push
+        run: |
+          git config user.name "agave-navi-bot"
+          git config user.email "bot@agave-navi.com"
+          git add -A
+          EVENT_NAME=$(python3 -c "import json; d=json.load(open('/tmp/event_data.json')); print(d.get('name','新規イベント'))")
+          git diff --staged --quiet || git commit -m "Auto: Add event - ${EVENT_NAME}"
+          git push
