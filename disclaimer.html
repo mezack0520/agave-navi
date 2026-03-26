@@ -21,23 +21,34 @@
 </head>
 <body>
     <header class="header">
-        <div class="header-inner">
+                <div class="header-inner">
             <a href="index.html" class="logo">
                 <span class="logo-en">AGAVE EVENT NAVI</span>
                 <span class="logo-jp">アガベイベントナビ</span>
             </a>
-            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
-                <span></span><span></span><span></span>
-            </button>
+            <div class="header-actions">
+                <a href="ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
+                    <span class="blob-bg"></span>
+                    <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span class="ikitai-label">行きたい</span>
+                    <span class="ikitai-badge" id="ikitaiBadge"></span>
+                </a>
+                <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <nav class="nav-overlay" id="navOverlay">
+        <nav class="nav-overlay" id="navOverlay">
         <div class="nav-overlay-inner">
             <a href="index.html">HOME</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="map.html">MAP</a>
             <a href="about.html">ABOUT</a>
             <a href="contact.html">CONTACT</a>
             <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            <a href="ikitai.html" class="nav-ikitai-link"><svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 行きたいリスト</a>
         </div>
     </nav>
 
@@ -143,6 +154,20 @@
                 document.body.classList.remove('no-scroll');
             });
         });
+    </script>
+    <script>
+    // Ikitai badge count
+    (function(){
+        var b = document.getElementById('ikitaiBadge');
+        if (!b) return;
+        try {
+            var favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
+            if (favs.length > 0) {
+                b.textContent = favs.length;
+                b.classList.add('has-count');
+            }
+        } catch(e) {}
+    })();
     </script>
 </body>
 </html>

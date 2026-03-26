@@ -163,6 +163,116 @@ body.no-scroll {
     letter-spacing: 0.05em;
 }
 
+/* ========================================
+   HEADER IKITAI (LIQUID) BUTTON
+   ======================================== */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.ikitai-blob-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem 0.45rem 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+/* Liquid / blob background */
+.ikitai-blob-btn .blob-bg {
+    position: absolute;
+    inset: -4px -6px;
+    z-index: -1;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e63946, #ff6b81);
+    opacity: 0.9;
+    animation: blobMorph 8s ease-in-out infinite;
+    filter: blur(0.5px);
+}
+
+@keyframes blobMorph {
+    0%   { border-radius: 42% 58% 60% 40% / 45% 50% 50% 55%; transform: rotate(0deg) scale(1); }
+    25%  { border-radius: 55% 45% 38% 62% / 52% 42% 58% 48%; transform: rotate(3deg) scale(1.03); }
+    50%  { border-radius: 38% 62% 55% 45% / 58% 55% 45% 42%; transform: rotate(-2deg) scale(0.98); }
+    75%  { border-radius: 60% 40% 48% 52% / 40% 60% 40% 60%; transform: rotate(2deg) scale(1.02); }
+    100% { border-radius: 42% 58% 60% 40% / 45% 50% 50% 55%; transform: rotate(0deg) scale(1); }
+}
+
+.ikitai-blob-btn:hover .blob-bg {
+    animation-duration: 3s;
+    opacity: 1;
+    filter: blur(0px);
+}
+
+.ikitai-blob-btn .ikitai-heart {
+    width: 18px;
+    height: 18px;
+    fill: var(--white);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+    transition: transform 0.3s;
+}
+
+.ikitai-blob-btn:hover .ikitai-heart {
+    transform: scale(1.15);
+    animation: heartBeat 0.6s ease;
+}
+
+@keyframes heartBeat {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.25); }
+    60%  { transform: scale(0.95); }
+    100% { transform: scale(1.15); }
+}
+
+.ikitai-blob-btn .ikitai-label {
+    color: var(--white);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.ikitai-blob-btn .ikitai-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #fff;
+    color: #e63946;
+    font-size: 0.65rem;
+    font-weight: 800;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ikitai-blob-btn .ikitai-badge.has-count {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Nav ikitai link: hidden on desktop, shown in mobile menu */
+.nav-ikitai-link {
+    display: none !important;
+}
+
 /* Hamburger Menu Toggle */
 .menu-toggle {
     display: none;
@@ -1427,6 +1537,32 @@ main {
 
     .logo-en {
         font-size: 0.85rem;
+    }
+
+    /* Mobile: show compact heart icon only, hide label */
+    .ikitai-blob-btn .ikitai-label {
+        display: none;
+    }
+    .ikitai-blob-btn {
+        padding: 0.4rem;
+    }
+    .ikitai-blob-btn .blob-bg {
+        inset: -3px;
+    }
+    .ikitai-blob-btn .ikitai-heart {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Nav overlay ikitai link */
+    .nav-ikitai-link {
+        display: flex !important;
+        align-items: center;
+        gap: 0.5rem;
+        color: #e63946 !important;
+    }
+    .nav-ikitai-link svg {
+        fill: #e63946;
     }
 
     .menu-toggle {
