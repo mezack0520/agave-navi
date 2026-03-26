@@ -1947,6 +1947,71 @@ main {
 }
 
 /* ========================================
+   AMAZON AFFILIATE SECTION
+   ======================================== */
+
+.affiliate-section {
+    margin-top: 1.5rem;
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+.affiliate-section h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.25rem 0;
+}
+.affiliate-desc {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0 0 1rem 0;
+}
+.affiliate-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.affiliate-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.affiliate-item:hover {
+    border-color: #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.affiliate-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+.affiliate-icon svg {
+    color: #666;
+}
+.affiliate-notice {
+    font-size: 0.7rem;
+    color: #aaa;
+    margin: 0.75rem 0 0 0;
+    text-align: right;
+}
+
+/* ========================================
    MOBILE CARD FAV ACTION BAR + SWIPE
    ======================================== */
 
