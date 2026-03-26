@@ -1954,6 +1954,9 @@ main {
 .card-fav-bar {
     display: none;
 }
+.swipe-hint {
+    display: none;
+}
 
 @media (max-width: 768px) {
     /* Hide the small overlay heart on mobile */
