@@ -504,9 +504,11 @@ main {
 /* Card thumbnail image */
 .event-thumb {
     width: 100%;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
+    object-position: center top;
     display: block;
+    background-color: var(--gray-200);
 }
 
 .event-card.event-ended .event-thumb {
@@ -881,8 +883,10 @@ main {
     width: 100%;
     height: auto;
     display: block;
-    max-height: 300px;
+    max-height: 360px;
     object-fit: cover;
+    object-position: center top;
+    background-color: var(--gray-200);
 }
 
 .detail-header {
