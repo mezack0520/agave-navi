@@ -1945,3 +1945,124 @@ main {
 @media (max-width: 480px) {
     .detail-hero { margin: 0 -0.75rem; }
 }
+
+/* ========================================
+   MOBILE CARD FAV ACTION BAR + SWIPE
+   ======================================== */
+
+/* Action bar hidden on desktop, shown on mobile */
+.card-fav-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Hide the small overlay heart on mobile */
+    .event-card .fav-btn {
+        display: none;
+    }
+
+    /* Show card fav action bar at bottom */
+    .card-fav-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.55rem 0.75rem;
+        border-top: 1px solid var(--gray-200);
+        background: var(--gray-100);
+        cursor: pointer;
+        transition: all 0.25s;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+    }
+    .card-fav-bar svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--gray-500);
+        fill: none;
+        stroke-width: 2;
+        flex-shrink: 0;
+        transition: all 0.25s;
+    }
+    .card-fav-bar span {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--gray-500);
+        transition: color 0.25s;
+    }
+    .card-fav-bar.is-fav {
+        background: var(--accent-pop);
+        border-color: var(--accent-pop);
+    }
+    .card-fav-bar.is-fav svg {
+        stroke: var(--white);
+        fill: var(--white);
+    }
+    .card-fav-bar.is-fav span {
+        color: var(--white);
+    }
+    .card-fav-bar:active {
+        transform: scale(0.97);
+    }
+
+    /* Swipe visual feedback */
+    .event-card {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        overflow: visible;
+    }
+    .event-card.swiping-right {
+        box-shadow: -4px 0 12px rgba(230, 57, 70, 0.2);
+    }
+    .event-card.swipe-confirm {
+        animation: swipeConfirm 0.4s ease;
+    }
+    @keyframes swipeConfirm {
+        0%   { transform: translateX(0); }
+        30%  { transform: translateX(20px); }
+        100% { transform: translateX(0); }
+    }
+
+    /* Swipe hint overlay */
+    .swipe-hint {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(230, 57, 70, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s;
+        border-radius: var(--radius);
+        z-index: 5;
+    }
+    .swipe-hint-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--accent-pop);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.5);
+        opacity: 0;
+        transition: all 0.2s ease;
+    }
+    .swipe-hint-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: white;
+        fill: white;
+        stroke-width: 2;
+    }
+    .event-card.swiping-right .swipe-hint {
+        opacity: 1;
+    }
+    .event-card.swiping-right .swipe-hint-icon {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
