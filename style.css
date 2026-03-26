@@ -1559,7 +1559,7 @@ main {
 
     .filter-bar {
         top: 38px;
-        background: transparent;
+        background-color: var(--white, #fff);
         border-bottom: none;
     }
 
