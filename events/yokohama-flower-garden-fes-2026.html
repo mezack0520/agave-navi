@@ -69,7 +69,7 @@
         <div class="detail-header">
             <h1>横浜フラワー&ガーデンフェスティバル 2026</h1>
             <div class="detail-meta">
-                <span class="detail-status-badge" style="background-color:#06a77d;">開催予定</span>
+                <span class="detail-status-badge">開催予定</span>
                 <span class="detail-meta-dot"></span>
                 <span class="detail-meta-item">2026年5月2日（土）-4日（月・祝）</span>
                 <span class="detail-meta-dot"></span>
@@ -266,5 +266,8 @@
     })();
     </script>
     <script src="../affiliate.js"></script>
+<script>
+(function(){var b=document.querySelector('.detail-status-badge');if(b){var c={'今週末':'#d63031','もうすぐ':'#e17055','1ヶ月以内':'#f39c12','開催予定':'#636e72','終了':'#b2bec3'};var t=b.textContent.trim();if(c[t])b.style.backgroundColor=c[t];if(t==='終了')b.style.color='#636e72';}})();
+</script>
 </body>
 </html>

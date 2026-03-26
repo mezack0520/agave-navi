@@ -558,12 +558,13 @@ body.no-scroll {
 .event-region {
     display: inline-block;
     padding: 0.15rem 0.55rem;
-    background-color: var(--gray-200);
-    color: var(--gray-600);
+    background-color: #eef2f7;
+    color: #4a6fa5;
     border-radius: 4px;
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.02em;
+    border: 1px solid #d0dae8;
 }
 
 /* ========================================
@@ -759,15 +760,28 @@ main {
     font-size: 0.6rem;
     font-weight: 700;
     color: var(--white);
-    background-color: var(--black);
+    background-color: var(--gray-400);
     padding: 0.2rem 0.55rem;
     border-radius: 3px;
     letter-spacing: 0.03em;
-    text-transform: uppercase;
 }
 
+/* Proximity color gradient: closer events = more vivid */
+.event-status.status-thisweek {
+    background-color: #d63031;
+}
 .event-status.status-soon {
-    background-color: var(--accent-pop);
+    background-color: #e17055;
+}
+.event-status.status-month {
+    background-color: #f39c12;
+}
+.event-status.status-upcoming {
+    background-color: #636e72;
+}
+.event-status.status-ended {
+    background-color: #b2bec3;
+    color: var(--gray-500);
 }
 
 .event-title {
@@ -800,12 +814,12 @@ main {
 .tag {
     display: inline-block;
     padding: 0.15rem 0.5rem;
-    background-color: var(--gray-100);
-    color: var(--gray-600);
+    background-color: #f0faf0;
+    color: #3a7d44;
     border-radius: 4px;
     font-size: 0.65rem;
     font-weight: 600;
-    border: 1px solid var(--gray-200);
+    border: 1px solid #c8e6c9;
 }
 
 .event-link {
