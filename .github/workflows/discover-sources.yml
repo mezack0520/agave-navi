@@ -1,0 +1,44 @@
+name: Weekly Source Discovery
+
+on:
+  schedule:
+    # 毎週水曜 9:00 JST (火曜 24:00 UTC) — crawl-events とずらす
+    - cron: '0 0 * * 3'
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run source discovery
+        run: python scripts/discover_sources.py
+
+      - name: Create issue with results
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f /tmp/discover-report.md ]; then
+            TITLE="[自動発掘] 新規巡回先候補レポート $(date +%Y-%m-%d)"
+            gh issue create \
+              --title "$TITLE" \
+              --body-file /tmp/discover-report.md \
+              --label "source-discovery"
+          fi
