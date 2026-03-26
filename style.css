@@ -2064,6 +2064,31 @@ main {
 }
 
 /* ========================================
+   ADSENSE SLOTS
+   ======================================== */
+
+.ad-slot {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 100%;
+    overflow: hidden;
+    min-height: 0;
+}
+.ad-slot:empty {
+    display: none;
+}
+.ad-slot-sidebar {
+    margin: 1.5rem 0 0;
+}
+.ad-slot-infeed {
+    grid-column: 1 / -1;
+    margin: 0.5rem 0;
+}
+.ad-slot-article-bottom {
+    margin: 2rem 0 0;
+}
+
+/* ========================================
    AMAZON AFFILIATE SECTION
    ======================================== */
 
@@ -2099,7 +2124,6 @@ main {
     border: 1px solid #e8e8e8;
     border-radius: 8px;
     color: #333;
-    text-decoration: none;
     font-size: 0.85rem;
     font-weight: 500;
     transition: border-color 0.2s, box-shadow 0.2s;
@@ -2120,6 +2144,35 @@ main {
 }
 .affiliate-icon svg {
     color: #666;
+}
+.affiliate-item-body {
+    flex: 1;
+    min-width: 0;
+}
+.affiliate-item-label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+.affiliate-asp-links {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+.asp-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+}
+.asp-badge:hover {
+    opacity: 0.8;
 }
 .affiliate-notice {
     font-size: 0.7rem;

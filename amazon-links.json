@@ -1,5 +1,25 @@
 {
-  "tag": "agavenavi-22",
+  "asp": {
+    "amazon": {
+      "tag": "agavenavi-22",
+      "searchUrl": "https://www.amazon.co.jp/s?k={keyword}&tag={tag}",
+      "label": "Amazon"
+    },
+    "rakuten": {
+      "affiliateId": "",
+      "searchUrl": "https://search.rakuten.co.jp/search/mall/{keyword}/",
+      "label": "楽天市場",
+      "_note": "楽天アフィリエイトID取得後に affiliateId を設定。URL形式は https://hb.afl.rakuten.co.jp/hgc/{affiliateId}/?pc=https://search.rakuten.co.jp/search/mall/{keyword}/"
+    },
+    "yahoo": {
+      "vcpid": "",
+      "sid": "",
+      "pid": "",
+      "searchUrl": "https://shopping.yahoo.co.jp/search?p={keyword}",
+      "label": "Yahoo!ショッピング",
+      "_note": "バリューコマース経由。vcpid/sid/pid取得後に設定。URL形式は https://ck.jp.ap.valuecommerce.com/servlet/referral?sid={sid}&pid={pid}&vc_url=https://shopping.yahoo.co.jp/search?p={keyword}"
+    }
+  },
   "common": [
     { "keyword": "アガベ 鉢", "label": "アガベ用の鉢を探す", "icon": "pot" },
     { "keyword": "多肉植物 土", "label": "多肉植物用の土を探す", "icon": "soil" },

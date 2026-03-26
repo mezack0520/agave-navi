@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NKY8V1H8HY');
+</script>
+<meta name="google-site-verification" content="23j_bxcczlGhWRVrlfh94HO0hYGk9qxQzfbew60oWB0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベント掲載申請 - アガベイベントナビ</title>
+    <meta name="description" content="アガベイベントナビへのイベント掲載をご希望の主催者様へ。無料掲載・公式掲載プランのご案内。">
+    <meta property="og:title" content="イベント掲載申請 - アガベイベントナビ">
+    <meta property="og:description" content="アガベ・多肉植物イベントの掲載申請。主催者様向けの無料掲載・公式掲載プランをご用意しています。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agave-navi.com/listing.html">
+    <meta property="og:image" content="https://agave-navi.com/images/ogp-default.jpg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .listing-hero {
+        background: linear-gradient(135deg, #111 0%, #2a2a2a 100%);
+        color: #fff;
+        padding: 3rem 1.5rem;
+        text-align: center;
+    }
+    .listing-hero h1 {
+        font-size: 1.8rem;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        margin: 0 0 0.5rem;
+    }
+    .listing-hero p {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.95rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .listing-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+    }
+    .listing-section {
+        margin-bottom: 2.5rem;
+    }
+    .listing-section h2 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #111;
+        margin: 0 0 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #111;
+    }
+    .listing-section p {
+        color: #555;
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+    .plan-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+    @media (max-width: 600px) {
+        .plan-cards { grid-template-columns: 1fr; }
+    }
+    .plan-card {
+        border: 1px solid #e8e8e8;
+        border-radius: 12px;
+        padding: 1.5rem;
+        background: #fff;
+        position: relative;
+    }
+    .plan-card.recommended {
+        border-color: #e63946;
+        box-shadow: 0 4px 20px rgba(230,57,70,0.1);
+    }
+    .plan-card.recommended::before {
+        content: 'おすすめ';
+        position: absolute;
+        top: -10px;
+        right: 16px;
+        background: #e63946;
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+    }
+    .plan-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.25rem;
+    }
+    .plan-price {
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: #111;
+        margin: 0.5rem 0;
+    }
+    .plan-price small {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #888;
+    }
+    .plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+    }
+    .plan-features li {
+        padding: 0.3rem 0;
+        font-size: 0.85rem;
+        color: #555;
+    }
+    .plan-features li::before {
+        content: '✓ ';
+        color: #22c55e;
+        font-weight: 700;
+    }
+    .plan-cta {
+        display: block;
+        text-align: center;
+        padding: 0.65rem 1.5rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+    .plan-cta-free {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ddd;
+    }
+    .plan-cta-free:hover {
+        background: #eee;
+    }
+    .plan-cta-paid {
+        background: #e63946;
+        color: #fff;
+        border: 1px solid #e63946;
+    }
+    .plan-cta-paid:hover {
+        background: #d62839;
+    }
+    .listing-steps {
+        counter-reset: step;
+        list-style: none;
+        padding: 0;
+    }
+    .listing-steps li {
+        padding: 0.75rem 0 0.75rem 3rem;
+        position: relative;
+        font-size: 0.9rem;
+        color: #555;
+        border-left: 2px solid #e8e8e8;
+        margin-left: 1rem;
+    }
+    .listing-steps li::before {
+        counter-increment: step;
+        content: counter(step);
+        position: absolute;
+        left: -14px;
+        width: 26px;
+        height: 26px;
+        background: #111;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .listing-steps li:last-child {
+        border-left-color: transparent;
+    }
+    .listing-faq dt {
+        font-weight: 700;
+        color: #333;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+    .listing-faq dd {
+        color: #666;
+        font-size: 0.85rem;
+        margin: 0.25rem 0 0 0;
+    }
+    </style>
+</head>
+<body>
+    <header class="header">
+                <div class="header-inner">
+            <a href="/" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <div class="header-actions">
+                <a href="ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
+                    <span class="blob-bg"></span>
+                    <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span class="ikitai-label">行きたい</span>
+                    <span class="ikitai-badge" id="ikitaiBadge"></span>
+                </a>
+                <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+        <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="/">HOME</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="map.html">MAP</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            <a href="ikitai.html" class="nav-ikitai-link"><svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 行きたいリスト</a>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="/">ホーム</a> > <span>イベント掲載申請</span>
+    </div>
+
+    <div class="listing-hero">
+        <h1>イベント掲載申請</h1>
+        <p>アガベ・多肉植物イベントの主催者様へ。あなたのイベントを全国の植物ファンに届けませんか。</p>
+    </div>
+
+    <main class="listing-content">
+
+        <div class="listing-section">
+            <h2>掲載プラン</h2>
+            <div class="plan-cards">
+                <div class="plan-card">
+                    <h3>無料掲載</h3>
+                    <div class="plan-price">¥0 <small>/イベント</small></div>
+                    <ul class="plan-features">
+                        <li>イベント情報の基本掲載</li>
+                        <li>イベント一覧への表示</li>
+                        <li>地図・カレンダー連携</li>
+                        <li>行きたいリスト対応</li>
+                    </ul>
+                    <a href="contact.html" class="plan-cta plan-cta-free">お問い合わせから申請</a>
+                </div>
+                <div class="plan-card recommended">
+                    <h3>公式掲載プラン</h3>
+                    <div class="plan-price">準備中 <small>近日公開</small></div>
+                    <ul class="plan-features">
+                        <li>無料掲載の全機能</li>
+                        <li>トップページ優先表示</li>
+                        <li>「公式」バッジ付与</li>
+                        <li>出店者リスト掲載</li>
+                        <li>SNSでの告知協力</li>
+                        <li>アクセスレポート提供</li>
+                    </ul>
+                    <a href="contact.html" class="plan-cta plan-cta-paid">お問い合わせ</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="listing-section">
+            <h2>掲載の流れ</h2>
+            <ol class="listing-steps">
+                <li>お問い合わせフォームからイベント情報をお送りください（イベント名、日時、会場、概要など）</li>
+                <li>内容を確認のうえ、通常1〜3営業日以内に掲載いたします</li>
+                <li>掲載後、修正が必要な場合はいつでもご連絡ください</li>
+                <li>イベント終了後は自動的に「終了」表示に切り替わります</li>
+            </ol>
+        </div>
+
+        <div class="listing-section">
+            <h2>掲載に必要な情報</h2>
+            <p>以下の情報をお問い合わせフォームにご記入ください。</p>
+            <dl class="listing-faq">
+                <dt>必須項目</dt>
+                <dd>イベント名、開催日時、会場名、住所、入場料、主催者名、イベント概要（100文字以上）</dd>
+                <dt>任意項目</dt>
+                <dd>公式サイトURL、公式SNSアカウント、出店者リスト、メインビジュアル画像、駐車場情報</dd>
+            </dl>
+        </div>
+
+        <div class="listing-section">
+            <h2>よくある質問</h2>
+            <dl class="listing-faq">
+                <dt>掲載料はかかりますか？</dt>
+                <dd>基本掲載は無料です。将来的に優先表示やバッジ付与などの有料プランを予定していますが、基本掲載は今後も無料のままです。</dd>
+                <dt>どのようなイベントが対象ですか？</dt>
+                <dd>アガベ、塊根植物、多肉植物、サボテン、ビザールプランツに関連する即売会、マルシェ、展示会、ワークショップなどが対象です。</dd>
+                <dt>掲載を取り下げてほしい場合は？</dt>
+                <dd>お問い合わせフォームからご連絡いただければ、速やかに対応いたします。</dd>
+                <dt>掲載内容の修正はできますか？</dt>
+                <dd>はい、いつでも修正可能です。お問い合わせフォームから修正内容をお知らせください。</dd>
+            </dl>
+        </div>
+
+        <div class="listing-section" style="text-align:center; padding: 2rem 0;">
+            <a href="contact.html" class="plan-cta plan-cta-paid" style="display:inline-block; padding:0.85rem 3rem; font-size:1rem;">掲載を申請する</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="about.html">ABOUT</a>
+                <a href="privacy.html">PRIVACY</a>
+                <a href="terms.html">TERMS</a>
+                <a href="disclaimer.html">DISCLAIMER</a>
+                <a href="operator.html">OPERATOR</a>
+                <a href="contact.html">CONTACT</a>
+                <a href="listing.html">掲載申請</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+    </script>
+    <script>
+    (function(){
+        var b = document.getElementById('ikitaiBadge');
+        if (!b) return;
+        try {
+            var favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
+            if (favs.length > 0) {
+                b.textContent = favs.length;
+                b.classList.add('has-count');
+            }
+        } catch(e) {}
+    })();
+    </script>
+</body>
+</html>

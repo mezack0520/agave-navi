@@ -1,7 +1,8 @@
 /**
- * Amazon Affiliate Dynamic Link Generator
- * - Loads amazon-links.json
- * - Picks random items based on page category (data-tags) or common pool
+ * Multi-ASP Affiliate Dynamic Link Generator
+ * - Loads amazon-links.json (supports Amazon, Rakuten, Yahoo!)
+ * - Picks random items based on page category (data-tags)
+ * - Each item shows links to all configured ASPs
  * - Renders into .affiliate-section container
  */
 (function () {
@@ -18,7 +19,14 @@
     book:  '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
   };
 
-  // Detect base path (root or ../  depending on page location)
+  // ASP brand colors for badges
+  var ASP_COLORS = {
+    amazon: '#ff9900',
+    rakuten: '#bf0000',
+    yahoo:  '#ff0033'
+  };
+
+  // Detect base path
   var scripts = document.getElementsByTagName('script');
   var basePath = '';
   for (var i = 0; i < scripts.length; i++) {
@@ -32,10 +40,8 @@
   var container = document.querySelector('.affiliate-section');
   if (!container) return;
 
-  // Read page tags from data attribute on affiliate-section
   var pageTags = (container.getAttribute('data-tags') || '').split(',').filter(Boolean);
 
-  // Fetch JSON
   var jsonUrl = basePath + 'amazon-links.json?v=' + Date.now();
   fetch(jsonUrl)
     .then(function (r) { return r.json(); })
@@ -51,18 +57,12 @@
   }
 
   function pickItems(data, tags) {
-    // Build a weighted pool:
-    // 1. Category-specific items for matching tags (higher priority)
-    // 2. Common items as fallback
     var catItems = [];
     var cats = data.categories || {};
     tags.forEach(function (tag) {
-      if (cats[tag]) {
-        catItems = catItems.concat(cats[tag]);
-      }
+      if (cats[tag]) catItems = catItems.concat(cats[tag]);
     });
 
-    // Deduplicate by keyword
     var seen = {};
     var deduped = [];
     catItems.concat(data.common || []).forEach(function (item) {
@@ -72,41 +72,108 @@
       }
     });
 
-    // If we have category items, pick 2 from category + 2 from common
     if (catItems.length >= 2) {
       var catPicks = shuffle(catItems.slice()).slice(0, 2);
-      var catKeywords = {};
-      catPicks.forEach(function (p) { catKeywords[p.keyword] = true; });
-      var commonFiltered = (data.common || []).filter(function (c) { return !catKeywords[c.keyword]; });
+      var catKws = {};
+      catPicks.forEach(function (p) { catKws[p.keyword] = true; });
+      var commonFiltered = (data.common || []).filter(function (c) { return !catKws[c.keyword]; });
       var commonPicks = shuffle(commonFiltered).slice(0, DISPLAY_COUNT - catPicks.length);
       return shuffle(catPicks.concat(commonPicks));
     }
 
-    // Fallback: random from all
     return shuffle(deduped).slice(0, DISPLAY_COUNT);
   }
 
-  function buildUrl(keyword, tag) {
-    return 'https://www.amazon.co.jp/s?k=' + encodeURIComponent(keyword) + '&tag=' + tag;
+  /**
+   * Build search URLs for all configured ASPs.
+   * Returns array of {label, url, color} only for ASPs that have credentials configured.
+   */
+  function buildAspLinks(keyword, aspConfig) {
+    var links = [];
+    var kw = encodeURIComponent(keyword);
+
+    // Amazon (always active — tag is already set)
+    var amz = aspConfig.amazon;
+    if (amz && amz.tag) {
+      links.push({
+        label: amz.label || 'Amazon',
+        url: amz.searchUrl.replace('{keyword}', kw).replace('{tag}', amz.tag),
+        color: ASP_COLORS.amazon
+      });
+    }
+
+    // Rakuten
+    var rak = aspConfig.rakuten;
+    if (rak) {
+      var rakUrl;
+      if (rak.affiliateId) {
+        rakUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + rak.affiliateId
+          + '/?pc=' + encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + keyword + '/');
+      } else {
+        rakUrl = 'https://search.rakuten.co.jp/search/mall/' + kw + '/';
+      }
+      links.push({
+        label: rak.label || '楽天市場',
+        url: rakUrl,
+        color: ASP_COLORS.rakuten
+      });
+    }
+
+    // Yahoo! Shopping (ValueCommerce)
+    var yah = aspConfig.yahoo;
+    if (yah) {
+      var yahUrl;
+      if (yah.sid && yah.pid) {
+        yahUrl = 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + yah.sid
+          + '&pid=' + yah.pid
+          + '&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=' + keyword);
+      } else {
+        yahUrl = 'https://shopping.yahoo.co.jp/search?p=' + kw;
+      }
+      links.push({
+        label: yah.label || 'Yahoo!',
+        url: yahUrl,
+        color: ASP_COLORS.yahoo
+      });
+    }
+
+    return links;
   }
 
   function render(data, tags, el) {
     var items = pickItems(data, tags);
-    var tag = data.tag || 'agavenavi-22';
+    var aspConfig = data.asp || { amazon: { tag: data.tag || 'agavenavi-22', searchUrl: 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}', label: 'Amazon' } };
 
     var html = '<h3>イベント準備におすすめ</h3>';
     html += '<p class="affiliate-desc">イベントをもっと楽しむためのアイテムをチェック</p>';
     html += '<div class="affiliate-links">';
+
     items.forEach(function (item) {
       var icon = ICONS[item.icon] || ICONS.plant;
-      var url = buildUrl(item.keyword, tag);
-      html += '<a href="' + url + '" target="_blank" rel="noopener sponsored" class="affiliate-item">';
+      var aspLinks = buildAspLinks(item.keyword, aspConfig);
+
+      html += '<div class="affiliate-item">';
       html += '<div class="affiliate-icon">' + icon + '</div>';
-      html += '<span>' + item.label + '</span>';
-      html += '</a>';
+      html += '<div class="affiliate-item-body">';
+      html += '<span class="affiliate-item-label">' + item.label + '</span>';
+      html += '<div class="affiliate-asp-links">';
+      aspLinks.forEach(function (asp) {
+        html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+          + ' class="asp-badge" style="background:' + asp.color + '">'
+          + asp.label + '</a>';
+      });
+      html += '</div></div></div>';
     });
+
     html += '</div>';
-    html += '<p class="affiliate-notice">※ Amazon.co.jpアソシエイト</p>';
+
+    // Build notice text
+    var notices = [];
+    if (aspConfig.amazon && aspConfig.amazon.tag) notices.push('Amazon.co.jpアソシエイト');
+    if (aspConfig.rakuten) notices.push('楽天アフィリエイト');
+    if (aspConfig.yahoo) notices.push('バリューコマース');
+    html += '<p class="affiliate-notice">※ ' + notices.join(' / ') + '</p>';
+
     el.innerHTML = html;
   }
 })();
