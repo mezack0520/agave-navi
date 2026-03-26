@@ -528,6 +528,15 @@
             });
         });
 
+        // 地域の初期値: localStorage → なければ '関東'
+        (function initRegion() {
+            const sel = document.getElementById('regionFilter');
+            const saved = localStorage.getItem('aen_region') || '関東';
+            if ([...sel.options].some(o => o.value === saved)) {
+                sel.value = saved;
+            }
+        })();
+
         let activeTag = 'all';
 
         function filterEvents(tag) {
@@ -570,6 +579,7 @@
         function applyFilters(query) {
             const searchVal = (query !== undefined ? query : document.getElementById('searchInput').value).trim().toLowerCase();
             const regionVal = document.getElementById('regionFilter').value;
+            try { localStorage.setItem('aen_region', regionVal); } catch(e) {}
             const cards = document.querySelectorAll('#eventsGrid .event-card');
             let delay = 0;
             let visibleCount = 0;
@@ -612,6 +622,9 @@
 
             document.getElementById('eventCount').textContent = visibleCount + '件';
         }
+
+        // ページ読み込み時に保存済みフィルターで初期表示
+        applyFilters();
     </script>
 </body>
 </html>
