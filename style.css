@@ -501,20 +501,73 @@ main {
     opacity: 0.5;
 }
 
-/* Card top accent — sharp dark band */
-.event-card::before {
-    content: '';
+/* Card thumbnail image */
+.event-thumb {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
     display: block;
-    height: 4px;
-    background: linear-gradient(90deg, #111 0%, #444 100%);
 }
 
-.event-card.event-ended::before {
-    background: var(--gray-300);
+.event-card.event-ended .event-thumb {
+    filter: grayscale(0.7);
+    opacity: 0.7;
+}
+
+/* Favorite button */
+.fav-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.fav-btn:hover {
+    transform: scale(1.1);
+    background: var(--white);
+}
+
+.fav-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--gray-500);
+    fill: none;
+    stroke-width: 2;
+    transition: all var(--transition);
+}
+
+.fav-btn.favorited svg {
+    fill: var(--accent-pop);
+    stroke: var(--accent-pop);
+}
+
+.fav-btn.favorited {
+    background: rgba(255,255,255,0.95);
+}
+
+/* Fav filter active state */
+.filter-tab .fav-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    vertical-align: -2px;
+    margin-right: 2px;
 }
 
 .event-card-body {
-    padding: 0.85rem 1rem 1rem;
+    padding: 0.75rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -816,6 +869,20 @@ main {
     max-width: 920px;
     margin: 0 auto;
     padding: 0 2rem 3rem;
+}
+
+.detail-hero {
+    margin: 0 -2rem;
+    overflow: hidden;
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.detail-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 300px;
+    object-fit: cover;
 }
 
 .detail-header {
