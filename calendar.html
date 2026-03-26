@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NKY8V1H8HY');
+</script>
+<meta name="google-site-verification" content="23j_bxcczlGhWRVrlfh94HO0hYGk9qxQzfbew60oWB0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベントカレンダー | アガベイベントナビ</title>
+    <meta name="description" content="アガベ・塊根植物・多肉植物・珍奇植物・ビザールプランツのイベントスケジュールをカレンダーで確認。">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cal-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        .cal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .cal-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        .cal-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .cal-nav button {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            background: var(--white);
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            transition: all 0.2s;
+        }
+        .cal-nav button:hover {
+            border-color: var(--black);
+            background: var(--gray-100);
+        }
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .cal-dow {
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--gray-500);
+            background: var(--gray-100);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .cal-dow:nth-child(1) { color: var(--accent-pop); }
+        .cal-dow:nth-child(7) { color: #4a90d9; }
+        .cal-cell {
+            min-height: 90px;
+            padding: 0.3rem;
+            border-right: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--white);
+            font-size: 0.7rem;
+            position: relative;
+        }
+        .cal-cell:nth-child(7n) { border-right: none; }
+        .cal-cell.other-month {
+            background: var(--gray-100);
+            opacity: 0.4;
+        }
+        .cal-cell.today {
+            background: #fffbeb;
+        }
+        .cal-day-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray-600);
+            margin-bottom: 0.2rem;
+            padding: 0.1rem 0.3rem;
+        }
+        .cal-cell:nth-child(7n+1) .cal-day-num { color: var(--accent-pop); }
+        .cal-cell:nth-child(7n) .cal-day-num { color: #4a90d9; }
+        .cal-event {
+            display: block;
+            padding: 0.15rem 0.3rem;
+            margin-bottom: 0.15rem;
+            border-radius: 3px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            line-height: 1.3;
+            text-decoration: none;
+            color: var(--white);
+            background: var(--black);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: opacity 0.2s;
+        }
+        .cal-event:hover { opacity: 0.8; }
+        .cal-event.tag-即売会 { background: #e63946; }
+        .cal-event.tag-マルシェ { background: #f4a261; color: #111; }
+        .cal-event.tag-大型 { background: #264653; }
+        .cal-event.tag-展示会 { background: #2a9d8f; }
+        .cal-legend {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .cal-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.72rem;
+            color: var(--gray-600);
+        }
+        .cal-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+        .cal-back {
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .cal-cell { min-height: 65px; }
+            .cal-event { font-size: 0.58rem; padding: 0.1rem 0.2rem; }
+            .cal-day-num { font-size: 0.68rem; }
+            .cal-container { padding: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .cal-cell { min-height: 50px; }
+            .cal-event { font-size: 0.52rem; }
+            .cal-dow { font-size: 0.62rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="index.html">HOME</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="index.html">ホーム</a> &gt; イベントカレンダー
+    </div>
+
+    <main class="cal-container">
+        <div class="cal-header">
+            <div class="cal-nav">
+                <button onclick="changeMonth(-1)">&larr; 前月</button>
+            </div>
+            <h1 class="cal-title" id="calTitle"></h1>
+            <div class="cal-nav">
+                <button onclick="changeMonth(1)">翌月 &rarr;</button>
+            </div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend">
+            <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#e63946"></span>即売会</div>
+            <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#f4a261"></span>マルシェ</div>
+            <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#264653"></span>大型イベント</div>
+            <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#2a9d8f"></span>展示会</div>
+        </div>
+        <div class="cal-back">
+            <a href="index.html" class="detail-back-link">イベント一覧に戻る</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="about.html">ABOUT</a>
+                <a href="privacy.html">PRIVACY</a>
+                <a href="terms.html">TERMS</a>
+                <a href="disclaimer.html">DISCLAIMER</a>
+                <a href="operator.html">OPERATOR</a>
+                <a href="contact.html">CONTACT</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu toggle
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+
+        // Event data
+        const events = [
+            {slug:"bizarrefarm-spring-fes-2026",name:"bizarrefarm SPRING FES",start:"2026-03-28",end:"2026-03-29",tag:"即売会"},
+            {slug:"wakayama-green-marche",name:"和歌山グリーンマルシェ",start:"2026-03-29",end:"2026-03-29",tag:"マルシェ"},
+            {slug:"futakotamagawa-botanical-2026",name:"二子玉川ボタニカルフェスタ",start:"2026-04-04",end:"2026-04-05",tag:"大型"},
+            {slug:"taniku-midori-marche-nabana-2026",name:"多肉みどりマルシェ なばな",start:"2026-04-10",end:"2026-04-12",tag:"マルシェ"},
+            {slug:"tilly-fes-vol5-2026",name:"Tilly FES Vol.5",start:"2026-04-11",end:"2026-04-12",tag:"即売会"},
+            {slug:"greensnap-marche-yokohama-2026",name:"GreenSnap 横浜",start:"2026-04-11",end:"2026-04-12",tag:"マルシェ"},
+            {slug:"taniku-moromoro-2026-spring",name:"多肉もろもろ市場",start:"2026-04-15",end:"2026-04-15",tag:"即売会"},
+            {slug:"shimamura-mini-soransai-2026",name:"ミニ草乱祭",start:"2026-04-18",end:"2026-04-19",tag:"即売会"},
+            {slug:"monster-plants-2026",name:"モンスタープランツ",start:"2026-04-20",end:"2026-04-20",tag:"大型"},
+            {slug:"hanatomofesta-2026",name:"花友フェスタ",start:"2026-04-29",end:"2026-04-29",tag:"大型"},
+            {slug:"gotanda-big-bazaar-2026-05",name:"ビッグバザール",start:"2026-05-01",end:"2026-05-01",tag:"即売会"},
+            {slug:"yokohama-flower-garden-fes-2026",name:"横浜フラワーフェス",start:"2026-05-02",end:"2026-05-04",tag:"大型"},
+            {slug:"plants-garage-market",name:"Plants Garage Market",start:"2026-05-03",end:"2026-05-04",tag:"即売会"},
+            {slug:"fukuoka-green-party-2026",name:"FUKUOKA GREEN PARTY",start:"2026-05-03",end:"2026-05-04",tag:"マルシェ"},
+            {slug:"collect-plants-vol2",name:"Collect Plants Vol.2",start:"2026-05-09",end:"2026-05-10",tag:"大型"},
+            {slug:"tenkaichi-2026",name:"天下一植物界",start:"2026-05-23",end:"2026-05-24",tag:"大型"},
+            {slug:"border-break-6th-2026",name:"BORDER BREAK!! 6th",start:"2026-05-23",end:"2026-05-24",tag:"大型"},
+            {slug:"greensnap-marche-hiroshima-2026",name:"GreenSnap 広島",start:"2026-05-23",end:"2026-05-24",tag:"マルシェ"},
+        ];
+
+        let currentYear = 2026;
+        let currentMonth = 2; // 0-indexed: March = 2
+
+        // Detect current month
+        const now = new Date();
+        if (now.getFullYear() === 2026) {
+            currentMonth = now.getMonth();
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+            document.getElementById('calTitle').textContent = `${currentYear}年 ${monthNames[currentMonth]}`;
+
+            const grid = document.getElementById('calGrid');
+            grid.innerHTML = '';
+
+            // Day of week headers
+            const dows = ['日','月','火','水','木','金','土'];
+            dows.forEach(d => {
+                const el = document.createElement('div');
+                el.className = 'cal-dow';
+                el.textContent = d;
+                grid.appendChild(el);
+            });
+
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const startDow = firstDay.getDay();
+            const daysInMonth = lastDay.getDate();
+
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+            // Previous month fill
+            const prevLast = new Date(currentYear, currentMonth, 0);
+            for (let i = startDow - 1; i >= 0; i--) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-cell other-month';
+                const dayNum = document.createElement('div');
+                dayNum.className = 'cal-day-num';
+                dayNum.textContent = prevLast.getDate() - i;
+                cell.appendChild(dayNum);
+                grid.appendChild(cell);
+            }
+
+            // Current month
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cell = document.createElement('div');
+                const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                cell.className = 'cal-cell';
+                if (dateStr === todayStr) cell.classList.add('today');
+
+                const dayNum = document.createElement('div');
+                dayNum.className = 'cal-day-num';
+                dayNum.textContent = d;
+                cell.appendChild(dayNum);
+
+                // Find events on this day
+                events.forEach(ev => {
+                    const start = new Date(ev.start + 'T00:00:00');
+                    const end = new Date(ev.end + 'T23:59:59');
+                    const cur = new Date(dateStr + 'T12:00:00');
+                    if (cur >= start && cur <= end) {
+                        const a = document.createElement('a');
+                        a.className = `cal-event tag-${ev.tag}`;
+                        a.href = `events/${ev.slug}.html`;
+                        a.textContent = ev.name;
+                        a.title = ev.name;
+                        cell.appendChild(a);
+                    }
+                });
+
+                grid.appendChild(cell);
+            }
+
+            // Next month fill
+            const totalCells = startDow + daysInMonth;
+            const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+            for (let i = 1; i <= remaining; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-cell other-month';
+                const dayNum = document.createElement('div');
+                dayNum.className = 'cal-day-num';
+                dayNum.textContent = i;
+                cell.appendChild(dayNum);
+                grid.appendChild(cell);
+            }
+        }
+
+        renderCalendar();
+    </script>
+</body>
+</html>

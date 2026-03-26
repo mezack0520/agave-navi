@@ -291,8 +291,9 @@ body.no-scroll {
 
 .filter-tabs {
     display: flex;
-    gap: 0;
+    gap: 0.4rem;
     flex-shrink: 0;
+    padding: 0.5rem 0;
 }
 
 .search-box {
@@ -326,12 +327,12 @@ body.no-scroll {
 
 .filter-tab {
     flex-shrink: 0;
-    padding: 0.75rem 1.1rem;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
+    padding: 0.45rem 0.9rem;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    border-radius: 20px;
     color: var(--gray-500);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition);
@@ -342,11 +343,82 @@ body.no-scroll {
 
 .filter-tab:hover {
     color: var(--black);
+    border-color: var(--gray-400);
+    background: var(--gray-200);
 }
 
 .filter-tab.active {
-    color: var(--black);
-    border-bottom-color: var(--black);
+    color: var(--white);
+    background: var(--black);
+    border-color: var(--black);
+}
+
+.filter-tab.active .fav-icon {
+    fill: var(--white);
+    stroke: var(--white);
+}
+
+/* Empty state for 行きたい list */
+.empty-state {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--gray-400);
+    grid-column: 1 / -1;
+}
+
+.empty-state.visible {
+    display: block;
+}
+
+.empty-state-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    stroke: var(--gray-300);
+    fill: none;
+    stroke-width: 1.5;
+}
+
+.empty-state-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    margin-bottom: 0.4rem;
+}
+
+.empty-state-desc {
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+/* Google Calendar button */
+.gcal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    color: var(--text-color);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition);
+    margin-top: 0.75rem;
+}
+
+.gcal-btn:hover {
+    border-color: var(--black);
+    background: var(--gray-100);
+}
+
+.gcal-btn svg {
+    width: 14px;
+    height: 14px;
 }
 
 .filter-controls {
@@ -1396,8 +1468,8 @@ main {
     }
 
     .filter-tab {
-        padding: 0.6rem 0.75rem;
-        font-size: 0.8rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.78rem;
     }
 
     .content-inner {
@@ -1486,8 +1558,8 @@ main {
     }
 
     .filter-tab {
-        padding: 0.5rem 0.6rem;
-        font-size: 0.75rem;
+        padding: 0.35rem 0.55rem;
+        font-size: 0.72rem;
     }
 
     .filter-controls {
