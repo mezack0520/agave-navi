@@ -1,0 +1,46 @@
+name: Weekly Event Crawl
+
+on:
+  schedule:
+    # 毎週月曜 9:00 JST (日曜 24:00 UTC)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run crawler
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/crawl_events.py
+
+      - name: Create issue with results
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f /tmp/crawl-report.md ]; then
+            TITLE="[自動巡回] イベント情報更新レポート $(date +%Y-%m-%d)"
+            gh issue create \
+              --title "$TITLE" \
+              --body-file /tmp/crawl-report.md \
+              --label "auto-crawl"
+          fi
