@@ -1834,7 +1834,90 @@ main {
     color: var(--gray-500);
 }
 
+/* Detail page: ikitai link */
+.ikitai-page-link {
+    display: inline-block;
+    margin-left: 1rem;
+    font-size: 0.78rem;
+    color: var(--accent-pop);
+    text-decoration: none;
+    font-weight: 600;
+    vertical-align: middle;
+}
+.ikitai-page-link:hover {
+    text-decoration: underline;
+}
+
+/* Category navigation */
+.category-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.category-nav-link {
+    padding: 0.45rem 0.9rem;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    border-radius: 20px;
+    color: var(--gray-500);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition);
+}
+.category-nav-link:hover {
+    border-color: var(--black);
+    color: var(--black);
+}
+.category-nav-link.active {
+    color: var(--white);
+    background: var(--black);
+    border-color: var(--black);
+}
+
+/* Empty state button */
+.empty-state-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.5rem;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+.empty-state-btn:hover { opacity: 0.8; }
+
+/* Category links under filter tabs */
+.category-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.4rem 0 0;
+}
+.category-links a {
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.category-links a:hover {
+    color: var(--black);
+}
+
+/* Fav tab as link */
+.filter-tab-fav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
-    .detail-fav-wrap { padding: 0 1rem; }
+    .detail-fav-wrap { padding: 0 1rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .ikitai-page-link { margin-left: 0; }
     .correction-notice { margin: 0 1rem 2rem; }
 }

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NKY8V1H8HY');
+</script>
+<meta name="google-site-verification" content="23j_bxcczlGhWRVrlfh94HO0hYGk9qxQzfbew60oWB0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行きたいリスト | アガベイベントナビ</title>
+    <meta name="description" content="あなたが「行きたい」に登録したアガベ・多肉植物イベントの一覧。">
+    <meta property="og:title" content="行きたいリスト | アガベイベントナビ">
+    <meta property="og:description" content="あなたが「行きたい」に登録したアガベ・多肉植物イベントの一覧。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://agave-navi.com/images/ogp-default.jpg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="index.html">HOME</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="map.html">MAP</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="index.html">ホーム</a> &gt; 行きたいリスト
+    </div>
+
+    <main class="page-content">
+        <div class="content-inner">
+            <section class="events-section">
+                <h1 class="section-heading">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--accent-pop)" stroke="var(--accent-pop)" stroke-width="2" style="vertical-align:-4px;margin-right:6px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    行きたいリスト<span class="event-count" id="favCount">0件</span>
+                </h1>
+                <p class="section-sub" style="color:var(--gray-500);font-size:0.82rem;margin:-0.5rem 0 1.5rem;line-height:1.6">イベント詳細ページの「行きたい」ボタンで追加したイベントがここに表示されます。データはお使いのブラウザに保存されます。</p>
+
+                <div class="events-grid" id="favGrid">
+                    <div class="empty-state" id="emptyState">
+                        <svg class="empty-state-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <p class="empty-state-title">行きたいイベントがまだありません</p>
+                        <p class="empty-state-desc">気になるイベントの詳細ページで<br>ハートボタンをタップすると追加できます</p>
+                        <a href="index.html" class="empty-state-btn">イベントを探す →</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="correction-notice">
+        <p>掲載情報に誤りがある場合は、<a href="contact.html">お問い合わせフォーム</a>からご連絡ください。</p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="about.html">ABOUT</a>
+                <a href="calendar.html">CALENDAR</a>
+                <a href="map.html">MAP</a>
+                <a href="privacy.html">PRIVACY</a>
+                <a href="terms.html">TERMS</a>
+                <a href="disclaimer.html">DISCLAIMER</a>
+                <a href="operator.html">OPERATOR</a>
+                <a href="contact.html">CONTACT</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' || e.target.closest('.fav-btn')) return;
+                const link = this.querySelector('.event-link');
+                if (link) window.location.href = link.href;
+            });
+        });
+
+        function getFavs() {
+            try { return JSON.parse(localStorage.getItem('aen_favs') || '[]'); } catch(e) { return []; }
+        }
+        function toggleFav(e, slug) {
+            e.stopPropagation();
+            let favs = getFavs();
+            const idx = favs.indexOf(slug);
+            if (idx > -1) { favs.splice(idx, 1); } else { favs.push(slug); }
+            try { localStorage.setItem('aen_favs', JSON.stringify(favs)); } catch(e) {}
+            syncFavUI();
+        }
+        function syncFavUI() {
+            const favs = getFavs();
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+                const card = btn.closest('.event-card');
+                const slug = card?.getAttribute('data-slug');
+                if (slug && favs.includes(slug)) {
+                    btn.classList.add('favorited');
+                } else {
+                    btn.classList.remove('favorited');
+                }
+            });
+        }
+        syncFavUI();
+
+        // Load events.json and render favorites
+        fetch('events.json')
+            .then(r => r.json())
+            .then(allEvents => {
+                const favs = getFavs();
+                const grid = document.getElementById('favGrid');
+                const empty = document.getElementById('emptyState');
+                const count = document.getElementById('favCount');
+                const favEvents = allEvents.filter(e => favs.includes(e.slug));
+
+                count.textContent = favEvents.length + '件';
+
+                if (favEvents.length === 0) {
+                    empty.style.display = 'block';
+                    return;
+                }
+                empty.style.display = 'none';
+
+                favEvents.forEach(ev => {
+                    const card = document.createElement('div');
+                    card.className = 'event-card';
+                    card.setAttribute('data-slug', ev.slug);
+                    const tags = (ev.tags||[]).map(t => '<span class="event-tag">'+t+'</span>').join('');
+                    const imgSrc = ev.imageUrl || 'images/events/'+ev.slug+'-thumb.jpg';
+                    const onerror = ev.imageUrl ? ' onerror="this.src=\'images/events/'+ev.slug+'-thumb.jpg\'"' : '';
+                    card.innerHTML = `
+                        <img src="${imgSrc}" alt="${ev.name}" class="event-thumb" loading="lazy"${onerror}>
+                        <button class="fav-btn favorited" onclick="removeFav(event, '${ev.slug}')" aria-label="行きたい解除">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                        <div class="event-card-body">
+                            <div class="event-header">
+                                <span class="event-date">${ev.dateDisplay}</span>
+                                <span class="event-status status-upcoming">${ev.status==='past'?'終了':'開催予定'}</span>
+                            </div>
+                            <h3 class="event-title">${ev.name}</h3>
+                            <p class="event-description">${(ev.description||'').substring(0,80)}</p>
+                            <div class="event-meta-row">
+                                <span class="event-region">${ev.prefecture||''}</span>
+                                ${tags}
+                            </div>
+                            <a href="events/${ev.slug}.html" class="event-link">詳細を見る →</a>
+                        </div>`;
+                    card.addEventListener('click', function(e) {
+                        if (e.target.tagName === 'A' || e.target.closest('.fav-btn')) return;
+                        window.location.href = 'events/'+ev.slug+'.html';
+                    });
+                    grid.appendChild(card);
+                });
+            });
+
+        function removeFav(e, slug) {
+            e.stopPropagation();
+            let favs = getFavs();
+            favs = favs.filter(s => s !== slug);
+            localStorage.setItem('aen_favs', JSON.stringify(favs));
+            // Remove card with animation
+            const card = e.target.closest('.event-card');
+            if (card) {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                card.style.transition = 'all 0.3s';
+                setTimeout(() => {
+                    card.remove();
+                    const remaining = document.querySelectorAll('#favGrid .event-card');
+                    document.getElementById('favCount').textContent = remaining.length + '件';
+                    if (remaining.length === 0) {
+                        document.getElementById('emptyState').style.display = 'block';
+                    }
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>

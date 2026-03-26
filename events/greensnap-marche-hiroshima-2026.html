@@ -67,12 +67,12 @@
                 <span class="detail-meta-item">広島県広島市</span>
             </div>
         </div>
-
-<div class="detail-fav-wrap">
+        <div class="detail-fav-wrap">
             <button class="detail-fav-btn" id="favBtn" onclick="toggleFav()">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 <span id="favLabel">行きたい</span>
             </button>
+            <a href="../ikitai.html" class="ikitai-page-link">行きたいリストを見る →</a>
         </div>
 
         <div class="detail-body">
@@ -199,6 +199,34 @@
                 document.body.classList.remove('no-scroll');
             });
         });
+    </script>
+    <script>
+        // 行きたい (favorite) functionality
+        const slug = location.pathname.split('/').pop().replace('.html','');
+        function getFavs() {
+            try { return JSON.parse(localStorage.getItem('aen_favs') || '[]'); } catch(e) { return []; }
+        }
+        function toggleFav() {
+            let favs = getFavs();
+            const idx = favs.indexOf(slug);
+            if (idx > -1) { favs.splice(idx, 1); } else { favs.push(slug); }
+            localStorage.setItem('aen_favs', JSON.stringify(favs));
+            updateFavBtn();
+        }
+        function updateFavBtn() {
+            const btn = document.getElementById('favBtn');
+            const label = document.getElementById('favLabel');
+            if (!btn || !label) return;
+            const isFav = getFavs().includes(slug);
+            if (isFav) {
+                btn.classList.add('is-fav');
+                label.textContent = '行きたい登録済み';
+            } else {
+                btn.classList.remove('is-fav');
+                label.textContent = '行きたい';
+            }
+        }
+        updateFavBtn();
     </script>
 </body>
 </html>
