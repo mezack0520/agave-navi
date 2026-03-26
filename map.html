@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NKY8V1H8HY');
+</script>
+<meta name="google-site-verification" content="23j_bxcczlGhWRVrlfh94HO0hYGk9qxQzfbew60oWB0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベントマップ | アガベイベントナビ</title>
+    <meta name="description" content="全国のアガベ・塊根植物・多肉植物・珍奇植物イベントを地図で検索。">
+    <meta property="og:title" content="イベントマップ - アガベイベントナビ">
+    <meta property="og:description" content="全国のアガベ・塊根植物・多肉植物・珍奇植物イベントを地図で検索。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agave-navi.com/map.html">
+    <meta property="og:image" content="https://agave-navi.com/images/ogp-default.jpg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .map-container {
+            position: relative;
+            width: 100%;
+            min-height: calc(100vh - 120px);
+            overflow: hidden;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 400;
+            font-size: 0.85rem;
+        }
+        .map-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        .map-legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .leaflet-popup-content {
+            margin: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .popup-event-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+        .popup-event-date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.4rem;
+        }
+        .popup-event-link {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: #e63946;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .popup-event-link:hover {
+            opacity: 0.8;
+        }
+        @media (max-width: 768px) {
+            .map-container {
+                min-height: calc(100vh - 100px);
+            }
+            .map-legend {
+                bottom: 10px;
+                right: 10px;
+                padding: 0.8rem;
+                font-size: 0.75rem;
+            }
+            .map-legend-item {
+                margin: 0.3rem 0;
+            }
+            .map-legend-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+                <span class="logo-jp">アガベイベントナビ</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <a href="index.html">HOME</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="map.html">MAP</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="index.html">ホーム</a> &gt; イベントマップ
+    </div>
+
+    <div class="map-container">
+        <div id="map"></div>
+        <div class="map-legend">
+            <div class="map-legend-item">
+                <div class="map-legend-dot" style="background: #e63946;"></div>
+                <span>即売会</span>
+            </div>
+            <div class="map-legend-item">
+                <div class="map-legend-dot" style="background: #f4a261;"></div>
+                <span>マルシェ</span>
+            </div>
+            <div class="map-legend-item">
+                <div class="map-legend-dot" style="background: #264653;"></div>
+                <span>大型イベント</span>
+            </div>
+            <div class="map-legend-item">
+                <div class="map-legend-dot" style="background: #2a9d8f;"></div>
+                <span>展示会</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="logo-en">AGAVE EVENT NAVI</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="about.html">ABOUT</a>
+                <a href="privacy.html">PRIVACY</a>
+                <a href="terms.html">TERMS</a>
+                <a href="disclaimer.html">DISCLAIMER</a>
+                <a href="operator.html">OPERATOR</a>
+                <a href="contact.html">CONTACT</a>
+                <a href="https://www.instagram.com/m.z.plants/" target="_blank">INSTAGRAM</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 AGAVE EVENT NAVI</p>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Menu toggle
+        const toggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('navOverlay');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+        overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+
+        // Event data with coordinates
+        const events = [
+            { slug: "bizarrefarm-spring-fes-2026", name: "bizarrefarm SPRING FES", date: "2026-03-28", lat: 36.05, lng: 139.45, tag: "即売会" },
+            { slug: "wakayama-green-marche", name: "和歌山グリーンマルシェ", date: "2026-03-29", lat: 34.23, lng: 135.17, tag: "マルシェ" },
+            { slug: "futakotamagawa-botanical-2026", name: "二子玉川ボタニカルフェスタ", date: "2026-04-04", lat: 35.61, lng: 139.63, tag: "大型" },
+            { slug: "taniku-midori-marche-nabana-2026", name: "多肉みどりマルシェ なばな", date: "2026-04-10", lat: 35.06, lng: 136.71, tag: "マルシェ" },
+            { slug: "tilly-fes-vol5-2026", name: "Tilly FES Vol.5", date: "2026-04-11", lat: 35.69, lng: 139.70, tag: "即売会" },
+            { slug: "greensnap-marche-yokohama-2026", name: "GreenSnap 横浜", date: "2026-04-11", lat: 35.44, lng: 139.65, tag: "マルシェ" },
+            { slug: "taniku-moromoro-2026-spring", name: "多肉もろもろ市場", date: "2026-04-15", lat: 35.69, lng: 139.70, tag: "即売会" },
+            { slug: "shimamura-mini-soransai-2026", name: "ミニ草乱祭", date: "2026-04-18", lat: 35.89, lng: 139.79, tag: "即売会" },
+            { slug: "monster-plants-2026", name: "モンスタープランツ", date: "2026-04-20", lat: 35.69, lng: 139.70, tag: "大型" },
+            { slug: "hanatomofesta-2026", name: "花友フェスタ", date: "2026-04-29", lat: 35.65, lng: 140.03, tag: "大型" },
+            { slug: "gotanda-big-bazaar-2026-05", name: "ビッグバザール", date: "2026-05-01", lat: 35.63, lng: 139.72, tag: "即売会" },
+            { slug: "yokohama-flower-garden-fes-2026", name: "横浜フラワーフェス", date: "2026-05-02", lat: 35.46, lng: 139.64, tag: "大型" },
+            { slug: "plants-garage-market", name: "Plants Garage Market", date: "2026-05-03", lat: 33.07, lng: 131.86, tag: "即売会" },
+            { slug: "fukuoka-green-party-2026", name: "FUKUOKA GREEN PARTY", date: "2026-05-03", lat: 33.55, lng: 130.18, tag: "マルシェ" },
+            { slug: "collect-plants-vol2", name: "Collect Plants Vol.2", date: "2026-05-09", lat: 32.81, lng: 130.81, tag: "大型" },
+            { slug: "tenkaichi-2026", name: "天下一植物界", date: "2026-05-23", lat: 34.66, lng: 135.48, tag: "大型" },
+            { slug: "border-break-6th-2026", name: "BORDER BREAK!! 6th", date: "2026-05-23", lat: 34.66, lng: 135.48, tag: "大型" },
+            { slug: "greensnap-marche-hiroshima-2026", name: "GreenSnap 広島", date: "2026-05-23", lat: 34.40, lng: 132.46, tag: "マルシェ" },
+        ];
+
+        // Initialize map
+        const map = L.map('map').setView([36.5, 137.0], 6);
+
+        // Add base layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Color mapping
+        const colorMap = {
+            "即売会": "#e63946",
+            "マルシェ": "#f4a261",
+            "大型": "#264653",
+            "展示会": "#2a9d8f",
+        };
+
+        // Add markers
+        events.forEach(event => {
+            const color = colorMap[event.tag] || "#e63946";
+            const marker = L.circleMarker([event.lat, event.lng], {
+                radius: 8,
+                fillColor: color,
+                color: color,
+                weight: 2,
+                opacity: 0.9,
+                fillOpacity: 0.75
+            }).addTo(map);
+
+            const popupContent = `
+                <div class="popup-event-name">${event.name}</div>
+                <div class="popup-event-date">${event.date}</div>
+                <a href="events/${event.slug}.html" class="popup-event-link">詳しく見る</a>
+            `;
+
+            marker.bindPopup(popupContent);
+        });
+    </script>
+</body>
+</html>
