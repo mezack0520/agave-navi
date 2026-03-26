@@ -1906,12 +1906,12 @@ main {
 .search-container {
     max-width: 900px;
     margin: 0 auto 1.5rem;
-    padding: 0 1.5rem;
+    padding: 0;
 }
 .search-box {
     width: 100%;
     padding: 0.7rem 1rem 0.7rem 2.8rem;
-    border: 2px solid var(--gray-300);
+    border: none;
     border-radius: 30px;
     font-size: 0.9rem;
     font-family: inherit;
