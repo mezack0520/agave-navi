@@ -1580,6 +1580,8 @@ main {
 
     .filter-bar {
         top: 38px;
+        background: transparent;
+        border-bottom: none;
     }
 
     .filter-bar-inner {
