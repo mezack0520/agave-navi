@@ -191,55 +191,34 @@ body.no-scroll {
     transition: color 0.3s;
 }
 
-/* Liquid / blob background */
+/* Pill background */
 .ikitai-blob-btn .blob-bg {
     position: absolute;
-    inset: -3px -4px;
+    inset: 0;
     z-index: -1;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e63946, #ff6b81);
-    opacity: 0.9;
-    animation: blobMorph 8s ease-in-out infinite;
-    filter: blur(0.5px);
-}
-
-@keyframes blobMorph {
-    0%   { border-radius: 42% 58% 60% 40% / 45% 50% 50% 55%; transform: rotate(0deg) scale(1); }
-    25%  { border-radius: 55% 45% 38% 62% / 52% 42% 58% 48%; transform: rotate(3deg) scale(1.03); }
-    50%  { border-radius: 38% 62% 55% 45% / 58% 55% 45% 42%; transform: rotate(-2deg) scale(0.98); }
-    75%  { border-radius: 60% 40% 48% 52% / 40% 60% 40% 60%; transform: rotate(2deg) scale(1.02); }
-    100% { border-radius: 42% 58% 60% 40% / 45% 50% 50% 55%; transform: rotate(0deg) scale(1); }
+    border-radius: 20px;
+    background: #e63946;
+    transition: background 0.25s, transform 0.25s;
 }
 
 .ikitai-blob-btn:hover .blob-bg {
-    animation-duration: 3s;
-    opacity: 1;
-    filter: blur(0px);
+    background: #d62839;
+    transform: scale(1.04);
 }
 
 .ikitai-blob-btn .ikitai-heart {
     width: 14px;
     height: 14px;
     fill: var(--white);
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
-    transition: transform 0.3s;
+    transition: transform 0.25s;
 }
 
 .ikitai-blob-btn:hover .ikitai-heart {
-    transform: scale(1.15);
-    animation: heartBeat 0.6s ease;
-}
-
-@keyframes heartBeat {
-    0%   { transform: scale(1); }
-    30%  { transform: scale(1.25); }
-    60%  { transform: scale(0.95); }
-    100% { transform: scale(1.15); }
+    transform: scale(1.1);
 }
 
 .ikitai-blob-btn .ikitai-label {
     color: var(--white);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .ikitai-blob-btn .ikitai-badge {
