@@ -1044,7 +1044,77 @@
             });
         }
 
+        // ========== もっと見る (Load More) ==========
+        const CARDS_PER_PAGE = 8;
+        let loadMoreShown = CARDS_PER_PAGE;
+
+        function initLoadMore() {
+            const grid = document.getElementById('eventsGrid');
+            const cards = Array.from(grid.querySelectorAll('.event-card'));
+            cards.forEach((card, i) => {
+                if (i >= CARDS_PER_PAGE) {
+                    card.classList.add('load-more-hidden');
+                }
+            });
+            updateLoadMoreBtn();
+        }
+
+        function loadMoreEvents() {
+            const grid = document.getElementById('eventsGrid');
+            const cards = Array.from(grid.querySelectorAll('.event-card'));
+            const newLimit = loadMoreShown + CARDS_PER_PAGE;
+            let delay = 0;
+            cards.forEach((card, i) => {
+                if (i >= loadMoreShown && i < newLimit) {
+                    card.classList.remove('load-more-hidden');
+                    card.style.display = '';
+                    card.classList.add('filter-show');
+                    card.style.animationDelay = delay + 'ms';
+                    delay += 60;
+                }
+            });
+            loadMoreShown = newLimit;
+            updateLoadMoreBtn();
+        }
+
+        function updateLoadMoreBtn() {
+            const grid = document.getElementById('eventsGrid');
+            const total = grid.querySelectorAll('.event-card').length;
+            const wrap = document.getElementById('loadMoreWrap');
+            if (wrap) {
+                wrap.style.display = loadMoreShown >= total ? 'none' : '';
+            }
+        }
+
+        // フィルター適用時はload-more制限を解除して全件対象にする
+        const _origApplyFilters = applyFilters;
+        applyFilters = function(query) {
+            const grid = document.getElementById('eventsGrid');
+            const cards = Array.from(grid.querySelectorAll('.event-card'));
+            const isFiltering = activeTag !== 'all'
+                || document.getElementById('regionFilter').value !== 'all'
+                || (document.getElementById('searchInput').value || '').trim() !== '';
+
+            if (isFiltering) {
+                cards.forEach(c => c.classList.remove('load-more-hidden'));
+                const wrap = document.getElementById('loadMoreWrap');
+                if (wrap) wrap.style.display = 'none';
+            } else {
+                loadMoreShown = CARDS_PER_PAGE;
+                cards.forEach((c, i) => {
+                    if (i >= CARDS_PER_PAGE) {
+                        c.classList.add('load-more-hidden');
+                    } else {
+                        c.classList.remove('load-more-hidden');
+                    }
+                });
+                updateLoadMoreBtn();
+            }
+            _origApplyFilters(query);
+        };
+
         // ページ読み込み時に保存済みフィルターで初期表示
+        initLoadMore();
         applyFilters();
         syncFavUI();
     </script>
