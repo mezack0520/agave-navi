@@ -1,0 +1,48 @@
+name: Generate OGP Images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'events/*.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ogp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install Pillow
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: Generate OGP images
+        run: python scripts/generate_ogp.py
+
+      - name: Check for new images
+        id: check
+        run: |
+          git add images/ogp/
+          git diff --cached --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push OGP images
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Auto-generate OGP images for new events [skip ci]"
+          git push

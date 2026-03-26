@@ -1,0 +1,82 @@
+name: Domain & SSL Check
+
+on:
+  schedule:
+    # 毎月1日 9:00 JST (前日 24:00 UTC)
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check domain and SSL
+        run: |
+          DOMAIN="agave-navi.com"
+          REPORT=""
+          ALERT=false
+
+          # Check SSL certificate expiry
+          EXPIRY=$(echo | openssl s_client -servername $DOMAIN -connect $DOMAIN:443 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+          if [ -n "$EXPIRY" ]; then
+            EXPIRY_EPOCH=$(date -d "$EXPIRY" +%s 2>/dev/null)
+            NOW_EPOCH=$(date +%s)
+            DAYS_LEFT=$(( (EXPIRY_EPOCH - NOW_EPOCH) / 86400 ))
+            REPORT="## SSL証明書\n- 有効期限: $EXPIRY\n- 残り日数: **${DAYS_LEFT}日**\n"
+            if [ "$DAYS_LEFT" -lt 30 ]; then
+              ALERT=true
+              REPORT="$REPORT- ⚠️ **30日以内に期限切れ！**\n"
+            else
+              REPORT="$REPORT- ✅ 問題なし\n"
+            fi
+          else
+            REPORT="## SSL証明書\n- ❌ 確認できませんでした\n"
+            ALERT=true
+          fi
+
+          # Check site accessibility
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "https://$DOMAIN/" || echo "000")
+          REPORT="$REPORT\n## サイトアクセス\n- HTTPステータス: $HTTP_CODE\n"
+          if [ "$HTTP_CODE" != "200" ]; then
+            ALERT=true
+            REPORT="$REPORT- ⚠️ サイトにアクセスできません！\n"
+          else
+            REPORT="$REPORT- ✅ 正常\n"
+          fi
+
+          # Check DNS
+          DNS_RESULT=$(dig +short $DOMAIN 2>/dev/null || echo "error")
+          REPORT="$REPORT\n## DNS\n- レコード: $DNS_RESULT\n"
+
+          # Add reminder about domain renewal
+          REPORT="$REPORT\n## リマインダー\n- ドメイン ($DOMAIN) の更新期限を定期的に確認してください\n- GitHub Pagesの設定 (CNAME) が正しいか確認してください\n"
+
+          echo -e "$REPORT" > /tmp/domain-report.md
+          cat /tmp/domain-report.md
+
+          # Create issue if there's an alert or it's a monthly check
+          echo "$ALERT" > /tmp/alert-status
+
+      - name: Create monitoring issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ALERT=$(cat /tmp/alert-status)
+          if [ "$ALERT" = "true" ]; then
+            TITLE="⚠️ ドメイン/SSL警告 - $(date +%Y-%m-%d)"
+            LABEL="urgent,monitoring"
+          else
+            TITLE="📋 月次ドメインチェック - $(date +%Y-%m-%d)"
+            LABEL="monitoring"
+          fi
+
+          gh issue create \
+            --title "$TITLE" \
+            --body-file /tmp/domain-report.md \
+            --label "$LABEL" \
+            --repo ${{ github.repository }} || true

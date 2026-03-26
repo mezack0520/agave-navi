@@ -91,6 +91,28 @@
     }
   }
 
+  // 2週間以上前の終了イベントを非表示（ページ肥大化防止）
+  var HIDE_AFTER_DAYS = 14;
+  if (pastGrid) {
+    pastGrid.querySelectorAll('.event-card').forEach(function (card) {
+      var dateStr = card.getAttribute('data-date');
+      if (!dateStr) return;
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var eventDate = new Date(dateStr + 'T00:00:00');
+      var daysSince = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
+      if (daysSince > HIDE_AFTER_DAYS) {
+        card.style.display = 'none';
+      }
+    });
+    // 表示可能な終了イベントが0件なら見出しも非表示
+    var visiblePast = pastGrid.querySelectorAll('.event-card:not([style*="display: none"])');
+    if (visiblePast.length === 0) {
+      pastGrid.style.display = 'none';
+      var pastHeading2 = pastGrid.previousElementSibling;
+      if (pastHeading2) pastHeading2.style.display = 'none';
+    }
+  }
+
   // detail ページ: .detail-status-badge を更新
   var badge = document.querySelector('.detail-status-badge');
   var detailDate = document.querySelector('.detail-meta-item');
