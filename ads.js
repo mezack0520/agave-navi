@@ -1,95 +1,91 @@
 /**
  * アガベイベントナビ - 広告・アフィリエイト管理
- * Google AdSense + 楽天/Yahoo!/Amazon アフィリエイト ランダム表示
+ * Google AdSense + Amazon アフィリエイト ランダム表示
+ *
+ * 楽天・Yahoo!等のアフィリエイトを追加する場合:
+ *   AFFILIATE_ITEMS に type:'rakuten' / 'yahoo' の商品を追加し、
+ *   getShopBadgeClass / getShopLabel に対応するラベルを追加してください。
  */
 (function() {
   'use strict';
 
+  // Amazon Associates トラッキングID
+  var AMAZON_TAG = 'agavenavi-22';
+
   // === アフィリエイト商品データ ===
+  // type: 'amazon' | 'rakuten' | 'yahoo' （将来追加用に構造を保持）
   var AFFILIATE_ITEMS = [
-    // --- 楽天アフィリエイト ---
-    {
-      type: 'rakuten',
-      title: 'アガベ チタノタ 実生選抜',
-      img: 'https://thumbnail.image.rakuten.co.jp/@0_mall/auc-gifuryokuenonline/cabinet/agave/titanota01.jpg',
-      url: 'https://hb.afl.rakuten.co.jp/hgc/agavenavi/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25A2%25E3%2582%25AC%25E3%2583%2599+%25E3%2583%2581%25E3%2582%25BF%25E3%2583%258E%25E3%2582%25BF%2F',
-      price: '3,980円〜',
-      shop: '楽天市場'
-    },
-    {
-      type: 'rakuten',
-      title: 'パキポディウム グラキリス 実生',
-      img: 'https://thumbnail.image.rakuten.co.jp/@0_mall/auc-gifuryokuenonline/cabinet/pachypodium/gracilius01.jpg',
-      url: 'https://hb.afl.rakuten.co.jp/hgc/agavenavi/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%2591%25E3%2582%25AD%25E3%2583%259D%25E3%2583%2587%25E3%2582%25A3%25E3%2582%25A6%25E3%2583%25A0+%25E3%2582%25B0%25E3%2583%25A9%25E3%2582%25AD%25E3%2583%25AA%25E3%2582%25B9%2F',
-      price: '5,980円〜',
-      shop: '楽天市場'
-    },
-    {
-      type: 'rakuten',
-      title: 'プレステラ 90 スリット鉢 10個',
-      img: 'https://thumbnail.image.rakuten.co.jp/@0_mall/chanet/cabinet/289/289957-1.jpg',
-      url: 'https://hb.afl.rakuten.co.jp/hgc/agavenavi/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%2597%25E3%2583%25AC%25E3%2582%25B9%25E3%2583%2586%25E3%2583%25A990+%25E3%2582%25B9%25E3%2583%25AA%25E3%2583%2583%25E3%2583%2588%2F',
-      price: '780円〜',
-      shop: '楽天市場'
-    },
-    {
-      type: 'rakuten',
-      title: '鶴仙園 オリジナル培養土 5L',
-      img: 'https://thumbnail.image.rakuten.co.jp/@0_mall/auc-kakusenen/cabinet/soil/soil01.jpg',
-      url: 'https://hb.afl.rakuten.co.jp/hgc/agavenavi/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E5%25A4%259A%25E8%2582%2589%25E6%25A4%258D%25E7%2589%25A9+%25E5%259F%25B9%25E9%25A4%258A%25E5%259C%259F%2F',
-      price: '1,280円〜',
-      shop: '楽天市場'
-    },
-    {
-      type: 'rakuten',
-      title: 'アガベ用 LED育成ライト',
-      img: 'https://thumbnail.image.rakuten.co.jp/@0_mall/auc-gifuryokuenonline/cabinet/led/led-grow01.jpg',
-      url: 'https://hb.afl.rakuten.co.jp/hgc/agavenavi/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%25A4%258D%25E7%2589%25A9+LED+%25E8%2582%25B2%25E6%2588%2590%25E3%2583%25A9%25E3%2582%25A4%25E3%2583%2588%2F',
-      price: '2,980円〜',
-      shop: '楽天市場'
-    },
-    // --- Yahoo!ショッピング ---
-    {
-      type: 'yahoo',
-      title: 'アガベ チタノタ 白鯨',
-      img: 'https://item-shopping.c.yimg.jp/i/n/agave-titanota-hakugei',
-      url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=agavenavi&pid=vc_agavenavi&vc_url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2582%25A2%25E3%2582%25AC%25E3%2583%2599+%25E3%2583%2581%25E3%2582%25BF%25E3%2583%258E%25E3%2582%25BF',
-      price: '4,980円〜',
-      shop: 'Yahoo!ショッピング'
-    },
-    {
-      type: 'yahoo',
-      title: '多肉植物 寄せ植えセット',
-      img: 'https://item-shopping.c.yimg.jp/i/n/taniku-yoseue-set',
-      url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=agavenavi&pid=vc_agavenavi&vc_url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E5%25A4%259A%25E8%2582%2589%25E6%25A4%258D%25E7%2589%25A9+%25E5%25AF%2584%25E3%2581%259B%25E6%25A4%258D%25E3%2581%2588',
-      price: '2,480円〜',
-      shop: 'Yahoo!ショッピング'
-    },
-    {
-      type: 'yahoo',
-      title: 'BLACK PLASTIC POT 丸型',
-      img: 'https://item-shopping.c.yimg.jp/i/n/black-plastic-pot',
-      url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=agavenavi&pid=vc_agavenavi&vc_url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E3%2583%2596%25E3%2583%25A9%25E3%2583%2583%25E3%2582%25AF%25E3%2583%259D%25E3%2583%2583%25E3%2583%2588+%25E6%25A4%258D%25E7%2589%25A9',
-      price: '580円〜',
-      shop: 'Yahoo!ショッピング'
-    },
     // --- Amazon ---
     {
       type: 'amazon',
       title: '多肉植物＆コーデックス GuideBook',
-      img: 'https://m.media-amazon.com/images/I/51succulent-guidebook.jpg',
-      url: 'https://www.amazon.co.jp/s?k=%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9+%E5%9B%B3%E9%91%91&tag=agavenavi-22',
+      img: 'https://m.media-amazon.com/images/I/81V2VRpSBnL._SY466_.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9+%E5%9B%B3%E9%91%91&tag=' + AMAZON_TAG,
       price: '1,650円〜',
       shop: 'Amazon'
     },
     {
       type: 'amazon',
       title: 'アガベ・ユッカ その魅力と育て方',
-      img: 'https://m.media-amazon.com/images/I/51agave-yucca-book.jpg',
-      url: 'https://www.amazon.co.jp/s?k=%E3%82%A2%E3%82%AC%E3%83%99+%E8%82%B2%E3%81%A6%E6%96%B9&tag=agavenavi-22',
+      img: 'https://m.media-amazon.com/images/I/71qOtP4CMHL._SY466_.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E3%82%A2%E3%82%AC%E3%83%99+%E8%82%B2%E3%81%A6%E6%96%B9&tag=' + AMAZON_TAG,
       price: '1,980円〜',
       shop: 'Amazon'
+    },
+    {
+      type: 'amazon',
+      title: 'プレステラ 105 スリット鉢 10個セット',
+      img: 'https://m.media-amazon.com/images/I/61pL5PZJCSL._AC_SX679_.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%A9+%E3%82%B9%E3%83%AA%E3%83%83%E3%83%88%E9%89%A2&tag=' + AMAZON_TAG,
+      price: '780円〜',
+      shop: 'Amazon'
+    },
+    {
+      type: 'amazon',
+      title: '植物育成LEDライト',
+      img: 'https://m.media-amazon.com/images/I/61dJG1rLmkL._AC_SX679_.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E6%A4%8D%E7%89%A9%E8%82%B2%E6%88%90+LED%E3%83%A9%E3%82%A4%E3%83%88&tag=' + AMAZON_TAG,
+      price: '2,980円〜',
+      shop: 'Amazon'
+    },
+    {
+      type: 'amazon',
+      title: '多肉植物用 培養土 5L',
+      img: 'https://m.media-amazon.com/images/I/71soilmix-succulent.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9+%E5%9F%B9%E9%A4%8A%E5%9C%9F&tag=' + AMAZON_TAG,
+      price: '1,280円〜',
+      shop: 'Amazon'
+    },
+    {
+      type: 'amazon',
+      title: '珍奇植物 ビザールプランツ入門',
+      img: 'https://m.media-amazon.com/images/I/81bizarreplants-book.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E3%83%93%E3%82%B6%E3%83%BC%E3%83%AB%E3%83%97%E3%83%A9%E3%83%B3%E3%83%84&tag=' + AMAZON_TAG,
+      price: '1,760円〜',
+      shop: 'Amazon'
+    },
+    {
+      type: 'amazon',
+      title: 'BLACK PLASTIC POT 丸型 3号',
+      img: 'https://m.media-amazon.com/images/I/51blackpot-round.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%9D%E3%83%83%E3%83%88+%E6%A4%8D%E7%89%A9&tag=' + AMAZON_TAG,
+      price: '580円〜',
+      shop: 'Amazon'
+    },
+    {
+      type: 'amazon',
+      title: 'マグァンプK 中粒 600g',
+      img: 'https://m.media-amazon.com/images/I/71magampk-fertilizer.jpg',
+      url: 'https://www.amazon.co.jp/s?k=%E3%83%9E%E3%82%B0%E3%82%A1%E3%83%B3%E3%83%97K+%E4%B8%AD%E7%B2%92&tag=' + AMAZON_TAG,
+      price: '980円〜',
+      shop: 'Amazon'
     }
+
+    // --- 楽天アフィリエイト（準備でき次第追加） ---
+    // { type: 'rakuten', title: '商品名', img: '画像URL', url: 'アフィリエイトURL', price: '価格', shop: '楽天市場' },
+
+    // --- Yahoo!ショッピング（準備でき次第追加） ---
+    // { type: 'yahoo', title: '商品名', img: '画像URL', url: 'アフィリエイトURL', price: '価格', shop: 'Yahoo!' },
   ];
 
   // === ユーティリティ ===
@@ -118,6 +114,7 @@
   // === アフィリエイト横スクロールバナー生成 ===
   function renderAffiliateBar(container, count) {
     if (!container) return;
+    if (AFFILIATE_ITEMS.length === 0) return;
     var items = shuffle(AFFILIATE_ITEMS.slice()).slice(0, count || 4);
 
     var html = '<div class="aff-section">';
@@ -140,7 +137,6 @@
 
   // === AdSense 広告枠の初期化 ===
   function initAdSense() {
-    // AdSenseスクリプトが読み込まれている場合のみ実行
     if (typeof adsbygoogle === 'undefined') return;
     document.querySelectorAll('.adsbygoogle').forEach(function(ad) {
       try {
@@ -151,14 +147,11 @@
 
   // === ページ読み込み時に実行 ===
   function init() {
-    // アフィリエイトバーを配置
     var affSlots = document.querySelectorAll('.aff-slot');
     affSlots.forEach(function(slot) {
       var count = parseInt(slot.getAttribute('data-count')) || 4;
       renderAffiliateBar(slot, count);
     });
-
-    // AdSense初期化
     initAdSense();
   }
 

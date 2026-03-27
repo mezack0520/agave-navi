@@ -1,0 +1,194 @@
+name: Event Check & Notify
+
+on:
+  schedule:
+    # 毎朝9時（JST = UTC 0:00）に実行（8時の巡回結果を含めるため）
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # 手動実行も可能
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check-events:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run event check script
+        id: check
+        continue-on-error: true
+        run: python scripts/check_events.py
+
+      - name: Read check results
+        id: results
+        run: |
+          if [ -f check-results.json ]; then
+            echo "results_exist=true" >> $GITHUB_OUTPUT
+
+            # Extract counts
+            DEAD=$(python3 -c "import json; d=json.load(open('check-results.json')); print(len(d['dead_links']))")
+            TBD=$(python3 -c "import json; d=json.load(open('check-results.json')); print(len(d['tbd_events']))")
+            PAST=$(python3 -c "import json; d=json.load(open('check-results.json')); print(len(d['past_events']))")
+            UPCOMING=$(python3 -c "import json; d=json.load(open('check-results.json')); print(len(d['upcoming_events']))")
+            TOTAL=$(python3 -c "import json; d=json.load(open('check-results.json')); print(d['total_events'])")
+
+            echo "dead_links=$DEAD" >> $GITHUB_OUTPUT
+            echo "tbd_count=$TBD" >> $GITHUB_OUTPUT
+            echo "past_count=$PAST" >> $GITHUB_OUTPUT
+            echo "upcoming_count=$UPCOMING" >> $GITHUB_OUTPUT
+            echo "total=$TOTAL" >> $GITHUB_OUTPUT
+
+            # Build email body
+            python3 << 'PYEOF'
+          import json
+          from datetime import date
+
+          with open('check-results.json') as f:
+              data = json.load(f)
+
+          today = date.today().strftime('%Y/%m/%d')
+          lines = []
+          lines.append(f"【アガベイベントナビ】イベント定期チェック結果")
+          lines.append(f"チェック日: {today}")
+          lines.append(f"")
+          lines.append(f"━━━ サマリー ━━━")
+          lines.append(f"総イベント数: {data['total_events']}")
+          today_events = data.get('today_events', [])
+          lines.append(f"🎉 本日開催中: {len(today_events)}")
+          lines.append(f"今後のイベント: {len(data['upcoming_events'])}")
+          lines.append(f"終了済み: {len(data['past_events'])}")
+          lines.append(f"詳細未定(TBD): {len(data['tbd_events'])}")
+          lines.append(f"リンク切れ: {len(data['dead_links'])}")
+          lines.append(f"")
+
+          has_updates = False
+
+          if today_events:
+              has_updates = True
+              lines.append(f"━━━ 🎉 本日開催中！ ━━━")
+              for te in today_events:
+                  end_info = f"〜{te['dateEnd']}" if te.get('dateEnd') and te['dateEnd'] != te['date'] else ''
+                  lines.append(f"・{te['name']}")
+                  lines.append(f"  日時: {te['date']}{end_info}")
+                  lines.append(f"  場所: {te['location']}")
+                  lines.append(f"  URL: https://agave-navi.com/events/{te['slug']}.html")
+                  lines.append(f"")
+
+          if data['dead_links']:
+              has_updates = True
+              lines.append(f"━━━ ⚠️ リンク切れ検出 ━━━")
+              for dl in data['dead_links']:
+                  lines.append(f"・{dl['name']}")
+                  lines.append(f"  URL: {dl['sourceUrl']}")
+                  lines.append(f"  ステータス: HTTP {dl['statusCode']}")
+                  lines.append(f"  詳細: https://agave-navi.com/events/{dl['slug']}.html")
+                  lines.append(f"")
+
+          if data['tbd_events']:
+              has_updates = True
+              lines.append(f"━━━ 📋 詳細未定イベント（要確認） ━━━")
+              for tbd in data['tbd_events']:
+                  lines.append(f"・{tbd['name']} ({tbd['date']})")
+                  lines.append(f"  ソース: {tbd['sourceUrl']}")
+                  lines.append(f"")
+
+          if data['past_events']:
+              has_updates = True
+              lines.append(f"━━━ 🕐 終了済みイベント（アーカイブ検討） ━━━")
+              for pe in data['past_events']:
+                  end = pe.get('dateEnd', pe['date'])
+                  lines.append(f"・{pe['name']} ({pe['date']}〜{end})")
+              lines.append(f"")
+
+          if data['upcoming_events']:
+              lines.append(f"━━━ 📅 今後のイベント一覧 ━━━")
+              for ue in sorted(data['upcoming_events'], key=lambda x: x['date']):
+                  status_label = '✅' if ue['eventStatus'] == 'confirmed' else '⏳'
+                  end = f"〜{ue['dateEnd']}" if ue.get('dateEnd') else ''
+                  lines.append(f"{status_label} {ue['name']}")
+                  lines.append(f"   日時: {ue['date']}{end}")
+                  lines.append(f"   場所: {ue['location']}")
+                  lines.append(f"   URL: https://agave-navi.com/events/{ue['slug']}.html")
+                  lines.append(f"")
+
+          lines.append(f"━━━━━━━━━━━━━━━━━━━━")
+          lines.append(f"アガベイベントナビ https://agave-navi.com")
+
+          body = '\n'.join(lines)
+
+          # Write to file for email step
+          with open('email-body.txt', 'w') as f:
+              f.write(body)
+
+          # Write has_updates flag
+          with open('has-updates.txt', 'w') as f:
+              f.write('true' if has_updates else 'false')
+
+          print(body)
+          PYEOF
+          else
+            echo "results_exist=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send email notification
+        if: steps.results.outputs.results_exist == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "【アガベイベント】定期チェック結果 ${{ github.event.repository.name }} $(date +'%Y/%m/%d')"
+          to: yuji.mezaki@gmail.com
+          from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
+          body: file://email-body.txt
+
+      - name: Create issue if problems found
+        if: steps.check.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('check-results.json', 'utf8'));
+            const today = new Date().toISOString().split('T')[0];
+
+            let body = `## イベントチェック結果 (${today})\n\n`;
+
+            if (data.dead_links.length > 0) {
+              body += `### ⚠️ リンク切れ (${data.dead_links.length}件)\n\n`;
+              data.dead_links.forEach(dl => {
+                body += `- **${dl.name}**: [${dl.sourceUrl}](${dl.sourceUrl}) → HTTP ${dl.statusCode}\n`;
+              });
+              body += '\n';
+            }
+
+            if (data.tbd_events.length > 0) {
+              body += `### 📋 詳細未定イベント (${data.tbd_events.length}件)\n\n`;
+              data.tbd_events.forEach(tbd => {
+                body += `- **${tbd.name}** (${tbd.date}) → [確認する](${tbd.sourceUrl})\n`;
+              });
+              body += '\n';
+            }
+
+            body += `\n---\n_自動生成 by event-check workflow_`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🔍 イベントチェック: ${data.dead_links.length}件のリンク切れ検出 (${today})`,
+              body: body,
+              labels: ['event-check', 'automated']
+            });
+
+      - name: Cleanup check results
+        run: |
+          rm -f check-results.json email-body.txt has-updates.txt
