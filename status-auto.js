@@ -6,6 +6,7 @@
   'use strict';
 
   var STATUS = {
+    today:    { label: '本日開催中', cls: 'status-today' },
     thisweek: { label: '今週末', cls: 'status-thisweek' },
     soon:     { label: 'もうすぐ', cls: 'status-soon' },
     month:    { label: '1ヶ月以内', cls: 'status-month' },
@@ -13,14 +14,19 @@
     ended:    { label: '終了', cls: 'status-ended' }
   };
 
-  function getStatus(dateStr) {
+  function getStatus(dateStr, dateEndStr) {
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     var eventDate = new Date(dateStr + 'T00:00:00');
+    var endDate = dateEndStr ? new Date(dateEndStr + 'T00:00:00') : eventDate;
     var diff = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
+    var diffEnd = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
 
-    // 終了: 過去の日付
-    if (diff < 0) return STATUS.ended;
+    // 本日開催中: 開始日 <= 今日 <= 終了日
+    if (diff <= 0 && diffEnd >= 0) return STATUS.today;
+
+    // 終了: 終了日が過去
+    if (diffEnd < 0) return STATUS.ended;
 
     // 今週末: 今日〜次の日曜日（土日含む）
     var dayOfWeek = today.getDay(); // 0=日, 6=土
@@ -28,10 +34,8 @@
     if (daysUntilSunday === 0 && dayOfWeek === 0) daysUntilSunday = 0; // 日曜なら今日まで
     // 月〜金: 次の土日, 土: 今日と明日, 日: 今日
     if (dayOfWeek === 0) {
-      // 今日が日曜 → 今日のイベントが「今週末」
       if (diff === 0) return STATUS.thisweek;
     } else {
-      // 月〜土 → 次の日曜日まで（inclusive）
       if (diff <= daysUntilSunday) return STATUS.thisweek;
     }
 
@@ -50,10 +54,11 @@
   document.querySelectorAll('.event-card').forEach(function (card) {
     var dateStr = card.getAttribute('data-date');
     if (!dateStr) return;
+    var dateEndStr = card.getAttribute('data-date-end') || '';
     var statusEl = card.querySelector('.event-status');
     if (!statusEl) return;
 
-    var status = getStatus(dateStr);
+    var status = getStatus(dateStr, dateEndStr);
     statusEl.textContent = status.label;
     statusEl.className = 'event-status ' + status.cls;
 
@@ -127,10 +132,12 @@
       }
     }
     if (dateAttr) {
-      var status = getStatus(dateAttr);
+      var dateEndAttr = badge.getAttribute('data-date-end') || '';
+      var status = getStatus(dateAttr, dateEndAttr);
       badge.textContent = status.label;
       // 色を直接適用（詳細ページはCSSクラスではなくインラインスタイル）
       var colors = {
+        'status-today': '#e84393',
         'status-thisweek': '#d63031',
         'status-soon': '#e17055',
         'status-month': '#f39c12',

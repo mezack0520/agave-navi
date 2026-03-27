@@ -767,6 +767,14 @@ main {
 }
 
 /* Proximity color gradient: closer events = more vivid */
+.event-status.status-today {
+    background-color: #e84393;
+    animation: pulse-today 1.5s ease-in-out infinite;
+}
+@keyframes pulse-today {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+}
 .event-status.status-thisweek {
     background-color: #d63031;
 }
