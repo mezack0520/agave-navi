@@ -790,11 +790,25 @@ main {
 /* Card thumbnail image */
 .event-thumb {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     object-position: center top;
     display: block;
     background-color: var(--gray-200);
+}
+
+.event-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+    color: var(--gray-400);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+.event-no-image::after {
+    content: "NO IMAGE";
+    font-weight: 600;
 }
 
 .event-card.event-ended .event-thumb {
@@ -1188,12 +1202,26 @@ main {
 
 .detail-hero-img {
     width: 100%;
-    height: auto;
+    aspect-ratio: 16 / 9;
     display: block;
-    max-height: 360px;
+    max-height: 480px;
     object-fit: cover;
     object-position: center top;
     background-color: var(--gray-200);
+}
+
+.detail-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+    color: var(--gray-400);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+}
+.detail-no-image::after {
+    content: "NO IMAGE";
+    font-weight: 600;
 }
 
 .detail-header {
