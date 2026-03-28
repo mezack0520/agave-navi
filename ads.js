@@ -1,10 +1,6 @@
 /**
  * アガベイベントナビ - 広告・アフィリエイト管理
- * Google AdSense + Amazon アフィリエイト ランダム表示
- *
- * 楽天・Yahoo!等のアフィリエイトを追加する場合:
- *   AFFILIATE_ITEMS に type:'rakuten' / 'yahoo' の商品を追加し、
- *   getShopBadgeClass / getShopLabel に対応するラベルを追加してください。
+ * Google AdSense + Amazon / 楽天 / Yahoo! アフィリエイト ランダム表示
  */
 (function() {
   'use strict';
@@ -81,11 +77,25 @@
       shop: 'Amazon'
     }
 
-    // --- 楽天アフィリエイト（準備でき次第追加） ---
-    // { type: 'rakuten', title: '商品名', img: '画像URL', url: 'アフィリエイトURL', price: '価格', shop: '楽天市場' },
+    // --- 楽天アフィリエイト ---
+    {
+      type: 'rakuten',
+      title: 'アガベ 品種見計らい5種セット',
+      img: 'https://thumbnail.image.rakuten.co.jp/@0_mall/auc-shikoku-garden/cabinet/agave/s19-003-1.jpg',
+      url: 'https://hb.afl.rakuten.co.jp/ichiba/5251fbf3.21164c54.5251fbf4.7818a8f3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-shikoku-garden%2Fs19-003%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9',
+      price: '4,948円',
+      shop: '楽天市場'
+    },
 
-    // --- Yahoo!ショッピング（準備でき次第追加） ---
-    // { type: 'yahoo', title: '商品名', img: '画像URL', url: 'アフィリエイトURL', price: '価格', shop: 'Yahoo!' },
+    // --- Yahoo!ショッピング ---
+    {
+      type: 'yahoo',
+      title: 'アガベ ベネズエラ バリエガータ 6号鉢',
+      img: 'https://item-shopping.c.yimg.jp/i/l/itanse_kan00152',
+      url: 'https://yahoo.jp/H3otoq',
+      price: '8,880円',
+      shop: 'Yahoo!'
+    }
   ];
 
   // === ユーティリティ ===
