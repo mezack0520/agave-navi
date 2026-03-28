@@ -166,7 +166,7 @@
     var notices = [];
     if (aspConfig.amazon && aspConfig.amazon.tag) notices.push('Amazon.co.jpアソシエイト');
     if (aspConfig.rakuten) notices.push('楽天アフィリエイト');
-    if (aspConfig.yahoo) notices.push('バリューコマース');
+    if (aspConfig.yahoo && aspConfig.yahoo.sid && aspConfig.yahoo.pid) notices.push('バリューコマース');
     html += '<p class="affiliate-notice">※ ' + notices.join(' / ') + '</p>';
 
     el.innerHTML = html;
