@@ -634,6 +634,60 @@ body.no-scroll {
     height: 14px;
 }
 
+/* Instagram card in detail sidebar */
+.detail-instagram-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    margin-top: 1rem;
+    box-shadow: var(--shadow-light);
+}
+.detail-instagram-card h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.detail-instagram-card h3 svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--gray-400);
+}
+.instagram-account-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all var(--transition);
+}
+.instagram-account-link:hover {
+    background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+    transform: translateY(-1px);
+}
+.instagram-account-link svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+.instagram-account-link .ig-gradient {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .filter-controls {
     display: flex;
     align-items: center;

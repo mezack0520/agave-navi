@@ -1,6 +1,6 @@
 {
   "description": "イベント情報の巡回元サイト一覧 - agave-navi.com",
-  "lastUpdated": "2026-03-26",
+  "lastUpdated": "2026-03-29",
   "sources": [
     {
       "name": "AGAVE MANIACS",
@@ -54,7 +54,16 @@
       "coverage": "全国",
       "focus": "植物イベント全般",
       "frequency": "weekly",
-      "notes": "地域・テーマ検索可能。新しめのサービス。"
+      "notes": "地域・テーマ検索可能。ページネーションあり（?page=2）。JSレンダリングのため要ブラウザ。"
+    },
+    {
+      "name": "IBECO（イベコ）",
+      "url": "https://www.ibeco.jp/search",
+      "type": "database",
+      "coverage": "全国",
+      "focus": "イベント全般（植物キーワードで検索）",
+      "frequency": "weekly",
+      "notes": "汎用イベントプラットフォーム。植物専門ではないため「植物」「多肉」「アガベ」等のキーワード検索が必要。都道府県別検索可能。"
     },
     {
       "name": "HanaPrime（ハナプライム）",
