@@ -447,6 +447,87 @@ body.no-scroll {
     stroke: var(--white);
 }
 
+/* === Area Filter Bar (Region Tabs + Prefecture Chips) === */
+.area-filter-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.area-filter-bar::-webkit-scrollbar { display: none; }
+
+.area-filter-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.4rem 1.5rem 0.5rem;
+}
+
+.region-tabs {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.1rem;
+}
+.region-tabs::-webkit-scrollbar { display: none; }
+
+.region-tab {
+    flex-shrink: 0;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.region-tab:hover {
+    border-color: var(--gray-400);
+    background: var(--gray-100);
+}
+.region-tab.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+}
+
+.pref-chips {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    padding-top: 0.4rem;
+}
+.pref-chips:empty {
+    display: none;
+}
+
+.pref-chip {
+    padding: 0.22rem 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    border: 1px solid var(--gray-300);
+    border-radius: 14px;
+    background: var(--white);
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pref-chip:hover {
+    border-color: var(--accent-pop);
+    color: var(--accent-pop);
+    background: #fff0f0;
+}
+.pref-chip.active {
+    background: var(--accent-pop);
+    color: var(--white);
+    border-color: var(--accent-pop);
+}
+
 /* Empty state for 行きたい list */
 .empty-state {
     display: none;
@@ -1611,6 +1692,18 @@ main {
     .filter-select {
         font-size: 0.7rem;
         padding: 0.3rem 1.4rem 0.3rem 0.5rem;
+    }
+
+    .area-filter-inner {
+        padding: 0.3rem 0.75rem 0.4rem;
+    }
+    .region-tab {
+        padding: 0.28rem 0.7rem;
+        font-size: 0.7rem;
+    }
+    .pref-chip {
+        padding: 0.18rem 0.55rem;
+        font-size: 0.66rem;
     }
 
     .filter-tabs {

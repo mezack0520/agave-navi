@@ -148,20 +148,29 @@
                 <button class="filter-tab" onclick="filterEvents('展示会')">展示会</button>
             </div>
 <div class="filter-controls">
-                <select id="regionFilter" class="filter-select" onchange="applyFilters()">
-                    <option value="all">全国</option>
-                    <option value="関東">関東</option>
-                    <option value="関西">関西</option>
-                    <option value="東海">東海</option>
-                    <option value="九州">九州</option>
-                    <option value="中国">中国</option>
-                </select>
                 <select id="sortOrder" class="filter-select" onchange="sortAndFilter()">
                     <option value="date-asc">開催日が近い順</option>
                     <option value="date-desc">開催日が遠い順</option>
                 </select>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="検索" oninput="searchEvents(this.value)">
+                </div>
+            </div>
+        </div>
+        <!-- エリア絞り込み: 地域タブ + 都道府県チップ -->
+        <div class="area-filter-bar" id="areaFilterBar">
+            <div class="area-filter-inner">
+                <div class="region-tabs" id="regionTabs">
+                    <button class="region-tab active" data-region="all" onclick="selectRegion('all')">全国</button>
+                    <button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button>
+                    <button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button>
+                    <button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button>
+                    <button class="region-tab" data-region="近畿" onclick="selectRegion('近畿')">近畿</button>
+                    <button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button>
+                    <button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button>
+                </div>
+                <div class="pref-chips" id="prefChips">
+                    <!-- JS で動的生成 -->
                 </div>
             </div>
         </div>
@@ -180,7 +189,7 @@
                         <p class="empty-state-desc">気になるイベントのハートボタンをタップすると<br>ここに表示されます</p>
                     </div>
                     <!-- March 2026 -->
-                    <div class="event-card" data-tags="即売会" data-status="upcoming" data-region="関東" data-date="2026-03-28" data-date-end="2026-03-29" data-slug="bizarrefarm-spring-fes-2026">
+                    <div class="event-card" data-tags="即売会" data-status="upcoming" data-region="関東" data-pref="埼玉" data-date="2026-03-28" data-date-end="2026-03-29" data-slug="bizarrefarm-spring-fes-2026">
                         <img src="images/events/bizarrefarm-spring-fes-2026-thumb.jpg?v=20260326" alt="bizarrefarm SPRING FES 2026" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'bizarrefarm-spring-fes-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -204,7 +213,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,展示会" data-status="upcoming" data-region="関西" data-date="2026-03-28" data-date-end="2026-03-29" data-slug="nara-botanical-garden-2026">
+                    <div class="event-card" data-tags="即売会,展示会" data-status="upcoming" data-region="関西" data-pref="奈良" data-date="2026-03-28" data-date-end="2026-03-29" data-slug="nara-botanical-garden-2026">
                         <img src="images/events/nara-botanical-garden-2026-thumb.jpg?v=20260326" alt="ならの植物園2026" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'nara-botanical-garden-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -229,7 +238,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="関西" data-date="2026-03-28" data-date-end="2026-03-29" data-slug="botanical-botanical-osaka">
+                    <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="関西" data-pref="大阪" data-date="2026-03-28" data-date-end="2026-03-29" data-slug="botanical-botanical-osaka">
                         <img src="images/events/botanical-botanical-osaka-thumb.jpg?v=20260326" alt="BOTANICAL BOTANICAL OSAKA" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'botanical-botanical-osaka')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -254,7 +263,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="関西" data-date="2026-03-29" data-slug="wakayama-green-marche">
+                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="関西" data-pref="和歌山" data-date="2026-03-29" data-slug="wakayama-green-marche">
                         <img src="images/events/wakayama-green-marche-thumb.jpg?v=20260326" alt="和歌山グリーンマルシェ" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'wakayama-green-marche')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -280,7 +289,7 @@
 </div>
 
                     <!-- April 2026 -->
-                    <div class="event-card" data-tags="展示会,即売会" data-status="upcoming" data-region="関東" data-date="2026-04-04" data-date-end="2026-04-05" data-slug="the-botanical-show">
+                    <div class="event-card" data-tags="展示会,即売会" data-status="upcoming" data-region="関東" data-pref="神奈川" data-date="2026-04-04" data-date-end="2026-04-05" data-slug="the-botanical-show">
                         <img src="images/events/the-botanical-show-thumb.jpg?v=20260326" alt="THE BOTANICAL SHOW" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'the-botanical-show')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -305,7 +314,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-date="2026-04-04" data-date-end="2026-04-05" data-slug="futakotamagawa-botanical-2026">
+                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-04-04" data-date-end="2026-04-05" data-slug="futakotamagawa-botanical-2026">
                         <img src="images/events/futakotamagawa-botanical-2026-thumb.jpg?v=20260326" alt="二子玉川ボタニカルフェスタ 2026春" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'futakotamagawa-botanical-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -331,7 +340,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="東海" data-date="2026-04-10" data-date-end="2026-04-12" data-slug="taniku-midori-marche-nabana-2026">
+                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="東海" data-pref="三重" data-date="2026-04-10" data-date-end="2026-04-12" data-slug="taniku-midori-marche-nabana-2026">
                         <img src="https://www.nagashima-onsen.co.jp/nabana/img/ogp.png" alt="多肉とみどりのマルシェ in なばなの里" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/taniku-midori-marche-nabana-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'taniku-midori-marche-nabana-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -356,7 +365,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="東海" data-date="2026-04-11" data-date-end="2026-04-12" data-slug="iku-matsuri-ichinomiya-spring">
+                    <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="東海" data-pref="愛知" data-date="2026-04-11" data-date-end="2026-04-12" data-slug="iku-matsuri-ichinomiya-spring">
                         <img src="images/events/iku-matsuri-ichinomiya-spring-thumb.jpg?v=20260326" alt="樹祭 in 一宮 2026春" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'iku-matsuri-ichinomiya-spring')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -381,7 +390,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,展示会" data-status="upcoming" data-region="関東" data-date="2026-04-11" data-date-end="2026-04-12" data-slug="tilly-fes-vol5-2026">
+                    <div class="event-card" data-tags="即売会,展示会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-04-11" data-date-end="2026-04-12" data-slug="tilly-fes-vol5-2026">
                         <img src="images/events/tilly-fes-vol5-2026-thumb.jpg?v=20260326" alt="Tilly FES Vol.5" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'tilly-fes-vol5-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -406,7 +415,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="マルシェ,大型,即売会" data-status="upcoming" data-region="関東" data-date="2026-04-11" data-date-end="2026-04-12" data-slug="greensnap-marche-yokohama-2026">
+                    <div class="event-card" data-tags="マルシェ,大型,即売会" data-status="upcoming" data-region="関東" data-pref="神奈川" data-date="2026-04-11" data-date-end="2026-04-12" data-slug="greensnap-marche-yokohama-2026">
                         <img src="https://greensnap.jp/event/wp-content/themes/gs-events/images/ogp.jpg" alt="GreenSnap Marche YOKOHAMA 2026 - アガベ・多肉植物マルシェ" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/greensnap-marche-yokohama-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'greensnap-marche-yokohama-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -432,7 +441,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会" data-status="upcoming" data-region="関西" data-date="2026-04-12" data-slug="agave-meeting-2026-kobe">
+                    <div class="event-card" data-tags="即売会" data-status="upcoming" data-region="関西" data-pref="兵庫" data-date="2026-04-12" data-slug="agave-meeting-2026-kobe">
                         <img src="images/events/agave-meeting-2026-kobe-thumb.jpg?v=20260326" alt="AGAVE MEETING 2026 KOBE" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'agave-meeting-2026-kobe')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -456,7 +465,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="近畿" data-date="2026-04-15" data-slug="taniku-moromoro-2026-spring">
+                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="近畿" data-pref="兵庫" data-date="2026-04-15" data-slug="taniku-moromoro-2026-spring">
                         <img src="images/events/taniku-moromoro-2026-spring-thumb.jpg?v=20260327" alt="多肉もろもろ市場 2026春" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'taniku-moromoro-2026-spring')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -481,7 +490,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-date="2026-04-20" data-slug="monster-plants-2026">
+                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-04-20" data-slug="monster-plants-2026">
                         <img src="images/events/monster-plants-2026-thumb.jpg?v=20260326" alt="モンスタープランツ 2026" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'monster-plants-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -507,7 +516,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,マルシェ" data-status="upcoming" data-region="関西" data-date="2026-04-29" data-slug="hanatomofesta-2026">
+                    <div class="event-card" data-tags="大型,マルシェ" data-status="upcoming" data-region="関西" data-pref="大阪" data-date="2026-04-29" data-slug="hanatomofesta-2026">
                         <img src="https://hanatomofesta.com/files/libs/7138/202602261755302855.png" alt="第8回 花友フェスタ 2026 - 多肉植物ガーデニングイベント" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/hanatomofesta-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'hanatomofesta-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -532,7 +541,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="関東" data-date="2026-04-18" data-date-end="2026-04-19" data-slug="shimamura-mini-soransai-2026">
+                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="関東" data-pref="埼玉" data-date="2026-04-18" data-date-end="2026-04-19" data-slug="shimamura-mini-soransai-2026">
                         <img src="https://soransai.com/wp-content/uploads/2026/01/IMG_8558.jpg" alt="ミニ草乱祭 in シマムラ園芸 - 多肉植物・塊根植物" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/shimamura-mini-soransai-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'shimamura-mini-soransai-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -557,7 +566,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="関西" data-date="2026-04-19" data-slug="plants-fes-vol3">
+                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="関西" data-pref="愛媛" data-date="2026-04-19" data-slug="plants-fes-vol3">
                         <img src="images/events/plants-fes-vol3-thumb.jpg?v=20260326" alt="PLANTS FES vol.3" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'plants-fes-vol3')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -583,7 +592,7 @@
 </div>
 
                     <!-- May 2026 -->
-                    <div class="event-card" data-tags="大型,即売会" data-status="upcoming" data-region="関東" data-date="2026-05-01" data-slug="gotanda-big-bazaar-2026-05">
+                    <div class="event-card" data-tags="大型,即売会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-05-01" data-slug="gotanda-big-bazaar-2026-05">
                         <img src="http://isij.net/20.jpg" alt="サボテン・多肉植物ビッグバザール - 珍奇植物即売会" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/gotanda-big-bazaar-2026-05-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'gotanda-big-bazaar-2026-05')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -608,7 +617,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,マルシェ,展示会" data-status="upcoming" data-region="関東" data-date="2026-05-02" data-date-end="2026-05-04" data-slug="yokohama-flower-garden-fes-2026">
+                    <div class="event-card" data-tags="大型,マルシェ,展示会" data-status="upcoming" data-region="関東" data-pref="神奈川" data-date="2026-05-02" data-date-end="2026-05-04" data-slug="yokohama-flower-garden-fes-2026">
                         <img src="https://yfg-fes.jp/assets/img/slide/main_title26.webp" alt="横浜フラワー&ガーデンフェスティバル" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/yokohama-flower-garden-fes-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'yokohama-flower-garden-fes-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -634,7 +643,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="関東" data-date="2026-05-03" data-date-end="2026-05-04" data-slug="plants-garage-market">
+                    <div class="event-card" data-tags="即売会,マルシェ" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-05-03" data-date-end="2026-05-04" data-slug="plants-garage-market">
                         <img src="images/events/plants-garage-market-thumb.jpg?v=20260326" alt="Plants Garage Market" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'plants-garage-market')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -659,7 +668,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="九州" data-date="2026-05-03" data-date-end="2026-05-04" data-slug="fukuoka-green-party-2026">
+                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="九州" data-pref="福岡" data-date="2026-05-03" data-date-end="2026-05-04" data-slug="fukuoka-green-party-2026">
                         <img src="images/events/fukuoka-green-party-2026-thumb.jpg?v=20260326" alt="FUKUOKA GREEN PARTY 2026" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'fukuoka-green-party-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -684,7 +693,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,即売会" data-status="upcoming" data-region="関東" data-date="2026-05-09" data-date-end="2026-05-10" data-slug="collect-plants-vol2">
+                    <div class="event-card" data-tags="大型,即売会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-05-09" data-date-end="2026-05-10" data-slug="collect-plants-vol2">
                         <img src="https://collect-plants.com/cms/wp-content/uploads/2025/12/Vol.2-1.png" alt="Collect Plants Vol.2 - 九州最大の植物イベント" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/collect-plants-vol2-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'collect-plants-vol2')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -709,7 +718,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="tenkaichi-2026">
+                    <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="tenkaichi-2026">
                         <img src="https://no1plantae.com/images/0/9/9/5/1/099514bd64e0fd9ea8df64efc26b32ff4463f7c5-img7956.jpeg" alt="第6回 天下一植物界 - ビザールプランツの祭典" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/tenkaichi-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'tenkaichi-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -735,7 +744,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="大型,即売会,展示会" data-status="upcoming" data-region="関西" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="border-break-6th-2026">
+                    <div class="event-card" data-tags="大型,即売会,展示会" data-status="upcoming" data-region="関西" data-pref="大阪" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="border-break-6th-2026">
                         <img src="https://no1plantae.com/user/pages/01.home/01._home/R0001118.JPG" alt="BORDER BREAK!! 6th - 珍奇植物即売会" class="event-thumb" loading="lazy" onerror="this.onerror=null;this.src='images/events/border-break-6th-2026-thumb.jpg'">
                         <button class="fav-btn" onclick="toggleFav(event, 'border-break-6th-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -761,7 +770,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="中国" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="greensnap-marche-hiroshima-2026">
+                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="中国" data-pref="広島" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="greensnap-marche-hiroshima-2026">
                         <img src="images/events/greensnap-marche-hiroshima-2026-thumb.jpg?v=20260326" alt="GreenSnap Marche HIROSHIMA 2026" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'greensnap-marche-hiroshima-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -786,7 +795,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="関東" data-date="2026-05-30" data-date-end="2026-05-31" data-slug="iku-matsuri-utsunomiya-2026">
+                    <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="関東" data-pref="栃木" data-date="2026-05-30" data-date-end="2026-05-31" data-slug="iku-matsuri-utsunomiya-2026">
                         <img src="images/events/iku-matsuri-utsunomiya-2026-thumb.jpg?v=20260326" alt="樹祭 in 宇都宮 2026" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'iku-matsuri-utsunomiya-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -811,7 +820,7 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
 
-                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="関西" data-date="2026-05-31" data-slug="green-breeze-fes-vol3">
+                    <div class="event-card" data-tags="マルシェ,即売会" data-status="upcoming" data-region="関西" data-pref="和歌山" data-date="2026-05-31" data-slug="green-breeze-fes-vol3">
                         <img src="images/events/green-breeze-fes-vol3-thumb.jpg?v=20260326" alt="GREEN BREEZE FES vol.3" class="event-thumb" loading="lazy">
                         <button class="fav-btn" onclick="toggleFav(event, 'green-breeze-fes-vol3')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -992,14 +1001,7 @@
             });
         });
 
-        // 地域の初期値: localStorage → なければ '関東'
-        (function initRegion() {
-            const sel = document.getElementById('regionFilter');
-            const saved = localStorage.getItem('aen_region') || 'all';
-            if ([...sel.options].some(o => o.value === saved)) {
-                sel.value = saved;
-            }
-        })();
+        // 地域の初期値は selectRegion 定義後に実行（後述）
 
         let activeTag = 'all';
 
@@ -1038,14 +1040,87 @@
             '関東': ['東京','神奈川','埼玉','千葉','茨城','栃木','群馬'],
             '関西': ['大阪','京都','兵庫','奈良','和歌山','滋賀','三重'],
             '東海': ['愛知','静岡','岐阜','三重'],
+            '近畿': ['兵庫','滋賀','京都','奈良','和歌山'],
             '九州': ['福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄'],
             '中国': ['広島','岡山','山口','島根','鳥取']
         };
 
+        // エリアフィルター状態
+        var activeRegion = 'all';
+        var activePref = 'all';
+
+        function selectRegion(region) {
+            activeRegion = region;
+            activePref = 'all';
+
+            // タブのactive切り替え
+            document.querySelectorAll('.region-tab').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-region') === region);
+            });
+
+            // 都道府県チップを生成
+            var chipsContainer = document.getElementById('prefChips');
+            chipsContainer.innerHTML = '';
+
+            if (region !== 'all') {
+                // 該当地域に実際にあるイベントの都道府県を取得
+                var prefsInRegion = new Set();
+                document.querySelectorAll('#eventsGrid .event-card, #pastEventsGrid .event-card').forEach(function(card) {
+                    var cardRegion = card.getAttribute('data-region') || '';
+                    var cardPref = card.getAttribute('data-pref') || '';
+                    var regionText = card.querySelector('.event-region') ? card.querySelector('.event-region').textContent : '';
+                    // regionMapでも照合
+                    var prefs = regionMap[region] || [];
+                    if (cardRegion === region || prefs.some(function(p) { return regionText.includes(p); })) {
+                        if (cardPref) prefsInRegion.add(cardPref);
+                        else if (regionText) prefsInRegion.add(regionText);
+                    }
+                });
+
+                if (prefsInRegion.size > 1) {
+                    // 「すべて」チップ
+                    var allChip = document.createElement('button');
+                    allChip.className = 'pref-chip active';
+                    allChip.setAttribute('data-pref', 'all');
+                    allChip.textContent = 'すべて';
+                    allChip.onclick = function() { selectPref('all'); };
+                    chipsContainer.appendChild(allChip);
+
+                    // 各都道府県チップ（イベント件数付き）
+                    Array.from(prefsInRegion).sort().forEach(function(pref) {
+                        var chip = document.createElement('button');
+                        chip.className = 'pref-chip';
+                        chip.setAttribute('data-pref', pref);
+                        chip.textContent = pref;
+                        chip.onclick = function() { selectPref(pref); };
+                        chipsContainer.appendChild(chip);
+                    });
+                }
+            }
+
+            try { localStorage.setItem('aen_region', region); } catch(e) {}
+            applyFilters();
+        }
+
+        function selectPref(pref) {
+            activePref = pref;
+            document.querySelectorAll('.pref-chip').forEach(function(chip) {
+                chip.classList.toggle('active', chip.getAttribute('data-pref') === pref);
+            });
+            applyFilters();
+        }
+
+        // 地域の初期値復元
+        (function initRegion() {
+            var saved = 'all';
+            try { saved = localStorage.getItem('aen_region') || 'all'; } catch(e) {}
+            if (saved !== 'all') selectRegion(saved);
+        })();
+
         function applyFilters(query) {
             const searchVal = (query !== undefined ? query : document.getElementById('searchInput').value).trim().toLowerCase();
-            const regionVal = document.getElementById('regionFilter').value;
-            try { localStorage.setItem('aen_region', regionVal); } catch(e) {}
+            const regionVal = activeRegion;
+            const prefVal = activePref;
 
             // 開催予定 + 終了イベント両方にフィルタ適用
             const allCards = document.querySelectorAll('#eventsGrid .event-card, #pastEventsGrid .event-card');
@@ -1059,18 +1134,26 @@
                 const desc = card.querySelector('.event-description') ? card.querySelector('.event-description').textContent.toLowerCase() : '';
                 const date = card.querySelector('.event-date').textContent.toLowerCase();
                 const region = card.querySelector('.event-region') ? card.querySelector('.event-region').textContent : '';
+                const cardPref = card.getAttribute('data-pref') || '';
 
                 const tagMatch = activeTag === 'all' || activeTag === 'fav' || tags.includes(activeTag);
                 const searchMatch = !searchVal || title.includes(searchVal) || desc.includes(searchVal) || date.includes(searchVal) || region.toLowerCase().includes(searchVal);
 
+                // 地域フィルタ
                 let regionMatch = true;
                 if (regionVal !== 'all') {
                     const prefectures = regionMap[regionVal] || [];
                     regionMatch = prefectures.some(p => region.includes(p)) || card.getAttribute('data-region') === regionVal;
                 }
 
+                // 都道府県フィルタ
+                let prefMatch = true;
+                if (prefVal !== 'all') {
+                    prefMatch = cardPref === prefVal || region === prefVal;
+                }
+
                 const favMatch = activeTag !== 'fav' || getFavs().includes(card.getAttribute('data-slug') || '');
-                const shouldShow = tagMatch && searchMatch && regionMatch && favMatch;
+                const shouldShow = tagMatch && searchMatch && regionMatch && prefMatch && favMatch;
 
                 if (shouldShow) {
                     card.classList.remove('filter-hide');
