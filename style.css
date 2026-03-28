@@ -1269,6 +1269,10 @@ main {
     position: relative;
 }
 
+.detail-body > .affiliate-section {
+    grid-column: 2;
+}
+
 .detail-info-card {
     position: sticky;
     top: 70px;
@@ -1650,6 +1654,11 @@ main {
         order: -1;
     }
 
+    .detail-body > .affiliate-section {
+        grid-column: 1;
+        order: 10;
+    }
+
     .detail-info-card {
         position: static;
     }
@@ -1799,6 +1808,11 @@ main {
 
     .detail-sidebar {
         order: -1;
+    }
+
+    .detail-body > .affiliate-section {
+        grid-column: 1;
+        order: 10;
     }
 
     .detail-info-card {

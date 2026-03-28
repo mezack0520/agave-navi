@@ -280,9 +280,10 @@ def generate_detail_page(data):
                         Googleカレンダーに追加
                     </a>
                 </div>
-                <div class="affiliate-section" data-tags="{tags}"></div>
 
             </div>
+
+            <div class="affiliate-section" data-tags="{tags}"></div>
         </div>
     </main>
 
