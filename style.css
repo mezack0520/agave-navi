@@ -2571,17 +2571,18 @@ main {
 }
 .aff-card-img {
     width: 100%;
-    height: 100px;
+    height: 120px;
     background: var(--gray-100);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding: 8px;
 }
 .aff-card-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 .aff-card-info {
     padding: 8px 10px 10px;
@@ -2639,7 +2640,7 @@ main {
         flex: 0 0 150px;
     }
     .aff-card-img {
-        height: 120px;
+        height: 130px;
     }
 }
 
@@ -2649,5 +2650,8 @@ main {
     }
     .aff-card {
         flex: 0 0 168px;
+    }
+    .aff-card-img {
+        height: 140px;
     }
 }
