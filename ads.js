@@ -75,7 +75,7 @@
       url: 'https://www.amazon.co.jp/s?k=%E3%83%9E%E3%82%B0%E3%82%A1%E3%83%B3%E3%83%97K+%E4%B8%AD%E7%B2%92&tag=' + AMAZON_TAG,
       price: '980円〜',
       shop: 'Amazon'
-    }
+    },
 
     // --- 楽天アフィリエイト ---
     {
