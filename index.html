@@ -1289,7 +1289,7 @@
             const grid = document.getElementById('eventsGrid');
             const cards = Array.from(grid.querySelectorAll('.event-card'));
             const isFiltering = activeTag !== 'all'
-                || document.getElementById('regionFilter').value !== 'all'
+                || activeRegion !== 'all'
                 || (document.getElementById('searchInput').value || '').trim() !== '';
 
             if (isFiltering) {
