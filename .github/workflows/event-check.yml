@@ -139,7 +139,8 @@ jobs:
           fi
 
       - name: Send email notification
-        if: steps.results.outputs.results_exist == 'true'
+        if: steps.results.outputs.results_exist == 'true' && secrets.GMAIL_USER != ''
+        continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -151,6 +152,12 @@ jobs:
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: file://email-body.txt
+
+      - name: Print results (fallback if email not configured)
+        if: steps.results.outputs.results_exist == 'true'
+        run: |
+          echo "=== チェック結果 ==="
+          cat email-body.txt
 
       - name: Create issue if problems found
         if: steps.check.outcome == 'failure'

@@ -18,9 +18,18 @@ def check_url(url, timeout=15):
     """URLの死活チェック。ステータスコードを返す。エラー時は-1"""
     if not url or url == '#':
         return 0  # URL未設定
+
+    # Instagram / SNS はボットを弾くので常にOK扱い
+    SKIP_DOMAINS = ['instagram.com', 'twitter.com', 'x.com', 'facebook.com', 'tiktok.com']
+    for domain in SKIP_DOMAINS:
+        if domain in url:
+            return 200  # SNSは死活チェックスキップ
+
+    # ブラウザに近いUser-Agentを使用
+    ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     try:
         req = urllib.request.Request(url, method='HEAD', headers={
-            'User-Agent': 'AgaveNaviBot/1.0 (Event link checker)'
+            'User-Agent': ua
         })
         resp = urllib.request.urlopen(req, timeout=timeout)
         return resp.getcode()
@@ -30,7 +39,7 @@ def check_url(url, timeout=15):
         # HEADが拒否される場合はGETで再試行
         try:
             req = urllib.request.Request(url, headers={
-                'User-Agent': 'AgaveNaviBot/1.0 (Event link checker)'
+                'User-Agent': ua
             })
             resp = urllib.request.urlopen(req, timeout=timeout)
             return resp.getcode()

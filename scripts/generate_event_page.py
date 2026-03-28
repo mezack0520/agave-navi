@@ -136,6 +136,11 @@ def generate_detail_page(data):
     addr_region = prefecture or ''
     addr_local = address.replace(addr_region, '').strip() if addr_region else address
 
+    # 構造化データ用の主催者・料金
+    organizer_name = organizer or name
+    organizer_url = data.get('organizer_url', official_url or f'https://agave-navi.com/events/{slug}.html')
+    offer_price = '0' if not admission or '無料' in admission else re.sub(r'[^\\d]', '', admission) or '0'
+
     html = f'''<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -318,6 +323,7 @@ def generate_detail_page(data):
         "description": "{meta_desc}",
         "startDate": "{start_iso}",
         "endDate": "{end_iso}",
+        "image": "https://agave-navi.com/images/ogp/{slug}.jpg",
         "location": {{
             "@type": "Place",
             "name": "{venue}",
@@ -327,6 +333,18 @@ def generate_detail_page(data):
                 "addressRegion": "{addr_region}",
                 "addressLocality": "{addr_local}"
             }}
+        }},
+        "organizer": {{
+            "@type": "Organization",
+            "name": "{organizer_name}",
+            "url": "{organizer_url}"
+        }},
+        "offers": {{
+            "@type": "Offer",
+            "price": "{offer_price}",
+            "priceCurrency": "JPY",
+            "availability": "https://schema.org/InStock",
+            "url": "https://agave-navi.com/events/{slug}.html"
         }},
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
