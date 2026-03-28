@@ -139,7 +139,7 @@ jobs:
           fi
 
       - name: Send email notification
-        if: steps.results.outputs.results_exist == 'true' && secrets.GMAIL_USER != ''
+        if: steps.results.outputs.results_exist == 'true'
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
