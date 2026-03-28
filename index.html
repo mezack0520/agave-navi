@@ -26,7 +26,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css?v=20260328c">
+    <link rel="stylesheet" href="style.css?v=20260328d">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -157,20 +157,26 @@
                 </div>
             </div>
         </div>
-        <!-- エリア絞り込み: 地域タブ + 都道府県チップ -->
+        <!-- エリア絞り込み: ドリルダウン式（1行） -->
         <div class="area-filter-bar" id="areaFilterBar">
             <div class="area-filter-inner">
-                <div class="region-tabs" id="regionTabs">
-                    <button class="region-tab active" data-region="all" onclick="selectRegion('all')">全国</button>
-                    <button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button>
-                    <button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button>
-                    <button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button>
-                    <button class="region-tab" data-region="近畿" onclick="selectRegion('近畿')">近畿</button>
-                    <button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button>
-                    <button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button>
-                </div>
-                <div class="pref-chips" id="prefChips">
-                    <!-- JS で動的生成 -->
+                <div class="area-drilldown" id="areaDrilldown">
+                    <!-- 地域選択モード -->
+                    <div class="region-tabs" id="regionTabs">
+                        <button class="region-tab active" data-region="all" onclick="selectRegion('all')">全国</button>
+                        <button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button>
+                        <button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button>
+                        <button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button>
+                        <button class="region-tab" data-region="近畿" onclick="selectRegion('近畿')">近畿</button>
+                        <button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button>
+                        <button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button>
+                    </div>
+                    <!-- 都道府県選択モード（地域選択後に表示） -->
+                    <div class="pref-row" id="prefRow" style="display:none">
+                        <button class="pref-back-btn" onclick="selectRegion('all')" title="全国に戻る">←</button>
+                        <span class="pref-region-label" id="prefRegionLabel"></span>
+                        <div class="pref-chips" id="prefChips"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1053,23 +1059,31 @@
             activeRegion = region;
             activePref = 'all';
 
-            // タブのactive切り替え
-            document.querySelectorAll('.region-tab').forEach(function(btn) {
-                btn.classList.toggle('active', btn.getAttribute('data-region') === region);
-            });
-
-            // 都道府県チップを生成
+            var regionTabs = document.getElementById('regionTabs');
+            var prefRow = document.getElementById('prefRow');
+            var prefLabel = document.getElementById('prefRegionLabel');
             var chipsContainer = document.getElementById('prefChips');
             chipsContainer.innerHTML = '';
 
-            if (region !== 'all') {
-                // 該当地域に実際にあるイベントの都道府県を取得
+            if (region === 'all') {
+                // 地域選択モードに戻す
+                regionTabs.style.display = '';
+                prefRow.style.display = 'none';
+                document.querySelectorAll('.region-tab').forEach(function(btn) {
+                    btn.classList.toggle('active', btn.getAttribute('data-region') === 'all');
+                });
+            } else {
+                // 都道府県ドリルダウンモードに切替
+                regionTabs.style.display = 'none';
+                prefRow.style.display = '';
+                prefLabel.textContent = region;
+
+                // 該当地域の都道府県を取得
                 var prefsInRegion = new Set();
                 document.querySelectorAll('#eventsGrid .event-card, #pastEventsGrid .event-card').forEach(function(card) {
                     var cardRegion = card.getAttribute('data-region') || '';
                     var cardPref = card.getAttribute('data-pref') || '';
                     var regionText = card.querySelector('.event-region') ? card.querySelector('.event-region').textContent : '';
-                    // regionMapでも照合
                     var prefs = regionMap[region] || [];
                     if (cardRegion === region || prefs.some(function(p) { return regionText.includes(p); })) {
                         if (cardPref) prefsInRegion.add(cardPref);
@@ -1077,25 +1091,23 @@
                     }
                 });
 
-                if (prefsInRegion.size > 1) {
-                    // 「すべて」チップ
-                    var allChip = document.createElement('button');
-                    allChip.className = 'pref-chip active';
-                    allChip.setAttribute('data-pref', 'all');
-                    allChip.textContent = 'すべて';
-                    allChip.onclick = function() { selectPref('all'); };
-                    chipsContainer.appendChild(allChip);
+                // 「すべて」チップ
+                var allChip = document.createElement('button');
+                allChip.className = 'pref-chip active';
+                allChip.setAttribute('data-pref', 'all');
+                allChip.textContent = 'すべて';
+                allChip.onclick = function() { selectPref('all'); };
+                chipsContainer.appendChild(allChip);
 
-                    // 各都道府県チップ（イベント件数付き）
-                    Array.from(prefsInRegion).sort().forEach(function(pref) {
-                        var chip = document.createElement('button');
-                        chip.className = 'pref-chip';
-                        chip.setAttribute('data-pref', pref);
-                        chip.textContent = pref;
-                        chip.onclick = function() { selectPref(pref); };
-                        chipsContainer.appendChild(chip);
-                    });
-                }
+                // 各都道府県チップ
+                Array.from(prefsInRegion).sort().forEach(function(pref) {
+                    var chip = document.createElement('button');
+                    chip.className = 'pref-chip';
+                    chip.setAttribute('data-pref', pref);
+                    chip.textContent = pref;
+                    chip.onclick = function() { selectPref(pref); };
+                    chipsContainer.appendChild(chip);
+                });
             }
 
             try { localStorage.setItem('aen_region', region); } catch(e) {}

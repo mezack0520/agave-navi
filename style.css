@@ -447,20 +447,22 @@ body.no-scroll {
     stroke: var(--white);
 }
 
-/* === Area Filter Bar (Region Tabs + Prefecture Chips) === */
+/* === Area Filter Bar (Drill-down: Region → Prefecture in 1 row) === */
 .area-filter-bar {
     background: var(--white);
     border-bottom: 1px solid var(--gray-200);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    overflow: hidden;
 }
 .area-filter-bar::-webkit-scrollbar { display: none; }
 
 .area-filter-inner {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0.4rem 1.5rem 0.5rem;
+    padding: 0.35rem 1.5rem;
+}
+
+.area-drilldown {
+    position: relative;
 }
 
 .region-tabs {
@@ -469,14 +471,14 @@ body.no-scroll {
     flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-width: none;
-    padding-bottom: 0.1rem;
+    -webkit-overflow-scrolling: touch;
 }
 .region-tabs::-webkit-scrollbar { display: none; }
 
 .region-tab {
     flex-shrink: 0;
-    padding: 0.35rem 0.9rem;
-    font-size: 0.78rem;
+    padding: 0.32rem 0.85rem;
+    font-size: 0.76rem;
     font-weight: 500;
     border: 1.5px solid var(--gray-300);
     border-radius: 20px;
@@ -496,18 +498,58 @@ body.no-scroll {
     border-color: var(--black);
 }
 
+/* Prefecture drill-down row (replaces region tabs when active) */
+.pref-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+.pref-row::-webkit-scrollbar { display: none; }
+
+.pref-back-btn {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--gray-600);
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+.pref-back-btn:hover {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+}
+
+.pref-region-label {
+    flex-shrink: 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--black);
+    padding-right: 0.3rem;
+    border-right: 1.5px solid var(--gray-300);
+    margin-right: 0.1rem;
+    white-space: nowrap;
+}
+
 .pref-chips {
     display: flex;
     gap: 0.3rem;
-    flex-wrap: wrap;
-    padding-top: 0.4rem;
-}
-.pref-chips:empty {
-    display: none;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
 }
 
 .pref-chip {
-    padding: 0.22rem 0.7rem;
+    flex-shrink: 0;
+    padding: 0.22rem 0.65rem;
     font-size: 0.72rem;
     font-weight: 500;
     border: 1px solid var(--gray-300);
@@ -516,6 +558,7 @@ body.no-scroll {
     color: var(--gray-500);
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 .pref-chip:hover {
     border-color: var(--accent-pop);
@@ -1695,14 +1738,22 @@ main {
     }
 
     .area-filter-inner {
-        padding: 0.3rem 0.75rem 0.4rem;
+        padding: 0.3rem 0.75rem;
     }
     .region-tab {
-        padding: 0.28rem 0.7rem;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.7rem;
+    }
+    .pref-back-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+    }
+    .pref-region-label {
         font-size: 0.7rem;
     }
     .pref-chip {
-        padding: 0.18rem 0.55rem;
+        padding: 0.18rem 0.5rem;
         font-size: 0.66rem;
     }
 
