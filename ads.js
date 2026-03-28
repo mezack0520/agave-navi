@@ -88,14 +88,15 @@
     },
 
     // --- Yahoo!ショッピング ---
-    {
-      type: 'yahoo',
-      title: 'アガベ ベネズエラ バリエガータ 6号鉢',
-      img: 'https://item-shopping.c.yimg.jp/i/l/itanse_kan00152',
-      url: 'https://yahoo.jp/H3otoq',
-      price: '8,880円',
-      shop: 'Yahoo!'
-    }
+    // ※ バリューコマース審査通過後に有効化
+    // {
+    //   type: 'yahoo',
+    //   title: 'アガベ ベネズエラ バリエガータ 6号鉢',
+    //   img: 'https://item-shopping.c.yimg.jp/i/l/itanse_kan00152',
+    //   url: 'https://yahoo.jp/H3otoq',
+    //   price: '8,880円',
+    //   shop: 'Yahoo!'
+    // }
   ];
 
   // === ユーティリティ ===
@@ -125,7 +126,7 @@
   function renderAffiliateBar(container, count) {
     if (!container) return;
     if (AFFILIATE_ITEMS.length === 0) return;
-    var items = shuffle(AFFILIATE_ITEMS.slice()).slice(0, count || 4);
+    var items = shuffle(AFFILIATE_ITEMS.slice()).slice(0, count || 5);
 
     var html = '<div class="aff-section">';
     html += '<p class="aff-section-title">おすすめアイテム <span class="aff-pr">PR</span></p>';

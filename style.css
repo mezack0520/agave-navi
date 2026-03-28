@@ -2518,12 +2518,13 @@ main {
 /* アフィリエイトセクション */
 .aff-section {
     margin: 0;
+    padding: 1rem 0 0.5rem;
 }
 .aff-section-title {
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--gray-600);
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.8rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -2541,7 +2542,7 @@ main {
 }
 .aff-scroll {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -2552,7 +2553,7 @@ main {
     display: none;
 }
 .aff-card {
-    flex: 0 0 140px;
+    flex: 0 0 130px;
     scroll-snap-align: start;
     background: #fff;
     border: 1px solid var(--gray-200);
@@ -2635,9 +2636,18 @@ main {
 
 @media (min-width: 768px) {
     .aff-card {
-        flex: 0 0 160px;
+        flex: 0 0 150px;
     }
     .aff-card-img {
         height: 120px;
+    }
+}
+
+@media (min-width: 960px) {
+    .aff-scroll {
+        gap: 14px;
+    }
+    .aff-card {
+        flex: 0 0 168px;
     }
 }

@@ -119,19 +119,14 @@
       });
     }
 
-    // Yahoo! Shopping (ValueCommerce)
+    // Yahoo! Shopping (ValueCommerce) — sid/pid が設定済みの場合のみ表示
     var yah = aspConfig.yahoo;
-    if (yah) {
-      var yahUrl;
-      if (yah.sid && yah.pid) {
-        yahUrl = 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + yah.sid
-          + '&pid=' + yah.pid
-          + '&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=' + keyword);
-      } else {
-        yahUrl = 'https://shopping.yahoo.co.jp/search?p=' + kw;
-      }
+    if (yah && yah.sid && yah.pid) {
+      var yahUrl = 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + yah.sid
+        + '&pid=' + yah.pid
+        + '&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=' + keyword);
       links.push({
-        label: yah.label || 'Yahoo!',
+        label: yah.label || 'Yahoo!ショッピング',
         url: yahUrl,
         color: ASP_COLORS.yahoo
       });
