@@ -2,8 +2,8 @@ name: Weekly Event Crawl
 
 on:
   schedule:
-    # 毎週月曜 9:00 JST (日曜 24:00 UTC)
-    - cron: '0 0 * * 1'
+    # 月・水・金 9:00 JST (前日 24:00 UTC)
+    - cron: '0 0 * * 1,3,5'
   workflow_dispatch: # 手動実行も可能
 
 permissions:
