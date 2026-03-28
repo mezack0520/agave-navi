@@ -6,10 +6,9 @@
       "label": "Amazon"
     },
     "rakuten": {
-      "affiliateId": "",
+      "affiliateId": "5251fbf3.21164c54.5251fbf4.7818a8f3",
       "searchUrl": "https://search.rakuten.co.jp/search/mall/{keyword}/",
-      "label": "楽天市場",
-      "_note": "楽天アフィリエイトID取得後に affiliateId を設定。URL形式は https://hb.afl.rakuten.co.jp/hgc/{affiliateId}/?pc=https://search.rakuten.co.jp/search/mall/{keyword}/"
+      "label": "楽天市場"
     },
     "yahoo": {
       "vcpid": "",
