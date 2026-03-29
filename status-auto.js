@@ -6,7 +6,7 @@
   'use strict';
 
   var STATUS = {
-    today:    { label: '本日開催中', cls: 'status-today' },
+    today:    { label: '本日開催', cls: 'status-today' },
     thisweek: { label: '今週末', cls: 'status-thisweek' },
     soon:     { label: 'もうすぐ', cls: 'status-soon' },
     month:    { label: '1ヶ月以内', cls: 'status-month' },
@@ -59,14 +59,8 @@
     if (!statusEl) return;
 
     var status = getStatus(dateStr, dateEndStr);
-    // 「本日開催中」は非表示（ラベルを出さない）
-    if (status === STATUS.today) {
-      statusEl.textContent = '';
-      statusEl.className = 'event-status';
-    } else {
-      statusEl.textContent = status.label;
-      statusEl.className = 'event-status ' + status.cls;
-    }
+    statusEl.textContent = status.label;
+    statusEl.className = 'event-status ' + status.cls;
 
     // 終了したイベントを記録
     if (status === STATUS.ended) {
@@ -140,12 +134,6 @@
     if (dateAttr) {
       var dateEndAttr = badge.getAttribute('data-date-end') || '';
       var status = getStatus(dateAttr, dateEndAttr);
-      // 「本日開催中」は非表示
-      if (status === STATUS.today) {
-        badge.textContent = '';
-        badge.style.display = 'none';
-        return;
-      }
       badge.textContent = status.label;
       // 色を直接適用（詳細ページはCSSクラスではなくインラインスタイル）
       var colors = {

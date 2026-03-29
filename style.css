@@ -1369,7 +1369,9 @@ main {
 }
 
 .detail-sidebar {
-    position: relative;
+    position: sticky;
+    top: 70px;
+    align-self: start;
 }
 
 .detail-body > .affiliate-section {
@@ -1377,8 +1379,6 @@ main {
 }
 
 .detail-info-card {
-    position: sticky;
-    top: 70px;
     background: var(--white);
     border: 1px solid var(--gray-200);
     border-radius: var(--radius);
@@ -1755,15 +1755,13 @@ main {
 
     .detail-sidebar {
         order: -1;
+        position: static;
+        align-self: auto;
     }
 
     .detail-body > .affiliate-section {
         grid-column: 1;
         order: 10;
-    }
-
-    .detail-info-card {
-        position: static;
     }
 }
 
@@ -1915,15 +1913,13 @@ main {
 
     .detail-sidebar {
         order: -1;
+        position: static;
+        align-self: auto;
     }
 
     .detail-body > .affiliate-section {
         grid-column: 1;
         order: 10;
-    }
-
-    .detail-info-card {
-        position: static;
     }
 
     .legal-content,
