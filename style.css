@@ -817,6 +817,7 @@ main {
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-bottom: 1.5rem;
+    align-items: stretch;
 }
 
 .event-card {
@@ -940,6 +941,12 @@ main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    min-height: 0;
+}
+
+.event-link {
+    margin-top: auto;
+    padding-top: 0.4rem;
 }
 
 .event-header {
@@ -1010,7 +1017,6 @@ main {
     color: var(--gray-500);
     margin-bottom: 0.6rem;
     line-height: 1.55;
-    flex-grow: 1;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -2487,6 +2493,8 @@ main {
         cursor: pointer;
         transition: all 0.25s;
         -webkit-tap-highlight-color: transparent;
+        margin-top: auto;
+        flex-shrink: 0;
         user-select: none;
     }
     .card-fav-bar svg {
@@ -2522,6 +2530,10 @@ main {
     /* Swipe visual feedback */
     .event-card {
         transition: transform 0.15s ease, box-shadow 0.15s ease;
+        overflow: hidden;
+    }
+    .event-card.swiping-right,
+    .event-card.swipe-confirm {
         overflow: visible;
     }
     .event-card.swiping-right {
