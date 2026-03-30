@@ -148,4 +148,9 @@
       if (status.cls === 'status-ended') badge.style.color = '#636e72';
     }
   }
+
+  // 終了イベントのカード移動完了後にもっと見る制限を適用
+  if (typeof initPastLoadMore === 'function') {
+    initPastLoadMore();
+  }
 })();
