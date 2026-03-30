@@ -185,8 +185,9 @@ def extract_page_info(url):
 
 def try_web_search(query, num_results=5):
     """
-    Search using duckduckgo_search library (API-based, no CAPTCHA issues).
-    Falls back to manual scraping if library is not available.
+    Search using Google Custom Search API.
+    Requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables.
+    Falls back to DuckDuckGo HTML scraping if API is not configured.
     """
     def _filter_url(url):
         domain = urlparse(url).netloc.lower()
@@ -196,30 +197,42 @@ def try_web_search(query, num_results=5):
             return False
         return True
 
-    # Primary: duckduckgo_search library (API-based, reliable from servers)
-    try:
-        from duckduckgo_search import DDGS
-        with DDGS() as ddgs:
-            raw = list(ddgs.text(query, region='jp-jp', max_results=num_results + 5))
+    # Primary: Google Custom Search API
+    api_key = os.environ.get('GOOGLE_API_KEY', '')
+    cse_id = os.environ.get('GOOGLE_CSE_ID', '')
 
-        results = []
-        for r in raw:
-            url = r.get('href', '')
-            if url and _filter_url(url):
-                results.append({
-                    'url': url,
-                    'title': r.get('title', ''),
-                })
-        if results:
-            print(f"    DuckDuckGo API: {len(results)} results")
-            return results[:num_results]
-        else:
-            print(f"    DuckDuckGo API: 0 results after filtering")
-            return []
-    except ImportError:
-        print(f"    duckduckgo_search not installed, trying fallback...")
-    except Exception as e:
-        print(f"    DuckDuckGo API error: {e}")
+    if api_key and cse_id:
+        try:
+            params = {
+                'key': api_key,
+                'cx': cse_id,
+                'q': query,
+                'num': min(num_results, 10),
+                'lr': 'lang_ja',
+                'gl': 'jp',
+            }
+            resp = requests.get(
+                'https://www.googleapis.com/customsearch/v1',
+                params=params, timeout=15)
+            resp.raise_for_status()
+            data = resp.json()
+
+            results = []
+            for item in data.get('items', []):
+                url = item.get('link', '')
+                if url and _filter_url(url):
+                    results.append({
+                        'url': url,
+                        'title': item.get('title', ''),
+                    })
+            if results:
+                print(f"    Google CSE: {len(results)} results for '{query[:40]}'")
+                return results[:num_results]
+            else:
+                print(f"    Google CSE: 0 results after filtering")
+                return []
+        except Exception as e:
+            print(f"    Google CSE error: {e}")
 
     # Fallback: DuckDuckGo HTML scraping
     try:
@@ -241,19 +254,19 @@ def try_web_search(query, num_results=5):
                 qs = parse_qs(urlparse(href).query)
                 if 'uddg' in qs:
                     href = qs['uddg'][0]
-            if href.startswith('http') and _filter_url(href):
+            if _filter_url(href):
                 results.append({
                     'url': href,
                     'title': link.get_text(strip=True),
                 })
         if results:
-            print(f"    DuckDuckGo HTML: {len(results)} results")
+            print(f"    DuckDuckGo fallback: {len(results)} results")
             return results[:num_results]
     except Exception as e:
-        print(f"    DuckDuckGo HTML error: {e}")
+        print(f"    DuckDuckGo fallback error: {e}")
 
-    print(f"    Web search: no results")
     return []
+
 def _is_relevant_result(result, event_name):
     """Check if a search result is actually relevant to the event"""
     import re as _re
