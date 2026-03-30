@@ -95,6 +95,12 @@ def google_search(query, num_results=5):
         for g in soup.find_all('div', class_='g'):
             link = g.find('a', href=True)
             if link and link['href'].startswith('http'):
+                # Skip SNS/self domains
+                domain = urlparse(link['href']).netloc.lower()
+                if any(skip in domain for skip in SKIP_DOMAINS):
+                    continue
+                if 'agave-navi.com' in domain:
+                    continue
                 title = g.find('h3')
                 title_text = title.get_text(strip=True) if title else ''
                 snippet_el = g.find('div', class_='VwiC3b')
