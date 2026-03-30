@@ -19,7 +19,7 @@ on:
 
 permissions:
   issues: write
-  contents: read
+  contents: write
 
 jobs:
   enrich:
@@ -35,7 +35,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependenciesh
+      - name: Install dependencies
         run: pip install requests beautifulsoup4 lxml duckduckgo_search
 
       - name: Run enrichment
@@ -49,6 +49,18 @@ jobs:
             ARGS="$ARGS --limit $LIMIT"
           fi
           python scripts/enrich_events.py $ARGS
+
+      - name: Commit changes (removed events)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add events.json events/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "auto: 公式情報なしイベントを削除 $(date +%Y-%m-%d)"
+            git push
+          fi
 
       - name: Create issue with report
         if: always()
