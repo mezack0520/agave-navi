@@ -1,9 +1,6 @@
 name: Event Info Enrichment
 
 on:
-  push:
-    paths:
-      - '.github/workflows/enrich-events.yml'
   schedule:
     # 毎週火曜 10:00 JST (月曜 01:00 UTC)
     - cron: '0 1 * * 2'
@@ -60,6 +57,8 @@ jobs:
         run: |
           if [ -f /tmp/enrich-report.md ]; then
             TITLE="[情報エンリッチメント] イベント情報更新候補 $(date +%Y-%m-%d)"
+            # ラベルが存在しない場合は作成
+            gh label create "auto-enrich" --description "自動エンリッチメントレポート" --color "0E8A16" 2>/dev/null || true
             gh issue create \
               --title "$TITLE" \
               --body-file /tmp/enrich-report.md \

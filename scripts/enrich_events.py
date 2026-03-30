@@ -112,6 +112,12 @@ def google_search(query, num_results=5):
                 if href.startswith('/url?q='):
                     actual_url = href.split('/url?q=')[1].split('&')[0]
                     if actual_url.startswith('http'):
+                        # Skip SNS/self domains in fallback too
+                        domain = urlparse(actual_url).netloc.lower()
+                        if any(skip in domain for skip in SKIP_DOMAINS):
+                            continue
+                        if 'agave-navi.com' in domain:
+                            continue
                         results.append({
                             'url': actual_url,
                             'title': a.get_text(strip=True),
@@ -290,7 +296,7 @@ def process_event(event, force=False):
     }
 
     # Step 1: Google search for the event
-    search_query = f'{name} 2026 植物 イベント'
+    search_query = f'{name} 2026 植物 イベント -site:instagram.com -site:twitter.com'
     print(f"  Searching: {search_query}")
     search_results = google_search(search_query)
     result['search_results'] = search_results
