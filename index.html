@@ -10,7 +10,6 @@
   gtag('config', 'G-NKY8V1H8HY');
 </script>
 <meta name="google-site-verification" content="23j_bxcczlGhWRVrlfh94HO0hYGk9qxQzfbew60oWB0" />
-<script>if(location.pathname==='/index.html')location.replace('/');</script>
     <meta charset="UTF-8">
     <link rel="canonical" href="https://agave-navi.com/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,8 +57,11 @@
     </script>
 
     <style>
-    /* Load More: 初回は8件表示、残りはhidden（SEO: HTML上は全件存在） */
+    /* Load More: 初回は12件表示（終了は4件）、残りはhidden（SEO: HTML上は全件存在） */
     .events-grid .event-card.load-more-hidden {
+        display: none !important;
+    }
+    .past-events .event-card.past-load-more-hidden {
         display: none !important;
     }
     .load-more-wrap {
@@ -1596,6 +1598,12 @@
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
                 </div>
+                <div class="load-more-wrap" id="pastLoadMoreWrap">
+                    <button class="load-more-btn" id="pastLoadMoreBtn" onclick="loadMorePastEvents()">
+                        <span>もっと見る</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                </div>
             </section>
         </div>
     </main>
@@ -1912,7 +1920,7 @@
         }
 
         // ========== もっと見る (Load More) ==========
-        const CARDS_PER_PAGE = 8;
+        const CARDS_PER_PAGE = 12;
         let loadMoreShown = CARDS_PER_PAGE;
 
         function initLoadMore() {
@@ -1964,6 +1972,40 @@
             }
         }
 
+        // 終了イベント: 初期4件表示、もっと見るで全件表示
+        const PAST_CARDS_INIT = 4;
+        function initPastLoadMore() {
+            const pastGrid = document.getElementById('pastEventsGrid');
+            if (!pastGrid) return;
+            const cards = Array.from(pastGrid.querySelectorAll('.event-card'));
+            cards.forEach((card, i) => {
+                if (i >= PAST_CARDS_INIT) {
+                    card.classList.add('past-load-more-hidden');
+                }
+            });
+            const wrap = document.getElementById('pastLoadMoreWrap');
+            if (wrap) {
+                wrap.style.display = cards.length <= PAST_CARDS_INIT ? 'none' : '';
+            }
+        }
+        function loadMorePastEvents() {
+            const pastGrid = document.getElementById('pastEventsGrid');
+            if (!pastGrid) return;
+            const cards = Array.from(pastGrid.querySelectorAll('.event-card'));
+            let delay = 0;
+            cards.forEach((card) => {
+                if (card.classList.contains('past-load-more-hidden')) {
+                    card.classList.remove('past-load-more-hidden');
+                    card.style.display = '';
+                    card.classList.add('filter-show');
+                    card.style.animationDelay = delay + 'ms';
+                    delay += 60;
+                }
+            });
+            const wrap = document.getElementById('pastLoadMoreWrap');
+            if (wrap) wrap.style.display = 'none';
+        }
+
         // フィルター適用時はload-more制限を解除して全件対象にする
         const _origApplyFilters = applyFilters;
         applyFilters = function(query) {
@@ -1993,6 +2035,7 @@
 
         // ページ読み込み時に保存済みフィルターで初期表示
         initLoadMore();
+        initPastLoadMore();
         applyFilters();
         syncFavUI();
 
