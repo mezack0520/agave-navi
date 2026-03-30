@@ -185,8 +185,8 @@ def extract_page_info(url):
 
 def try_web_search(query, num_results=5):
     """
-    Try multiple search engines. Returns results or empty list.
-    Note: Server-based search is often blocked by CAPTCHAs.
+    Search using duckduckgo_search library (API-based, no CAPTCHA issues).
+    Falls back to manual scraping if library is not available.
     """
     def _filter_url(url):
         domain = urlparse(url).netloc.lower()
@@ -196,7 +196,32 @@ def try_web_search(query, num_results=5):
             return False
         return True
 
-    # Try DuckDuckGo HTML
+    # Primary: duckduckgo_search library (API-based, reliable from servers)
+    try:
+        from duckduckgo_search import DDGS
+        with DDGS() as ddgs:
+            raw = list(ddgs.text(query, region='jp-jp', max_results=num_results + 5))
+
+        results = []
+        for r in raw:
+            url = r.get('href', '')
+            if url and _filter_url(url):
+                results.append({
+                    'url': url,
+                    'title': r.get('title', ''),
+                })
+        if results:
+            print(f"    DuckDuckGo API: {len(results)} results")
+            return results[:num_results]
+        else:
+            print(f"    DuckDuckGo API: 0 results after filtering")
+            return []
+    except ImportError:
+        print(f"    duckduckgo_search not installed, trying fallback...")
+    except Exception as e:
+        print(f"    DuckDuckGo API error: {e}")
+
+    # Fallback: DuckDuckGo HTML scraping
     try:
         encoded = quote_plus(query)
         resp = requests.get(
@@ -222,39 +247,13 @@ def try_web_search(query, num_results=5):
                     'title': link.get_text(strip=True),
                 })
         if results:
-            print(f"    DuckDuckGo: {len(results)} results")
+            print(f"    DuckDuckGo HTML: {len(results)} results")
             return results[:num_results]
     except Exception as e:
-        print(f"    DuckDuckGo error: {e}")
+        print(f"    DuckDuckGo HTML error: {e}")
 
-    # Try Bing
-    try:
-        time.sleep(1)
-        encoded = quote_plus(query)
-        resp = requests.get(
-            f'https://www.bing.com/search?q={encoded}&setlang=ja',
-            headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, 'html.parser')
-
-        results = []
-        for li in soup.find_all('li', class_='b_algo'):
-            link = li.find('a', href=True)
-            if link and link['href'].startswith('http') and _filter_url(link['href']):
-                results.append({
-                    'url': link['href'],
-                    'title': link.get_text(strip=True),
-                })
-        if results:
-            print(f"    Bing: {len(results)} results")
-            return results[:num_results]
-    except Exception as e:
-        print(f"    Bing error: {e}")
-
-    print(f"    Web search: no results (likely CAPTCHA blocked)")
+    print(f"    Web search: no results")
     return []
-
-
 def process_event(event, force=False):
     """Process a single event and return enrichment data"""
     slug = event['slug']
