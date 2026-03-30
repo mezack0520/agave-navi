@@ -254,6 +254,36 @@ def try_web_search(query, num_results=5):
 
     print(f"    Web search: no results")
     return []
+def _is_relevant_result(result, event_name):
+    """Check if a search result is actually relevant to the event"""
+    import re as _re
+    title = (result.get('title', '') or '').lower()
+    url = (result.get('url', '') or '').lower()
+    combined = title + ' ' + url
+
+    # Tokenize event name by spaces and common delimiters
+    tokens = _re.split(r'[\s\u3000\u30FB\u2606\u2605\xd7\-]+', event_name)
+    # Keep meaningful tokens (2+ chars)
+    tokens = [t.lower() for t in tokens if len(t) >= 2]
+
+    if not tokens:
+        return True
+
+    # At least one significant token must appear in title or URL
+    for token in tokens:
+        if token in combined:
+            return True
+
+    # Also reject if URL domain is clearly non-Japanese / non-event
+    domain = urlparse(url).netloc.lower()
+    reject_tlds = ['.mx', '.com.br', '.com.ar']
+    for tld in reject_tlds:
+        if domain.endswith(tld):
+            return False
+
+    return False
+
+
 def _build_search_query(event):
     """Build an optimized search query using event metadata"""
     name = event['name']
@@ -332,18 +362,26 @@ def process_event(event, force=False):
         if info.get('venues_found'):
             print(f"  ✓ Venue: {info['venues_found'][0][:50]}")
 
-    # === Category B: SNS-only source → try search, else manual ===
+    # === Category B: SNS-only source → try search, else SNS OGP fallback ===
     elif source_url and source_sns:
         print(f"  SNS source: {source_url} → trying web search...")
         # Build a richer search query using event metadata
         search_query = _build_search_query(event)
         search_results = try_web_search(search_query)
 
+        # Filter for relevance
+        if search_results:
+            search_results = [r for r in search_results if _is_relevant_result(r, name)]
+            if not search_results:
+                print(f"    All results filtered as irrelevant")
+
         # If first query fails, try a simpler variant
         if not search_results:
             alt_query = f'{name} 公式'
             print(f"    Retrying with: {alt_query}")
             search_results = try_web_search(alt_query)
+            if search_results:
+                search_results = [r for r in search_results if _is_relevant_result(r, name)]
 
         if search_results:
             best = search_results[0]
@@ -353,15 +391,30 @@ def process_event(event, force=False):
             result['extracted_info'] = info
             result['category'] = 'enriched'
         else:
-            result['category'] = 'needs_manual'
-            result['best_url'] = source_url
-            print(f"  → Needs manual research")
+            # Fallback: try to get OGP from the SNS URL itself
+            print(f"  Trying OGP from SNS source: {source_url}")
+            info = extract_page_info(source_url)
+            if info and not info.get('error') and (info.get('ogp_image') or info.get('ogp_title')):
+                result['best_url'] = source_url
+                result['extracted_info'] = info
+                result['category'] = 'enriched'
+                print(f"  ✓ Got info from SNS source")
+            else:
+                result['category'] = 'needs_manual'
+                result['best_url'] = source_url
+                print(f"  → Needs manual research")
 
     # === Category C: No source URL at all ===
     else:
         print(f"  No source URL → trying web search...")
         search_query = _build_search_query(event)
         search_results = try_web_search(search_query)
+
+        # Filter for relevance
+        if search_results:
+            search_results = [r for r in search_results if _is_relevant_result(r, name)]
+            if not search_results:
+                print(f"    All results filtered as irrelevant")
 
         if search_results:
             best = search_results[0]
