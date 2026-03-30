@@ -36,7 +36,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 lxml duckduckgo_search
+        run: pip install requests beautifulsoup4 lxml
 
       - name: Run enrichment
         run: |
@@ -66,6 +66,8 @@ jobs:
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
         run: |
           if [ -f /tmp/enrich-report.md ]; then
             TITLE="[情報エンリッチメント] イベント情報更新候補 $(date +%Y-%m-%d)"
