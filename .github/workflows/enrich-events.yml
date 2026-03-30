@@ -35,8 +35,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4 lxml
+      - name: Install dependenciesh
+        run: pip install requests beautifulsoup4 lxml duckduckgo_search
 
       - name: Run enrichment
         run: |
