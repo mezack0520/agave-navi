@@ -77,11 +77,98 @@ def check_detail_page(slug):
     }
 
 
-def google_search(query, num_results=5):
-    """
-    Search Google for the query and return top results.
-    Uses Google's search page directly.
-    """
+def _filter_url(url):
+    """Check if a URL should be skipped (SNS, self-domain)"""
+    domain = urlparse(url).netloc.lower()
+    if any(skip in domain for skip in SKIP_DOMAINS):
+        return False
+    if 'agave-navi.com' in domain:
+        return False
+    return True
+
+
+def _search_duckduckgo(query, num_results=5):
+    """Search using DuckDuckGo HTML version (no JS required, bot-friendly)"""
+    encoded_query = quote_plus(query)
+    url = f'https://html.duckduckgo.com/html/?q={encoded_query}'
+
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, 'html.parser')
+
+        results = []
+        for result in soup.find_all('div', class_='result'):
+            link = result.find('a', class_='result__a', href=True)
+            if not link:
+                continue
+
+            href = link['href']
+            # DuckDuckGo sometimes uses redirect URLs
+            if '//duckduckgo.com/l/' in href:
+                from urllib.parse import parse_qs
+                parsed = urlparse(href)
+                qs = parse_qs(parsed.query)
+                if 'uddg' in qs:
+                    href = qs['uddg'][0]
+
+            if not href.startswith('http'):
+                continue
+
+            if not _filter_url(href):
+                continue
+
+            title = link.get_text(strip=True)
+            snippet_el = result.find('a', class_='result__snippet')
+            snippet = snippet_el.get_text(strip=True) if snippet_el else ''
+            results.append({
+                'url': href,
+                'title': title,
+                'snippet': snippet,
+            })
+
+        print(f"    DuckDuckGo results: {len(results)}")
+        return results[:num_results]
+    except Exception as e:
+        print(f"    DuckDuckGo error: {e}")
+        return []
+
+
+def _search_bing(query, num_results=5):
+    """Fallback: Search using Bing"""
+    encoded_query = quote_plus(query)
+    url = f'https://www.bing.com/search?q={encoded_query}&setlang=ja'
+
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, 'html.parser')
+
+        results = []
+        for li in soup.find_all('li', class_='b_algo'):
+            link = li.find('a', href=True)
+            if not link or not link['href'].startswith('http'):
+                continue
+            if not _filter_url(link['href']):
+                continue
+            title = link.get_text(strip=True)
+            snippet_el = li.find('p')
+            snippet = snippet_el.get_text(strip=True) if snippet_el else ''
+            results.append({
+                'url': link['href'],
+                'title': title,
+                'snippet': snippet,
+            })
+
+        print(f"    Bing results: {len(results)}")
+        return results[:num_results]
+    except Exception as e:
+        print(f"    Bing error: {e}")
+        return []
+
+
+def _search_google(query, num_results=5):
+    """Search using Google (may be blocked from server IPs)"""
     encoded_query = quote_plus(query)
     url = f'https://www.google.com/search?q={encoded_query}&hl=ja&num={num_results}'
 
@@ -91,59 +178,67 @@ def google_search(query, num_results=5):
         soup = BeautifulSoup(resp.text, 'html.parser')
 
         results = []
-        # Debug: log raw HTML structure
-        all_divs_g = soup.find_all('div', class_='g')
-        print(f"    Found {len(all_divs_g)} div.g elements")
-
-        # Extract search result links
-        for g in all_divs_g:
+        for g in soup.find_all('div', class_='g'):
             link = g.find('a', href=True)
-            if link and link['href'].startswith('http'):
-                # Skip SNS/self domains
-                domain = urlparse(link['href']).netloc.lower()
-                if any(skip in domain for skip in SKIP_DOMAINS):
-                    continue
-                if 'agave-navi.com' in domain:
-                    continue
+            if link and link['href'].startswith('http') and _filter_url(link['href']):
                 title = g.find('h3')
                 title_text = title.get_text(strip=True) if title else ''
-                snippet_el = g.find('div', class_='VwiC3b')
-                snippet = snippet_el.get_text(strip=True) if snippet_el else ''
                 results.append({
                     'url': link['href'],
                     'title': title_text,
-                    'snippet': snippet,
+                    'snippet': '',
                 })
 
-        print(f"    div.g results after filtering: {len(results)}")
-
-        # Fallback: parse all <a> tags with result-like hrefs
+        # Fallback: /url?q= links
         if not results:
             for a in soup.find_all('a', href=True):
                 href = a['href']
                 if href.startswith('/url?q='):
                     actual_url = href.split('/url?q=')[1].split('&')[0]
-                    if actual_url.startswith('http'):
-                        # Skip SNS/self domains in fallback too
-                        domain = urlparse(actual_url).netloc.lower()
-                        if any(skip in domain for skip in SKIP_DOMAINS):
-                            continue
-                        if 'agave-navi.com' in domain:
-                            continue
+                    if actual_url.startswith('http') and _filter_url(actual_url):
                         results.append({
                             'url': actual_url,
                             'title': a.get_text(strip=True),
                             'snippet': '',
                         })
 
-        print(f"    Total results (after fallback): {len(results)}")
-        if results:
-            for i, r in enumerate(results[:3]):
-                print(f"    [{i}] {r['url'][:80]}")
+        print(f"    Google results: {len(results)}")
         return results[:num_results]
     except Exception as e:
-        print(f"    Search error: {e}")
+        print(f"    Google error: {e}")
         return []
+
+
+def web_search(query, num_results=5):
+    """
+    Multi-engine search: tries DuckDuckGo first, then Bing, then Google.
+    Returns top results from the first engine that succeeds.
+    """
+    print(f"    Trying DuckDuckGo...")
+    results = _search_duckduckgo(query, num_results)
+    if results:
+        for i, r in enumerate(results[:3]):
+            print(f"      [{i}] {r['url'][:80]}")
+        return results
+
+    print(f"    Trying Bing...")
+    time.sleep(1)
+    results = _search_bing(query, num_results)
+    if results:
+        for i, r in enumerate(results[:3]):
+            print(f"      [{i}] {r['url'][:80]}")
+        return results
+
+    print(f"    Trying Google...")
+    time.sleep(1)
+    results = _search_google(query, num_results)
+    if results:
+        for i, r in enumerate(results[:3]):
+            print(f"      [{i}] {r['url'][:80]}")
+        return results
+
+    print(f"    All search engines returned 0 results")
+    return []
 
 
 def select_best_url(results, event_name):
@@ -311,10 +406,10 @@ def process_event(event, force=False):
         'extracted_info': None,
     }
 
-    # Step 1: Google search for the event
-    search_query = f'{name} 2026 植物 イベント -site:instagram.com -site:twitter.com'
+    # Step 1: Search for the event across multiple engines
+    search_query = f'{name} 2026 植物 イベント'
     print(f"  Searching: {search_query}")
-    search_results = google_search(search_query)
+    search_results = web_search(search_query)
     result['search_results'] = search_results
 
     # Step 2: Select best URL
