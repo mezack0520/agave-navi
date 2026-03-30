@@ -254,6 +254,38 @@ def try_web_search(query, num_results=5):
 
     print(f"    Web search: no results")
     return []
+def _build_search_query(event):
+    """Build an optimized search query using event metadata"""
+    name = event['name']
+    parts = [name]
+
+    # Add location/venue for context
+    location = event.get('location', '')
+    if location:
+        parts.append(location)
+
+    # Add prefecture if no specific location
+    if not location:
+        prefecture = event.get('prefecture', '')
+        if prefecture:
+            parts.append(prefecture)
+
+    # Add organizer if available
+    organizer = event.get('organizer', '')
+    if organizer and not organizer.startswith('@'):
+        parts.append(organizer)
+
+    # Add year for relevance
+    date = event.get('date', '')
+    if date:
+        year = date[:4]
+        if year not in name:
+            parts.append(year)
+
+    parts.append('イベント')
+    return ' '.join(parts)
+
+
 def process_event(event, force=False):
     """Process a single event and return enrichment data"""
     slug = event['slug']
@@ -303,8 +335,15 @@ def process_event(event, force=False):
     # === Category B: SNS-only source → try search, else manual ===
     elif source_url and source_sns:
         print(f"  SNS source: {source_url} → trying web search...")
-        search_query = f'{name} イベント 公式'
+        # Build a richer search query using event metadata
+        search_query = _build_search_query(event)
         search_results = try_web_search(search_query)
+
+        # If first query fails, try a simpler variant
+        if not search_results:
+            alt_query = f'{name} 公式'
+            print(f"    Retrying with: {alt_query}")
+            search_results = try_web_search(alt_query)
 
         if search_results:
             best = search_results[0]
@@ -321,7 +360,7 @@ def process_event(event, force=False):
     # === Category C: No source URL at all ===
     else:
         print(f"  No source URL → trying web search...")
-        search_query = f'{name} イベント 公式'
+        search_query = _build_search_query(event)
         search_results = try_web_search(search_query)
 
         if search_results:
@@ -338,9 +377,10 @@ def process_event(event, force=False):
     return result
 
 
-def generate_report(results):
+def generate_report(results, removed_names=None):
     """Generate actionable markdown report"""
     now = datetime.now().strftime('%Y-%m-%d %H:%M')
+    removed_names = removed_names or []
 
     enriched = [r for r in results if r and r.get('category') == 'enriched']
     needs_manual = [r for r in results if r and r.get('category') == 'needs_manual']
@@ -350,7 +390,7 @@ def generate_report(results):
 
     report = f"""## イベント情報エンリッチメントレポート
 **実行日時**: {now} (UTC)
-**対象**: {total}件中 ✅{len(enriched)}件自動取得 / 🔍{len(needs_manual)}件要手動リサーチ / ⏭️{skipped}件スキップ
+**対象**: {total}件中 ✅{len(enriched)}件自動取得 / 🗑️{len(needs_manual)}件削除 / ⏭️{skipped}件スキップ
 
 """
 
@@ -388,25 +428,18 @@ def generate_report(results):
                 report += f"- **要修正**: {', '.join(issues)}\n"
             report += "\n"
 
-    # === Section 2: Needs manual research ===
-    if needs_manual:
-        report += "### 🔍 要手動リサーチ（公式サイト未発見）\n\n"
-        report += "以下のイベントは自動検索で公式サイトが見つかりませんでした。\n"
-        report += "各イベント名でGoogle検索し、公式サイトURLを `events.json` の `sourceUrl` に追記してください。\n\n"
-
-        report += "| イベント名 | 現在のソース | Google検索 |\n"
-        report += "|---|---|---|\n"
-        for r in needs_manual:
-            src = r.get('current_source_url', 'なし')
-            src_display = f"[Instagram]({src})" if 'instagram.com' in src else (src[:40] if src else 'なし')
-            search_link = r.get('search_link', '#')
-            report += f"| {r['name']} | {src_display} | [🔍検索]({search_link}) |\n"
+    # === Section 2: Removed events ===
+    if removed_names:
+        report += "### 🗑️ 削除済み（公式情報なし）\n\n"
+        report += "以下のイベントは公式サイトが見つからなかったため、`events.json` と詳細ページを削除しました。\n\n"
+        for name in removed_names:
+            report += f"- {name}\n"
         report += "\n"
+        report += "※ 復元する場合は、公式サイトURLを見つけた上でイベントを再登録してください。\n\n"
 
     report += "\n---\n"
     report += "*このレポートは自動エンリッチメントスクリプトで生成されました。*\n"
     report += "*✅の情報は自動抽出のため、正確性を確認の上で更新してください。*\n"
-    report += "*🔍のイベントはGoogle検索リンクから公式サイトを探し、sourceUrlを更新してください。*\n"
     return report
 
 
@@ -442,7 +475,37 @@ def main():
         if args.limit and count >= args.limit:
             break
 
-    report = generate_report(results)
+    # === Remove events with no official info ===
+    needs_manual_slugs = {r['slug'] for r in results
+                          if r and r.get('category') == 'needs_manual'}
+
+    if needs_manual_slugs:
+        print(f"\n=== Removing {len(needs_manual_slugs)} events with no official info ===")
+        original_count = len(events)
+
+        # Reload full events list to include ones we didn't process
+        all_events = load_events()
+        filtered_events = [e for e in all_events if e['slug'] not in needs_manual_slugs]
+
+        # Save updated events.json
+        with open(EVENTS_PATH, 'w', encoding='utf-8') as f:
+            json.dump(filtered_events, f, ensure_ascii=False, indent=2)
+            f.write('\n')
+        print(f"  events.json: {original_count} → {len(filtered_events)} events")
+
+        # Remove corresponding detail pages
+        for slug in needs_manual_slugs:
+            html_path = os.path.join(EVENTS_DIR, f'{slug}.html')
+            if os.path.exists(html_path):
+                os.remove(html_path)
+                print(f"  Removed: events/{slug}.html")
+
+        removed_names = [r['name'] for r in results
+                         if r and r.get('category') == 'needs_manual']
+    else:
+        removed_names = []
+
+    report = generate_report(results, removed_names)
     with open(REPORT_PATH, 'w', encoding='utf-8') as f:
         f.write(report)
     print(f"\nReport saved to {REPORT_PATH}")
@@ -453,8 +516,8 @@ def main():
     print(f"Data saved to {DATA_PATH}")
 
     enriched = len([r for r in results if r and r.get('category') == 'enriched'])
-    manual = len([r for r in results if r and r.get('category') == 'needs_manual'])
-    print(f"\n=== Summary: ✅{enriched} enriched / 🔍{manual} needs manual ===")
+    removed = len(needs_manual_slugs)
+    print(f"\n=== Summary: ✅{enriched} enriched / 🗑️{removed} removed ===")
 
 
 if __name__ == '__main__':
