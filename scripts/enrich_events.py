@@ -2,14 +2,15 @@
 """
 Event Information Enrichment Script for agave-navi.com
 
-Searches for official event pages via Google, extracts OGP metadata,
-event details (dates, venue, admission, organizer), and generates
-a structured report for manual review and update.
+Strategy:
+1. Events with official (non-SNS) sourceUrl → extract OGP/details directly
+2. Events with SNS-only sourceUrl → try web search, report for manual review
+3. Generate actionable report with Google search links for manual research
 
 Usage:
   python scripts/enrich_events.py                    # Check all events
   python scripts/enrich_events.py --slug <slug>      # Check specific event
-  python scripts/enrich_events.py --missing-only      # Only events missing info
+  python scripts/enrich_events.py --limit 10         # Limit to 10 events
 
 Output: /tmp/enrich-report.md (Markdown report for GitHub Issue)
         /tmp/enrich-data.json (Machine-readable enrichment data)
@@ -40,16 +41,9 @@ HEADERS = {
     'Accept-Language': 'ja,en;q=0.5',
 }
 
-# Domains to skip (SNS, generic platforms - won't have good OGP for our purposes)
+# Domains to skip (SNS, generic platforms)
 SKIP_DOMAINS = {'instagram.com', 'twitter.com', 'x.com', 'facebook.com',
                 'tiktok.com', 'youtube.com', 'line.me'}
-
-# Preferred domains (official event sites, venues)
-PREFERRED_DOMAINS = {
-    'sunshinecity.jp', 'makuhari-messe.com', 'tokyo-dome.co.jp',
-    'nagashima-onsen.co.jp', 'greensnap.jp', 'peatix.com',
-    'teket.jp', 'passmarket.yahoo.co.jp',
-}
 
 
 def load_events():
@@ -67,214 +61,28 @@ def check_detail_page(slug):
     with open(fpath, 'r', encoding='utf-8') as f:
         html = f.read()
 
+    info_value_parts = html.split('info-value')
+    has_real_venue = False
+    if len(info_value_parts) > 1:
+        venue_section = info_value_parts[1].split('</span>')[0]
+        # 「東京県」のような架空の地名が含まれていないか
+        has_real_venue = '県' not in venue_section
+
     return {
         'exists': True,
         'has_generic_desc': 'このイベントは植物愛好家にとって重要な機会' in html,
         'has_template_text': '詳細な日程や出店者情報は、直接主催者にお問い合わせ' in html,
         'has_ogp_image': ('og:image' in html and 'default.jpg' not in html),
-        'has_real_venue': '県' not in html.split('info-value')[1].split('</span>')[0]
-                          if 'info-value' in html else False,
+        'has_real_venue': has_real_venue,
     }
 
 
-def _filter_url(url):
-    """Check if a URL should be skipped (SNS, self-domain)"""
+def is_sns_url(url):
+    """Check if URL is from a social media domain"""
+    if not url:
+        return False
     domain = urlparse(url).netloc.lower()
-    if any(skip in domain for skip in SKIP_DOMAINS):
-        return False
-    if 'agave-navi.com' in domain:
-        return False
-    return True
-
-
-def _search_duckduckgo(query, num_results=5):
-    """Search using DuckDuckGo HTML version (no JS required, bot-friendly)"""
-    encoded_query = quote_plus(query)
-    url = f'https://html.duckduckgo.com/html/?q={encoded_query}'
-
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, 'html.parser')
-
-        results = []
-        for result in soup.find_all('div', class_='result'):
-            link = result.find('a', class_='result__a', href=True)
-            if not link:
-                continue
-
-            href = link['href']
-            # DuckDuckGo sometimes uses redirect URLs
-            if '//duckduckgo.com/l/' in href:
-                from urllib.parse import parse_qs
-                parsed = urlparse(href)
-                qs = parse_qs(parsed.query)
-                if 'uddg' in qs:
-                    href = qs['uddg'][0]
-
-            if not href.startswith('http'):
-                continue
-
-            if not _filter_url(href):
-                continue
-
-            title = link.get_text(strip=True)
-            snippet_el = result.find('a', class_='result__snippet')
-            snippet = snippet_el.get_text(strip=True) if snippet_el else ''
-            results.append({
-                'url': href,
-                'title': title,
-                'snippet': snippet,
-            })
-
-        print(f"    DuckDuckGo results: {len(results)}")
-        return results[:num_results]
-    except Exception as e:
-        print(f"    DuckDuckGo error: {e}")
-        return []
-
-
-def _search_bing(query, num_results=5):
-    """Fallback: Search using Bing"""
-    encoded_query = quote_plus(query)
-    url = f'https://www.bing.com/search?q={encoded_query}&setlang=ja'
-
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, 'html.parser')
-
-        results = []
-        for li in soup.find_all('li', class_='b_algo'):
-            link = li.find('a', href=True)
-            if not link or not link['href'].startswith('http'):
-                continue
-            if not _filter_url(link['href']):
-                continue
-            title = link.get_text(strip=True)
-            snippet_el = li.find('p')
-            snippet = snippet_el.get_text(strip=True) if snippet_el else ''
-            results.append({
-                'url': link['href'],
-                'title': title,
-                'snippet': snippet,
-            })
-
-        print(f"    Bing results: {len(results)}")
-        return results[:num_results]
-    except Exception as e:
-        print(f"    Bing error: {e}")
-        return []
-
-
-def _search_google(query, num_results=5):
-    """Search using Google (may be blocked from server IPs)"""
-    encoded_query = quote_plus(query)
-    url = f'https://www.google.com/search?q={encoded_query}&hl=ja&num={num_results}'
-
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, 'html.parser')
-
-        results = []
-        for g in soup.find_all('div', class_='g'):
-            link = g.find('a', href=True)
-            if link and link['href'].startswith('http') and _filter_url(link['href']):
-                title = g.find('h3')
-                title_text = title.get_text(strip=True) if title else ''
-                results.append({
-                    'url': link['href'],
-                    'title': title_text,
-                    'snippet': '',
-                })
-
-        # Fallback: /url?q= links
-        if not results:
-            for a in soup.find_all('a', href=True):
-                href = a['href']
-                if href.startswith('/url?q='):
-                    actual_url = href.split('/url?q=')[1].split('&')[0]
-                    if actual_url.startswith('http') and _filter_url(actual_url):
-                        results.append({
-                            'url': actual_url,
-                            'title': a.get_text(strip=True),
-                            'snippet': '',
-                        })
-
-        print(f"    Google results: {len(results)}")
-        return results[:num_results]
-    except Exception as e:
-        print(f"    Google error: {e}")
-        return []
-
-
-def web_search(query, num_results=5):
-    """
-    Multi-engine search: tries DuckDuckGo first, then Bing, then Google.
-    Returns top results from the first engine that succeeds.
-    """
-    print(f"    Trying DuckDuckGo...")
-    results = _search_duckduckgo(query, num_results)
-    if results:
-        for i, r in enumerate(results[:3]):
-            print(f"      [{i}] {r['url'][:80]}")
-        return results
-
-    print(f"    Trying Bing...")
-    time.sleep(1)
-    results = _search_bing(query, num_results)
-    if results:
-        for i, r in enumerate(results[:3]):
-            print(f"      [{i}] {r['url'][:80]}")
-        return results
-
-    print(f"    Trying Google...")
-    time.sleep(1)
-    results = _search_google(query, num_results)
-    if results:
-        for i, r in enumerate(results[:3]):
-            print(f"      [{i}] {r['url'][:80]}")
-        return results
-
-    print(f"    All search engines returned 0 results")
-    return []
-
-
-def select_best_url(results, event_name):
-    """Select the most relevant official URL from search results"""
-    if not results:
-        return None
-
-    # Filter out agave-navi.com itself and SNS domains
-    filtered = []
-    for r in results:
-        domain = urlparse(r['url']).netloc.lower()
-        if 'agave-navi.com' in domain:
-            continue
-        if any(skip in domain for skip in SKIP_DOMAINS):
-            continue
-        filtered.append(r)
-
-    if not filtered:
-        return None
-
-    # Prefer results from known venue/ticketing domains
-    for r in filtered:
-        domain = urlparse(r['url']).netloc.lower()
-        if any(pref in domain for pref in PREFERRED_DOMAINS):
-            return r['url']
-
-    # Prefer results whose title closely matches the event name
-    for r in filtered:
-        title_lower = r['title'].lower()
-        name_parts = event_name.lower().split()
-        matches = sum(1 for p in name_parts if p in title_lower)
-        if matches >= len(name_parts) * 0.6:
-            return r['url']
-
-    # Return first non-SNS result
-    return filtered[0]['url'] if filtered else None
+    return any(skip in domain for skip in SKIP_DOMAINS)
 
 
 def extract_page_info(url):
@@ -285,6 +93,7 @@ def extract_page_info(url):
         resp.encoding = resp.apparent_encoding or 'utf-8'
         soup = BeautifulSoup(resp.text, 'html.parser')
     except Exception as e:
+        print(f"    Extract error: {e}")
         return {'error': str(e)}
 
     info = {'url': url}
@@ -299,7 +108,6 @@ def extract_page_info(url):
         el = soup.find('meta', property=meta_name) or soup.find('meta', attrs={'name': meta_name})
         if el and el.get('content'):
             content = el['content']
-            # Make relative URLs absolute
             if key == 'ogp_image' and not content.startswith('http'):
                 content = urljoin(url, content)
             info[key] = content
@@ -315,7 +123,6 @@ def extract_page_info(url):
 
     # --- Page text for analysis ---
     text = soup.get_text(separator='\n', strip=True)
-    info['page_text_preview'] = text[:3000]  # First 3000 chars for analysis
 
     # --- Date extraction ---
     date_patterns = [
@@ -376,15 +183,87 @@ def extract_page_info(url):
     return info
 
 
+def try_web_search(query, num_results=5):
+    """
+    Try multiple search engines. Returns results or empty list.
+    Note: Server-based search is often blocked by CAPTCHAs.
+    """
+    def _filter_url(url):
+        domain = urlparse(url).netloc.lower()
+        if any(skip in domain for skip in SKIP_DOMAINS):
+            return False
+        if 'agave-navi.com' in domain:
+            return False
+        return True
+
+    # Try DuckDuckGo HTML
+    try:
+        encoded = quote_plus(query)
+        resp = requests.get(
+            f'https://html.duckduckgo.com/html/?q={encoded}',
+            headers=HEADERS, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, 'html.parser')
+
+        results = []
+        for div in soup.find_all('div', class_='result'):
+            link = div.find('a', class_='result__a', href=True)
+            if not link:
+                continue
+            href = link['href']
+            if '//duckduckgo.com/l/' in href:
+                from urllib.parse import parse_qs
+                qs = parse_qs(urlparse(href).query)
+                if 'uddg' in qs:
+                    href = qs['uddg'][0]
+            if href.startswith('http') and _filter_url(href):
+                results.append({
+                    'url': href,
+                    'title': link.get_text(strip=True),
+                })
+        if results:
+            print(f"    DuckDuckGo: {len(results)} results")
+            return results[:num_results]
+    except Exception as e:
+        print(f"    DuckDuckGo error: {e}")
+
+    # Try Bing
+    try:
+        time.sleep(1)
+        encoded = quote_plus(query)
+        resp = requests.get(
+            f'https://www.bing.com/search?q={encoded}&setlang=ja',
+            headers=HEADERS, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, 'html.parser')
+
+        results = []
+        for li in soup.find_all('li', class_='b_algo'):
+            link = li.find('a', href=True)
+            if link and link['href'].startswith('http') and _filter_url(link['href']):
+                results.append({
+                    'url': link['href'],
+                    'title': link.get_text(strip=True),
+                })
+        if results:
+            print(f"    Bing: {len(results)} results")
+            return results[:num_results]
+    except Exception as e:
+        print(f"    Bing error: {e}")
+
+    print(f"    Web search: no results (likely CAPTCHA blocked)")
+    return []
+
+
 def process_event(event, force=False):
-    """Process a single event: search, extract, return enrichment data"""
+    """Process a single event and return enrichment data"""
     slug = event['slug']
     name = event['name']
     source_url = event.get('sourceUrl', '')
 
     print(f"\n--- {name} ({slug}) ---")
 
-    # Check current state
+    # Check current state of detail page
     page_state = check_detail_page(slug)
     needs_update = (
         page_state.get('has_generic_desc', False) or
@@ -393,7 +272,7 @@ def process_event(event, force=False):
     )
 
     if not needs_update and not force:
-        print(f"  → Already has good content, skipping")
+        print(f"  → Already enriched, skipping")
         return None
 
     result = {
@@ -401,86 +280,86 @@ def process_event(event, force=False):
         'name': name,
         'current_source_url': source_url,
         'page_state': page_state,
-        'search_results': [],
+        'category': 'unknown',  # 'enriched', 'needs_manual', 'no_source'
         'best_url': None,
         'extracted_info': None,
+        'search_link': f"https://www.google.com/search?q={quote_plus(name + ' イベント 公式')}",
     }
 
-    # Step 1: Search for the event across multiple engines
-    search_query = f'{name} 2026 植物 イベント'
-    print(f"  Searching: {search_query}")
-    search_results = web_search(search_query)
-    result['search_results'] = search_results
+    source_sns = is_sns_url(source_url)
 
-    # Step 2: Select best URL
-    # sourceUrlがSNSの場合はGoogle検索結果を優先
-    source_is_sns = False
-    if source_url:
-        source_domain = urlparse(source_url).netloc.lower()
-        source_is_sns = any(skip in source_domain for skip in SKIP_DOMAINS)
-
-    if source_url and not source_is_sns:
-        best_url = source_url
-    else:
-        best_url = select_best_url(search_results, name)
-        if not best_url and source_url:
-            # SNSでも見つからない場合は元のURLをフォールバック
-            best_url = source_url
-    result['best_url'] = best_url
-
-    if not best_url:
-        print(f"  → No suitable URL found")
-        return result
-
-    print(f"  Best URL: {best_url}")
-
-    # Step 3: Extract info from the page
-    print(f"  Extracting info...")
-    info = extract_page_info(best_url)
-    result['extracted_info'] = info
-
-    if info.get('ogp_image'):
-        print(f"  → OGP image: {info['ogp_image'][:80]}...")
-    if info.get('venues_found'):
-        print(f"  → Venue: {info['venues_found'][0][:50]}")
-    if info.get('prices_found'):
-        print(f"  → Price: {info['prices_found'][0][:50]}")
-
-    # If source_url was empty but we found a good URL, also try that
-    if source_url and best_url != source_url:
-        print(f"  Also checking source URL: {source_url}")
-        source_info = extract_page_info(source_url)
-        # Merge: prefer source_url for text, search result for image
-        if source_info.get('ogp_image') and not info.get('ogp_image'):
-            info['ogp_image'] = source_info['ogp_image']
-        if source_info.get('venues_found') and not info.get('venues_found'):
-            info['venues_found'] = source_info['venues_found']
+    # === Category A: Has official (non-SNS) source URL ===
+    if source_url and not source_sns:
+        print(f"  Official source: {source_url}")
+        result['best_url'] = source_url
+        info = extract_page_info(source_url)
         result['extracted_info'] = info
+        result['category'] = 'enriched' if not info.get('error') else 'extract_failed'
 
-    # Rate limiting
-    time.sleep(2)
+        if info.get('ogp_image'):
+            print(f"  ✓ OGP image found")
+        if info.get('venues_found'):
+            print(f"  ✓ Venue: {info['venues_found'][0][:50]}")
 
+    # === Category B: SNS-only source → try search, else manual ===
+    elif source_url and source_sns:
+        print(f"  SNS source: {source_url} → trying web search...")
+        search_query = f'{name} イベント 公式'
+        search_results = try_web_search(search_query)
+
+        if search_results:
+            best = search_results[0]
+            result['best_url'] = best['url']
+            print(f"  Found: {best['url'][:80]}")
+            info = extract_page_info(best['url'])
+            result['extracted_info'] = info
+            result['category'] = 'enriched'
+        else:
+            result['category'] = 'needs_manual'
+            result['best_url'] = source_url
+            print(f"  → Needs manual research")
+
+    # === Category C: No source URL at all ===
+    else:
+        print(f"  No source URL → trying web search...")
+        search_query = f'{name} イベント 公式'
+        search_results = try_web_search(search_query)
+
+        if search_results:
+            best = search_results[0]
+            result['best_url'] = best['url']
+            info = extract_page_info(best['url'])
+            result['extracted_info'] = info
+            result['category'] = 'enriched'
+        else:
+            result['category'] = 'needs_manual'
+            print(f"  → Needs manual research")
+
+    time.sleep(1)
     return result
 
 
 def generate_report(results):
-    """Generate markdown report from enrichment results"""
+    """Generate actionable markdown report"""
     now = datetime.now().strftime('%Y-%m-%d %H:%M')
 
-    found = [r for r in results if r and r.get('extracted_info')]
-    not_found = [r for r in results if r and not r.get('extracted_info')]
+    enriched = [r for r in results if r and r.get('category') == 'enriched']
+    needs_manual = [r for r in results if r and r.get('category') == 'needs_manual']
+    no_source = [r for r in results if r and r.get('category') == 'no_source']
     skipped = len([r for r in results if r is None])
+    total = len(results) + skipped
 
     report = f"""## イベント情報エンリッチメントレポート
 **実行日時**: {now} (UTC)
-**対象**: {len(results) + skipped}件中 {len(found)}件で情報取得成功 / {len(not_found)}件未発見 / {skipped}件スキップ
+**対象**: {total}件中 ✅{len(enriched)}件自動取得 / 🔍{len(needs_manual)}件要手動リサーチ / ⏭️{skipped}件スキップ
 
 """
 
-    if found:
-        report += "### 情報取得成功\n\n"
-        for r in found:
-            info = r['extracted_info']
+    # === Section 1: Successfully enriched ===
+    if enriched:
+        report += "### ✅ 情報自動取得成功\n\n"
+        for r in enriched:
+            info = r.get('extracted_info', {})
             report += f"#### {r['name']} (`{r['slug']}`)\n"
             report += f"- **公式URL**: {r['best_url']}\n"
 
@@ -507,21 +386,28 @@ def generate_report(results):
             if not state.get('has_ogp_image'):
                 issues.append("OGP画像なし")
             if issues:
-                report += f"- **現在の問題**: {', '.join(issues)}\n"
+                report += f"- **要修正**: {', '.join(issues)}\n"
             report += "\n"
 
-    if not_found:
-        report += "### 情報未発見\n\n"
-        for r in not_found:
-            report += f"- **{r['name']}** (`{r['slug']}`): "
-            if r.get('search_results'):
-                report += f"検索結果あるが適切なURL見つからず\n"
-            else:
-                report += f"検索結果なし\n"
+    # === Section 2: Needs manual research ===
+    if needs_manual:
+        report += "### 🔍 要手動リサーチ（公式サイト未発見）\n\n"
+        report += "以下のイベントは自動検索で公式サイトが見つかりませんでした。\n"
+        report += "各イベント名でGoogle検索し、公式サイトURLを `events.json` の `sourceUrl` に追記してください。\n\n"
+
+        report += "| イベント名 | 現在のソース | Google検索 |\n"
+        report += "|---|---|---|\n"
+        for r in needs_manual:
+            src = r.get('current_source_url', 'なし')
+            src_display = f"[Instagram]({src})" if 'instagram.com' in src else (src[:40] if src else 'なし')
+            search_link = r.get('search_link', '#')
+            report += f"| {r['name']} | {src_display} | [🔍検索]({search_link}) |\n"
         report += "\n"
 
-    report += "\n---\n*このレポートは自動エンリッチメントスクリプトで生成されました。*\n"
-    report += "*情報の正確性を確認の上、手動でイベント詳細ページを更新してください。*\n"
+    report += "\n---\n"
+    report += "*このレポートは自動エンリッチメントスクリプトで生成されました。*\n"
+    report += "*✅の情報は自動抽出のため、正確性を確認の上で更新してください。*\n"
+    report += "*🔍のイベントはGoogle検索リンクから公式サイトを探し、sourceUrlを更新してください。*\n"
     return report
 
 
@@ -542,14 +428,12 @@ def main():
     events = load_events()
     print(f"Total events: {len(events)}")
 
-    # Filter events
     if args.slug:
         events = [e for e in events if e['slug'] == args.slug]
         if not events:
             print(f"Event not found: {args.slug}")
             sys.exit(1)
 
-    # Process events
     results = []
     count = 0
     for event in events:
@@ -559,21 +443,19 @@ def main():
         if args.limit and count >= args.limit:
             break
 
-    # Generate report
     report = generate_report(results)
     with open(REPORT_PATH, 'w', encoding='utf-8') as f:
         f.write(report)
     print(f"\nReport saved to {REPORT_PATH}")
 
-    # Save machine-readable data
     serializable = [r for r in results if r is not None]
     with open(DATA_PATH, 'w', encoding='utf-8') as f:
         json.dump(serializable, f, ensure_ascii=False, indent=2)
     print(f"Data saved to {DATA_PATH}")
 
-    # Summary
-    found = len([r for r in results if r and isinstance(r.get('extracted_info'), dict) and r['extracted_info'].get('ogp_image')])
-    print(f"\n=== Summary: {found} events with OGP images found ===")
+    enriched = len([r for r in results if r and r.get('category') == 'enriched'])
+    manual = len([r for r in results if r and r.get('category') == 'needs_manual'])
+    print(f"\n=== Summary: ✅{enriched} enriched / 🔍{manual} needs manual ===")
 
 
 if __name__ == '__main__':
