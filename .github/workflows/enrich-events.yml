@@ -1,0 +1,69 @@
+name: Event Info Enrichment
+
+on:
+  schedule:
+    # 毎週火曜 10:00 JST (月曜 01:00 UTC)
+    - cron: '0 1 * * 2'
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: '特定イベントのslug（空欄で全件）'
+        required: false
+      limit:
+        description: '処理件数上限（0=全件）'
+        required: false
+        default: '10'
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run enrichment
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="--slug ${{ github.event.inputs.slug }}"
+          fi
+          LIMIT="${{ github.event.inputs.limit || '10' }}"
+          if [ "$LIMIT" != "0" ]; then
+            ARGS="$ARGS --limit $LIMIT"
+          fi
+          python scripts/enrich_events.py $ARGS
+
+      - name: Create issue with report
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f /tmp/enrich-report.md ]; then
+            TITLE="[情報エンリッチメント] イベント情報更新候補 $(date +%Y-%m-%d)"
+            gh issue create \
+              --title "$TITLE" \
+              --body-file /tmp/enrich-report.md \
+              --label "enhancement,auto-enrich"
+          fi
+
+      - name: Upload enrichment data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enrich-data
+          path: /tmp/enrich-data.json
+          retention-days: 30
