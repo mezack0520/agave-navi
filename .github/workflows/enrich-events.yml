@@ -9,9 +9,12 @@ on:
       slug:
         description: '特定イベントのslug（空欄で全件）'
         required: false
+        type: string
+        default: ''
       limit:
         description: '処理件数上限（0=全件）'
         required: false
+        type: string
         default: '10'
 
 permissions:
