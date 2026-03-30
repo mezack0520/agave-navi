@@ -88,15 +88,22 @@
     },
 
     // --- Yahoo!ショッピング ---
-    // ※ バリューコマース審査通過後に有効化
-    // {
-    //   type: 'yahoo',
-    //   title: 'アガベ ベネズエラ バリエガータ 6号鉢',
-    //   img: 'https://item-shopping.c.yimg.jp/i/l/itanse_kan00152',
-    //   url: 'https://yahoo.jp/H3otoq',
-    //   price: '8,880円',
-    //   shop: 'Yahoo!'
-    // }
+    {
+      type: 'yahoo',
+      title: 'アガベ チタノタ 実生選抜株',
+      img: 'https://item-shopping.c.yimg.jp/i/l/itanse_kan00152',
+      url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3766429&pid=892581557&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=アガベ+チタノタ'),
+      price: '2,980円〜',
+      shop: 'Yahoo!'
+    },
+    {
+      type: 'yahoo',
+      title: '多肉植物 寄せ植えセット',
+      img: 'https://item-shopping.c.yimg.jp/i/g/flower-net_9-succulent-set',
+      url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3766429&pid=892581557&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=多肉植物+寄せ植え+セット'),
+      price: '1,980円〜',
+      shop: 'Yahoo!'
+    }
   ];
 
   // === ユーティリティ ===
