@@ -32,15 +32,19 @@ else
   IMG_OK=0
   IMG_NG=0
   for url in $IMG_URLS; do
-    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 \
-      -H "Referer: " -A "Mozilla/5.0" "$url" 2>/dev/null || echo "000")
-    if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 15 \
+      -H "Referer: " -A "Mozilla/5.0 (compatible; AgaveNaviBot/1.0)" "$url" 2>/dev/null || echo "000")
+    SLUG=$(grep -B5 "$url" "$REPO_ROOT/index.html" | grep -oP 'data-slug="\K[^"]+' | tail -1)
+    if [ "$HTTP_CODE" -ge 200 ] 2>/dev/null && [ "$HTTP_CODE" -lt 400 ] 2>/dev/null; then
       IMG_OK=$((IMG_OK + 1))
+    elif [ "$HTTP_CODE" = "000" ]; then
+      # 接続エラー（タイムアウト等）= 警告扱い
+      IMG_NG=$((IMG_NG + 1))
+      WARN_COUNT=$((WARN_COUNT + 1))
+      echo "- ⚠️ **接続不可** \`${SLUG}\` → ${url}" >> "$REPORT_FILE"
     else
       IMG_NG=$((IMG_NG + 1))
       BROKEN_COUNT=$((BROKEN_COUNT + 1))
-      # URLからslugを特定
-      SLUG=$(grep -B5 "$url" "$REPO_ROOT/index.html" | grep -oP 'data-slug="\K[^"]+' | tail -1)
       echo "- ❌ **${HTTP_CODE}** \`${SLUG}\` → ${url}" >> "$REPORT_FILE"
     fi
   done
@@ -90,13 +94,20 @@ if [ -n "$SRC_PAIRS" ]; then
     else
       HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 \
         -A "Mozilla/5.0" "$url" 2>/dev/null || echo "000")
-      if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+      if [ "$HTTP_CODE" = "000" ]; then
+        # 接続エラー（タイムアウト等）= 警告扱い
+        SRC_WARN=$((SRC_WARN + 1))
+        WARN_COUNT=$((WARN_COUNT + 1))
+        echo "- ⚠️ **接続不可** \`${slug}\` → ${url}" >> "$REPORT_FILE"
+      elif [ "$HTTP_CODE" -ge 200 ] 2>/dev/null && [ "$HTTP_CODE" -lt 400 ] 2>/dev/null; then
         SRC_OK=$((SRC_OK + 1))
-      elif [ "$HTTP_CODE" -ge 400 ] && [ "$HTTP_CODE" -lt 500 ]; then
+      elif [ "$HTTP_CODE" -ge 400 ] 2>/dev/null && [ "$HTTP_CODE" -lt 500 ] 2>/dev/null; then
+        # 4xx = 明確なリンク切れ
         SRC_NG=$((SRC_NG + 1))
         BROKEN_COUNT=$((BROKEN_COUNT + 1))
         echo "- ❌ **${HTTP_CODE}** \`${slug}\` → ${url}" >> "$REPORT_FILE"
       else
+        # 5xx / その他 = 一時的な問題の可能性 → 警告
         SRC_WARN=$((SRC_WARN + 1))
         WARN_COUNT=$((WARN_COUNT + 1))
         echo "- ⚠️ **${HTTP_CODE}** \`${slug}\` → ${url}" >> "$REPORT_FILE"
