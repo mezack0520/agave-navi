@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/enrich-events.yml'
+      - 'scripts/enrich_events.py'
   schedule:
     # 毎週火曜 10:00 JST (月曜 01:00 UTC)
     - cron: '0 1 * * 2'
