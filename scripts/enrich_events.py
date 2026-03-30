@@ -91,8 +91,12 @@ def google_search(query, num_results=5):
         soup = BeautifulSoup(resp.text, 'html.parser')
 
         results = []
+        # Debug: log raw HTML structure
+        all_divs_g = soup.find_all('div', class_='g')
+        print(f"    Found {len(all_divs_g)} div.g elements")
+
         # Extract search result links
-        for g in soup.find_all('div', class_='g'):
+        for g in all_divs_g:
             link = g.find('a', href=True)
             if link and link['href'].startswith('http'):
                 # Skip SNS/self domains
@@ -110,6 +114,8 @@ def google_search(query, num_results=5):
                     'title': title_text,
                     'snippet': snippet,
                 })
+
+        print(f"    div.g results after filtering: {len(results)}")
 
         # Fallback: parse all <a> tags with result-like hrefs
         if not results:
@@ -130,6 +136,10 @@ def google_search(query, num_results=5):
                             'snippet': '',
                         })
 
+        print(f"    Total results (after fallback): {len(results)}")
+        if results:
+            for i, r in enumerate(results[:3]):
+                print(f"    [{i}] {r['url'][:80]}")
         return results[:num_results]
     except Exception as e:
         print(f"    Search error: {e}")
@@ -308,7 +318,19 @@ def process_event(event, force=False):
     result['search_results'] = search_results
 
     # Step 2: Select best URL
-    best_url = source_url if source_url else select_best_url(search_results, name)
+    # sourceUrlがSNSの場合はGoogle検索結果を優先
+    source_is_sns = False
+    if source_url:
+        source_domain = urlparse(source_url).netloc.lower()
+        source_is_sns = any(skip in source_domain for skip in SKIP_DOMAINS)
+
+    if source_url and not source_is_sns:
+        best_url = source_url
+    else:
+        best_url = select_best_url(search_results, name)
+        if not best_url and source_url:
+            # SNSでも見つからない場合は元のURLをフォールバック
+            best_url = source_url
     result['best_url'] = best_url
 
     if not best_url:
