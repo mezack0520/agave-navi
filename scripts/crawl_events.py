@@ -229,12 +229,15 @@ def main():
     all_events = []
 
     for source in sources:
+        # コメント用エントリ（_comment のみ等）をスキップ
+        if 'name' not in source or 'url' not in source:
+            continue
         try:
             events, status = crawl_source(source)
             results.append((source['name'], status))
             all_events.extend(events)
         except Exception as e:
-            results.append((source['name'], f"Error: {str(e)[:50]}"))
+            results.append((source.get('name', 'unknown'), f"Error: {str(e)[:50]}"))
 
     print(f"\nTotal events found across all sources: {len(all_events)}")
 
