@@ -149,7 +149,10 @@
     }
   }
 
-  // 終了イベントのカード移動完了後にもっと見る制限を適用
+  // カード移動完了後にもっと見る制限を再適用
+  if (typeof initLoadMore === 'function') {
+    initLoadMore();
+  }
   if (typeof initPastLoadMore === 'function') {
     initPastLoadMore();
   }

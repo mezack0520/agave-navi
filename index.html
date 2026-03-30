@@ -1926,9 +1926,12 @@
         function initLoadMore() {
             const grid = document.getElementById('eventsGrid');
             const cards = Array.from(grid.querySelectorAll('.event-card'));
+            loadMoreShown = CARDS_PER_PAGE;
             cards.forEach((card, i) => {
                 if (i >= CARDS_PER_PAGE) {
                     card.classList.add('load-more-hidden');
+                } else {
+                    card.classList.remove('load-more-hidden');
                 }
             });
             updateLoadMoreBtn();
