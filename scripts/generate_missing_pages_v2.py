@@ -113,7 +113,6 @@ TEMPLATE = """<!DOCTYPE html>
 {src_row}{gcal_html}
 </div>
 </div>
-{ig_section}
 <div class="affiliate-section" id="affiliateSection"></div>
 </div>
 </main>
@@ -167,13 +166,9 @@ def gen(ev):
         me=maps_embed(loc,pref); ml=maps_link(loc,pref)
         map_section=f'<div class="detail-map"><h2 class="detail-section-title">会場</h2><div class="map-container"><a href="{ml}" target="_blank" rel="noopener" class="map-open-link">マップで開く &#8599;</a><iframe src="{me}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div>'
     else: map_section=''
-    ig_section=''
-    if src and 'instagram.com' in src:
-        m=re.search(r'instagram\.com/([^/?]+)',src)
-        if m: ig_section=f'<div class="detail-info-card"><h3>&#128247; 公式INSTAGRAM</h3><a href="{esc(src)}" target="_blank" rel="noopener" class="ig-link">&#128247; @{esc(m.group(1))}</a></div>'
     offers=''
     if adm: offers=f',"offers":{{"@type":"Offer","price":"0","priceCurrency":"JPY","description":"{esc(adm)}"}}'
-    return TEMPLATE.format(slug=slug,name=esc(name),date=date,date_end=date_end or date,location=esc(loc or pref),prefecture=esc(pref),region=esc(region),tags_text=esc(tags_text),description=esc(desc),desc_esc=esc(desc).replace('\n',' '),meta_desc=esc(meta_desc),date_jp=date_jp,date_range=date_range,time_html=time_html,cat_label=cat_label,organizer=esc(org or name),offers=offers,map_section=map_section,loc_row=loc_row,adm_row=adm_row,src_row=src_row,gcal_html=gcal_html,ig_section=ig_section)
+    return TEMPLATE.format(slug=slug,name=esc(name),date=date,date_end=date_end or date,location=esc(loc or pref),prefecture=esc(pref),region=esc(region),tags_text=esc(tags_text),description=esc(desc),desc_esc=esc(desc).replace('\n',' '),meta_desc=esc(meta_desc),date_jp=date_jp,date_range=date_range,time_html=time_html,cat_label=cat_label,organizer=esc(org or name),offers=offers,map_section=map_section,loc_row=loc_row,adm_row=adm_row,src_row=src_row,gcal_html=gcal_html)
 
 def card_data(idx,slug):
     p=idx.find(f'data-slug="{slug}"')
