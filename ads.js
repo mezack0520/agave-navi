@@ -173,9 +173,27 @@
     initAdSense();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
+  // 広告エリアをdetail-mainの中に移動し、サイドバーとの重なりを防止
+  function initAdPlacement() {
+    var main = document.querySelector('.detail-main');
+    if (!main) return;
+    var adBottom = document.querySelector('body > .ad-slot-article-bottom');
+    var adArea = document.querySelector('body > .ad-affiliate-area');
+    if (adBottom) main.appendChild(adBottom);
+    if (adArea) {
+      adArea.removeAttribute('style');
+      main.appendChild(adArea);
+    }
+  }
+
+  function initAll() {
     init();
+    initAdPlacement();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 })();
