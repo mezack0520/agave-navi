@@ -2387,13 +2387,15 @@ main {
 
 .ad-slot {
     text-align: center;
-    margin: 2rem auto;
+    margin: 1.5rem auto;
     max-width: 100%;
     overflow: hidden;
     min-height: 0;
 }
-.ad-slot:empty {
+.ad-slot:empty,
+.ad-slot-article-bottom:not(:has(ins[data-ad-status="filled"])) {
     display: none;
+    margin: 0;
 }
 .ad-slot-sidebar {
     margin: 1.5rem 0 0;
@@ -2403,7 +2405,7 @@ main {
     margin: 0.5rem 0;
 }
 .ad-slot-article-bottom {
-    margin: 2rem 0 0;
+    margin: 1rem 0 0;
 }
 
 /* ========================================
@@ -2411,7 +2413,7 @@ main {
    ======================================== */
 
 .affiliate-section {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     background: #fafafa;
     border: 1px solid #eee;
     border-radius: 12px;
@@ -2765,8 +2767,25 @@ main {
 
 /* アフィリエイトスロット */
 .aff-slot {
-    margin: 1.5rem 0;
+    margin: 0.75rem 0;
     padding: 0;
+}
+
+/* 広告エリア：デスクトップでサイドバーと重ならないよう制限 */
+@media (min-width: 1025px) {
+    .ad-affiliate-area {
+        max-width: 920px !important;
+        margin: 0 auto !important;
+        padding: 0 2rem !important;
+        padding-right: calc(340px + 3rem + 2rem) !important;
+        box-sizing: border-box;
+    }
+}
+.ad-affiliate-area > .ad-slot {
+    margin: 0.75rem auto;
+}
+.ad-affiliate-area > .ad-slot:last-child {
+    margin-bottom: 0;
 }
 
 @media (min-width: 768px) {
