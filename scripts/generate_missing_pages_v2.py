@@ -112,9 +112,9 @@ TEMPLATE = """<!DOCTYPE html>
 <div class="info-row"><span class="info-label">開催地域</span><span class="info-value">{region}</span></div>
 {src_row}{gcal_html}
 </div>
+</div>
 {ig_section}
 <div class="affiliate-section" id="affiliateSection"></div>
-</div>
 </div>
 </main>
 <div class="ad-slot ad-slot-article-bottom"><div class="ad-affiliate-area" id="adAffiliateArea"><div class="aff-slot" id="affSlot1"></div><div class="aff-slot" id="affSlot2"></div></div></div>
