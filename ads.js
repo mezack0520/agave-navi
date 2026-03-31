@@ -173,10 +173,14 @@
     initAdSense();
   }
 
-  // 広告エリアをdetail-mainの中に移動し、サイドバーとの重なりを防止
+  // 広告・アフィリエイトをdetail-mainの中に移動し、サイドバーとの重なりを防止
   function initAdPlacement() {
     var main = document.querySelector('.detail-main');
     if (!main) return;
+    // グリッド内のaffiliate-sectionも左カラムに移動
+    var affSection = document.querySelector('.detail-body > .affiliate-section');
+    if (affSection) main.appendChild(affSection);
+    // body直下の広告要素も移動
     var adBottom = document.querySelector('body > .ad-slot-article-bottom');
     var adArea = document.querySelector('body > .ad-affiliate-area');
     if (adBottom) main.appendChild(adBottom);
