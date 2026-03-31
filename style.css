@@ -2771,15 +2771,11 @@ main {
     padding: 0;
 }
 
-/* 広告エリア：デスクトップでサイドバーと重ならないよう制限 */
-@media (min-width: 1025px) {
-    .ad-affiliate-area {
-        max-width: 920px !important;
-        margin: 0 auto !important;
-        padding: 0 2rem !important;
-        padding-right: calc(340px + 3rem + 2rem) !important;
-        box-sizing: border-box;
-    }
+/* 広告エリア */
+.detail-main > .ad-affiliate-area {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 1rem 0 0 !important;
 }
 .ad-affiliate-area > .ad-slot {
     margin: 0.75rem auto;
