@@ -10,19 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
+      - name: Remove old generated pages for regeneration
+        run: |
+          for f in events/joyful-festival-2026.html events/the-botanical-show.html events/seiseihatake-2026.html events/shokuenseisai-5th.html events/plants-junkee-12th-2026.html events/bromeliad-festa-spring-2026.html events/hanauchu-dream-garden-26.html events/iku-matsuri-ichinomiya-spring.html events/tilly-fes-vol5-2026.html events/sora-to-taiyo-marche-2026.html events/bota-magic-2026.html events/wakayama-green-marche.html events/botanical-botanical-osaka.html events/nara-botanical-garden-2026.html events/bizarrefarm-spring-fes-2026.html events/kumagaya-taniku-fes-2026.html events/miyashita-park-popup-2026.html events/ibaraki-sky-palette-2026.html events/plant-freaks-4th-2026.html; do
+            [ -f "$f" ] && git rm "$f" && echo "Removed $f" || true
+          done
+
       - name: Generate missing event pages
         run: python scripts/generate_missing_pages_v2.py
-      
+
       - name: Commit generated pages
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add events/*.html
-          git diff --cached --quiet || git commit -m "feat: regenerate event detail pages with proper template"
+          git diff --cached --quiet || git commit -m "feat: regenerate event detail pages with correct data (v2)"
           git push
