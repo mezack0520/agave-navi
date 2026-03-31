@@ -168,7 +168,7 @@ def get_html_template():
 
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">ホーム</a> &gt;
-    <a href="/{cat_slug}">{cat_label}</a> &gt;
+    <a href="../{cat_slug}">{cat_label}</a> &gt;
     <span>{name}</span>
   </nav>
 
@@ -177,9 +177,9 @@ def get_html_template():
       <h1>{name}</h1>
       <div class="detail-meta">
         <span class="detail-status-badge" data-date="{date}" data-date-end="{date_end_or_start}"></span>
-        <span class="detail-meta-dot">&middot;</span>
+        <span class="detail-meta-dot"></span>
         <span class="detail-meta-item">{date_jp}</span>
-        <span class="detail-meta-dot">&middot;</span>
+        <span class="detail-meta-dot"></span>
         <span class="detail-meta-item">{prefecture}</span>
       </div>
       <div class="detail-header-actions">
@@ -202,7 +202,7 @@ def get_html_template():
 {map_section}
 
         <div class="detail-back">
-          <a href="/{cat_slug}" class="detail-back-link">&larr; {cat_label}に戻る</a>
+          <a href="../{cat_slug}" class="detail-back-link">{cat_label}に戻る</a>
         </div>
       </div>
 
@@ -235,10 +235,13 @@ def get_html_template():
     </div>
   </main>
 
-  <div class="ad-slot ad-slot-article-bottom">
-    <div class="ad-affiliate-area" id="adAffiliateArea">
-      <div class="aff-slot" id="affSlot1"></div>
-      <div class="aff-slot" id="affSlot2"></div>
+  <div class="ad-slot ad-slot-article-bottom" data-ad="article-bottom">
+  </div>
+
+  <div class="ad-affiliate-area" style="max-width:960px;margin:0 auto;padding:0 1rem;">
+    <div class="aff-slot" data-count="5"></div>
+    <div class="ad-slot">
+      <span class="ad-slot-label">広告</span>
     </div>
   </div>
 
@@ -320,16 +323,19 @@ def generate_page(ev):
     date_range_jp = format_date_range_jp(date, date_end if date_end != date else '')
 
     # Category for breadcrumb
-    cat_slug = 'listing.html'
-    cat_label = '即売会一覧'
+    cat_slug = 'category/sokubai.html'
+    cat_label = '即売会イベント一覧'
     if tags:
         first_tag = tags[0]
         if first_tag in ['マルシェ']:
-            cat_slug = 'listing.html'
-            cat_label = 'マルシェ一覧'
+            cat_slug = 'category/marche.html'
+            cat_label = 'マルシェイベント一覧'
         elif first_tag in ['展示会']:
-            cat_slug = 'listing.html'
-            cat_label = '展示会,即売会一覧'
+            cat_slug = 'category/exhibition.html'
+            cat_label = '展示会一覧'
+        elif first_tag in ['大型']:
+            cat_slug = 'category/large.html'
+            cat_label = '大型イベント一覧'
 
     # Meta description (truncated)
     meta_description = description[:120] if description else f'{name}のイベント情報'
@@ -428,7 +434,7 @@ def generate_page(ev):
 
     # Correction notice
     correction_notice = '''  <div class="correction-notice">
-    <p>掲載情報に誤りがある場合は<a href="/contact.html">お問い合わせ</a>よりご連絡ください。</p>
+    <p>掲載情報はなるべく精査しておりますが、万が一誤りがある場合は申し訳ございません。お手数をおかけいたしますが、<a href="../contact.html">お問い合わせフォーム</a>からご連絡いただけますと幸いです。</p>
   </div>'''
 
     # Fill template
