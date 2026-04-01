@@ -2771,18 +2771,6 @@ main {
     padding: 0;
 }
 
-/* 広告エリア */
-.detail-main > .ad-affiliate-area {
-    max-width: none !important;
-    padding: 0 !important;
-    margin: 1rem 0 0 !important;
-}
-.ad-affiliate-area > .ad-slot {
-    margin: 0.75rem auto;
-}
-.ad-affiliate-area > .ad-slot:last-child {
-    margin-bottom: 0;
-}
 
 @media (min-width: 768px) {
     .aff-card {
