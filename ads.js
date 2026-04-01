@@ -210,3 +210,13 @@
     initAll();
   }
 })();
+
+
+// === 関連イベント表示スクリプトの動的ロード ===
+(function() {
+  var s = document.createElement('script');
+  var base = (document.querySelector('link[rel="canonical"]') || {}).href || location.href;
+  s.src = base.replace(/\/events\/.*|\/category\/.*|[^\/]*\.html$/, '') + 'related-events.js';
+  s.async = true;
+  document.body.appendChild(s);
+})();
