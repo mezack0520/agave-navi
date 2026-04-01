@@ -13,52 +13,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Fix fav-link in event pages
-        run: |
-          OLD_BLOCK='      <a href="/listing.html" class="fav-link" id="favLink">
-        <span class="fav-icon">\&#10084;</span> 行きたい
-        <span class="fav-count" id="favCount">0</span>
-      </a>'
-
-          NEW_BLOCK='      <div class="header-actions">
-        <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
-          <span class="blob-bg"></span>
-          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="ikitai-label">行きたい</span>
-          <span class="ikitai-badge" id="ikitaiBadge"></span>
-        </a>
-      </div>'
-
-          cd events
-          for f in *.html; do
-            if grep -q 'href="/listing.html" class="fav-link"' "$f"; then
-              python3 -c "
-import sys
-with open(sys.argv[1], 'r') as fh:
-    content = fh.read()
-old = '''      <a href=\"/listing.html\" class=\"fav-link\" id=\"favLink\">
-        <span class=\"fav-icon\">&#10084;</span> 行きたい
-        <span class=\"fav-count\" id=\"favCount\">0</span>
-      </a>'''
-new = '''      <div class=\"header-actions\">
-        <a href=\"../ikitai.html\" class=\"ikitai-blob-btn\" id=\"ikitaiBlobBtn\">
-          <span class=\"blob-bg\"></span>
-          <svg class=\"ikitai-heart\" viewBox=\"0 0 24 24\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg>
-          <span class=\"ikitai-label\">行きたい</span>
-          <span class=\"ikitai-badge\" id=\"ikitaiBadge\"></span>
-        </a>
-      </div>'''
-content = content.replace(old, new)
-with open(sys.argv[1], 'w') as fh:
-    fh.write(content)
-print(f'Fixed: {sys.argv[1]}')
-" "$f"
-            fi
-          done
+        run: python3 scripts/fix-header-fav-link.py
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add events/
-          git diff --staged --quiet || git commit -m "fix: replace fav-link with ikitai-blob-btn in 23 event pages"
+          git diff --staged --quiet || git commit -m "fix: replace fav-link with ikitai-blob-btn in event pages"
           git push
