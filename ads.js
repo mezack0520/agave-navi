@@ -214,9 +214,15 @@ h/**
 
 // === 関連イベント表示スクリプトの動的ロード ===
 (function() {
+  if (!/\/events\//.test(location.pathname)) return;
   var s = document.createElement('script');
-  var base = (document.querySelector('link[rel="canonical"]') || {}).href || location.href;
-  s.src = base.replace(/\/events\/.*|\/category\/.*|[^\/]*\.html$/, '') + '/related-events.js';
+  s.src = location.origin + '/related-events.js';
   s.async = true;
-  document.body.appendChild(s);
+  if (document.body) {
+    document.body.appendChild(s);
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.appendChild(s);
+    });
+  }
 })();
