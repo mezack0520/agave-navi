@@ -184,10 +184,14 @@ def get_html_template():
         <span class="logo-en">AGAVE EVENT NAVI</span>
         <span class="logo-jp">アガベイベントナビ</span>
       </a>
-      <a href="/listing.html" class="fav-link" id="favLink">
-        <span class="fav-icon">&#10084;</span> 行きたい
-        <span class="fav-count" id="favCount">0</span>
-      </a>
+      <div class="header-actions">
+        <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
+          <span class="blob-bg"></span>
+          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="ikitai-label">行きたい</span>
+          <span class="ikitai-badge" id="ikitaiBadge"></span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -313,8 +317,8 @@ def get_html_template():
         btn.classList.remove('is-fav');
         label.textContent = '行きたい';
       }}
-      const countEl = document.getElementById('favCount');
-      if (countEl) countEl.textContent = favs.length;
+      const badge = document.getElementById('ikitaiBadge');
+      if (badge) badge.textContent = favs.length || '';
     }}
     updateFavUI();
   </script>
