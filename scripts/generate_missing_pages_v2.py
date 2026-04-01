@@ -150,6 +150,31 @@ def get_html_template():
     }}{offers_block}
   }}
   </script>
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://agave-navi.com/"
+      }},
+      {{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{cat_label}",
+        "item": "https://agave-navi.com/{cat_slug}"
+      }},
+      {{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{name}"
+      }}
+    ]
+  }}
+  </script>
 </head>
 <body>
 
