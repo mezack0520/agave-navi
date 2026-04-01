@@ -361,15 +361,11 @@ def generate_page(ev):
     else:
         admission_row = ''
 
-    # Source URL row (conditional)
-    if source_url:
-        # Detect if it's Instagram
-        if 'instagram.com' in source_url:
-            source_label = 'Instagram'
-            source_display = 'Instagram →'
-        else:
-            source_label = '公式サイト'
-            source_display = '公式サイト →'
+    # Source URL row (conditional) - Instagram links are shown only in the
+    # dedicated 公式Instagram block below, so skip them here.
+    if source_url and 'instagram.com' not in source_url:
+        source_label = '公式サイト'
+        source_display = '公式サイト →'
         source_url_row = f'''          <div class="info-row">
             <span class="info-label">{source_label}</span>
             <span class="info-value"><a href="{escape_html(source_url)}" target="_blank" rel="noopener" style="color:var(--accent-pop);text-decoration:none">{source_display}</a></span>
