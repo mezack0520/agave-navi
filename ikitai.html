@@ -208,10 +208,11 @@
                     card.className = 'event-card';
                     card.setAttribute('data-slug', ev.slug);
                     const tags = (ev.tags||[]).map(t => '<span class="event-tag">'+t+'</span>').join('');
-                    const imgSrc = ev.imageUrl || 'images/events/'+ev.slug+'-thumb.jpg';
-                    const onerror = ev.imageUrl ? ' onerror="this.src=\'images/events/'+ev.slug+'-thumb.jpg\'"' : '';
+                    const imgHtml = ev.imageUrl
+                        ? '<img src="' + ev.imageUrl + '" alt="' + ev.name + '" class="event-thumb" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;event-thumb event-no-image&quot;></div>\'">'  
+                        : '<div class="event-thumb event-no-image"></div>';
                     card.innerHTML = `
-                        <img src="${imgSrc}" alt="${ev.name}" class="event-thumb" loading="lazy"${onerror}>
+                        ${imgHtml}
                         <button class="fav-btn favorited" onclick="removeFav(event, '${ev.slug}')" aria-label="行きたい解除">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         </button>
