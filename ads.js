@@ -1,4 +1,4 @@
-/**
+h/**
  * アガベイベントナビ - 広告・アフィリエイト管理
  * Google AdSense + Amazon / 楽天 / Yahoo! アフィリエイト ランダム表示
  */
@@ -216,7 +216,7 @@
 (function() {
   var s = document.createElement('script');
   var base = (document.querySelector('link[rel="canonical"]') || {}).href || location.href;
-  s.src = base.replace(/\/events\/.*|\/category\/.*|[^\/]*\.html$/, '') + 'related-events.js';
+  s.src = base.replace(/\/events\/.*|\/category\/.*|[^\/]*\.html$/, '') + '/related-events.js';
   s.async = true;
   document.body.appendChild(s);
 })();
