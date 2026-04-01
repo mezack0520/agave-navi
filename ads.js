@@ -173,26 +173,35 @@
     initAdSense();
   }
 
-  // 広告・アフィリエイトをdetail-mainの中に移動し、サイドバーとの重なりを防止
-  function initAdPlacement() {
-    var main = document.querySelector('.detail-main');
-    if (!main) return;
-    // グリッド内のaffiliate-sectionも左カラムに移動
-    var affSection = document.querySelector('.detail-body > .affiliate-section');
-    if (affSection) main.appendChild(affSection);
-    // body直下の広告要素も移動
-    var adBottom = document.querySelector('body > .ad-slot-article-bottom');
-    var adArea = document.querySelector('body > .ad-affiliate-area');
-    if (adBottom) main.appendChild(adBottom);
-    if (adArea) {
-      adArea.removeAttribute('style');
-      main.appendChild(adArea);
+  // サイドバーがaffiliate-sectionに重ならないようsticky位置を制御
+  function initSidebarControl() {
+    var sidebar = document.querySelector('.detail-sidebar');
+    var affSection = document.querySelector('.affiliate-section');
+    if (!sidebar || !affSection) return;
+
+    var defaultTop = 70;
+
+    function update() {
+      var affTop = affSection.getBoundingClientRect().top;
+      var sidebarH = sidebar.offsetHeight;
+      var gap = 20;
+      var available = affTop - sidebarH - gap;
+
+      if (available < defaultTop) {
+        sidebar.style.top = available + 'px';
+      } else {
+        sidebar.style.top = defaultTop + 'px';
+      }
     }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
   }
 
   function initAll() {
     init();
-    initAdPlacement();
+    initSidebarControl();
   }
 
   if (document.readyState === 'loading') {
