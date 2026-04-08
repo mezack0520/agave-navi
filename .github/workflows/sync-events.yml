@@ -1,7 +1,9 @@
-name: Sync Events (one-time)
+name: Sync New Events
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [sync-events]
 
 permissions:
   contents: write
@@ -12,64 +14,53 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update events.json
+      - name: Merge new events into events.json
         run: |
           python3 << 'PYEOF'
-          import json
-          from datetime import date
+          import json, os
 
-          TODAY = date(2026, 4, 8)
+          if not os.path.exists("new-events.json"):
+              print("No new-events.json found. Nothing to do.")
+              exit(0)
 
           with open("events.json", "r", encoding="utf-8") as f:
               events = json.load(f)
 
-          for e in events:
-              d = e.get("dateEnd") or e.get("date")
-              if d:
-                  try:
-                      end = date.fromisoformat(d)
-                      if end < TODAY and e["status"] == "upcoming":
-                          e["status"] = "past"
-                          print(f"past: {e['slug']}")
-                  except:
-                      pass
-
-          fixes = {
-              "plants-garage-market": {"prefecture": "\u5927\u5206", "region": "\u4e5d\u5dde", "location": "\u6d25\u4e45\u898b\u5e02\u6c11\u4f1a\u9928"},
-              "collect-plants-vol2": {"prefecture": "\u718a\u672c", "region": "\u4e5d\u5dde", "location": "\u30b0\u30e9\u30f3\u30e1\u30c3\u30bb\u718a\u672c"},
-              "tenkaichi-2026": {"prefecture": "\u5927\u962a", "region": "\u8fd1\u757f", "location": "\u4eac\u30bb\u30e9\u30c9\u30fc\u30e0\u5927\u962a"},
-          }
-          for e in events:
-              if e["slug"] in fixes:
-                  for k, v in fixes[e["slug"]].items():
-                      e[k] = v
+          with open("new-events.json", "r", encoding="utf-8") as f:
+              new_events = json.load(f)
 
           existing = {e["slug"] for e in events}
-          new_events = [
-              {"slug":"the-botanical-show","name":"THE BOTANICAL SHOW 5th","date":"2026-04-04","dateEnd":"2026-04-05","dateDisplay":"2026.04.04-05","location":"THE OUTLETS SHONAN HIRATSUKA","prefecture":"\u795e\u5948\u5ddd","region":"\u95a2\u6771","tags":["\u5373\u58f2\u4f1a","\u5c55\u793a\u4f1a"],"status":"past","description":"\u6e58\u5357\u5e73\u585a\u30a2\u30a6\u30c8\u30ec\u30c3\u30c8\u3067\u958b\u50ac\u3055\u308c\u308b\u30dc\u30bf\u30cb\u30ab\u30eb\u30a4\u30d9\u30f3\u30c8\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"bromeliad-festa-spring-2026","name":"BROMELIAD FESTA SPRING 2026","date":"2026-04-05","dateEnd":"2026-04-05","dateDisplay":"2026.04.05","location":"\u677f\u6a4b\u533a\u7acb\u6587\u5316\u4f1a\u9928","prefecture":"\u6771\u4eac","region":"\u95a2\u6771","tags":["\u5373\u58f2\u4f1a"],"status":"past","description":"\u30d6\u30ed\u30e1\u30ea\u30a2\u5c02\u9580\u306e\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"hanauchu-dream-garden-26","name":"\u7b2c26\u56de \u82b1\u5b87\u5b99\u30c9\u30ea\u30fc\u30e0\u30ac\u30fc\u30c7\u30f3","date":"2026-04-10","dateEnd":"2026-04-12","dateDisplay":"2026.04.10-12","location":"\u82b1\u5b87\u5b99","prefecture":"\u5175\u5eab","region":"\u8fd1\u757f","tags":["\u5373\u58f2\u4f1a","\u5927\u578b"],"status":"upcoming","description":"\u5175\u5eab\u770c\u5ddd\u897f\u5e02\u306e\u82b1\u5b87\u5b99\u3067\u958b\u50ac\u3055\u308c\u308b\u5927\u578b\u690d\u7269\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"iku-matsuri-ichinomiya-spring","name":"\u6a39\u796d in \u4e00\u5bae 2026\u6625","date":"2026-04-11","dateEnd":"2026-04-12","dateDisplay":"2026.04.11-12","location":"\u4e00\u5bae\u5e02\u7dcf\u5408\u4f53\u80b2\u9928","prefecture":"\u611b\u77e5","region":"\u6771\u6d77","tags":["\u5373\u58f2\u4f1a","\u5927\u578b"],"status":"upcoming","description":"\u611b\u77e5\u770c\u4e00\u5bae\u5e02\u3067\u958b\u50ac\u3055\u308c\u308b\u690d\u7269\u306e\u796d\u5178\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"tilly-fes-vol5-2026","name":"Tilly FES Vol.5","date":"2026-04-11","dateEnd":"2026-04-12","dateDisplay":"2026.04.11-12","location":"\u6771\u4eac\u90fd\u5185","prefecture":"\u6771\u4eac","region":"\u95a2\u6771","tags":["\u5373\u58f2\u4f1a"],"status":"upcoming","description":"\u30c1\u30e9\u30f3\u30b8\u30a2\u5c02\u9580\u306e\u5373\u58f2\u4f1a Vol.5\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"agave-meeting-2026-kobe","name":"AGAVE MEETING 2026 KOBE","date":"2026-04-12","dateEnd":"2026-04-12","dateDisplay":"2026.04.12","location":"\u795e\u6238\u5e02\u5185","prefecture":"\u5175\u5eab","region":"\u8fd1\u757f","tags":["\u5373\u58f2\u4f1a","\u30a2\u30ac\u30d9"],"status":"upcoming","description":"\u795e\u6238\u3067\u958b\u50ac\u3055\u308c\u308b\u30a2\u30ac\u30d9\u5c02\u9580\u306e\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"jungle-plants-market","name":"JUNGLE PLANTS MARKET","date":"2026-04-12","dateEnd":"2026-04-12","dateDisplay":"2026.04.12","location":"\u57fc\u7389\u770c\u5185","prefecture":"\u57fc\u7389","region":"\u95a2\u6771","tags":["\u5373\u58f2\u4f1a"],"status":"upcoming","description":"\u57fc\u7389\u3067\u958b\u50ac\u3055\u308c\u308b\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"sora-to-taiyo-marche-2026","name":"\u7a7a\u3068\u592a\u967d\u306e\u30de\u30eb\u30b7\u30a7","date":"2026-04-12","dateEnd":"2026-04-12","dateDisplay":"2026.04.12","location":"\u8328\u57ce\u770c\u5185","prefecture":"\u8328\u57ce","region":"\u95a2\u6771","tags":["\u30de\u30eb\u30b7\u30a7"],"status":"upcoming","description":"\u8328\u57ce\u770c\u3067\u958b\u50ac\u3055\u308c\u308b\u690d\u7269\u30de\u30eb\u30b7\u30a7\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"plants-plants-plants-2026","name":"PLANTS PLANTS PLANTS","date":"2026-04-13","dateEnd":"2026-04-13","dateDisplay":"2026.04.13","location":"\u5c90\u961c\u770c\u5185","prefecture":"\u5c90\u961c","region":"\u4e2d\u90e8","tags":["\u5373\u58f2\u4f1a"],"status":"upcoming","description":"\u5c90\u961c\u770c\u3067\u958b\u50ac\u3055\u308c\u308b\u690d\u7269\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"bts-beppu-taniku-show-2026","name":"BTS - BEPPU TANIKU SHOW","date":"2026-04-18","dateEnd":"2026-04-18","dateDisplay":"2026.04.18","location":"\u5225\u5e9c\u5e02\u5185","prefecture":"\u5927\u5206","region":"\u4e5d\u5dde","tags":["\u5373\u58f2\u4f1a","\u591a\u8089"],"status":"upcoming","description":"\u5927\u5206\u770c\u5225\u5e9c\u5e02\u3067\u958b\u50ac\u3055\u308c\u308b\u591a\u8089\u690d\u7269\u306e\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"shokubutsu-hyakkaten-2026","name":"\u690d\u7269\u767e\u8ca8\u5c55","date":"2026-04-17","dateEnd":"2026-04-18","dateDisplay":"2026.04.17-18","location":"\u6771\u4eac\u90fd\u5185","prefecture":"\u6771\u4eac","region":"\u95a2\u6771","tags":["\u5373\u58f2\u4f1a","\u5c55\u793a\u4f1a","\u5927\u578b"],"status":"upcoming","description":"\u6771\u4eac\u3067\u958b\u50ac\u3055\u308c\u308b\u5927\u578b\u690d\u7269\u5c55\u793a\u5373\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"},
-              {"slug":"monster-plants-2nd-marugame-2026","name":"\u30e2\u30f3\u30b9\u30bf\u30fc\u30d7\u30e9\u30f3\u30c4 \u7b2c2\u5f3e","date":"2026-04-12","dateEnd":"2026-04-12","dateDisplay":"2026.04.12","location":"\u30a2\u30a4\u30ec\u30c3\u30af\u30b9","prefecture":"\u9999\u5ddd","region":"\u56db\u56fd","tags":["\u5373\u58f2\u4f1a","\u73cd\u5947\u690d\u7269"],"status":"upcoming","description":"\u9999\u5ddd\u770c\u4e38\u4e80\u5e02\u3067\u958b\u50ac\u3055\u308c\u308b\u73cd\u5947\u690d\u7269\u8ca9\u58f2\u4f1a\u3002","sourceUrl":"","eventStatus":"confirmed"}
-          ]
+          added = []
+          updated = []
+
           for ne in new_events:
               if ne["slug"] not in existing:
                   events.append(ne)
-                  print(f"add: {ne['slug']}")
+                  added.append(ne["slug"])
+              else:
+                  # Update existing event fields if provided
+                  for e in events:
+                      if e["slug"] == ne["slug"]:
+                          for k, v in ne.items():
+                              if v and v != e.get(k):
+                                  e[k] = v
+                                  if ne["slug"] not in updated:
+                                      updated.append(ne["slug"])
+                          break
 
-          events.sort(key=lambda e: (0 if e["status"]=="upcoming" else 1, e["date"]))
+          events.sort(key=lambda e: (0 if e["status"]=="upcoming" else 1, e.get("date","")))
+
           with open("events.json", "w", encoding="utf-8") as f:
               json.dump(events, f, indent=2, ensure_ascii=False)
 
           up = sum(1 for e in events if e["status"]=="upcoming")
           print(f"Total: {len(events)}, Upcoming: {up}")
+          if added:
+              print(f"Added {len(added)}: {', '.join(added)}")
+          if updated:
+              print(f"Updated {len(updated)}: {', '.join(updated)}")
+          if not added and not updated:
+              print("No changes.")
           PYEOF
 
       - name: Add cards to index.html for new slugs
@@ -99,20 +90,22 @@ jobs:
                   pref = e.get("prefecture","")
                   region = e.get("region","")
                   de = e.get("dateEnd","")
-                  card = f'''<div class="event-card" data-tags="{tags_csv}" data-status="upcoming" data-region="{region}" data-pref="{pref}" data-date="{e['date']}" data-date-end="{de}" data-slug="{slug}">
-          <div class="event-thumb event-no-image"></div>
-          <button class="fav-btn" onclick="toggleFav(event,'{slug}')" aria-label="\u884c\u304d\u305f\u3044"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
-          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div></div>
-          <div class="event-card-body">
-          <div class="event-header"><span class="event-date">{dd}</span><span class="event-status"></span></div>
-          <h3 class="event-title">{e['name']}</h3>
-          <p class="event-description">{e.get('description','')}</p>
-          <div class="event-meta-row"><span class="event-region">{pref}</span></div>
-          <a href="events/{slug}.html" class="event-link">\u8a73\u7d30\u3092\u898b\u308b</a>
-          </div>
-          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>\u884c\u304d\u305f\u3044</span></div>
-          </div>
-          '''
+                  card = f'''<div class="event-card" data-tags="{tags_csv}" data-status="upcoming" data-region="{region}" data-prefecture="{pref}" data-slug="{slug}">
+              <div class="event-thumb event-no-image"></div>
+              <button class="fav-btn" onclick="toggleFav(event,'{slug}')" aria-label="\u884c\u304d\u305f\u3044\u3044">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+              <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div></div>
+              <div class="event-card-body">
+                <div class="event-header"><span class="event-date">{dd}</span><span class="event-status"></span></div>
+                <h3 class="event-title">{e['name']}</h3>
+                <p class="event-description">{e.get('description','')}</p>
+                <div class="event-meta-row"><span class="event-region">{pref}</span></div>
+                <a href="events/{slug}.html" class="event-link">\u8a73\u7d30\u3092\u898b\u308b \u2192</a>
+              </div>
+              <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            </div>
+...'''
                   cards += card
                   print(f"Card added: {slug}")
 
@@ -130,10 +123,17 @@ jobs:
       - name: Generate missing pages
         run: python3 scripts/generate_missing_pages_v2.py
 
+      - name: Remove new-events.json after processing
+        run: |
+          if [ -f new-events.json ]; then
+            rm new-events.json
+            echo "Removed new-events.json"
+          fi
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add events.json index.html events/
-          git diff --staged --quiet || git commit -m "feat: sync events - add 12 new events, fix statuses and prefectures"
+          git add events.json index.html events/ new-events.json || true
+          git diff --staged --quiet || git commit -m "feat: sync new events from new-events.json"
           git push
