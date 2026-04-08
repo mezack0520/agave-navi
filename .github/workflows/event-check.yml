@@ -16,11 +16,83 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Set date variable
+        id: date
+        run: |
+          echo "today=$(TZ=Asia/Tokyo date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
+
+      - name: Count recently added events
+        id: new_events
+        run: |
+          python3 << 'PYEOF'
+          import json, subprocess, os
+
+          # Get current events
+          with open("events.json") as f:
+              current = json.load(f)
+          current_slugs = {e["slug"] for e in current}
+          current_map = {e["slug"]: e for e in current}
+
+          # Try to get yesterday's events from git (compare against ~24h ago)
+          old_slugs = set()
+          try:
+              # Find the commit from before the last sync-events run
+              result = subprocess.run(
+                  ["git", "log", "--since=24 hours ago", "--oneline", "--", "events.json"],
+                  capture_output=True, text=True
+              )
+              commits = result.stdout.strip().split('\n')
+              if commits and commits[0]:
+                  # Get the state BEFORE the oldest recent commit
+                  oldest_hash = commits[-1].split()[0]
+                  old_json = subprocess.check_output(
+                      ["git", "show", f"{oldest_hash}~1:events.json"],
+                      stderr=subprocess.DEVNULL
+                  ).decode()
+                  old_slugs = {e["slug"] for e in json.loads(old_json)}
+              else:
+                  # No changes in 24h, compare with HEAD~1
+                  old_json = subprocess.check_output(
+                      ["git", "show", "HEAD~1:events.json"],
+                      stderr=subprocess.DEVNULL
+                  ).decode()
+                  old_slugs = {e["slug"] for e in json.loads(old_json)}
+          except Exception as ex:
+              print(f"Warning: Could not get previous events: {ex}")
+              old_slugs = current_slugs  # No diff if we can't compare
+
+          added = current_slugs - old_slugs
+          added_events = [current_map[s] for s in sorted(added) if s in current_map]
+
+          output = {"count": len(added), "events": []}
+          for e in added_events:
+              output["events"].append({
+                  "slug": e["slug"],
+                  "name": e.get("name", ""),
+                  "date": e.get("date", ""),
+                  "dateEnd": e.get("dateEnd", ""),
+                  "location": e.get("location", ""),
+                  "prefecture": e.get("prefecture", "")
+              })
+
+          with open("new-events-added.json", "w", encoding="utf-8") as f:
+              json.dump(output, f, ensure_ascii=False, indent=2)
+
+          with open(os.environ.get("GITHUB_OUTPUT", "/dev/null"), "a") as f:
+              f.write(f"count={len(added)}\n")
+
+          print(f"New events added (last 24h): {len(added)}")
+          for e in added_events:
+              print(f"  - {e.get('name', e['slug'])}")
+          PYEOF
 
       - name: Run event check script
         id: check
@@ -54,6 +126,14 @@ jobs:
           with open('check-results.json') as f:
               data = json.load(f)
 
+          # Load new events added info
+          new_added = {"count": 0, "events": []}
+          try:
+              with open('new-events-added.json') as f:
+                  new_added = json.load(f)
+          except:
+              pass
+
           today = date.today().strftime('%Y/%m/%d')
           lines = []
           lines.append(f"【アガベイベントナビ】イベント定期チェック結果")
@@ -61,8 +141,10 @@ jobs:
           lines.append(f"")
           lines.append(f"━━━ サマリー ━━━")
           lines.append(f"総イベント数: {data['total_events']}")
+
           today_events = data.get('today_events', [])
-          lines.append(f"🎉 本日開催中: {len(today_events)}")
+          lines.append(f"🎪 本日開催中: {len(today_events)}")
+          lines.append(f"🆕 本日追加: {new_added['count']}件")
           lines.append(f"今後のイベント: {len(data['upcoming_events'])}")
           lines.append(f"終了済み: {len(data['past_events'])}")
           lines.append(f"詳細未定(TBD): {len(data['tbd_events'])}")
@@ -71,9 +153,21 @@ jobs:
 
           has_updates = False
 
+          # New events added section
+          if new_added['count'] > 0:
+              has_updates = True
+              lines.append(f"━━━ 🆕 本日追加イベント（{new_added['count']}件） ━━━")
+              for ne in new_added['events']:
+                  end_info = f"〜{ne['dateEnd']}" if ne.get('dateEnd') else ''
+                  lines.append(f"・{ne['name']}")
+                  lines.append(f"  日時: {ne['date']}{end_info}")
+                  lines.append(f"  場所: {ne.get('prefecture', '')} {ne.get('location', '')}")
+                  lines.append(f"  URL: https://agave-navi.com/events/{ne['slug']}.html")
+                  lines.append(f"")
+
           if today_events:
               has_updates = True
-              lines.append(f"━━━ 🎉 本日開催中！ ━━━")
+              lines.append(f"━━━ 🎪 本日開催中！ ━━━")
               for te in today_events:
                   end_info = f"〜{te['dateEnd']}" if te.get('dateEnd') and te['dateEnd'] != te['date'] else ''
                   lines.append(f"・{te['name']}")
@@ -148,7 +242,7 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "【アガベイベント】定期チェック結果 ${{ github.event.repository.name }} $(date +'%Y/%m/%d')"
+          subject: "【アガベイベント】定期チェック結果 agave-navi ${{ steps.date.outputs.today }}"
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: file://email-body.txt
@@ -198,4 +292,4 @@ jobs:
 
       - name: Cleanup check results
         run: |
-          rm -f check-results.json email-body.txt has-updates.txt
+          rm -f check-results.json email-body.txt has-updates.txt new-events-added.json
