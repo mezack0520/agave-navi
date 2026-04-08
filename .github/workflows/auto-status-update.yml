@@ -1,0 +1,98 @@
+name: Auto Status Update
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # 毎日 07:00 JST (22:00 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update event statuses
+        run: |
+          python3 << 'PYEOF'
+          import json
+          from datetime import datetime, date
+
+          TODAY = date.today()
+
+          with open("events.json", "r", encoding="utf-8") as f:
+              events = json.load(f)
+
+          changed = []
+          for e in events:
+              d = e.get("dateEnd") or e.get("date")
+              if d and e.get("status") == "upcoming":
+                  try:
+                      end = date.fromisoformat(d)
+                      if end < TODAY:
+                          e["status"] = "past"
+                          changed.append(e["slug"])
+                  except:
+                      pass
+
+          if changed:
+              with open("events.json", "w", encoding="utf-8") as f:
+                  json.dump(events, f, indent=2, ensure_ascii=False)
+              print(f"Updated {len(changed)} events to past:")
+              for s in changed:
+                  print(f"  - {s}")
+          else:
+              print("No status changes needed.")
+          PYEOF
+
+      - name: Update index.html status badges
+        if: success()
+        run: |
+          python3 << 'PYEOF'
+          import json, re
+
+          with open("events.json", "r", encoding="utf-8") as f:
+              events = json.load(f)
+
+          past_slugs = {e["slug"] for e in events if e.get("status") == "past"}
+
+          with open("index.html", "r", encoding="utf-8") as f:
+              html = f.read()
+
+          # Update event count
+          up_count = sum(1 for e in events if e["status"] == "upcoming")
+          html = re.sub(
+              r'<span class="event-count" id="eventCount">\d+\u4ef6</span>',
+              f'<span class="event-count" id="eventCount">{up_count}\u4ef6</span>',
+              html
+          )
+
+          # Move past event cards to past section if needed
+          changed = False
+          for slug in past_slugs:
+              pattern = f'data-slug="{slug}"[^>]*data-status="upcoming"'
+              if re.search(pattern, html):
+                  html = html.replace(
+                      f'data-slug="{slug}" data-status="upcoming"',
+                      f'data-slug="{slug}" data-status="past"'
+                  )
+                  changed = True
+                  print(f"Badge updated: {slug}")
+
+          if changed:
+              with open("index.html", "w", encoding="utf-8") as f:
+                  f.write(html)
+              print(f"Updated index.html. Upcoming count: {up_count}")
+          else:
+              print("No badge changes needed.")
+          PYEOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add events.json index.html
+          git diff --staged --quiet || git commit -m "chore: auto-update event statuses"
+          git push
