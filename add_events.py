@@ -64,7 +64,7 @@ new_events_data = [
         "prefecture": "埼玉",
         "region": "関東",
         "tags": ["マルシェ"],
-        "description": "埼玉県久喜市で開催されるジャングルプランツのマルシェ。アロイドやジャングルプランツが揃う。",
+        "description": "埼犉縌久喙市で開催されるジャングルプランツのマルシェ。アロイドやジャングルプランツが揃う。",
     },
     {
         "name": "Our Plants ver.2.03",
@@ -160,7 +160,7 @@ new_events_data = [
         "name": "仙台竜舌露店 Vol.2",
         "date": "2026-06-27",
         "dateEnd": None,
-        "location": "虹色路店前 ガレージスペース",
+        "location": "虹色路康前 ガレージスペース",
         "prefecture": "宮城",
         "region": "東北",
         "tags": ["マルシェ"],
@@ -237,7 +237,8 @@ def create_event_dict(data):
         "admission": "無料",
         "description": data["description"],
         "sourceUrl": "",
-        "eventStatus": "confirmed"
+        "eventStatus": "confirmed",
+        "addedDate": datetime.now().strftime('%Y-%m-%d')
     }
 
     if data.get("dateEnd"):
@@ -404,7 +405,7 @@ def create_event_html(event):
                         <span class="info-label">カテゴリ</span>
                         <span class="info-value">{tags[0] if tags else '即売会'}</span>
                     </div>
-                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text={name}&dates={schema_date.replace('-', '')}%2F{(datetime.strptime(event.get('dateEnd', event['date']), '%Y-%m-%d') + __import__('datetime').timedelta(days=1)).strftime('%Y%m%d')}&location={prefecture}&details={name}+-+%E3%82%A2%E3%82%AC%E3%83%99%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%8A%E3%83%93+https%3A%2F%2Fagave-navi.com%2F" target="_blank" rel="noopener" class="gcal-btn">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text={name}&dates={schema_date.replace('-', '')}%2F{(datetime.strptime(event.get('dateEnd', event['date']), '%Y-%m-%d') + __import__('datetime').timedelta(days=1)).strftime('%Y%m%d')}&location={prefecture}&details={name}+-+%E3%82%A2%E3%82%AC%E3%83%99%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%8A%E3%83%92+https%3A%2F%2Fagave-navi.com%2F" target="_blank" rel="noopener" class="gcal-btn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                         Googleカレンダーに追加
                     </a>
