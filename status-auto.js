@@ -68,6 +68,25 @@
     }
   });
 
+  // 新着バッジを追加: addedDate が7日以内のイベントに表示
+  document.querySelectorAll('.event-card').forEach(function (card) {
+    var addedDateStr = card.getAttribute('data-added-date');
+    if (!addedDateStr) return;
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var addedDate = new Date(addedDateStr + 'T00:00:00');
+    var daysSinceAdded = Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+
+    // 7日以内なら新着バッジを表示
+    if (daysSinceAdded >= 0 && daysSinceAdded <= 7) {
+      var badge = document.createElement('span');
+      badge.className = 'new-badge';
+      badge.textContent = '新着';
+      card.appendChild(badge);
+    }
+  });
+
   // 終了イベントを自動で「終了したイベント」セクションに移動
   var pastGrid = document.getElementById('pastEventsGrid');
   if (pastGrid && endedCards.length > 0) {
@@ -156,4 +175,9 @@
   if (typeof initPastLoadMore === 'function') {
     initPastLoadMore();
   }
+
+  // Inject new-badge CSS
+  var style = document.createElement('style');
+  style.textContent = '.new-badge { position:absolute; top:8px; left:8px; background:#00b894; color:#fff; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:4px; z-index:3; letter-spacing:0.05em; pointer-events:none; }';
+  document.head.appendChild(style);
 })();
