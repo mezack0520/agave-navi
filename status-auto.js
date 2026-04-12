@@ -175,6 +175,9 @@
   if (typeof initPastLoadMore === 'function') {
     initPastLoadMore();
   }
+  if (typeof applyFilters === 'function') {
+    applyFilters();
+  }
 
   // Inject new-badge CSS
   var style = document.createElement('style');
