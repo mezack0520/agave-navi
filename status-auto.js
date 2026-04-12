@@ -137,24 +137,35 @@
     }
   }
 
-  // detail ページ: .detail-status-badge を更新
+  // detail ページ: .detail-status-badge を更新（events.jsonから終了日も取得）
   var badge = document.querySelector('.detail-status-badge');
   var detailDate = document.querySelector('.detail-meta-item');
   if (badge && detailDate) {
-    // data-date 属性があればそれを使う、なければテキストからパース
     var dateAttr = badge.getAttribute('data-date');
     if (!dateAttr) {
-      // テキストから "2026年4月4日" のような日付を抽出
       var match = detailDate.textContent.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
       if (match) {
         dateAttr = match[1] + '-' + match[2].padStart(2, '0') + '-' + match[3].padStart(2, '0');
       }
     }
+    var dateEndAttr = badge.getAttribute('data-date-end') || '';
+    // data-date-endがない場合、events.jsonからslugで終了日を取得
+    if (dateAttr && !dateEndAttr) {
+      var slug = location.pathname.replace(/.*\//, '').replace(/\.html$/, '');
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/events.json', false);
+        xhr.send();
+        if (xhr.status === 200) {
+          var evts = JSON.parse(xhr.responseText);
+          var ev = evts.find(function(e) { return e.slug === slug; });
+          if (ev && ev.dateEnd) dateEndAttr = ev.dateEnd;
+        }
+      } catch(e) {}
+    }
     if (dateAttr) {
-      var dateEndAttr = badge.getAttribute('data-date-end') || '';
       var status = getStatus(dateAttr, dateEndAttr);
       badge.textContent = status.label;
-      // 色を直接適用（詳細ページはCSSクラスではなくインラインスタイル）
       var colors = {
         'status-today': '#e84393',
         'status-thisweek': '#d63031',
