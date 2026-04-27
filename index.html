@@ -2595,7 +2595,7 @@
             cards.forEach((card, i) => {
                 if (i >= PAST_CARDS_INIT) {
                     card.classList.add('past-load-more-hidden');
-                }
+                }else{card.classList.remove('load-more-hidden');}
             });
             const wrap = document.getElementById('pastLoadMoreWrap');
             if (wrap) {
@@ -2609,7 +2609,7 @@
             let delay = 0;
             cards.forEach((card) => {
                 if (card.classList.contains('past-load-more-hidden')) {
-                    card.classList.remove('past-load-more-hidden');card.classList.remove('load-more-hidden');
+                    card.classList.remove('past-load-more-hidden');
                     card.style.display = '';
                     card.classList.add('filter-show');
                     card.style.animationDelay = delay + 'ms';
