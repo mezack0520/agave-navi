@@ -1335,7 +1335,7 @@
 </div>
 
 <div class="event-card" data-tags="大型,展示会,即売会" data-status="upcoming" data-region="関東" data-pref="東京" data-date="2026-05-23" data-date-end="2026-05-24" data-slug="tenkaichi-2026">
-                        <div class="event-thumb event-no-image"></div>
+                        <div class="event-thumb"><img src="https://no1plantae.com/images/0/9/9/5/1/099514bd64e0fd9ea8df64efc26b32ff4463f7c5-img7956.jpeg" alt="" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('event-no-image');this.remove();"></div>
                         <button class="fav-btn" onclick="toggleFav(event, 'tenkaichi-2026')" aria-label="行きたい">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         </button>
@@ -2735,6 +2735,66 @@
 
         initMobileFav();
     </script>
+<script>
+/* === URLパラメータ対応 (SEO & シェア用) === */
+(function(){
+  function updateURL(){
+    var params=new URLSearchParams();
+    if(activeTag&&activeTag!=='all') params.set('tag',activeTag);
+    if(activeRegion&&activeRegion!=='all') params.set('region',activeRegion);
+    if(activePref&&activePref!=='all') params.set('pref',activePref);
+    var q=document.getElementById('searchInput').value.trim();
+    if(q) params.set('q',q);
+    var url=params.toString()?location.pathname+'?'+params.toString():location.pathname;
+    history.replaceState({tag:activeTag,region:activeRegion,pref:activePref,q:q},'',url);
+  }
+  // Wrap existing functions
+  var _fE=window.filterEvents;
+  window.filterEvents=function(tag){_fE(tag);updateURL();};
+  var _sR=window.selectRegion;
+  window.selectRegion=function(r){_sR(r);updateURL();};
+  var _sP=window.selectPref;
+  window.selectPref=function(p){_sP(p);updateURL();};
+  var _sE=window.searchEvents;
+  window.searchEvents=function(q){_sE(q);updateURL();};
+  // popstate (back/forward)
+  window.addEventListener('popstate',function(){
+    var p=new URLSearchParams(location.search);
+    var tag=p.get('tag')||'all';
+    var region=p.get('region')||'all';
+    var pref=p.get('pref')||'all';
+    var q=p.get('q')||'';
+    activeTag=tag;
+    document.querySelectorAll('.filter-tab').forEach(function(b){
+      var oc=b.getAttribute('onclick')||'';
+      b.classList.toggle('active',oc.indexOf("'"+tag+"'")>-1||(tag==='all'&&oc.indexOf("'all'")>-1));
+    });
+    if(region!==activeRegion) _sR(region);
+    if(pref!==activePref) _sP(pref);
+    document.getElementById('searchInput').value=q;
+    applyFilters(q||undefined);
+  });
+  // Init from URL on load
+  var p=new URLSearchParams(location.search);
+  if(p.toString()){
+    var tag=p.get('tag')||'all';
+    var region=p.get('region')||'all';
+    var pref=p.get('pref')||'all';
+    var q=p.get('q')||'';
+    if(tag!=='all'){
+      activeTag=tag;
+      document.querySelectorAll('.filter-tab').forEach(function(b){
+        var oc=b.getAttribute('onclick')||'';
+        b.classList.toggle('active',oc.indexOf("'"+tag+"'")>-1);
+      });
+    }
+    if(region!=='all') _sR(region);
+    if(pref!=='all') setTimeout(function(){_sP(pref);},50);
+    if(q) document.getElementById('searchInput').value=q;
+    applyFilters(q||undefined);
+  }
+})();
+</script>
     <script>
     // Ikitai badge count
     (function(){
