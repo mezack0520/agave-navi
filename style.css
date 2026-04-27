@@ -2393,7 +2393,8 @@ main {
     min-height: 0;
 }
 .ad-slot:empty,
-.ad-slot-article-bottom:not(:has(ins[data-ad-status="filled"])) {
+.ad-slot-article-bottom:not(:has(ins[data-ad-status="filled"])),
+.ad-affiliate-area .ad-slot:not(:has(ins[data-ad-status="filled"])) {
     display: none;
     margin: 0;
 }
@@ -2791,4 +2792,9 @@ main {
     .aff-card-img {
         height: 140px;
     }
+}
+
+/* マップで開くリンク非表示（地図埋め込みで代替） */
+.map-open-link {
+  display: none !important;
 }
