@@ -1,13 +1,10 @@
-/**
+/** 
  * アガベイベントナビ - 関連イベント表示
  * イベント詳細ページの下部に同カテゴリ・同地域のイベントを表示し回遊率を向上
  */
 (function () {
   'use strict';
-
-  // イベント詳細ページ以外では実行しない
   if (!/\/events\//.test(location.pathname)) return;
-
   var BASE = location.pathname.replace(/\/events\/.*/, '');
   var EVENTS_JSON = BASE + '/events.json';
   var CURRENT_SLUG = location.pathname.replace(/^.*\/events\//, '').replace(/\.html$/, '');
@@ -23,7 +20,6 @@
     x.send();
   }
 
-  /** スコアリング: 同タグ +3, 同地域 +2, 日付が近い +1 */
   function score(ev, cur) {
     var s = 0;
     if (cur.tags && ev.tags) {
@@ -37,32 +33,27 @@
 
   function buildCard(ev) {
     var href = BASE + '/events/' + ev.slug + '.html';
-    var imgSrc = ev.imageUrl
-      ? ev.imageUrl
-      : BASE + '/images/events/' + ev.slug + '.jpg';
-    var fallback = BASE + '/images/ogp-default.jpg';
-
+    var imgSrc = ev.imageUrl ? ev.imageUrl : BASE + '/images/events/' + ev.slug + '.jpg';
     var tagsHTML = '';
     if (ev.tags) {
       ev.tags.forEach(function (t) {
         tagsHTML += '<span class="re-tag">' + t + '</span>';
       });
     }
-
     return (
       '<a href="' + href + '" class="re-card">' +
-        '<div class="re-card-img">' +
-          '<img src="' + imgSrc + '" alt="' + ev.name + '" loading="lazy" ' +
-            'onerror="this.onerror=null;this.src=\'' + fallback + '\'">' +
-        '</div>' +
-        '<div class="re-card-body">' +
-          '<p class="re-card-date">' + (ev.dateDisplay || ev.date) + '</p>' +
-          '<p class="re-card-title">' + ev.name + '</p>' +
-          '<div class="re-card-meta">' +
-            '<span class="re-region">' + (ev.prefecture || ev.region || '') + '</span>' +
-            tagsHTML +
-          '</div>' +
-        '</div>' +
+      '<div class="re-card-img">' +
+      '<img src="' + imgSrc + '" alt="' + ev.name + '" loading="lazy" ' +
+      'onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.classList.add(\'re-no-image\')">' +
+      '</div>' +
+      '<div class="re-card-body">' +
+      '<p class="re-card-date">' + (ev.dateDisplay || ev.date) + '</p>' +
+      '<p class="re-card-title">' + ev.name + '</p>' +
+      '<div class="re-card-meta">' +
+      '<span class="re-region">' + (ev.prefecture || ev.region || '') + '</span>' +
+      tagsHTML +
+      '</div>' +
+      '</div>' +
       '</a>'
     );
   }
@@ -73,11 +64,12 @@
       '.re-section-title{font-size:1.15rem;font-weight:700;margin:0 0 18px;color:#1a1a1a;display:flex;align-items:center;gap:8px}' +
       '.re-section-title::before{content:"";display:inline-block;width:4px;height:20px;background:var(--accent-pop,#e74c3c);border-radius:2px}' +
       '.re-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}' +
-      '@media(max-width:768px){.re-grid{grid-template-columns:1fr}}' +
       '.re-card{display:flex;flex-direction:column;border:1px solid #eee;border-radius:12px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .15s;background:#fff;overflow:hidden}' +
       '.re-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}' +
       '.re-card-img{width:100%;aspect-ratio:16/9;overflow:hidden;background:#f5f5f5}' +
       '.re-card-img img{width:100%;height:100%;object-fit:cover}' +
+      '.re-no-image{background:linear-gradient(160deg,#1a1a1a 0%,#252525 40%,#1e1e1e 100%);display:flex;align-items:center;justify-content:center}' +
+      '.re-no-image::after{content:"NO IMAGE";color:#555;font-size:.7rem;font-weight:600;letter-spacing:2px}' +
       '.re-card-body{padding:12px;flex:1;min-width:0}' +
       '.re-card-date{font-size:.75rem;color:#888;margin:0 0 4px}' +
       '.re-card-title{font-size:.9rem;font-weight:600;margin:0 0 6px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
@@ -93,32 +85,25 @@
     var cur = null;
     var rest = [];
     var today = new Date().toISOString().slice(0, 10);
-
     events.forEach(function (ev) {
       if (ev.slug === CURRENT_SLUG) { cur = ev; return; }
       var end = ev.dateEnd || ev.date;
       if (end >= today) rest.push(ev);
     });
     if (!cur || rest.length === 0) return;
-
     rest.sort(function (a, b) { return score(b, cur) - score(a, cur); });
-
     var picks = rest.slice(0, 4);
     if (picks.length === 0) return;
-
     injectStyles();
-
     var html =
       '<div class="re-section">' +
-        '<p class="re-section-title">他のおすすめイベント</p>' +
-        '<div class="re-grid">' +
-          picks.map(buildCard).join('') +
-        '</div>' +
+      '<p class="re-section-title">他のおすすめイベント</p>' +
+      '<div class="re-grid">' + picks.map(buildCard).join('') + '</div>' +
       '</div>';
-
-    var anchor = document.querySelector('.affiliate-section') ||
-                 document.querySelector('.detail-back') ||
-                 document.querySelector('main');
+    var anchor =
+      document.querySelector('.affiliate-section') ||
+      document.querySelector('.detail-back') ||
+      document.querySelector('main');
     if (anchor) {
       if (anchor.classList && anchor.classList.contains('affiliate-section')) {
         anchor.insertAdjacentHTML('beforebegin', html);

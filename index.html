@@ -2609,7 +2609,7 @@
             let delay = 0;
             cards.forEach((card) => {
                 if (card.classList.contains('past-load-more-hidden')) {
-                    card.classList.remove('past-load-more-hidden');
+                    card.classList.remove('past-load-more-hidden');card.classList.remove('load-more-hidden');
                     card.style.display = '';
                     card.classList.add('filter-show');
                     card.style.animationDelay = delay + 'ms';
@@ -2750,15 +2750,20 @@
   }
   // Wrap existing functions
   var _fE=window.filterEvents;
-  window.filterEvents=function(tag){_fE(tag);updateURL();};
+  window.filterEvents=function(tag){_fE(tag);updateURL();updateMeta();};
   var _sR=window.selectRegion;
-  window.selectRegion=function(r){_sR(r);updateURL();};
+  window.selectRegion=function(r){_sR(r);updateURL();updateMeta();};
   var _sP=window.selectPref;
-  window.selectPref=function(p){_sP(p);updateURL();};
+  window.selectPref=function(p){_sP(p);updateURL();updateMeta();};
   var _sE=window.searchEvents;
-  window.searchEvents=function(q){_sE(q);updateURL();};
+  window.searchEvents=function(q){_sE(q);updateURL();updateMeta();};
   // popstate (back/forward)
-  window.addEventListener('popstate',function(){
+  
+    // AIO: カテゴリURLパラメータ時にtitle/metaを動的変更
+    var tagMeta={"即売会":{t:"即売会 | アガベイベントナビ",d:"全国のアガベ・多肉植物・塊根植物の即売会イベント一覧。お気に入りの株を見つけに行こう。"},"マルシェ":{t:"マルシェ | アガベイベントナビ",d:"アガベ・多肉植物のマルシェ・フリーマーケットイベント一覧。気軽に植物に出会える場所。"},"大型":{t:"大型イベント | アガベイベントナビ",d:"天下一植物界やビッグバザールなど、全国の大型植物イベント一覧。大規模な即売会・展示会を一挙掲載。"},"展示会":{t:"展示会 | アガベイベントナビ",d:"アガベ・塊根植物・珍奇植物の展示会イベント一覧。希少種を観賞できるイベント情報。"}};
+    var origTitle=document.title,origDesc=document.querySelector('meta[name="description"]').content;
+    function updateMeta(){var p=new URLSearchParams(location.search);var tag=p.get("tag");if(tag&&tagMeta[tag]){document.title=tagMeta[tag].t;document.querySelector('meta[name="description"]').setAttribute("content",tagMeta[tag].d);}else{document.title=origTitle;document.querySelector('meta[name="description"]').setAttribute("content",origDesc);}}
+    window.addEventListener('popstate',function(){
     var p=new URLSearchParams(location.search);
     var tag=p.get('tag')||'all';
     var region=p.get('region')||'all';
@@ -2793,7 +2798,8 @@
     if(q) document.getElementById('searchInput').value=q;
     applyFilters(q||undefined);
   }
-})();
+    updateMeta();
+  })();
 </script>
     <script>
     // Ikitai badge count
