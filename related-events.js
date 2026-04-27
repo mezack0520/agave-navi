@@ -4,6 +4,8 @@
  */
 (function () {
   'use strict';
+
+  // イベント詳細ページ以外では実行しない
   if (!/\/events\//.test(location.pathname)) return;
 
   var BASE = location.pathname.replace(/\/events\/.*/, '');
@@ -15,12 +17,13 @@
     x.open('GET', url, true);
     x.onreadystatechange = function () {
       if (x.readyState === 4 && x.status === 200) {
-        try { cb(JSON.parse(x.responseText)); } catch (e) {}
+        try { cb(JSON.parse(x.responseText)); } catch (e) { /* ignore */ }
       }
     };
     x.send();
   }
 
+  /** スコアリング: 同タグ +3, 同地域 +2, 日付が近い +1 */
   function score(ev, cur) {
     var s = 0;
     if (cur.tags && ev.tags) {
@@ -34,17 +37,23 @@
 
   function buildCard(ev) {
     var href = BASE + '/events/' + ev.slug + '.html';
-    var imgSrc = ev.imageUrl ? ev.imageUrl : BASE + '/images/events/' + ev.slug + '.jpg';
+    var imgSrc = ev.imageUrl
+      ? ev.imageUrl
+      : BASE + '/images/events/' + ev.slug + '.jpg';
     var fallback = BASE + '/images/ogp-default.jpg';
+
     var tagsHTML = '';
     if (ev.tags) {
-      ev.tags.forEach(function (t) { tagsHTML += '<span class="re-tag">' + t + '</span>'; });
+      ev.tags.forEach(function (t) {
+        tagsHTML += '<span class="re-tag">' + t + '</span>';
+      });
     }
+
     return (
       '<a href="' + href + '" class="re-card">' +
         '<div class="re-card-img">' +
           '<img src="' + imgSrc + '" alt="' + ev.name + '" loading="lazy" ' +
-          'onerror="this.onerror=null;this.src=\x27' + fallback + '\x27">' +
+            'onerror="this.onerror=null;this.src=\'' + fallback + '\'">' +
         '</div>' +
         '<div class="re-card-body">' +
           '<p class="re-card-date">' + (ev.dateDisplay || ev.date) + '</p>' +
@@ -57,6 +66,7 @@
       '</a>'
     );
   }
+
   function injectStyles() {
     var css =
       '.re-section{margin:40px 0 0;padding:30px 0;border-top:1px solid #eee}' +
@@ -73,9 +83,7 @@
       '.re-card-title{font-size:.9rem;font-weight:600;margin:0 0 6px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
       '.re-card-meta{display:flex;flex-wrap:wrap;gap:4px}' +
       '.re-region,.re-tag{font-size:.7rem;padding:2px 8px;border-radius:20px;background:#f0f0f0;color:#555}' +
-      '.re-tag{background:#fff3f3;color:var(--accent-pop,#e74c3c)}' +
-      '.re-ended .re-card-img{opacity:.7}' +
-      '.re-ended .re-card-title{color:#888}';
+      '.re-tag{background:#fff3f3;color:var(--accent-pop,#e74c3c)}';
     var s = document.createElement('style');
     s.textContent = css;
     document.head.appendChild(s);
@@ -83,51 +91,30 @@
 
   function render(events) {
     var cur = null;
-    var upcoming = [];
-    var ended = [];
+    var rest = [];
     var today = new Date().toISOString().slice(0, 10);
 
     events.forEach(function (ev) {
       if (ev.slug === CURRENT_SLUG) { cur = ev; return; }
       var end = ev.dateEnd || ev.date;
-      if (end >= today) {
-        upcoming.push(ev);
-      } else {
-        ended.push(ev);
-      }
+      if (end >= today) rest.push(ev);
     });
+    if (!cur || rest.length === 0) return;
 
-    if (!cur) return;
+    rest.sort(function (a, b) { return score(b, cur) - score(a, cur); });
 
-    upcoming.sort(function (a, b) { return score(b, cur) - score(a, cur); });
-    var picks = upcoming.slice(0, 4);
-
-    ended.sort(function (a, b) {
-      var da = a.dateEnd || a.date;
-      var db = b.dateEnd || b.date;
-      return db.localeCompare(da);
-    });
-    var endedPicks = ended.slice(0, 4);
-
-    if (picks.length === 0 && endedPicks.length === 0) return;
+    var picks = rest.slice(0, 4);
+    if (picks.length === 0) return;
 
     injectStyles();
 
-    var html = '';
-
-    if (picks.length > 0) {
-      html += '<div class="re-section">' +
+    var html =
+      '<div class="re-section">' +
         '<p class="re-section-title">他のおすすめイベント</p>' +
-        '<div class="re-grid">' + picks.map(buildCard).join('') + '</div>' +
-        '</div>';
-    }
-
-    if (endedPicks.length > 0) {
-      html += '<div class="re-section re-ended">' +
-        '<p class="re-section-title">終了したイベント</p>' +
-        '<div class="re-grid">' + endedPicks.map(buildCard).join('') + '</div>' +
-        '</div>';
-    }
+        '<div class="re-grid">' +
+          picks.map(buildCard).join('') +
+        '</div>' +
+      '</div>';
 
     var anchor = document.querySelector('.affiliate-section') ||
                  document.querySelector('.detail-back') ||
