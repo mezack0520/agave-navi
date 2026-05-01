@@ -2790,3 +2790,40 @@ main {
 .map-open-link {
   display: none !important;
 }
+
+/* Instagram投稿の埋め込み（投稿/リールURLが instagramUrl にある場合） */
+.detail-instagram-embed {
+  margin-top: 1.5rem;
+}
+.detail-instagram-embed .instagram-embed-wrap {
+  position: relative;
+  max-width: 540px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  background: #fff;
+}
+.detail-instagram-embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 720px;
+  border: 0;
+}
+.detail-instagram-embed .instagram-embed-link {
+  margin: .6rem 0 0;
+  text-align: center;
+  font-size: .85rem;
+}
+.detail-instagram-embed .instagram-embed-link a {
+  color: var(--gray-600, #666);
+  text-decoration: none;
+}
+.detail-instagram-embed .instagram-embed-link a:hover {
+  text-decoration: underline;
+}
+
+/* カード全体クリック化（event-link 廃止に伴うカーソル表示） */
+.events-grid .event-card[data-slug]:not(.event-ended) {
+  cursor: pointer;
+}

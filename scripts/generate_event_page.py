@@ -118,15 +118,13 @@ def generate_detail_page(data):
     maps_embed = make_maps_embed(address)
     meta_desc = description[:120] if len(description) > 120 else description
 
-    # カテゴリからパンくず用のカテゴリスラッグを推定
-    cat_map = {
-        '即売会': ('sokubaikai', '即売会一覧'),
-        '大型': ('large', '大型イベント一覧'),
-        'マルシェ': ('marche', 'マルシェ一覧'),
-        '展示会': ('exhibition', '展示会一覧'),
-    }
-    primary_cat = category.split(',')[0].strip() if ',' in category else category
-    cat_slug, cat_label = cat_map.get(primary_cat, ('sokubaikai', '即売会一覧'))
+    # エリア（地域）ベースのパンくず
+    if region:
+        area_label = f'{region}のイベント'
+        area_href = f'/?region={urllib.parse.quote(region)}'
+    else:
+        area_label = 'イベント一覧'
+        area_href = '/'
 
     # 構造化データ用の日時
     start_iso = f'{date_str}T10:00:00+09:00'
@@ -203,7 +201,7 @@ def generate_detail_page(data):
     </nav>
 
     <div class="breadcrumb">
-        <a href="/">ホーム</a> &gt; <a href="../category/{cat_slug}.html">{cat_label}</a> &gt; {name}</div>
+        <a href="/">ホーム</a> &gt; <a href="{area_href}">{area_label}</a> &gt; {name}</div>
 
     <main class="detail-page">
         <div class="detail-hero">
@@ -239,7 +237,7 @@ def generate_detail_page(data):
                 </div>
 
                 <div class="detail-back">
-                    <a href="../category/{cat_slug}.html" class="detail-back-link">{cat_label}に戻る</a>
+                    <a href="{area_href}" class="detail-back-link">{area_label}に戻る</a>
                 </div>
             </div>
 
@@ -261,10 +259,6 @@ def generate_detail_page(data):
                     <div class="info-row">
                         <span class="info-label">入場料</span>
                         <span class="info-value">{admission}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">カテゴリ</span>
-                        <span class="info-value">{tags}</span>
                     </div>'''
 
     if official_url:
@@ -435,8 +429,6 @@ def generate_index_card(data, slug):
     short_pref = get_short_pref(prefecture or address)
     short_desc = description[:80] + '...' if len(description) > 80 else description
 
-    tag_items = ''.join(f'<span class="tag">{t.strip()}</span>' for t in tags.split(','))
-
     card = f'''
                     <div class="event-card" data-tags="{tags}" data-status="upcoming" data-region="{region}" data-date="{date_str}" data-slug="{slug}">
                         <img src="images/events/{slug}-thumb.jpg?v=20260326" alt="{name}" class="event-thumb" loading="lazy">
@@ -454,10 +446,6 @@ def generate_index_card(data, slug):
                         <div class="event-meta-row">
                             <span class="event-region">{short_pref}</span>
                         </div>
-                        <div class="event-tags">
-                            {tag_items}
-                        </div>
-                        <a href="events/{slug}.html" class="event-link">詳細を見る</a>
                         </div>
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
