@@ -56,6 +56,31 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://agave-navi.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "即売会イベント一覧",
+        "item": "https://agave-navi.com/category/sokubai.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "ならの植物園2026"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -66,13 +91,13 @@
         <span class="logo-jp">アガベイベントナビ</span>
       </a>
       <div class="header-actions">
-      <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
-        <span class="blob-bg"></span>
-        <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="ikitai-label">行きたい</span>
-        <span class="ikitai-badge" id="ikitaiBadge"></span>
-      </a>
-    </div>
+        <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
+          <span class="blob-bg"></span>
+          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="ikitai-label">行きたい</span>
+          <span class="ikitai-badge" id="ikitaiBadge"></span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -112,6 +137,7 @@
         <div class="detail-map">
           <h2 class="detail-section-title">会場</h2>
           <div class="map-container">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E7%A3%AF%E5%9F%8E%E9%83%A1%E7%94%B0%E5%8E%9F%E6%9C%AC%E7%94%BA" target="_blank" rel="noopener" class="map-open-link">マップで開く &#8599;</a>
             <iframe src="https://www.google.com/maps?q=%E7%A3%AF%E5%9F%8E%E9%83%A1%E7%94%B0%E5%8E%9F%E6%9C%AC%E7%94%BA&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
@@ -144,6 +170,7 @@
             <span class="info-label">開催地域</span>
             <span class="info-value">関西</span>
           </div>
+
           <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E3%81%AA%E3%82%89%E3%81%AE%E6%A4%8D%E7%89%A9%E5%9C%922026&dates=20260328%2F20260330&location=%E7%A3%AF%E5%9F%8E%E9%83%A1%E7%94%B0%E5%8E%9F%E6%9C%AC%E7%94%BA" target="_blank" rel="noopener" class="gcal-btn">
             &#128197; Googleカレンダーに追加
           </a>
@@ -218,11 +245,10 @@
         btn.classList.remove('is-fav');
         label.textContent = '行きたい';
       }
-      const countEl = document.getElementById('ikitaiBadge');
-      if (countEl) countEl.textContent = favs.length;
+      const badge = document.getElementById('ikitaiBadge');
+      if (badge) badge.textContent = favs.length || '';
     }
     updateFavUI();
   </script>
-<script src="/official-links.js"></script>
 </body>
 </html>

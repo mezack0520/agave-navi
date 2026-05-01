@@ -56,6 +56,31 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://agave-navi.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "即売会イベント一覧",
+        "item": "https://agave-navi.com/category/sokubai.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "BOTA☆MAGIC"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -66,13 +91,13 @@
         <span class="logo-jp">アガベイベントナビ</span>
       </a>
       <div class="header-actions">
-      <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
-        <span class="blob-bg"></span>
-        <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="ikitai-label">行きたい</span>
-        <span class="ikitai-badge" id="ikitaiBadge"></span>
-      </a>
-    </div>
+        <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
+          <span class="blob-bg"></span>
+          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="ikitai-label">行きたい</span>
+          <span class="ikitai-badge" id="ikitaiBadge"></span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -112,6 +137,7 @@
         <div class="detail-map">
           <h2 class="detail-section-title">会場</h2>
           <div class="map-container">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E6%9C%AC%E7%94%BA%E5%85%AC%E5%9C%92%E8%8A%9D%E7%94%9F%E3%82%A8%E3%83%AA%E3%82%A2" target="_blank" rel="noopener" class="map-open-link">マップで開く &#8599;</a>
             <iframe src="https://www.google.com/maps?q=%E6%9C%AC%E7%94%BA%E5%85%AC%E5%9C%92%E8%8A%9D%E7%94%9F%E3%82%A8%E3%83%AA%E3%82%A2&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
@@ -145,10 +171,7 @@
             <span class="info-label">開催地域</span>
             <span class="info-value">関西</span>
           </div>
-          <div class="info-row">
-            <span class="info-label">Instagram</span>
-            <span class="info-value"><a href="https://www.instagram.com/bota_magic/" target="_blank" rel="noopener" style="color:var(--accent-pop);text-decoration:none">Instagram →</a></span>
-          </div>
+
           <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=BOTA%E2%98%86MAGIC&dates=20260329%2F20260330&location=%E6%9C%AC%E7%94%BA%E5%85%AC%E5%9C%92%E8%8A%9D%E7%94%9F%E3%82%A8%E3%83%AA%E3%82%A2" target="_blank" rel="noopener" class="gcal-btn">
             &#128197; Googleカレンダーに追加
           </a>
@@ -223,11 +246,10 @@
         btn.classList.remove('is-fav');
         label.textContent = '行きたい';
       }
-      const countEl = document.getElementById('ikitaiBadge');
-      if (countEl) countEl.textContent = favs.length;
+      const badge = document.getElementById('ikitaiBadge');
+      if (badge) badge.textContent = favs.length || '';
     }
     updateFavUI();
   </script>
-<script src="/official-links.js"></script>
 </body>
 </html>
