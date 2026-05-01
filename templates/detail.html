@@ -10,42 +10,42 @@
     gtag('config', 'G-MKY0V1H0HY');
   </script>
   <meta charset="UTF-8">
-  <link rel="canonical" href="https://agave-navi.com/events/grateful-days-10th-osaka-2026.html">
+  <link rel="canonical" href="https://agave-navi.com/events/{{slug}}.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grateful Days 〜 The 10th episode 〜 | アガベイベントナビ</title>
-  <meta name="description" content="大阪で開催される植物販売イベント、第10回目。アガベ・塊根植物の即売会。">
-  <meta name="keywords" content="Grateful Days 〜 The 10th episode 〜,即売会,アガベ,多肉植物,塊根植物,コーデックス,ビザールプランツ,即売会,イベント">
-  <meta property="og:title" content="Grateful Days 〜 The 10th episode 〜 | アガベイベントナビ">
-  <meta property="og:description" content="大阪で開催される植物販売イベント、第10回目。アガベ・塊根植物の即売会。">
+  <title>{{name}} | アガベイベントナビ</title>
+  <meta name="description" content="{{metaDescription}}">
+  <meta name="keywords" content="{{name}},即売会,アガベ,多肉植物,塊根植物,コーデックス,ビザールプランツ,即売会,イベント">
+  <meta property="og:title" content="{{name}} | アガベイベントナビ">
+  <meta property="og:description" content="{{metaDescription}}">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://agave-navi.com/events/grateful-days-10th-osaka-2026.html">
+  <meta property="og:url" content="https://agave-navi.com/events/{{slug}}.html">
   <meta property="og:image" content="https://agave-navi.com/images/ogp-default.jpg">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="stylesheet" href="../style.css?v=20260501a">
+  <link rel="stylesheet" href="../style.css?v={{cssVersion}}">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Event",
-    "name": "Grateful Days 〜 The 10th episode 〜",
-    "startDate": "2026-05-05",
-    "endDate": "2026-05-06",
+    "name": "{{name}}",
+    "startDate": "{{date}}",
+    "endDate": "{{dateEndOrDate}}",
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
     "location": {
       "@type": "Place",
-      "name": "大阪",
+      "name": "{{venue}}",
       "address": {
         "@type": "PostalAddress",
-        "addressRegion": "大阪",
+        "addressRegion": "{{prefecture}}",
         "addressCountry": "JP"
       }
     },
-    "description": "大阪で開催される植物販売イベント、第10回目。アガベ・塊根植物の即売会。",
+    "description": "{{metaDescription}}",
     "organizer": {
       "@type": "Organization",
-      "name": "Grateful Days 〜 The 10th episode 〜"
+      "name": "{{name}}"
     }
   }
   </script>
@@ -63,13 +63,13 @@
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "関西のイベント",
-        "item": "https://agave-navi.com/?region=%E9%96%A2%E8%A5%BF"
+        "name": "{{region}}のイベント",
+        "item": "https://agave-navi.com/?region={{regionEncoded}}"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "Grateful Days 〜 The 10th episode 〜"
+        "name": "{{name}}"
       }
     ]
   }
@@ -96,19 +96,19 @@
 
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">ホーム</a> &gt;
-    <a href="/?region=%E9%96%A2%E8%A5%BF">関西のイベント</a> &gt;
-    <span>Grateful Days 〜 The 10th episode 〜</span>
+    <a href="/?region={{regionEncoded}}">{{region}}のイベント</a> &gt;
+    <span>{{name}}</span>
   </nav>
 
   <main class="detail-page">
     <div class="detail-header">
-      <h1>Grateful Days 〜 The 10th episode 〜</h1>
+      <h1>{{name}}</h1>
       <div class="detail-meta">
-        <span class="detail-status-badge" data-date="2026-05-05" data-date-end="2026-05-06"></span>
+        <span class="detail-status-badge" data-date="{{date}}" data-date-end="{{dateEnd}}"></span>
         <span class="detail-meta-dot"></span>
-        <span class="detail-meta-item">2026年5月5日（火）</span>
+        <span class="detail-meta-item">{{dateDisplayShort}}</span>
         <span class="detail-meta-dot"></span>
-        <span class="detail-meta-item">大阪</span>
+        <span class="detail-meta-item">{{prefectureOrRegion}}</span>
       </div>
       <div class="detail-header-actions">
         <button class="detail-fav-btn" id="favBtn" onclick="toggleFav()">
@@ -124,22 +124,15 @@
       <div class="detail-main">
         <div class="detail-section">
           <h2 class="detail-section-title">概要</h2>
-          <p>大阪で開催される植物販売イベント、第10回目。アガベ・塊根植物の即売会。</p>
+          <p>{{description}}</p>
         </div>
 
+{{instagramSection}}
 
-
-        <div class="detail-map">
-          <h2 class="detail-section-title">会場</h2>
-          <div class="map-container">
-            <a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA" target="_blank" rel="noopener" class="map-open-link">マップで開く &#8599;</a>
-            <iframe src="https://www.google.com/maps?q=%E5%A4%A7%E9%98%AA&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-
+{{mapSection}}
 
         <div class="detail-back">
-          <a href="/?region=%E9%96%A2%E8%A5%BF" class="detail-back-link">関西のイベントに戻る</a>
+          <a href="/?region={{regionEncoded}}" class="detail-back-link">{{region}}のイベントに戻る</a>
         </div>
       </div>
 
@@ -148,20 +141,20 @@
           <h3>EVENT INFO</h3>
           <div class="info-row">
             <span class="info-label">日時</span>
-            <span class="info-value">2026年5月5日（火） 〜 5月6日（水）</span>
+            <span class="info-value">{{dateDisplayFull}}</span>
           </div>
           <div class="info-row">
             <span class="info-label">会場</span>
-            <span class="info-value">大阪</span>
+            <span class="info-value">{{venue}}</span>
           </div>
           <div class="info-row">
             <span class="info-label">開催地域</span>
-            <span class="info-value">関西</span>
+            <span class="info-value">{{region}}</span>
           </div>
+{{admissionRow}}
+{{timeRow}}
 
-
-
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Grateful%20Days%20%E3%80%9C%20The%2010th%20episode%20%E3%80%9C&dates=20260505%2F20260507&location=%E5%A4%A7%E9%98%AA" target="_blank" rel="noopener" class="gcal-btn">
+          <a href="{{gcalUrl}}" target="_blank" rel="noopener" class="gcal-btn">
             &#128197; Googleカレンダーに追加
           </a>
         </div>
@@ -206,10 +199,10 @@
   </footer>
 
   <script src="../affiliate.js"></script>
-  <script src="../status-auto.js?v=20260501a"></script>
+  <script src="../status-auto.js?v={{jsVersion}}"></script>
   <script src="../ads.js"></script>
   <script>
-    const SLUG = 'grateful-days-10th-osaka-2026';
+    const SLUG = '{{slug}}';
     function toggleFav() {
       let favs = JSON.parse(localStorage.getItem('favEvents') || '[]');
       const idx = favs.indexOf(SLUG);
