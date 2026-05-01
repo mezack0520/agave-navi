@@ -89,10 +89,13 @@ jobs:
               print("No badge changes needed.")
           PYEOF
 
+      - name: Rebuild detail pages (update status badges)
+        run: python3 build-detail-pages.py
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add events.json index.html
+          git add events.json index.html events/
           git diff --staged --quiet || git commit -m "chore: auto-update event statuses"
           git push

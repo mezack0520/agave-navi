@@ -14,13 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Merge new events into events.json
+      - name: Merge new-events.json (if exists)
         run: |
           python3 << 'PYEOF'
           import json, os
 
           if not os.path.exists("new-events.json"):
-              print("No new-events.json found. Nothing to do.")
+              print("No new-events.json found. Skipping merge.")
               exit(0)
 
           with open("events.json", "r", encoding="utf-8") as f:
@@ -38,7 +38,6 @@ jobs:
                   events.append(ne)
                   added.append(ne["slug"])
               else:
-                  # Update existing event fields if provided
                   for e in events:
                       if e["slug"] == ne["slug"]:
                           for k, v in ne.items():
@@ -48,12 +47,12 @@ jobs:
                                       updated.append(ne["slug"])
                           break
 
-          events.sort(key=lambda e: (0 if e["status"]=="upcoming" else 1, e.get("date","")))
+          events.sort(key=lambda e: (0 if e.get("status")=="upcoming" else 1, e.get("date","")))
 
           with open("events.json", "w", encoding="utf-8") as f:
               json.dump(events, f, indent=2, ensure_ascii=False)
 
-          up = sum(1 for e in events if e["status"]=="upcoming")
+          up = sum(1 for e in events if e.get("status")=="upcoming")
           print(f"Total: {len(events)}, Upcoming: {up}")
           if added:
               print(f"Added {len(added)}: {', '.join(added)}")
@@ -63,10 +62,13 @@ jobs:
               print("No changes.")
           PYEOF
 
+      - name: Build all detail pages from template
+        run: python3 build-detail-pages.py
+
       - name: Add cards to index.html for new slugs
         run: |
           python3 << 'PYEOF'
-          import json, re, os
+          import json, re
 
           with open("events.json") as f:
               events = json.load(f)
@@ -76,7 +78,10 @@ jobs:
 
           existing_slugs = set(re.findall(r'data-slug="([^"]+)"', html))
           event_map = {e["slug"]: e for e in events}
-          new_slugs = [e["slug"] for e in events if e["slug"] not in existing_slugs and e["status"] == "upcoming"]
+          new_slugs = [e["slug"] for e in events
+                       if e["slug"] not in existing_slugs
+                       and e.get("status") == "upcoming"
+                       and e.get("date")]
 
           if not new_slugs:
               print("No new cards to add to index.html")
@@ -86,13 +91,13 @@ jobs:
               for slug in new_slugs:
                   e = event_map[slug]
                   tags_csv = ",".join(e.get("tags",[]))
-                  dd = e.get("dateDisplay", e["date"].replace("-","."))
+                  dd = e.get("dateDisplay", e.get("date","").replace("-","."))
                   pref = e.get("prefecture","")
                   region = e.get("region","")
-                  de = e.get("dateEnd","")
-                  card = f'''<div class="event-card" data-tags="{tags_csv}" data-status="upcoming" data-region="{region}" data-prefecture="{pref}" data-slug="{slug}">
+                  ad = e.get("addedDate","")
+                  card = f'''<div class="event-card" data-tags="{tags_csv}" data-status="upcoming" data-region="{region}" data-prefecture="{pref}" data-slug="{slug}" data-date="{e.get('date','')}" data-date-end="{e.get('dateEnd','')}" data-added-date="{ad}">
               <div class="event-thumb event-no-image"></div>
-              <button class="fav-btn" onclick="toggleFav(event,'{slug}')" aria-label="\u884c\u304d\u305f\u3044\u3044">
+              <button class="fav-btn" onclick="toggleFav(event,'{slug}')" aria-label="行きたい">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
               </button>
               <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div></div>
@@ -100,28 +105,61 @@ jobs:
                 <div class="event-header"><span class="event-date">{dd}</span><span class="event-status"></span></div>
                 <h3 class="event-title">{e['name']}</h3>
                 <p class="event-description">{e.get('description','')}</p>
-                <div class="event-meta-row"><span class="event-region">{pref}</span></div>
-                <a href="events/{slug}.html" class="event-link">\u8a73\u7d30\u3092\u898b\u308b \u2192</a>
+                <div class="event-meta-row"><span class="event-region">{pref or region}</span></div>
               </div>
-              <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>行きたい</span></div>
             </div>
               '''
                   cards += card
                   print(f"Card added: {slug}")
 
               html = html.replace(marker, cards + marker)
-              # Update event count
-              up_count = sum(1 for e in events if e["status"]=="upcoming")
-              html = re.sub(r'<span class="event-count" id="eventCount">\d+\u4ef6</span>',
-                            f'<span class="event-count" id="eventCount">{up_count}\u4ef6</span>', html)
+              up_count = sum(1 for e in events if e.get("status")=="upcoming")
+              html = re.sub(r'<span class="event-count" id="eventCount">\d+件</span>',
+                            f'<span class="event-count" id="eventCount">{up_count}件</span>', html)
 
               with open("index.html", "w") as f:
                   f.write(html)
               print(f"Added {len(new_slugs)} cards. Count: {up_count}")
           PYEOF
 
-      - name: Generate missing pages
-        run: python3 scripts/generate_missing_pages_v2.py
+      - name: Update sitemap
+        run: |
+          python3 << 'PYEOF'
+          import json, os
+          from datetime import date
+
+          with open("events.json") as f:
+              events = json.load(f)
+
+          today = date.today().isoformat()
+          base = "https://agave-navi.com"
+          static = [
+              (f"{base}/", today, "daily", "1.0"),
+              (f"{base}/about.html", "2025-12-01", "monthly", "0.3"),
+              (f"{base}/contact.html", "2025-12-01", "monthly", "0.3"),
+              (f"{base}/disclaimer.html", "2025-12-01", "monthly", "0.2"),
+              (f"{base}/privacy.html", "2025-12-01", "monthly", "0.2"),
+              (f"{base}/operator.html", "2025-12-01", "monthly", "0.2"),
+              (f"{base}/ikitai.html", "2025-12-01", "monthly", "0.4"),
+          ]
+          xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+          xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          for url, mod, freq, pri in static:
+              xml += f'  <url><loc>{url}</loc><lastmod>{mod}</lastmod><changefreq>{freq}</changefreq><priority>{pri}</priority></url>\n'
+
+          for e in events:
+              slug = e.get("slug","")
+              if not slug or not e.get("date"):
+                  continue
+              page = f"{base}/events/{slug}.html"
+              xml += f'  <url><loc>{page}</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>\n'
+
+          xml += '</urlset>\n'
+          with open("sitemap.xml", "w") as f:
+              f.write(xml)
+          print(f"Sitemap updated: {sum(1 for e in events if e.get('date'))} event pages")
+          PYEOF
 
       - name: Remove new-events.json after processing
         run: |
@@ -134,6 +172,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add events.json index.html events/ new-events.json || true
-          git diff --staged --quiet || git commit -m "feat: sync new events from new-events.json"
+          git add events.json index.html events/ sitemap.xml new-events.json || true
+          git diff --staged --quiet || git commit -m "feat: sync events & rebuild detail pages"
           git push
