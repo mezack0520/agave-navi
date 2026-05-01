@@ -72,10 +72,6 @@ def generate_event_card(event):
 
     data_str = ' '.join([d for d in data_attrs if d])
 
-    # Generate tags HTML
-    tags_list = event.get('tags', [])
-    tags_html = generate_tags_html(tags_list)
-
     # Generate thumbnail HTML - check for imageUrl
     image_url = event.get('imageUrl', '')
     if image_url:
@@ -83,7 +79,7 @@ def generate_event_card(event):
     else:
         thumb_html = '<div class="event-thumb event-no-image"></div>'
 
-    # Build the card
+    # Build the card (entire card is clickable via data-slug; no inner detail link)
     card_html = f'''<div class="event-card" {data_str}>
                         {thumb_html}
                         <button class="fav-btn" onclick="toggleFav(event, '{slug}')" aria-label="行きたい">
@@ -100,9 +96,6 @@ def generate_event_card(event):
                         <div class="event-meta-row">
                             <span class="event-region">{get_region_display(event)}</span>
                         </div>
-                        <div class="event-tags">{tags_html}
-                        </div>
-                        <a href="events/{slug}.html" class="event-link">詳細を見る</a>
                         </div>
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>
@@ -137,7 +130,6 @@ def generate_past_event_card(event):
                         <div class="event-meta-row">
                             <span class="event-region">{get_region_display(event)}</span>
                         </div>
-                        <a href="events/{slug}.html" class="event-link">詳細を見る</a>
                         </div>
                                             <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>行きたい</span></div>
 </div>

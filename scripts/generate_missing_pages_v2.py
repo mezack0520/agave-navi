@@ -164,8 +164,8 @@ def get_html_template():
       {{
         "@type": "ListItem",
         "position": 2,
-        "name": "{cat_label}",
-        "item": "https://agave-navi.com/{cat_slug}"
+        "name": "{area_label}",
+        "item": "{area_url}"
       }},
       {{
         "@type": "ListItem",
@@ -197,7 +197,7 @@ def get_html_template():
 
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">ホーム</a> &gt;
-    <a href="../{cat_slug}">{cat_label}</a> &gt;
+    <a href="{area_href}">{area_label}</a> &gt;
     <span>{name}</span>
   </nav>
 
@@ -230,8 +230,10 @@ def get_html_template():
 
 {map_section}
 
+{instagram_embed_section}
+
         <div class="detail-back">
-          <a href="../{cat_slug}" class="detail-back-link">{cat_label}に戻る</a>
+          <a href="{area_href}" class="detail-back-link">{area_label}に戻る</a>
         </div>
       </div>
 
@@ -244,10 +246,6 @@ def get_html_template():
           </div>
 {location_row}
 {admission_row}
-          <div class="info-row">
-            <span class="info-label">カテゴリ</span>
-            <span class="info-value">{tags_text}</span>
-          </div>
           <div class="info-row">
             <span class="info-label">開催地域</span>
             <span class="info-value">{region}</span>
@@ -351,20 +349,16 @@ def generate_page(ev):
     date_jp = format_date_jp(date)
     date_range_jp = format_date_range_jp(date, date_end if date_end != date else '')
 
-    # Category for breadcrumb
-    cat_slug = 'category/sokubai.html'
-    cat_label = '即売会イベント一覧'
-    if tags:
-        first_tag = tags[0]
-        if first_tag in ['マルシェ']:
-            cat_slug = 'category/marche.html'
-            cat_label = 'マルシェイベント一覧'
-        elif first_tag in ['展示会']:
-            cat_slug = 'category/exhibition.html'
-            cat_label = '展示会一覧'
-        elif first_tag in ['大型']:
-            cat_slug = 'category/large.html'
-            cat_label = '大型イベント一覧'
+    # Area-based breadcrumb (replaces former category-based breadcrumb)
+    instagram_url = ev.get('instagramUrl', '')
+    if region:
+        area_label = f'{region}のイベント'
+        area_href = f'/?region={urllib.parse.quote(region)}'
+        area_url = f'https://agave-navi.com/?region={urllib.parse.quote(region)}'
+    else:
+        area_label = 'イベント一覧'
+        area_href = '/'
+        area_url = 'https://agave-navi.com/'
 
     # Meta description (truncated)
     meta_description = description[:120] if description else f'{name}のイベント情報'
@@ -425,7 +419,21 @@ def generate_page(ev):
     else:
         map_section = ''
 
-    # Instagram section (conditional - only if sourceUrl is Instagram)
+    # Instagram embed section (Instagram post / reel iframe).
+    # Triggers when instagramUrl is set to a /p/ or /reel/ URL.
+    instagram_embed_section = ''
+    ig_post_re = re.compile(r'^https?://(?:www\.)?instagram\.com/(?:p|reel)/[^/?#]+/?')
+    if instagram_url and ig_post_re.match(instagram_url):
+        embed_url = instagram_url.rstrip('/') + '/embed/'
+        instagram_embed_section = f'''        <div class="detail-section detail-instagram-embed">
+          <h2 class="detail-section-title">Instagram投稿</h2>
+          <div class="instagram-embed-wrap">
+            <iframe src="{escape_html(embed_url)}" loading="lazy" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+          </div>
+          <p class="instagram-embed-link"><a href="{escape_html(instagram_url)}" target="_blank" rel="noopener">Instagramで見る ↗</a></p>
+        </div>'''
+
+    # Instagram sidebar account link (conditional - only if sourceUrl is Instagram profile)
     if source_url and 'instagram.com' in source_url:
         ig_handle = ''
         ig_match = re.search(r'instagram\.com/([^/?]+)', source_url)
@@ -479,8 +487,9 @@ def generate_page(ev):
         date_jp=date_jp,
         date_range_jp=date_range_jp,
         time_line=time_line,
-        cat_slug=cat_slug,
-        cat_label=cat_label,
+        area_label=escape_html(area_label),
+        area_href=escape_html(area_href),
+        area_url=escape_html(area_url),
         organizer_or_name=escape_html(organizer or name),
         offers_block=offers_block,
         map_section=map_section,
@@ -489,6 +498,7 @@ def generate_page(ev):
         source_url_row=source_url_row,
         gcal_row=gcal_row,
         instagram_section=instagram_section,
+        instagram_embed_section=instagram_embed_section,
         correction_notice=correction_notice,
     )
     return html
