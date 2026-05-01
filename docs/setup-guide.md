@@ -206,10 +206,12 @@ function onFormSubmit(e) {
    - contact.html からテスト送信
    - yuji.mezaki@gmail.com にメールが届くことを確認
 
-### events.json による管理フロー
-- イベント情報の修正依頼が来たら、`events.json` を更新するだけ
-- GitHub上でevents.jsonを直接編集 → コミット → GitHub Pagesが自動デプロイ
-- 詳細ページの更新は、今後テンプレート化して自動生成する運用に移行可能
+### events.json による管理フロー（テンプレートシステム導入済み）
+1. イベント情報を `events.json` に追加・編集（[情報収集プロンプト](event-data-prompt.md) を参照）
+2. `python3 build-detail-pages.py` を実行 → 全詳細ページが自動生成
+3. コミット＆プッシュ → GitHub Pagesが自動デプロイ
+- 個別の詳細ページHTMLを直接編集する必要はありません
+- テンプレート: `templates/detail.html`
 
 ---
 
