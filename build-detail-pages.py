@@ -153,15 +153,15 @@ def make_map_section(ev):
 
 
 def make_hero_section(ev):
-    """Hero image section (only if imageUrl exists)"""
+    """Hero image section (only if imageUrl exists). Rendered at top of <main> outside columns."""
     img = ev.get('imageUrl', '')
     if not img:
         return ''
     name = ev.get('name', '')
     alt = html_escape(name) if name else ''
-    return f'''        <div class="detail-hero">
-          <img src="{img}" alt="{alt}" class="detail-hero-img" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'">
-        </div>
+    return f'''    <div class="detail-hero">
+      <img src="{img}" alt="{alt}" class="detail-hero-img" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'">
+    </div>
 '''
 
 def make_admission_row(ev):
