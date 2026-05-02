@@ -1,0 +1,73 @@
+name: Backfill Event Images
+
+on:
+  schedule:
+    # 毎週日曜 10:00 JST (土曜 01:00 UTC)
+    - cron: '0 1 * * 0'
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: '特定イベントのslug(空欄で全件)'
+        required: false
+        type: string
+        default: ''
+      limit:
+        description: '処理件数上限(0=全件)'
+        required: false
+        type: string
+        default: '0'
+      overwrite:
+        description: '既にimageUrlがあっても上書き'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run backfill
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          fi
+          LIMIT="${{ github.event.inputs.limit || '0' }}"
+          if [ "$LIMIT" != "0" ]; then
+            ARGS="$ARGS --limit $LIMIT"
+          fi
+          if [ "${{ github.event.inputs.overwrite }}" = "true" ]; then
+            ARGS="$ARGS --overwrite"
+          fi
+          python3 scripts/backfill-images.py $ARGS
+
+      - name: Rebuild detail pages
+        run: python3 build-detail-pages.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git add events.json events/
+          git commit -m "auto: backfill imageUrl from og:image [skip ci]"
+          git push
