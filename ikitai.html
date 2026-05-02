@@ -218,10 +218,10 @@
                             <h3 class="event-title">${ev.name}</h3>
                             <p class="event-description">${(ev.description||'').substring(0,80)}</p>
                             <div class="event-meta-row">
-                                <span class="event-region">${ev.prefecture||''}</span>
+                                <span class="event-region">${ev.prefecture||ev.region||''}</span>
                                 ${tags}
                             </div>
-                            <a href="events/${ev.slug}.html" class="event-link">詳細を見る →</a>
+                            <a href="events/${ev.slug}.html" class="event-link">詳細を見る</a>
                         </div>`;
                     card.addEventListener('click', function(e) {
                         if (e.target.tagName === 'A' || e.target.closest('.fav-btn')) return;
