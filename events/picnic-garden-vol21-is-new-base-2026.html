@@ -213,15 +213,15 @@
   <script>
     const SLUG = 'picnic-garden-vol21-is-new-base-2026';
     function toggleFav() {
-      let favs = JSON.parse(localStorage.getItem('favEvents') || '[]');
+      let favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
       const idx = favs.indexOf(SLUG);
       if (idx >= 0) { favs.splice(idx, 1); }
       else { favs.push(SLUG); }
-      localStorage.setItem('favEvents', JSON.stringify(favs));
+      localStorage.setItem('aen_favs', JSON.stringify(favs));
       updateFavUI();
     }
     function updateFavUI() {
-      const favs = JSON.parse(localStorage.getItem('favEvents') || '[]');
+      const favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
       const btn = document.getElementById('favBtn');
       const label = document.getElementById('favLabel');
       if (favs.includes(SLUG)) {
