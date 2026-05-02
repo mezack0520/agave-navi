@@ -1,5 +1,58 @@
 # agave-navi.com セットアップガイド
 
+## 0. アーキテクチャ概要(2026-05時点)
+
+### データの単一ソース
+`events.json` がすべてのイベント情報の唯一のソース。詳細ページ・トップページ表示・サイトマップ等はすべてここから生成される。
+
+スキーマ詳細: [event-data-prompt.md](event-data-prompt.md)
+
+主要フィールド:
+- `slug`, `name`, `date`, `dateEnd`, `dateDisplay`
+- `region`, `prefecture`, `venue`, `mapQuery`
+- `description`, `admission`, `time`
+- `imageUrl` — ヒーロー画像URL(詳細ページ上部に表示。空の場合は非表示)
+- `instagramUrl` / `instagramPostId` — Instagram埋め込み用
+- `tags`, `eventStatus`, `addedDate`
+
+### ビルドパイプライン
+```
+events.json + templates/detail.html
+            │
+            ▼  python3 build-detail-pages.py
+            │
+            ▼
+        events/*.html (100件強)
+```
+
+`build-detail-pages.py` の主要オプション:
+- `--slug <slug>` 個別生成
+- `--dry-run` 書き込み無しで確認
+
+### アクティブなWorkflows(.github/workflows/)
+| Workflow | 用途 | スクリプト |
+|---|---|---|
+| sync-events.yml | events.json更新時の詳細ページ再生成 | build-detail-pages.py |
+| auto-status-update.yml | ステータス自動更新+詳細ページ再生成 | build-detail-pages.py |
+| auto-event.yml | repository_dispatch で新イベントページ生成 | scripts/generate_event_page.py |
+| crawl-events.yml | 月水金 自動巡回 | scripts/crawl_events.py |
+| discover-sources.yml | 週次 巡回先候補発見 | scripts/discover_sources.py |
+| enrich-events.yml | 週次 イベント情報の補強 | scripts/enrich_events.py |
+| event-check.yml | 毎日 イベント期限チェック | scripts/check_events.py |
+| check-date-updates.yml | 日付変更検出 | scripts/check_date_updates.py |
+| update-sitemap.yml | サイトマップ更新 | scripts/generate_sitemap.py |
+| link-check.yml | 週次 リンク切れチェック | scripts/check-links.sh |
+| domain-check.yml | 月次 SSL/ドメイン期限チェック | (inline) |
+| fix-header-links.yml | ヘッダーリンク自動補正 | scripts/fix-header-fav-link.py |
+
+### イベント追加の標準フロー
+1. `events.json` にイベントエントリを追加(プロンプト [docs/event-data-prompt.md](event-data-prompt.md) を活用)
+2. `python3 build-detail-pages.py` でローカル生成・確認
+3. コミット&プッシュ → GitHub Pages自動デプロイ
+
+---
+
+
 ## 1. Google Search Console 連携
 
 ### 手順

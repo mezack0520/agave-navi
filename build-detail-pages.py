@@ -150,6 +150,20 @@ def make_map_section(ev):
         </div>
 '''
 
+
+
+def make_hero_section(ev):
+    """Hero image section (only if imageUrl exists)"""
+    img = ev.get('imageUrl', '')
+    if not img:
+        return ''
+    name = ev.get('name', '')
+    alt = html_escape(name) if name else ''
+    return f'''        <div class="detail-hero">
+          <img src="{img}" alt="{alt}" class="detail-hero-img" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'">
+        </div>
+'''
+
 def make_admission_row(ev):
     """Admission info row"""
     admission = ev.get('admission', '')
@@ -212,6 +226,7 @@ def build_page(template, ev):
         '{{gcalUrl}}': make_gcal_url(ev),
         '{{cssVersion}}': CSS_VERSION,
         '{{jsVersion}}': JS_VERSION,
+        '{{heroSection}}': make_hero_section(ev),
         '{{instagramSection}}': make_instagram_section(ev),
         '{{mapSection}}': make_map_section(ev),
         '{{admissionRow}}': make_admission_row(ev),
