@@ -1,0 +1,75 @@
+name: Instagram oEmbed Backfill
+
+on:
+  schedule:
+    # 毎週月曜 11:00 JST (日曜 02:00 UTC)
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: '特定イベントのslug(空欄で全件)'
+        required: false
+        type: string
+        default: ''
+      limit:
+        description: '処理件数上限(0=全件)'
+        required: false
+        type: string
+        default: '0'
+
+permissions:
+  contents: write
+
+jobs:
+  ig-oembed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check token
+        run: |
+          if [ -z "${{ secrets.IG_OEMBED_TOKEN }}" ]; then
+            echo "::warning::IG_OEMBED_TOKEN secret is not set; skipping."
+            echo "See docs/instagram-oembed-setup.md for setup."
+            exit 0
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Instagram oEmbed
+        env:
+          IG_OEMBED_TOKEN: ${{ secrets.IG_OEMBED_TOKEN }}
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          fi
+          LIMIT="${{ github.event.inputs.limit || '0' }}"
+          if [ "$LIMIT" != "0" ]; then
+            ARGS="$ARGS --limit $LIMIT"
+          fi
+          python3 scripts/instagram-oembed.py $ARGS
+
+      - name: Rebuild detail pages
+        run: python3 build-detail-pages.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git add events.json events/
+          git commit -m "auto: backfill imageUrl from Instagram oEmbed [skip ci]"
+          git push

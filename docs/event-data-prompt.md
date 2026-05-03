@@ -44,6 +44,8 @@ Instagram投稿や公式サイトの情報を元に、必要なフィールド�
   "sourceUrl": "公式サイトURL or 公式InstagramプロフィールURL",
   "instagramPostId": "Instagram投稿のID（/p/XXXXX/ のXXXXX部分）",
   "instagramUrl": "Instagram投稿の完全URL",
+  "imageUrl": "ヒーロー画像URL（公式サイトのog:image / メインビジュアル / Instagramの投稿画像 のいずれか。横長推奨）",
+  "url": "公式情報URL（イベント公式ページがあれば。なければ空文字）",
   "addedDate": "今日の日付 YYYY-MM-DD",
   "status": "upcoming",
   "eventStatus": "confirmed"
@@ -91,8 +93,27 @@ Instagram投稿や公式サイトの情報を元に、必要なフィールド�
 - 日付が「〇月上旬」等の曖昧な表現の場合、dateは空文字にしてdateDisplayに原文を記載
 - 入場料の記載がなければ空文字（「無料」と推測しない）
 - Instagram投稿がある場合、instagramPostId は必ず抽出する
-- 画像やサムネイルは現時点では不要（今後対応予定）
+- imageUrl は必須。優先順位:
+  1. 公式サイトの og:image (View Source で `<meta property="og:image"` を探す)
+  2. 公式サイトのメインビジュアル(.jpg/.png/.webp)
+  3. Instagram投稿の画像URL
+  - 横長(16:9前後)で1200px以上推奨
+  - URLが画像生存していること(ブラウザで直接開いて表示されること)を確認
+- url と sourceUrl は最低どちらか1つは必須
+  - sourceUrl: 情報の出典(Instagramプロフィール等で可)
+  - url: 公式情報URL(あればぜひ)
 ```
+
+### imageUrl が見つからない場合
+
+そのままでもイベントは追加できますが、ヒーロー画像欄が空になります。後から自動補完を試すには:
+
+```bash
+# 該当slugだけ自動取得を試す(url/sourceUrlからog:imageを抽出)
+python3 scripts/backfill-images.py --slug <slug>
+```
+
+毎週日曜は GitHub Actions の "Backfill Event Images" が自動実行されます。
 
 ---
 
