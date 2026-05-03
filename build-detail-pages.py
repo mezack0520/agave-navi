@@ -23,8 +23,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.join(SCRIPT_DIR, 'events.json')
 TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html')
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, 'events')
-CSS_VERSION = '20260504a'
-JS_VERSION = '20260504a'
+CSS_VERSION = '20260504b'
+JS_VERSION = '20260504b'
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -166,10 +166,10 @@ def make_hero_section(ev):
 
 
 
-def make_official_links_section(ev):
-    """公式情報リンク。url/sourceUrl/instagramUrl があれば各々を表示。
-    どれもなければ Google検索フォールバックを表示。"""
-    items = []
+def make_official_links_rows(ev):
+    """公式情報の info-row(複数可)。サイドバー EVENT INFO 内に表示。
+    url/sourceUrl/instagramUrl がなければ Google検索リンクをフォールバック。"""
+    items = []  # list of (url, label)
     seen = set()
 
     def add(url, label):
@@ -179,56 +179,50 @@ def make_official_links_section(ev):
         items.append((url, label))
 
     if ev.get('url'):
-        url = ev['url']
-        if 'instagram.com' in url:
-            label = 'Instagram'
-        elif 'facebook.com' in url:
+        u = ev['url']
+        if 'instagram.com' in u:
+            label = '公式Instagram'
+        elif 'facebook.com' in u:
             label = 'Facebook'
-        elif 'twitter.com' in url or 'x.com/' in url:
+        elif 'twitter.com' in u or '://x.com/' in u:
             label = 'X (Twitter)'
         else:
             label = '公式サイト'
-        add(url, label)
+        add(u, label)
 
     if ev.get('sourceUrl'):
         s = ev['sourceUrl']
         if 'instagram.com' in s:
-            label = '公式Instagram'
+            add(s, '公式Instagram')
+        elif 'facebook.com' in s:
+            add(s, '公式Facebook')
+        elif 'twitter.com' in s or '://x.com/' in s:
+            add(s, '公式X')
         else:
-            label = '情報元サイト'
-        add(s, label)
+            add(s, '公式サイト')
 
     if ev.get('instagramUrl'):
         add(ev['instagramUrl'], 'Instagram投稿')
 
-    if items:
-        rows = '\n'.join(
-            f'            <li><a href="{u}" target="_blank" rel="noopener">{label} ↗</a></li>'
-            for u, label in items
-        )
-        return f'''        <div class="detail-section detail-official-links">
-          <h2 class="detail-section-title">公式情報</h2>
-          <ul class="detail-links">
-{rows}
-          </ul>
-        </div>
-'''
+    if not items:
+        # Google検索フォールバック
+        name = ev.get('name', '')
+        if not name:
+            return ''
+        venue = ev.get('venue', '')
+        q = quote(f'{name} {venue} 2026'.strip())
+        items.append((f'https://www.google.com/search?q={q}', 'Googleで検索'))
 
-    # Fallback: Google search
-    name = ev.get('name', '')
-    if not name:
-        return ''
-    venue = ev.get('venue', '')
-    q = quote(f'{name} {venue} 2026'.strip())
-    search_url = f'https://www.google.com/search?q={q}'
-    return f'''        <div class="detail-section detail-official-links detail-search-fallback">
-          <h2 class="detail-section-title">公式情報</h2>
-          <p class="detail-links-note">公式リンクは未登録です。Web検索で最新情報をご確認ください。</p>
-          <ul class="detail-links">
-            <li><a href="{search_url}" target="_blank" rel="noopener">Googleで「{html_escape(name)}」を検索 ↗</a></li>
-          </ul>
-        </div>
-'''
+    rows = []
+    for u, label in items:
+        rows.append(
+            f'          <div class="info-row">\n'
+            f'            <span class="info-label">公式</span>\n'
+            f'            <span class="info-value"><a href="{u}" target="_blank" rel="noopener">{html_escape(label)} ↗</a></span>\n'
+            f'          </div>'
+        )
+    return '\n'.join(rows)
+
 
 def make_admission_row(ev):
     """Admission info row"""
@@ -293,7 +287,7 @@ def build_page(template, ev):
         '{{cssVersion}}': CSS_VERSION,
         '{{jsVersion}}': JS_VERSION,
         '{{heroSection}}': make_hero_section(ev),
-        '{{officialLinksSection}}': make_official_links_section(ev),
+        '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{instagramSection}}': make_instagram_section(ev),
         '{{mapSection}}': make_map_section(ev),
         '{{admissionRow}}': make_admission_row(ev),
