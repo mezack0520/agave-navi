@@ -1801,6 +1801,9 @@ main {
         color: #e63946 !important;
     }
     .nav-ikitai-link svg {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
         fill: #e63946;
     }
 

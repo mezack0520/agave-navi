@@ -22,7 +22,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css?v=20260329e">
+    <link rel="stylesheet" href="style.css?v=20260504a">
 </head>
 <body>
     <header class="header">
@@ -197,34 +197,40 @@
                 }
                 empty.style.display = 'none';
 
+                const HEART_SVG = '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+                function escAttr(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
                 favEvents.forEach(ev => {
                     const card = document.createElement('div');
                     card.className = 'event-card';
                     card.setAttribute('data-slug', ev.slug);
-                    const tags = (ev.tags||[]).map(t => '<span class="event-tag">'+t+'</span>').join('');
-                    const imgHtml = ev.imageUrl
-                        ? '<img src="' + ev.imageUrl + '" alt="' + ev.name + '" class="event-thumb" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;event-thumb event-no-image&quot;></div>\'">'  
+                    card.setAttribute('data-status', ev.status||'upcoming');
+                    if (ev.region) card.setAttribute('data-region', ev.region);
+                    if (ev.prefecture) card.setAttribute('data-pref', ev.prefecture);
+                    if (ev.date) card.setAttribute('data-date', ev.date);
+                    if (ev.dateEnd) card.setAttribute('data-date-end', ev.dateEnd);
+                    if (ev.tags) card.setAttribute('data-tags', (ev.tags||[]).join(','));
+                    const thumbHtml = ev.imageUrl
+                        ? `<div class="event-thumb"><img src="${escAttr(ev.imageUrl)}" alt="${escAttr(ev.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('event-no-image');this.remove();"></div>`
                         : '<div class="event-thumb event-no-image"></div>';
                     card.innerHTML = `
-                        ${imgHtml}
+                        ${thumbHtml}
                         <button class="fav-btn favorited" onclick="removeFav(event, '${ev.slug}')" aria-label="行きたい解除">
-                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            ${HEART_SVG}
                         </button>
                         <div class="event-card-body">
                             <div class="event-header">
-                                <span class="event-date">${ev.dateDisplay}</span>
-                                <span class="event-status" data-date="${ev.date||''}" data-date-end="${ev.dateEnd||''}">${ev.status==='past'?'終了':'開催予定'}</span>
+                                <span class="event-date">${escAttr(ev.dateDisplay||'')}</span>
+                                <span class="event-status" data-date="${escAttr(ev.date||'')}" data-date-end="${escAttr(ev.dateEnd||'')}"></span>
                             </div>
-                            <h3 class="event-title">${ev.name}</h3>
-                            <p class="event-description">${(ev.description||'').substring(0,80)}</p>
+                            <h3 class="event-title">${escAttr(ev.name)}</h3>
+                            <p class="event-description">${escAttr((ev.description||'').substring(0,80))}</p>
                             <div class="event-meta-row">
-                                <span class="event-region">${ev.prefecture||ev.region||''}</span>
-                                ${tags}
+                                <span class="event-region">${escAttr(ev.prefecture||ev.region||'')}</span>
                             </div>
-                            <a href="events/${ev.slug}.html" class="event-link">詳細を見る</a>
-                        </div>`;
+                        </div>
+                        <div class="card-fav-bar" onclick="event.stopPropagation()">${HEART_SVG}<span>行きたい</span></div>`;
                     card.addEventListener('click', function(e) {
-                        if (e.target.tagName === 'A' || e.target.closest('.fav-btn')) return;
+                        if (e.target.closest('.fav-btn') || e.target.closest('.card-fav-bar')) return;
                         window.location.href = 'events/'+ev.slug+'.html';
                     });
                     grid.appendChild(card);

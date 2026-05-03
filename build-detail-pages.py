@@ -23,8 +23,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.join(SCRIPT_DIR, 'events.json')
 TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html')
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, 'events')
-CSS_VERSION = '20260501a'
-JS_VERSION = '20260501a'
+CSS_VERSION = '20260504a'
+JS_VERSION = '20260504a'
 
 # ---------------------------------------------------------------------------
 # Helpers
