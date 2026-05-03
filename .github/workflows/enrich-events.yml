@@ -7,15 +7,20 @@ on:
   workflow_dispatch:
     inputs:
       slug:
-        description: '特定イベントのslug（空欄で全件）'
+        description: '特定イベントのslug(空欄で全件)'
         required: false
         type: string
         default: ''
       limit:
-        description: '処理件数上限（0=全件）'
+        description: '処理件数上限(0=全件)'
         required: false
         type: string
-        default: '10'
+        default: '20'
+      remove_orphans:
+        description: '公式情報なしイベントを削除する(デフォルトはfalse=安全)'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   issues: write
@@ -39,18 +44,28 @@ jobs:
         run: pip install requests beautifulsoup4 lxml
 
       - name: Run enrichment
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
         run: |
-          ARGS=""
-          if [ -n "${{ github.event.inputs.slug }}" ]; then
-            ARGS="--slug ${{ github.event.inputs.slug }}"
+          ARGS="--write-back"
+          if [ "${{ github.event.inputs.remove_orphans }}" != "true" ]; then
+            ARGS="$ARGS --no-remove"
           fi
-          LIMIT="${{ github.event.inputs.limit || '10' }}"
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          fi
+          LIMIT="${{ github.event.inputs.limit || '20' }}"
           if [ "$LIMIT" != "0" ]; then
             ARGS="$ARGS --limit $LIMIT"
           fi
+          echo "Running: python scripts/enrich_events.py $ARGS"
           python scripts/enrich_events.py $ARGS
 
-      - name: Commit changes (removed events)
+      - name: Rebuild detail pages
+        run: python3 build-detail-pages.py
+
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -58,8 +73,8 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "auto: 公式情報なしイベントを削除 $(date +%Y-%m-%d)"
-            # Robust push with rebase+retry to avoid concurrent-push races
+            git commit -m "auto: enrich events.json (imageUrl/url backfill from web search) [skip ci]"
+            # Robust push with rebase+retry
             for attempt in 1 2 3 4 5; do
               if git push; then break; fi
               echo "::warning::push failed (attempt $attempt/5); pulling --rebase and retrying..."
@@ -73,12 +88,9 @@ jobs:
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
         run: |
           if [ -f /tmp/enrich-report.md ]; then
             TITLE="[情報エンリッチメント] イベント情報更新候補 $(date +%Y-%m-%d)"
-            # ラベルが存在しない場合は作成
             gh label create "auto-enrich" --description "自動エンリッチメントレポート" --color "0E8A16" 2>/dev/null || true
             gh issue create \
               --title "$TITLE" \

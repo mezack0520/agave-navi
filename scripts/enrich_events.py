@@ -511,6 +511,10 @@ def generate_report(results, removed_names=None):
 
 def main():
     parser = argparse.ArgumentParser(description='Enrich event information')
+    parser.add_argument('--write-back', action='store_true',
+        help='Write discovered imageUrl/url back to events.json (for empty fields only)')
+    parser.add_argument('--no-remove', action='store_true',
+        help='Do not remove events that have no findings (default: remove them)')
     parser.add_argument('--slug', help='Process specific event by slug')
     parser.add_argument('--missing-only', action='store_true',
                         help='Only process events with missing info')
@@ -545,7 +549,45 @@ def main():
     needs_manual_slugs = {r['slug'] for r in results
                           if r and r.get('category') == 'needs_manual'}
 
-    if needs_manual_slugs:
+
+    # === Write-back: populate imageUrl/url from enrichment to events.json ===
+    if args.write_back:
+        all_events = load_events()
+        slug_to_result = {r['slug']: r for r in results if r}
+        write_count = 0
+        for ev in all_events:
+            r = slug_to_result.get(ev.get('slug'))
+            if not r:
+                continue
+            if r.get('category') != 'enriched':
+                continue
+            info = r.get('extracted_info') or {}
+            best_url = r.get('best_url')
+            changed = False
+            if best_url and not ev.get('url'):
+                ev['url'] = best_url
+                changed = True
+            ogp_image = info.get('ogp_image')
+            if ogp_image and not ev.get('imageUrl'):
+                try:
+                    h = requests.head(ogp_image, headers=HEADERS, timeout=8, allow_redirects=True)
+                    if h.status_code < 400:
+                        ev['imageUrl'] = ogp_image
+                        changed = True
+                except requests.RequestException:
+                    pass
+            if changed:
+                write_count += 1
+                print(f"  WRITE-BACK: {ev['slug']} ← url={(ev.get('url') or '')[:40]} img={(ev.get('imageUrl') or '')[:50]}")
+        if write_count:
+            with open(EVENTS_PATH, 'w', encoding='utf-8') as f:
+                json.dump(all_events, f, ensure_ascii=False, indent=2)
+                f.write('\n')
+            print(f"  events.json: write-back {write_count} field-set(s)")
+        else:
+            print('  No new fields to write back.')
+
+    if needs_manual_slugs and not args.no_remove:
         print(f"\n=== Removing {len(needs_manual_slugs)} events with no official info ===")
         original_count = len(events)
 
