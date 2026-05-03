@@ -45,6 +45,7 @@ jobs:
 
       - name: Run enrichment
         env:
+          BRAVE_API_KEY:  ${{ secrets.BRAVE_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
         run: |

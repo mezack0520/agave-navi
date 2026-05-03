@@ -185,9 +185,10 @@ def extract_page_info(url):
 
 def try_web_search(query, num_results=5):
     """
-    Search using Google Custom Search API.
-    Requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables.
-    Falls back to DuckDuckGo HTML scraping if API is not configured.
+    Search backends in priority order:
+      1. Brave Search API (BRAVE_API_KEY)         — primary (Google CSE deprecated 2026)
+      2. Google Custom Search API (GOOGLE_API_KEY + GOOGLE_CSE_ID) — kept for compat
+      3. DuckDuckGo HTML scraping                 — last-resort fallback
     """
     def _filter_url(url):
         domain = urlparse(url).netloc.lower()
@@ -197,7 +198,42 @@ def try_web_search(query, num_results=5):
             return False
         return True
 
-    # Primary: Google Custom Search API
+    # Primary: Brave Search API
+    brave_key = os.environ.get('BRAVE_API_KEY', '')
+    if brave_key:
+        try:
+            params = {
+                'q': query,
+                'count': min(num_results, 20),
+                'country': 'JP',
+                'search_lang': 'jp',
+            }
+            headers = {
+                'Accept': 'application/json',
+                'X-Subscription-Token': brave_key,
+            }
+            resp = requests.get(
+                'https://api.search.brave.com/res/v1/web/search',
+                params=params, headers=headers, timeout=15)
+            if resp.status_code == 200:
+                data = resp.json()
+                items = (data.get('web') or {}).get('results', []) or []
+                results = []
+                for item in items:
+                    url = item.get('url', '')
+                    if url and _filter_url(url):
+                        results.append({'url': url, 'title': item.get('title', '')})
+                if results:
+                    print(f"    Brave: {len(results)} results for '{query[:40]}'")
+                    return results[:num_results]
+                else:
+                    print(f"    Brave: 0 results after filtering")
+            else:
+                print(f"    Brave error: HTTP {resp.status_code}: {resp.text[:120]}")
+        except Exception as e:
+            print(f"    Brave error: {e}")
+
+    # Fallback 1: Google Custom Search API
     api_key = os.environ.get('GOOGLE_API_KEY', '')
     cse_id = os.environ.get('GOOGLE_CSE_ID', '')
 
@@ -234,7 +270,7 @@ def try_web_search(query, num_results=5):
         except Exception as e:
             print(f"    Google CSE error: {e}")
 
-    # Fallback: DuckDuckGo HTML scraping
+    # Fallback 2: DuckDuckGo HTML scraping (last resort)
     try:
         encoded = quote_plus(query)
         resp = requests.get(
