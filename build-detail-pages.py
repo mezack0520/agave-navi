@@ -164,6 +164,72 @@ def make_hero_section(ev):
     </div>
 '''
 
+
+
+def make_official_links_section(ev):
+    """公式情報リンク。url/sourceUrl/instagramUrl があれば各々を表示。
+    どれもなければ Google検索フォールバックを表示。"""
+    items = []
+    seen = set()
+
+    def add(url, label):
+        if not url or url in seen:
+            return
+        seen.add(url)
+        items.append((url, label))
+
+    if ev.get('url'):
+        url = ev['url']
+        if 'instagram.com' in url:
+            label = 'Instagram'
+        elif 'facebook.com' in url:
+            label = 'Facebook'
+        elif 'twitter.com' in url or 'x.com/' in url:
+            label = 'X (Twitter)'
+        else:
+            label = '公式サイト'
+        add(url, label)
+
+    if ev.get('sourceUrl'):
+        s = ev['sourceUrl']
+        if 'instagram.com' in s:
+            label = '公式Instagram'
+        else:
+            label = '情報元サイト'
+        add(s, label)
+
+    if ev.get('instagramUrl'):
+        add(ev['instagramUrl'], 'Instagram投稿')
+
+    if items:
+        rows = '\n'.join(
+            f'            <li><a href="{u}" target="_blank" rel="noopener">{label} ↗</a></li>'
+            for u, label in items
+        )
+        return f'''        <div class="detail-section detail-official-links">
+          <h2 class="detail-section-title">公式情報</h2>
+          <ul class="detail-links">
+{rows}
+          </ul>
+        </div>
+'''
+
+    # Fallback: Google search
+    name = ev.get('name', '')
+    if not name:
+        return ''
+    venue = ev.get('venue', '')
+    q = quote(f'{name} {venue} 2026'.strip())
+    search_url = f'https://www.google.com/search?q={q}'
+    return f'''        <div class="detail-section detail-official-links detail-search-fallback">
+          <h2 class="detail-section-title">公式情報</h2>
+          <p class="detail-links-note">公式リンクは未登録です。Web検索で最新情報をご確認ください。</p>
+          <ul class="detail-links">
+            <li><a href="{search_url}" target="_blank" rel="noopener">Googleで「{html_escape(name)}」を検索 ↗</a></li>
+          </ul>
+        </div>
+'''
+
 def make_admission_row(ev):
     """Admission info row"""
     admission = ev.get('admission', '')
@@ -227,6 +293,7 @@ def build_page(template, ev):
         '{{cssVersion}}': CSS_VERSION,
         '{{jsVersion}}': JS_VERSION,
         '{{heroSection}}': make_hero_section(ev),
+        '{{officialLinksSection}}': make_official_links_section(ev),
         '{{instagramSection}}': make_instagram_section(ev),
         '{{mapSection}}': make_map_section(ev),
         '{{admissionRow}}': make_admission_row(ev),
