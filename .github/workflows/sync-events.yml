@@ -65,6 +65,9 @@ jobs:
       - name: Build all detail pages from template
         run: python3 build-detail-pages.py
 
+      - name: Sync index.html card images with events.json
+        run: python3 scripts/sync-index-cards.py
+
       - name: Add cards to index.html for new slugs
         run: |
           python3 << 'PYEOF'

@@ -92,6 +92,9 @@ jobs:
       - name: Rebuild detail pages (update status badges)
         run: python3 build-detail-pages.py
 
+      - name: Sync index.html card images with events.json
+        run: python3 scripts/sync-index-cards.py
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
