@@ -28,6 +28,18 @@ except ImportError:
     from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent.parent
+
+AGGREGATOR_BLOCKLIST = (
+    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+)
+
+
+def is_aggregator(url):
+    if not url: return False
+    return any(ag in url.lower() for ag in AGGREGATOR_BLOCKLIST)
+
+
 EVENTS_JSON = ROOT / "events.json"
 EVENTS_DIR = ROOT / "events"
 INDEX_HTML = ROOT / "index.html"
@@ -243,6 +255,8 @@ def main():
         name = ev.get("name", "")
         slug = ev.get("slug", "")
         source = ev.get("sourceUrl", "")
+        if is_aggregator(source):
+            continue
         current_date = ev.get("date", "")
 
         print(f"\n[{i+1}/{len(targets)}] {name} ({slug})")

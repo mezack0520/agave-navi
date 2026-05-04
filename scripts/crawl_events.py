@@ -20,6 +20,17 @@ SOURCES_PATH = os.path.join(os.path.dirname(__file__), '..', 'crawl-sources.json
 EVENTS_PATH = os.path.join(os.path.dirname(__file__), '..', 'events.json')
 REPORT_PATH = '/tmp/crawl-report.md'
 
+AGGREGATOR_BLOCKLIST = (
+    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+)
+
+
+def is_aggregator(url):
+    if not url: return False
+    return any(ag in url.lower() for ag in AGGREGATOR_BLOCKLIST)
+
+
 HEADERS = {
     'User-Agent': 'AgaveNaviBot/1.0 (+https://agave-navi.com/about.html)',
     'Accept': 'text/html,application/xhtml+xml',

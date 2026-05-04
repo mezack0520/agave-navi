@@ -24,6 +24,17 @@ from bs4 import BeautifulSoup
 SOURCES_PATH = os.path.join(os.path.dirname(__file__), '..', 'crawl-sources.json')
 REPORT_PATH = '/tmp/discover-report.md'
 
+AGGREGATOR_BLOCKLIST = (
+    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+)
+
+
+def is_aggregator(url):
+    if not url: return False
+    return any(ag in url.lower() for ag in AGGREGATOR_BLOCKLIST)
+
+
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                   '(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
