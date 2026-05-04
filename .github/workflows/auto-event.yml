@@ -44,6 +44,12 @@ jobs:
           print(f'Wrote {len(payload)} new event(s) to new-events.json')
           PYEOF
 
+      - name: Sanity-check new-events.json (drop ticketing/aggregator entries)
+        run: |
+          if [ -f new-events.json ]; then
+            python3 scripts/sanity-check-new-events.py --in new-events.json
+          fi
+
       - name: Merge new-events.json
         run: |
           python3 << 'PYEOF'

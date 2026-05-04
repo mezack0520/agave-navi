@@ -14,6 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Sanity-check new-events.json (drop ticketing/aggregator entries)
+        run: |
+          if [ -f new-events.json ]; then
+            python3 scripts/sanity-check-new-events.py --in new-events.json
+          fi
+
       - name: Merge new-events.json (if exists)
         run: |
           python3 << 'PYEOF'
