@@ -479,11 +479,27 @@ def process_event(event, force=False):
 
     # Check current state of detail page
     page_state = check_detail_page(slug)
+    # events.json にプレースホルダー('調整中'/'未定'等)があれば常に enrichment 対象
+    has_placeholders = any(
+        _is_empty(event.get(f, '')) and event.get(f) is not None
+        and str(event.get(f, '')).strip() not in ('', None)
+        for f in ('venue', 'mapQuery', 'admission', 'time', 'access')
+    )
+    # Or simpler: check if any of those fields has a placeholder string
+    placeholder_fields = []
+    for f in ('venue', 'mapQuery', 'admission', 'time', 'access'):
+        v = event.get(f)
+        if isinstance(v, str) and v.strip() in _PLACEHOLDER_VALUES and v.strip():
+            placeholder_fields.append(f)
+
     needs_update = (
         page_state.get('has_generic_desc', False) or
         page_state.get('has_template_text', False) or
-        not page_state.get('has_ogp_image', False)
+        not page_state.get('has_ogp_image', False) or
+        bool(placeholder_fields)
     )
+    if placeholder_fields:
+        print(f"  Placeholders detected in: {placeholder_fields}")
 
     if not needs_update and not force:
         print(f"  → Already enriched, skipping")
