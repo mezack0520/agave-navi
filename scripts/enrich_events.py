@@ -169,6 +169,58 @@ def extract_page_info(url):
     if venues:
         info['venues_found'] = venues[:3]
 
+    # --- Access extraction ---
+    access_patterns = [
+        r'(アクセス|交通)\s*[：:]\s*([^\n]{10,200})',
+        r'((?:JR|地下鉄|私鉄|東京メトロ|都営|京急|京王|小田急|東急|東武|西武|京成)[^\n]{5,80}徒歩\d+[分秒])',
+        r'(最寄駅?\s*[：:]?\s*[^\n]{5,80})',
+    ]
+    access_lines = []
+    for pat in access_patterns:
+        for m in re.finditer(pat, text):
+            line = m.group().strip().replace('\n', ' ')
+            if 5 < len(line) < 250:
+                access_lines.append(line)
+    if access_lines:
+        # dedupe preserve order
+        seen = set(); uniq = []
+        for line in access_lines:
+            if line not in seen:
+                seen.add(line); uniq.append(line)
+        info['access_found'] = uniq[:3]
+
+    # --- Highlights extraction ---
+    # Look for bullet-style lines after keywords like 見どころ/特徴/概要
+    hi_patterns = [
+        r'(?:見どころ|特徴|概要|ポイント|内容)\s*[：:\n]([\s\S]{30,500}?)(?=\n\s*\n)',
+    ]
+    highlights = []
+    for pat in hi_patterns:
+        for m in re.finditer(pat, text):
+            chunk = m.group(1).strip()
+            # Split into bullet-like lines
+            for line in re.split(r'[\n・●▶︎▶◆■]+', chunk):
+                line = line.strip(' 　・*-')
+                if 8 < len(line) < 120:
+                    highlights.append(line)
+    if highlights:
+        seen = set(); uniq = []
+        for h in highlights:
+            if h not in seen:
+                seen.add(h); uniq.append(h)
+        info['highlights_found'] = uniq[:5]
+
+    # --- Exhibitor count hint ---
+    m = re.search(r'(?:出店者?数?|出展者?数?|参加[店者]+数?)\s*[：:]?\s*(?:約\s*)?(\d{2,3})', text)
+    if m:
+        info['exhibitor_count'] = int(m.group(1))
+
+    # --- Long description: prefer first substantial paragraph ---
+    paragraphs = [p.strip() for p in re.split(r'\n{2,}', text) if 80 <= len(p.strip()) <= 400]
+    if paragraphs:
+        info['long_description'] = paragraphs[0]
+
+
     # --- Organizer extraction ---
     org_patterns = [
         r'(主催|運営)\s*[：:]\s*([^\n]{2,50})',
@@ -586,40 +638,85 @@ def main():
                           if r and r.get('category') == 'needs_manual'}
 
 
-    # === Write-back: populate imageUrl/url from enrichment to events.json ===
+    # === Write-back: populate fields from enrichment to events.json ===
+    # Only upcoming events get write-back (per user preference).
     if args.write_back:
         all_events = load_events()
         slug_to_result = {r['slug']: r for r in results if r}
         write_count = 0
         for ev in all_events:
-            r = slug_to_result.get(ev.get('slug'))
-            if not r:
+            if ev.get('status') != 'upcoming':
                 continue
-            if r.get('category') != 'enriched':
+            r = slug_to_result.get(ev.get('slug'))
+            if not r or r.get('category') != 'enriched':
                 continue
             info = r.get('extracted_info') or {}
             best_url = r.get('best_url')
-            changed = False
+            changed_fields = []
+
+            # url (only if empty)
             if best_url and not ev.get('url'):
                 ev['url'] = best_url
-                changed = True
+                changed_fields.append('url')
+
+            # imageUrl (only if empty, with HEAD verification)
             ogp_image = info.get('ogp_image')
             if ogp_image and not ev.get('imageUrl'):
                 try:
                     h = requests.head(ogp_image, headers=HEADERS, timeout=8, allow_redirects=True)
                     if h.status_code < 400:
                         ev['imageUrl'] = ogp_image
-                        changed = True
+                        changed_fields.append('imageUrl')
                 except requests.RequestException:
                     pass
-            if changed:
+
+            # description: replace if extracted is significantly longer (>=1.5x AND >=200 chars)
+            ogp_desc = (info.get('ogp_description') or '').strip()
+            long_desc = (info.get('long_description') or '').strip()
+            candidate_desc = ogp_desc if len(ogp_desc) >= len(long_desc) else long_desc
+            cur_desc = (ev.get('description') or '').strip()
+            if (candidate_desc and len(candidate_desc) >= 200
+                    and len(candidate_desc) >= int(len(cur_desc) * 1.5)
+                    and candidate_desc != cur_desc):
+                ev['description'] = candidate_desc[:500]
+                changed_fields.append('description')
+
+            # time (only if empty)
+            times_found = info.get('times_found') or []
+            if times_found and not ev.get('time'):
+                ev['time'] = times_found[0]
+                changed_fields.append('time')
+
+            # admission (only if empty)
+            prices = info.get('prices_found') or []
+            if prices and not ev.get('admission'):
+                # pick the shortest non-trivial entry as the headline price
+                pick = sorted(prices, key=lambda s: (len(s) > 60, len(s)))[0]
+                if pick:
+                    ev['admission'] = pick[:80]
+                    changed_fields.append('admission')
+
+            # access (new field, only if empty)
+            access_lines = info.get('access_found') or []
+            if access_lines and not ev.get('access'):
+                ev['access'] = ' / '.join(access_lines)[:300]
+                changed_fields.append('access')
+
+            # highlights (new field, list, only if empty)
+            highlights = info.get('highlights_found') or []
+            if highlights and not ev.get('highlights'):
+                ev['highlights'] = highlights
+                changed_fields.append('highlights')
+
+            if changed_fields:
                 write_count += 1
-                print(f"  WRITE-BACK: {ev['slug']} ← url={(ev.get('url') or '')[:40]} img={(ev.get('imageUrl') or '')[:50]}")
+                print(f"  WRITE-BACK: {ev['slug']} ← {', '.join(changed_fields)}")
+
         if write_count:
             with open(EVENTS_PATH, 'w', encoding='utf-8') as f:
                 json.dump(all_events, f, ensure_ascii=False, indent=2)
                 f.write('\n')
-            print(f"  events.json: write-back {write_count} field-set(s)")
+            print(f"  events.json: write-back {write_count} event(s)")
         else:
             print('  No new fields to write back.')
 

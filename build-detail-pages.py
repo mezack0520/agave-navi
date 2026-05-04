@@ -23,8 +23,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.join(SCRIPT_DIR, 'events.json')
 TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html')
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, 'events')
-CSS_VERSION = '20260504b'
-JS_VERSION = '20260504b'
+CSS_VERSION = '20260504c'
+JS_VERSION = '20260504c'
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -165,6 +165,34 @@ def make_hero_section(ev):
 '''
 
 
+
+def make_access_row(ev):
+    """Access info row in sidebar (only if access exists)"""
+    access = ev.get('access', '')
+    if not access:
+        return ''
+    return f'''          <div class="info-row">
+            <span class="info-label">アクセス</span>
+            <span class="info-value">{html_escape(access)}</span>
+          </div>'''
+
+
+def make_highlights_section(ev):
+    """Highlights section in main column (only if highlights list exists)"""
+    highlights = ev.get('highlights') or []
+    if not highlights:
+        return ''
+    items = '\n'.join(
+        f'            <li>{html_escape(h)}</li>'
+        for h in highlights[:8]
+    )
+    return f'''        <div class="detail-section detail-highlights">
+          <h2 class="detail-section-title">見どころ</h2>
+          <ul class="highlights-list">
+{items}
+          </ul>
+        </div>
+'''
 
 def make_event_jsonld(ev):
     """schema.org Event JSON-LD. Skip entirely if no date (avoid invalid empty startDate)."""
@@ -324,6 +352,8 @@ def build_page(template, ev):
         '{{jsVersion}}': JS_VERSION,
         '{{heroSection}}': make_hero_section(ev),
         '{{eventJsonLd}}': make_event_jsonld(ev),
+        '{{accessRow}}': make_access_row(ev),
+        '{{highlightsSection}}': make_highlights_section(ev),
         '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{instagramSection}}': make_instagram_section(ev),
         '{{mapSection}}': make_map_section(ev),

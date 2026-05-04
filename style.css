@@ -2830,3 +2830,26 @@ main {
 .events-grid .event-card[data-slug]:not(.event-ended) {
   cursor: pointer;
 }
+
+/* === Highlights list (added 2026-05-04) === */
+.detail-highlights .highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+.detail-highlights .highlights-list li {
+    position: relative;
+    padding: 0.55rem 0 0.55rem 1.6rem;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+.detail-highlights .highlights-list li:last-child { border-bottom: none; }
+.detail-highlights .highlights-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 1rem;
+    width: 0.55rem; height: 0.55rem;
+    background: var(--accent-pop, #e63946);
+    border-radius: 50%;
+}
