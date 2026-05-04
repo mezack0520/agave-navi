@@ -39,7 +39,7 @@ TIMEOUT = 12
 # --- Aggregator/blocklist (used by image, url and field acceptance) ---
 AGGREGATOR_DOMAINS = (
     'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
 )
 _GENERIC_IMG_RE = re.compile(
     r'/(ogp|og_image|og-image|default|logo|share|thumb|main)\.(png|jpg|jpeg|webp|gif)(\?|$)',

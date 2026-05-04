@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 AGGREGATOR_BLOCKLIST = (
     'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
 )
 
 

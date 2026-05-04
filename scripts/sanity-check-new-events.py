@@ -21,7 +21,7 @@ TICKETING_DOMAINS = (
 # Aggregator (データ汚染源) → 同じく url にしてはいけない
 AGGREGATOR_DOMAINS = (
     'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
 )
 
 def url_domain(u):

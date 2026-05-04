@@ -22,7 +22,7 @@ REPORT_PATH = '/tmp/crawl-report.md'
 
 AGGREGATOR_BLOCKLIST = (
     'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
 )
 
 
