@@ -2830,3 +2830,36 @@ main {
 .events-grid .event-card[data-slug]:not(.event-ended) {
   cursor: pointer;
 }
+
+/* === Share buttons (added 2026-05-04) === */
+.detail-share {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.5rem 0 0.5rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: var(--gray-100, #f7f7f7);
+    border-radius: var(--radius, 12px);
+}
+.detail-share-label { font-size: 0.85rem; color: var(--gray-600, #666); font-weight: 600; margin-right: 0.2rem; }
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+}
+.share-btn:hover { opacity: 0.85; }
+.share-btn:active { transform: scale(0.97); }
+.share-btn.share-x { background: #000; color: #fff; }
+.share-btn.share-line { background: #06c755; color: #fff; }
+.share-btn.share-copy { background: #fff; color: #333; border-color: #ddd; }
+.ad-affiliate-area-inline { max-width: 100%; }
