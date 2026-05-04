@@ -166,6 +166,42 @@ def make_hero_section(ev):
 
 
 
+def make_event_jsonld(ev):
+    """schema.org Event JSON-LD. Skip entirely if no date (avoid invalid empty startDate)."""
+    if not ev.get('date'):
+        return ''
+    name = html_escape(ev.get('name', ''))
+    date = ev.get('date', '')
+    end = ev.get('dateEnd') or date
+    venue = html_escape(ev.get('venue', '') or '')
+    pref = ev.get('prefecture', '') or ev.get('region', '')
+    desc = html_escape(make_meta_description(ev))
+    return f'''  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "{name}",
+    "startDate": "{date}",
+    "endDate": "{end}",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {{
+      "@type": "Place",
+      "name": "{venue}",
+      "address": {{
+        "@type": "PostalAddress",
+        "addressRegion": "{pref}",
+        "addressCountry": "JP"
+      }}
+    }},
+    "description": "{desc}",
+    "organizer": {{
+      "@type": "Organization",
+      "name": "{name}"
+    }}
+  }}
+  </script>'''
+
 def make_official_links_rows(ev):
     """公式情報の info-row(複数可)。サイドバー EVENT INFO 内に表示。
     url/sourceUrl/instagramUrl がなければ Google検索リンクをフォールバック。"""
@@ -287,6 +323,7 @@ def build_page(template, ev):
         '{{cssVersion}}': CSS_VERSION,
         '{{jsVersion}}': JS_VERSION,
         '{{heroSection}}': make_hero_section(ev),
+        '{{eventJsonLd}}': make_event_jsonld(ev),
         '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{instagramSection}}': make_instagram_section(ev),
         '{{mapSection}}': make_map_section(ev),
@@ -333,11 +370,8 @@ def main():
             skipped += 1
             continue
 
-        # Skip events with no date (incomplete data)
-        if not ev.get('date'):
-            print(f'  SKIP (no date): {slug}')
-            skipped += 1
-            continue
+        # Note: events without date are still built (with dateDisplay fallback);
+        # JSON-LD Event schema is omitted in that case (see make_event_jsonld).
 
         html = build_page(template, ev)
         output_path = os.path.join(OUTPUT_DIR, f'{slug}.html')

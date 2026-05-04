@@ -25,31 +25,7 @@
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../style.css?v={{cssVersion}}">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": "{{name}}",
-    "startDate": "{{date}}",
-    "endDate": "{{dateEndOrDate}}",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {
-      "@type": "Place",
-      "name": "{{venue}}",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "{{prefecture}}",
-        "addressCountry": "JP"
-      }
-    },
-    "description": "{{metaDescription}}",
-    "organizer": {
-      "@type": "Organization",
-      "name": "{{name}}"
-    }
-  }
-  </script>
+{{eventJsonLd}}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

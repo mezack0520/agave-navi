@@ -9,7 +9,7 @@
     gtag('js', new Date());
     gtag('config', 'G-MKY0V1H0HY');
   </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0790348660030345" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0790348660030345" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <link rel="canonical" href="https://agave-navi.com/events/botanical-circus-7-2026.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,32 +24,8 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="stylesheet" href="../style.css?v=20260504a">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": "Botanical Circus 7",
-    "startDate": "",
-    "endDate": "",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {
-      "@type": "Place",
-      "name": "",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "",
-        "addressCountry": "JP"
-      }
-    },
-    "description": "東京・京橋で開催されるビザールプランツ・珍奇植物の展示即売イベント第7回。",
-    "organizer": {
-      "@type": "Organization",
-      "name": "Botanical Circus 7"
-    }
-  }
-  </script>
+  <link rel="stylesheet" href="../style.css?v=20260504b">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -64,8 +40,8 @@
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "イベント一覧",
-        "item": "https://agave-navi.com/"
+        "name": "関東のイベント",
+        "item": "https://agave-navi.com/?region=%E9%96%A2%E6%9D%B1"
       },
       {
         "@type": "ListItem",
@@ -97,19 +73,23 @@
 
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">ホーム</a> &gt;
-    <a href="/">イベント一覧</a> &gt;
+    <a href="/?region=%E9%96%A2%E6%9D%B1">関東のイベント</a> &gt;
     <span>Botanical Circus 7</span>
   </nav>
 
   <main class="detail-page">
+    <div class="detail-hero">
+      <img src="https://i0.wp.com/botanical-zone.tokyo/wp-content/uploads/2025/06/4d618a8d322b860b44d0b7c094ec1e80.jpg?fit=1200%2C630&ssl=1" alt="Botanical Circus 7" class="detail-hero-img" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'">
+    </div>
+
     <div class="detail-header">
       <h1>Botanical Circus 7</h1>
       <div class="detail-meta">
         <span class="detail-status-badge" data-date="" data-date-end=""></span>
         <span class="detail-meta-dot"></span>
-        <span class="detail-meta-item"></span>
+        <span class="detail-meta-item">未定</span>
         <span class="detail-meta-dot"></span>
-        <span class="detail-meta-item"></span>
+        <span class="detail-meta-item">東京</span>
       </div>
       <div class="detail-header-actions">
         <button class="detail-fav-btn" id="favBtn" onclick="toggleFav()">
@@ -130,8 +110,10 @@
 
 
 
+
+
         <div class="detail-back">
-          <a href="/" class="detail-back-link">イベント一覧に戻る</a>
+          <a href="/?region=%E9%96%A2%E6%9D%B1" class="detail-back-link">関東のイベントに戻る</a>
         </div>
       </div>
 
@@ -140,14 +122,26 @@
           <h3>EVENT INFO</h3>
           <div class="info-row">
             <span class="info-label">日時</span>
-            <span class="info-value"></span>
+            <span class="info-value">未定</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">会場</span>
+            <span class="info-value">京橋</span>
           </div>
           <div class="info-row">
             <span class="info-label">開催地域</span>
-            <span class="info-value"></span>
+            <span class="info-value">関東</span>
           </div>
 
 
+          <div class="info-row">
+            <span class="info-label">公式</span>
+            <span class="info-value"><a href="https://botanical-zone.tokyo/202507tokyoevent/" target="_blank" rel="noopener">公式サイト ↗</a></span>
+          </div>
+
+          <a href="#" target="_blank" rel="noopener" class="gcal-btn">
+            &#128197; Googleカレンダーに追加
+          </a>
         </div>
 
 
@@ -190,20 +184,20 @@
   </footer>
 
   <script src="../affiliate.js"></script>
-  <script src="../status-auto.js?v=20260330b"></script>
+  <script src="../status-auto.js?v=20260504b"></script>
   <script src="../ads.js"></script>
   <script>
     const SLUG = 'botanical-circus-7-2026';
     function toggleFav() {
-      let favs = JSON.parse(localStorage.getItem('favEvents') || '[]');
+      let favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
       const idx = favs.indexOf(SLUG);
       if (idx >= 0) { favs.splice(idx, 1); }
       else { favs.push(SLUG); }
-      localStorage.setItem('favEvents', JSON.stringify(favs));
+      localStorage.setItem('aen_favs', JSON.stringify(favs));
       updateFavUI();
     }
     function updateFavUI() {
-      const favs = JSON.parse(localStorage.getItem('favEvents') || '[]');
+      const favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
       const btn = document.getElementById('favBtn');
       const label = document.getElementById('favLabel');
       if (favs.includes(SLUG)) {
