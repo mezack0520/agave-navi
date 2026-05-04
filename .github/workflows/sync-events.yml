@@ -165,42 +165,7 @@ jobs:
           PYEOF
 
       - name: Update sitemap
-        run: |
-          python3 << 'PYEOF'
-          import json, os
-          from datetime import date
-
-          with open("events.json") as f:
-              events = json.load(f)
-
-          today = date.today().isoformat()
-          base = "https://agave-navi.com"
-          static = [
-              (f"{base}/", today, "daily", "1.0"),
-              (f"{base}/about.html", "2025-12-01", "monthly", "0.3"),
-              (f"{base}/contact.html", "2025-12-01", "monthly", "0.3"),
-              (f"{base}/disclaimer.html", "2025-12-01", "monthly", "0.2"),
-              (f"{base}/privacy.html", "2025-12-01", "monthly", "0.2"),
-              (f"{base}/operator.html", "2025-12-01", "monthly", "0.2"),
-              (f"{base}/ikitai.html", "2025-12-01", "monthly", "0.4"),
-          ]
-          xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-          xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          for url, mod, freq, pri in static:
-              xml += f'  <url><loc>{url}</loc><lastmod>{mod}</lastmod><changefreq>{freq}</changefreq><priority>{pri}</priority></url>\n'
-
-          for e in events:
-              slug = e.get("slug","")
-              if not slug or not e.get("date"):
-                  continue
-              page = f"{base}/events/{slug}.html"
-              xml += f'  <url><loc>{page}</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>\n'
-
-          xml += '</urlset>\n'
-          with open("sitemap.xml", "w") as f:
-              f.write(xml)
-          print(f"Sitemap updated: {sum(1 for e in events if e.get('date'))} event pages")
-          PYEOF
+        run: python3 scripts/generate_sitemap.py
 
       - name: Remove new-events.json after processing
         run: |

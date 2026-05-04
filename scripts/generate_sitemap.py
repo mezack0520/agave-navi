@@ -1,92 +1,118 @@
 #!/usr/bin/env python3
 """
-Auto-generate sitemap.xml from all HTML files in the repository.
-Run as part of GitHub Actions or locally.
+Auto-generate sitemap.xml from all HTML files + events.json image data.
+Includes image:image extension so Google can index event hero images.
 """
 import os
 import glob
+import json
 from datetime import datetime
 
 DOMAIN = "https://agave-navi.com"
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
 
-# Priority and changefreq settings
 PRIORITY_MAP = {
-    "index.html": ("1.0", "daily"),
-    "ikitai.html": ("0.8", "daily"),
-    "calendar.html": ("0.8", "daily"),
-    "map.html": ("0.7", "weekly"),
-    "listing.html": ("0.7", "monthly"),
-    "about.html": ("0.5", "monthly"),
-    "contact.html": ("0.5", "monthly"),
-    "privacy.html": ("0.3", "yearly"),
-    "terms.html": ("0.3", "yearly"),
-    "disclaimer.html": ("0.3", "yearly"),
-    "operator.html": ("0.3", "yearly"),
+    "index.html":     ("1.0", "daily"),
+    "ikitai.html":    ("0.8", "daily"),
+    "calendar.html":  ("0.8", "daily"),
+    "map.html":       ("0.7", "weekly"),
+    "listing.html":   ("0.7", "monthly"),
+    "about.html":     ("0.5", "monthly"),
+    "contact.html":   ("0.5", "monthly"),
+    "privacy.html":   ("0.3", "yearly"),
+    "terms.html":     ("0.3", "yearly"),
+    "disclaimer.html":("0.3", "yearly"),
+    "operator.html":  ("0.3", "yearly"),
 }
 
-def get_url(filepath):
-    """Convert file path to URL."""
-    rel = os.path.relpath(filepath, REPO_ROOT)
-    # index.html -> /
+
+def url_for(rel):
     if rel == "index.html":
         return DOMAIN + "/"
-    return DOMAIN + "/" + rel
+    return DOMAIN + "/" + rel.replace(os.sep, "/")
 
-def get_lastmod(filepath):
-    """Get last modified date of file."""
-    mtime = os.path.getmtime(filepath)
+
+def lastmod(fp):
+    mtime = os.path.getmtime(fp)
     return datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
 
+
+def html_escape(s):
+    return (s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+
+
+def load_event_images():
+    """slug → imageUrl map"""
+    if not os.path.exists(EVENTS_JSON):
+        return {}
+    with open(EVENTS_JSON, encoding='utf-8') as f:
+        data = json.load(f)
+    out = {}
+    for e in data:
+        slug = e.get('slug')
+        img = e.get('imageUrl')
+        if slug and img:
+            out[slug] = (img, e.get('name', ''))
+    return out
+
+
 def generate():
-    urls = []
+    image_map = load_event_images()
 
-    # Collect all HTML files (exclude 404, google verification, etc.)
-    html_files = glob.glob(os.path.join(REPO_ROOT, "*.html"))
-    html_files += glob.glob(os.path.join(REPO_ROOT, "events", "*.html"))
-    html_files += glob.glob(os.path.join(REPO_ROOT, "category", "*.html"))
+    # Collect HTML files
+    files = []
+    files += glob.glob(os.path.join(REPO_ROOT, "*.html"))
+    files += glob.glob(os.path.join(REPO_ROOT, "events", "*.html"))
+    files += glob.glob(os.path.join(REPO_ROOT, "category", "*.html"))
 
-    for fp in sorted(html_files):
+    rows = []
+    for fp in sorted(files):
+        rel = os.path.relpath(fp, REPO_ROOT)
         basename = os.path.basename(fp)
-        # Skip non-content pages
-        if basename.startswith("google") or basename == "404.html":
+        if basename.startswith('google') or basename == '404.html':
             continue
-
-        url = get_url(fp)
-        lastmod = get_lastmod(fp)
-
-        # Determine priority and changefreq
+        loc = url_for(rel)
+        lm = lastmod(fp)
         if basename in PRIORITY_MAP:
-            priority, changefreq = PRIORITY_MAP[basename]
-        elif "/events/" in fp:
-            priority, changefreq = "0.8", "weekly"
-        elif "/category/" in fp:
-            priority, changefreq = "0.6", "weekly"
+            pri, freq = PRIORITY_MAP[basename]
+        elif rel.startswith('events/'):
+            pri, freq = '0.8', 'weekly'
+        elif rel.startswith('category/'):
+            pri, freq = '0.6', 'weekly'
         else:
-            priority, changefreq = "0.5", "monthly"
+            pri, freq = '0.5', 'monthly'
 
-        urls.append((url, lastmod, changefreq, priority))
+        # detail page → image:image entry if event has imageUrl
+        slug = None
+        if rel.startswith('events/'):
+            slug = os.path.splitext(basename)[0]
 
-    # Generate XML
-    xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml_lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+        rows.append((loc, lm, freq, pri, slug))
 
-    for url, lastmod, changefreq, priority in urls:
-        xml_lines.append("  <url>")
-        xml_lines.append(f"    <loc>{url}</loc>")
-        xml_lines.append(f"    <lastmod>{lastmod}</lastmod>")
-        xml_lines.append(f"    <changefreq>{changefreq}</changefreq>")
-        xml_lines.append(f"    <priority>{priority}</priority>")
-        xml_lines.append("  </url>")
+    out = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+           '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
+    for loc, lm, freq, pri, slug in rows:
+        out.append('  <url>')
+        out.append(f'    <loc>{loc}</loc>')
+        out.append(f'    <lastmod>{lm}</lastmod>')
+        out.append(f'    <changefreq>{freq}</changefreq>')
+        out.append(f'    <priority>{pri}</priority>')
+        if slug and slug in image_map:
+            img_url, ev_name = image_map[slug]
+            out.append('    <image:image>')
+            out.append(f'      <image:loc>{html_escape(img_url)}</image:loc>')
+            out.append(f'      <image:title>{html_escape(ev_name)}</image:title>')
+            out.append('    </image:image>')
+        out.append('  </url>')
+    out.append('</urlset>')
 
-    xml_lines.append("</urlset>")
+    sitemap_path = os.path.join(REPO_ROOT, 'sitemap.xml')
+    with open(sitemap_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(out) + '\n')
+    print(f'Generated sitemap.xml: {len(rows)} URLs, {sum(1 for r in rows if r[4] in image_map)} with image')
 
-    sitemap_path = os.path.join(REPO_ROOT, "sitemap.xml")
-    with open(sitemap_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(xml_lines) + "\n")
 
-    print(f"Generated sitemap.xml with {len(urls)} URLs")
-    return sitemap_path
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     generate()
