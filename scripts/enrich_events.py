@@ -257,9 +257,13 @@ def try_web_search(query, num_results=5):
     """
     def _filter_url(url):
         domain = urlparse(url).netloc.lower()
-        if any(skip in domain for skip in SKIP_DOMAINS):
-            return False
+        # Instagram は post / reel / profile を valid source として許可
+        # (画像取得はIG認証要なので諦めるが、URL自体は instagramUrl として保存できる)
         if 'agave-navi.com' in domain:
+            return False
+        if 'instagram.com' in domain:
+            return True
+        if any(skip in domain for skip in SKIP_DOMAINS):
             return False
         return True
 
@@ -672,8 +676,27 @@ def main():
                 continue
             changed_fields = []
 
-            # url (only if empty AND non-aggregator)
-            if best_url and not ev.get('url'):
+            # IG投稿URLの場合は instagramUrl / instagramPostId として保存(画像は取れないが
+            # 公式source として有効)。post/reel/tv パターンを判定。
+            ig_post_match = None
+            if best_url and 'instagram.com' in best_url.lower():
+                m = re.search(r'instagram\.com/(?:p|reel|tv)/([A-Za-z0-9_-]+)', best_url)
+                if m:
+                    ig_post_match = m.group(1)
+            if ig_post_match:
+                if not ev.get('instagramUrl'):
+                    ev['instagramUrl'] = best_url
+                    changed_fields.append('instagramUrl')
+                if not ev.get('instagramPostId'):
+                    ev['instagramPostId'] = ig_post_match
+                    changed_fields.append('instagramPostId')
+            elif best_url and 'instagram.com' in best_url.lower():
+                # IG profile URL — sourceUrl として保存
+                if not ev.get('sourceUrl'):
+                    ev['sourceUrl'] = best_url
+                    changed_fields.append('sourceUrl')
+            elif best_url and not ev.get('url'):
+                # 通常のwebサイト — url として保存(aggregator拒否)
                 if is_aggregator_url(best_url):
                     print(f"    URL-REJECTED for {ev['slug']}: aggregator — {best_url[:70]}")
                 else:
