@@ -62,6 +62,38 @@ jobs:
               print("No changes.")
           PYEOF
 
+      - name: Detect newly added slugs
+        id: newslugs
+        run: |
+          python3 << 'PYEOF' >> $GITHUB_OUTPUT
+          import json, os, subprocess
+          # Compare current events.json to git HEAD (pre-merge) to find newly added slugs
+          try:
+              prev = subprocess.run(['git','show','HEAD:events.json'], capture_output=True, text=True).stdout
+              prev_slugs = {e.get('slug') for e in json.loads(prev)}
+          except Exception:
+              prev_slugs = set()
+          with open('events.json') as f:
+              cur = json.load(f)
+          new_slugs = sorted({e['slug'] for e in cur if e.get('slug') not in prev_slugs})
+          print(f'slugs={",".join(new_slugs)}')
+          PYEOF
+
+      - name: Enrich newly added slugs (Brave Search → og:image/url/etc)
+        if: steps.newslugs.outputs.slugs != ''
+        env:
+          BRAVE_API_KEY:  ${{ secrets.BRAVE_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
+        run: |
+          pip install requests beautifulsoup4 lxml
+          IFS=',' read -ra SLUGS <<< "${{ steps.newslugs.outputs.slugs }}"
+          for slug in "${SLUGS[@]}"; do
+            echo "::group::Enrich $slug"
+            python3 scripts/enrich_events.py --slug "$slug" --write-back --no-remove || true
+            echo "::endgroup::"
+          done
+
       - name: Build all detail pages from template
         run: python3 build-detail-pages.py
 

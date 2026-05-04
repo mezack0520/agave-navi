@@ -46,9 +46,21 @@ events.json + templates/detail.html
 | fix-header-links.yml | ヘッダーリンク自動補正 | scripts/fix-header-fav-link.py |
 
 ### イベント追加の標準フロー
-1. `events.json` にイベントエントリを追加(プロンプト [docs/event-data-prompt.md](event-data-prompt.md) を活用)
-2. `python3 build-detail-pages.py` でローカル生成・確認
-3. コミット&プッシュ → GitHub Pages自動デプロイ
+1. `new-events.json` にイベントエントリを追加(必須項目だけでOK: slug/name/date/region など)
+   詳細は [docs/event-data-prompt.md](event-data-prompt.md) を参照
+2. リポジトリへコミット → 「Sync New Events」 workflow を手動実行
+3. workflow 内で:
+   - events.json にマージ
+   - **新規slugだけ Brave Search で自動 enrichment**(imageUrl / url / time / admission 等を補完)
+   - 詳細ページ + index.html カードを再生成
+   - 自動コミット&プッシュ
+4. それでも空欄の項目は、毎週火曜の `Event Info Enrichment` workflow が再試行
+
+### 補完の仕組み (Brave Search API)
+- 検索バックエンド: Brave Search API(月2,000クエリ無料枠)
+- aggregator サイトは自動拒否(集約ページから複数イベントの情報を混入させない)
+- 取得した imageUrl は HTTP HEAD で生存確認、汎用OGP(.../ogp.png 等)は拒否
+- 詳細: [docs/brave-search-setup.md](brave-search-setup.md)
 
 ---
 

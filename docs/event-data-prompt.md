@@ -43,9 +43,9 @@ Instagram投稿や公式サイトの情報を元に、必要なフィールド�
   "tags": ["即売会", "マルシェ"],
   "sourceUrl": "公式サイトURL or 公式InstagramプロフィールURL",
   "instagramPostId": "Instagram投稿のID（/p/XXXXX/ のXXXXX部分）",
-  "instagramUrl": "Instagram投稿の完全URL",
-  "imageUrl": "ヒーロー画像URL（公式サイトのog:image / メインビジュアル / Instagramの投稿画像 のいずれか。横長推奨）",
-  "url": "公式情報URL（イベント公式ページがあれば。なければ空文字）",
+  "instagramUrl": "Instagram投稿の完全URL（任意）",
+  "imageUrl": "ヒーロー画像URL（任意。空でもOK — 後で自動補完される）",
+  "url": "公式情報URL（任意。空でもOK — 後で自動補完される）",
   "addedDate": "今日の日付 YYYY-MM-DD",
   "status": "upcoming",
   "eventStatus": "confirmed"
@@ -93,15 +93,18 @@ Instagram投稿や公式サイトの情報を元に、必要なフィールド�
 - 日付が「〇月上旬」等の曖昧な表現の場合、dateは空文字にしてdateDisplayに原文を記載
 - 入場料の記載がなければ空文字（「無料」と推測しない）
 - Instagram投稿がある場合、instagramPostId は必ず抽出する
-- imageUrl は必須。優先順位:
-  1. 公式サイトの og:image (View Source で `<meta property="og:image"` を探す)
-  2. 公式サイトのメインビジュアル(.jpg/.png/.webp)
-  3. Instagram投稿の画像URL
-  - 横長(16:9前後)で1200px以上推奨
-  - URLが画像生存していること(ブラウザで直接開いて表示されること)を確認
-- url と sourceUrl は最低どちらか1つは必須
-  - sourceUrl: 情報の出典(Instagramプロフィール等で可)
-  - url: 公式情報URL(あればぜひ)
+- imageUrl と url は **任意**(空でもOK)
+  - 追加後、毎週火曜の自動 enrichment(Brave Search API + GitHub Actions)が
+    公式サイトを検索して og:image / 公式URL を自動補完する
+  - 手で先に入れる場合は:
+    1. 公式サイトの og:image (View Source で `<meta property="og:image"` を探す)
+    2. 公式サイトのメインビジュアル(横長16:9前後・1200px以上推奨)
+    3. ブラウザで直接開いて画像が表示されることを確認
+- **aggregator系URLを url / sourceUrl に入れない**(品質劣化の元):
+  - 入れない: nextmeet.app / botanical-zone.tokyo / leaf-laboratory.com /
+    pukubook.jp / tochinavi.net / fukuoka-now.com / churatoku.net
+  - 入れてOK: イベント主催者の公式サイト、公式Instagramプロフィール
+- sourceUrl は情報の出典として記録するだけ(任意、Instagramプロフィール等可)
 ```
 
 ### imageUrl が見つからない場合
