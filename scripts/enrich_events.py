@@ -650,18 +650,51 @@ def main():
                 except requests.RequestException:
                     pass
 
-            # description: replace if extracted is meaningfully richer
+            # description: replace ONLY if extracted is meaningfully richer AND
+            # passes quality checks (event relevance + boilerplate rejection).
             ogp_desc = (info.get('ogp_description') or '').strip()
             long_desc = (info.get('long_description') or '').strip()
             candidate_desc = ogp_desc if len(ogp_desc) >= len(long_desc) else long_desc
             cur_desc = (ev.get('description') or '').strip()
-            # Replace when candidate is >=120 chars AND
-            # either current is <80 chars (sparse) OR candidate is >=1.2x longer
-            if (candidate_desc and len(candidate_desc) >= 120
-                    and candidate_desc != cur_desc
+
+            def _quality_ok(cand, ev_name, ev_venue):
+                if not cand or len(cand) < 120:
+                    return False, 'too short'
+                # Reject aggregator/boilerplate phrases
+                blocklist = [
+                    'イベント情報をまとめ', '次回のイベント', '関連するタグ',
+                    '実際の情報が変更', '各リンクよりご確認', '記事は執筆時の情報',
+                    '当サイトでは', '公開：', 'クッキーを使用',
+                ]
+                for bad in blocklist:
+                    if bad in cand:
+                        return False, f'boilerplate: {bad}'
+                # Must be predominantly Japanese (>=40% non-ASCII)
+                non_ascii = sum(1 for c in cand if ord(c) > 127)
+                if non_ascii / max(len(cand), 1) < 0.4:
+                    return False, 'mostly ASCII (probably wrong language)'
+                # Must overlap with event name OR venue (>=2 char substring of name)
+                # to ensure it's about THIS event, not a generic site description.
+                name_clean = re.sub(r'\s+', '', ev_name).lower()
+                venue_clean = re.sub(r'\s+', '', (ev_venue or '')).lower()
+                cand_clean = cand.lower()
+                # Pick a few representative tokens from the name
+                # (skip generic words like "vol", numbers, year)
+                tokens = re.findall(r'[\u3040-\u30ff\u3400-\u9fffA-Za-z]{2,}', ev_name)
+                tokens = [tk for tk in tokens if not re.match(r'^(vol|the|in|of|and|2026|2025)$', tk, re.I) and len(tk) >= 2]
+                if not any(tk.lower() in cand_clean for tk in tokens) and (
+                        not venue_clean or venue_clean[:4] not in cand_clean):
+                    return False, 'no name/venue overlap'
+                return True, None
+
+            ok, reason = _quality_ok(candidate_desc, ev.get('name',''), ev.get('venue',''))
+            if (ok and candidate_desc != cur_desc
                     and (len(cur_desc) < 80 or len(candidate_desc) >= int(len(cur_desc) * 1.2))):
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')
+            elif not ok and len(cur_desc) < 80:
+                # Log skipped but don't write
+                print(f"    DESC-REJECTED for {ev['slug']}: {reason}")
 
             # time (only if empty)
             times_found = info.get('times_found') or []
