@@ -189,26 +189,6 @@ def extract_page_info(url):
                 seen.add(line); uniq.append(line)
         info['access_found'] = uniq[:3]
 
-    # --- Highlights extraction ---
-    # Look for bullet-style lines after keywords like 見どころ/特徴/概要
-    hi_patterns = [
-        r'(?:見どころ|特徴|概要|ポイント|内容)\s*[：:\n]([\s\S]{30,500}?)(?=\n\s*\n)',
-    ]
-    highlights = []
-    for pat in hi_patterns:
-        for m in re.finditer(pat, text):
-            chunk = m.group(1).strip()
-            # Split into bullet-like lines
-            for line in re.split(r'[\n・●▶︎▶◆■]+', chunk):
-                line = line.strip(' 　・*-')
-                if 8 < len(line) < 120:
-                    highlights.append(line)
-    if highlights:
-        seen = set(); uniq = []
-        for h in highlights:
-            if h not in seen:
-                seen.add(h); uniq.append(h)
-        info['highlights_found'] = uniq[:5]
 
     # --- Exhibitor count hint ---
     m = re.search(r'(?:出店者?数?|出展者?数?|参加[店者]+数?)\s*[：:]?\s*(?:約\s*)?(\d{2,3})', text)
@@ -670,14 +650,16 @@ def main():
                 except requests.RequestException:
                     pass
 
-            # description: replace if extracted is significantly longer (>=1.5x AND >=200 chars)
+            # description: replace if extracted is meaningfully richer
             ogp_desc = (info.get('ogp_description') or '').strip()
             long_desc = (info.get('long_description') or '').strip()
             candidate_desc = ogp_desc if len(ogp_desc) >= len(long_desc) else long_desc
             cur_desc = (ev.get('description') or '').strip()
-            if (candidate_desc and len(candidate_desc) >= 200
-                    and len(candidate_desc) >= int(len(cur_desc) * 1.5)
-                    and candidate_desc != cur_desc):
+            # Replace when candidate is >=120 chars AND
+            # either current is <80 chars (sparse) OR candidate is >=1.2x longer
+            if (candidate_desc and len(candidate_desc) >= 120
+                    and candidate_desc != cur_desc
+                    and (len(cur_desc) < 80 or len(candidate_desc) >= int(len(cur_desc) * 1.2))):
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')
 
@@ -701,12 +683,6 @@ def main():
             if access_lines and not ev.get('access'):
                 ev['access'] = ' / '.join(access_lines)[:300]
                 changed_fields.append('access')
-
-            # highlights (new field, list, only if empty)
-            highlights = info.get('highlights_found') or []
-            if highlights and not ev.get('highlights'):
-                ev['highlights'] = highlights
-                changed_fields.append('highlights')
 
             if changed_fields:
                 write_count += 1
