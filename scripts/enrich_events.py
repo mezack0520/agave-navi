@@ -45,32 +45,37 @@ HEADERS = {
 SKIP_DOMAINS = {'instagram.com', 'twitter.com', 'x.com', 'facebook.com',
                 'tiktok.com', 'youtube.com', 'line.me'}
 
-# --- Image quality validation ---
-_BAD_IMAGE_DOMAINS = {
-    'nextmeet.app',           # generic OGP API
-    'botanical-zone.tokyo',   # aggregator
-    'leaf-laboratory.com',    # plants news/blog aggregator
-    'tochinavi.net',          # regional events aggregator
-    'pukubook.jp',            # plant directory
-    'fukuoka-now.com',        # general info site
-    'churatoku.net',          # coupon aggregator
-}
+# --- Aggregator/blocklist (used by image, url and field acceptance) ---
+AGGREGATOR_DOMAINS = (
+    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
+    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net',
+)
 _GENERIC_IMG_RE = re.compile(
     r'/(ogp|og_image|og-image|default|logo|share|thumb|main)\.(png|jpg|jpeg|webp|gif)(\?|$)',
     re.I
 )
 
+def _url_contains_aggregator(url):
+    """Detect aggregator anywhere in the URL (host or CDN-proxied path)."""
+    if not url: return False
+    u = url.lower()
+    return any(ag in u for ag in AGGREGATOR_DOMAINS)
+
+def is_aggregator_url(url):
+    """Reject URLs whose host or path contains a known aggregator domain."""
+    return _url_contains_aggregator(url)
+
 def is_quality_image_url(img_url):
-    """Return False if the image URL looks like a sitewide-generic OGP or comes
-    from a known aggregator/news domain. Used to gate write-back."""
+    """Image URL acceptance: reject aggregator-sourced AND generic-named images."""
     if not img_url:
         return False
-    m = re.match(r'https?://([^/]+)', img_url)
-    if m and any(d in m.group(1).lower() for d in _BAD_IMAGE_DOMAINS):
+    if _url_contains_aggregator(img_url):
         return False
     if _GENERIC_IMG_RE.search(img_url):
         return False
     return True
+
+
 
 
 
@@ -660,12 +665,20 @@ def main():
                 continue
             info = r.get('extracted_info') or {}
             best_url = r.get('best_url')
+            # If the search hit was an aggregator, do not trust ANY of its fields
+            # (those pages often list multiple events and we'd cross-contaminate).
+            if best_url and is_aggregator_url(best_url):
+                print(f"    SKIP-ALL for {ev['slug']}: source is aggregator — {best_url[:70]}")
+                continue
             changed_fields = []
 
-            # url (only if empty)
+            # url (only if empty AND non-aggregator)
             if best_url and not ev.get('url'):
-                ev['url'] = best_url
-                changed_fields.append('url')
+                if is_aggregator_url(best_url):
+                    print(f"    URL-REJECTED for {ev['slug']}: aggregator — {best_url[:70]}")
+                else:
+                    ev['url'] = best_url
+                    changed_fields.append('url')
 
             # imageUrl (only if empty, with HEAD verification)
             ogp_image = info.get('ogp_image')
