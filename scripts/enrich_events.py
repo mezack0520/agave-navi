@@ -182,16 +182,25 @@ def extract_page_info(url):
     if dates_found:
         info['dates_found'] = dates_found[:5]
 
-    # --- Time extraction ---
-    time_pattern = r'(\d{1,2})[：:](\d{2})\s*[～〜~ー−-]\s*(\d{1,2})[：:](\d{2})'
+    # --- Time extraction (HH:MM〜HH:MM, accepts various separators) ---
+    time_pattern = r'(\d{1,2})\s*[：:]\s*(\d{2})\s*[～〜~ー−–-]\s*(\d{1,2})\s*[：:]\s*(\d{2})'
     times = re.findall(time_pattern, text)
     if times:
-        info['times_found'] = [f"{t[0]}:{t[1]}〜{t[2]}:{t[3]}" for t in times[:3]]
+        # dedupe preserving order
+        seen = set(); uniq = []
+        for tm in times:
+            key = (tm[0], tm[1], tm[2], tm[3])
+            if key not in seen:
+                seen.add(key); uniq.append(tm)
+        info['times_found'] = [f"{t[0]}:{t[1]}〜{t[2]}:{t[3]}" for t in uniq[:3]]
 
     # --- Admission/Price extraction ---
     price_patterns = [
+        # 'ラベル: 値' 形式
         r'(入場[料金]?\s*[：:]\s*[^\n]{3,50})',
-        r'(一般\s*[：:]?\s*[\d,]+円)',
+        # 'ラベル\n値' (HTMLテーブル)
+        r'(?:^|\n)\s*入場[料金]?\s*\n([^\n]{3,80})',
+        r'(一般入?場?\s*[：:]?\s*[\d,]+円(?:[^\n]{0,40})?)',
         r'(前売[りり]?\s*[：:]?\s*[\d,]+円)',
         r'(入場無料)',
         r'([\d,]+円\s*[（(].*?[）)])',
@@ -205,13 +214,26 @@ def extract_page_info(url):
 
     # --- Venue extraction ---
     venue_patterns = [
-        r'(会場|開催場所|場所)\s*[：:]\s*([^\n]{3,80})',
-        r'(〒\d{3}-\d{4}[^\n]{5,50})',
+        # 'ラベル: 値' 形式
+        r'(?:会場|開催場所|場所)\s*[：:]\s*([^\n]{3,80})',
+        # 'ラベル\n値' 形式(HTMLテーブル由来)
+        r'(?:^|\n)\s*(?:会場|開催場所|場所)\s*\n([^\n]{3,80})',
+        # 郵便番号始まりの住所
+        r'(〒\d{3}-\d{4}[^\n]{5,80})',
     ]
-    venues = []
+    venues_raw = []
     for pat in venue_patterns:
-        for m in re.finditer(pat, text):
-            venues.append(m.group().strip())
+        for m in re.finditer(pat, text, re.MULTILINE):
+            v = m.group(1) if m.lastindex else m.group(0)
+            v = v.strip()
+            if v and v not in venues_raw:
+                venues_raw.append(v)
+    venues = []
+    for v in venues_raw:
+        # filter out generic placeholders / TOC labels
+        if any(bad in v for bad in ['詳しくは', '公式サイト', 'ご参照', 'クリック']):
+            continue
+        venues.append(v)
     if venues:
         info['venues_found'] = venues[:3]
 
