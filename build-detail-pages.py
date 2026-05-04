@@ -214,54 +214,73 @@ def make_event_jsonld(ev):
   </script>'''
 
 def make_official_links_rows(ev):
-    """公式情報の info-row(複数可)。サイドバー EVENT INFO 内に表示。
-    url/sourceUrl/instagramUrl がなければ Google検索リンクをフォールバック。"""
-    items = []  # list of (url, label)
-    seen = set()
+    """公式情報の info-row。以下のルール:
+    - URL を種別(公式サイト/公式Instagram/公式X/公式Facebook/Instagram投稿)に分類
+    - 同じ種別は1件のみ表示(重複防止)
+    - 既に main column の Instagram 埋込が出る場合は「Instagram投稿」行を省略
+    - 全部なければ Google検索フォールバック"""
+    items = []  # list of (url, label, kind)
+    seen_kinds = set()
+    seen_urls = set()
 
-    def add(url, label):
-        if not url or url in seen:
+    def classify(u):
+        ul = (u or '').lower()
+        if not ul:
+            return None
+        if 'instagram.com' in ul:
+            if '/p/' in ul or '/reel/' in ul or '/tv/' in ul:
+                return 'ig_post'
+            return 'ig_profile'
+        if 'facebook.com' in ul:
+            return 'facebook'
+        if 'twitter.com' in ul or '://x.com/' in ul:
+            return 'x'
+        return 'site'
+
+    LABELS = {
+        'ig_post': 'Instagram投稿',
+        'ig_profile': '公式Instagram',
+        'facebook': '公式Facebook',
+        'x': '公式X',
+        'site': '公式サイト',
+    }
+
+    has_ig_embed = bool(ev.get('instagramPostId') or ev.get('instagramUrl'))
+
+    def add(url):
+        if not url or url in seen_urls:
             return
-        seen.add(url)
-        items.append((url, label))
+        kind = classify(url)
+        if not kind:
+            return
+        if kind in seen_kinds:
+            return
+        # If main column already has IG iframe, skip the IG投稿 row in sidebar
+        if kind == 'ig_post' and has_ig_embed:
+            return
+        seen_urls.add(url); seen_kinds.add(kind)
+        items.append((url, LABELS[kind], kind))
 
-    if ev.get('url'):
-        u = ev['url']
-        if 'instagram.com' in u:
-            label = '公式Instagram'
-        elif 'facebook.com' in u:
-            label = 'Facebook'
-        elif 'twitter.com' in u or '://x.com/' in u:
-            label = 'X (Twitter)'
-        else:
-            label = '公式サイト'
-        add(u, label)
-
-    if ev.get('sourceUrl'):
-        s = ev['sourceUrl']
-        if 'instagram.com' in s:
-            add(s, '公式Instagram')
-        elif 'facebook.com' in s:
-            add(s, '公式Facebook')
-        elif 'twitter.com' in s or '://x.com/' in s:
-            add(s, '公式X')
-        else:
-            add(s, '公式サイト')
-
-    if ev.get('instagramUrl'):
-        add(ev['instagramUrl'], 'Instagram投稿')
+    # Priority order: url, sourceUrl, instagramUrl
+    add(ev.get('url') or '')
+    add(ev.get('sourceUrl') or '')
+    add(ev.get('instagramUrl') or '')
 
     if not items:
-        # Google検索フォールバック
+        # If IG iframe is already shown in main column, that section already has
+        # an "Instagramで見る ↗" link. No need for sidebar fallback.
+        if has_ig_embed:
+            return ''
+        # Otherwise: Google search fallback
         name = ev.get('name', '')
         if not name:
             return ''
         venue = ev.get('venue', '')
         q = quote(f'{name} {venue} 2026'.strip())
-        items.append((f'https://www.google.com/search?q={q}', 'Googleで検索'))
+        items.append((f'https://www.google.com/search?q={q}', 'Googleで検索', 'search'))
 
     rows = []
-    for u, label in items:
+    for u, label, _ in items:
         rows.append(
             f'          <div class="info-row">\n'
             f'            <span class="info-label">公式</span>\n'
