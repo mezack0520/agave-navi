@@ -268,27 +268,8 @@
             });
         });
 
-        // Event data
-        const events = [
-            {slug:"bizarrefarm-spring-fes-2026",name:"bizarrefarm SPRING FES",start:"2026-03-28",end:"2026-03-29",tag:"即売会"},
-            {slug:"wakayama-green-marche",name:"和歌山グリーンマルシェ",start:"2026-03-29",end:"2026-03-29",tag:"マルシェ"},
-            {slug:"futakotamagawa-botanical-2026",name:"二子玉川ボタニカルフェスタ",start:"2026-04-04",end:"2026-04-05",tag:"大型"},
-            {slug:"taniku-midori-marche-nabana-2026",name:"多肉みどりマルシェ なばな",start:"2026-04-10",end:"2026-04-12",tag:"マルシェ"},
-            {slug:"tilly-fes-vol5-2026",name:"Tilly FES Vol.5",start:"2026-04-11",end:"2026-04-12",tag:"即売会"},
-            {slug:"greensnap-marche-yokohama-2026",name:"GreenSnap 横浜",start:"2026-04-11",end:"2026-04-12",tag:"マルシェ"},
-            {slug:"taniku-moromoro-2026-spring",name:"多肉もろもろ市場",start:"2026-04-15",end:"2026-04-15",tag:"即売会"},
-            {slug:"shimamura-mini-soransai-2026",name:"ミニ草乱祭",start:"2026-04-18",end:"2026-04-19",tag:"即売会"},
-            {slug:"monster-plants-2026",name:"モンスタープランツ",start:"2026-04-20",end:"2026-04-20",tag:"大型"},
-            {slug:"hanatomofesta-2026",name:"花友フェスタ",start:"2026-04-29",end:"2026-04-29",tag:"大型"},
-            {slug:"gotanda-big-bazaar-2026-05",name:"ビッグバザール",start:"2026-05-01",end:"2026-05-01",tag:"即売会"},
-            {slug:"yokohama-flower-garden-fes-2026",name:"横浜フラワーフェス",start:"2026-05-02",end:"2026-05-04",tag:"大型"},
-            {slug:"plants-garage-market",name:"Plants Garage Market",start:"2026-05-03",end:"2026-05-04",tag:"即売会"},
-            {slug:"fukuoka-green-party-2026",name:"FUKUOKA GREEN PARTY",start:"2026-05-03",end:"2026-05-04",tag:"マルシェ"},
-            {slug:"collect-plants-vol2",name:"Collect Plants Vol.2",start:"2026-05-09",end:"2026-05-10",tag:"大型"},
-            {slug:"tenkaichi-2026",name:"天下一植物界",start:"2026-05-23",end:"2026-05-24",tag:"大型"},
-            {slug:"border-break-6th-2026",name:"BORDER BREAK!! 6th",start:"2026-05-23",end:"2026-05-24",tag:"大型"},
-            {slug:"greensnap-marche-hiroshima-2026",name:"GreenSnap 広島",start:"2026-05-23",end:"2026-05-24",tag:"マルシェ"},
-        ];
+        // Event data — fetched dynamically from events.json
+        let events = [];
 
         let currentYear = 2026;
         let currentMonth = 2; // 0-indexed: March = 2
@@ -385,9 +366,23 @@
                 grid.appendChild(cell);
             }
         }
-
-        renderCalendar();
-    </script>
+        // Initial fetch + render
+        fetch('events.json?t=' + Date.now())
+            .then(r => r.json())
+            .then(data => {
+                events = data
+                    .filter(e => e.slug && e.date && e.status !== 'past')
+                    .map(e => ({
+                        slug: e.slug,
+                        name: e.name || '',
+                        start: e.date,
+                        end: e.dateEnd || e.date,
+                        tag: (e.tags && e.tags[0]) || ''
+                    }));
+                renderCalendar();
+            })
+            .catch(() => renderCalendar()); // fallback empty
+        </script>
     <script>
     // Ikitai badge count
     (function(){
