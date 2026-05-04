@@ -5,6 +5,15 @@ Checks 17 crawl sources for new plant events and generates a report.
 Designed to run as a GitHub Actions workflow.
 """
 
+# Aggregator handling:
+# - crawl-sources.json で discovery_only:true がついたソースは "発見専用" 扱い
+# - 抽出した候補は Issue に "発見元: aggregator" と注記
+# - ユーザーが手動レビューして new-events.json に追加するときに、
+#   実際の公式URLは別途確認する流れ
+# - sanity-check-new-events.py が aggregator URL を url/sourceUrl に
+#   採用しないように最終チェック
+
+
 import json
 import os
 import re

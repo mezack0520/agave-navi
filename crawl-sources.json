@@ -250,6 +250,24 @@
       "focus": "ボタニカル全般",
       "frequency": "monthly",
       "notes": "二子玉川ライズでの都市型ボタニカルイベント。"
+    },
+    {
+      "name": "BOTANICAL ZONE",
+      "url": "https://botanical-zone.tokyo/",
+      "discovery_only": true,
+      "_note": "aggregator: discovery専用。enrichment時にURLとして採用しない"
+    },
+    {
+      "name": "Leaf Laboratory",
+      "url": "https://leaf-laboratory.com/blogs/media",
+      "discovery_only": true,
+      "_note": "aggregator: discovery専用"
+    },
+    {
+      "name": "AGAVE MANIACS",
+      "url": "https://agavemaniacs.com/event/",
+      "discovery_only": true,
+      "_note": "aggregator: discovery専用"
     }
   ]
 }
