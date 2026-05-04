@@ -40,6 +40,12 @@
 
 ## Coworkスケジュールタスク (`Documents/Claude/Scheduled/agave-event-update`)
 - 役割: Web検索 → 新規イベント発見 → curl で `new-events.json` を作成
-- ⚠️ **PAT がプレーンテキストで埋め込み**: 改善余地(別タスクで)
-- 現在のフロー: SKILL.md → new-events.json 作成 → ユーザーが手動 sync-events 実行
+- ✅ **PATセキュリティ改善済**(2026-05-04):
+  - `SKILL.md` から PAT 平文を除去
+  - 同階層の `github.pat` ファイルにPATを分離保管
+  - SKILL.md内のbashは `cat ./github.pat` で読み込んで `$PAT` 変数化
+  - SKILL.md は外部公開されてもPATは漏れない設計
+- 現在のフロー: SKILL.md → 裏取り → new-events.json 作成 → Sync workflow
+  - sanity-check で ticketing/aggregator URL は自動拒否
   - Brave enrich step が走るので imageUrl/url が自動補完される
+  - IG投稿URLが Brave結果にあれば instagramUrl として自動採用(2026-05-04 commit 9d86c65)
