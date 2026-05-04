@@ -36,6 +36,34 @@ UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
 HEADERS = {'User-Agent': UA, 'Accept-Language': 'ja,en;q=0.8'}
 TIMEOUT = 12
 
+# --- Image quality validation ---
+_BAD_IMAGE_DOMAINS = {
+    'nextmeet.app',           # generic OGP API
+    'botanical-zone.tokyo',   # aggregator
+    'leaf-laboratory.com',    # plants news/blog aggregator
+    'tochinavi.net',          # regional events aggregator
+    'pukubook.jp',            # plant directory
+    'fukuoka-now.com',        # general info site
+    'churatoku.net',          # coupon aggregator
+}
+_GENERIC_IMG_RE = re.compile(
+    r'/(ogp|og_image|og-image|default|logo|share|thumb|main)\.(png|jpg|jpeg|webp|gif)(\?|$)',
+    re.I
+)
+
+def is_quality_image_url(img_url):
+    """Return False if the image URL looks like a sitewide-generic OGP or comes
+    from a known aggregator/news domain. Used to gate write-back."""
+    if not img_url:
+        return False
+    m = re.match(r'https?://([^/]+)', img_url)
+    if m and any(d in m.group(1).lower() for d in _BAD_IMAGE_DOMAINS):
+        return False
+    if _GENERIC_IMG_RE.search(img_url):
+        return False
+    return True
+
+
 # --- helpers ----------------------------------------------------------------
 
 def fetch_html(url):
@@ -105,6 +133,9 @@ def find_image_for_event(ev):
         img = extract_og_image(html, page_url)
         if not img:
             yield (source, page_url, None, 'no og:image')
+            continue
+        if not is_quality_image_url(img):
+            yield (source, page_url, img, 'rejected: aggregator/generic')
             continue
         ok, err = verify_image(img)
         if not ok:
