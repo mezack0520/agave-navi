@@ -65,6 +65,19 @@ def is_aggregator_url(url):
     """Reject URLs whose host or path contains a known aggregator domain."""
     return _url_contains_aggregator(url)
 
+_PLACEHOLDER_VALUES = {
+    '', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表',
+}
+
+def _is_empty(v):
+    """Treat placeholder strings ('調整中', '未定' etc.) as effectively empty
+    so enrichment can overwrite them."""
+    if v is None: return True
+    if isinstance(v, str):
+        return v.strip() in _PLACEHOLDER_VALUES
+    return not bool(v)
+
+
 def is_quality_image_url(img_url):
     """Image URL acceptance: reject aggregator-sourced AND generic-named images."""
     if not img_url:
@@ -684,18 +697,18 @@ def main():
                 if m:
                     ig_post_match = m.group(1)
             if ig_post_match:
-                if not ev.get('instagramUrl'):
+                if _is_empty(ev.get('instagramUrl')):
                     ev['instagramUrl'] = best_url
                     changed_fields.append('instagramUrl')
-                if not ev.get('instagramPostId'):
+                if _is_empty(ev.get('instagramPostId')):
                     ev['instagramPostId'] = ig_post_match
                     changed_fields.append('instagramPostId')
             elif best_url and 'instagram.com' in best_url.lower():
                 # IG profile URL — sourceUrl として保存
-                if not ev.get('sourceUrl'):
+                if _is_empty(ev.get('sourceUrl')):
                     ev['sourceUrl'] = best_url
                     changed_fields.append('sourceUrl')
-            elif best_url and not ev.get('url'):
+            elif best_url and _is_empty(ev.get('url')):
                 # 通常のwebサイト — url として保存(aggregator拒否)
                 if is_aggregator_url(best_url):
                     print(f"    URL-REJECTED for {ev['slug']}: aggregator — {best_url[:70]}")
@@ -705,7 +718,7 @@ def main():
 
             # imageUrl (only if empty, with HEAD verification)
             ogp_image = info.get('ogp_image')
-            if ogp_image and not ev.get('imageUrl'):
+            if ogp_image and _is_empty(ev.get('imageUrl')):
                 if not is_quality_image_url(ogp_image):
                     print(f"    IMG-REJECTED for {ev['slug']}: aggregator/generic — {ogp_image[:70]}")
                 else:
@@ -765,13 +778,13 @@ def main():
 
             # time (only if empty)
             times_found = info.get('times_found') or []
-            if times_found and not ev.get('time'):
+            if times_found and _is_empty(ev.get('time')):
                 ev['time'] = times_found[0]
                 changed_fields.append('time')
 
             # admission (only if empty)
             prices = info.get('prices_found') or []
-            if prices and not ev.get('admission'):
+            if prices and _is_empty(ev.get('admission')):
                 # pick the shortest non-trivial entry as the headline price
                 pick = sorted(prices, key=lambda s: (len(s) > 60, len(s)))[0]
                 if pick:
@@ -780,9 +793,24 @@ def main():
 
             # access (new field, only if empty)
             access_lines = info.get('access_found') or []
-            if access_lines and not ev.get('access'):
+            if access_lines and _is_empty(ev.get('access')):
                 ev['access'] = ' / '.join(access_lines)[:300]
                 changed_fields.append('access')
+
+            # venue (only if empty/placeholder; pick the first venue extracted)
+            venues = info.get('venues_found') or []
+            if venues and _is_empty(ev.get('venue')):
+                # venues_found entries may contain prefix like '会場：' — strip
+                v = venues[0]
+                import re as _re
+                v = _re.sub(r'^(会場|開催場所|場所)\s*[：:]\s*', '', v).strip()
+                if 3 < len(v) < 120:
+                    ev['venue'] = v[:100]
+                    changed_fields.append('venue')
+                    # mapQuery を venue で更新(plaheolderだった場合)
+                    if _is_empty(ev.get('mapQuery')):
+                        ev['mapQuery'] = v[:100]
+                        changed_fields.append('mapQuery')
 
             if changed_fields:
                 write_count += 1
