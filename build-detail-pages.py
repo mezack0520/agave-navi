@@ -217,6 +217,40 @@ def make_tags_csv(ev):
     return ','.join(ev.get('tags', []) or [])
 
 
+def make_breadcrumb_prefecture(ev):
+    """visible breadcrumb の prefecture セグメント。
+    都道府県あり: '<a href="/?region=R&pref=P">P</a> > '
+    なし: 空文字列(直接イベント名にスキップ)"""
+    pref = ev.get('prefecture', '') or ''
+    if not pref:
+        return ''
+    region = ev.get('region', '') or ''
+    return f'    <a href="/?region={quote(region)}&pref={quote(pref)}">{html_escape(pref)}</a> &gt;\n'
+
+
+def make_breadcrumb_ld_prefecture(ev):
+    """JSON-LD BreadcrumbList の prefecture ListItem(あれば)。
+    あり: ',\n      {ListItem position3 ...}'
+    なし: ''"""
+    pref = ev.get('prefecture', '') or ''
+    if not pref:
+        return ''
+    region = ev.get('region', '') or ''
+    return (
+        f',\n      {{\n'
+        f'        "@type": "ListItem",\n'
+        f'        "position": 3,\n'
+        f'        "name": "{html_escape(pref)}",\n'
+        f'        "item": "https://agave-navi.com/?region={quote(region)}&pref={quote(pref)}"\n'
+        f'      }}'
+    )
+
+
+def make_breadcrumb_ld_last_pos(ev):
+    """イベント名の position は prefecture の有無で 3 or 4"""
+    return '4' if ev.get('prefecture') else '3'
+
+
 def make_event_jsonld(ev):
     """schema.org Event JSON-LD. Skip entirely if no date (avoid invalid empty startDate)."""
     if not ev.get('date'):
@@ -397,6 +431,9 @@ def build_page(template, ev):
         '{{heroSection}}': make_hero_section(ev),
         '{{eventJsonLd}}': make_event_jsonld(ev),
         '{{accessRow}}': make_access_row(ev),
+        '{{breadcrumbPrefecture}}': make_breadcrumb_prefecture(ev),
+        '{{breadcrumbLdPrefecture}}': make_breadcrumb_ld_prefecture(ev),
+        '{{breadcrumbLdLastPos}}': make_breadcrumb_ld_last_pos(ev),
         '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{ogImage}}': make_og_image(ev),
         '{{shareSection}}': make_share_section(ev),
