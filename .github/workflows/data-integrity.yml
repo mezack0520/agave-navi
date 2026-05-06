@@ -1,0 +1,35 @@
+name: Data Integrity Check
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # 毎週月曜 09:00 JST
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [events.json]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: python3 scripts/data-integrity-check.py
+        continue-on-error: true
+      - name: Run with strict mode (for output)
+        run: python3 scripts/data-integrity-check.py --strict 2>&1 | tee /tmp/integrity.log || true
+      - name: Comment on issue if errors
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if grep -q "errors: 0" /tmp/integrity.log; then
+            echo "All clean"; exit 0
+          fi
+          gh issue create --title "[Data Integrity] events.json に不整合あり $(date +%Y-%m-%d)" \
+            --body-file /tmp/integrity.log \
+            --label "data-quality" || true

@@ -217,6 +217,21 @@ def make_tags_csv(ev):
     return ','.join(ev.get('tags', []) or [])
 
 
+def make_robots_meta(ev):
+    """終了から30日経過したイベントには noindex を付与してクロール予算を節約"""
+    from datetime import datetime, timedelta
+    end = ev.get('dateEnd') or ev.get('date') or ''
+    if not end:
+        return 'index,follow'
+    try:
+        end_dt = datetime.strptime(end, '%Y-%m-%d')
+        if end_dt < datetime.now() - timedelta(days=30):
+            return 'noindex,follow'
+    except ValueError:
+        pass
+    return 'index,follow'
+
+
 def make_breadcrumb_prefecture(ev):
     """visible breadcrumb の prefecture セグメント。
     都道府県あり: '<a href="/?region=R&pref=P">P</a> > '
@@ -255,6 +270,7 @@ def make_event_jsonld(ev):
     """schema.org Event JSON-LD. Skip entirely if no date (avoid invalid empty startDate)."""
     if not ev.get('date'):
         return ''
+    from datetime import datetime, timedelta
     name = html_escape(ev.get('name', ''))
     date = ev.get('date', '')
     end = ev.get('dateEnd') or date
@@ -263,6 +279,36 @@ def make_event_jsonld(ev):
     desc = html_escape(make_meta_description(ev))
     image_url = (ev.get('imageUrl') or '').replace('"', '&quot;')
     image_field = f',\n    "image": "{image_url}"' if image_url else ''
+    # eventStatus 動的判定
+    status_map = {
+        'confirmed': 'EventScheduled',
+        'cancelled': 'EventCancelled',
+        'postponed': 'EventPostponed',
+        'rescheduled': 'EventRescheduled',
+        'movedonline': 'EventMovedOnline',
+    }
+    ev_status_raw = (ev.get('eventStatus') or 'confirmed').lower()
+    schema_status = status_map.get(ev_status_raw, 'EventScheduled')
+    # offers (admission)
+    admission = (ev.get('admission') or '').strip()
+    offers_field = ''
+    if admission:
+        is_free = ('無料' in admission)
+        # 価格抽出 (例: '500円', '1,000円', '前売¥1,600')
+        import re as _re
+        price_match = _re.search(r'(\d{1,3}(?:,\d{3})*|\d+)\s*円', admission)
+        price = price_match.group(1).replace(',', '') if price_match else ('0' if is_free else '')
+        if price or is_free:
+            avail_url = f'https://agave-navi.com/events/{ev.get("slug","")}.html'
+            offers_field = (
+                f',\n    "offers": {{\n'
+                f'      "@type": "Offer",\n'
+                f'      "price": "{price or 0}",\n'
+                f'      "priceCurrency": "JPY",\n'
+                f'      "availability": "https://schema.org/InStock",\n'
+                f'      "url": "{avail_url}"\n'
+                f'    }}'
+            )
     return f'''  <script type="application/ld+json">
   {{
     "@context": "https://schema.org",
@@ -271,7 +317,7 @@ def make_event_jsonld(ev):
     "startDate": "{date}",
     "endDate": "{end}"{image_field},
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
+    "eventStatus": "https://schema.org/{schema_status}",
     "location": {{
       "@type": "Place",
       "name": "{venue}",
@@ -280,7 +326,7 @@ def make_event_jsonld(ev):
         "addressRegion": "{pref}",
         "addressCountry": "JP"
       }}
-    }},
+    }}{offers_field},
     "description": "{desc}",
     "organizer": {{
       "@type": "Organization",
@@ -431,6 +477,7 @@ def build_page(template, ev):
         '{{heroSection}}': make_hero_section(ev),
         '{{eventJsonLd}}': make_event_jsonld(ev),
         '{{accessRow}}': make_access_row(ev),
+        '{{robotsMeta}}': make_robots_meta(ev),
         '{{breadcrumbPrefecture}}': make_breadcrumb_prefecture(ev),
         '{{breadcrumbLdPrefecture}}': make_breadcrumb_ld_prefecture(ev),
         '{{breadcrumbLdLastPos}}': make_breadcrumb_ld_last_pos(ev),
