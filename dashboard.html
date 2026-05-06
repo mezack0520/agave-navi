@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-NKY8V1H8HY');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0790348660030345" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <link rel="canonical" href="https://agave-navi.com/dashboard.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イベント統計ダッシュボード - アガベイベントナビ</title>
+  <meta name="description" content="アガベ・多肉植物イベントの開催統計。月別ヒートマップ、都道府県別ランキング、年間動向を可視化。">
+  <meta name="keywords" content="統計,ダッシュボード,ヒートマップ,ランキング,アガベ,イベント">
+  <meta property="og:title" content="イベント統計ダッシュボード - アガベイベントナビ">
+  <meta property="og:description" content="アガベ・多肉植物イベントの開催統計。月別ヒートマップ、都道府県別ランキング、年間動向を可視化。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://agave-navi.com/dashboard.html">
+  <meta property="og:image" content="https://agave-navi.com/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#2d5016">
+  <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="/rss.xml">
+  <link rel="stylesheet" href="style.css?v=20260507a">
+  <style>
+    .dash-wrap{max-width:1200px;margin:0 auto;padding:0 1rem}
+    .dash-section{background:#fff;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+    .dash-section h2{margin:0 0 1rem;color:#2d5016;font-size:1.3rem;border-bottom:2px solid #d8e6c7;padding-bottom:.5rem}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .stat-card{background:linear-gradient(135deg,#2d5016,#4a7c2e);color:#fff;border-radius:12px;padding:1.5rem;text-align:center}
+    .stat-card .stat-num{font-size:2.5rem;font-weight:700;line-height:1}
+    .stat-card .stat-label{font-size:.9rem;margin-top:.4rem;opacity:.9}
+    .heatmap-grid{display:grid;grid-template-columns:auto repeat(12, 1fr);gap:3px;align-items:center;font-size:.75rem}
+    .heatmap-grid .row-label{padding-right:.5rem;color:#6a7855;text-align:right;font-weight:700}
+    .heatmap-grid .col-label{text-align:center;color:#6a7855;font-weight:700}
+    .heatmap-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.75rem;cursor:pointer;position:relative}
+    .heatmap-cell:hover{outline:2px solid #2d5016;z-index:1}
+    .heatmap-legend{margin-top:.8rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:#6a7855}
+    .heatmap-legend .swatch{width:16px;height:16px;border-radius:3px;display:inline-block}
+    .ranking-list{list-style:none;padding:0;margin:0}
+    .ranking-list li{display:flex;align-items:center;padding:.6rem .8rem;border-bottom:1px solid #f0f4ea;gap:.8rem}
+    .ranking-list .rank{font-weight:700;color:#2d5016;width:2.5rem;font-size:1.1rem}
+    .ranking-list .rank.top1{color:#d4a017}.ranking-list .rank.top2{color:#888}.ranking-list .rank.top3{color:#cd7f32}
+    .ranking-list .name{flex:1}
+    .ranking-list .name a{color:#2d5016;text-decoration:none;font-weight:600}
+    .ranking-list .name a:hover{text-decoration:underline}
+    .ranking-list .count{color:#6a7855;font-size:.85rem}
+    .ranking-list .bar{height:6px;background:#eef3e6;border-radius:3px;flex:0 0 80px;overflow:hidden}
+    .ranking-list .bar-fill{height:100%;background:linear-gradient(90deg,#4a7c2e,#2d5016)}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    @media (max-width:768px){.two-col{grid-template-columns:1fr}.heatmap-grid{font-size:.65rem}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo"><span class="logo-en">AGAVE EVENT NAVI</span><span class="logo-jp">アガベイベントナビ</span></a>
+      <div class="header-actions">
+        <a href="/ikitai.html" class="ikitai-blob-btn"><span class="blob-bg"></span>
+          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="ikitai-label">行きたい</span></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="/">ホーム</a> &gt; <span>統計ダッシュボード</span>
+  </nav>
+
+  <main>
+    <div class="dash-wrap">
+      <section class="dash-section">
+        <h2>イベント統計ダッシュボード</h2>
+        <p>アガベイベントナビに掲載中のイベント情報を可視化しています。データは <a href="/events.json">events.json</a> から動的にロードされ、リアルタイムに反映されます。</p>
+        <div class="stats-grid" id="statsGrid"></div>
+      </section>
+
+      <section class="dash-section">
+        <h2>月別開催ヒートマップ</h2>
+        <p>年×月のイベント密度。色が濃いほど開催数が多い月です。</p>
+        <div id="heatmap"></div>
+        <div class="heatmap-legend">
+          少ない <span class="swatch" style="background:#eef3e6"></span><span class="swatch" style="background:#bcd9a3"></span><span class="swatch" style="background:#7ab85a"></span><span class="swatch" style="background:#4a7c2e"></span><span class="swatch" style="background:#2d5016"></span> 多い
+        </div>
+      </section>
+
+      <div class="two-col">
+        <section class="dash-section">
+          <h2>都道府県別ランキング</h2>
+          <ol class="ranking-list" id="prefRanking"></ol>
+        </section>
+        <section class="dash-section">
+          <h2>地域別ランキング</h2>
+          <ol class="ranking-list" id="regionRanking"></ol>
+        </section>
+      </div>
+
+      <section class="dash-section">
+        <h2>常設会場ランキング(複数開催実績)</h2>
+        <ol class="ranking-list" id="venueRanking"></ol>
+      </section>
+
+      <section class="dash-section">
+        <h2>外部フォーマットで購読</h2>
+        <p>iCalendar形式でカレンダーアプリに購読登録できます:</p>
+        <ul>
+          <li><a href="/events.ics">events.ics</a> — 全イベント</li>
+          <li><a href="/upcoming.ics">upcoming.ics</a> — 開催予定のみ</li>
+          <li><a href="/this-month.ics">this-month.ics</a> — 今月のみ</li>
+        </ul>
+        <p>その他: <a href="/rss.xml">RSS</a> / <a href="/events.json">JSON API</a> / <a href="/events.csv">CSV</a></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">アガベ・塊根・ビザールプランツのイベント検索ナビ</p>
+      <nav class="footer-nav"><a href="/">ホーム</a><a href="/calendar.html">カレンダー</a><a href="/map.html">マップ</a><a href="/ikitai.html">行きたいリスト</a></nav>
+      <nav class="footer-nav"><a href="/pref/">都道府県別</a><a href="/region/">地域別</a><a href="/tag/">タグ別</a><a href="/archive/">アーカイブ</a></nav>
+      <nav class="footer-nav"><a href="/about.html">サイトについて</a><a href="/operator.html">運営者情報</a><a href="/listing.html">掲載申請</a><a href="/contact.html">お問い合わせ</a></nav>
+      <p class="copyright">© アガベイベントナビ</p>
+    </div>
+  </footer>
+
+<script>
+const REGION_ROMAJI={'北海道':'hokkaido','東北':'tohoku','関東':'kanto','北陸':'hokuriku','東海':'tokai','関西':'kansai','中国':'chugoku','四国':'shikoku','九州':'kyushu'};
+const PREF_ROMAJI={'北海道':'hokkaido','青森':'aomori','岩手':'iwate','宮城':'miyagi','秋田':'akita','山形':'yamagata','福島':'fukushima','茨城':'ibaraki','栃木':'tochigi','群馬':'gunma','埼玉':'saitama','千葉':'chiba','東京':'tokyo','神奈川':'kanagawa','新潟':'niigata','富山':'toyama','石川':'ishikawa','福井':'fukui','山梨':'yamanashi','長野':'nagano','岐阜':'gifu','静岡':'shizuoka','愛知':'aichi','三重':'mie','滋賀':'shiga','京都':'kyoto','大阪':'osaka','兵庫':'hyogo','奈良':'nara','和歌山':'wakayama','鳥取':'tottori','島根':'shimane','岡山':'okayama','広島':'hiroshima','山口':'yamaguchi','徳島':'tokushima','香川':'kagawa','愛媛':'ehime','高知':'kochi','福岡':'fukuoka','佐賀':'saga','長崎':'nagasaki','熊本':'kumamoto','大分':'oita','宮崎':'miyazaki','鹿児島':'kagoshima','沖縄':'okinawa'};
+
+function venueSlugSafe(s){
+  if(!s) return '';
+  // ASCII slug attempt
+  const ascii = s.normalize('NFKD').replace(/[^\x00-\x7F]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+  if(ascii) return ascii;
+  // hash fallback
+  let h=0;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}
+  return 'v-'+h.toString(16).slice(0,8);
+}
+
+fetch('/events.json').then(r=>r.json()).then(events=>{
+  const today=new Date().toISOString().slice(0,10);
+  const upcoming = events.filter(e=>e.date && e.date>=today);
+  const past = events.filter(e=>e.date && e.date<today);
+
+  // Stats cards
+  const sg = document.getElementById('statsGrid');
+  const stats=[
+    {n:events.length, l:'掲載イベント総数'},
+    {n:upcoming.length, l:'開催予定'},
+    {n:past.length, l:'過去開催'},
+    {n:new Set(events.map(e=>e.prefecture).filter(Boolean)).size, l:'カバー都道府県'},
+  ];
+  sg.innerHTML = stats.map(s=>`<div class="stat-card"><div class="stat-num">${s.n}</div><div class="stat-label">${s.l}</div></div>`).join('');
+
+  // Heatmap
+  const ymCount={};
+  events.forEach(e=>{
+    const d=e.date||'';
+    if(d.length>=7){const ym=d.slice(0,7);ymCount[ym]=(ymCount[ym]||0)+1;}
+  });
+  const years=[...new Set(Object.keys(ymCount).map(k=>k.slice(0,4)))].sort();
+  const maxCount=Math.max(...Object.values(ymCount),1);
+  let html='<div class="heatmap-grid"><div></div>';
+  for(let m=1;m<=12;m++) html+=`<div class="col-label">${m}月</div>`;
+  years.forEach(y=>{
+    html+=`<div class="row-label">${y}</div>`;
+    for(let m=1;m<=12;m++){
+      const ym=`${y}-${String(m).padStart(2,'0')}`;
+      const c=ymCount[ym]||0;
+      const intensity = c===0 ? 0 : Math.min(Math.ceil(c/maxCount*4), 4);
+      const colors=['#eef3e6','#bcd9a3','#7ab85a','#4a7c2e','#2d5016'];
+      const bg = colors[intensity];
+      const url = c>0 ? `/archive/${ym}/` : '';
+      html+=`<a href="${url}" class="heatmap-cell" style="background:${bg};color:${intensity>=2?'#fff':'#2d5016'};text-decoration:none" title="${ym}: ${c}件">${c||''}</a>`;
+    }
+  });
+  html+='</div>';
+  document.getElementById('heatmap').innerHTML=html;
+
+  // Pref ranking
+  const prefCount={};
+  events.forEach(e=>{if(e.prefecture)prefCount[e.prefecture]=(prefCount[e.prefecture]||0)+1;});
+  const prefRanked = Object.entries(prefCount).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const prefMax = Math.max(...prefRanked.map(x=>x[1]),1);
+  document.getElementById('prefRanking').innerHTML = prefRanked.map((x,i)=>{
+    const cls = i===0?'top1':(i===1?'top2':(i===2?'top3':''));
+    return `<li><span class="rank ${cls}">${i+1}</span><span class="name"><a href="/pref/${PREF_ROMAJI[x[0]]||''}/">${x[0]}</a></span><span class="bar"><span class="bar-fill" style="width:${x[1]/prefMax*100}%"></span></span><span class="count">${x[1]}件</span></li>`;
+  }).join('');
+
+  // Region ranking
+  const regionCount={};
+  events.forEach(e=>{if(e.region)regionCount[e.region]=(regionCount[e.region]||0)+1;});
+  const regionRanked = Object.entries(regionCount).sort((a,b)=>b[1]-a[1]);
+  const regionMax = Math.max(...regionRanked.map(x=>x[1]),1);
+  document.getElementById('regionRanking').innerHTML = regionRanked.map((x,i)=>{
+    const cls = i===0?'top1':(i===1?'top2':(i===2?'top3':''));
+    return `<li><span class="rank ${cls}">${i+1}</span><span class="name"><a href="/region/${REGION_ROMAJI[x[0]]||''}/">${x[0]}</a></span><span class="bar"><span class="bar-fill" style="width:${x[1]/regionMax*100}%"></span></span><span class="count">${x[1]}件</span></li>`;
+  }).join('');
+
+  // Venue ranking
+  const venueCount={};
+  events.forEach(e=>{if(e.location)venueCount[e.location]=(venueCount[e.location]||0)+1;});
+  const venueRanked = Object.entries(venueCount).filter(x=>x[1]>=2).sort((a,b)=>b[1]-a[1]);
+  const venueMax = Math.max(...venueRanked.map(x=>x[1]),1);
+  document.getElementById('venueRanking').innerHTML = venueRanked.map((x,i)=>{
+    const cls = i===0?'top1':(i===1?'top2':(i===2?'top3':''));
+    return `<li><span class="rank ${cls}">${i+1}</span><span class="name"><a href="/venue/${venueSlugSafe(x[0])}/">${x[0]}</a></span><span class="bar"><span class="bar-fill" style="width:${x[1]/venueMax*100}%"></span></span><span class="count">${x[1]}件</span></li>`;
+  }).join('') || '<li><span class="name" style="color:#6a7855">複数開催実績のある会場がまだありません。</span></li>';
+}).catch(e=>{console.error(e);});
+</script>
+</body>
+</html>

@@ -489,6 +489,8 @@ def build_page(template, ev):
         '{{mapSection}}': make_map_section(ev),
         '{{admissionRow}}': make_admission_row(ev),
         '{{timeRow}}': make_time_row(ev),
+        '{{lastUpdatedRow}}': make_last_updated_row(ev),
+        '{{dataSourceRow}}': make_data_source_row(ev),
     }
 
     html = template
@@ -496,6 +498,47 @@ def build_page(template, ev):
         html = html.replace(key, value)
 
     return html
+
+
+
+def make_last_updated_row(ev):
+    """イベント情報の最終更新日表示。enrichedAt > addedDate を優先。"""
+    last = ev.get('enrichedAt') or ev.get('addedDate')
+    if not last:
+        return ''
+    try:
+        d = last[:10]
+        from datetime import datetime as _dt
+        dt = _dt.strptime(d, '%Y-%m-%d')
+        disp = f'{dt.year}年{dt.month}月{dt.day}日'
+    except Exception:
+        disp = last
+    return ('\n          <div class="info-row">'
+            '\n            <span class="info-label">最終更新</span>'
+            f'\n            <span class="info-value">{disp}</span>'
+            '\n          </div>')
+
+
+def make_data_source_row(ev):
+    """データソース表示。url があれば公式参照を、なければ自社収集を明記。"""
+    url = (ev.get('url') or '').strip()
+    if not url:
+        return ('\n          <div class="info-row">'
+                '\n            <span class="info-label">データソース</span>'
+                '\n            <span class="info-value" style="font-size:.85em;color:#6a7855">スタッフ収集情報</span>'
+                '\n          </div>')
+    src_label = '公式サイト'
+    if 'instagram.com' in url:
+        src_label = '公式Instagram'
+    elif 'facebook.com' in url:
+        src_label = '公式Facebook'
+    elif 'twitter.com' in url or 'x.com' in url:
+        src_label = '公式X(Twitter)'
+    return ('\n          <div class="info-row">'
+            '\n            <span class="info-label">データソース</span>'
+            f'\n            <span class="info-value" style="font-size:.85em;color:#6a7855">{src_label}を参照</span>'
+            '\n          </div>')
+
 
 
 def main():

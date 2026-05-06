@@ -220,4 +220,46 @@
   var style = document.createElement('style');
   style.textContent = '.new-badge { position:absolute; top:8px; left:8px; background:#00b894; color:#fff; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:4px; z-index:3; letter-spacing:0.05em; pointer-events:none; }';
   document.head.appendChild(style);
+
+  // detail-page countdown (D2)
+  (function initCountdown(){
+    var cd = document.getElementById('detailCountdown');
+    if (!cd) return;
+    var d = cd.getAttribute('data-date');
+    var de = cd.getAttribute('data-date-end') || d;
+    if (!d) return;
+    var start = new Date(d + 'T00:00:00+09:00');
+    var end = new Date(de + 'T23:59:59+09:00');
+    function tick(){
+      var now = new Date();
+      if (now > end) {
+        cd.style.display = 'none';
+        return;
+      }
+      cd.style.display = '';
+      if (now < start) {
+        var diff = start - now;
+        var days = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var mins = Math.floor((diff % 3600000) / 60000);
+        if (days >= 1) {
+          cd.innerHTML = '<span class="cd-icon">⏳</span><span class="cd-text">開催まであと <strong>' + days + '</strong>日</span>';
+        } else if (hours >= 1) {
+          cd.innerHTML = '<span class="cd-icon">⏳</span><span class="cd-text">開催まであと <strong>' + hours + '</strong>時間 <strong>' + mins + '</strong>分</span>';
+        } else {
+          cd.innerHTML = '<span class="cd-icon">⏳</span><span class="cd-text">まもなく開催! あと <strong>' + mins + '</strong>分</span>';
+        }
+      } else {
+        cd.innerHTML = '<span class="cd-icon">🟢</span><span class="cd-text">開催中</span>';
+        cd.classList.add('cd-ongoing');
+      }
+    }
+    tick();
+    setInterval(tick, 60000);
+  })();
+
+  // Inject countdown CSS
+  var cdStyle = document.createElement('style');
+  cdStyle.textContent = '.detail-countdown{display:inline-flex;align-items:center;gap:.5rem;margin:.6rem 0;padding:.5rem .9rem;background:linear-gradient(135deg,#fff5d6,#ffe9b3);border-radius:24px;color:#7a5c00;font-size:.95rem;border:1px solid #f0d785}.detail-countdown.cd-ongoing{background:linear-gradient(135deg,#d4f5dd,#aaf0c0);color:#0c5e2a;border-color:#7ed29a}.detail-countdown .cd-icon{font-size:1.1rem}.detail-countdown strong{font-size:1.15em;color:#2d5016}.detail-countdown.cd-ongoing strong{color:#0c5e2a}';
+  document.head.appendChild(cdStyle);
 })();

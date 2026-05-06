@@ -149,6 +149,15 @@ jobs:
           print(f'Added {len(new_slugs)} card(s)')
           PYEOF
 
+      - name: Generate landing pages
+        run: python3 scripts/generate-landing-pages.py
+
+      - name: Generate iCal feeds
+        run: python3 scripts/generate-ical.py
+
+      - name: Generate CSV export
+        run: python3 scripts/generate-csv.py
+
       - name: Update sitemap
         run: python3 scripts/generate_sitemap.py
 
