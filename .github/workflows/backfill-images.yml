@@ -63,6 +63,12 @@ jobs:
       - name: Sync index.html card images with events.json
         run: python3 scripts/sync-index-cards.py
 
+      - name: Generate RSS feed
+        run: python3 scripts/generate-rss.py
+
+      - name: Update dynamic ItemList JSON-LD on homepage
+        run: python3 scripts/generate-itemlist-jsonld.py
+
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"

@@ -1,0 +1,35 @@
+name: Issue → Candidates Staging
+
+on:
+  schedule:
+    - cron: '0 22 * * 0'  # 毎週日曜 07:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Aggregate issue candidates
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/issue-to-candidates.py
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add staging/candidates.json
+          if git diff --staged --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "auto: refresh staging/candidates.json from open issues [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then exit 1; fi
+          done

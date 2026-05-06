@@ -28,6 +28,29 @@ def url_domain(u):
     m = re.match(r'https?://([^/]+)', (u or '').lower())
     return m.group(1) if m else ''
 
+def _normalize(s):
+    """イベント名比較用に正規化: 全半角統一/記号除去/小文字化/Vol番号維持"""
+    if not s: return ''
+    import re, unicodedata
+    s = unicodedata.normalize('NFKC', s)
+    s = s.lower()
+    s = re.sub(r'[\s　]+', '', s)
+    s = re.sub(r'[!！?？「」『』()（）"\'-]+', '', s)
+    return s
+
+
+def _existing_events():
+    """events.json をロードして既存event一覧を返す(重複検出用キャッシュ)"""
+    import json, os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    p = os.path.join(root, 'events.json')
+    if not os.path.exists(p): return []
+    with open(p, encoding='utf-8') as f:
+        return json.load(f)
+
+
+_EXISTING = None
+
 def reasons(ev):
     rs = []
     url = ev.get('url') or ''
@@ -45,6 +68,32 @@ def reasons(ev):
         rs.append('missing slug')
     if not ev.get('name'):
         rs.append('missing name')
+
+    # 重複検出: name+venue+date が類似する既存イベントを探す
+    global _EXISTING
+    if _EXISTING is None:
+        _EXISTING = _existing_events()
+    new_name_norm = _normalize(ev.get('name', ''))
+    new_venue_norm = _normalize(ev.get('venue', '') or ev.get('location', ''))
+    new_date = ev.get('date', '')
+    new_slug = ev.get('slug', '')
+    for ee in _EXISTING:
+        if ee.get('slug') == new_slug:
+            rs.append(f'slug already exists: {new_slug}')
+            break
+        ex_name_norm = _normalize(ee.get('name', ''))
+        ex_venue_norm = _normalize(ee.get('venue', '') or ee.get('location', ''))
+        ex_date = ee.get('date', '')
+        # 同名+同日 → 重複
+        if ex_name_norm and ex_name_norm == new_name_norm and ex_date == new_date and new_date:
+            rs.append(f'duplicate (name+date matches existing slug={ee.get("slug")})')
+            break
+        # 同会場+同日 + 名前部分一致 → 高確度の重複
+        if (ex_venue_norm and ex_venue_norm == new_venue_norm and ex_date == new_date and new_date
+            and ex_name_norm and new_name_norm
+            and (ex_name_norm in new_name_norm or new_name_norm in ex_name_norm)):
+            rs.append(f'likely-duplicate (venue+date+partialname matches slug={ee.get("slug")})')
+            break
     return rs
 
 def main():
