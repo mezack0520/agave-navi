@@ -34,12 +34,6 @@
   function buildCard(ev) {
     var href = BASE + '/events/' + ev.slug + '.html';
     var imgSrc = ev.imageUrl ? ev.imageUrl : BASE + '/images/events/' + ev.slug + '.jpg';
-    var tagsHTML = '';
-    if (ev.tags) {
-      ev.tags.forEach(function (t) {
-        tagsHTML += '<span class="re-tag">' + t + '</span>';
-      });
-    }
     return (
       '<a href="' + href + '" class="re-card">' +
       '<div class="re-card-img">' +
@@ -51,7 +45,6 @@
       '<p class="re-card-title">' + ev.name + '</p>' +
       '<div class="re-card-meta">' +
       '<span class="re-region">' + (ev.prefecture || ev.region || '') + '</span>' +
-      tagsHTML +
       '</div>' +
       '</div>' +
       '</a>'
@@ -74,8 +67,7 @@
       '.re-card-date{font-size:.75rem;color:#888;margin:0 0 4px}' +
       '.re-card-title{font-size:.9rem;font-weight:600;margin:0 0 6px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
       '.re-card-meta{display:flex;flex-wrap:wrap;gap:4px}' +
-      '.re-region,.re-tag{font-size:.7rem;padding:2px 8px;border-radius:20px;background:#f0f0f0;color:#555}' +
-      '.re-tag{background:#fff3f3;color:var(--accent-pop,#e74c3c)}';
+      '.re-region{font-size:.7rem;padding:2px 8px;border-radius:20px;background:#f0f0f0;color:#555}';
     var s = document.createElement('style');
     s.textContent = css;
     document.head.appendChild(s);
