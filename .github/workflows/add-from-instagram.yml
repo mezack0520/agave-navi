@@ -1,0 +1,98 @@
+name: Add Event from Instagram URL
+
+on:
+  workflow_dispatch:
+    inputs:
+      ig_url:
+        description: 'Instagram post URL (例: https://www.instagram.com/p/XXX/)'
+        required: true
+        type: string
+      hint_name:
+        description: 'イベント名のヒント(空欄でOK、後で enrich で自動補完)'
+        required: false
+        type: string
+        default: ''
+  repository_dispatch:
+    types: [ig-event]
+
+permissions:
+  contents: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Build stub entry from IG URL
+        env:
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+        run: |
+          IG_URL="${{ github.event.inputs.ig_url || github.event.client_payload.url }}"
+          HINT="${{ github.event.inputs.hint_name || github.event.client_payload.hint_name || '' }}"
+          if [ -z "$IG_URL" ]; then echo "::error::ig_url is required"; exit 1; fi
+          python3 scripts/add-from-instagram.py "$IG_URL" "$HINT"
+      - name: Sanity check + merge into events.json
+        run: |
+          python3 scripts/sanity-check-new-events.py
+      - name: Trigger sync-events flow inline (merge + enrich + build + deploy)
+        env:
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
+        run: |
+          python3 << 'PYEOF'
+          import json, os
+          if not os.path.exists('new-events.json'):
+              print('No new-events.json'); exit(0)
+          with open('events.json') as f: events = json.load(f)
+          with open('new-events.json') as f: new = json.load(f)
+          existing = {e['slug'] for e in events}
+          added = []
+          for ne in new:
+              if ne['slug'] not in existing:
+                  events.append(ne); added.append(ne['slug'])
+          events.sort(key=lambda e: (0 if e.get('status')=='upcoming' else 1, e.get('date','')))
+          with open('events.json','w', encoding='utf-8') as f:
+              json.dump(events, f, ensure_ascii=False, indent=2); f.write('\n')
+          print(f'Added: {added}')
+          # Stash for next steps
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f'slugs={",".join(added)}\n')
+          PYEOF
+        id: merge
+      - name: Enrich newly added slugs
+        if: steps.merge.outputs.slugs != ''
+        env:
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+        run: |
+          IFS=',' read -ra SLUGS <<< "${{ steps.merge.outputs.slugs }}"
+          for slug in "${SLUGS[@]}"; do
+            python3 scripts/enrich_events.py --slug "$slug" --write-back --no-remove || true
+          done
+      - name: Build + sync + RSS + ItemList
+        run: |
+          python3 build-detail-pages.py
+          python3 scripts/sync-index-cards.py
+          python3 scripts/generate-rss.py
+          python3 scripts/generate-itemlist-jsonld.py
+          python3 scripts/generate_sitemap.py
+      - name: Cleanup new-events.json
+        run: rm -f new-events.json
+      - name: Commit + push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "feat: add event from IG URL (stub + enrich)"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then exit 1; fi
+          done
