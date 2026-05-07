@@ -7,12 +7,15 @@
 
   var STATUS = {
     today:    { label: '本日開催', cls: 'status-today' },
-    thisweek: { label: '今週末', cls: 'status-thisweek' },
-    soon:     { label: 'もうすぐ', cls: 'status-soon' },
-    month:    { label: '1ヶ月以内', cls: 'status-month' },
-    upcoming: { label: '開催予定', cls: 'status-upcoming' },
+    tomorrow: { label: '明日開催', cls: 'status-thisweek' },
+    soonD:    { cls: 'status-thisweek' },   // あとN日 (1-3日)
+    weekD:    { cls: 'status-soon' },        // あとN日 (4-13日)
+    monthD:   { cls: 'status-month' },       // あとN日 (14-31日)
+    upcomingD:{ cls: 'status-upcoming' },    // あとN日 (32+)
     ended:    { label: '終了', cls: 'status-ended' }
   };
+
+  function dayLabel(d) { return 'あと' + d + '日'; }
 
   // data-date がない場合、.event-date テキストから日付をパース
   function parseDateFromText(card) {
@@ -29,38 +32,31 @@
   }
 
   function getStatus(dateStr, dateEndStr) {
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    var eventDate = new Date(dateStr + 'T00:00:00');
-    var endDate = dateEndStr ? new Date(dateEndStr + 'T00:00:00') : eventDate;
-    var diff = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
-    var diffEnd = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+    // JST calendar-day based comparison
+    var now = new Date();
+    var jstMs = now.getTime() + (now.getTimezoneOffset()*60000) + (9*3600000);
+    var j = new Date(jstMs);
+    var todayStr = j.getUTCFullYear() + '-' + String(j.getUTCMonth()+1).padStart(2,'0') + '-' + String(j.getUTCDate()).padStart(2,'0');
+    var todayJST = new Date(todayStr + 'T00:00:00+09:00');
+    var eventDate = new Date(dateStr + 'T00:00:00+09:00');
+    var endDate = (dateEndStr ? new Date(dateEndStr + 'T00:00:00+09:00') : eventDate);
+    var diff = Math.round((eventDate - todayJST) / 86400000);
+    var diffEnd = Math.round((endDate - todayJST) / 86400000);
 
-    // 本日開催中: 開始日 <= 今日 <= 終了日
+    // 本日開催中
     if (diff <= 0 && diffEnd >= 0) return STATUS.today;
-
-    // 終了: 終了日が過去
+    // 終了
     if (diffEnd < 0) return STATUS.ended;
-
-    // 今週末: 今日〜次の日曜日（土日含む）
-    var dayOfWeek = today.getDay(); // 0=日, 6=土
-    var daysUntilSunday = (7 - dayOfWeek) % 7;
-    if (daysUntilSunday === 0 && dayOfWeek === 0) daysUntilSunday = 0; // 日曜なら今日まで
-    // 月〜金: 次の土日, 土: 今日と明日, 日: 今日
-    if (dayOfWeek === 0) {
-      if (diff === 0) return STATUS.thisweek;
-    } else {
-      if (diff <= daysUntilSunday) return STATUS.thisweek;
-    }
-
-    // もうすぐ: 2週間以内
-    if (diff <= 14) return STATUS.soon;
-
-    // 1ヶ月以内
-    if (diff <= 31) return STATUS.month;
-
-    // 開催予定: それ以外の未来
-    return STATUS.upcoming;
+    // 明日
+    if (diff === 1) return STATUS.tomorrow;
+    // あとN日 — 緊急度に応じてクラス分け
+    var s;
+    if (diff <= 3) s = Object.assign({}, STATUS.soonD);
+    else if (diff <= 13) s = Object.assign({}, STATUS.weekD);
+    else if (diff <= 31) s = Object.assign({}, STATUS.monthD);
+    else s = Object.assign({}, STATUS.upcomingD);
+    s.label = dayLabel(diff);
+    return s;
   }
 
   // index / category ページ: .event-card の .event-status を更新
@@ -221,56 +217,4 @@
   style.textContent = '.new-badge { position:absolute; top:8px; left:8px; background:#00b894; color:#fff; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:4px; z-index:3; letter-spacing:0.05em; pointer-events:none; }';
   document.head.appendChild(style);
 
-  // detail-page countdown (D2) — JST calendar-day based
-  (function initCountdown(){
-    var cd = document.getElementById('detailCountdown');
-    if (!cd) return;
-    var d = cd.getAttribute('data-date');
-    var de = cd.getAttribute('data-date-end') || d;
-    if (!d) return;
-    // JST midnight anchors
-    var startJST = new Date(d + 'T00:00:00+09:00');
-    var endJST = new Date(de + 'T23:59:59+09:00');
-    // helper: get JST yyyy-mm-dd of "now"
-    function todayJSTDate(){
-      var now = new Date();
-      var jstMs = now.getTime() + (now.getTimezoneOffset()*60000) + (9*3600000);
-      var j = new Date(jstMs);
-      return j.getUTCFullYear() + '-' + String(j.getUTCMonth()+1).padStart(2,'0') + '-' + String(j.getUTCDate()).padStart(2,'0');
-    }
-    function tick(){
-      var now = new Date();
-      if (now > endJST) { cd.style.display = 'none'; return; }
-      cd.style.display = '';
-      if (now < startJST) {
-        // calendar day diff (JST-based, ignores time-of-day)
-        var todayStr = todayJSTDate();
-        var todayJST = new Date(todayStr + 'T00:00:00+09:00');
-        var calDays = Math.round((startJST - todayJST) / 86400000);
-        var diffMs = startJST - now;
-        var hours = Math.floor(diffMs / 3600000);
-        var mins = Math.floor((diffMs % 3600000) / 60000);
-        if (calDays >= 1) {
-          cd.innerHTML = 'あと<strong>' + calDays + '</strong>日';
-          if (calDays <= 3) cd.classList.add('cd-soon');
-        } else if (hours >= 1) {
-          cd.innerHTML = 'あと<strong>' + hours + '</strong>時間';
-          cd.classList.add('cd-soon');
-        } else {
-          cd.innerHTML = 'まもなく開催';
-          cd.classList.add('cd-soon');
-        }
-      } else {
-        cd.innerHTML = '開催中';
-        cd.classList.add('cd-ongoing');
-      }
-    }
-    tick();
-    setInterval(tick, 60000);
-  })();
-
-  // Inject countdown CSS
-  var cdStyle = document.createElement('style');
-  cdStyle.textContent = '.detail-countdown{font-size:.85rem;color:var(--gray-500,#6a7855);font-weight:500;display:inline-flex;align-items:baseline;gap:.2rem}.detail-countdown strong{color:#c0392b;font-weight:800;font-variant-numeric:tabular-nums;font-size:1em}.detail-countdown.cd-ongoing strong{color:#0c5e2a}.detail-countdown.cd-soon strong{color:#e74c3c}';
-  document.head.appendChild(cdStyle);
 })();
