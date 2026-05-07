@@ -251,14 +251,17 @@
         var hours = Math.floor(diffMs / 3600000);
         var mins = Math.floor((diffMs % 3600000) / 60000);
         if (calDays >= 1) {
-          cd.innerHTML = '<span class="cd-icon">⏳</span>開催まであと <strong>' + calDays + '</strong>日';
+          cd.innerHTML = 'あと<strong>' + calDays + '</strong>日';
+          if (calDays <= 3) cd.classList.add('cd-soon');
         } else if (hours >= 1) {
-          cd.innerHTML = '<span class="cd-icon">⏳</span>あと <strong>' + hours + '</strong>時間<strong>' + mins + '</strong>分';
+          cd.innerHTML = 'あと<strong>' + hours + '</strong>時間';
+          cd.classList.add('cd-soon');
         } else {
-          cd.innerHTML = '<span class="cd-icon">⏳</span>まもなく開催! あと <strong>' + Math.max(0, mins) + '</strong>分';
+          cd.innerHTML = 'まもなく開催';
+          cd.classList.add('cd-soon');
         }
       } else {
-        cd.innerHTML = '<span class="cd-icon">🟢</span>開催中';
+        cd.innerHTML = '開催中';
         cd.classList.add('cd-ongoing');
       }
     }
@@ -268,6 +271,6 @@
 
   // Inject countdown CSS
   var cdStyle = document.createElement('style');
-  cdStyle.textContent = '.detail-countdown{display:inline-flex;align-items:baseline;gap:.3rem;padding:.15rem .55rem .15rem .5rem;background:transparent;color:#a8731a;font-size:.82rem;font-weight:600;line-height:1.3;border-left:3px solid #f0b22a;letter-spacing:.01em}.detail-countdown.cd-ongoing{color:#0c5e2a;border-left-color:#39c264}.detail-countdown .cd-icon{font-size:.85rem;opacity:.85}.detail-countdown strong{font-size:1.25em;font-weight:800;color:#7a5c00;font-feature-settings:"tnum";font-variant-numeric:tabular-nums}.detail-countdown.cd-ongoing strong{color:#0c5e2a}';
+  cdStyle.textContent = '.detail-countdown{font-size:.85rem;color:var(--gray-500,#6a7855);font-weight:500;display:inline-flex;align-items:baseline;gap:.2rem}.detail-countdown strong{color:#c0392b;font-weight:800;font-variant-numeric:tabular-nums;font-size:1em}.detail-countdown.cd-ongoing strong{color:#0c5e2a}.detail-countdown.cd-soon strong{color:#e74c3c}';
   document.head.appendChild(cdStyle);
 })();
