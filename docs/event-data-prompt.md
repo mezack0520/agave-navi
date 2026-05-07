@@ -48,7 +48,8 @@ Instagram投稿や公式サイトの情報を元に、必要なフィールド�
   "url": "公式情報URL（任意。空でもOK — 後で自動補完される）",
   "addedDate": "今日の日付 YYYY-MM-DD",
   "status": "upcoming",
-  "eventStatus": "confirmed"
+  "eventStatus": "confirmed",
+  "recurring": true（定期開催イベントの場合のみ。vol.X、第X回など回数付きイベントに設定）
 }
 
 ### slug のルール

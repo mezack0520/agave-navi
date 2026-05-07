@@ -238,6 +238,7 @@ def main():
         events = json.load(f)
 
     targets = []
+    recurring_targets = []
     for ev in events:
         if args.slug and ev.get("slug") != args.slug:
             continue
@@ -246,9 +247,15 @@ def main():
         # Instagram URLはスキップ（日付の構造化データがない）
         if "instagram.com" in ev.get("sourceUrl", ""):
             continue
-        targets.append(ev)
+        # 定期開催イベントは優先チェック（過去イベントも含む）
+        if ev.get("recurring"):
+            recurring_targets.append(ev)
+        else:
+            targets.append(ev)
 
-    print(f"チェック対象: {len(targets)}件")
+    # 定期開催イベントを先頭に配置（優先チェック）
+    targets = recurring_targets + targets
+    print(f"チェック対象: {len(targets)}件（うち定期開催: {len(recurring_targets)}件）")
     updates = []
 
     for i, ev in enumerate(targets):
