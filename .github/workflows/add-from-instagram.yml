@@ -74,11 +74,14 @@ jobs:
           for slug in "${SLUGS[@]}"; do
             python3 scripts/enrich_events.py --slug "$slug" --write-back --no-remove || true
           done
-      - name: Build + sync + RSS + ItemList
+      - name: Build + sync + RSS + landing pages + iCal + CSV + ItemList + sitemap
         run: |
           python3 build-detail-pages.py
           python3 scripts/sync-index-cards.py
           python3 scripts/generate-rss.py
+          python3 scripts/generate-landing-pages.py
+          python3 scripts/generate-ical.py
+          python3 scripts/generate-csv.py
           python3 scripts/generate-itemlist-jsonld.py
           python3 scripts/generate_sitemap.py
       - name: Cleanup new-events.json
