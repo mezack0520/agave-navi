@@ -45,7 +45,7 @@ def generate():
     files += glob.glob(os.path.join(REPO_ROOT, "events", "*.html"))
     files += glob.glob(os.path.join(REPO_ROOT, "category", "*.html"))
     # Landing pages
-    for d in ['tag','pref','region','archive','venue','this-weekend','this-month']:
+    for d in ['tag','pref','region','archive','venue','this-weekend','this-month','guides']:
         files += glob.glob(os.path.join(REPO_ROOT, d, "**", "*.html"), recursive=True)
 
     rows = []
@@ -75,6 +75,8 @@ def generate():
             pri, freq = '0.5', 'monthly'
         elif first == 'venue':
             pri, freq = '0.6', 'weekly'
+        elif first == 'guides':
+            pri, freq = '0.7', 'monthly'
         else:
             pri, freq = '0.5', 'monthly'
 
