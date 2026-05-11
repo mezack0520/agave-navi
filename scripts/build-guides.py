@@ -46,33 +46,41 @@ HEAD = '''<!DOCTYPE html>
   </script>
   <style>
     .guide-wrap{{max-width:760px;margin:0 auto;padding:0 1rem}}
-    .guide-hero{{padding:1.5rem 0 .8rem;border-bottom:1px solid var(--gray-200,#e8e8e8)}}
-    .guide-hero h1{{font-size:1.8rem;line-height:1.35;color:#2d5016;margin:.4rem 0 .6rem;font-weight:900;letter-spacing:-.01em}}
-    .guide-meta{{font-size:.85rem;color:#6a7855}}
-    .guide-meta .meta-cat{{background:#eef3e6;color:#2d5016;padding:2px 8px;border-radius:10px;font-weight:700;margin-right:.5rem}}
-    .guide-toc{{background:#fafaf7;border-left:3px solid #2d5016;padding:.8rem 1rem;margin:1.2rem 0;border-radius:0 8px 8px 0}}
-    .guide-toc h2{{font-size:.9rem;color:#2d5016;margin:0 0 .4rem;letter-spacing:.05em}}
+    .guide-hero{{padding:1.5rem 0 .8rem;border-bottom:1px solid #e8e8e8}}
+    .guide-hero h1{{font-size:1.7rem;line-height:1.35;color:#1a1a1a;margin:.4rem 0 .6rem;font-weight:900;letter-spacing:-.01em}}
+    .guide-meta{{font-size:.85rem;color:#888}}
+    .guide-meta .meta-cat{{background:#f3f3ee;color:#444;padding:2px 8px;border-radius:3px;font-weight:600;margin-right:.5rem;font-size:.78rem}}
+    .guide-toc{{background:#fafaf7;border-left:3px solid #d0d0c8;padding:.8rem 1rem;margin:1.2rem 0;border-radius:0 4px 4px 0}}
+    .guide-toc h2{{font-size:.85rem;color:#666;margin:0 0 .4rem;letter-spacing:.05em;border:none;padding:0;font-weight:700}}
     .guide-toc ol{{margin:0;padding-left:1.3rem;line-height:1.7;font-size:.9rem}}
-    .guide-toc a{{color:#2d5016;text-decoration:none}}
-    .guide-toc a:hover{{text-decoration:underline}}
-    .guide-body{{font-size:1rem;line-height:1.85;color:#333}}
-    .guide-body h2{{font-size:1.35rem;color:#2d5016;border-bottom:2px solid #d8e6c7;padding-bottom:.4rem;margin:2rem 0 .8rem;font-weight:800}}
-    .guide-body h3{{font-size:1.1rem;color:#2d5016;margin:1.6rem 0 .5rem;font-weight:700}}
+    .guide-toc a{{color:#333;text-decoration:none}}
+    .guide-toc a:hover{{text-decoration:underline;color:#000}}
+    .guide-body{{font-size:1rem;line-height:1.95;color:#222}}
+    .guide-body h2{{font-size:1.3rem;color:#1a1a1a;border-bottom:1px solid #e0e0e0;padding-bottom:.45rem;margin:2.2rem 0 .9rem;font-weight:800;letter-spacing:-.005em}}
+    .guide-body h3{{font-size:1.05rem;color:#222;margin:1.6rem 0 .5rem;font-weight:700}}
     .guide-body p{{margin:.7rem 0}}
     .guide-body ul,.guide-body ol{{margin:.7rem 0;padding-left:1.5rem;line-height:1.85}}
     .guide-body li{{margin:.35rem 0}}
-    .guide-body strong{{color:#2d5016;font-weight:700}}
-    .guide-body .callout{{background:#fff5d6;border-left:4px solid #f0b22a;padding:.8rem 1rem;margin:1.2rem 0;border-radius:0 6px 6px 0}}
-    .guide-body .callout.warning{{background:#fde8e1;border-left-color:#e74c3c}}
-    .guide-body .callout.tip{{background:#e6f4f1;border-left-color:#16a085}}
-    .guide-body .callout p{{margin:.3rem 0;font-size:.92rem}}
-    .guide-related{{margin:2.5rem 0 1.5rem;padding:1.2rem;background:#fafaf7;border-radius:10px}}
-    .guide-related h2{{font-size:1.05rem;color:#2d5016;margin:0 0 .8rem}}
+    .guide-body strong{{color:#000;font-weight:700}}
+    .guide-body .callout{{background:#fafaf5;border-left:3px solid #d0c890;padding:.7rem .9rem;margin:1rem 0;border-radius:0 4px 4px 0}}
+    .guide-body .callout.warning{{background:#fdf3f0;border-left-color:#d6766a}}
+    .guide-body .callout.tip{{background:#f0f6f4;border-left-color:#7ab39a}}
+    .guide-body .callout p{{margin:.25rem 0;font-size:.92rem;color:#444}}
+    .guide-related{{margin:2.5rem 0 1.5rem;padding:1.2rem;background:#fafaf7;border-radius:6px}}
+    .guide-related h2{{font-size:.95rem;color:#666;margin:0 0 .8rem;border:none;padding:0}}
     .guide-related ul{{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem}}
-    .guide-related li a{{display:block;padding:.6rem .8rem;background:#fff;border-radius:6px;color:#2d5016;text-decoration:none;font-size:.9rem;border:1px solid #e8e8e8}}
-    .guide-related li a:hover{{background:#eef3e6;border-color:#2d5016}}
-    .guide-author{{margin:2rem 0 1rem;padding:1rem;background:#fafaf7;border-radius:10px;font-size:.88rem;color:#555}}
-    .guide-author strong{{color:#2d5016}}
+    .guide-related li a{{display:block;padding:.6rem .8rem;background:#fff;border-radius:4px;color:#333;text-decoration:none;font-size:.9rem;border:1px solid #e8e8e8}}
+    .guide-related li a:hover{{background:#f5f5f0;border-color:#999}}
+    .guide-author{{margin:2rem 0 1rem;padding:1rem;background:#fafaf7;border-radius:6px;font-size:.85rem;color:#555;line-height:1.7}}
+    .guide-author strong{{color:#222}}
+    .guide-index-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin:1.5rem 0}}
+    .guide-card{{background:#fff;border-radius:6px;border:1px solid #e8e8e8;overflow:hidden;transition:border-color .2s,box-shadow .2s}}
+    .guide-card:hover{{border-color:#aaa;box-shadow:0 2px 8px rgba(0,0,0,.06)}}
+    .guide-card a{{display:block;padding:1.1rem;color:inherit;text-decoration:none}}
+    .guide-card .gc-cat{{display:inline-block;background:#f3f3ee;color:#555;font-size:.72rem;font-weight:600;padding:2px 7px;border-radius:3px;letter-spacing:.03em}}
+    .guide-card .gc-title{{font-size:1.02rem;color:#1a1a1a;margin:.5rem 0 .35rem;line-height:1.45;border:none;padding:0;font-weight:700}}
+    .guide-card .gc-lead{{font-size:.85rem;color:#555;line-height:1.6;margin:.25rem 0 .55rem}}
+    .guide-card .gc-meta{{font-size:.75rem;color:#888}}
   </style>
 </head>'''
 
@@ -91,11 +99,8 @@ HEADER = '''  <header class="header">
 
 FOOTER = '''  <footer class="footer">
     <div class="footer-inner">
-      <p class="footer-tagline">アガベ・塊根・ビザールプランツのイベント検索ナビ</p>
-      <nav class="footer-nav"><a href="/">ホーム</a><a href="/calendar.html">カレンダー</a><a href="/map.html">マップ</a><a href="/ikitai.html">行きたいリスト</a></nav>
-      <nav class="footer-nav"><a href="/guides/">植物ガイド</a><a href="/dashboard.html">統計</a><a href="/this-weekend/">今週末</a><a href="/this-month/">今月</a></nav>
-      <nav class="footer-nav"><a href="/pref/">都道府県別</a><a href="/region/">地域別</a><a href="/tag/">タグ別</a><a href="/archive/">アーカイブ</a></nav>
-      <nav class="footer-nav"><a href="/about.html">サイトについて</a><a href="/operator.html">運営者情報</a><a href="/listing.html">掲載申請</a><a href="/contact.html">お問い合わせ</a></nav>
+      <nav class="footer-nav"><a href="/">イベント一覧</a><a href="/calendar.html">カレンダー</a><a href="/map.html">マップ</a><a href="/ikitai.html">行きたいリスト</a><a href="/guides/">植物ガイド</a><a href="/about.html">サイトについて</a><a href="/contact.html">お問い合わせ</a></nav>
+      <nav class="footer-nav footer-nav-tertiary"><a href="/listing.html">掲載申請</a><a href="/operator.html">運営者情報</a><a href="/privacy.html">プライバシー</a><a href="/terms.html">利用規約</a><a href="/disclaimer.html">免責事項</a></nav>
       <p class="copyright">© アガベイベントナビ</p>
     </div>
   </footer>'''
@@ -238,16 +243,7 @@ def main():
       <section class="guide-hero"><h1>植物ガイド</h1>
       <p style="color:#555;line-height:1.7">アガベ・塊根植物・ビザールプランツの育て方、即売会で失敗しないコツ、品種の見分け方など、現場で得た知見をまとめています。これから始める方も、もっと深く知りたい方もどうぞ。</p>
       </section>
-      <style>
-        .guide-index-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin:1.5rem 0}}
-        .guide-card{{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;transition:transform .2s,box-shadow .2s}}
-        .guide-card:hover{{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}}
-        .guide-card a{{display:block;padding:1.2rem;color:inherit;text-decoration:none}}
-        .guide-card .gc-cat{{display:inline-block;background:#eef3e6;color:#2d5016;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.05em}}
-        .guide-card .gc-title{{font-size:1.05rem;color:#2d5016;margin:.6rem 0 .4rem;line-height:1.4}}
-        .guide-card .gc-lead{{font-size:.88rem;color:#555;line-height:1.6;margin:.3rem 0 .6rem}}
-        .guide-card .gc-meta{{font-size:.78rem;color:#6a7855}}
-      </style>
+
       <div class="guide-index-grid">{cards}</div>
     </div>
   </main>
