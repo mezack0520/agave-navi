@@ -42,12 +42,25 @@ jobs:
           fi
           python scripts/check_date_updates.py $ARGS
 
+      - name: Rebuild detail pages (also regenerate static HTML)
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          python3 build-detail-pages.py || true
+          python3 scripts/build-static-html.py || true
+          python3 scripts/sync-index-cards.py || true
+          python3 scripts/generate-rss.py || true
+          python3 scripts/generate-itemlist-jsonld.py || true
+          python3 scripts/generate-landing-pages.py || true
+          python3 scripts/generate-ical.py || true
+          python3 scripts/generate-csv.py || true
+          python3 scripts/generate_sitemap.py || true
+
       - name: Commit changes
         if: github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add events.json events/ index.html
+          git add events.json events/ index.html map.html calendar.html sitemap.xml rss.xml itemlist.json *.csv *.ics
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
