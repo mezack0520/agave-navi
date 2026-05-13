@@ -76,19 +76,15 @@ jobs:
         run: python3 scripts/generate-itemlist-jsonld.py
 
       - name: Generate landing pages
-
         run: python3 scripts/generate-landing-pages.py
 
       - name: Generate iCal feeds
-
         run: python3 scripts/generate-ical.py
 
       - name: Generate CSV export
-
         run: python3 scripts/generate-csv.py
 
       - name: Update sitemap
-
         run: python3 scripts/generate_sitemap.py
 
       - name: Commit changes
