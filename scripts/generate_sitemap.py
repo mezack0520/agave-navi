@@ -61,9 +61,9 @@ def generate():
             loc = DOMAIN + '/' + os.path.dirname(rel).replace(os.sep,'/') + '/'
         lm = lastmod(fp)
 
-        if basename in PRIORITY_MAP:
-            pri, freq = PRIORITY_MAP[basename]
-        elif rel.startswith('events' + os.sep):
+        # directory-based rules first (so landing-page index.html does NOT inherit
+        # the root index.html priority of 1.0/daily)
+        if rel.startswith('events' + os.sep):
             pri, freq = '0.8', 'weekly'
         elif rel.startswith('category' + os.sep):
             pri, freq = '0.6', 'weekly'
@@ -77,6 +77,9 @@ def generate():
             pri, freq = '0.6', 'weekly'
         elif first == 'guides':
             pri, freq = '0.7', 'monthly'
+        elif basename in PRIORITY_MAP:
+            # only root-level html files fall here
+            pri, freq = PRIORITY_MAP[basename]
         else:
             pri, freq = '0.5', 'monthly'
 
