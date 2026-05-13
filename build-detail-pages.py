@@ -82,7 +82,7 @@ def make_gcal_url(ev):
     name = ev.get('name', '')
     date_str = ev.get('date', '')
     date_end = ev.get('dateEnd', date_str)
-    venue = ev.get('venue', '')
+    venue = ev.get('venue') or ev.get('location') or ''
 
     if not date_str:
         return '#'
@@ -274,7 +274,7 @@ def make_event_jsonld(ev):
     name = html_escape(ev.get('name', ''))
     date = ev.get('date', '')
     end = ev.get('dateEnd') or date
-    venue = html_escape(ev.get('venue', '') or '')
+    venue = html_escape(ev.get('venue') or ev.get('location') or '')
     pref = ev.get('prefecture', '') or ev.get('region', '')
     desc = html_escape(make_meta_description(ev))
     image_url = (ev.get('imageUrl') or '').replace('"', '&quot;')
@@ -397,7 +397,7 @@ def make_official_links_rows(ev):
         name = ev.get('name', '')
         if not name:
             return ''
-        venue = ev.get('venue', '')
+        venue = ev.get('venue') or ev.get('location') or ''
         q = quote(f'{name} {venue} 2026'.strip())
         items.append((f'https://www.google.com/search?q={q}', 'Googleで検索', 'search'))
 
@@ -454,7 +454,7 @@ def build_page(template, ev):
     date_end = ev.get('dateEnd', '')
     region = ev.get('region', '')
     prefecture = ev.get('prefecture', region)
-    venue = ev.get('venue', '')
+    venue = ev.get('venue') or ev.get('location') or ''
 
     replacements = {
         '{{slug}}': slug,
