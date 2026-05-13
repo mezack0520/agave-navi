@@ -18,7 +18,7 @@ import sys
 import os
 from datetime import date
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 MAP_HTML = os.path.join(ROOT, 'map.html')
 CAL_HTML = os.path.join(ROOT, 'calendar.html')
