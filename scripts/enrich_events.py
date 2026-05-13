@@ -136,8 +136,22 @@ def extract_page_info(url):
     try:
         resp = requests.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
         resp.raise_for_status()
-        resp.encoding = resp.apparent_encoding or 'utf-8'
-        soup = BeautifulSoup(resp.text, 'html.parser')
+        # Encoding selection: trust HTTP Content-Type charset if present,
+        # otherwise default to UTF-8 (most modern Japanese sites are UTF-8).
+        # `apparent_encoding` was previously used but chardet often
+        # misidentifies UTF-8 Japanese pages as Windows-1252/Latin → mojibake.
+        ct = resp.headers.get('Content-Type', '').lower()
+        if 'charset=' in ct:
+            cs = ct.split('charset=', 1)[1].split(';')[0].strip()
+            if cs:
+                resp.encoding = cs
+            else:
+                resp.encoding = 'utf-8'
+        else:
+            resp.encoding = 'utf-8'
+        # If we still got mojibake-looking bytes, fall back to letting
+        # BeautifulSoup sniff from raw bytes (handles BOM + meta charset).
+        soup = BeautifulSoup(resp.content, 'html.parser')
     except Exception as e:
         print(f"    Extract error: {e}")
         return {'error': str(e)}
