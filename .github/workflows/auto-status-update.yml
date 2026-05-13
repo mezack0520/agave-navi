@@ -92,7 +92,7 @@ jobs:
       - name: Rebuild detail pages (update status badges)
         run: python3 build-detail-pages.py
 
-- name: Rebuild static HTML (map.html, calendar.html SSR)
+      - name: Rebuild static HTML (map.html, calendar.html SSR)
         run: python3 scripts/build-static-html.py
       - name: Sync index.html card images with events.json
         run: python3 scripts/sync-index-cards.py
