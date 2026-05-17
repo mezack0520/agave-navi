@@ -88,6 +88,51 @@ def render_fallback_list(events_list, heading):
 </section>'''
 
 
+def render_itemlist_jsonld(events_list, page_name, page_url):
+    """ItemList Event JSON-LD for SEO (Google's Event rich result eligibility)."""
+    items = []
+    for i, e in enumerate(events_list[:30], 1):
+        slug = e.get('slug', '')
+        if not slug:
+            continue
+        item = {
+            "@type": "ListItem",
+            "position": i,
+            "item": {
+                "@type": "Event",
+                "name": e.get('name', ''),
+                "startDate": e.get('date', ''),
+                "endDate": e.get('dateEnd') or e.get('date', ''),
+                "url": f"https://agave-navi.com/events/{slug}.html",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                "eventStatus": "https://schema.org/EventScheduled",
+                "location": {
+                    "@type": "Place",
+                    "name": e.get('venue') or e.get('location', ''),
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressRegion": e.get('prefecture', ''),
+                        "addressCountry": "JP"
+                    }
+                }
+            }
+        }
+        if e.get('description'):
+            item["item"]["description"] = e['description'][:300]
+        items.append(item)
+
+    obj = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": page_name,
+        "url": page_url,
+        "numberOfItems": len(items),
+        "itemListElement": items
+    }
+    payload = json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
+    return f'<script type="application/ld+json">{payload}</script>'
+
+
 def render_inline_events_json(events_list):
     """Embed events as inline JSON so JS doesn't need an AJAX round trip."""
     payload = json.dumps(events_list, ensure_ascii=False, separators=(',', ':'))
@@ -368,6 +413,7 @@ CAL_JS_FIXED = '''<script>
 
 def rewrite_map_html(html_src, events_list, inline_data_block):
     fallback = render_fallback_list(events_list, '開催予定イベント一覧（地図に表示中）')
+    jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントマップ', 'https://agave-navi.com/map.html')
 
     # 1) JS全体を置き換え: <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> 以降を全部置換
     leaflet_marker = '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>'
@@ -376,8 +422,8 @@ def rewrite_map_html(html_src, events_list, inline_data_block):
     pre, _, _ = html_src.partition(leaflet_marker)
     new_html = pre + leaflet_marker + '\n    ' + MAP_JS_FIXED + '\n</body>\n</html>\n'
 
-    # 2) </footer> の直前にSSRイベント一覧 + インラインJSONを挿入
-    insertion = inline_data_block + '\n' + fallback + '\n'
+    # 2) </footer> の直前にSSRイベント一覧 + インラインJSON + JSON-LDを挿入
+    insertion = jsonld + '\n' + inline_data_block + '\n' + fallback + '\n'
     new_html = new_html.replace('</footer>', '</footer>\n' + insertion, 1)
 
     return new_html
@@ -385,6 +431,7 @@ def rewrite_map_html(html_src, events_list, inline_data_block):
 
 def rewrite_cal_html(html_src, events_list, inline_data_block):
     fallback = render_fallback_list(events_list, '開催予定イベント一覧（カレンダーに表示中）')
+    jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントカレンダー', 'https://agave-navi.com/calendar.html')
 
     # JS全体を置き換え: 元のスクリプトを新しいCAL_JS_FIXEDに差し替え
     # マッチさせるパターン: <script>\n        // Menu toggle ... </script><script src="ads.js"></script>
@@ -398,8 +445,8 @@ def rewrite_cal_html(html_src, events_list, inline_data_block):
     pre = html_src[:idx_start]
     new_html = pre + CAL_JS_FIXED + '\n</body>\n</html>\n'
 
-    # SSRイベント一覧 + インラインJSON を </footer> 直前に挿入
-    insertion = inline_data_block + '\n' + fallback + '\n'
+    # SSRイベント一覧 + インラインJSON + JSON-LD を </footer> 直前に挿入
+    insertion = jsonld + '\n' + inline_data_block + '\n' + fallback + '\n'
     new_html = new_html.replace('</footer>', '</footer>\n' + insertion, 1)
 
     return new_html
