@@ -119,7 +119,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add events.json index.html events/
+          git add events.json index.html events/ sitemap.xml rss.xml map.html calendar.html pref/ tag/ region/ archive/ this-weekend/ this-month/ venue/ guides/ events.csv events.ics this-month.ics upcoming.ics 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: auto-update event statuses"
           # Robust push with rebase+retry to avoid concurrent-push races
           for attempt in 1 2 3 4 5; do
