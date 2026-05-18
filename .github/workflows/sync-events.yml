@@ -5,6 +5,10 @@ on:
   repository_dispatch:
     types: [sync-events]
 
+concurrency:
+  group: events-write
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
