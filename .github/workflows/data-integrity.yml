@@ -1,13 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Data Integrity Check
 
 on:
-  schedule:
-    - cron: '0 0 * * 1'  # 毎週月曜 09:00 JST
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [events.json]
-
 permissions:
   contents: read
   issues: write
