@@ -1,10 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Issue → Candidates Staging
 
 on:
-  schedule:
-    - cron: '0 22 * * 0'  # 毎週日曜 07:00 JST
   workflow_dispatch:
-
 permissions:
   contents: write
   issues: read
