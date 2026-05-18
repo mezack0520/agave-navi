@@ -1,11 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Domain & SSL Check
 
 on:
-  schedule:
-    # 毎月1日 9:00 JST (前日 24:00 UTC)
-    - cron: '0 0 1 * *'
   workflow_dispatch:
-
 permissions:
   issues: write
 
