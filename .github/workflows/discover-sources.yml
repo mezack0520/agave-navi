@@ -1,11 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Weekly Source Discovery
 
 on:
-  schedule:
-    # 毎週水曜 9:00 JST (火曜 24:00 UTC) — crawl-events とずらす
-    - cron: '0 0 * * 3'
-  workflow_dispatch: # 手動実行も可能
-
+  workflow_dispatch:
 permissions:
   issues: write
   contents: read
