@@ -13,6 +13,10 @@ on:
     types: [weekly-discovery]
   workflow_dispatch:
 
+concurrency:
+  group: events-write
+  cancel-in-progress: false
+
 permissions:
   contents: write
   issues: write
