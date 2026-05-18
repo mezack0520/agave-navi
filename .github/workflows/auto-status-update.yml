@@ -1,10 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Auto Status Update
 
 on:
-  schedule:
-    - cron: '0 22 * * *'  # 毎日 07:00 JST (22:00 UTC)
   workflow_dispatch:
-
 permissions:
   contents: write
 
