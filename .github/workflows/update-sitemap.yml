@@ -1,14 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Update Sitemap
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '*.html'
-      - 'events/*.html'
-      - 'category/*.html'
   workflow_dispatch:
-
 permissions:
   contents: write
 
