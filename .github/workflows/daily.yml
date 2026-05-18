@@ -9,6 +9,8 @@ name: Daily Maintenance
 on:
   schedule:
     - cron: '0 21 * * *'
+  repository_dispatch:
+    types: [daily]
   workflow_dispatch:
     inputs:
       skip_date_check:
