@@ -1,27 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Event Info Enrichment
 
 on:
-  schedule:
-    # 毎週火曜 10:00 JST (月曜 01:00 UTC)
-    - cron: '0 1 * * 2'
   workflow_dispatch:
-    inputs:
-      slug:
-        description: '特定イベントのslug(空欄で全件)'
-        required: false
-        type: string
-        default: ''
-      limit:
-        description: '処理件数上限(0=全件)'
-        required: false
-        type: string
-        default: '20'
-      remove_orphans:
-        description: '公式情報なしイベントを削除する(デフォルトはfalse=安全)'
-        required: false
-        type: boolean
-        default: false
-
 permissions:
   issues: write
   contents: write
