@@ -1,11 +1,11 @@
+# [DEPRECATED] This workflow has been consolidated into one of:
+#   - daily.yml / weekly-enrichment.yml / weekly-discovery.yml / health.yml
+# Cron trigger removed; workflow_dispatch kept for manual rollback only.
+
 name: Link Check (リンク切れ監視)
 
 on:
-  schedule:
-    # 毎週月曜 10:00 JST (日曜 25:00 UTC → 月曜 01:00 UTC)
-    - cron: '0 1 * * 1'
   workflow_dispatch:
-
 permissions:
   contents: read
   issues: write
