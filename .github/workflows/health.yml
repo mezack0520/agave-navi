@@ -1,0 +1,163 @@
+name: Health Check
+
+# 統合元: event-check.yml + link-check.yml + image-health.yml + domain-check.yml + data-integrity.yml
+# 毎日 11:00 JST (02:00 UTC) に全ヘルスチェック実行
+# 1. データ整合性チェック (events.json)
+# 2. 外部リンク生死監視 (link-check.sh)
+# 3. 画像生死監視 + dead URL クリア (image-health-check.py)
+# 4. SSL/ドメイン残日数
+# 5. 各イベント詳細の生死 (check_events.py)
+# 問題発見時のみ1件のIssueにまとめて通知
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  push:
+    paths:
+      - 'events.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install deps
+        run: pip install requests
+
+      - name: 1. Data integrity check
+        id: integrity
+        run: |
+          python3 scripts/data-integrity-check.py --strict 2>&1 | tee /tmp/integrity.log || true
+          ERR=$(grep -c "ERROR\|FAIL" /tmp/integrity.log || true)
+          echo "errors=$ERR" >> $GITHUB_OUTPUT
+
+      - name: 2. Link check (external URLs)
+        id: linkcheck
+        if: github.event_name != 'push'
+        run: |
+          bash scripts/check-links.sh 2>&1 | tee /tmp/links.log || true
+          BROKEN=$(grep -c "BROKEN\|404\|FAIL" /tmp/links.log || true)
+          echo "broken=$BROKEN" >> $GITHUB_OUTPUT
+
+      - name: 3. Image health (clear dead imageUrls)
+        id: imghealth
+        if: github.event_name != 'push'
+        run: |
+          python3 scripts/image-health-check.py 2>&1 | tee /tmp/img.log || true
+          DEAD=$(grep -c "dead\|404" /tmp/img.log || true)
+          echo "dead=$DEAD" >> $GITHUB_OUTPUT
+
+          # If events.json changed, regen detail pages + sync index
+          if ! git diff --quiet events.json; then
+            python3 build-detail-pages.py
+            python3 scripts/sync-index-cards.py
+          fi
+
+      - name: 4. Domain/SSL check
+        id: domain
+        if: github.event_name != 'push'
+        run: |
+          DOMAIN="agave-navi.com"
+          EXPIRY=$(echo | openssl s_client -servername $DOMAIN -connect $DOMAIN:443 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+          if [ -n "$EXPIRY" ]; then
+            EXPIRY_EPOCH=$(date -d "$EXPIRY" +%s 2>/dev/null)
+            DAYS_LEFT=$(( ($EXPIRY_EPOCH - $(date +%s)) / 86400 ))
+            echo "ssl_days_left=$DAYS_LEFT" >> $GITHUB_OUTPUT
+            echo "SSL: $DAYS_LEFT days left"
+          else
+            echo "ssl_days_left=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 5. Event detail page checks
+        id: eventcheck
+        if: github.event_name != 'push'
+        run: python3 scripts/check_events.py 2>&1 | tee /tmp/events.log || true
+
+      - name: Commit any auto-cleaned changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "no changes"
+            exit 0
+          fi
+          git commit -m "chore(health): auto cleanup [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then exit 1; fi
+          done
+
+      - name: Aggregate report → single Issue (only if problems)
+        if: github.event_name != 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          INTEGRITY_ERR=${{ steps.integrity.outputs.errors || 0 }}
+          LINKS_BROKEN=${{ steps.linkcheck.outputs.broken || 0 }}
+          IMAGES_DEAD=${{ steps.imghealth.outputs.dead || 0 }}
+          SSL_DAYS=${{ steps.domain.outputs.ssl_days_left || 999 }}
+
+          PROBLEMS=$((INTEGRITY_ERR + LINKS_BROKEN + IMAGES_DEAD))
+          SSL_ALERT=""
+          if [ "$SSL_DAYS" -lt 30 ]; then SSL_ALERT="⚠️ SSL残${SSL_DAYS}日"; PROBLEMS=$((PROBLEMS+1)); fi
+
+          if [ "$PROBLEMS" -eq 0 ]; then
+            echo "All health checks passed. No issue needed."
+            exit 0
+          fi
+
+          cat > /tmp/health-report.md <<EOF
+          ## 健全性レポート $(date +%Y-%m-%d)
+
+          | 項目 | 状態 |
+          |---|---|
+          | データ整合性エラー | ${INTEGRITY_ERR}件 |
+          | リンク切れ | ${LINKS_BROKEN}件 |
+          | 画像URL死亡 | ${IMAGES_DEAD}件 |
+          | SSL残日数 | ${SSL_DAYS}日 ${SSL_ALERT} |
+
+          ### 詳細ログ
+          <details><summary>data integrity</summary>
+
+          \`\`\`
+          $(tail -30 /tmp/integrity.log 2>/dev/null)
+          \`\`\`
+          </details>
+          <details><summary>links</summary>
+
+          \`\`\`
+          $(tail -20 /tmp/links.log 2>/dev/null)
+          \`\`\`
+          </details>
+          <details><summary>images</summary>
+
+          \`\`\`
+          $(tail -20 /tmp/img.log 2>/dev/null)
+          \`\`\`
+          </details>
+          <details><summary>events</summary>
+
+          \`\`\`
+          $(tail -20 /tmp/events.log 2>/dev/null)
+          \`\`\`
+          </details>
+          EOF
+
+          gh label create "auto-health" --description "自動健全性レポート" --color "F4A261" 2>/dev/null || true
+          gh issue create \
+            --title "🩺 健全性レポート $(date +%Y-%m-%d) (${PROBLEMS}件)" \
+            --body-file /tmp/health-report.md \
+            --label "auto-health" || true
