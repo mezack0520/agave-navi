@@ -15,6 +15,8 @@ on:
   push:
     paths:
       - 'events.json'
+  repository_dispatch:
+    types: [health]
   workflow_dispatch:
 
 permissions:
