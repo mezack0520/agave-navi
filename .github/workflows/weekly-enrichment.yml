@@ -9,6 +9,8 @@ name: Weekly Enrichment
 on:
   schedule:
     - cron: '0 1 * * 0'
+  repository_dispatch:
+    types: [weekly-enrichment]
   workflow_dispatch:
     inputs:
       slug:
