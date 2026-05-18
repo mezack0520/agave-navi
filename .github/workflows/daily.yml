@@ -1,0 +1,116 @@
+name: Daily Maintenance
+
+# 統合元: auto-status-update.yml + check-date-updates.yml + update-sitemap.yml
+# 毎日 06:00 JST (21:00 UTC) に実行
+# 1. 各公式ページから日付検証で events.json 補正
+# 2. upcoming → past 自動遷移
+# 3. 全 static (detail / sitemap / RSS / iCal / CSV / landing) 再生成
+
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      skip_date_check:
+        description: 'check_date_updates をスキップ'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install deps
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Check date updates (scrape official sources)
+        if: github.event.inputs.skip_date_check != 'true'
+        run: python3 scripts/check_date_updates.py || true
+
+      - name: Auto status update (upcoming → past)
+        run: |
+          python3 << 'PYEOF'
+          import json
+          from datetime import date
+
+          TODAY = date.today()
+          with open("events.json", "r", encoding="utf-8") as f:
+              events = json.load(f)
+
+          changed = []
+          for e in events:
+              d = e.get("dateEnd") or e.get("date")
+              if d and e.get("status") == "upcoming":
+                  try:
+                      end = date.fromisoformat(d)
+                      if end < TODAY:
+                          e["status"] = "past"
+                          changed.append(e["slug"])
+                  except: pass
+
+          if changed:
+              with open("events.json", "w", encoding="utf-8") as f:
+                  json.dump(events, f, indent=2, ensure_ascii=False)
+              print(f"Updated {len(changed)} events to past:")
+              for s in changed: print(f"  - {s}")
+          else:
+              print("No status changes")
+          PYEOF
+
+      - name: Update index.html upcoming count badge
+        run: |
+          python3 << 'PYEOF'
+          import json, re
+          with open("events.json", "r", encoding="utf-8") as f:
+              events = json.load(f)
+          up_count = sum(1 for e in events if e.get("status") == "upcoming")
+          with open("index.html", "r", encoding="utf-8") as f:
+              html = f.read()
+          html = re.sub(
+              r'<span class="event-count" id="eventCount">\d+件</span>',
+              f'<span class="event-count" id="eventCount">{up_count}件</span>',
+              html
+          )
+          with open("index.html", "w", encoding="utf-8") as f:
+              f.write(html)
+          print(f"upcoming count: {up_count}")
+          PYEOF
+
+      - name: Regenerate all static files
+        run: |
+          python3 build-detail-pages.py
+          python3 scripts/build-static-html.py
+          python3 scripts/sync-index-cards.py
+          python3 scripts/generate-rss.py
+          python3 scripts/generate-itemlist-jsonld.py
+          python3 scripts/generate-landing-pages.py
+          python3 scripts/generate-ical.py
+          python3 scripts/generate-csv.py
+          python3 scripts/generate_sitemap.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(daily): status update + date verification + regen all"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            echo "::warning::push failed attempt $attempt/5, retrying"
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then echo "::error::push failed"; exit 1; fi
+          done
