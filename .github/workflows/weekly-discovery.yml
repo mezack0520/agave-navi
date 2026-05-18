@@ -1,0 +1,64 @@
+name: Weekly Discovery
+
+# 統合元: crawl-events.yml + discover-sources.yml + issue-to-candidates.yml
+# 毎週水曜 09:00 JST (00:00 UTC) に実行
+# 1. 既存ソース巡回 (crawl_events.py) → staging に流す
+# 2. 新規ソース発見 (discover_sources.py) → Issue化
+# 3. Issue 由来の候補集約 (issue-to-candidates.py) → staging
+
+on:
+  schedule:
+    - cron: '0 0 * * 3'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install deps
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Crawl existing aggregator sources
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/crawl_events.py || true
+
+      - name: Discover new aggregator sources
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
+        run: python3 scripts/discover_sources.py || true
+
+      - name: Aggregate issue → candidates.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/issue-to-candidates.py || true
+
+      - name: Commit candidate updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(weekly-discovery): refresh staging/candidates + sources"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then exit 1; fi
+          done
