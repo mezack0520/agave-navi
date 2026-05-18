@@ -9,6 +9,8 @@ name: Weekly Discovery
 on:
   schedule:
     - cron: '0 0 * * 3'
+  repository_dispatch:
+    types: [weekly-discovery]
   workflow_dispatch:
 
 permissions:
