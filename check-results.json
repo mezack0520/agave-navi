@@ -1,7 +1,22 @@
 {
   "check_date": "2026-05-18",
   "total_events": 112,
-  "dead_links": [],
+  "dead_links": [
+    {
+      "slug": "border-break-6th-2026",
+      "name": "BORDER BREAK!! 6th",
+      "sourceUrl": "https://no1plantae.com/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "tenkaichi-2026",
+      "name": "第6回 天下一植物界",
+      "sourceUrl": "https://no1plantae.com/",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "miyashita-park-popup-2026",
@@ -788,8 +803,8 @@
       "slug": "border-break-6th-2026",
       "name": "BORDER BREAK!! 6th",
       "sourceUrl": "https://no1plantae.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "greensnap-marche-hiroshima-2026",
@@ -802,8 +817,8 @@
       "slug": "tenkaichi-2026",
       "name": "第6回 天下一植物界",
       "sourceUrl": "https://no1plantae.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "iku-matsuri-utsunomiya-2026",
