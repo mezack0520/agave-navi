@@ -19,6 +19,10 @@ on:
     types: [health]
   workflow_dispatch:
 
+concurrency:
+  group: events-write
+  cancel-in-progress: false
+
 permissions:
   contents: write
   issues: write
