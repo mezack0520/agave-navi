@@ -1,0 +1,81 @@
+name: 巡回対象店舗の追加リクエスト
+description: アガベ・多肉植物・塊根植物などの販売店を巡回対象に追加
+title: "[巡回追加] 店舗名"
+labels: ["add-source", "shop"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        全国の有名アガベ・多肉植物販売店を巡回対象に追加するためのフォームです。
+        記入された情報は `crawl-sources.json` の `type: shop` エントリとして自動的に取り込まれます。
+
+  - type: input
+    id: name
+    attributes:
+      label: 店舗名
+      placeholder: "例: オザキフラワーパーク"
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: 巡回URL（イベント / ニュース / ブログページ推奨。トップページよりも更新頻度の高いページを優先）
+      placeholder: "例: https://ozaki-flowerpark.co.jp/news/event-schedule/"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: coverage
+    attributes:
+      label: 主な所在地（地域）
+      options:
+        - 北海道
+        - 東北
+        - 関東
+        - 中部・東海
+        - 北陸
+        - 関西
+        - 中国
+        - 四国
+        - 九州・沖縄
+    validations:
+      required: true
+
+  - type: input
+    id: prefecture
+    attributes:
+      label: 所在都道府県
+      placeholder: "例: 東京"
+    validations:
+      required: true
+
+  - type: input
+    id: focus
+    attributes:
+      label: 主な取り扱い植物
+      placeholder: "例: アガベ・コーデックス・多肉植物"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: 推奨巡回頻度
+      options:
+        - weekly
+        - monthly
+    validations:
+      required: true
+
+  - type: input
+    id: instagram
+    attributes:
+      label: 公式Instagram（あれば。@アカウント名）
+      placeholder: "例: @ozakiflowerpark"
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      placeholder: "店内イベント開催の頻度、特徴、注意点など"
