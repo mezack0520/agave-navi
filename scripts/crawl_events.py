@@ -68,58 +68,140 @@ def fetch_page(url, timeout=15):
 
 
 def extract_events_from_html(html, source_name, source_url):
-    """Generic event extraction from HTML pages"""
+    """Generic event extraction from HTML pages — improved precision version.
+
+    Requires for each candidate:
+      - Date pattern (YYYY/MM/DD or YYYY年MM月DD日 or MM月DD日)
+      - At least one plant-related keyword in title or surrounding text
+      - At least one event-related keyword in title or surrounding text
+      - Title is NOT a known noise pattern (privacy, contact, archive, etc.)
+      - Year is not in the past
+    """
     if not html:
         return []
+
+    from datetime import date as _date
+    CURRENT_YEAR = _date.today().year
 
     soup = BeautifulSoup(html, 'lxml')
     events = []
 
-    # Common date patterns in Japanese event pages
-    date_patterns = [
-        r'(\d{4})[./年](\d{1,2})[./月](\d{1,2})',  # 2026.04.15 or 2026年4月15日
-        r'(\d{1,2})[./月](\d{1,2})[日]',             # 4月15日
+    # Noise title patterns (clearly non-event pages/sections)
+    noise_pats = [
+        r'^プライバシー', r'^お問い合わせ', r'^利用規約', r'^免責',
+        r'^運営者', r'^サイト[マポ]', r'^関連記事', r'^おすすめ',
+        r'^カテゴリ', r'^アーカイブ', r'^ホーム$', r'^Home$',
+        r'まとめ$', r'^新着', r'^記事一覧', r'^最新記事',
+        r'コメント', r'ログイン', r'^登録', r'^検索',
+        r'^第\d+章', r'^Chapter', r'^Page',
+        r'^20\d{2}年.*植物イベントまとめ',
+        r'^全国の.*専門店',
+        r'の特徴$', r'の育て方$', r'^どう育て', r'の作り方$', r'の手入れ',
+        r'^ニュース$', r'^お知らせ$', r'^イベント$', r'^Event$',
+        r'^トップ$', r'^Top$',
+    ]
+    noise_re = re.compile('|'.join(noise_pats))
+
+    # Event keywords
+    event_kw = [
+        '即売会', 'マルシェ', 'イベント', 'フェス', 'バザール',
+        '展示会', '販売会', '即売', 'フェア', '祭', '楽市',
+        'ワークショップ', '体験会', '勉強会', '交換会',
+        'パーティ', 'MEETING', 'meeting', 'MARKET', 'market',
+        'BAZAAR', 'bazaar', 'FES', 'fes', 'EXPO', 'expo',
+        'コレクション', 'COLLECTION', 'collection',
     ]
 
-    # Look for event-like content blocks
-    # Strategy 1: Look for articles/cards with dates and event names
-    for article in soup.find_all(['article', 'li', 'div'], class_=re.compile(r'event|post|item|card', re.I)):
-        title_el = article.find(['h2', 'h3', 'h4', 'a', 'strong'])
+    # Plant keywords
+    plant_kw = [
+        'アガベ', 'agave', 'AGAVE', '多肉', 'タニク',
+        'コーデックス', 'caudex', 'CAUDEX', '塊根',
+        'サボテン', 'cactus', 'cacti', 'CACTUS',
+        '珍奇', 'ビザール', 'bizarre', 'BIZARRE',
+        'プランツ', 'plant', 'PLANT', 'PLANTS',
+        'BOTANICAL', 'botanical', 'ボタニカル',
+        '植物', 'グリーン', 'green', 'GREEN',
+        'ハオルチア', 'エケベリア', 'パキポ', 'グラキリス',
+        'ユーフォルビア', 'ブロメリア', 'チランジア',
+        '園芸', 'ガーデン', 'garden', 'GARDEN',
+    ]
+
+    date_patterns = [
+        r'(\d{4})[./年-](\d{1,2})[./月-](\d{1,2})',  # 2026.04.15 / 2026年4月15日 / 2026-04-15
+        r'(\d{1,2})[./月](\d{1,2})[日]',                # 4月15日 (year unknown)
+    ]
+
+    pref_re = re.compile(
+        r'(北海道|青森|岩手|宮城|秋田|山形|福島|茨城|栃木|群馬|埼玉|千葉|東京|神奈川|'
+        r'新潟|富山|石川|福井|山梨|長野|岐阜|静岡|愛知|三重|滋賀|京都|大阪|兵庫|奈良|和歌山|'
+        r'鳥取|島根|岡山|広島|山口|徳島|香川|愛媛|高知|福岡|佐賀|長崎|熊本|大分|宮崎|鹿児島|沖縄)'
+    )
+
+    def is_noise(title):
+        if not title or len(title) < 3 or len(title) > 120:
+            return True
+        return bool(noise_re.search(title))
+
+    def has_any(text, kws):
+        return any(k in text for k in kws)
+
+    def extract_date(text):
+        """Return (iso_date, has_year_explicit). Filters out past years."""
+        for pat in date_patterns:
+            for m in re.finditer(pat, text):
+                g = m.groups()
+                try:
+                    if len(g) == 3:
+                        y, mo, d = int(g[0]), int(g[1]), int(g[2])
+                        if 2020 <= y <= CURRENT_YEAR + 3 and 1 <= mo <= 12 and 1 <= d <= 31:
+                            if y < CURRENT_YEAR:
+                                continue  # past year, keep looking for newer date
+                            return f"{y:04d}-{mo:02d}-{d:02d}", True
+                    elif len(g) == 2:
+                        mo, d = int(g[0]), int(g[1])
+                        if 1 <= mo <= 12 and 1 <= d <= 31:
+                            return f"{CURRENT_YEAR:04d}-{mo:02d}-{d:02d}", False
+                except Exception:
+                    continue
+        return None, False
+
+    # Strategy 1: article/li/div blocks with event-related class
+    blocks = soup.find_all(['article', 'li', 'div'],
+                            class_=re.compile(r'event|post|item|card|news', re.I))
+
+    for block in blocks:
+        title_el = block.find(['h1', 'h2', 'h3', 'h4', 'a', 'strong'])
         if not title_el:
             continue
 
         title = title_el.get_text(strip=True)
-        if len(title) < 3 or len(title) > 100:
+        if is_noise(title):
             continue
 
-        # Extract link
+        block_text = block.get_text(' ', strip=True)[:1500]
+        combined = title + ' ' + block_text
+
+        # All three required
+        if not has_any(combined, plant_kw):
+            continue
+        if not has_any(combined, event_kw):
+            continue
+
+        date_str, has_year = extract_date(combined)
+        if not date_str:
+            continue
+
+        # Get link
         link = None
-        link_el = article.find('a', href=True)
+        link_el = block.find('a', href=True)
         if link_el:
             link = urljoin(source_url, link_el['href'])
 
-        # Extract date from text
-        text = article.get_text()
-        date_str = None
-        for pat in date_patterns:
-            m = re.search(pat, text)
-            if m:
-                groups = m.groups()
-                if len(groups) == 3:
-                    date_str = f"{groups[0]}-{int(groups[1]):02d}-{int(groups[2]):02d}"
-                break
-
-        # Extract location hints
+        # Get location
         location = None
-        loc_patterns = [
-            r'(東京|大阪|名古屋|福岡|札幌|横浜|神戸|京都|埼玉|千葉|広島|仙台)',
-            r'([\u4e00-\u9fff]{2,4}[県府都道])',
-        ]
-        for lp in loc_patterns:
-            lm = re.search(lp, text)
-            if lm:
-                location = lm.group(1)
-                break
+        pm = pref_re.search(combined)
+        if pm:
+            location = pm.group(1)
 
         events.append({
             'name': title,
@@ -127,23 +209,68 @@ def extract_events_from_html(html, source_name, source_url):
             'location': location,
             'source': source_name,
             'source_url': link or source_url,
+            'has_year': has_year,
         })
 
-    # Strategy 2: Look for links containing event-related keywords
+    # Strategy 2 (fallback): bare headings if Strategy 1 found nothing
     if not events:
-        for a in soup.find_all('a', href=True):
-            text = a.get_text(strip=True)
-            if any(kw in text for kw in ['即売会', 'マルシェ', 'イベント', 'フェス', 'バザール', '展示']):
-                if len(text) >= 5 and len(text) <= 80:
-                    events.append({
-                        'name': text,
-                        'date': None,
-                        'location': None,
-                        'source': source_name,
-                        'source_url': urljoin(source_url, a['href']),
-                    })
+        for h in soup.find_all(['h2', 'h3', 'h4']):
+            title = h.get_text(strip=True)
+            if is_noise(title):
+                continue
+            if not has_any(title, event_kw):
+                continue
 
-    return events
+            # Look around for context (next 6 siblings)
+            ctx = title
+            try:
+                cur = h.next_sibling
+                cnt = 0
+                while cur is not None and cnt < 6:
+                    if hasattr(cur, 'get_text'):
+                        ctx += ' ' + cur.get_text(' ', strip=True)
+                    elif isinstance(cur, str):
+                        ctx += ' ' + cur
+                    cur = cur.next_sibling
+                    cnt += 1
+            except Exception:
+                pass
+
+            if not has_any(ctx, plant_kw):
+                continue
+
+            date_str, has_year = extract_date(ctx)
+            if not date_str:
+                continue
+
+            link_el = h.find('a', href=True)
+            link = urljoin(source_url, link_el['href']) if link_el else None
+
+            location = None
+            pm = pref_re.search(ctx)
+            if pm:
+                location = pm.group(1)
+
+            events.append({
+                'name': title,
+                'date': date_str,
+                'location': location,
+                'source': source_name,
+                'source_url': link or source_url,
+                'has_year': has_year,
+            })
+
+    # Dedupe by (name, date)
+    seen = set()
+    uniq = []
+    for e in events:
+        k = (e['name'], e.get('date'))
+        if k in seen:
+            continue
+        seen.add(k)
+        uniq.append(e)
+
+    return uniq
 
 
 def crawl_source(source):
