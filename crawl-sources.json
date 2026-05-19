@@ -1,6 +1,6 @@
 {
   "description": "イベント情報の巡回元サイト一覧 - agave-navi.com",
-  "lastUpdated": "2026-03-29",
+  "lastUpdated": "2026-05-19",
   "sources": [
     {
       "name": "ボタ日誌（daybook-botanical）",
@@ -268,6 +268,96 @@
       "url": "https://agavemaniacs.com/event/",
       "discovery_only": true,
       "_note": "aggregator: discovery専用"
+    },
+    {
+      "name": "オザキフラワーパーク（イベントスケジュール）",
+      "url": "https://ozaki-flowerpark.co.jp/news/event-schedule/",
+      "type": "shop",
+      "coverage": "東京",
+      "focus": "観葉・多肉・アガベ・コーデックス・花",
+      "frequency": "monthly",
+      "notes": "都内最大級のガーデンセンター。店内イベント（多肉大集合など）を頻繁に開催。練馬区。"
+    },
+    {
+      "name": "オザキフラワーパーク（ジャーナル/ブログ）",
+      "url": "https://ozaki-flowerpark.co.jp/journal/",
+      "type": "shop",
+      "coverage": "東京",
+      "focus": "多肉・アガベ・コーデックス",
+      "frequency": "weekly",
+      "notes": "店内取り扱い植物の紹介ブログ。販売告知も含まれる。"
+    },
+    {
+      "name": "シマムラ園芸",
+      "url": "https://shimamuraengei.com/event/",
+      "type": "shop",
+      "coverage": "埼玉",
+      "focus": "多肉・アガベ・観葉植物",
+      "frequency": "weekly",
+      "notes": "草乱祭などのイベント会場。越谷市。"
+    },
+    {
+      "name": "タナベフラワー",
+      "url": "https://www.tanabeflower.com/",
+      "type": "shop",
+      "coverage": "神奈川",
+      "focus": "多肉植物",
+      "frequency": "monthly",
+      "notes": "川崎市宮前区。年間600種類以上の多肉植物を取り扱い。"
+    },
+    {
+      "name": "鶴仙園 (サボテン・多肉植物専門店)",
+      "url": "https://www.kakusenen.com/",
+      "type": "shop",
+      "coverage": "東京",
+      "focus": "サボテン・多肉・アガベ・コーデックス",
+      "frequency": "monthly",
+      "notes": "西武池袋本店9階屋上。販売イベント・展示会あり。"
+    },
+    {
+      "name": "山城愛仙園 (Yamashiro Aisenen)",
+      "url": "https://www.aisenen.com/",
+      "type": "shop",
+      "coverage": "大阪",
+      "focus": "多肉・サボテン・アガベ・斑入り植物",
+      "frequency": "monthly",
+      "notes": "大阪府池田市。希少な品種多数、定期イベントあり。"
+    },
+    {
+      "name": "Yubisakino Jyunin (指先の住人)",
+      "url": "https://www.yubisakino-jyunin.com/",
+      "type": "shop",
+      "coverage": "福岡",
+      "focus": "アガベ・コーデックス・グラキリス・パキプス",
+      "frequency": "monthly",
+      "notes": "福岡県筑紫野市。希少種・輸入植物専門店。"
+    },
+    {
+      "name": "BIZARRE FARM",
+      "url": "https://www.bizarrefarm.com/",
+      "type": "shop",
+      "coverage": "千葉",
+      "focus": "アガベ・塊根植物・珍奇植物",
+      "frequency": "weekly",
+      "notes": "千葉県のアガベ・珍奇植物専門店。SPRING FES等を主催。"
+    },
+    {
+      "name": "RAFLUM 大阪店",
+      "url": "https://raflum.jp/",
+      "type": "shop",
+      "coverage": "大阪",
+      "focus": "パキポディウム・アガベ・塊根植物",
+      "frequency": "monthly",
+      "notes": "希少なアガベ・塊根を扱う。POP-UP展開も多い。"
+    },
+    {
+      "name": "WONDER PLANTS JAPAN",
+      "url": "https://wonderplants.jp/",
+      "type": "shop",
+      "coverage": "三重",
+      "focus": "珍奇植物・コーデックス・アガベ",
+      "frequency": "monthly",
+      "notes": "三重県の珍奇植物ナーサリー。BRUTUSなど取材歴あり。"
     }
   ]
 }
