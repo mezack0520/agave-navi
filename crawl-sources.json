@@ -1,6 +1,6 @@
 {
   "description": "イベント情報の巡回元サイト一覧 - agave-navi.com",
-  "lastUpdated": "2026-05-19",
+  "lastUpdated": "2026-05-22",
   "sources": [
     {
       "name": "ボタ日誌（daybook-botanical）",
@@ -421,6 +421,33 @@
       "focus": "植物関連イベント",
       "frequency": "monthly",
       "notes": "環境省所管。展示会あり。"
+    },
+    {
+      "name": "川口市立グリーンセンター（年間カレンダー）",
+      "url": "https://greencenter.1110city.com/calendar04.html",
+      "type": "shop",
+      "coverage": "埼玉",
+      "focus": "公共植物園のイベント（まつり・植物展・園芸教室・菊花展・山野草展・盆栽展など）",
+      "frequency": "monthly",
+      "notes": "川口市新井宿700。calendar{04..12}.html / calendar{01..03}.html の各月ページを月替わりで更新。"
+    },
+    {
+      "name": "川口市立グリーンセンター（5月）",
+      "url": "https://greencenter.1110city.com/calendar05.html",
+      "type": "shop",
+      "coverage": "埼玉",
+      "focus": "5月の植物関連イベント (初夏のまつり等)",
+      "frequency": "monthly",
+      "notes": "5月度カレンダー。"
+    },
+    {
+      "name": "川口市立グリーンセンター（10月）",
+      "url": "https://greencenter.1110city.com/calendar10.html",
+      "type": "shop",
+      "coverage": "埼玉",
+      "focus": "10月の植物関連イベント (秋のまつり・菊花展等)",
+      "frequency": "monthly",
+      "notes": "10月度カレンダー。"
     }
   ]
 }
