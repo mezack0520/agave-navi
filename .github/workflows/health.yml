@@ -11,7 +11,7 @@ name: Health Check
 
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 0 * * *'  # 09:00 JST想定 (GitHub Actionsの遅延で実際は11:00 JST前後に着くことが多い)
   push:
     paths:
       - 'events.json'
