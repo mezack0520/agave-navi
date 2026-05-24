@@ -1,5 +1,5 @@
 {
-  "check_date": "2026-05-23",
+  "check_date": "2026-05-24",
   "total_events": 123,
   "dead_links": [],
   "tbd_events": [
@@ -26,6 +26,12 @@
     }
   ],
   "past_events": [
+    {
+      "slug": "kyoto-midorino-marche-bangaihen-vol9",
+      "name": "京都みどりのマルシェ 番外編vol.9",
+      "date": "2026-05-23",
+      "dateEnd": "2026-05-23"
+    },
     {
       "slug": "taniku-midori-marche-nabana-2026",
       "name": "多肉とみどりのマルシェ in なばなの里",
@@ -445,87 +451,9 @@
       "name": "SaikiEngei to 福山deマルシェ",
       "date": "2026-05-17",
       "dateEnd": "2026-05-17"
-    },
-    {
-      "slug": "futakotamagawa-botanical-2026",
-      "name": "二子玉川ボタニカルフェスタ 2026春",
-      "date": "2026-05-21",
-      "dateEnd": ""
     }
   ],
   "upcoming_events": [
-    {
-      "slug": "border-break-6th-2026",
-      "name": "BORDER BREAK!! 6th",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "京セラドーム大阪 スカイホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://no1plantae.com/"
-    },
-    {
-      "slug": "greensnap-marche-hiroshima-2026",
-      "name": "GreenSnap Marche HIROSHIMA 2026",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "広島",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://greensnap.jp/event/"
-    },
-    {
-      "slug": "haze-various-genres-marche-2026",
-      "name": "HAZE -various genres marche",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "茨城県内会場",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "hosokawa-botafes-2026-spring",
-      "name": "HOSOKAWA BOTAFES '26 spring",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "旧細河小学校",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "tenkaichi-2026",
-      "name": "第6回 天下一植物界",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "京セラドーム大阪",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://no1plantae.com/"
-    },
-    {
-      "slug": "kyoto-midorino-marche-bangaihen-vol9",
-      "name": "京都みどりのマルシェ 番外編vol.9",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-23",
-      "location": "トートひろば",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "sumori-sai-vol36",
-      "name": "スモリ祭 vol.36",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "スモリの家駐車場前 (ホームセンタームサシ名取店敷地内)",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "shoka-no-greencenter-matsuri-2026",
-      "name": "初夏のグリーンセンターまつり",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-24",
-      "location": "川口市立グリーンセンター",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
     {
       "slug": "isij-big-bazaar-2026-05-24",
       "name": "5月のサボテン・多肉植物ビッグバザール",
@@ -842,6 +770,15 @@
       "sourceUrl": "https://hanatomofesta.com/"
     },
     {
+      "slug": "futakotamagawa-botanical-2026",
+      "name": "二子玉川ボタニカルフェスタ 2026春",
+      "date": "2026-05-26",
+      "dateEnd": "",
+      "location": "二子玉川ライズ",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.rise.sc/"
+    },
+    {
       "slug": "shimamura-mini-soransai-2026",
       "name": "ミニ草乱祭 in シマムラ園芸",
       "date": "2026-06-20",
@@ -907,15 +844,6 @@
       "sourceUrl": "https://no1plantae.com/"
     },
     {
-      "slug": "kyoto-midorino-marche-bangaihen-vol9",
-      "name": "京都みどりのマルシェ 番外編vol.9",
-      "date": "2026-05-23",
-      "dateEnd": "2026-05-23",
-      "location": "トートひろば",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
       "slug": "sumori-sai-vol36",
       "name": "スモリ祭 vol.36",
       "date": "2026-05-23",
@@ -930,6 +858,24 @@
       "date": "2026-05-23",
       "dateEnd": "2026-05-24",
       "location": "川口市立グリーンセンター",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "isij-big-bazaar-2026-05-24",
+      "name": "5月のサボテン・多肉植物ビッグバザール",
+      "date": "2026-05-24",
+      "dateEnd": "2026-05-24",
+      "location": "五反田TOCビル 13階",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "myoko-taniku-market-13th-2026",
+      "name": "妙高多肉市場 13th",
+      "date": "2026-05-24",
+      "dateEnd": "2026-05-24",
+      "location": "道の駅あらい フィールド妙高",
       "eventStatus": "confirmed",
       "sourceUrl": ""
     }
