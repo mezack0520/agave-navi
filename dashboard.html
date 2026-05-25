@@ -30,11 +30,11 @@
     .stat-card .stat-num{font-size:2.5rem;font-weight:700;line-height:1}
     .stat-card .stat-label{font-size:.9rem;margin-top:.4rem;opacity:.9}
     .heatmap-grid{display:grid;grid-template-columns:auto repeat(12, 1fr);gap:3px;align-items:center;font-size:.75rem}
-    .heatmap-grid .row-label{padding-right:.5rem;color:#6a7855;text-align:right;font-weight:700}
-    .heatmap-grid .col-label{text-align:center;color:#6a7855;font-weight:700}
+    .heatmap-grid .row-label{padding-right:.5rem;color:#666;text-align:right;font-weight:700}
+    .heatmap-grid .col-label{text-align:center;color:#666;font-weight:700}
     .heatmap-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.75rem;cursor:pointer;position:relative}
     .heatmap-cell:hover{outline:2px solid #111;z-index:1}
-    .heatmap-legend{margin-top:.8rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:#6a7855}
+    .heatmap-legend{margin-top:.8rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:#666}
     .heatmap-legend .swatch{width:16px;height:16px;border-radius:3px;display:inline-block}
     .ranking-list{list-style:none;padding:0;margin:0}
     .ranking-list li{display:flex;align-items:center;padding:.6rem .8rem;border-bottom:1px solid #f0f4ea;gap:.8rem}
@@ -43,7 +43,7 @@
     .ranking-list .name{flex:1}
     .ranking-list .name a{color:#111;text-decoration:none;font-weight:600}
     .ranking-list .name a:hover{text-decoration:underline}
-    .ranking-list .count{color:#6a7855;font-size:.85rem}
+    .ranking-list .count{color:#666;font-size:.85rem}
     .ranking-list .bar{height:6px;background:#f0f0f0;border-radius:3px;flex:0 0 80px;overflow:hidden}
     .ranking-list .bar-fill{height:100%;background:linear-gradient(90deg,#444,#111)}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
@@ -219,7 +219,7 @@ fetch('/events.json').then(r=>r.json()).then(events=>{
   document.getElementById('venueRanking').innerHTML = venueRanked.map((x,i)=>{
     const cls = i===0?'top1':(i===1?'top2':(i===2?'top3':''));
     return `<li><span class="rank ${cls}">${i+1}</span><span class="name"><a href="/venue/${venueSlugSafe(x[0])}/">${x[0]}</a></span><span class="bar"><span class="bar-fill" style="width:${x[1]/venueMax*100}%"></span></span><span class="count">${x[1]}件</span></li>`;
-  }).join('') || '<li><span class="name" style="color:#6a7855">複数開催実績のある会場がまだありません。</span></li>';
+  }).join('') || '<li><span class="name" style="color:#666">複数開催実績のある会場がまだありません。</span></li>';
 }).catch(e=>{console.error(e);});
 </script>
 </body>

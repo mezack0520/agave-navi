@@ -83,15 +83,15 @@ HEAD = '''<!DOCTYPE html>
     .landing-hero{{max-width:1200px;margin:1.2rem auto .6rem;padding:0 1rem}}
     .landing-hero h1{{font-size:1.8rem;margin:.2rem 0;color:#111}}
     .landing-hero p.lead{{color:#555;margin:.4rem 0 0}}
-    .landing-stats{{font-size:.9rem;color:#6a7855;margin:.4rem 0}}
+    .landing-stats{{font-size:.9rem;color:#666;margin:.4rem 0}}
     .landing-grid{{max-width:1200px;margin:1rem auto;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}}
     .landing-card{{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;transition:transform .2s,box-shadow .2s}}
     .landing-card:hover{{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}}
     .landing-card a{{display:block;color:inherit;text-decoration:none;padding:1rem}}
     .landing-card .lc-date{{font-weight:700;color:#111;font-size:.9rem}}
     .landing-card .lc-name{{font-size:1.05rem;margin:.4rem 0 .3rem;line-height:1.35}}
-    .landing-card .lc-meta{{font-size:.85rem;color:#6a7855}}
-    .landing-empty{{max-width:1200px;margin:2rem auto;padding:2rem 1rem;text-align:center;color:#6a7855;background:#fff;border-radius:12px}}
+    .landing-card .lc-meta{{font-size:.85rem;color:#666}}
+    .landing-empty{{max-width:1200px;margin:2rem auto;padding:2rem 1rem;text-align:center;color:#666;background:#fff;border-radius:12px}}
   </style>
 </head>'''
 

@@ -361,10 +361,10 @@ def make_official_links_rows(ev):
 
     LABELS = {
         'ig_post': 'Instagram投稿',
-        'ig_profile': '公式Instagram',
-        'facebook': '公式Facebook',
-        'x': '公式X',
-        'site': '公式サイト',
+        'ig_profile': 'Instagram',
+        'facebook': 'Facebook',
+        'x': 'X (Twitter)',
+        'site': '関連サイト',
     }
 
     has_ig_embed = bool(ev.get('instagramPostId') or ev.get('instagramUrl'))
@@ -405,7 +405,7 @@ def make_official_links_rows(ev):
     for u, label, _ in items:
         rows.append(
             f'          <div class="info-row">\n'
-            f'            <span class="info-label">公式</span>\n'
+            f'            <span class="info-label">リンク</span>\n'
             f'            <span class="info-value"><a href="{u}" target="_blank" rel="noopener">{html_escape(label)} ↗</a></span>\n'
             f'          </div>'
         )
@@ -723,18 +723,18 @@ def make_data_source_row(ev):
     if not url:
         return ('\n          <div class="info-row">'
                 '\n            <span class="info-label">データソース</span>'
-                '\n            <span class="info-value" style="font-size:.85em;color:#6a7855">スタッフ収集情報</span>'
+                '\n            <span class="info-value" style="font-size:.85em;color:#666">スタッフ収集情報</span>'
                 '\n          </div>')
-    src_label = '公式サイト'
+    src_label = '参考サイト'
     if 'instagram.com' in url:
-        src_label = '公式Instagram'
+        src_label = 'Instagram'
     elif 'facebook.com' in url:
-        src_label = '公式Facebook'
+        src_label = 'Facebook'
     elif 'twitter.com' in url or 'x.com' in url:
-        src_label = '公式X(Twitter)'
+        src_label = 'X (Twitter)'
     return ('\n          <div class="info-row">'
             '\n            <span class="info-label">データソース</span>'
-            f'\n            <span class="info-value" style="font-size:.85em;color:#6a7855">{src_label}を参照</span>'
+            f'\n            <span class="info-value" style="font-size:.85em;color:#666">{src_label}を参照</span>'
             '\n          </div>')
 
 
