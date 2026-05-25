@@ -18,34 +18,34 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <meta name="theme-color" content="#2d5016">
+  <meta name="theme-color" content="#111">
   <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="/rss.xml">
   <link rel="stylesheet" href="style.css?v=20260507a">
   <style>
     .dash-wrap{max-width:1200px;margin:0 auto;padding:0 1rem}
     .dash-section{background:#fff;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-    .dash-section h2{margin:0 0 1rem;color:#2d5016;font-size:1.3rem;border-bottom:2px solid #d8e6c7;padding-bottom:.5rem}
+    .dash-section h2{margin:0 0 1rem;color:#111;font-size:1.3rem;border-bottom:2px solid #ddd;padding-bottom:.5rem}
     .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
-    .stat-card{background:linear-gradient(135deg,#2d5016,#4a7c2e);color:#fff;border-radius:12px;padding:1.5rem;text-align:center}
+    .stat-card{background:linear-gradient(135deg,#111,#444);color:#fff;border-radius:12px;padding:1.5rem;text-align:center}
     .stat-card .stat-num{font-size:2.5rem;font-weight:700;line-height:1}
     .stat-card .stat-label{font-size:.9rem;margin-top:.4rem;opacity:.9}
     .heatmap-grid{display:grid;grid-template-columns:auto repeat(12, 1fr);gap:3px;align-items:center;font-size:.75rem}
     .heatmap-grid .row-label{padding-right:.5rem;color:#6a7855;text-align:right;font-weight:700}
     .heatmap-grid .col-label{text-align:center;color:#6a7855;font-weight:700}
     .heatmap-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.75rem;cursor:pointer;position:relative}
-    .heatmap-cell:hover{outline:2px solid #2d5016;z-index:1}
+    .heatmap-cell:hover{outline:2px solid #111;z-index:1}
     .heatmap-legend{margin-top:.8rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:#6a7855}
     .heatmap-legend .swatch{width:16px;height:16px;border-radius:3px;display:inline-block}
     .ranking-list{list-style:none;padding:0;margin:0}
     .ranking-list li{display:flex;align-items:center;padding:.6rem .8rem;border-bottom:1px solid #f0f4ea;gap:.8rem}
-    .ranking-list .rank{font-weight:700;color:#2d5016;width:2.5rem;font-size:1.1rem}
+    .ranking-list .rank{font-weight:700;color:#111;width:2.5rem;font-size:1.1rem}
     .ranking-list .rank.top1{color:#d4a017}.ranking-list .rank.top2{color:#888}.ranking-list .rank.top3{color:#cd7f32}
     .ranking-list .name{flex:1}
-    .ranking-list .name a{color:#2d5016;text-decoration:none;font-weight:600}
+    .ranking-list .name a{color:#111;text-decoration:none;font-weight:600}
     .ranking-list .name a:hover{text-decoration:underline}
     .ranking-list .count{color:#6a7855;font-size:.85rem}
-    .ranking-list .bar{height:6px;background:#eef3e6;border-radius:3px;flex:0 0 80px;overflow:hidden}
-    .ranking-list .bar-fill{height:100%;background:linear-gradient(90deg,#4a7c2e,#2d5016)}
+    .ranking-list .bar{height:6px;background:#f0f0f0;border-radius:3px;flex:0 0 80px;overflow:hidden}
+    .ranking-list .bar-fill{height:100%;background:linear-gradient(90deg,#444,#111)}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
     @media (max-width:768px){.two-col{grid-template-columns:1fr}.heatmap-grid{font-size:.65rem}}
   </style>
@@ -79,7 +79,7 @@
         <p>年×月のイベント密度。色が濃いほど開催数が多い月です。</p>
         <div id="heatmap"></div>
         <div class="heatmap-legend">
-          少ない <span class="swatch" style="background:#eef3e6"></span><span class="swatch" style="background:#bcd9a3"></span><span class="swatch" style="background:#7ab85a"></span><span class="swatch" style="background:#4a7c2e"></span><span class="swatch" style="background:#2d5016"></span> 多い
+          少ない <span class="swatch" style="background:#f0f0f0"></span><span class="swatch" style="background:#ccc"></span><span class="swatch" style="background:#888"></span><span class="swatch" style="background:#444"></span><span class="swatch" style="background:#111"></span> 多い
         </div>
       </section>
 
@@ -182,10 +182,10 @@ fetch('/events.json').then(r=>r.json()).then(events=>{
       const ym=`${y}-${String(m).padStart(2,'0')}`;
       const c=ymCount[ym]||0;
       const intensity = c===0 ? 0 : Math.min(Math.ceil(c/maxCount*4), 4);
-      const colors=['#eef3e6','#bcd9a3','#7ab85a','#4a7c2e','#2d5016'];
+      const colors=['#f0f0f0','#ccc','#888','#444','#111'];
       const bg = colors[intensity];
       const url = c>0 ? `/archive/${ym}/` : '';
-      html+=`<a href="${url}" class="heatmap-cell" style="background:${bg};color:${intensity>=2?'#fff':'#2d5016'};text-decoration:none" title="${ym}: ${c}件">${c||''}</a>`;
+      html+=`<a href="${url}" class="heatmap-cell" style="background:${bg};color:${intensity>=2?'#fff':'#111'};text-decoration:none" title="${ym}: ${c}件">${c||''}</a>`;
     }
   });
   html+='</div>';

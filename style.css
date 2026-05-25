@@ -2890,13 +2890,13 @@ main {
 }
 
 
-/* Enriched content sections (AdSense / E-E-A-T 強化用) */
+/* Enriched content sections (AdSense / E-E-A-T 強化用 / モノクロ統一) */
 .detail-enriched {
   margin-top: 1.5rem;
 }
 .detail-enriched p {
   line-height: 1.85;
-  color: #2a2a2a;
+  color: #222;
 }
 .detail-enriched .visit-tips-list,
 .detail-enriched .related-guides-list {
@@ -2909,32 +2909,33 @@ main {
   margin: 0.4rem 0;
 }
 .detail-enriched .related-guides-list a {
-  color: #2d5016;
+  color: #111;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .detail-enriched .related-guides-list a:hover {
-  color: #4a7c2a;
+  color: #444;
 }
 .detail-enriched .related-guides-more {
   margin-top: 0.6rem;
   text-align: right;
 }
 .detail-enriched .related-guides-more a {
-  color: #4a7c2a;
+  color: #222;
   font-weight: 600;
 }
 .detail-mission {
-  background: #f7f5ec;
-  border-left: 3px solid #4a7c2a;
+  background: #fafafa;
+  border-left: 3px solid #222;
   padding: 1rem 1.2rem;
   border-radius: 4px;
 }
 .detail-mission p {
   margin: 0;
   font-size: 0.95em;
+  color: #222;
 }
 .detail-mission a {
-  color: #2d5016;
+  color: #111;
   text-decoration: underline;
 }

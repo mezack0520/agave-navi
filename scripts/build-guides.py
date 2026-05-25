@@ -35,7 +35,7 @@ HEAD = '''<!DOCTYPE html>
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="manifest" href="../manifest.webmanifest">
-  <meta name="theme-color" content="#2d5016">
+  <meta name="theme-color" content="#111">
   <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="../rss.xml">
   <link rel="stylesheet" href="../style.css?v=20260507e">
   <script type="application/ld+json">
