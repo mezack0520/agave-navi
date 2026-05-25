@@ -491,6 +491,7 @@ def build_page(template, ev):
         '{{timeRow}}': make_time_row(ev),
         '{{lastUpdatedRow}}': make_last_updated_row(ev),
         '{{dataSourceRow}}': make_data_source_row(ev),
+        '{{enrichedContent}}': make_enriched_content(ev),
     }
 
     html = template
@@ -517,6 +518,203 @@ def make_last_updated_row(ev):
             '\n            <span class="info-label">最終更新</span>'
             f'\n            <span class="info-value">{disp}</span>'
             '\n          </div>')
+
+
+# ---------------------------------------------------------------------------
+# Enriched content (AdSense / SEO 向け本文増強セクション)
+# ---------------------------------------------------------------------------
+# 目的: 各イベントページが「概要1文 + 地図 + EVENT INFO」だけだとコンテンツが薄く
+#       AdSense の「有用性の低いコンテンツ」判定の原因になるため、
+#       カテゴリ・地域・タグなどイベント固有のデータから生成した独自コンテンツを
+#       挿入する。完全な定型文ではなく、イベントごとに表示が変わるよう設計。
+
+GUIDE_LINKS = [
+    ('agave-winter-hardiness.html', 'アガベの耐寒性ガイド: 屋外越冬できる品種と室内必須種の見分け方', 'アガベ'),
+    ('agave-titanota-care.html',    'アガベ チタノタ系の管理: 美観を保ちながら長く育てるコツ',       'アガベ'),
+    ('pachypodium-gracilius.html',  'パキポディウム グラキリスを枯らさない: 実生株と現地球の管理差', 'コーデックス'),
+    ('caudex-intro.html',           '塊根植物(コーデックス)入門: 夏型・冬型の見分け方と選び方',     'コーデックス'),
+    ('adenium-wintering.html',      'アデニウム(砂漠の薔薇)の冬越し完全ガイド: 種類別の温度管理',   'コーデックス'),
+    ('wintering-tokyo.html',        '東京近郊での冬越し: 練馬から学ぶ屋外・軒下・不織布・室内の使い分け', '管理'),
+    ('failure-analysis.html',       '失敗から学ぶ塊根管理: 過去に枯らした植物と原因分析',           '管理'),
+    ('sokubaikai-tips.html',        '植物即売会で失敗しないチェックリスト: 当日の流れと買付けのコツ', '購入'),
+]
+
+CATEGORY_INTROS = {
+    '即売会': (
+        '即売会は、複数の生産者・販売店が一堂に集まり、その場で植物を購入できる '
+        'スタイルのイベントです。通信販売では出会えない一点物の選抜株や、'
+        '生産者と直接話しながら株の特徴・育成歴を聞ける機会として、'
+        'アガベ・塊根植物・多肉植物の愛好家にとって重要な仕入れの場になっています。'
+        '希少な株は開場前の整理券配布で先着順になることが多く、'
+        '人気生産者のブース前は開場直後から行列ができる傾向があります。'
+    ),
+    'マルシェ': (
+        '植物マルシェは、即売会よりもカジュアルな雰囲気で、'
+        '飲食やワークショップなどと併催されることが多いイベント形式です。'
+        '出店者は園芸店、生産者、個人作家、鉢メーカーなど多彩で、'
+        '植物本体だけでなく鉢・用土・小物・園芸書まで一度に揃えられるのが魅力。'
+        '家族連れでも立ち寄りやすく、はじめて多肉植物・塊根植物に触れる人の'
+        '入り口としても向いています。'
+    ),
+    '展示会': (
+        '展示会は販売よりも「観賞」と「情報交換」が中心のイベントです。'
+        '長年の愛好家が育てた銘品株、コンテスト出品株、稀少な分類群の'
+        '実物を見られる貴重な機会で、写真では伝わらないサイズ感・葉の質感・'
+        '株姿の作り込みを学ぶ場として活用できます。会期中に行われる'
+        '解説会・分類トークも、栽培知識を深めるきっかけになります。'
+    ),
+    '大型イベント': (
+        '大型イベントは複数日にわたって開催される、出店者数・来場者数とも'
+        '最大級のイベントです。1日では回り切れない規模のため、'
+        '事前に出店者一覧と会場マップを確認して目的のブースをマーキングしておくと'
+        '効率的に回れます。海外バイヤーや遠方の生産者が出店することも多く、'
+        '通常の即売会では入手しづらい選抜株・輸入株に出会える可能性が高まります。'
+    ),
+    '展示販売会': (
+        '展示販売会は、観賞向けの展示と即売を組み合わせた中規模イベントです。'
+        '見て学べる + その場で買える、というハイブリッドな構成で、'
+        '初心者から中・上級者まで幅広く楽しめます。'
+        '銘品株の解説を聞きながら、近い系統の入手可能株を探せるのが大きな利点です。'
+    ),
+    '講演': (
+        '講演・トークイベントは、生産者や愛好家が長年の栽培・採集経験を'
+        '直接共有する場です。本やネット記事には載らない「現場の知見」'
+        '— 失敗事例、地域別の管理差、流通の裏側 — を聞ける貴重な機会で、'
+        '中・上級者の栽培レベルを一段引き上げてくれます。'
+    ),
+}
+
+def detect_primary_category(ev):
+    """tags から主カテゴリを判定して、CATEGORY_INTROS のキーを返す。"""
+    tags = ev.get('tags') or []
+    priority = ['大型イベント', '展示販売会', '展示会', '講演', 'マルシェ', '即売会']
+    for p in priority:
+        if p in tags:
+            return p
+    return '即売会'
+
+def make_category_intro(ev):
+    cat = detect_primary_category(ev)
+    intro = CATEGORY_INTROS.get(cat, CATEGORY_INTROS['即売会'])
+    return (
+        f'        <div class="detail-section detail-enriched">\n'
+        f'          <h2 class="detail-section-title">{html_escape(cat)}とは — このイベントの楽しみ方</h2>\n'
+        f'          <p>{html_escape(intro)}</p>\n'
+        f'        </div>\n'
+    )
+
+def make_visit_tips(ev):
+    """カテゴリ + admission/time/会場で来場時のヒントを動的生成。"""
+    cat = detect_primary_category(ev)
+    region = ev.get('region') or ''
+    pref = ev.get('prefecture') or ''
+    venue = ev.get('venue') or ''
+    admission = (ev.get('admission') or '').strip()
+    time_str = (ev.get('time') or '').strip()
+    is_free = '無料' in admission
+
+    tips = []
+
+    if cat == '即売会':
+        tips.append('開場前に整理券配布や入場列が発生することが多い即売会形式です。目当ての生産者がある場合は、開場の60〜90分前到着を見込んでおくと安心です。')
+        tips.append('株を運ぶ大きめのトートバッグ・苗運搬用の段ボール・即時会計に備えた小銭/小額紙幣・財布の準備をおすすめします。人気株は即決が必要なため、価格帯の上限を事前に決めておくと迷いません。')
+    elif cat == 'マルシェ':
+        tips.append('カジュアルな雰囲気のマルシェは、滞在時間が長くなる傾向があります。飲食ブースが併設されることも多いので、空きスケジュールで半日確保しておくとゆっくり回れます。')
+        tips.append('鉢・用土・小物などの周辺アイテムも豊富に揃うため、欲しい鉢のサイズメモや既存株の写真を持参すると、組み合わせ買いがスムーズです。')
+    elif cat == '展示会':
+        tips.append('展示中心のイベントは販売株が限られる場合があるため、購入目的というよりは「銘品を観察する・育成のヒントを得る」視点で時間を確保するのがおすすめです。')
+        tips.append('カメラ・メモ帳・スマホの十分な空き容量を準備し、気になる株のラベル(品種名・出品者)を必ず控えておくと、後日の調査・購入検討に役立ちます。')
+    elif cat == '大型イベント':
+        tips.append('複数日開催・出店者多数の大型イベントは、事前に公式の出店者一覧・会場マップを確認して、回るルートを決めてから来場するのが効率的です。')
+        tips.append('1日では回り切れない規模が多いため、初日午前で全体を俯瞰 → 2日目で目的の株を購入、という2回入場プランも有効です。半券・リストバンドの保管にご注意ください。')
+    else:
+        tips.append('開場時間・閉場時間・整理券の有無は主催者の公式情報を直前に再確認することをおすすめします。雨天や天候による会期変更にも備えて、当日朝の最新告知をチェックしてください。')
+
+    if region:
+        tips.append(
+            f'会場は{html_escape(pref or region)}({html_escape(venue or "会場")})です。'
+            '公共交通機関でのアクセスを基本に、休日の駐車場混雑・周辺道路の規制情報も'
+            '合わせて確認しておくと当日のスケジュールが組みやすくなります。'
+        )
+
+    if is_free:
+        tips.append('入場料は無料の予定ですが、会場運営費・出店者への支援としての協賛・カンパ箱が設置されることもあります。気持ちのよい形で楽しめるよう、小銭を多めに用意しておくのがおすすめです。')
+    elif admission:
+        tips.append(f'入場料は「{html_escape(admission)}」の予定です。前売り・当日券の差や、リピート入場のルールも公式情報でご確認ください。')
+
+    if time_str:
+        tips.append(f'開催時間は{html_escape(time_str)}の予定です。人気株は開場直後に流通することが多いため、購入目的の場合は開場時刻を基準にスケジュールを組んでください。')
+
+    lis = '\n'.join(f'          <li>{t}</li>' for t in tips)
+    return (
+        f'        <div class="detail-section detail-enriched">\n'
+        f'          <h2 class="detail-section-title">来場前のチェックリスト</h2>\n'
+        f'          <ul class="visit-tips-list">\n{lis}\n          </ul>\n'
+        f'        </div>\n'
+    )
+
+def make_related_guides(ev):
+    """タグ + イベント名から関連度を付けて、関連ガイド記事を 4件選定。"""
+    tags = ev.get('tags') or []
+    name = ev.get('name', '')
+
+    scored = []
+    for path, title, gcat in GUIDE_LINKS:
+        score = 0
+        if gcat in tags:
+            score += 10
+        if 'アガベ' in name and 'アガベ' in gcat:
+            score += 5
+        if ('パキポ' in name or 'グラキリス' in name) and 'パキポ' in title:
+            score += 8
+        if 'アデニウム' in name and 'アデニウム' in title:
+            score += 8
+        if ('コーデックス' in name or '塊根' in name) and gcat == 'コーデックス':
+            score += 5
+        if '即売' in name and '即売' in title:
+            score += 6
+        scored.append((score, path, title))
+    scored.sort(reverse=True)
+    top = scored[:4]
+    if all(s == 0 for s, _, _ in top):
+        slug = ev.get('slug', '')
+        offset = (sum(ord(c) for c in slug) % len(GUIDE_LINKS))
+        rotated = GUIDE_LINKS[offset:] + GUIDE_LINKS[:offset]
+        top = [(0, p, t) for p, t, _ in rotated[:4]]
+
+    items = []
+    for _, path, title in top:
+        items.append(f'            <li><a href="/guides/{path}">{html_escape(title)}</a></li>')
+    items_html = '\n'.join(items)
+
+    return (
+        f'        <div class="detail-section detail-enriched">\n'
+        f'          <h2 class="detail-section-title">あわせて読みたい栽培ガイド</h2>\n'
+        f'          <p>このイベントで出会える植物の管理に役立つ、本サイト独自の栽培ガイド記事をピックアップしています。'
+        f'購入後の長期管理を見据えて、来場前に目を通しておくとイベント当日の判断がスムーズになります。</p>\n'
+        f'          <ul class="related-guides-list">\n{items_html}\n          </ul>\n'
+        f'          <p class="related-guides-more"><a href="/guides/">栽培ガイド一覧を見る →</a></p>\n'
+        f'        </div>\n'
+    )
+
+def make_site_mission_section():
+    return (
+        '        <div class="detail-section detail-enriched detail-mission">\n'
+        '          <h2 class="detail-section-title">アガベイベントナビについて</h2>\n'
+        '          <p>本サイトは、アガベ・塊根植物(コーデックス)・多肉植物・ビザールプランツの即売会・マルシェ・大型展示会の情報を、'
+        '東京・練馬を拠点とする一個人愛好家(栽培歴8年/参加歴6年)が一次情報を中心に確認・編集してまとめています。'
+        '掲載情報は主催者公式・SNS・直接確認を経て掲載しており、日付・会場・入場料に変更があった場合は速やかに更新するよう運営しています。'
+        '誤りを発見された場合は<a href="/contact.html">お問い合わせフォーム</a>からご連絡いただけますと幸いです。</p>\n'
+        '        </div>\n'
+    )
+
+def make_enriched_content(ev):
+    return (
+        make_category_intro(ev)
+        + make_visit_tips(ev)
+        + make_related_guides(ev)
+        + make_site_mission_section()
+    )
 
 
 def make_data_source_row(ev):
