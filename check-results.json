@@ -1,6 +1,6 @@
 {
-  "check_date": "2026-05-27",
-  "total_events": 139,
+  "check_date": "2026-05-28",
+  "total_events": 144,
   "dead_links": [],
   "tbd_events": [
     {
@@ -515,11 +515,20 @@
     {
       "slug": "futakotamagawa-botanical-2026",
       "name": "二子玉川ボタニカルフェスタ 2026春",
-      "date": "2026-05-25",
+      "date": "2026-05-27",
       "dateEnd": ""
     }
   ],
   "upcoming_events": [
+    {
+      "slug": "tanikudayo-zeninshugo-vol15-kanazawa-2026",
+      "name": "第15回 多肉だヨ！全員集合 in 金沢",
+      "date": "2026-05-29",
+      "dateEnd": "2026-05-30",
+      "location": "金沢港クルーズターミナル",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
     {
       "slug": "botanical-botanical-tokyo-2026",
       "name": "BOTANICAL BOTANICAL TOKYO",
@@ -602,6 +611,15 @@
       "sourceUrl": ""
     },
     {
+      "slug": "kusa-paradise-vol9-shizuoka-2026",
+      "name": "Kusa Paradise vol.9",
+      "date": "2026-05-30",
+      "dateEnd": "2026-05-30",
+      "location": "ツインメッセ静岡 西館1F",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
       "slug": "green-breeze-fes-vol3",
       "name": "GREEN BREEZE FES vol.3",
       "date": "2026-05-31",
@@ -670,6 +688,24 @@
       "date": "2026-06-06",
       "dateEnd": "2026-06-07",
       "location": "FUN SPACE DINER",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "happy-joyful-hitachinaka-2026-06",
+      "name": "Happy Joyful",
+      "date": "2026-06-06",
+      "dateEnd": "2026-06-06",
+      "location": "ジョイフル本田ひたちなか店 無印良品前駐車場",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "jungle-marche-flarie-2026",
+      "name": "ジャングルマルシェ2026",
+      "date": "2026-06-06",
+      "dateEnd": "2026-06-07",
+      "location": "久屋大通庭園フラリエ",
       "eventStatus": "confirmed",
       "sourceUrl": ""
     },
@@ -971,7 +1007,17 @@
       "sourceUrl": "https://soransai.com/"
     }
   ],
-  "today_events": [],
+  "today_events": [
+    {
+      "slug": "taniku-midori-marche-nabana-2026-10",
+      "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
+      "date": "2026-05-02",
+      "dateEnd": "2026-10-25",
+      "location": "なばなの里 B駐車場 特設会場",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html"
+    }
+  ],
   "url_results": [
     {
       "slug": "botanical-circus-7-2026",
@@ -984,6 +1030,13 @@
       "slug": "fujiyama-days-little-green-park-2026",
       "name": "FUJIYAMA DAYS LITTLE GREEN PARK",
       "sourceUrl": "https://www.instagram.com/fujiyama_days/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "taniku-midori-marche-nabana-2026-10",
+      "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
+      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html",
       "statusCode": 200,
       "alive": true
     },
