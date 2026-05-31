@@ -33,12 +33,58 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
 
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
 
       - name: Install deps
         run: pip install requests
+
+      - name: Set date (Asia/Tokyo)
+        id: date
+        run: echo "today=$(TZ=Asia/Tokyo date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
+
+      - name: Detect newly added events (last 24h)
+        if: github.event_name != 'push'
+        run: |
+          python3 << 'PYEOF'
+          import json, subprocess
+          with open("events.json") as f:
+              current = json.load(f)
+          current_slugs = {e["slug"] for e in current}
+          current_map = {e["slug"]: e for e in current}
+          old_slugs = set()
+          try:
+              result = subprocess.run(
+                  ["git", "log", "--since=24 hours ago", "--oneline", "--", "events.json"],
+                  capture_output=True, text=True)
+              commits = result.stdout.strip().split('\n')
+              if commits and commits[0]:
+                  oldest_hash = commits[-1].split()[0]
+                  old_json = subprocess.check_output(
+                      ["git", "show", f"{oldest_hash}~1:events.json"], stderr=subprocess.DEVNULL).decode()
+                  old_slugs = {e["slug"] for e in json.loads(old_json)}
+              else:
+                  old_json = subprocess.check_output(
+                      ["git", "show", "HEAD~1:events.json"], stderr=subprocess.DEVNULL).decode()
+                  old_slugs = {e["slug"] for e in json.loads(old_json)}
+          except Exception as ex:
+              print(f"Warning: could not get previous events: {ex}")
+              old_slugs = current_slugs
+          added = current_slugs - old_slugs
+          added_events = [current_map[s] for s in sorted(added) if s in current_map]
+          output = {"count": len(added), "events": []}
+          for e in added_events:
+              output["events"].append({
+                  "slug": e["slug"], "name": e.get("name", ""), "date": e.get("date", ""),
+                  "dateEnd": e.get("dateEnd", ""), "location": e.get("location", ""),
+                  "prefecture": e.get("prefecture", "")})
+          with open("new-events-added.json", "w", encoding="utf-8") as f:
+              json.dump(output, f, ensure_ascii=False, indent=2)
+          print(f"New events added (last 24h): {len(added)}")
+          PYEOF
 
       - name: 1. Data integrity check
         id: integrity
@@ -88,6 +134,111 @@ jobs:
         id: eventcheck
         if: github.event_name != 'push'
         run: python3 scripts/check_events.py 2>&1 | tee /tmp/events.log || true
+
+      - name: Build daily email body
+        id: emailbody
+        if: github.event_name != 'push'
+        run: |
+          if [ -f check-results.json ]; then
+            echo "results_exist=true" >> $GITHUB_OUTPUT
+            python3 << 'PYEOF'
+          import json
+          from datetime import date
+          with open('check-results.json') as f:
+              data = json.load(f)
+          new_added = {"count": 0, "events": []}
+          try:
+              with open('new-events-added.json') as f:
+                  new_added = json.load(f)
+          except Exception:
+              pass
+          today = date.today().strftime('%Y/%m/%d')
+          lines = []
+          lines.append("【アガベイベントナビ】イベント定期チェック結果")
+          lines.append(f"チェック日: {today}")
+          lines.append("")
+          lines.append("━━━ サマリー ━━━")
+          lines.append(f"総イベント数: {data['total_events']}")
+          today_events = data.get('today_events', [])
+          lines.append(f"🎪 本日開催中: {len(today_events)}")
+          lines.append(f"🆕 本日追加: {new_added['count']}件")
+          lines.append(f"今後のイベント: {len(data['upcoming_events'])}")
+          lines.append(f"終了済み: {len(data['past_events'])}")
+          lines.append(f"詳細未定(TBD): {len(data['tbd_events'])}")
+          lines.append(f"リンク切れ: {len(data['dead_links'])}")
+          lines.append("")
+          if new_added['count'] > 0:
+              lines.append(f"━━━ 🆕 本日追加イベント（{new_added['count']}件） ━━━")
+              for ne in new_added['events']:
+                  end_info = f"〜{ne['dateEnd']}" if ne.get('dateEnd') else ''
+                  lines.append(f"・{ne['name']}")
+                  lines.append(f"  日時: {ne['date']}{end_info}")
+                  lines.append(f"  場所: {ne.get('prefecture', '')} {ne.get('location', '')}")
+                  lines.append(f"  URL: https://agave-navi.com/events/{ne['slug']}.html")
+                  lines.append("")
+          if today_events:
+              lines.append("━━━ 🎪 本日開催中！ ━━━")
+              for te in today_events:
+                  end_info = f"〜{te['dateEnd']}" if te.get('dateEnd') and te['dateEnd'] != te['date'] else ''
+                  lines.append(f"・{te['name']}")
+                  lines.append(f"  日時: {te['date']}{end_info}")
+                  lines.append(f"  場所: {te['location']}")
+                  lines.append(f"  URL: https://agave-navi.com/events/{te['slug']}.html")
+                  lines.append("")
+          if data['dead_links']:
+              lines.append("━━━ ⚠️ リンク切れ検出 ━━━")
+              for dl in data['dead_links']:
+                  lines.append(f"・{dl['name']}")
+                  lines.append(f"  URL: {dl['sourceUrl']}")
+                  lines.append(f"  ステータス: HTTP {dl['statusCode']}")
+                  lines.append(f"  詳細: https://agave-navi.com/events/{dl['slug']}.html")
+                  lines.append("")
+          if data['tbd_events']:
+              lines.append("━━━ 📋 詳細未定イベント（要確認） ━━━")
+              for tbd in data['tbd_events']:
+                  lines.append(f"・{tbd['name']} ({tbd['date']})")
+                  lines.append(f"  ソース: {tbd['sourceUrl']}")
+                  lines.append("")
+          if data['past_events']:
+              lines.append("━━━ 🕐 終了済みイベント（アーカイブ検討） ━━━")
+              for pe in data['past_events']:
+                  end = pe.get('dateEnd', pe['date'])
+                  lines.append(f"・{pe['name']} ({pe['date']}〜{end})")
+              lines.append("")
+          if data['upcoming_events']:
+              lines.append("━━━ 📅 今後のイベント一覧 ━━━")
+              for ue in sorted(data['upcoming_events'], key=lambda x: x['date']):
+                  status_label = '✅' if ue['eventStatus'] == 'confirmed' else '⏳'
+                  end = f"〜{ue['dateEnd']}" if ue.get('dateEnd') else ''
+                  lines.append(f"{status_label} {ue['name']}")
+                  lines.append(f"   日時: {ue['date']}{end}")
+                  lines.append(f"   場所: {ue['location']}")
+                  lines.append(f"   URL: https://agave-navi.com/events/{ue['slug']}.html")
+                  lines.append("")
+          lines.append("━━━━━━━━━━━━━━━━━━━━")
+          lines.append("アガベイベントナビ https://agave-navi.com")
+          with open('email-body.txt', 'w') as f:
+              f.write('\n'.join(lines))
+          print('\n'.join(lines))
+          PYEOF
+          else
+            echo "results_exist=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send daily email
+        if: github.event_name != 'push' && steps.emailbody.outputs.results_exist == 'true'
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "【アガベイベント】定期チェック結果 agave-navi ${{ steps.date.outputs.today }}"
+          to: yuji.mezaki@gmail.com
+          from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
+          body: file://email-body.txt
 
       - name: Commit any auto-cleaned changes
         run: |
