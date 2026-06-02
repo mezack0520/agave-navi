@@ -247,6 +247,9 @@ def main():
         # Instagram URLはスキップ（日付の構造化データがない）
         if "instagram.com" in ev.get("sourceUrl", ""):
             continue
+        # 手動で日付を確定したイベントは自動更新をスキップ（誤スクレイプ防止）
+        if ev.get("autoDateUpdate") is False:
+            continue
         # 定期開催イベントは優先チェック（過去イベントも含む）
         if ev.get("recurring"):
             recurring_targets.append(ev)
@@ -279,6 +282,23 @@ def main():
         dates = extract_dates(text, name)
         if not dates:
             print("  日付抽出できず")
+            continue
+
+        # サニティガード: dateEndと矛盾する候補(終了日より後 / 期間31日超)は除外。
+        # 複数開催回が載るページで別回の日付を誤取得し、date<<dateEndの巨大スパンになる事故を防ぐ。
+        date_end = ev.get("dateEnd", "")
+        if date_end:
+            try:
+                ed = datetime.strptime(date_end, "%Y-%m-%d")
+                filtered = [c for c in dates
+                            if (lambda nd: nd <= ed and (ed - nd).days + 1 <= 31)(datetime.strptime(c["date"], "%Y-%m-%d"))]
+                if len(filtered) != len(dates):
+                    print(f"  サニティ除外: {len(dates)-len(filtered)}件 (dateEnd={date_end}と矛盾)")
+                dates = filtered
+            except ValueError:
+                pass
+        if not dates:
+            print("  dateEndと整合する候補なし → スキップ")
             continue
 
         best = dates[0]
