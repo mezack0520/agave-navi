@@ -1,6 +1,6 @@
 {
-  "check_date": "2026-06-02",
-  "total_events": 146,
+  "check_date": "2026-06-03",
+  "total_events": 145,
   "dead_links": [],
   "tbd_events": [
     {
@@ -26,12 +26,6 @@
     }
   ],
   "past_events": [
-    {
-      "slug": "taniku-midori-marche-nabana-2026",
-      "name": "多肉とみどりのマルシェ in なばなの里",
-      "date": "2018-05-19",
-      "dateEnd": "2026-04-12"
-    },
     {
       "slug": "kumagaya-taniku-fes-2026",
       "name": "第2回 熊谷多肉フェス",
@@ -941,6 +935,24 @@
       "sourceUrl": ""
     },
     {
+      "slug": "on-the-plants-vol9-fukuoka-2026-10",
+      "name": "On the Plants Vol.09",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04",
+      "location": "福岡アイランドシティフォーラム",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "taniku-midori-marche-nabana-2026-10",
+      "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
+      "date": "2026-10-23",
+      "dateEnd": "2026-10-25",
+      "location": "なばなの里 B駐車場 特設会場",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html"
+    },
+    {
       "slug": "chuushokushobutsusai-2026",
       "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
       "date": "2026-11-07",
@@ -975,28 +987,9 @@
       "location": "二子玉川ライズ",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.rise.sc/"
-    },
-    {
-      "slug": "shimamura-mini-soransai-2026",
-      "name": "ミニ草乱祭 in シマムラ園芸",
-      "date": "2026-06-20",
-      "dateEnd": "2026-04-19",
-      "location": "シマムラ園芸",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://soransai.com/"
     }
   ],
-  "today_events": [
-    {
-      "slug": "taniku-midori-marche-nabana-2026-10",
-      "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
-      "date": "2026-05-02",
-      "dateEnd": "2026-10-25",
-      "location": "なばなの里 B駐車場 特設会場",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html"
-    }
-  ],
+  "today_events": [],
   "url_results": [
     {
       "slug": "botanical-circus-7-2026",
@@ -1013,13 +1006,6 @@
       "alive": true
     },
     {
-      "slug": "taniku-midori-marche-nabana-2026-10",
-      "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
-      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html",
-      "statusCode": 200,
-      "alive": true
-    },
-    {
       "slug": "happy-smile-odawara-2026",
       "name": "HAPPY SMILE",
       "sourceUrl": "https://www.instagram.com/happy_smile_plants/",
@@ -1027,16 +1013,16 @@
       "alive": true
     },
     {
-      "slug": "hanatomofesta-2026",
-      "name": "第8回 花友フェスタ 2026",
-      "sourceUrl": "https://hanatomofesta.com/",
+      "slug": "taniku-midori-marche-nabana-2026-10",
+      "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
+      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html",
       "statusCode": 200,
       "alive": true
     },
     {
-      "slug": "taniku-midori-marche-nabana-2026",
-      "name": "多肉とみどりのマルシェ in なばなの里",
-      "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/",
+      "slug": "hanatomofesta-2026",
+      "name": "第8回 花友フェスタ 2026",
+      "sourceUrl": "https://hanatomofesta.com/",
       "statusCode": 200,
       "alive": true
     },
@@ -1233,13 +1219,6 @@
       "slug": "futakotamagawa-botanical-2026",
       "name": "二子玉川ボタニカルフェスタ 2026春",
       "sourceUrl": "https://www.rise.sc/",
-      "statusCode": 200,
-      "alive": true
-    },
-    {
-      "slug": "shimamura-mini-soransai-2026",
-      "name": "ミニ草乱祭 in シマムラ園芸",
-      "sourceUrl": "https://soransai.com/",
       "statusCode": 200,
       "alive": true
     }
