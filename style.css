@@ -2939,3 +2939,23 @@ main {
   color: #111;
   text-decoration: underline;
 }
+
+/* === detail enriched sections (2026-06) — モノクロ基調 === */
+.data-summary{color:#555;font-size:.92em;line-height:1.8;margin-top:.7em;padding-top:.7em;border-top:1px dashed #e3e3e3}
+.series-list,.nearby-list{list-style:none;padding:0;margin:.4em 0 0}
+.series-list li,.nearby-list li{padding:.55em 0;border-bottom:1px solid #efefef;line-height:1.55}
+.series-list li:last-child,.nearby-list li:last-child{border-bottom:none}
+.series-list a,.nearby-list a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}
+.series-list a:hover,.nearby-list a:hover{text-decoration-color:#111}
+.series-meta,.nearby-meta{display:block;font-size:.82em;color:#888;margin-top:.15em}
+.series-state{display:inline-block;font-size:.72em;color:#999;border:1px solid #ddd;border-radius:3px;padding:0 .4em;margin-left:.5em;vertical-align:middle}
+.nearby-date{font-weight:700;font-size:.88em;color:#333;margin-right:.4em;font-variant-numeric:tabular-nums}
+.detail-faq .faq-item{margin:.9em 0;padding-bottom:.9em;border-bottom:1px solid #efefef}
+.detail-faq .faq-item:last-of-type{border-bottom:none;padding-bottom:0}
+.detail-faq .faq-q{font-size:.98em;font-weight:700;color:#111;margin:0 0 .35em}
+.detail-faq .faq-q::before{content:"Q. ";color:#999}
+.detail-faq .faq-a{margin:0;color:#444;line-height:1.75}
+.detail-faq .faq-a::before{content:"A. ";color:#999;font-weight:700}
+.detail-mission{background:#fafafa;border:1px solid #eee;border-radius:8px;padding:.8em 1em}
+.mission-note{margin:0;font-size:.85em;color:#666;line-height:1.7}
+.mission-note a{color:#444}

@@ -23,8 +23,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.join(SCRIPT_DIR, 'events.json')
 TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html')
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, 'events')
-CSS_VERSION = '20260507e'
-JS_VERSION = '20260507e'
+CSS_VERSION = '20260611a'
+JS_VERSION = '20260611a'
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -446,7 +446,7 @@ def html_escape(text):
 # Main build
 # ---------------------------------------------------------------------------
 
-def build_page(template, ev):
+def build_page(template, ev, ctx):
     """Generate one detail page from template + event data"""
     slug = ev.get('slug', '')
     name = ev.get('name', '')
@@ -491,7 +491,8 @@ def build_page(template, ev):
         '{{timeRow}}': make_time_row(ev),
         '{{lastUpdatedRow}}': make_last_updated_row(ev),
         '{{dataSourceRow}}': make_data_source_row(ev),
-        '{{enrichedContent}}': make_enriched_content(ev),
+        '{{enrichedContent}}': make_enriched_content(ev, ctx),
+        '{{dataSummary}}': make_data_summary(ev, ctx),
     }
 
     html = template
@@ -523,79 +524,137 @@ def make_last_updated_row(ev):
 # ---------------------------------------------------------------------------
 # Enriched content (AdSense / SEO 向け本文増強セクション)
 # ---------------------------------------------------------------------------
-# 目的: 各イベントページが「概要1文 + 地図 + EVENT INFO」だけだとコンテンツが薄く
-#       AdSense の「有用性の低いコンテンツ」判定の原因になるため、
-#       カテゴリ・地域・タグなどイベント固有のデータから生成した独自コンテンツを
-#       挿入する。完全な定型文ではなく、イベントごとに表示が変わるよう設計。
+# 設計方針 (2026-06 改修):
+#   ページ間で共通する定型文(boilerplate)の比率を下げ、イベント固有の
+#   実データから生成されるコンテンツを主役にする。
+#   - 固定文は カテゴリ×複数バリアント とし slug ハッシュで分散
+#   - 開催履歴 / 近隣イベント / 同会場 / FAQ / 統計サマリは
+#     events.json の実データのみから生成(憶測・創作はしない)
+
+import unicodedata as _ud
+import re as _re2
+
+def _slug_hash(slug):
+    return sum(ord(c) for c in (slug or ''))
 
 GUIDE_LINKS = [
     ('agave-winter-hardiness.html', 'アガベの耐寒性ガイド: 屋外越冬できる品種と室内必須種の見分け方', 'アガベ'),
     ('agave-titanota-care.html',    'アガベ チタノタ系の管理: 美観を保ちながら長く育てるコツ',       'アガベ'),
+    ('titanota-oteroi-labels.html', 'チタノタとオテロイ: イベントで迷わない品種ラベルの読み方',      'アガベ'),
+    ('agave-bareroot-rooting.html', 'ベアルート株の発根管理: イベントで買った抜き苗を枯らさない手順', 'アガベ'),
     ('pachypodium-gracilius.html',  'パキポディウム グラキリスを枯らさない: 実生株と現地球の管理差', 'コーデックス'),
     ('caudex-intro.html',           '塊根植物(コーデックス)入門: 夏型・冬型の見分け方と選び方',     'コーデックス'),
     ('adenium-wintering.html',      'アデニウム(砂漠の薔薇)の冬越し完全ガイド: 種類別の温度管理',   'コーデックス'),
     ('wintering-tokyo.html',        '東京近郊での冬越し: 練馬から学ぶ屋外・軒下・不織布・室内の使い分け', '管理'),
+    ('rainy-season-care.html',      '梅雨〜真夏のアガベ・塊根植物管理: 遮光・水やり・風通しの実務',  '管理'),
     ('failure-analysis.html',       '失敗から学ぶ塊根管理: 過去に枯らした植物と原因分析',           '管理'),
     ('sokubaikai-tips.html',        '植物即売会で失敗しないチェックリスト: 当日の流れと買付けのコツ', '購入'),
+    ('plant-health-check.html',     'イベントで失敗しない株の選び方: 葉・根・害虫のチェックポイント', '購入'),
+    ('event-types-guide.html',      '植物イベントの種類と選び方: 即売会・マルシェ・展示会の違い',    'イベント'),
+    ('event-data-2026.html',        'データで見る2026年の植物イベント: 開催数・地域・入場料の傾向',  'イベント'),
 ]
 
+# カテゴリ解説: 1カテゴリ複数バリアント。slugハッシュで安定的に1つ選ぶ。
 CATEGORY_INTROS = {
-    '即売会': (
-        '即売会は、複数の生産者・販売店が一堂に集まり、その場で植物を購入できる '
-        'スタイルのイベントです。通信販売では出会えない一点物の選抜株や、'
-        '生産者と直接話しながら株の特徴・育成歴を聞ける機会として、'
-        'アガベ・塊根植物・多肉植物の愛好家にとって重要な仕入れの場になっています。'
-        '希少な株は開場前の整理券配布で先着順になることが多く、'
-        '人気生産者のブース前は開場直後から行列ができる傾向があります。'
-    ),
-    'マルシェ': (
-        '植物マルシェは、即売会よりもカジュアルな雰囲気で、'
-        '飲食やワークショップなどと併催されることが多いイベント形式です。'
-        '出店者は園芸店、生産者、個人作家、鉢メーカーなど多彩で、'
-        '植物本体だけでなく鉢・用土・小物・園芸書まで一度に揃えられるのが魅力。'
-        '家族連れでも立ち寄りやすく、はじめて多肉植物・塊根植物に触れる人の'
-        '入り口としても向いています。'
-    ),
-    '展示会': (
-        '展示会は販売よりも「観賞」と「情報交換」が中心のイベントです。'
-        '長年の愛好家が育てた銘品株、コンテスト出品株、稀少な分類群の'
-        '実物を見られる貴重な機会で、写真では伝わらないサイズ感・葉の質感・'
-        '株姿の作り込みを学ぶ場として活用できます。会期中に行われる'
-        '解説会・分類トークも、栽培知識を深めるきっかけになります。'
-    ),
-    '大型イベント': (
-        '大型イベントは複数日にわたって開催される、出店者数・来場者数とも'
-        '最大級のイベントです。1日では回り切れない規模のため、'
-        '事前に出店者一覧と会場マップを確認して目的のブースをマーキングしておくと'
-        '効率的に回れます。海外バイヤーや遠方の生産者が出店することも多く、'
-        '通常の即売会では入手しづらい選抜株・輸入株に出会える可能性が高まります。'
-    ),
-    '展示販売会': (
-        '展示販売会は、観賞向けの展示と即売を組み合わせた中規模イベントです。'
-        '見て学べる + その場で買える、というハイブリッドな構成で、'
-        '初心者から中・上級者まで幅広く楽しめます。'
-        '銘品株の解説を聞きながら、近い系統の入手可能株を探せるのが大きな利点です。'
-    ),
-    '講演': (
-        '講演・トークイベントは、生産者や愛好家が長年の栽培・採集経験を'
-        '直接共有する場です。本やネット記事には載らない「現場の知見」'
-        '— 失敗事例、地域別の管理差、流通の裏側 — を聞ける貴重な機会で、'
-        '中・上級者の栽培レベルを一段引き上げてくれます。'
-    ),
+    '即売会': [
+        (
+            '即売会は、複数の生産者・販売店が一堂に集まり、その場で植物を購入できる形式のイベントです。'
+            '通信販売では出会えない一点物の選抜株を実物を見て選べること、'
+            '生産者から株の育成歴や管理のコツを直接聞けることが最大の魅力で、'
+            '人気生産者のブースには開場直後から行列ができる傾向があります。'
+        ),
+        (
+            '店頭やネット通販と違い、即売会では生産者が当日持ち込む株を「流通に乗る前」の状態で選べます。'
+            '同じ品種でも株ごとに姿が大きく異なるアガベや塊根植物では、'
+            '複数ブースを見比べながら状態と価格のバランスで選べる対面形式の利点が特に大きく、'
+            '発根状態や用土の様子をその場で確認・質問できるのも即売会ならではです。'
+        ),
+        (
+            '即売会形式のイベントは、はじめての方でも気軽に参加できますが、'
+            '人気株は開場直後の数十分で動くことが多いのが実情です。'
+            '出店者リストの事前確認と予算の上限決めが当日の満足度を大きく左右します。'
+            'なお、株を手に取って確認したい場合は出店者へ一声かけるのが会場での一般的なマナーです。'
+        ),
+    ],
+    'マルシェ': [
+        (
+            '植物マルシェは、即売会よりカジュアルな雰囲気で、飲食やワークショップと併催されることが多い形式です。'
+            '出店者は園芸店・生産者・個人作家・鉢メーカーなど多彩で、'
+            '植物本体だけでなく鉢・用土・小物まで一度に揃えられます。'
+            '家族連れでも立ち寄りやすく、多肉植物・塊根植物の入り口としても向いています。'
+        ),
+        (
+            'マルシェ型のイベントは地域密着の開催が多く、植物専門の即売会に比べて敷居が低いのが特徴です。'
+            '価格帯も入門向けの小苗から愛好家向けの選抜株まで幅広く、'
+            '掘り出し物との出会いは早い時間帯ほど多い傾向があります。'
+            '雑貨・飲食ブースと合わせて、半日かけてゆっくり回るのに向いたイベントです。'
+        ),
+        (
+            '屋外開催が中心のマルシェは、天候の影響を受けやすい一方で開放的な雰囲気が魅力です。'
+            '寄せ植え体験や植え替えワークショップなど参加型の企画が組まれることも多く、'
+            '買う・見るだけでなく「体験する」楽しみ方ができます。'
+            '当日の開催可否・時間変更は主催者のSNSで直前に告知されることが多いので出発前の確認がおすすめです。'
+        ),
+    ],
+    '大型イベント': [
+        (
+            '大型イベントは、出店者数・来場者数とも最大級の植物イベントです。'
+            '広域から生産者・専門店が集まるため、通常の即売会では入手しづらい選抜株や輸入株に出会える可能性が高まります。'
+            '1日で回り切れない規模のことも多く、事前に出店者一覧と会場マップを確認して'
+            '目的のブースに優先順位を付けておくのが効率的です。'
+        ),
+        (
+            '複数日にわたって開催される大型イベントでは、初日と最終日で楽しみ方が変わります。'
+            '品揃えを重視するなら初日の開場直後、価格との折り合いを重視するなら'
+            '在庫整理が進む最終日の午後、という回り方がよく知られています。'
+            '再入場の可否やリストバンドの扱いは主催者ごとに異なるため、公式案内の確認をおすすめします。'
+        ),
+    ],
+    '展示会': [
+        (
+            '展示会は販売よりも「観賞」と「情報交換」が中心のイベントです。'
+            '長年の愛好家が育てた銘品株やコンテスト出品株の実物を見られる貴重な機会で、'
+            '写真では伝わらないサイズ感・葉の質感・株姿の作り込みを学ぶ場として活用できます。'
+        ),
+        (
+            '展示中心のイベントでは、即売コーナーが併設される場合でも販売株は限られることが多いため、'
+            '「銘品を観察して育成のヒントを得る」視点で時間を確保するのがおすすめです。'
+            '気になる株はラベルの品種名・出品者名を控えておくと、後日の調査や入手検討に役立ちます。'
+        ),
+    ],
+    '展示販売会': [
+        (
+            '展示販売会は、観賞向けの展示と即売を組み合わせた構成のイベントです。'
+            '銘品株の解説を聞きながら、近い系統の入手可能な株をその場で探せるのが大きな利点で、'
+            '初心者から中・上級者まで幅広く楽しめます。'
+        ),
+    ],
+    '講演': [
+        (
+            '講演・トークイベントは、生産者や愛好家が長年の栽培・採集経験を直接共有する場です。'
+            '書籍やネット記事には載らない現場の知見 — 失敗事例、地域別の管理差、流通の裏側 — を'
+            '聞ける機会として、栽培経験者ほど得るものが大きい形式です。'
+        ),
+    ],
 }
 
 def detect_primary_category(ev):
     """tags から主カテゴリを判定して、CATEGORY_INTROS のキーを返す。"""
     tags = ev.get('tags') or []
-    priority = ['大型イベント', '展示販売会', '展示会', '講演', 'マルシェ', '即売会']
-    for p in priority:
-        if p in tags:
-            return p
+    priority = [
+        ('大型イベント', '大型イベント'), ('大型', '大型イベント'),
+        ('展示販売会', '展示販売会'), ('展示会', '展示会'),
+        ('講演', '講演'), ('マルシェ', 'マルシェ'), ('即売会', '即売会'),
+    ]
+    for tag, key in priority:
+        if tag in tags:
+            return key
     return '即売会'
 
 def make_category_intro(ev):
     cat = detect_primary_category(ev)
-    intro = CATEGORY_INTROS.get(cat, CATEGORY_INTROS['即売会'])
+    variants = CATEGORY_INTROS.get(cat, CATEGORY_INTROS['即売会'])
+    intro = variants[_slug_hash(ev.get('slug')) % len(variants)]
     return (
         f'        <div class="detail-section detail-enriched">\n'
         f'          <h2 class="detail-section-title">{html_escape(cat)}とは — このイベントの楽しみ方</h2>\n'
@@ -603,8 +662,45 @@ def make_category_intro(ev):
         f'        </div>\n'
     )
 
+# --- 来場前チェックリスト(カテゴリ別バリアント + 実データ差し込み) ---
+
+_TIPS_VARIANTS = {
+    '即売会': [
+        [
+            '開場前に整理券配布や入場列が発生することが多い形式です。目当ての生産者がある場合は、開場の60〜90分前到着を見込んでおくと安心です。',
+            '株を運ぶ大きめのトートバッグ・苗運搬用の緩衝材・現金(小銭/小額紙幣)の準備がおすすめです。人気株は即決が求められる場面が多いため、価格上限を事前に決めておくと迷いません。',
+        ],
+        [
+            '出店者リストが公開されている場合は事前に確認し、目当てのブースの位置と回る順番を決めておくと当日の動きに無駄がなくなります。',
+            '支払いは出店者によって現金のみの場合があります。キャッシュレス対応を過信せず、現金を多めに用意しておくのが無難です。購入株の持ち帰り用に底の安定したバッグもあると安心です。',
+        ],
+    ],
+    'マルシェ': [
+        [
+            'カジュアルな雰囲気のマルシェは滞在時間が長くなりがちです。飲食ブースが併設されることも多いので、半日ほど余裕を持ったスケジュールがおすすめです。',
+            '鉢・用土・小物などの周辺アイテムも揃うため、手持ちの鉢のサイズメモや既存株の写真があると組み合わせ買いがスムーズです。',
+        ],
+        [
+            '屋外会場の場合は天候対策(帽子・飲み物・雨具)を忘れずに。天候による開催可否は主催者SNSで当日朝に告知されることが多いので、出発前の確認をおすすめします。',
+            '混雑のピークは開場直後と昼前後になる傾向があります。ゆっくり見たい場合は午後の時間帯も選択肢です。ただし人気の植物は午前中に動くことが多い点は織り込んでおいてください。',
+        ],
+    ],
+    '大型イベント': [
+        [
+            '複数日開催・出店者多数の大型イベントは、事前に公式の出店者一覧・会場マップを確認して回るルートを決めてから来場するのが効率的です。',
+            '1日では回り切れない規模が多いため、初日午前で全体を俯瞰してから目的の株を購入する2段構えも有効です。再入場条件(半券・リストバンド)の確認をお忘れなく。',
+        ],
+    ],
+    '展示会': [
+        [
+            '展示中心のイベントは販売株が限られる場合があります。購入目的というより「銘品を観察して育成のヒントを得る」視点で時間を確保するのがおすすめです。',
+            'カメラ・メモの準備をして、気になる株のラベル(品種名・出品者)を控えておくと後日の調査・購入検討に役立ちます。',
+        ],
+    ],
+}
+
 def make_visit_tips(ev):
-    """カテゴリ + admission/time/会場で来場時のヒントを動的生成。"""
+    """カテゴリ別バリアント + admission/time/会場の実データでチェックリストを生成。"""
     cat = detect_primary_category(ev)
     region = ev.get('region') or ''
     pref = ev.get('prefecture') or ''
@@ -613,37 +709,23 @@ def make_visit_tips(ev):
     time_str = (ev.get('time') or '').strip()
     is_free = '無料' in admission
 
-    tips = []
-
-    if cat == '即売会':
-        tips.append('開場前に整理券配布や入場列が発生することが多い即売会形式です。目当ての生産者がある場合は、開場の60〜90分前到着を見込んでおくと安心です。')
-        tips.append('株を運ぶ大きめのトートバッグ・苗運搬用の段ボール・即時会計に備えた小銭/小額紙幣・財布の準備をおすすめします。人気株は即決が必要なため、価格帯の上限を事前に決めておくと迷いません。')
-    elif cat == 'マルシェ':
-        tips.append('カジュアルな雰囲気のマルシェは、滞在時間が長くなる傾向があります。飲食ブースが併設されることも多いので、空きスケジュールで半日確保しておくとゆっくり回れます。')
-        tips.append('鉢・用土・小物などの周辺アイテムも豊富に揃うため、欲しい鉢のサイズメモや既存株の写真を持参すると、組み合わせ買いがスムーズです。')
-    elif cat == '展示会':
-        tips.append('展示中心のイベントは販売株が限られる場合があるため、購入目的というよりは「銘品を観察する・育成のヒントを得る」視点で時間を確保するのがおすすめです。')
-        tips.append('カメラ・メモ帳・スマホの十分な空き容量を準備し、気になる株のラベル(品種名・出品者)を必ず控えておくと、後日の調査・購入検討に役立ちます。')
-    elif cat == '大型イベント':
-        tips.append('複数日開催・出店者多数の大型イベントは、事前に公式の出店者一覧・会場マップを確認して、回るルートを決めてから来場するのが効率的です。')
-        tips.append('1日では回り切れない規模が多いため、初日午前で全体を俯瞰 → 2日目で目的の株を購入、という2回入場プランも有効です。半券・リストバンドの保管にご注意ください。')
-    else:
-        tips.append('開場時間・閉場時間・整理券の有無は主催者の公式情報を直前に再確認することをおすすめします。雨天や天候による会期変更にも備えて、当日朝の最新告知をチェックしてください。')
+    variants = _TIPS_VARIANTS.get(cat) or [[
+        '開場時間・整理券の有無は主催者の公式情報を直前に再確認することをおすすめします。天候による会期変更にも備えて、当日朝の最新告知をチェックしてください。',
+    ]]
+    tips = list(variants[_slug_hash(ev.get('slug')) % len(variants)])
 
     if region:
         tips.append(
             f'会場は{html_escape(pref or region)}({html_escape(venue or "会場")})です。'
-            '公共交通機関でのアクセスを基本に、休日の駐車場混雑・周辺道路の規制情報も'
+            '公共交通機関でのアクセスを基本に、休日の駐車場混雑・周辺道路の状況も'
             '合わせて確認しておくと当日のスケジュールが組みやすくなります。'
         )
-
     if is_free:
-        tips.append('入場料は無料の予定ですが、会場運営費・出店者への支援としての協賛・カンパ箱が設置されることもあります。気持ちのよい形で楽しめるよう、小銭を多めに用意しておくのがおすすめです。')
+        tips.append('入場無料のイベントです。会場によっては協賛・カンパ箱が設置されることもあるため、小銭があると気持ちよく参加できます。')
     elif admission:
-        tips.append(f'入場料は「{html_escape(admission)}」の予定です。前売り・当日券の差や、リピート入場のルールも公式情報でご確認ください。')
-
+        tips.append(f'入場料は「{html_escape(admission)}」です。前売り・当日券の差や再入場のルールは公式情報でご確認ください。')
     if time_str:
-        tips.append(f'開催時間は{html_escape(time_str)}の予定です。人気株は開場直後に流通することが多いため、購入目的の場合は開場時刻を基準にスケジュールを組んでください。')
+        tips.append(f'開催時間は{html_escape(time_str)}です。人気株は開場直後に動くことが多いため、購入目的の場合は開場時刻を基準に予定を組むのがおすすめです。')
 
     lis = '\n'.join(f'          <li>{t}</li>' for t in tips)
     return (
@@ -651,6 +733,282 @@ def make_visit_tips(ev):
         f'          <h2 class="detail-section-title">来場前のチェックリスト</h2>\n'
         f'          <ul class="visit-tips-list">\n{lis}\n          </ul>\n'
         f'        </div>\n'
+    )
+
+# --- シリーズ開催履歴 (同名イベントの過去回・別回) ---
+
+_SEASON_WORDS = r'(spring|summer|autumn|fall|winter|春|夏|秋|冬|new\s*year)'
+
+def normalize_series_name(name):
+    """イベント名からシリーズ判定用キーを作る。回数・年・季節・開催地表記を除去。"""
+    s = _ud.normalize('NFKC', (name or '')).lower()
+    s = _re2.sub(r'vol\.?\s*\d+', ' ', s)
+    s = _re2.sub(r'第\s*\d+\s*回', ' ', s)
+    s = _re2.sub(r'\d+(st|nd|rd|th)\b', ' ', s)
+    s = _re2.sub(r'(19|20)\d{2}', ' ', s)
+    s = _re2.sub(_SEASON_WORDS, ' ', s)
+    s = _re2.sub(r'\bin\s+\S+', ' ', s)
+    s = _re2.sub(r'[#＃]?\d+', ' ', s)
+    s = _re2.sub(r'[^0-9a-zぁ-んァ-ヶ一-龠ー]+', '', s)
+    return s
+
+
+def make_compact_date(e):
+    """一覧用の YYYY.MM.DD(-DD / -MM.DD) 表示。date が無ければ dateDisplay にフォールバック。"""
+    d = e.get('date') or ''
+    if not d:
+        return e.get('dateDisplay') or '開催日未発表'
+    de = e.get('dateEnd') or d
+    s = f"{d[:4]}.{d[5:7]}.{d[8:10]}"
+    if de and de != d:
+        s += f"-{de[8:10]}" if de[5:7] == d[5:7] else f"-{de[5:7]}.{de[8:10]}"
+    return s
+
+def make_series_history(ev, ctx):
+    key = normalize_series_name(ev.get('name'))
+    if len(key) < 4:
+        return ''
+    siblings = [e for e in ctx['series'].get(key, []) if e['slug'] != ev.get('slug')]
+    if not siblings:
+        return ''
+    siblings = sorted(siblings, key=lambda e: e.get('date') or '0000', reverse=True)[:6]
+    today = ctx['today']
+    items = []
+    for e in siblings:
+        dd = make_compact_date(e)
+        place = e.get('prefecture') or e.get('region') or ''
+        venue = e.get('location') or e.get('venue') or ''
+        meta = ' / '.join(x for x in [place, venue] if x)
+        state = ''
+        d_end = e.get('dateEnd') or e.get('date') or ''
+        if d_end and d_end < today:
+            state = '<span class="series-state">終了</span>'
+        items.append(
+            f'            <li><a href="/events/{e["slug"]}.html">{html_escape(e.get("name",""))}</a>'
+            f'<span class="series-meta">{html_escape(dd)}{("　" + html_escape(meta)) if meta else ""}</span>{state}</li>'
+        )
+    items_html = '\n'.join(items)
+    return (
+        f'        <div class="detail-section detail-enriched">\n'
+        f'          <h2 class="detail-section-title">このイベントの開催履歴・関連回</h2>\n'
+        f'          <p>当サイトに掲載している同シリーズの開催情報です。回ごとの会場・規模の変化は、次回参加を検討する際の参考になります。</p>\n'
+        f'          <ul class="series-list">\n{items_html}\n          </ul>\n'
+        f'        </div>\n'
+    )
+
+# --- 近隣・今後のイベント (静的リンク。クローラからも見える) ---
+
+def make_nearby_events(ev, ctx):
+    today = ctx['today']
+    pool = [e for e in ctx['events']
+            if e.get('slug') != ev.get('slug') and (e.get('date') or '') >= today]
+    skey = normalize_series_name(ev.get('name'))
+    if len(skey) >= 4:
+        pool = [e for e in pool if normalize_series_name(e.get('name')) != skey]
+    pref = ev.get('prefecture')
+    region = ev.get('region')
+    same_pref = sorted([e for e in pool if pref and e.get('prefecture') == pref],
+                       key=lambda e: e.get('date') or '')
+    same_region = sorted([e for e in pool if e.get('region') == region and e not in same_pref],
+                         key=lambda e: e.get('date') or '')
+    picks = (same_pref + same_region)[:5]
+    if not picks:
+        picks = sorted(pool, key=lambda e: e.get('date') or '')[:5]
+        if not picks:
+            return ''
+        scope = '全国'
+    else:
+        scope = html_escape(pref or region or '近隣')
+
+    d_end = ev.get('dateEnd') or ev.get('date') or ''
+    is_past = bool(d_end) and d_end < today
+    if is_past:
+        lead = f'このイベントは終了していますが、{scope}では今後も植物イベントの開催が予定されています。'
+    else:
+        lead = f'{scope}で今後開催が予定されている植物イベントです。あわせて予定を立てる際の参考にどうぞ。'
+
+    items = []
+    for e in picks:
+        dd = make_compact_date(e)
+        place = e.get('prefecture') or e.get('region') or ''
+        venue = e.get('location') or e.get('venue') or ''
+        meta = ' / '.join(x for x in [place, venue] if x)
+        meta_html = ('<span class="nearby-meta">' + html_escape(meta) + '</span>') if meta else ''
+        items.append(
+            f'            <li><span class="nearby-date">{html_escape(dd)}</span> '
+            f'<a href="/events/{e["slug"]}.html">{html_escape(e.get("name",""))}</a>{meta_html}</li>'
+        )
+    items_html = '\n'.join(items)
+    title = f'{scope}の今後の植物イベント'
+    return (
+        f'        <div class="detail-section detail-enriched">\n'
+        f'          <h2 class="detail-section-title">{title}</h2>\n'
+        f'          <p>{lead}</p>\n'
+        f'          <ul class="nearby-list">\n{items_html}\n          </ul>\n'
+        f'        </div>\n'
+    )
+
+# --- 同会場の他イベント ---
+
+_VAGUE_VENUES = {'東京', '東京都内', '都内', '大阪', '名古屋', '会場未定', '未定'}
+
+def make_venue_history(ev, ctx):
+    v = (ev.get('location') or '').strip()
+    if not v or v in _VAGUE_VENUES:
+        return ''
+    others = [e for e in ctx['venues'].get(v, []) if e.get('slug') != ev.get('slug')]
+    if not others:
+        return ''
+    others = sorted(others, key=lambda e: e.get('date') or '', reverse=True)[:5]
+    items = []
+    for e in others:
+        dd = make_compact_date(e)
+        items.append(
+            f'            <li><span class="nearby-date">{html_escape(dd)}</span> '
+            f'<a href="/events/{e["slug"]}.html">{html_escape(e.get("name",""))}</a></li>'
+        )
+    items_html = '\n'.join(items)
+    return (
+        f'        <div class="detail-section detail-enriched">\n'
+        f'          <h2 class="detail-section-title">{html_escape(v)}で開催される他のイベント</h2>\n'
+        f'          <p>同じ会場「{html_escape(v)}」での開催情報です。会場の雰囲気やアクセスの参考になります。</p>\n'
+        f'          <ul class="nearby-list">\n{items_html}\n          </ul>\n'
+        f'        </div>\n'
+    )
+
+# --- よくある質問 (実データのみ + FAQPage JSON-LD) ---
+
+def _faq_pairs(ev, ctx):
+    today = ctx['today']
+    name = ev.get('name', '')
+    d = ev.get('date') or ''
+    d_end = ev.get('dateEnd') or d
+    is_past = bool(d_end) and d_end < today
+    pairs = []
+
+    if d:
+        dd = make_date_display_full(ev)
+        if is_past:
+            a = f'{name}は{dd}に開催されました。'
+        else:
+            a = f'{dd}に開催予定です。直前の変更もあり得るため、最新情報は主催者の公式発信もあわせてご確認ください。'
+        pairs.append((f'{name}の開催日はいつですか？', a))
+    else:
+        pairs.append((f'{name}の開催日はいつですか？', '開催日は現時点で未発表です。公式発表があり次第、本ページを更新します。'))
+
+    admission = (ev.get('admission') or '').strip()
+    if admission:
+        if '無料' in admission:
+            a = '入場は無料です。' if admission == '入場無料' else f'入場料は「{admission}」です。'
+        else:
+            a = f'入場料は「{admission}」です。前売り・当日の価格差がある場合は主催者の公式案内をご確認ください。'
+        pairs.append(('入場料はかかりますか？', a))
+
+    time_str = (ev.get('time') or '').strip()
+    if time_str:
+        verb = 'でした' if is_past else 'です'
+        pairs.append(('開催時間は何時から何時までですか？', f'開催時間は{time_str}{verb}。整理券配布や入場列は開場前に始まることがあります。'))
+
+    venue = (ev.get('location') or ev.get('venue') or '').strip()
+    if venue and venue not in _VAGUE_VENUES:
+        pref = ev.get('prefecture') or ev.get('region') or ''
+        a = f'会場は{venue}({pref})です。'
+        access = (ev.get('access') or '').strip()
+        if access:
+            a += f'アクセス: {access}'
+        pairs.append(('会場はどこですか？', a))
+
+    return pairs
+
+def make_event_faq(ev, ctx):
+    pairs = _faq_pairs(ev, ctx)
+    if len(pairs) < 2:
+        return ''
+    rows = []
+    for q, a in pairs:
+        rows.append(
+            f'          <div class="faq-item">\n'
+            f'            <h3 class="faq-q">{html_escape(q)}</h3>\n'
+            f'            <p class="faq-a">{html_escape(a)}</p>\n'
+            f'          </div>'
+        )
+    rows_html = '\n'.join(rows)
+    import json as _json
+    ld = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": q,
+             "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in pairs
+        ],
+    }
+    ld_str = _json.dumps(ld, ensure_ascii=False)
+    return (
+        f'        <div class="detail-section detail-enriched detail-faq">\n'
+        f'          <h2 class="detail-section-title">よくある質問</h2>\n{rows_html}\n'
+        f'        </div>\n'
+        f'        <script type="application/ld+json">{ld_str}</script>\n'
+    )
+
+# --- 概要セクションに足す実データ・サマリ段落 ---
+
+def make_data_summary(ev, ctx):
+    stats = ctx['stats']
+    sentences = []
+    d = ev.get('date') or ''
+    d_end = ev.get('dateEnd') or d
+    today = ctx['today']
+
+    if d:
+        try:
+            sdt = datetime.strptime(d, '%Y-%m-%d')
+            edt = datetime.strptime(d_end, '%Y-%m-%d')
+            days = (edt - sdt).days + 1
+            wd_s = WEEKDAYS_JA[sdt.weekday()]
+            if days == 1:
+                sentences.append(f'開催は{sdt.year}年{sdt.month}月{sdt.day}日({wd_s})の1日です。')
+            else:
+                wd_e = WEEKDAYS_JA[edt.weekday()]
+                sentences.append(
+                    f'会期は{sdt.year}年{sdt.month}月{sdt.day}日({wd_s})から'
+                    f'{edt.month}月{edt.day}日({wd_e})までの{days}日間です。'
+                )
+        except ValueError:
+            pass
+
+    pref = ev.get('prefecture')
+    if pref and pref in stats['pref_counts']:
+        n = stats['pref_counts'][pref]
+        rank = stats['pref_rank'].get(pref)
+        if rank == 1:
+            rank_txt = 'で、当サイト掲載分では全国で最も植物イベントが多い地域です'
+        elif rank and rank <= 3:
+            rank_txt = f'で、当サイト掲載分では全国{rank}番目に植物イベントが多い地域です'
+        else:
+            rank_txt = 'です'
+        sentences.append(f'会場のある{pref}の植物イベントは、当サイト掲載分で{n}件{rank_txt}。')
+
+    cat = detect_primary_category(ev)
+    pct = stats['cat_pct'].get(cat)
+    if pct:
+        sentences.append(f'{cat}形式のイベントは当サイト掲載全体の約{pct}%を占めます。')
+
+    admission = (ev.get('admission') or '')
+    if '無料' in admission and stats.get('free_pct'):
+        sentences.append(f'本イベントは入場無料です(掲載イベント中、入場無料と確認できているのは約{stats["free_pct"]}%)。')
+
+    if not sentences:
+        return ''
+    return '          <p class="data-summary">' + html_escape(' '.join(sentences)) + '</p>\n'
+
+def make_site_mission_section():
+    return (
+        '        <div class="detail-section detail-enriched detail-mission">\n'
+        '          <p class="mission-note">本ページの情報は、運営者(東京・練馬の愛好家/栽培歴8年)が主催者の公式発信を確認して編集しています。'
+        '誤りのご指摘は<a href="/contact.html">お問い合わせ</a>から。'
+        '<a href="/about.html">編集方針</a> / <a href="/operator.html">運営者情報</a></p>\n'
+        '        </div>\n'
     )
 
 def make_related_guides(ev):
@@ -663,7 +1021,7 @@ def make_related_guides(ev):
         score = 0
         if gcat in tags:
             score += 10
-        if 'アガベ' in name and 'アガベ' in gcat:
+        if 'アガベ' in name and gcat == 'アガベ':
             score += 5
         if ('パキポ' in name or 'グラキリス' in name) and 'パキポ' in title:
             score += 8
@@ -671,14 +1029,16 @@ def make_related_guides(ev):
             score += 8
         if ('コーデックス' in name or '塊根' in name) and gcat == 'コーデックス':
             score += 5
-        if '即売' in name and '即売' in title:
+        if '即売' in name and gcat == '購入':
             score += 6
+        if gcat == 'イベント':
+            score += 2
         scored.append((score, path, title))
     scored.sort(reverse=True)
     top = scored[:4]
     if all(s == 0 for s, _, _ in top):
         slug = ev.get('slug', '')
-        offset = (sum(ord(c) for c in slug) % len(GUIDE_LINKS))
+        offset = (_slug_hash(slug) % len(GUIDE_LINKS))
         rotated = GUIDE_LINKS[offset:] + GUIDE_LINKS[:offset]
         top = [(0, p, t) for p, t, _ in rotated[:4]]
 
@@ -690,31 +1050,72 @@ def make_related_guides(ev):
     return (
         f'        <div class="detail-section detail-enriched">\n'
         f'          <h2 class="detail-section-title">あわせて読みたい栽培ガイド</h2>\n'
-        f'          <p>このイベントで出会える植物の管理に役立つ、本サイト独自の栽培ガイド記事をピックアップしています。'
-        f'購入後の長期管理を見据えて、来場前に目を通しておくとイベント当日の判断がスムーズになります。</p>\n'
+        f'          <p>このイベントで出会える植物の管理・購入判断に役立つ、本サイト独自のガイド記事です。</p>\n'
         f'          <ul class="related-guides-list">\n{items_html}\n          </ul>\n'
         f'          <p class="related-guides-more"><a href="/guides/">栽培ガイド一覧を見る →</a></p>\n'
         f'        </div>\n'
     )
 
-def make_site_mission_section():
-    return (
-        '        <div class="detail-section detail-enriched detail-mission">\n'
-        '          <h2 class="detail-section-title">アガベイベントナビについて</h2>\n'
-        '          <p>本サイトは、アガベ・塊根植物(コーデックス)・多肉植物・ビザールプランツの即売会・マルシェ・大型展示会の情報を、'
-        '東京・練馬を拠点とする一個人愛好家(栽培歴8年/参加歴6年)が一次情報を中心に確認・編集してまとめています。'
-        '掲載情報は主催者公式・SNS・直接確認を経て掲載しており、日付・会場・入場料に変更があった場合は速やかに更新するよう運営しています。'
-        '誤りを発見された場合は<a href="/contact.html">お問い合わせフォーム</a>からご連絡いただけますと幸いです。</p>\n'
-        '        </div>\n'
-    )
-
-def make_enriched_content(ev):
+def make_enriched_content(ev, ctx):
     return (
         make_category_intro(ev)
+        + make_series_history(ev, ctx)
         + make_visit_tips(ev)
+        + make_nearby_events(ev, ctx)
+        + make_venue_history(ev, ctx)
+        + make_event_faq(ev, ctx)
         + make_related_guides(ev)
         + make_site_mission_section()
     )
+
+def build_context(events):
+    """全イベント横断の事前計算: シリーズ・会場・統計。"""
+    from datetime import timezone as _tz, timedelta as _td
+    today = datetime.now(_tz(_td(hours=9))).strftime('%Y-%m-%d')
+
+    series = {}
+    venues = {}
+    pref_counts = {}
+    cat_counts = {}
+    free_n = 0
+    admission_known = 0
+    for e in events:
+        k = normalize_series_name(e.get('name'))
+        if len(k) >= 4:
+            series.setdefault(k, []).append(e)
+        v = (e.get('location') or '').strip()
+        if v and v not in _VAGUE_VENUES:
+            venues.setdefault(v, []).append(e)
+        p = e.get('prefecture')
+        if p:
+            pref_counts[p] = pref_counts.get(p, 0) + 1
+        c = detect_primary_category(e)
+        cat_counts[c] = cat_counts.get(c, 0) + 1
+        adm = (e.get('admission') or '')
+        if adm:
+            admission_known += 1
+            if '無料' in adm:
+                free_n += 1
+
+    total = len(events) or 1
+    cat_pct = {c: round(100.0 * n / total) for c, n in cat_counts.items() if n >= 3}
+    ranked = sorted(pref_counts.items(), key=lambda x: -x[1])
+    pref_rank = {p: i + 1 for i, (p, _) in enumerate(ranked)}
+    free_pct = round(100.0 * free_n / admission_known) if admission_known >= 20 else None
+
+    return {
+        'events': events,
+        'today': today,
+        'series': series,
+        'venues': venues,
+        'stats': {
+            'pref_counts': pref_counts,
+            'pref_rank': pref_rank,
+            'cat_pct': cat_pct,
+            'free_pct': free_pct,
+        },
+    }
+
 
 
 def make_data_source_row(ev):
@@ -754,6 +1155,9 @@ def main():
     with open(args.events, 'r', encoding='utf-8') as f:
         events = json.load(f)
 
+    # 全イベント横断コンテキスト(シリーズ/会場/統計)は必ず全件で構築する
+    ctx = build_context(events)
+
     # Filter if slug specified
     if args.slug:
         events = [e for e in events if e['slug'] == args.slug]
@@ -774,7 +1178,7 @@ def main():
         # Note: events without date are still built (with dateDisplay fallback);
         # JSON-LD Event schema is omitted in that case (see make_event_jsonld).
 
-        html = build_page(template, ev)
+        html = build_page(template, ev, ctx)
         output_path = os.path.join(OUTPUT_DIR, f'{slug}.html')
 
         if args.dry_run:

@@ -6,7 +6,7 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "venue": "京橋",
@@ -17,7 +17,11 @@
     "time": "11:00〜19:00",
     "admission": "入場無料",
     "access": null,
-    "sourceUrl": "https://www.instagram.com/botanical_circus/"
+    "sourceUrl": "https://www.instagram.com/botanical_circus/",
+    "date": "2026-04-18",
+    "dateEnd": "2026-04-19",
+    "dateDisplay": "2026.04.18-19",
+    "autoDateUpdate": false
   },
   {
     "slug": "fujiyama-days-little-green-park-2026",
@@ -26,7 +30,7 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "venue": "富士中央公園",
@@ -37,7 +41,11 @@
     "imageUrl": null,
     "time": "10:00〜17:00",
     "admission": "入場無料",
-    "sourceUrl": "https://www.instagram.com/fujiyama_days/"
+    "sourceUrl": "https://www.instagram.com/fujiyama_days/",
+    "date": "2026-04-18",
+    "dateEnd": "2026-04-19",
+    "dateDisplay": "2026.04.18-19",
+    "autoDateUpdate": false
   },
   {
     "slug": "haru-saboten-taniku-fair-2026",
@@ -46,13 +54,17 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "venue": "百合が原公園",
     "mapQuery": "百合が原公園 札幌",
     "prefecture": "北海道",
-    "region": "北海道"
+    "region": "北海道",
+    "date": "2026-04-24",
+    "dateEnd": "2026-04-26",
+    "dateDisplay": "2026.04.24-26",
+    "autoDateUpdate": false
   },
   {
     "slug": "mebuki-sai-2026",
@@ -61,7 +73,7 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "prefecture": "東京",
@@ -70,7 +82,11 @@
     "imageUrl": null,
     "time": "11:30〜14:00",
     "venue": "東京都立小台橋高等学校",
-    "mapQuery": "東京都立小台橋高等学校"
+    "mapQuery": "東京都立小台橋高等学校",
+    "date": "2026-04-11",
+    "dateEnd": "2026-04-19",
+    "dateDisplay": "2026.04.11-19",
+    "autoDateUpdate": false
   },
   {
     "slug": "plants-2306-3rd-anniversary-2026",
@@ -79,7 +95,7 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "prefecture": "三重",
@@ -88,7 +104,11 @@
     "imageUrl": "https://takez.jp/wp-content/uploads/2025/07/IMG_4716.jpeg",
     "time": "10:00〜17:00",
     "admission": "入場無料",
-    "recurring": true
+    "recurring": true,
+    "date": "2026-04-18",
+    "dateEnd": "2026-04-19",
+    "dateDisplay": "2026.04.18-19",
+    "autoDateUpdate": false
   },
   {
     "slug": "plants-fes-vol3-ehime-2026",
@@ -97,7 +117,7 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "prefecture": "愛媛",
@@ -105,7 +125,10 @@
     "url": null,
     "time": "10:00〜16:00",
     "imageUrl": "https://kaizoku-ehime.jp/wp-content/uploads/2026/04/616183791_17912022843272102_7326773099516280060_n-1-1.jpg",
-    "recurring": true
+    "recurring": true,
+    "date": "2026-04-19",
+    "dateDisplay": "2026.04.19",
+    "autoDateUpdate": false
   },
   {
     "slug": "raflum-popup-nagoya-takashimaya-2026",
@@ -114,7 +137,7 @@
     "tags": [
       "即売会"
     ],
-    "status": "upcoming",
+    "status": "past",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
     "venue": "ジェイアール名古屋タカシマヤ",
@@ -123,7 +146,11 @@
     "region": "東海",
     "url": "https://raflum.com/",
     "imageUrl": null,
-    "time": "10:00〜20:00"
+    "time": "10:00〜20:00",
+    "date": "2026-04-22",
+    "dateEnd": "2026-04-28",
+    "dateDisplay": "2026.04.22-28",
+    "autoDateUpdate": false
   },
   {
     "slug": "sakuya-konohana-cactus-succulent-euphorbia-2026-06",
@@ -1392,10 +1419,10 @@
   },
   {
     "slug": "hanatomofesta-2026",
-    "name": "第8回 花友フェスタ 2026",
+    "name": "第9回 花友フェスタ",
     "date": "2026-12-19",
-    "dateDisplay": "2026年12月19日（土）",
-    "location": "幕張メッセ",
+    "dateDisplay": "2026.12.19",
+    "location": "インテックス大阪",
     "prefecture": "大阪",
     "region": "関西",
     "tags": [
@@ -1405,13 +1432,14 @@
     "status": "upcoming",
     "admission": "前売¥1,600",
     "imageUrl": "https://hanatomofesta.com/files/libs/7138/202602261755302855.png",
-    "description": "幕張メッセで開催の日本最大級ガーデニングの祭典。園芸超人カーメン君がアンバサダー。前売¥1,600。",
+    "description": "インテックス大阪で開催の日本最大級ガーデニングの祭典。園芸超人カーメン君がアンバサダー。前売¥1,600。",
     "sourceUrl": "https://hanatomofesta.com/",
     "eventStatus": "confirmed",
     "addedDate": "2026-04-01",
-    "venue": "幕張メッセ",
-    "mapQuery": "幕張メッセ",
-    "recurring": true
+    "venue": "インテックス大阪",
+    "mapQuery": "インテックス大阪",
+    "recurring": true,
+    "url": "https://hanatomofesta.com/"
   },
   {
     "slug": "kumagaya-taniku-fes-2026",
@@ -1999,7 +2027,7 @@
     "region": "九州",
     "tags": [
       "即売会",
-      "多肉"
+      "多肉植物"
     ],
     "status": "past",
     "description": "大分県別府市で開催される多肉植物の即売会。",

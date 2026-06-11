@@ -20,6 +20,8 @@ HEAD = '''<!DOCTYPE html>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-NKY8V1H8HY');</script>
   <meta charset="UTF-8">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0790348660030345" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-0790348660030345">
   <link rel="canonical" href="{canonical}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title} | アガベイベントナビ</title>
@@ -37,7 +39,7 @@ HEAD = '''<!DOCTYPE html>
   <link rel="manifest" href="../manifest.webmanifest">
   <meta name="theme-color" content="#111">
   <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="../rss.xml">
-  <link rel="stylesheet" href="../style.css?v=20260507e">
+  <link rel="stylesheet" href="../style.css?v=20260611a">
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"Article","headline":"{title}","description":"{description}","datePublished":"{date_iso}","dateModified":"{date_iso}","author":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/"}},"publisher":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/","logo":{{"@type":"ImageObject","url":"https://agave-navi.com/android-chrome-512x512.png"}}}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{canonical}"}},"image":"https://agave-navi.com/og-image.png"}}
   </script>

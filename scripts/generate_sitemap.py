@@ -38,8 +38,34 @@ def load_event_images():
         data = json.load(f)
     return {e['slug']: (e.get('imageUrl'), e.get('name','')) for e in data if e.get('slug') and e.get('imageUrl')}
 
+def load_noindex_slugs():
+    """終了から30日超のイベント(detailページ側で noindex 付与)のslug集合。"""
+    if not os.path.exists(EVENTS_JSON): return set()
+    from datetime import timedelta
+    with open(EVENTS_JSON, encoding='utf-8') as f:
+        data = json.load(f)
+    cutoff = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+    out = set()
+    for e in data:
+        end = e.get('dateEnd') or e.get('date') or ''
+        if end and end < cutoff:
+            out.add(e.get('slug'))
+    return out
+
+def load_noindex_landing():
+    """generate-landing-pages.py が出力した noindex manifest。"""
+    mpath = os.path.join(REPO_ROOT, 'scripts', 'landing-meta.json')
+    if not os.path.exists(mpath): return set()
+    with open(mpath, encoding='utf-8') as f:
+        return set(json.load(f).get('noindex', []))
+
+# 内部ツール・noindexページはsitemapに載せない
+EXCLUDE_BASENAMES = {'dashboard.html'}
+
 def generate():
     image_map = load_event_images()
+    noindex_slugs = load_noindex_slugs()
+    noindex_landing = load_noindex_landing()
     files = []
     files += glob.glob(os.path.join(REPO_ROOT, "*.html"))
     files += glob.glob(os.path.join(REPO_ROOT, "events", "*.html"))
@@ -53,6 +79,13 @@ def generate():
         rel = os.path.relpath(fp, REPO_ROOT)
         basename = os.path.basename(fp)
         if basename.startswith('google') or basename == '404.html':
+            continue
+        if basename in EXCLUDE_BASENAMES:
+            continue
+        relu = rel.replace(os.sep, '/')
+        if relu in noindex_landing:
+            continue
+        if relu.startswith('events/') and os.path.splitext(basename)[0] in noindex_slugs:
             continue
         loc = url_for(rel)
         # Landing page index URLs end in / (trailing slash form)
