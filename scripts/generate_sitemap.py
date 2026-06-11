@@ -3,6 +3,9 @@
 import os, glob, json
 from datetime import datetime
 
+import sitelib
+from sitelib import html_escape
+
 DOMAIN = "https://agave-navi.com"
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
@@ -29,8 +32,6 @@ def url_for(rel):
 def lastmod(fp):
     return datetime.fromtimestamp(os.path.getmtime(fp)).strftime("%Y-%m-%d")
 
-def html_escape(s):
-    return (s or '').replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('"','&quot;')
 
 def load_event_images():
     if not os.path.exists(EVENTS_JSON): return {}

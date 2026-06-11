@@ -60,15 +60,13 @@ for _e in _yr:
     for _t in (_e.get('tags') or []):
         if _t in _cats: _cats[_t] += 1
 
-# シリーズ(同名イベントの複数回開催)
-import re as _re
-import unicodedata as _ud
-def _norm(n):
-    s = _ud.normalize('NFKC', (n or '')).lower()
-    s = _re.sub(r'vol\.?\s*\d+|第\s*\d+\s*回|\d+(st|nd|rd|th)\b|(19|20)\d{2}|[#＃]?\d+', ' ', s)
-    s = _re.sub(r'(spring|summer|autumn|fall|winter|春|夏|秋|冬)', ' ', s)
-    s = _re.sub(r'[^0-9a-zぁ-んァ-ヶ一-龠ー]+', '', s)
-    return s
+# シリーズ(同名イベントの複数回開催) — 正規化はsitelibと共通
+try:
+    from sitelib import normalize_series_name as _norm
+except ImportError:
+    import sys as _sys
+    _sys.path.insert(0, os.path.join(_ROOT, 'scripts'))
+    from sitelib import normalize_series_name as _norm
 _series = {}
 for _e in _EVS:
     _k = _norm(_e.get('name'))

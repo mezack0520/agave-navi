@@ -37,15 +37,7 @@ jobs:
       - name: Rebuild detail pages (also regenerate static HTML)
         if: github.event.inputs.dry_run != 'true'
         run: |
-          python3 build-detail-pages.py || true
-          python3 scripts/build-static-html.py || true
-          python3 scripts/sync-index-cards.py || true
-          python3 scripts/generate-rss.py || true
-          python3 scripts/generate-itemlist-jsonld.py || true
-          python3 scripts/generate-landing-pages.py || true
-          python3 scripts/generate-ical.py || true
-          python3 scripts/generate-csv.py || true
-          python3 scripts/generate_sitemap.py || true
+          bash scripts/build-all.sh || true
 
       - name: Commit changes
         if: github.event.inputs.dry_run != 'true'

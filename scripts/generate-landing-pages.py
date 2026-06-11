@@ -10,52 +10,18 @@ SEOランディングページ一括生成
 - /this-month/        - 今月のイベント
 - /venue/<slug>/      - 会場別(2件以上)
 """
-import os, re, json, hashlib, unicodedata
-from datetime import datetime, timedelta, timezone
+import os, re, json
+from datetime import datetime, timedelta
 from collections import defaultdict
+
+import sitelib
+from sitelib import (
+    JST, DOMAIN, html_escape, pref_slug, region_slug, tag_slug, venue_slug,
+    PREF_ROMAJI, REGION_ROMAJI, TAG_ROMAJI, VENUE_ROMAJI, VAGUE_VENUES, safe_slug,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
-DOMAIN = 'https://agave-navi.com'
-JST = timezone(timedelta(hours=9))
-
-PREF_ROMAJI = {
-    '北海道':'hokkaido','青森':'aomori','岩手':'iwate','宮城':'miyagi','秋田':'akita',
-    '山形':'yamagata','福島':'fukushima','茨城':'ibaraki','栃木':'tochigi','群馬':'gunma',
-    '埼玉':'saitama','千葉':'chiba','東京':'tokyo','神奈川':'kanagawa',
-    '新潟':'niigata','富山':'toyama','石川':'ishikawa','福井':'fukui',
-    '山梨':'yamanashi','長野':'nagano','岐阜':'gifu','静岡':'shizuoka','愛知':'aichi','三重':'mie',
-    '滋賀':'shiga','京都':'kyoto','大阪':'osaka','兵庫':'hyogo','奈良':'nara','和歌山':'wakayama',
-    '鳥取':'tottori','島根':'shimane','岡山':'okayama','広島':'hiroshima','山口':'yamaguchi',
-    '徳島':'tokushima','香川':'kagawa','愛媛':'ehime','高知':'kochi',
-    '福岡':'fukuoka','佐賀':'saga','長崎':'nagasaki','熊本':'kumamoto',
-    '大分':'oita','宮崎':'miyazaki','鹿児島':'kagoshima','沖縄':'okinawa',
-}
-REGION_ROMAJI = {'北海道':'hokkaido','東北':'tohoku','関東':'kanto','北陸':'hokuriku',
-                 '東海':'tokai','関西':'kansai','中国':'chugoku','四国':'shikoku','九州':'kyushu'}
-TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','展示会':'tenjikai',
-              'ブロメリア':'bromelia','珍奇植物':'chinki','多肉':'tanniku',
-              'コーデックス':'caudex','アガベ':'agave',
-              '塊根植物':'kaikon','多肉植物':'succulent','サボテン':'cactus',
-              'ビカクシダ':'platycerium','アロイド':'aroid','着生植物':'epiphyte'}
-VENUE_ROMAJI = {'五反田TOCビル 13階':'gotanda-toc','サンシャインシティ':'sunshine-city',
-                '久屋大通庭園フラリエ':'flarie','研究学園駅前公園（つくば市）':'kenkyu-gakuen-park',
-                '千住本氷川神社':'senju-hikawa-jinja'}
-# 「会場」として意味をなさない曖昧値はvenueページを作らない
-VAGUE_VENUES = {'東京','東京都内','都内','大阪','名古屋','会場未定','未定'}
-
-def safe_slug(s, kind='gen'):
-    if not s: return ''
-    nfkd = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode('ascii').lower()
-    slug = re.sub(r'[^a-z0-9]+', '-', nfkd).strip('-')[:50]
-    if slug: return slug
-    h = hashlib.md5(s.encode('utf-8')).hexdigest()[:8]
-    return f'{kind}-{h}'
-
-def pref_slug(p): return PREF_ROMAJI.get(p) or safe_slug(p, 'pref')
-def region_slug(r): return REGION_ROMAJI.get(r) or safe_slug(r, 'region')
-def tag_slug(t): return TAG_ROMAJI.get(t) or safe_slug(t, 'tag')
-def venue_slug(v): return VENUE_ROMAJI.get(v) or safe_slug(v, 'v')
 
 HEAD = '''<!DOCTYPE html>
 <html lang="ja">
@@ -106,26 +72,10 @@ HEAD = '''<!DOCTYPE html>
     .landing-intro a{{color:#111}}
   </style>
 </head>'''
+HEAD = HEAD.replace('style.css?v=20260611a', 'style.css?v=' + sitelib.CSS_VERSION)
 
-HEADER = '''  <header class="header">
-    <div class="header-inner">
-      <a href="/" class="logo"><span class="logo-en">AGAVE EVENT NAVI</span><span class="logo-jp">アガベイベントナビ</span></a>
-      <div class="header-actions">
-        <a href="/ikitai.html" class="ikitai-blob-btn"><span class="blob-bg"></span>
-          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="ikitai-label">行きたい</span></a>
-      </div>
-    </div>
-  </header>'''
-
-FOOTER = '''  <footer class="footer">
-    <div class="footer-inner">
-      <nav class="footer-nav"><a href="/">イベント一覧</a><a href="/calendar.html">カレンダー</a><a href="/map.html">マップ</a><a href="/ikitai.html">行きたいリスト</a><a href="/guides/">植物ガイド</a><a href="/about.html">サイトについて</a><a href="/contact.html">お問い合わせ</a></nav>
-      <nav class="footer-nav footer-nav-tertiary"><a href="/listing.html">掲載申請</a><a href="/operator.html">運営者情報</a><a href="/privacy.html">プライバシー</a><a href="/terms.html">利用規約</a><a href="/disclaimer.html">免責事項</a></nav>
-      <p class="copyright">© アガベイベントナビ</p>
-    </div>
-  </footer>'''
-
+HEADER = sitelib.site_header()
+FOOTER = sitelib.site_footer()
 
 # --- ページ固有の解説文 (boilerplate化を避けるため種別ごとに手書き) ---
 TAG_INTROS = {

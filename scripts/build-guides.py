@@ -5,13 +5,14 @@
 HTML化する。スタイルはサイト共通の style.css に揃える。
 """
 import os, re, json, glob, importlib.util
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
+
+import sitelib
+from sitelib import JST, DOMAIN
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT_DIR = os.path.join(REPO_ROOT, 'guides_content')
 OUT_DIR = os.path.join(REPO_ROOT, 'guides')
-DOMAIN = 'https://agave-navi.com'
-JST = timezone(timedelta(hours=9))
 
 
 HEAD = '''<!DOCTYPE html>
@@ -85,27 +86,13 @@ HEAD = '''<!DOCTYPE html>
     .guide-card .gc-meta{{font-size:.75rem;color:#888}}
   </style>
 </head>'''
+HEAD = HEAD.replace('style.css?v=20260611a', 'style.css?v=' + sitelib.CSS_VERSION)
 
 
-HEADER = '''  <header class="header">
-    <div class="header-inner">
-      <a href="/" class="logo"><span class="logo-en">AGAVE EVENT NAVI</span><span class="logo-jp">アガベイベントナビ</span></a>
-      <div class="header-actions">
-        <a href="/ikitai.html" class="ikitai-blob-btn"><span class="blob-bg"></span>
-          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="ikitai-label">行きたい</span></a>
-      </div>
-    </div>
-  </header>'''
+HEADER = sitelib.site_header()
 
 
-FOOTER = '''  <footer class="footer">
-    <div class="footer-inner">
-      <nav class="footer-nav"><a href="/">イベント一覧</a><a href="/calendar.html">カレンダー</a><a href="/map.html">マップ</a><a href="/ikitai.html">行きたいリスト</a><a href="/guides/">植物ガイド</a><a href="/about.html">サイトについて</a><a href="/contact.html">お問い合わせ</a></nav>
-      <nav class="footer-nav footer-nav-tertiary"><a href="/listing.html">掲載申請</a><a href="/operator.html">運営者情報</a><a href="/privacy.html">プライバシー</a><a href="/terms.html">利用規約</a><a href="/disclaimer.html">免責事項</a></nav>
-      <p class="copyright">© アガベイベントナビ</p>
-    </div>
-  </footer>'''
+FOOTER = sitelib.site_footer()
 
 
 def render_markdown(md):

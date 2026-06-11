@@ -92,17 +92,7 @@ jobs:
           PYEOF
 
       - name: Regenerate all static files
-        run: |
-          python3 build-detail-pages.py
-          python3 scripts/build-guides.py
-          python3 scripts/build-static-html.py
-          python3 scripts/sync-index-cards.py
-          python3 scripts/generate-rss.py
-          python3 scripts/generate-itemlist-jsonld.py
-          python3 scripts/generate-landing-pages.py
-          python3 scripts/generate-ical.py
-          python3 scripts/generate-csv.py
-          python3 scripts/generate_sitemap.py
+        run: bash scripts/build-all.sh
 
       - name: Commit and push
         run: |

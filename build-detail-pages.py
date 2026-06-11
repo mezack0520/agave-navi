@@ -16,6 +16,14 @@ import argparse
 from datetime import datetime, timedelta
 from urllib.parse import quote
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts'))
+import sitelib
+from sitelib import (
+    html_escape, compact_date as make_compact_date, normalize_series_name,
+    VAGUE_VENUES as _VAGUE_VENUES, WEEKDAYS_JA, slug_hash as _slug_hash,
+    date_to_japanese,
+)
+
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
@@ -23,25 +31,14 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.join(SCRIPT_DIR, 'events.json')
 TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html')
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, 'events')
-CSS_VERSION = '20260611a'
-JS_VERSION = '20260611a'
+CSS_VERSION = sitelib.CSS_VERSION
+JS_VERSION = sitelib.JS_VERSION
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
-WEEKDAYS_JA = ['月', '火', '水', '木', '金', '土', '日']
 
-def date_to_japanese(date_str):
-    """2026-05-03 → 2026年5月3日（日）"""
-    if not date_str:
-        return ''
-    try:
-        dt = datetime.strptime(date_str, '%Y-%m-%d')
-        wd = WEEKDAYS_JA[dt.weekday()]
-        return f'{dt.year}年{dt.month}月{dt.day}日（{wd}）'
-    except ValueError:
-        return date_str
 
 def make_date_display_full(ev):
     """sidebar用のフル日時表示を生成"""
@@ -433,14 +430,6 @@ def make_time_row(ev):
           </div>'''
 
 
-def html_escape(text):
-    """Basic HTML escaping"""
-    return (text
-            .replace('&', '&amp;')
-            .replace('<', '&lt;')
-            .replace('>', '&gt;')
-            .replace('"', '&quot;'))
-
 
 # ---------------------------------------------------------------------------
 # Main build
@@ -531,11 +520,6 @@ def make_last_updated_row(ev):
 #   - 開催履歴 / 近隣イベント / 同会場 / FAQ / 統計サマリは
 #     events.json の実データのみから生成(憶測・創作はしない)
 
-import unicodedata as _ud
-import re as _re2
-
-def _slug_hash(slug):
-    return sum(ord(c) for c in (slug or ''))
 
 GUIDE_LINKS = [
     ('agave-winter-hardiness.html', 'アガベの耐寒性ガイド: 屋外越冬できる品種と室内必須種の見分け方', 'アガベ'),
@@ -742,32 +726,7 @@ def make_visit_tips(ev):
 
 # --- シリーズ開催履歴 (同名イベントの過去回・別回) ---
 
-_SEASON_WORDS = r'(spring|summer|autumn|fall|winter|春|夏|秋|冬|new\s*year)'
 
-def normalize_series_name(name):
-    """イベント名からシリーズ判定用キーを作る。回数・年・季節・開催地表記を除去。"""
-    s = _ud.normalize('NFKC', (name or '')).lower()
-    s = _re2.sub(r'vol\.?\s*\d+', ' ', s)
-    s = _re2.sub(r'第\s*\d+\s*回', ' ', s)
-    s = _re2.sub(r'\d+(st|nd|rd|th)\b', ' ', s)
-    s = _re2.sub(r'(19|20)\d{2}', ' ', s)
-    s = _re2.sub(_SEASON_WORDS, ' ', s)
-    s = _re2.sub(r'\bin\s+\S+', ' ', s)
-    s = _re2.sub(r'[#＃]?\d+', ' ', s)
-    s = _re2.sub(r'[^0-9a-zぁ-んァ-ヶ一-龠ー]+', '', s)
-    return s
-
-
-def make_compact_date(e):
-    """一覧用の YYYY.MM.DD(-DD / -MM.DD) 表示。date が無ければ dateDisplay にフォールバック。"""
-    d = e.get('date') or ''
-    if not d:
-        return e.get('dateDisplay') or '開催日未発表'
-    de = e.get('dateEnd') or d
-    s = f"{d[:4]}.{d[5:7]}.{d[8:10]}"
-    if de and de != d:
-        s += f"-{de[8:10]}" if de[5:7] == d[5:7] else f"-{de[5:7]}.{de[8:10]}"
-    return s
 
 def make_series_history(ev, ctx):
     key = normalize_series_name(ev.get('name'))
@@ -855,7 +814,6 @@ def make_nearby_events(ev, ctx):
 
 # --- 同会場の他イベント ---
 
-_VAGUE_VENUES = {'東京', '東京都内', '都内', '大阪', '名古屋', '会場未定', '未定'}
 
 def make_venue_history(ev, ctx):
     v = (ev.get('location') or '').strip()
