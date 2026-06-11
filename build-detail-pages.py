@@ -552,6 +552,11 @@ GUIDE_LINKS = [
     ('plant-health-check.html',     'イベントで失敗しない株の選び方: 葉・根・害虫のチェックポイント', '購入'),
     ('event-types-guide.html',      '植物イベントの種類と選び方: 即売会・マルシェ・展示会の違い',    'イベント'),
     ('event-data-2026.html',        'データで見る2026年の植物イベント: 開催数・地域・入場料の傾向',  'イベント'),
+    ('soil-pot-repot.html',         'アガベ・塊根植物の用土と鉢: 配合例と植え替えの基本手順',        '管理'),
+    ('agave-seedling.html',         'アガベ実生入門: 種まきから1年目までの管理カレンダー',           'アガベ'),
+    ('pest-treatment.html',         'アガベ・多肉の病害虫対策: カイガラムシ・ハダニ・根腐れの治療',  '管理'),
+    ('offsets-guide.html',          '子株(カキコ)の外し方と育成: 失敗しない株分けの手順',            'アガベ'),
+    ('grow-light-basics.html',      '植物育成LEDライト入門: アガベ室内管理の徒長を防ぐ',             '管理'),
 ]
 
 # カテゴリ解説: 1カテゴリ複数バリアント。slugハッシュで安定的に1つ選ぶ。
@@ -1031,16 +1036,20 @@ def make_related_guides(ev):
             score += 5
         if '即売' in name and gcat == '購入':
             score += 6
-        if gcat == 'イベント':
-            score += 2
         scored.append((score, path, title))
     scored.sort(reverse=True)
-    top = scored[:4]
-    if all(s == 0 for s, _, _ in top):
-        slug = ev.get('slug', '')
-        offset = (_slug_hash(slug) % len(GUIDE_LINKS))
-        rotated = GUIDE_LINKS[offset:] + GUIDE_LINKS[:offset]
-        top = [(0, p, t) for p, t, _ in rotated[:4]]
+    # 関連度の高い2本 + slugハッシュで分散させる2本(全19記事がサイト全体に行き渡る)
+    top = [x for x in scored[:2] if x[0] > 0]
+    slug = ev.get('slug', '')
+    offset = _slug_hash(slug) % len(GUIDE_LINKS)
+    rotated = GUIDE_LINKS[offset:] + GUIDE_LINKS[:offset]
+    chosen_paths = {p for _, p, _ in top}
+    for p, t, _ in rotated:
+        if len(top) >= 4:
+            break
+        if p not in chosen_paths:
+            top.append((0, p, t))
+            chosen_paths.add(p)
 
     items = []
     for _, path, title in top:
