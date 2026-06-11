@@ -72,7 +72,7 @@ def generate():
     files += glob.glob(os.path.join(REPO_ROOT, "events", "*.html"))
     files += glob.glob(os.path.join(REPO_ROOT, "category", "*.html"))
     # Landing pages
-    for d in ['tag','pref','region','archive','venue','this-weekend','this-month','guides']:
+    for d in ['tag','pref','region','archive','venue','this-weekend','this-month','guides','new']:
         files += glob.glob(os.path.join(REPO_ROOT, d, "**", "*.html"), recursive=True)
 
     rows = []
@@ -91,7 +91,7 @@ def generate():
         loc = url_for(rel)
         # Landing page index URLs end in / (trailing slash form)
         first = rel.split(os.sep)[0]
-        if first in ('tag','pref','region','archive','venue','this-weekend','this-month') and basename == 'index.html':
+        if first in ('tag','pref','region','archive','venue','this-weekend','this-month','new') and basename == 'index.html':
             loc = DOMAIN + '/' + os.path.dirname(rel).replace(os.sep,'/') + '/'
         lm = lastmod(fp)
 
@@ -103,7 +103,7 @@ def generate():
             pri, freq = '0.6', 'weekly'
         elif first in ('tag','pref','region'):
             pri, freq = '0.7', 'weekly'
-        elif first == 'this-weekend' or first == 'this-month':
+        elif first in ('this-weekend', 'this-month', 'new'):
             pri, freq = '0.8', 'daily'
         elif first == 'archive':
             pri, freq = '0.5', 'monthly'

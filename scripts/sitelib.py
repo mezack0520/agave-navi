@@ -14,8 +14,8 @@ from datetime import datetime, timezone, timedelta
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260611a'
-JS_VERSION = '20260611a'
+CSS_VERSION = '20260611b'
+JS_VERSION = '20260611b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -145,11 +145,30 @@ def site_header(root=''):
   </header>'''
 
 def site_footer():
-    """共通フッター。全生成ページがこれを使う(404含め乖離防止)。"""
-    return '''  <footer class="footer">
+    """正規フッター(全ページ共通・単一情報源)。404含む全静的ページは sync-footers.py で同期。"""
+    year = now_jst().year
+    return f"""  <footer class="footer">
     <div class="footer-inner">
-      <nav class="footer-nav"><a href="/">イベント一覧</a><a href="/calendar.html">カレンダー</a><a href="/map.html">マップ</a><a href="/ikitai.html">行きたいリスト</a><a href="/guides/">植物ガイド</a><a href="/about.html">サイトについて</a><a href="/contact.html">お問い合わせ</a></nav>
-      <nav class="footer-nav footer-nav-tertiary"><a href="/listing.html">掲載申請</a><a href="/operator.html">運営者情報</a><a href="/privacy.html">プライバシー</a><a href="/terms.html">利用規約</a><a href="/disclaimer.html">免責事項</a></nav>
-      <p class="copyright">© アガベイベントナビ</p>
+      <div class="footer-logo">
+        <span class="logo-en">AGAVE EVENT NAVI</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="/">イベント一覧</a>
+        <a href="/new/">新着</a>
+        <a href="/calendar.html">カレンダー</a>
+        <a href="/map.html">マップ</a>
+        <a href="/ikitai.html">行きたいリスト</a>
+        <a href="/guides/">植物ガイド</a>
+        <a href="/about.html">サイトについて</a>
+        <a href="/contact.html">お問い合わせ</a>
+      </nav>
+      <nav class="footer-nav footer-nav-tertiary">
+        <a href="/listing.html">掲載申請</a>
+        <a href="/operator.html">運営者情報</a>
+        <a href="/privacy.html">プライバシー</a>
+        <a href="/terms.html">利用規約</a>
+        <a href="/disclaimer.html">免責事項</a>
+      </nav>
+      <p class="footer-copy">&copy; 2025-{year} アガベイベントナビ</p>
     </div>
-  </footer>'''
+  </footer>"""

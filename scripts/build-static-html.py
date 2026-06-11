@@ -411,7 +411,28 @@ CAL_JS_FIXED = '''<script>
 <script src="ads.js"></script>'''
 
 
+
+import re as _re_cleanup
+
+def strip_previous_insertions(html_src):
+    """過去のビルドが挿入したSSRブロック(JSON-LD/インラインJSON/フォールバック一覧)を全て除去する。
+    これが無いとビルドのたびに1セットずつ蓄積する(2026-06-11に4.2MBまで肥大したバグの恒久対策)。"""
+    # ItemList JSON-LD (このスクリプトが挿入したもの)
+    html_src = _re_cleanup.sub(
+        r'<script type="application/ld\+json">\s*\{"@context":"https://schema\.org","@type":"ItemList".*?</script>\n?',
+        '', html_src, flags=_re_cleanup.S)
+    # インラインイベントJSON
+    html_src = _re_cleanup.sub(
+        r'<script type="application/json" id="ssr-events-data">.*?</script>\n?',
+        '', html_src, flags=_re_cleanup.S)
+    # SSRフォールバック一覧
+    html_src = _re_cleanup.sub(
+        r'<section class="ssr-event-list".*?</section>\n?',
+        '', html_src, flags=_re_cleanup.S)
+    return html_src
+
 def rewrite_map_html(html_src, events_list, inline_data_block):
+    html_src = strip_previous_insertions(html_src)
     fallback = render_fallback_list(events_list, '開催予定イベント一覧（地図に表示中）')
     jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントマップ', 'https://agave-navi.com/map.html')
 
@@ -430,6 +451,7 @@ def rewrite_map_html(html_src, events_list, inline_data_block):
 
 
 def rewrite_cal_html(html_src, events_list, inline_data_block):
+    html_src = strip_previous_insertions(html_src)
     fallback = render_fallback_list(events_list, '開催予定イベント一覧（カレンダーに表示中）')
     jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントカレンダー', 'https://agave-navi.com/calendar.html')
 

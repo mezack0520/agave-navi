@@ -351,6 +351,52 @@ def main():
                    intro_html=intro_html, rel_path=f'venue/{sl}/index.html'))
         counters['venue']+=1
 
+    # 新着イベントページ /new/
+    added = [e for e in events if e.get('addedDate')]
+    added.sort(key=lambda e: (e.get('addedDate',''), e.get('slug','')), reverse=True)
+    recent = added[:30]
+    seven_days_ago = (today - timedelta(days=7)).strftime('%Y-%m-%d')
+    n_cards = []
+    for e in recent:
+        slug = e.get('slug',''); name = html_escape(e.get('name',''))
+        dd = e.get('dateDisplay') or e.get('date','') or '開催日未発表'
+        pref = e.get('prefecture') or e.get('region') or ''
+        venue_n = e.get('location') or ''
+        meta = ' / '.join(x for x in [pref, venue_n] if x)
+        ad = e.get('addedDate','')
+        ad_disp = ad.replace('-', '.')
+        is_new = ad >= seven_days_ago
+        badge = '<span class="new-badge">NEW</span>' if is_new else ''
+        ended = ''
+        d_end = e.get('dateEnd') or e.get('date') or ''
+        if d_end and d_end < today_str:
+            ended = '<span class="ended-note">(終了)</span>'
+        n_cards.append(
+            f'<article class="landing-card"><a href="/events/{slug}.html">'
+            f'<div class="lc-date">開催: {dd} {ended}</div>'
+            f'<h2 class="lc-name">{name}{badge}</h2>'
+            f'<div class="lc-meta">{html_escape(meta)}</div>'
+            f'<div class="lc-added">掲載: {ad_disp}</div>'
+            f'</a></article>')
+    n_grid = '  <div class="landing-grid">\n' + ''.join(n_cards) + '\n  </div>'
+    n_bc = [('ホーム', DOMAIN+'/'), ('新着', None)]
+    n_head = HEAD.format(
+        title='新着掲載イベント', description='アガベ・塊根植物・多肉植物イベントの新着掲載情報。当サイトに最近追加されたイベントを掲載日順に一覧できます。',
+        keywords='新着,植物イベント,アガベ,即売会', canonical=f'{DOMAIN}/new/', root='../',
+        breadcrumb_jsonld=bc_jsonld(n_bc), robots_meta='<meta name="robots" content="index,follow">')
+    n_style = '<style>.new-badge{display:inline-block;font-size:.62em;font-weight:700;color:#fff;background:#111;border-radius:3px;padding:.1em .45em;margin-left:.5em;vertical-align:middle}.lc-added{font-size:.78rem;color:#999;margin-top:.35rem}.ended-note{color:#999;font-size:.85em;margin-left:.3em}</style>'
+    n_intro = ('<p>当サイトのデータベースに最近追加されたイベント30件を、掲載日の新しい順に並べています。'
+               '毎日の自動収集と手動確認で随時追加しているため、定期的にチェックすると新しいイベントをいち早く見つけられます。'
+               '開催日順に探す場合は<a href="/">イベント一覧</a>、購読型で受け取りたい場合は<a href="/calendar.html">カレンダー(iCal対応)</a>や<a href="/rss.xml">RSS</a>もご利用ください。</p>')
+    n_body = (f'<body>\n{HEADER}\n{bc_html(n_bc)}\n  <main>\n'
+              f'  <section class="landing-hero"><h1>新着掲載イベント</h1>'
+              f'<p class="lead">最近サイトに追加されたイベント(掲載日順)。</p>'
+              f'<p class="landing-stats">直近{len(recent)}件を表示</p></section>'
+              f'\n  <section class="landing-intro">{n_intro}</section>'
+              f'\n{n_grid}\n  </main>\n{FOOTER}\n</body>\n</html>\n')
+    write_page(os.path.join(REPO_ROOT, 'new', 'index.html'), n_head + n_style + '\n' + n_body)
+    counters['new'] += 1
+
     # Index pages
     index_page(os.path.join(REPO_ROOT,'tag','index.html'),
         'タグ別イベント一覧','カテゴリ別にイベントを絞り込めます。','タグ別,アガベ,イベント',

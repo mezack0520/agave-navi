@@ -482,6 +482,8 @@ def build_page(template, ev, ctx):
         '{{dataSourceRow}}': make_data_source_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{dataSummary}}': make_data_summary(ev, ctx),
+        '{{weatherRow}}': make_weather_row(ev, ctx),
+        '{{siteFooter}}': sitelib.site_footer(),
     }
 
     html = template
@@ -1084,6 +1086,27 @@ def build_context(events):
     }
 
 
+
+
+def make_weather_row(ev, ctx):
+    """未来のイベントに会場周辺の天気検索リンクを出す(実用リンク・データ不要)。"""
+    d = ev.get('date') or ''
+    if not d or d < ctx['today']:
+        return ''
+    venue = (ev.get('location') or ev.get('venue') or '').strip()
+    pref = ev.get('prefecture') or ev.get('region') or ''
+    place = venue if venue and venue not in _VAGUE_VENUES else pref
+    if not place:
+        return ''
+    try:
+        dt = datetime.strptime(d, '%Y-%m-%d')
+        q = quote(f'{place} 天気 {dt.month}月{dt.day}日')
+    except ValueError:
+        q = quote(f'{place} 天気')
+    return ('\n          <div class="info-row">'
+            '\n            <span class="info-label">天気</span>'
+            f'\n            <span class="info-value"><a href="https://www.google.com/search?q={q}" target="_blank" rel="noopener">会場周辺の天気を確認 ↗</a></span>'
+            '\n          </div>')
 
 def make_data_source_row(ev):
     """データソース表示。url があれば公式参照を、なければ自社収集を明記。"""
