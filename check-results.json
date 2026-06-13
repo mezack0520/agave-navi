@@ -1,7 +1,22 @@
 {
-  "check_date": "2026-06-12",
+  "check_date": "2026-06-13",
   "total_events": 199,
-  "dead_links": [],
+  "dead_links": [
+    {
+      "slug": "border-break-6th-2026",
+      "name": "BORDER BREAK!! 6th",
+      "sourceUrl": "https://no1plantae.com/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "tenkaichi-2026",
+      "name": "第6回 天下一植物界",
+      "sourceUrl": "https://no1plantae.com/",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "miyashita-park-popup-2026",
@@ -1463,6 +1478,105 @@
       "location": "咲くやこの花館",
       "eventStatus": "confirmed",
       "sourceUrl": ""
+    },
+    {
+      "slug": "wako-jurin-unique-plants-2026-06",
+      "name": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "埼玉県営和光樹林公園",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "plants-jamboree-2026-06",
+      "name": "PLANTS JAMBOREE 2026",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "シマムラ園芸 第二駐車場横ハウス内",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "botanical-break-natori-2026-06",
+      "name": "BOTANICAL BREAK 2026",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "スモリの家中庭",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "shokusai-kakegawa-2026-06",
+      "name": "植祭 植物で暮らしを楽しくする",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "ミソラタウン掛川",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "gunma-cactus-shikishima-2026-06",
+      "name": "多肉植物サボテン展示即売会 in 敷島公園バラ園 2026",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-13",
+      "location": "敷島公園 門倉テクノばら園",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "koumori-ran-no-ichi-vol4-2026-06",
+      "name": "第4回 蝙蝠蘭の市",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "SPROUT BRITOMART店",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "kominka-saboten-openhouse-2026-06",
+      "name": "古民家さぼてんオープンハウス",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-13",
+      "location": "古民家さぼてん（市原市瀬又）",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "spine-note-shimonoseki-2026-06",
+      "name": "SPINE NOTE",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "AnvireNote",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "uomachi-botanical-night-market-2026-06",
+      "name": "魚町ボダニカルナイトマーケット",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "魚町みらい広場",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "plants-plants-sapporo-2026-06",
+      "name": "プランツ×プランツ",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "ガーデニングショップマイン 大温室",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "reggio-popup-shiga-2026-06",
+      "name": "REGGIO POP UP SHOP in SHIGA",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-14",
+      "location": "doo-bop（草津市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
     }
   ],
   "url_results": [
@@ -1659,8 +1773,8 @@
       "slug": "border-break-6th-2026",
       "name": "BORDER BREAK!! 6th",
       "sourceUrl": "https://no1plantae.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "greensnap-marche-hiroshima-2026",
@@ -1673,8 +1787,8 @@
       "slug": "tenkaichi-2026",
       "name": "第6回 天下一植物界",
       "sourceUrl": "https://no1plantae.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "iku-matsuri-utsunomiya-2026",
