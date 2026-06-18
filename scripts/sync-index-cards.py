@@ -29,9 +29,11 @@ def html_attr_escape(s):
     return (s or '').replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
 
 
-def img_html(image_url, alt):
+def img_html(image_url, alt, eager=False):
+    # 先頭カード(LCP候補)はeager+fetchpriority、それ以外はlazyで初期ロードを軽くする
+    perf = 'decoding="async" fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     return (f'<div class="event-thumb"><img src="{html_attr_escape(image_url)}" '
-            f'alt="{html_attr_escape(alt)}" referrerpolicy="no-referrer" '
+            f'alt="{html_attr_escape(alt)}" {perf} referrerpolicy="no-referrer" '
             f"onerror=\"this.parentElement.classList.add('event-no-image');this.remove();\""
             f'></div>')
 
@@ -70,6 +72,7 @@ def main():
     swapped_to_img = 0
     swapped_to_noimg = 0
     unchanged = 0
+    img_count = 0
     for m in CARD_HEADER_RE.finditer(html):
         # Append everything up to (and including) the card opening tag
         new_chunks.append(html[last_end:m.end()])
@@ -89,7 +92,8 @@ def main():
 
         existing = thumb_match.group(0)
         if img_url:
-            new_html = img_html(img_url, ev_name)
+            new_html = img_html(img_url, ev_name, eager=(img_count == 0))
+            img_count += 1
             if existing != new_html:
                 if 'event-no-image' in existing:
                     swapped_to_img += 1
