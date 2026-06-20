@@ -1,7 +1,22 @@
 {
-  "check_date": "2026-06-19",
+  "check_date": "2026-06-20",
   "total_events": 199,
-  "dead_links": [],
+  "dead_links": [
+    {
+      "slug": "picnic-garden-vol20-aobayama-2026",
+      "name": "ピクニックガーデン vol.20 in 青葉山公園",
+      "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
+      "statusCode": 403,
+      "alive": false
+    },
+    {
+      "slug": "enjoy-place-outside-tsukuba-2026",
+      "name": "enjoy place outside",
+      "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
+      "statusCode": 403,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "miyashita-park-popup-2026",
@@ -1421,7 +1436,44 @@
       "sourceUrl": "https://www.rise.sc/"
     }
   ],
-  "today_events": [],
+  "today_events": [
+    {
+      "slug": "mini-soransai-june-2026",
+      "name": "ミニ草乱祭（6月）",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-21",
+      "location": "シマムラ園芸 第2ハウス",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "hachimon-plants-festa-5th-ueda-2026-06",
+      "name": "第5回 鉢もん植物フェスタ & frillマルシェ",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-21",
+      "location": "カクイチA-SITE上田店",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "ohana-de-marche-chiyo-2026-06",
+      "name": "オハナdeマルシェ",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-21",
+      "location": "オハナガーデン千代店",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "kisarazu-engei-yoichi-2026-06",
+      "name": "木更津園芸夜市",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-20",
+      "location": "木更津市金田地域交流センター（きさてらす）",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    }
+  ],
   "url_results": [
     {
       "slug": "happy-smile-odawara-2026",
@@ -1581,8 +1633,8 @@
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "plant-freaks-special-2026-05",
@@ -1609,8 +1661,8 @@
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "border-break-6th-2026",
