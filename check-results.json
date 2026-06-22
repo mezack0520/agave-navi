@@ -1,7 +1,22 @@
 {
-  "check_date": "2026-06-21",
+  "check_date": "2026-06-22",
   "total_events": 201,
-  "dead_links": [],
+  "dead_links": [
+    {
+      "slug": "picnic-garden-vol20-aobayama-2026",
+      "name": "ピクニックガーデン vol.20 in 青葉山公園",
+      "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
+      "statusCode": 403,
+      "alive": false
+    },
+    {
+      "slug": "enjoy-place-outside-tsukuba-2026",
+      "name": "enjoy place outside",
+      "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
+      "statusCode": 403,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "miyashita-park-popup-2026",
@@ -27,10 +42,76 @@
   ],
   "past_events": [
     {
+      "slug": "mini-soransai-june-2026",
+      "name": "ミニ草乱祭（6月）",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "hachimon-plants-festa-5th-ueda-2026-06",
+      "name": "第5回 鉢もん植物フェスタ & frillマルシェ",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "ohana-de-marche-chiyo-2026-06",
+      "name": "オハナdeマルシェ",
+      "date": "2026-06-20",
+      "dateEnd": "2026-06-21"
+    },
+    {
       "slug": "kisarazu-engei-yoichi-2026-06",
       "name": "木更津園芸夜市",
       "date": "2026-06-20",
       "dateEnd": "2026-06-20"
+    },
+    {
+      "slug": "aichin-shokusai-2026",
+      "name": "愛珍植祭2026",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "asamiya-tanikusai-2026-06",
+      "name": "あさみやin「多肉祭」",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "mr-plants-market-niigata-2026-06",
+      "name": "Mr. Plants Market 2026",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "jungle-caravan-hokkaido-2026-06",
+      "name": "JUNGLE CARAVAN — HOKKAIDO —",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "myoko-taniku-market-14th-2026",
+      "name": "妙高多肉市場 vol.14",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "on-the-deck-3rd-2026-06",
+      "name": "On The Deck 3rd",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "taniku-sukijaken-ichi-3rd-2026-06",
+      "name": "第3回 多肉すきじゃけん市",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
+    },
+    {
+      "slug": "kyoujinkai-rakuichi-2026-06",
+      "name": "狂人会楽市",
+      "date": "2026-06-21",
+      "dateEnd": "2026-06-21"
     },
     {
       "slug": "kumagaya-taniku-fes-2026",
@@ -833,78 +914,6 @@
   ],
   "upcoming_events": [
     {
-      "slug": "aichin-shokusai-2026",
-      "name": "愛珍植祭2026",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "刈谷市産業振興センター あいおいホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "asamiya-tanikusai-2026-06",
-      "name": "あさみやin「多肉祭」",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "雑貨のお店 あさみや",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "mr-plants-market-niigata-2026-06",
-      "name": "Mr. Plants Market 2026",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "いくとぴあ食花",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "jungle-caravan-hokkaido-2026-06",
-      "name": "JUNGLE CARAVAN — HOKKAIDO —",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "ブランチ札幌月寒",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "myoko-taniku-market-14th-2026",
-      "name": "妙高多肉市場 vol.14",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "フィールド妙高（道の駅あらい東側）",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "on-the-deck-3rd-2026-06",
-      "name": "On The Deck 3rd",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "sunny drop",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "taniku-sukijaken-ichi-3rd-2026-06",
-      "name": "第3回 多肉すきじゃけん市",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "湖畔の里 福富 多目的ホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "kyoujinkai-rakuichi-2026-06",
-      "name": "狂人会楽市",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "むさしの村さくらホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
       "slug": "hankyu-green-expo-2026",
       "name": "Hankyu GREEN EXPO 阪急植物博覧会 2026",
       "date": "2026-06-24",
@@ -1409,107 +1418,7 @@
       "sourceUrl": "https://www.rise.sc/"
     }
   ],
-  "today_events": [
-    {
-      "slug": "mini-soransai-june-2026",
-      "name": "ミニ草乱祭（6月）",
-      "date": "2026-06-20",
-      "dateEnd": "2026-06-21",
-      "location": "シマムラ園芸 第2ハウス",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "hachimon-plants-festa-5th-ueda-2026-06",
-      "name": "第5回 鉢もん植物フェスタ & frillマルシェ",
-      "date": "2026-06-20",
-      "dateEnd": "2026-06-21",
-      "location": "カクイチA-SITE上田店",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "ohana-de-marche-chiyo-2026-06",
-      "name": "オハナdeマルシェ",
-      "date": "2026-06-20",
-      "dateEnd": "2026-06-21",
-      "location": "オハナガーデン千代店",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "aichin-shokusai-2026",
-      "name": "愛珍植祭2026",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "刈谷市産業振興センター あいおいホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "asamiya-tanikusai-2026-06",
-      "name": "あさみやin「多肉祭」",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "雑貨のお店 あさみや",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "mr-plants-market-niigata-2026-06",
-      "name": "Mr. Plants Market 2026",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "いくとぴあ食花",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "jungle-caravan-hokkaido-2026-06",
-      "name": "JUNGLE CARAVAN — HOKKAIDO —",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "ブランチ札幌月寒",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "myoko-taniku-market-14th-2026",
-      "name": "妙高多肉市場 vol.14",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "フィールド妙高（道の駅あらい東側）",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "on-the-deck-3rd-2026-06",
-      "name": "On The Deck 3rd",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "sunny drop",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "taniku-sukijaken-ichi-3rd-2026-06",
-      "name": "第3回 多肉すきじゃけん市",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "湖畔の里 福富 多目的ホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "kyoujinkai-rakuichi-2026-06",
-      "name": "狂人会楽市",
-      "date": "2026-06-21",
-      "dateEnd": "2026-06-21",
-      "location": "むさしの村さくらホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    }
-  ],
+  "today_events": [],
   "url_results": [
     {
       "slug": "happy-smile-odawara-2026",
@@ -1669,8 +1578,8 @@
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "plant-freaks-special-2026-05",
@@ -1697,8 +1606,8 @@
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "border-break-6th-2026",
