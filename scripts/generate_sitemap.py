@@ -51,6 +51,10 @@ def load_noindex_slugs():
         end = e.get('dateEnd') or e.get('date') or ''
         if end and end < cutoff:
             out.add(e.get('slug'))
+    mpath = os.path.join(REPO_ROOT, 'scripts', 'events-meta.json')
+    if os.path.exists(mpath):
+        with open(mpath, encoding='utf-8') as f:
+            out |= set(json.load(f).get('noindex', []))
     return out
 
 def load_noindex_landing():

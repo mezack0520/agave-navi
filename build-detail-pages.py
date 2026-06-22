@@ -214,18 +214,36 @@ def make_tags_csv(ev):
     return ','.join(ev.get('tags', []) or [])
 
 
+NOINDEX_EVENT_SLUGS = []  # フルビルド時に収集し sitemap 用 manifest に出力
+
+
+def _is_thin_event(ev):
+    """有用性の低い(薄い)イベント判定: 出典(url/sourceUrl)無し、または出典があっても
+    実質情報(time / imageUrl / 説明50字以上)が無いものは noindex 対象(AdSense低品質対策)。"""
+    desc = ev.get('description') or ''
+    has_src = bool((ev.get('url') or '').strip()) or bool((ev.get('sourceUrl') or '').strip())
+    has_substance = bool((ev.get('time') or '').strip()) or bool((ev.get('imageUrl') or '').strip()) or len(desc) >= 50
+    return not (has_src and has_substance)
+
+
 def make_robots_meta(ev):
-    """終了から30日経過したイベントには noindex を付与してクロール予算を節約"""
+    """終了30日超 または 有用性の低い(薄い)イベントには noindex を付与。"""
     from datetime import datetime, timedelta
+    noindex = False
     end = ev.get('dateEnd') or ev.get('date') or ''
-    if not end:
-        return 'index,follow'
-    try:
-        end_dt = datetime.strptime(end, '%Y-%m-%d')
-        if end_dt < datetime.now() - timedelta(days=30):
-            return 'noindex,follow'
-    except ValueError:
-        pass
+    if end:
+        try:
+            if datetime.strptime(end, '%Y-%m-%d') < datetime.now() - timedelta(days=30):
+                noindex = True
+        except ValueError:
+            pass
+    if _is_thin_event(ev):
+        noindex = True
+    if noindex:
+        slug = ev.get('slug')
+        if slug and slug not in NOINDEX_EVENT_SLUGS:
+            NOINDEX_EVENT_SLUGS.append(slug)
+        return 'noindex,follow'
     return 'index,follow'
 
 
@@ -1181,6 +1199,13 @@ def main():
         generated += 1
 
     print(f'\nDone: {generated} generated, {skipped} skipped')
+
+    if not args.slug and not args.dry_run:
+        import json as _meta_json
+        meta_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'events-meta.json')
+        with open(meta_path, 'w', encoding='utf-8') as f:
+            _meta_json.dump({'noindex': sorted(set(NOINDEX_EVENT_SLUGS))}, f, ensure_ascii=False, indent=2)
+        print(f'noindex events: {len(set(NOINDEX_EVENT_SLUGS))} -> scripts/events-meta.json')
 
 
 if __name__ == '__main__':
