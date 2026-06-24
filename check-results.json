@@ -1,22 +1,7 @@
 {
-  "check_date": "2026-06-23",
+  "check_date": "2026-06-24",
   "total_events": 201,
-  "dead_links": [
-    {
-      "slug": "picnic-garden-vol20-aobayama-2026",
-      "name": "ピクニックガーデン vol.20 in 青葉山公園",
-      "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 403,
-      "alive": false
-    },
-    {
-      "slug": "enjoy-place-outside-tsukuba-2026",
-      "name": "enjoy place outside",
-      "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 403,
-      "alive": false
-    }
-  ],
+  "dead_links": [],
   "tbd_events": [
     {
       "slug": "miyashita-park-popup-2026",
@@ -1418,7 +1403,17 @@
       "sourceUrl": "https://www.rise.sc/"
     }
   ],
-  "today_events": [],
+  "today_events": [
+    {
+      "slug": "hankyu-green-expo-2026",
+      "name": "Hankyu GREEN EXPO 阪急植物博覧会 2026",
+      "date": "2026-06-24",
+      "dateEnd": "2026-06-29",
+      "location": "阪急うめだ本店 9階祝祭広場",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    }
+  ],
   "url_results": [
     {
       "slug": "happy-smile-odawara-2026",
@@ -1578,8 +1573,8 @@
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 403,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "plant-freaks-special-2026-05",
@@ -1606,8 +1601,8 @@
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 403,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "border-break-6th-2026",
