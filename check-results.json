@@ -1,7 +1,22 @@
 {
-  "check_date": "2026-06-29",
+  "check_date": "2026-06-30",
   "total_events": 204,
-  "dead_links": [],
+  "dead_links": [
+    {
+      "slug": "picnic-garden-vol20-aobayama-2026",
+      "name": "ピクニックガーデン vol.20 in 青葉山公園",
+      "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
+      "statusCode": 403,
+      "alive": false
+    },
+    {
+      "slug": "enjoy-place-outside-tsukuba-2026",
+      "name": "enjoy place outside",
+      "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
+      "statusCode": 403,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "miyashita-park-popup-2026",
@@ -26,6 +41,12 @@
     }
   ],
   "past_events": [
+    {
+      "slug": "hankyu-green-expo-2026",
+      "name": "Hankyu GREEN EXPO 阪急植物博覧会 2026",
+      "date": "2026-06-24",
+      "dateEnd": "2026-06-29"
+    },
     {
       "slug": "sendai-agave-shop-vol2",
       "name": "仙台竜舌露店 Vol.2",
@@ -1400,17 +1421,7 @@
       "sourceUrl": "https://hanatomofesta.com/"
     }
   ],
-  "today_events": [
-    {
-      "slug": "hankyu-green-expo-2026",
-      "name": "Hankyu GREEN EXPO 阪急植物博覧会 2026",
-      "date": "2026-06-24",
-      "dateEnd": "2026-06-29",
-      "location": "阪急うめだ本店 9階祝祭広場",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    }
-  ],
+  "today_events": [],
   "url_results": [
     {
       "slug": "happy-smile-odawara-2026",
@@ -1570,8 +1581,8 @@
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "plant-freaks-special-2026-05",
@@ -1598,8 +1609,8 @@
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "border-break-6th-2026",
