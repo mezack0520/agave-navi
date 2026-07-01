@@ -1,7 +1,14 @@
 {
-  "check_date": "2026-06-30",
-  "total_events": 204,
+  "check_date": "2026-07-01",
+  "total_events": 205,
   "dead_links": [
+    {
+      "slug": "yokohama-flower-garden-fes-2026",
+      "name": "横浜フラワー&ガーデンフェスティバル 2026",
+      "sourceUrl": "https://yfg-fes.jp/",
+      "statusCode": -1,
+      "alive": false
+    },
     {
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
@@ -41,48 +48,6 @@
     }
   ],
   "past_events": [
-    {
-      "slug": "hankyu-green-expo-2026",
-      "name": "Hankyu GREEN EXPO 阪急植物博覧会 2026",
-      "date": "2026-06-24",
-      "dateEnd": "2026-06-29"
-    },
-    {
-      "slug": "sendai-agave-shop-vol2",
-      "name": "仙台竜舌露店 Vol.2",
-      "date": "2026-06-27",
-      "dateEnd": "2026-06-27"
-    },
-    {
-      "slug": "nagasaki-plants-classic-2026-06",
-      "name": "NAGASAKI PLANTS CLASSIC",
-      "date": "2026-06-27",
-      "dateEnd": "2026-06-28"
-    },
-    {
-      "slug": "bop-with-needles-nagoya-2026-06",
-      "name": "B.O.P with NEEDLES",
-      "date": "2026-06-27",
-      "dateEnd": "2026-06-28"
-    },
-    {
-      "slug": "minori-kaboku-cactus-agave-2026-06",
-      "name": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター）",
-      "date": "2026-06-27",
-      "dateEnd": "2026-06-28"
-    },
-    {
-      "slug": "fuji-taniku-plants-marche-2026-06",
-      "name": "富士多肉プランツマルシェ",
-      "date": "2026-06-27",
-      "dateEnd": "2026-06-27"
-    },
-    {
-      "slug": "ennichi-gaiden-okayama-2026-06",
-      "name": "園日 外伝",
-      "date": "2026-06-28",
-      "dateEnd": "2026-06-28"
-    },
     {
       "slug": "kumagaya-taniku-fes-2026",
       "name": "第2回 熊谷多肉フェス",
@@ -954,10 +919,52 @@
       "dateEnd": "2026-06-21"
     },
     {
+      "slug": "hankyu-green-expo-2026",
+      "name": "Hankyu GREEN EXPO 阪急植物博覧会 2026",
+      "date": "2026-06-24",
+      "dateEnd": "2026-06-29"
+    },
+    {
       "slug": "futakotamagawa-botanical-2026",
       "name": "二子玉川ボタニカルフェスタ 2026春",
       "date": "2026-06-26",
       "dateEnd": ""
+    },
+    {
+      "slug": "sendai-agave-shop-vol2",
+      "name": "仙台竜舌露店 Vol.2",
+      "date": "2026-06-27",
+      "dateEnd": "2026-06-27"
+    },
+    {
+      "slug": "nagasaki-plants-classic-2026-06",
+      "name": "NAGASAKI PLANTS CLASSIC",
+      "date": "2026-06-27",
+      "dateEnd": "2026-06-28"
+    },
+    {
+      "slug": "bop-with-needles-nagoya-2026-06",
+      "name": "B.O.P with NEEDLES",
+      "date": "2026-06-27",
+      "dateEnd": "2026-06-28"
+    },
+    {
+      "slug": "minori-kaboku-cactus-agave-2026-06",
+      "name": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター）",
+      "date": "2026-06-27",
+      "dateEnd": "2026-06-28"
+    },
+    {
+      "slug": "fuji-taniku-plants-marche-2026-06",
+      "name": "富士多肉プランツマルシェ",
+      "date": "2026-06-27",
+      "dateEnd": "2026-06-27"
+    },
+    {
+      "slug": "ennichi-gaiden-okayama-2026-06",
+      "name": "園日 外伝",
+      "date": "2026-06-28",
+      "dateEnd": "2026-06-28"
     }
   ],
   "upcoming_events": [
@@ -1219,6 +1226,15 @@
       "date": "2026-09-19",
       "dateEnd": "2026-09-21",
       "location": "サンシャインシティ",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "collect-plants-2026-09",
+      "name": "Collect Plants（コレクトプランツ）",
+      "date": "2026-09-22",
+      "dateEnd": "2026-09-23",
+      "location": "グランメッセ熊本",
       "eventStatus": "confirmed",
       "sourceUrl": ""
     },
@@ -1567,8 +1583,8 @@
       "slug": "yokohama-flower-garden-fes-2026",
       "name": "横浜フラワー&ガーデンフェスティバル 2026",
       "sourceUrl": "https://yfg-fes.jp/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "fukuoka-green-party-6th-2026",
