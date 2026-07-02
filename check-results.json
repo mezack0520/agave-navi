@@ -1,26 +1,26 @@
 {
-  "check_date": "2026-07-01",
+  "check_date": "2026-07-02",
   "total_events": 205,
   "dead_links": [
     {
-      "slug": "yokohama-flower-garden-fes-2026",
-      "name": "横浜フラワー&ガーデンフェスティバル 2026",
-      "sourceUrl": "https://yfg-fes.jp/",
+      "slug": "taniku-moromoro-2026-spring",
+      "name": "多肉もろもろ市場 2026春",
+      "sourceUrl": "https://tanikumoromoro.denku-travel.com/",
       "statusCode": -1,
       "alive": false
     },
     {
-      "slug": "picnic-garden-vol20-aobayama-2026",
-      "name": "ピクニックガーデン vol.20 in 青葉山公園",
-      "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 403,
+      "slug": "collect-plants-vol2",
+      "name": "Collect Plants Vol.2",
+      "sourceUrl": "https://collect-plants.com/event/",
+      "statusCode": -1,
       "alive": false
     },
     {
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 403,
+      "statusCode": -1,
       "alive": false
     }
   ],
@@ -925,12 +925,6 @@
       "dateEnd": "2026-06-29"
     },
     {
-      "slug": "futakotamagawa-botanical-2026",
-      "name": "二子玉川ボタニカルフェスタ 2026春",
-      "date": "2026-06-26",
-      "dateEnd": ""
-    },
-    {
       "slug": "sendai-agave-shop-vol2",
       "name": "仙台竜舌露店 Vol.2",
       "date": "2026-06-27",
@@ -1435,6 +1429,15 @@
       "location": "インテックス大阪",
       "eventStatus": "confirmed",
       "sourceUrl": "https://hanatomofesta.com/"
+    },
+    {
+      "slug": "futakotamagawa-botanical-2026",
+      "name": "二子玉川ボタニカルフェスタ 2026春",
+      "date": "2026-07-08",
+      "dateEnd": "",
+      "location": "二子玉川ライズ",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.rise.sc/"
     }
   ],
   "today_events": [],
@@ -1562,8 +1565,8 @@
       "slug": "taniku-moromoro-2026-spring",
       "name": "多肉もろもろ市場 2026春",
       "sourceUrl": "https://tanikumoromoro.denku-travel.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "botanical-circus-7-2026",
@@ -1583,8 +1586,8 @@
       "slug": "yokohama-flower-garden-fes-2026",
       "name": "横浜フラワー&ガーデンフェスティバル 2026",
       "sourceUrl": "https://yfg-fes.jp/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "fukuoka-green-party-6th-2026",
@@ -1597,8 +1600,8 @@
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 403,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "plant-freaks-special-2026-05",
@@ -1618,14 +1621,14 @@
       "slug": "collect-plants-vol2",
       "name": "Collect Plants Vol.2",
       "sourceUrl": "https://collect-plants.com/event/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": 403,
+      "statusCode": -1,
       "alive": false
     },
     {
