@@ -1,5 +1,5 @@
 {
-  "check_date": "2026-07-02",
+  "check_date": "2026-07-03",
   "total_events": 205,
   "dead_links": [
     {
@@ -7,6 +7,13 @@
       "name": "多肉もろもろ市場 2026春",
       "sourceUrl": "https://tanikumoromoro.denku-travel.com/",
       "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "picnic-garden-vol20-aobayama-2026",
+      "name": "ピクニックガーデン vol.20 in 青葉山公園",
+      "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
+      "statusCode": 403,
       "alive": false
     },
     {
@@ -20,7 +27,7 @@
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": -1,
+      "statusCode": 403,
       "alive": false
     }
   ],
@@ -1440,7 +1447,17 @@
       "sourceUrl": "https://www.rise.sc/"
     }
   ],
-  "today_events": [],
+  "today_events": [
+    {
+      "slug": "natsu-cactus-succulent-fair-sapporo-2026",
+      "name": "サボテン多肉植物フェア 夏 (札幌)",
+      "date": "2026-07-03",
+      "dateEnd": "2026-07-05",
+      "location": "花のとびつか",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    }
+  ],
   "url_results": [
     {
       "slug": "happy-smile-odawara-2026",
@@ -1600,8 +1617,8 @@
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 403,
+      "alive": false
     },
     {
       "slug": "plant-freaks-special-2026-05",
@@ -1628,7 +1645,7 @@
       "slug": "enjoy-place-outside-tsukuba-2026",
       "name": "enjoy place outside",
       "sourceUrl": "https://pukubook.jp/events/enjoy-place-outside-2026",
-      "statusCode": -1,
+      "statusCode": 403,
       "alive": false
     },
     {
