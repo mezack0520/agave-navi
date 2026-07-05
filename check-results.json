@@ -1,5 +1,5 @@
 {
-  "check_date": "2026-07-04",
+  "check_date": "2026-07-05",
   "total_events": 205,
   "dead_links": [
     {
@@ -14,13 +14,6 @@
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
       "sourceUrl": "https://pukubook.jp/events/picnic-garden-20",
       "statusCode": 403,
-      "alive": false
-    },
-    {
-      "slug": "collect-plants-vol2",
-      "name": "Collect Plants Vol.2",
-      "sourceUrl": "https://collect-plants.com/event/",
-      "statusCode": -1,
       "alive": false
     },
     {
@@ -55,6 +48,12 @@
     }
   ],
   "past_events": [
+    {
+      "slug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
+      "name": "番外編の番外編 夏祭り",
+      "date": "2026-07-04",
+      "dateEnd": ""
+    },
     {
       "slug": "kumagaya-taniku-fes-2026",
       "name": "第2回 熊谷多肉フェス",
@@ -970,42 +969,6 @@
   ],
   "upcoming_events": [
     {
-      "slug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
-      "name": "番外編の番外編 夏祭り",
-      "date": "2026-07-04",
-      "dateEnd": "",
-      "location": "TauT 阪急洛西口",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "hentai-shokubutsu-fes-vol0-atc-2026-07",
-      "name": "変態植物倶楽部FES Vol.0",
-      "date": "2026-07-04",
-      "dateEnd": "2026-07-05",
-      "location": "ATCホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "rekishi-domannaka-chokkyu-shokubutsu-2026-07",
-      "name": "第3回 歴史ど真ん中～直球植物～古都の宴",
-      "date": "2026-07-04",
-      "dateEnd": "2026-07-05",
-      "location": "京都市勧業館 みやこめっせ",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "yogoshiyama-taniku-matsuri-2026-07",
-      "name": "多肉植物まつり2026（夜越山）",
-      "date": "2026-07-04",
-      "dateEnd": "2026-07-12",
-      "location": "夜越山森林公園",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
       "slug": "okhotsk-taniku-festival-vol2-2026-07",
       "name": "オホーツク多肉Festival 2026 vol.2",
       "date": "2026-07-05",
@@ -1449,15 +1412,6 @@
       "sourceUrl": ""
     },
     {
-      "slug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
-      "name": "番外編の番外編 夏祭り",
-      "date": "2026-07-04",
-      "dateEnd": "2026-07-04",
-      "location": "TauT 阪急洛西口",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
       "slug": "hentai-shokubutsu-fes-vol0-atc-2026-07",
       "name": "変態植物倶楽部FES Vol.0",
       "date": "2026-07-04",
@@ -1481,6 +1435,24 @@
       "date": "2026-07-04",
       "dateEnd": "2026-07-12",
       "location": "夜越山森林公園",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "okhotsk-taniku-festival-vol2-2026-07",
+      "name": "オホーツク多肉Festival 2026 vol.2",
+      "date": "2026-07-05",
+      "dateEnd": "2026-07-05",
+      "location": "端野石倉交流センター",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "taniku-matsuri-iwami-2026-07",
+      "name": "多肉祭りin石見",
+      "date": "2026-07-05",
+      "dateEnd": "2026-07-05",
+      "location": "道の駅ゆうひパーク浜田",
       "eventStatus": "confirmed",
       "sourceUrl": ""
     }
@@ -1665,8 +1637,8 @@
       "slug": "collect-plants-vol2",
       "name": "Collect Plants Vol.2",
       "sourceUrl": "https://collect-plants.com/event/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "enjoy-place-outside-tsukuba-2026",
