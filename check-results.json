@@ -1,14 +1,7 @@
 {
-  "check_date": "2026-07-05",
-  "total_events": 205,
+  "check_date": "2026-07-06",
+  "total_events": 204,
   "dead_links": [
-    {
-      "slug": "taniku-moromoro-2026-spring",
-      "name": "多肉もろもろ市場 2026春",
-      "sourceUrl": "https://tanikumoromoro.denku-travel.com/",
-      "statusCode": -1,
-      "alive": false
-    },
     {
       "slug": "picnic-garden-vol20-aobayama-2026",
       "name": "ピクニックガーデン vol.20 in 青葉山公園",
@@ -49,10 +42,40 @@
   ],
   "past_events": [
     {
+      "slug": "natsu-cactus-succulent-fair-sapporo-2026",
+      "name": "サボテン多肉植物フェア 夏 (札幌)",
+      "date": "2026-07-03",
+      "dateEnd": "2026-07-05"
+    },
+    {
       "slug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
       "name": "番外編の番外編 夏祭り",
       "date": "2026-07-04",
       "dateEnd": ""
+    },
+    {
+      "slug": "hentai-shokubutsu-fes-vol0-atc-2026-07",
+      "name": "変態植物倶楽部FES Vol.0",
+      "date": "2026-07-04",
+      "dateEnd": "2026-07-05"
+    },
+    {
+      "slug": "rekishi-domannaka-chokkyu-shokubutsu-2026-07",
+      "name": "第3回 歴史ど真ん中～直球植物～古都の宴",
+      "date": "2026-07-04",
+      "dateEnd": "2026-07-05"
+    },
+    {
+      "slug": "okhotsk-taniku-festival-vol2-2026-07",
+      "name": "オホーツク多肉Festival 2026 vol.2",
+      "date": "2026-07-05",
+      "dateEnd": "2026-07-05"
+    },
+    {
+      "slug": "taniku-matsuri-iwami-2026-07",
+      "name": "多肉祭りin石見",
+      "date": "2026-07-05",
+      "dateEnd": "2026-07-05"
     },
     {
       "slug": "kumagaya-taniku-fes-2026",
@@ -931,6 +954,12 @@
       "dateEnd": "2026-06-29"
     },
     {
+      "slug": "futakotamagawa-botanical-2026",
+      "name": "二子玉川ボタニカルフェスタ 2026春",
+      "date": "2026-07-05",
+      "dateEnd": ""
+    },
+    {
       "slug": "sendai-agave-shop-vol2",
       "name": "仙台竜舌露店 Vol.2",
       "date": "2026-06-27",
@@ -968,24 +997,6 @@
     }
   ],
   "upcoming_events": [
-    {
-      "slug": "okhotsk-taniku-festival-vol2-2026-07",
-      "name": "オホーツク多肉Festival 2026 vol.2",
-      "date": "2026-07-05",
-      "dateEnd": "2026-07-05",
-      "location": "端野石倉交流センター",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "taniku-matsuri-iwami-2026-07",
-      "name": "多肉祭りin石見",
-      "date": "2026-07-05",
-      "dateEnd": "2026-07-05",
-      "location": "道の駅ゆうひパーク浜田",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
     {
       "slug": "plant-freaks-vol6-2026-07",
       "name": "PLANT FREAKS vol.6",
@@ -1239,15 +1250,6 @@
       "sourceUrl": ""
     },
     {
-      "slug": "happy-smile-odawara-2026",
-      "name": "HAPPY SMILE",
-      "date": "2026-09-28",
-      "dateEnd": "2026-09-28",
-      "location": "小田原アリーナ",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/happy_smile_plants/"
-    },
-    {
       "slug": "tochigi-tanippe-2026-10",
       "name": "栃木★多肉フェス タニッペ",
       "date": "2026-10-03",
@@ -1390,45 +1392,9 @@
       "location": "インテックス大阪",
       "eventStatus": "confirmed",
       "sourceUrl": "https://hanatomofesta.com/"
-    },
-    {
-      "slug": "futakotamagawa-botanical-2026",
-      "name": "二子玉川ボタニカルフェスタ 2026春",
-      "date": "2026-07-08",
-      "dateEnd": "",
-      "location": "二子玉川ライズ",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.rise.sc/"
     }
   ],
   "today_events": [
-    {
-      "slug": "natsu-cactus-succulent-fair-sapporo-2026",
-      "name": "サボテン多肉植物フェア 夏 (札幌)",
-      "date": "2026-07-03",
-      "dateEnd": "2026-07-05",
-      "location": "花のとびつか",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "hentai-shokubutsu-fes-vol0-atc-2026-07",
-      "name": "変態植物倶楽部FES Vol.0",
-      "date": "2026-07-04",
-      "dateEnd": "2026-07-05",
-      "location": "ATCホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "rekishi-domannaka-chokkyu-shokubutsu-2026-07",
-      "name": "第3回 歴史ど真ん中～直球植物～古都の宴",
-      "date": "2026-07-04",
-      "dateEnd": "2026-07-05",
-      "location": "京都市勧業館 みやこめっせ",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
     {
       "slug": "yogoshiyama-taniku-matsuri-2026-07",
       "name": "多肉植物まつり2026（夜越山）",
@@ -1437,34 +1403,9 @@
       "location": "夜越山森林公園",
       "eventStatus": "confirmed",
       "sourceUrl": ""
-    },
-    {
-      "slug": "okhotsk-taniku-festival-vol2-2026-07",
-      "name": "オホーツク多肉Festival 2026 vol.2",
-      "date": "2026-07-05",
-      "dateEnd": "2026-07-05",
-      "location": "端野石倉交流センター",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "taniku-matsuri-iwami-2026-07",
-      "name": "多肉祭りin石見",
-      "date": "2026-07-05",
-      "dateEnd": "2026-07-05",
-      "location": "道の駅ゆうひパーク浜田",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
     }
   ],
   "url_results": [
-    {
-      "slug": "happy-smile-odawara-2026",
-      "name": "HAPPY SMILE",
-      "sourceUrl": "https://www.instagram.com/happy_smile_plants/",
-      "statusCode": 200,
-      "alive": true
-    },
     {
       "slug": "taniku-midori-marche-nabana-2026-10",
       "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
@@ -1581,8 +1522,8 @@
       "slug": "taniku-moromoro-2026-spring",
       "name": "多肉もろもろ市場 2026春",
       "sourceUrl": "https://tanikumoromoro.denku-travel.com/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "botanical-circus-7-2026",
