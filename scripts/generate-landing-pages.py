@@ -351,6 +351,27 @@ def main():
                    intro_html=intro_html, rel_path=f'venue/{sl}/index.html'))
         counters['venue']+=1
 
+    # カテゴリページ /category/*.html (旧・手作り静的ページを日次生成に置換。URL維持)
+    CATEGORY_PAGES = [
+        ('sokubai.html', '即売会', '即売会イベント一覧'),
+        ('marche.html', 'マルシェ', 'マルシェイベント一覧'),
+        ('exhibition.html', '展示会', '展示会イベント一覧'),
+        ('large.html', '大型', '大型イベント一覧'),
+    ]
+    for fname, tag_name, page_title in CATEGORY_PAGES:
+        evs = by_tag.get(tag_name, [])
+        intro = TAG_INTROS.get(tag_name, '')
+        facts = dyn_facts(evs, today_str)
+        intro_html = (f'<p>{intro}</p>' if intro else '') + (f'<p>{facts}</p>' if facts else '')
+        write_page(os.path.join(REPO_ROOT, 'category', fname),
+            render(page_title, f'{tag_name}形式のアガベ・多肉植物・塊根植物イベント一覧。{len(evs)}件掲載。',
+                   f'{tag_name},アガベ,多肉植物,イベント', f'{DOMAIN}/category/{fname}',
+                   [('ホーム',DOMAIN+'/'),('カテゴリ',None),(tag_name,None)],
+                   page_title, f'{tag_name}形式のイベント一覧。開催予定から過去実績まで。', upcoming_then_past(evs), '../',
+                   noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
+                   fallback_evs=fallback5, rel_path=f'category/{fname}'))
+        counters['category'] += 1
+
     # 新着イベントページ /new/
     added = [e for e in events if e.get('addedDate')]
     added.sort(key=lambda e: (e.get('addedDate',''), e.get('slug','')), reverse=True)

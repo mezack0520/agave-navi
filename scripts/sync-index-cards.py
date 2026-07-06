@@ -55,6 +55,43 @@ THUMB_RE = re.compile(
 )
 
 
+
+def find_card_span(html, start_idx):
+    """<div class="event-card" ...> の開始位置から、div入れ子を数えて閉じ位置を返す。"""
+    import re as _re
+    depth = 0
+    i = start_idx
+    tag_re = _re.compile(r'<(/?)div\b[^>]*>', _re.I)
+    for m in tag_re.finditer(html, start_idx):
+        if m.group(1):
+            depth -= 1
+            if depth == 0:
+                return start_idx, m.end()
+        else:
+            depth += 1
+    return start_idx, len(html)
+
+
+def remove_stale_cards(html, valid_slugs):
+    """events.json に存在しないイベントのカードをindex.htmlから除去する(削除イベントの残留防止)。"""
+    import re as _re
+    removed = []
+    while True:
+        stale = None
+        for m in _re.finditer(r'<div class="event-card[^"]*"[^>]*data-slug="([^"]+)"', html):
+            if m.group(1) not in valid_slugs:
+                stale = m
+                break
+        if not stale:
+            break
+        s, e = find_card_span(html, stale.start())
+        # 直後の空白行も片付ける
+        while e < len(html) and html[e] in '\n\r\t ':
+            e += 1
+        html = html[:s] + html[e:]
+        removed.append(stale.group(1))
+    return html, removed
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dry-run', action='store_true')
@@ -66,6 +103,12 @@ def main():
 
     with open(INDEX_HTML, encoding='utf-8') as f:
         html = f.read()
+    original_html = html
+
+    # 削除されたイベントのカードを除去(events.jsonが正)
+    html, stale_removed = remove_stale_cards(html, set(by_slug.keys()))
+    if stale_removed:
+        print(f'stale cards removed: {stale_removed}')
 
     new_chunks = []
     last_end = 0
@@ -121,7 +164,7 @@ def main():
     print(f'  → swapped to no-image: {swapped_to_noimg}')
     print(f'  → unchanged:       {unchanged}')
 
-    if new_html != html:
+    if new_html != original_html:
         if args.dry_run:
             print('(dry-run, not writing)')
         else:
