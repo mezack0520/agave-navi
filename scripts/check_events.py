@@ -82,8 +82,10 @@ def main():
                     'dateEnd': ev.get('dateEnd', ''),
                 })
 
-        # TBDイベントリスト
-        if event_status == 'tbd':
+        # TBDイベントリスト(開催前のイベントのみ。終了済みのtbd旗は実害がないため報告しない)
+        ev_end_for_tbd = ev.get('dateEnd') or ev_date
+        is_past_ev = bool(ev_end_for_tbd) and ev_end_for_tbd < today
+        if event_status == 'tbd' and not is_past_ev:
             results['tbd_events'].append({
                 'slug': slug,
                 'name': name,
@@ -92,8 +94,17 @@ def main():
                 'note': '日時・詳細未確定'
             })
 
-        # URL死活チェック
-        if source_url:
+        # URL死活チェック(終了30日超のイベントは対象外。
+        # 主催者が告知ページを消すのは自然で、古い切れリンクを毎日報告しても積み上がるだけのため)
+        from datetime import datetime as _dt, timedelta as _td
+        _end = ev.get('dateEnd') or ev_date
+        _recent = True
+        if _end:
+            try:
+                _recent = _dt.strptime(_end, '%Y-%m-%d') >= _dt.strptime(today, '%Y-%m-%d') - _td(days=30)
+            except ValueError:
+                pass
+        if source_url and _recent:
             status_code = check_url(source_url)
             url_result = {
                 'slug': slug,

@@ -199,12 +199,6 @@ jobs:
                   lines.append(f"・{tbd['name']} ({tbd['date']})")
                   lines.append(f"  ソース: {tbd['sourceUrl']}")
                   lines.append("")
-          if data['past_events']:
-              lines.append("━━━ 🕐 終了済みイベント（アーカイブ検討） ━━━")
-              for pe in data['past_events']:
-                  end = pe.get('dateEnd', pe['date'])
-                  lines.append(f"・{pe['name']} ({pe['date']}〜{end})")
-              lines.append("")
           if data['upcoming_events']:
               lines.append("━━━ 📅 今後のイベント一覧 ━━━")
               for ue in sorted(data['upcoming_events'], key=lambda x: x['date']):
