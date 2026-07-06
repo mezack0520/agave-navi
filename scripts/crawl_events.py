@@ -367,6 +367,30 @@ def main():
         print(f"Error loading sources: {e}")
         sys.exit(1)
 
+    # 自動導出ウォッチリスト(watch-sources.json)の公式サイト候補を追加巡回
+    # (generate-watchlist.py が events.json から毎日再生成する。手動管理不要)
+    watch_path = os.path.join(os.path.dirname(SOURCES_PATH), 'watch-sources.json')
+    try:
+        with open(watch_path, 'r', encoding='utf-8') as f:
+            watch = json.load(f)
+        existing_urls = {s.get('url') for s in sources}
+        added = 0
+        for c in watch.get('officialSiteCandidates', []):
+            if c.get('url') and c['url'] not in existing_urls:
+                sources.append({
+                    'name': f"[auto] {c.get('eventName','')} 公式",
+                    'url': c['url'],
+                    'type': 'auto-organizer',
+                    'discovery_only': True,
+                    'notes': 'watch-sources.json由来の自動候補',
+                })
+                added += 1
+        print(f"watch-sources: {added} auto-organizer sources added")
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        print(f"watch-sources load skipped: {e}")
+
     # Load known events
     known_slugs, known_names = load_known_events()
     print(f"Known events: {len(known_slugs)}")

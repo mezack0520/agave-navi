@@ -14,6 +14,7 @@ python3 scripts/generate-itemlist-jsonld.py
 python3 scripts/generate-landing-pages.py
 python3 scripts/generate-ical.py
 python3 scripts/generate-csv.py
+python3 scripts/generate-watchlist.py
 python3 scripts/sync-footers.py
 python3 scripts/generate_sitemap.py
 

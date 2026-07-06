@@ -18,6 +18,12 @@ TICKETING_DOMAINS = (
     'tixee.tv', 'zaiko.io', 'streetdance.jp',
     'fan-club', 'fanclub',
 )
+# 植物と無関係の有名イベント公式ドメイン(名前類似の誤リンク事故防止。
+# 例: HAPPY SMILE→goodsmilefest.com 誤登録 2026-07-06検出)
+UNRELATED_EVENT_DOMAINS = (
+    'goodsmilefest.com', 'comiket.co.jp', 'wonfes.jp',
+    'designfesta.com', 'tokyogameshow.jp',
+)
 # Aggregator (データ汚染源) → 同じく url にしてはいけない
 AGGREGATOR_DOMAINS = (
     'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
@@ -60,6 +66,9 @@ def reasons(ev):
         if d in full:
             rs.append(f'ticketing-domain: {d}')
             break
+    for d in UNRELATED_EVENT_DOMAINS:
+        if d in u:
+            rs.append(f'unrelated-event-domain: {d}')
     for d in AGGREGATOR_DOMAINS:
         if d in full:
             rs.append(f'aggregator-domain: {d}')

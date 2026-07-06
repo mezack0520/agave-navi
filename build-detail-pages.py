@@ -772,11 +772,21 @@ def make_series_history(ev, ctx):
             f'<span class="series-meta">{html_escape(dd)}{("　" + html_escape(meta)) if meta else ""}</span>{state}</li>'
         )
     items_html = '\n'.join(items)
+    # シリーズ全回が終了済み → 次回告知のウォッチ中であることを明示
+    my_end = ev.get('dateEnd') or ev.get('date') or ''
+    all_ended = bool(my_end) and my_end < today and all(
+        (e.get('dateEnd') or e.get('date') or '9999') < today for e in siblings)
+    watch_note = ''
+    if all_ended:
+        watch_note = ('          <p class="series-watch-note">次回開催は未発表です。'
+                      '主催者の公式発信を継続的に確認しており、告知を確認し次第掲載します。'
+                      '新しい掲載は<a href="/new/">新着ページ</a>から確認できます。</p>\n')
     return (
         f'        <div class="detail-section detail-enriched">\n'
         f'          <h2 class="detail-section-title">このイベントの開催履歴・関連回</h2>\n'
         f'          <p>当サイトに掲載している同シリーズの開催情報です。回ごとの会場・規模の変化は、次回参加を検討する際の参考になります。</p>\n'
         f'          <ul class="series-list">\n{items_html}\n          </ul>\n'
+        f'{watch_note}'
         f'        </div>\n'
     )
 
