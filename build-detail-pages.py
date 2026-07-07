@@ -132,8 +132,14 @@ def make_instagram_section(ev):
 '''
 
 def make_map_section(ev):
-    """Map section (if mapQuery exists)"""
+    """Map section。mapQuery が無ければ 会場名+都道府県 でフォールバック
+    (収集パイプライン産のイベントはmapQueryを持たないことが多く、地図が消えていた)"""
     map_query = ev.get('mapQuery', '')
+    if not map_query:
+        venue = (ev.get('location') or ev.get('venue') or '').strip()
+        pref = (ev.get('prefecture') or '').strip()
+        if venue and venue not in _VAGUE_VENUES:
+            map_query = f'{venue} {pref}'.strip()
     if not map_query:
         return ''
 
@@ -149,11 +155,39 @@ def make_map_section(ev):
 
 
 
+
+def make_date_hero(ev):
+    """画像が無いイベント用: 大きな日付+カテゴリ/地域チップのビジュアルブロック。"""
+    d = ev.get('date') or ''
+    cat = detect_primary_category(ev)
+    pref = ev.get('prefecture') or ev.get('region') or ''
+    if d:
+        try:
+            sdt = datetime.strptime(d, '%Y-%m-%d')
+            de = ev.get('dateEnd') or d
+            edt = datetime.strptime(de, '%Y-%m-%d')
+            big = f'{sdt.month}.{sdt.day}'
+            wd = WEEKDAYS_JA[sdt.weekday()]
+            sub = f'{sdt.year}年 {wd}曜日'
+            if de != d:
+                big += f'<span class="dh-tilde">–</span>{edt.month}.{edt.day}'
+                sub = f'{sdt.year}年 {wd}〜{WEEKDAYS_JA[edt.weekday()]}曜日'
+        except ValueError:
+            big, sub = '', ''
+    else:
+        big, sub = '', '開催日未発表'
+    chips = ''.join(f'<span class="dh-chip">{html_escape(x)}</span>' for x in [cat, pref] if x)
+    big_html = f'<div class="dh-date">{big}</div>' if big else '<div class="dh-date dh-tbd">Coming</div>'
+    return (f'    <div class="date-hero">\n'
+            f'      <div class="dh-inner">{big_html}<div class="dh-sub">{html_escape(sub)}</div>'
+            f'<div class="dh-chips">{chips}</div></div>\n'
+            f'    </div>\n')
+
 def make_hero_section(ev):
-    """Hero image section (only if imageUrl exists). Rendered at top of <main> outside columns."""
+    """Hero: imageUrl があれば画像、無ければ日付タイポグラフィのヒーロー(モノクロ)。"""
     img = ev.get('imageUrl', '')
     if not img:
-        return ''
+        return make_date_hero(ev)
     name = ev.get('name', '')
     alt = html_escape(name) if name else ''
     return f'''    <div class="detail-hero">
@@ -169,7 +203,7 @@ def make_access_row(ev):
     if not access:
         return ''
     return f'''          <div class="info-row">
-            <span class="info-label">アクセス</span>
+            <span class="info-label">' + icon('train') + 'アクセス</span>
             <span class="info-value">{html_escape(access)}</span>
           </div>'''
 
@@ -420,7 +454,7 @@ def make_official_links_rows(ev):
     for u, label, _ in items:
         rows.append(
             f'          <div class="info-row">\n'
-            f'            <span class="info-label">リンク</span>\n'
+            f'            <span class="info-label">{icon("link")}リンク</span>\n'
             f'            <span class="info-value"><a href="{u}" target="_blank" rel="noopener">{html_escape(label)} ↗</a></span>\n'
             f'          </div>'
         )
@@ -433,7 +467,7 @@ def make_admission_row(ev):
     if not admission:
         return ''
     return f'''          <div class="info-row">
-            <span class="info-label">入場料</span>
+            <span class="info-label">{icon('ticket')}入場料</span>
             <span class="info-value">{admission}</span>
           </div>'''
 
@@ -443,7 +477,7 @@ def make_time_row(ev):
     if not time_str:
         return ''
     return f'''          <div class="info-row">
-            <span class="info-label">時間</span>
+            <span class="info-label">{icon('clock')}時間</span>
             <span class="info-value">{time_str}</span>
           </div>'''
 
@@ -525,7 +559,7 @@ def make_last_updated_row(ev):
     except Exception:
         disp = last
     return ('\n          <div class="info-row">'
-            '\n            <span class="info-label">最終更新</span>'
+            '\n            <span class="info-label">' + icon('update') + '最終更新</span>'
             f'\n            <span class="info-value">{disp}</span>'
             '\n          </div>')
 
@@ -661,15 +695,10 @@ def detect_primary_category(ev):
     return '即売会'
 
 def make_category_intro(ev):
+    """(折りたたみ内で使用) カテゴリ解説文のみ返す。"""
     cat = detect_primary_category(ev)
     variants = CATEGORY_INTROS.get(cat, CATEGORY_INTROS['即売会'])
-    intro = variants[_slug_hash(ev.get('slug')) % len(variants)]
-    return (
-        f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title">{html_escape(cat)}とは — このイベントの楽しみ方</h2>\n'
-        f'          <p>{html_escape(intro)}</p>\n'
-        f'        </div>\n'
-    )
+    return variants[_slug_hash(ev.get('slug')) % len(variants)]
 
 # --- 来場前チェックリスト(カテゴリ別バリアント + 実データ差し込み) ---
 
@@ -736,12 +765,23 @@ def make_visit_tips(ev):
     if time_str:
         tips.append(f'開催時間は{html_escape(time_str)}です。人気株は開場直後に動くことが多いため、購入目的の場合は開場時刻を基準に予定を組むのがおすすめです。')
 
-    lis = '\n'.join(f'          <li>{t}</li>' for t in tips)
+    return '\n'.join(f'            <li>{t}</li>' for t in tips)
+
+
+def make_visitor_guide(ev):
+    """カテゴリ解説+来場チェックリストを1つの折りたたみに。
+    定型文が本文を占拠しない(ユーザーからの指摘対応)一方、開けば読める＆クローラにも見える。"""
+    cat = detect_primary_category(ev)
+    intro = make_category_intro(ev)
+    tips = make_visit_tips(ev)
     return (
-        f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title">来場前のチェックリスト</h2>\n'
-        f'          <ul class="visit-tips-list">\n{lis}\n          </ul>\n'
-        f'        </div>\n'
+        f'        <details class="visitor-guide detail-enriched">\n'
+        f'          <summary><span class="vg-icon">?</span>はじめての{html_escape(cat)}ガイド — 楽しみ方と来場前チェック</summary>\n'
+        f'          <div class="vg-body">\n'
+        f'            <p>{html_escape(intro)}</p>\n'
+        f'            <ul class="visit-tips-list">\n{tips}\n            </ul>\n'
+        f'          </div>\n'
+        f'        </details>\n'
     )
 
 # --- シリーズ開催履歴 (同名イベントの過去回・別回) ---
@@ -762,6 +802,8 @@ def make_series_history(ev, ctx):
         dd = make_compact_date(e)
         place = e.get('prefecture') or e.get('region') or ''
         venue = e.get('location') or e.get('venue') or ''
+        if venue in _VAGUE_VENUES or venue == place:
+            venue = ''
         meta = ' / '.join(x for x in [place, venue] if x)
         state = ''
         d_end = e.get('dateEnd') or e.get('date') or ''
@@ -826,6 +868,8 @@ def make_nearby_events(ev, ctx):
         dd = make_compact_date(e)
         place = e.get('prefecture') or e.get('region') or ''
         venue = e.get('location') or e.get('venue') or ''
+        if venue in _VAGUE_VENUES or venue == place:
+            venue = ''
         meta = ' / '.join(x for x in [place, venue] if x)
         meta_html = ('<span class="nearby-meta">' + html_escape(meta) + '</span>') if meta else ''
         items.append(
@@ -920,10 +964,10 @@ def make_event_faq(ev, ctx):
     rows = []
     for q, a in pairs:
         rows.append(
-            f'          <div class="faq-item">\n'
-            f'            <h3 class="faq-q">{html_escape(q)}</h3>\n'
+            f'          <details class="faq-item">\n'
+            f'            <summary class="faq-q">{html_escape(q)}</summary>\n'
             f'            <p class="faq-a">{html_escape(a)}</p>\n'
-            f'          </div>'
+            f'          </details>'
         )
     rows_html = '\n'.join(rows)
     import json as _json
@@ -975,12 +1019,11 @@ def make_data_summary(ev, ctx):
         n = stats['pref_counts'][pref]
         rank = stats['pref_rank'].get(pref)
         if rank == 1:
-            rank_txt = 'で、当サイト掲載分では全国で最も植物イベントが多い地域です'
+            sentences.append(f'会場のある{pref}は当サイト掲載分で{n}件と、全国で最も植物イベントが多い地域です。')
         elif rank and rank <= 3:
-            rank_txt = f'で、当サイト掲載分では全国{rank}番目に植物イベントが多い地域です'
+            sentences.append(f'会場のある{pref}は当サイト掲載分で{n}件と、全国{rank}番目に植物イベントが多い地域です。')
         else:
-            rank_txt = 'です'
-        sentences.append(f'会場のある{pref}の植物イベントは、当サイト掲載分で{n}件{rank_txt}。')
+            sentences.append(f'会場のある{pref}の植物イベントは、当サイトに{n}件掲載しています。')
 
     cat = detect_primary_category(ev)
     pct = stats['cat_pct'].get(cat)
@@ -1055,12 +1098,11 @@ def make_related_guides(ev):
 
 def make_enriched_content(ev, ctx):
     return (
-        make_category_intro(ev)
-        + make_series_history(ev, ctx)
-        + make_visit_tips(ev)
+        make_series_history(ev, ctx)
         + make_nearby_events(ev, ctx)
         + make_venue_history(ev, ctx)
         + make_event_faq(ev, ctx)
+        + make_visitor_guide(ev)
         + make_related_guides(ev)
         + make_site_mission_section()
     )
@@ -1116,6 +1158,23 @@ def build_context(events):
 
 
 
+
+# --- インラインSVGアイコン (モノクロ・16px・currentColor) ---
+_ICONS = {
+    'calendar': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    'pin': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+    'ticket': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-3a3 3 0 0 1 0-6V6a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"/><line x1="13" y1="5" x2="13" y2="19" stroke-dasharray="2 3"/></svg>',
+    'clock': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    'train': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><circle cx="8.5" cy="14.5" r="0.5"/><circle cx="15.5" cy="14.5" r="0.5"/><path d="M8 19l-2 3M16 19l2 3"/></svg>',
+    'link': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+    'weather': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19a4.5 4.5 0 1 0 0-9h-1.8A7 7 0 1 0 4 14.9"/></svg>',
+    'update': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+    'source': '<svg class="i" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><circle cx="12" cy="8" r="0.5"/></svg>',
+}
+
+def icon(name):
+    return _ICONS.get(name, '')
+
 def make_weather_row(ev, ctx):
     """未来のイベントに会場周辺の天気検索リンクを出す(実用リンク・データ不要)。"""
     d = ev.get('date') or ''
@@ -1132,7 +1191,7 @@ def make_weather_row(ev, ctx):
     except ValueError:
         q = quote(f'{place} 天気')
     return ('\n          <div class="info-row">'
-            '\n            <span class="info-label">天気</span>'
+            '\n            <span class="info-label">' + icon('weather') + '天気</span>'
             f'\n            <span class="info-value"><a href="https://www.google.com/search?q={q}" target="_blank" rel="noopener">会場周辺の天気を確認 ↗</a></span>'
             '\n          </div>')
 
@@ -1141,7 +1200,7 @@ def make_data_source_row(ev):
     url = (ev.get('url') or '').strip()
     if not url:
         return ('\n          <div class="info-row">'
-                '\n            <span class="info-label">データソース</span>'
+                '\n            <span class="info-label">' + icon('source') + 'データソース</span>'
                 '\n            <span class="info-value" style="font-size:.85em;color:#666">スタッフ収集情報</span>'
                 '\n          </div>')
     src_label = '参考サイト'
@@ -1152,7 +1211,7 @@ def make_data_source_row(ev):
     elif 'twitter.com' in url or 'x.com' in url:
         src_label = 'X (Twitter)'
     return ('\n          <div class="info-row">'
-            '\n            <span class="info-label">データソース</span>'
+            '\n            <span class="info-label">' + icon('source') + 'データソース</span>'
             f'\n            <span class="info-value" style="font-size:.85em;color:#666">{src_label}を参照</span>'
             '\n          </div>')
 

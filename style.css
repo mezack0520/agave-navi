@@ -2961,3 +2961,42 @@ main {
 .mission-note a{color:#444}
 .series-watch-note{font-size:.85em;color:#777;background:#fafafa;border:1px dashed #ddd;border-radius:6px;padding:.6em .8em;margin-top:.6em}
 .series-watch-note a{color:#444}
+
+/* === detail UX 2026-07: date-hero / visitor-guide / faq accordion === */
+.date-hero{background:#111;color:#fff;border-radius:var(--radius,12px);margin:0 0 1.4rem;overflow:hidden}
+.dh-inner{padding:1.6rem 1.5rem 1.4rem;display:flex;flex-direction:column;gap:.3rem;background:
+  radial-gradient(ellipse at 85% -20%, rgba(255,255,255,.14), transparent 55%),
+  repeating-linear-gradient(135deg, transparent 0 22px, rgba(255,255,255,.045) 22px 23px)}
+.dh-date{font-size:3.2rem;font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.dh-date .dh-tilde{opacity:.45;margin:0 .12em;font-weight:400}
+.dh-date.dh-tbd{font-size:2.2rem;opacity:.85}
+.dh-sub{font-size:.85rem;color:rgba(255,255,255,.75);letter-spacing:.06em}
+.dh-chips{display:flex;gap:.4rem;margin-top:.55rem;flex-wrap:wrap}
+.dh-chip{font-size:.72rem;font-weight:700;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:.18em .75em;color:#fff}
+
+.info-label .i{vertical-align:-2px;margin-right:.45em;color:#999}
+
+.visitor-guide{border:1px solid #e8e8e8;border-radius:10px;margin:1.6rem 0;background:#fcfcfc}
+.visitor-guide summary{cursor:pointer;padding:.9rem 1.1rem;font-weight:700;font-size:.95rem;color:#333;list-style:none;display:flex;align-items:center;gap:.6rem}
+.visitor-guide summary::-webkit-details-marker{display:none}
+.visitor-guide summary::after{content:"+";margin-left:auto;font-size:1.25rem;color:#999;font-weight:400;transition:transform .2s}
+.visitor-guide[open] summary::after{transform:rotate(45deg)}
+.vg-icon{flex:none;width:1.35rem;height:1.35rem;border:1.5px solid #bbb;border-radius:50%;color:#888;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.vg-body{padding:0 1.1rem 1rem;color:#444;line-height:1.85;font-size:.93rem;border-top:1px dashed #e5e5e5}
+.vg-body p{margin:.9rem 0 .6rem}
+.vg-body .visit-tips-list{margin:.2rem 0 0;padding-left:1.3em}
+.vg-body .visit-tips-list li{margin:.45em 0}
+
+.detail-faq details.faq-item{margin:0;padding:0;border-bottom:1px solid #efefef}
+.detail-faq details.faq-item:last-of-type{border-bottom:none}
+.detail-faq .faq-q{cursor:pointer;padding:.8em 0;list-style:none;display:flex;align-items:baseline}
+.detail-faq .faq-q::-webkit-details-marker{display:none}
+.detail-faq .faq-q::after{content:"+";margin-left:auto;color:#aaa;font-size:1.1rem;padding-left:1em}
+.detail-faq details[open] .faq-q::after{content:"−"}
+.detail-faq .faq-a{margin:0 0 1em;padding-right:1.5em}
+
+@media (max-width:480px){
+  .dh-date{font-size:2.5rem}
+  .dh-inner{padding:1.2rem 1.1rem 1.1rem}
+  .detail-section-title{font-size:1.05rem}
+}
