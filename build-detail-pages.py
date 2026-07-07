@@ -792,19 +792,24 @@ def make_visitor_guide(ev):
 
 
 def make_chip_date(e, today):
-    """カードの日付チップ: 当年は "7.12" / "7.25-26"、他年は "2025.11.22"。"""
+    """カードの日付列(HTML)。範囲は2行に整形して中途半端な折返しを防ぐ。
+    当年: "7.12" / "7.25(–26)" 、他年: 年を1行目に。"""
     d = e.get('date') or ''
     if not d:
         return '未定'
     de = e.get('dateEnd') or d
     cur_year = today[:4]
-    if d[:4] == cur_year:
-        s = f"{int(d[5:7])}.{int(d[8:10])}"
-    else:
-        s = f"{d[:4]}.{int(d[5:7])}.{int(d[8:10])}"
+    lines = []
+    if d[:4] != cur_year:
+        lines.append(d[:4])
+    main = f"{int(d[5:7])}.{int(d[8:10])}"
     if de and de != d:
-        s += f"-{int(de[8:10])}" if de[5:7] == d[5:7] else f"-{int(de[5:7])}.{int(de[8:10])}"
-    return s
+        to = f"–{int(de[8:10])}" if de[5:7] == d[5:7] else f"–{int(de[5:7])}.{int(de[8:10])}"
+        lines.append(main)
+        lines.append(f'<span class="mc-to">{to}</span>')
+    else:
+        lines.append(main)
+    return '<span class="mc-l">' + '</span><span class="mc-l">'.join(lines) + '</span>' 
 
 def make_mini_card(e, today, show_state=True):
     """イベントへのカード型リンク(モノクロ)。"""
@@ -819,7 +824,7 @@ def make_mini_card(e, today, show_state=True):
     state = '<span class="mc-state">終了</span>' if ended else ''
     meta_html = f'<span class="mc-meta">{html_escape(meta)}</span>' if meta else ''
     return (f'<a class="mini-card{" is-ended" if ended else ""}" href="/events/{e["slug"]}.html">'
-            f'<span class="mc-date">{html_escape(dd)}</span>'
+            f'<span class="mc-date">{dd}</span>'
             f'<span class="mc-body"><span class="mc-name">{html_escape(e.get("name",""))}</span>{meta_html}</span>'
             f'{state}</a>')
 
