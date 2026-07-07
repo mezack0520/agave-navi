@@ -67,7 +67,7 @@ jobs:
           python3 scripts/enrich_events.py $ARGS || true
 
       - name: Backfill missing images (og:image)
-        run: python3 scripts/backfill-images.py || true
+        run: python3 scripts/backfill-images.py --upcoming-only || true
 
       - name: Regenerate all static files
         run: |
