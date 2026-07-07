@@ -161,10 +161,10 @@
 
   // detail ページ: .detail-status-badge を更新（events.jsonから終了日も取得）
   var badge = document.querySelector('.detail-status-badge');
-  var detailDate = document.querySelector('.detail-meta-item');
-  if (badge && detailDate) {
+  var detailDate = document.querySelector('.detail-meta-item, .eh-spec .info-value');
+  if (badge) {
     var dateAttr = badge.getAttribute('data-date');
-    if (!dateAttr) {
+    if (!dateAttr && detailDate) {
       var match = detailDate.textContent.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
       if (match) {
         dateAttr = match[1] + '-' + match[2].padStart(2, '0') + '-' + match[3].padStart(2, '0');
