@@ -42,9 +42,13 @@ AGGREGATOR_DOMAINS = (
     'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
 )
 _GENERIC_IMG_RE = re.compile(
-    r'/(ogp|og_image|og-image|default|logo|share|thumb|main)\.(png|jpg|jpeg|webp|gif)(\?|$)',
+    r'/(ogp|ogimage|og_image|og-image|default|logo|sitelogo|share|thumb|main|noimage|placeholder)\.(png|jpg|jpeg|webp|gif)(\?|$)'
+    r'|/cropped-',  # WordPressサイトアイコン(favicon)へのフォールバック
     re.I
 )
+# イベントと無関係なドメインの画像(会場運営元の汎用OGP等)。
+# 実例: カシマスタジアム経由で jleague.jp の汎用OGPが混入(2026-07-06検出)
+UNRELATED_IMAGE_DOMAINS = ('jleague.jp', 'static.cdninstagram.com', 'mercari')
 
 def _url_contains_aggregator(url):
     """Detect aggregator anywhere in the URL (host or CDN-proxied path)."""
@@ -57,12 +61,15 @@ def is_aggregator_url(url):
     return _url_contains_aggregator(url)
 
 def is_quality_image_url(img_url):
-    """Image URL acceptance: reject aggregator-sourced AND generic-named images."""
+    """Image URL acceptance: reject aggregator-sourced / generic-named / unrelated-domain images."""
     if not img_url:
         return False
     if _url_contains_aggregator(img_url):
         return False
     if _GENERIC_IMG_RE.search(img_url):
+        return False
+    u = img_url.lower()
+    if any(d in u for d in UNRELATED_IMAGE_DOMAINS):
         return False
     return True
 
@@ -117,6 +124,89 @@ def verify_image(url):
     except requests.RequestException as e:
         return False, type(e).__name__
 
+
+
+# --- daybook-botanical (ボタ日誌) からのフライヤー画像取得 -------------------
+# Instagramはデータセンター IP からの匿名取得を拒否するため、
+# IG発のフライヤーを安定CDN(i0.wp.com)で再配信している daybook の記事を探す。
+DAYBOOK = 'https://daybook-botanical.com'
+
+def _date_tokens(ev):
+    """記事本文との照合用に「7月10日」等の表記ゆれトークンを作る。"""
+    d = ev.get('date') or ''
+    if not d:
+        return []
+    m, day = int(d[5:7]), int(d[8:10])
+    return [f'{m}月{day}日', f'{m}/{day}', f'{d[:4]}年{m}月']
+
+def _extract_article_image(html, base_url):
+    """記事本文(entry-content)内の最初の実画像を返す。サイトアイコン等は除外。"""
+    soup = BeautifulSoup(html, 'html.parser')
+    body = None
+    for cand in soup.find_all(class_=re.compile(r'(entry-content|post-content|post_content|article-body)')):
+        cls = ' '.join(cand.get('class') or [])
+        if 'p-toc' in cls:  # SWELLテーマの目次コンテナを除外
+            continue
+        body = cand
+        break
+    if body is None:
+        return None  # 本文コンテナ不明のページでは拾わない(関連記事サムネ誤用防止)
+    for img in body.find_all('img'):
+        cand = img.get('data-src') or img.get('src') or ''
+        if not cand or cand.startswith('data:'):
+            continue
+        cand = urljoin(base_url, cand)
+        if not is_quality_image_url(cand):
+            continue
+        # 極小画像(アイコン類)を width/height 属性で除外
+        try:
+            w = int(img.get('width') or 0)
+            if 0 < w < 200:
+                continue
+        except ValueError:
+            pass
+        return cand
+    return None
+
+def daybook_image(ev):
+    """daybookでイベント記事を検索し、日付照合のうえフライヤー画像URLを返す。"""
+    name = (ev.get('name') or '').strip()
+    if not name:
+        return None, 'no name'
+    # 検索クエリ: 厳密→単純化の順に試す(年号・回数・括弧書き会場を段階的に除去)
+    q1 = re.sub(r'(vol\.?\s*\d+|第\s*\d+\s*回|[#＃]\d+)', '', name, flags=re.I).strip()
+    q2 = re.sub(r'(19|20)\d{2}|[（(][^）)]*[）)]|[「」『』]', ' ', q1).strip()
+    q2 = re.sub(r'\s+', ' ', q2)
+    queries = [q for q in dict.fromkeys([q1, q2]) if len(q) >= 3]
+    seen = []
+    for q in queries:
+        search_url = f'{DAYBOOK}/?s={requests.utils.quote(q)}'
+        html, err = fetch_html(search_url)
+        if html is None:
+            continue
+        for u in re.findall(r'href="(' + re.escape(DAYBOOK) + r'/xo_event/[^"]+)"', html):
+            if u not in seen:
+                seen.append(u)
+        if seen:
+            break
+    if not seen:
+        return None, 'no search results'
+    tokens = _date_tokens(ev)
+    for art_url in seen[:4]:
+        art, err = fetch_html(art_url)
+        if art is None:
+            continue
+        # 開催日が本文に含まれる記事だけを同一イベントとみなす(別回の画像誤用防止)
+        if tokens and not any(t in art for t in tokens):
+            continue
+        img = _extract_article_image(art, art_url)
+        if img:
+            ok, _ = verify_image(img)
+            if ok:
+                return img, 'OK'
+    return None, 'no matching article/image'
+
+
 def candidate_urls(ev):
     """Yield candidate page URLs in priority order."""
     ig = ev.get('instagramUrl')
@@ -130,6 +220,13 @@ def candidate_urls(ev):
         yield ('url', ev['url'])
 
 def find_image_for_event(ev):
+    # 経路0: daybook (IG発フライヤーの安定ミラー。日付照合付き)
+    img, msg = daybook_image(ev)
+    if img:
+        yield ('daybook', DAYBOOK, img, 'OK')
+        return
+    else:
+        yield ('daybook', DAYBOOK, None, msg)
     for source, page_url in candidate_urls(ev):
         html, err = fetch_html(page_url)
         if html is None:
@@ -159,6 +256,8 @@ def main():
     ap.add_argument('--limit', type=int, default=0, help='max events to process (0=all)')
     ap.add_argument('--overwrite', action='store_true',
                     help='retry even if imageUrl is already set')
+    ap.add_argument('--upcoming-only', action='store_true',
+                    help='開催予定(未終了)のイベントのみ処理')
     ap.add_argument('--events', default=EVENTS_JSON)
     args = ap.parse_args()
 
@@ -171,6 +270,11 @@ def main():
             continue
         if not args.overwrite and ev.get('imageUrl'):
             continue
+        if args.upcoming_only:
+            from datetime import datetime as _dt
+            end = ev.get('dateEnd') or ev.get('date') or ''
+            if not end or end < _dt.now().strftime('%Y-%m-%d'):
+                continue
         if not any(candidate_urls(ev)):
             continue
         targets.append(ev)
