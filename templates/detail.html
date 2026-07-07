@@ -93,49 +93,16 @@
   </nav>
 
   <main class="detail-page">
-{{heroSection}}
-    <div class="detail-header">
-      <h1>{{name}}</h1>
-      <div class="detail-meta">
+
+    <header class="event-hero">
+      <div class="eh-kicker">
         <span class="detail-status-badge" data-date="{{date}}" data-date-end="{{dateEnd}}"></span>
-        <span class="detail-meta-dot"></span>
-        <span class="detail-meta-item">{{dateDisplayShort}}</span>
-        <span class="detail-meta-dot"></span>
-        <span class="detail-meta-item">{{prefectureOrRegion}}</span>
+        <span class="eh-chip">{{primaryCategory}}</span>
+        <span class="eh-chip eh-chip-ghost">{{prefectureOrRegion}}</span>
       </div>
-      <div class="detail-header-actions">
-        <button class="detail-fav-btn" id="favBtn" onclick="toggleFav()">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-          <span id="favLabel">行きたい</span>
-        </button>
-      </div>
-    </div>
+      <h1 class="eh-title">{{name}}</h1>
 
-    <div class="detail-body">
-      <div class="detail-main">
-        <div class="detail-section">
-          <h2 class="detail-section-title" data-kicker="ABOUT">概要</h2>
-          <p>{{description}}</p>
-{{dataSummary}}
-        </div>
-
-{{instagramSection}}
-
-{{mapSection}}
-
-{{shareSection}}
-
-{{enrichedContent}}
-        <div class="detail-back">
-          <a href="/?region={{regionEncoded}}" class="detail-back-link">{{region}}のイベントに戻る</a>
-        </div>
-      </div>
-
-      <div class="detail-sidebar">
-        <div class="detail-info-card">
-          <h3>EVENT INFO</h3>
+      <div class="eh-spec">
           <div class="info-row">
             <span class="info-label">日時</span>
             <span class="info-value">{{dateDisplayFull}}</span>
@@ -148,21 +115,42 @@
 {{timeRow}}
 {{accessRow}}
 {{officialLinksRows}}
+{{weatherRow}}
 {{lastUpdatedRow}}
 {{dataSourceRow}}
-
-{{weatherRow}}
-          <a href="{{gcalUrl}}" target="_blank" rel="noopener" class="gcal-btn">
-            &#128197; Googleカレンダーに追加
-          </a>
-        </div>
-
-
-
       </div>
 
-      <div class="affiliate-section" id="affiliateSection"></div>
+      <div class="eh-actions">
+        <button class="detail-fav-btn" id="favBtn" onclick="toggleFav()">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span id="favLabel">行きたい</span>
+        </button>
+        <a href="{{gcalUrl}}" target="_blank" rel="noopener" class="gcal-btn">&#128197; カレンダーに登録</a>
+{{shareSection}}
+      </div>
+    </header>
+
+{{heroSection}}
+
+    <div class="detail-main">
+        <div class="detail-section">
+          <h2 class="detail-section-title" data-kicker="ABOUT">概要</h2>
+          <p>{{description}}</p>
+{{dataSummary}}
+        </div>
+
+{{instagramSection}}
+
+{{mapSection}}
+
+{{enrichedContent}}
+        <div class="detail-back">
+          <a href="/?region={{regionEncoded}}" class="detail-back-link">{{region}}のイベントに戻る</a>
+        </div>
     </div>
+
   </main>
 
   <div class="ad-affiliate-area" style="max-width:960px;margin:0 auto;padding:0 1rem;">

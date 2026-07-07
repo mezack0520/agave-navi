@@ -3020,3 +3020,33 @@ main {
 .mc-meta{font-size:.78rem;color:#999}
 .mc-state{flex:none;margin-left:auto;font-size:.7rem;color:#999;border:1px solid #ddd;border-radius:4px;padding:.15em .5em}
 @media (min-width:769px){.mini-grid{grid-template-columns:1fr 1fr}}
+
+/* === event-hero 編集誌型レイアウト 2026-07 === */
+.detail-page{max-width:820px}
+.event-hero{padding-top:1.6rem}
+.eh-kicker{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.eh-chip{font-size:.72rem;font-weight:700;letter-spacing:.08em;background:#111;color:#fff;border-radius:4px;padding:.28em .7em}
+.eh-chip-ghost{background:none;color:#555;border:1px solid #ccc}
+.eh-title{font-size:clamp(1.75rem,5.2vw,2.7rem);font-weight:900;letter-spacing:-.022em;line-height:1.16;margin:.45em 0 .55em;color:#111}
+.eh-spec{border-top:2px solid #111;margin-top:.2rem}
+.eh-spec .info-row{display:grid;grid-template-columns:7.2em 1fr;gap:0 1rem;align-items:baseline;padding:.72em .1em;border-bottom:1px solid #eaeaea;margin:0}
+.eh-spec .info-label{font-size:.78rem;font-weight:700;color:#999;letter-spacing:.05em}
+.eh-spec .info-label .i{vertical-align:-2px;margin-right:.4em;color:#c2c2c2}
+.eh-spec .info-value{font-size:.95rem;color:#111;line-height:1.65;text-align:left}
+.eh-spec .info-value a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}
+.eh-actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:1.15rem 0 .4rem}
+.eh-actions .detail-fav-btn{display:inline-flex;align-items:center;gap:.45em;background:#111;color:#fff;border:none;border-radius:999px;padding:.62em 1.3em;font-size:.9rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+.eh-actions .detail-fav-btn:hover{opacity:.82}
+.eh-actions .detail-fav-btn.is-fav{background:var(--accent-pop,#e63946)}
+.eh-actions .gcal-btn{display:inline-flex;align-items:center;gap:.4em;border:1px solid #ccc;border-radius:999px;padding:.6em 1.15em;font-size:.88rem;font-weight:700;color:#333;text-decoration:none;background:#fff}
+.eh-actions .gcal-btn:hover{border-color:#111}
+.eh-actions .detail-share{display:inline-flex;align-items:center;gap:.45rem;background:none;padding:0;margin:0;border:none}
+.eh-actions .detail-share-label{display:none}
+.detail-main{padding-top:.6rem}
+.detail-hero{margin-top:1.4rem}
+.detail-hero-img{width:100%;border-radius:12px;border:1px solid #eee}
+@media (max-width:480px){
+  .eh-spec .info-row{grid-template-columns:5.6em 1fr}
+  .eh-actions{gap:.5rem}
+  .eh-actions .detail-fav-btn,.eh-actions .gcal-btn{padding:.55em 1em;font-size:.85rem}
+}

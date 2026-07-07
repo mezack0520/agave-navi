@@ -187,7 +187,7 @@ def make_hero_section(ev):
     """Hero: imageUrl があれば画像、無ければ日付タイポグラフィのヒーロー(モノクロ)。"""
     img = ev.get('imageUrl', '')
     if not img:
-        return make_date_hero(ev)
+        return ''
     name = ev.get('name', '')
     alt = html_escape(name) if name else ''
     return f'''    <div class="detail-hero">
@@ -536,6 +536,7 @@ def build_page(template, ev, ctx):
         '{{dataSourceRow}}': make_data_source_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{dataSummary}}': make_data_summary(ev, ctx),
+        '{{primaryCategory}}': html_escape(detect_primary_category(ev)),
         '{{weatherRow}}': make_weather_row(ev, ctx),
         '{{siteFooter}}': sitelib.site_footer(),
     }
