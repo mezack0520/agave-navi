@@ -123,7 +123,7 @@ def make_instagram_section(ev):
         ig_url = f'https://www.instagram.com/p/{post_id}/'
 
     return f'''        <div class="detail-section detail-instagram-embed">
-          <h2 class="detail-section-title">Instagram投稿</h2>
+          <h2 class="detail-section-title" data-kicker="SNS">Instagram投稿</h2>
           <div class="instagram-embed-wrap">
             <iframe src="https://www.instagram.com/p/{post_id}/embed/" loading="lazy" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
           </div>
@@ -145,7 +145,7 @@ def make_map_section(ev):
 
     map_query_enc = quote(map_query)
     return f'''        <div class="detail-map">
-          <h2 class="detail-section-title">会場</h2>
+          <h2 class="detail-section-title" data-kicker="ACCESS">会場</h2>
           <div class="map-container">
             <a href="https://www.google.com/maps/search/?api=1&query={map_query_enc}" target="_blank" rel="noopener" class="map-open-link">マップで開く &#8599;</a>
             <iframe src="https://www.google.com/maps?q={map_query_enc}&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -203,7 +203,7 @@ def make_access_row(ev):
     if not access:
         return ''
     return f'''          <div class="info-row">
-            <span class="info-label">' + icon('train') + 'アクセス</span>
+            <span class="info-label">{icon('train')}アクセス</span>
             <span class="info-value">{html_escape(access)}</span>
           </div>'''
 
@@ -472,10 +472,12 @@ def make_admission_row(ev):
           </div>'''
 
 def make_time_row(ev):
-    """Time info row"""
+    """Time info row。日時行(dateDisplayFull)に時間が含まれるケースでは重複するため出さない。"""
     time_str = ev.get('time', '')
     if not time_str:
         return ''
+    if ev.get('date'):
+        return ''  # dateがあればmake_date_display_fullがtimeを含む
     return f'''          <div class="info-row">
             <span class="info-label">{icon('clock')}時間</span>
             <span class="info-value">{time_str}</span>
@@ -788,6 +790,39 @@ def make_visitor_guide(ev):
 
 
 
+
+def make_chip_date(e, today):
+    """カードの日付チップ: 当年は "7.12" / "7.25-26"、他年は "2025.11.22"。"""
+    d = e.get('date') or ''
+    if not d:
+        return '未定'
+    de = e.get('dateEnd') or d
+    cur_year = today[:4]
+    if d[:4] == cur_year:
+        s = f"{int(d[5:7])}.{int(d[8:10])}"
+    else:
+        s = f"{d[:4]}.{int(d[5:7])}.{int(d[8:10])}"
+    if de and de != d:
+        s += f"-{int(de[8:10])}" if de[5:7] == d[5:7] else f"-{int(de[5:7])}.{int(de[8:10])}"
+    return s
+
+def make_mini_card(e, today, show_state=True):
+    """イベントへのカード型リンク(モノクロ)。"""
+    dd = make_chip_date(e, today)
+    place = e.get('prefecture') or e.get('region') or ''
+    venue = e.get('location') or e.get('venue') or ''
+    if venue in _VAGUE_VENUES or venue == place:
+        venue = ''
+    meta = ' / '.join(x for x in [place, venue] if x)
+    d_end = e.get('dateEnd') or e.get('date') or ''
+    ended = show_state and bool(d_end) and d_end < today
+    state = '<span class="mc-state">終了</span>' if ended else ''
+    meta_html = f'<span class="mc-meta">{html_escape(meta)}</span>' if meta else ''
+    return (f'<a class="mini-card{" is-ended" if ended else ""}" href="/events/{e["slug"]}.html">'
+            f'<span class="mc-date">{html_escape(dd)}</span>'
+            f'<span class="mc-body"><span class="mc-name">{html_escape(e.get("name",""))}</span>{meta_html}</span>'
+            f'{state}</a>')
+
 def make_series_history(ev, ctx):
     key = normalize_series_name(ev.get('name'))
     if len(key) < 4:
@@ -797,24 +832,7 @@ def make_series_history(ev, ctx):
         return ''
     siblings = sorted(siblings, key=lambda e: e.get('date') or '0000', reverse=True)[:6]
     today = ctx['today']
-    items = []
-    for e in siblings:
-        dd = make_compact_date(e)
-        place = e.get('prefecture') or e.get('region') or ''
-        venue = e.get('location') or e.get('venue') or ''
-        if venue in _VAGUE_VENUES or venue == place:
-            venue = ''
-        meta = ' / '.join(x for x in [place, venue] if x)
-        state = ''
-        d_end = e.get('dateEnd') or e.get('date') or ''
-        if d_end and d_end < today:
-            state = '<span class="series-state">終了</span>'
-        items.append(
-            f'            <li><a href="/events/{e["slug"]}.html">{html_escape(e.get("name",""))}</a>'
-            f'<span class="series-meta">{html_escape(dd)}{("　" + html_escape(meta)) if meta else ""}</span>{state}</li>'
-        )
-    items_html = '\n'.join(items)
-    # シリーズ全回が終了済み → 次回告知のウォッチ中であることを明示
+    cards = ''.join(make_mini_card(e, today) for e in siblings)
     my_end = ev.get('dateEnd') or ev.get('date') or ''
     all_ended = bool(my_end) and my_end < today and all(
         (e.get('dateEnd') or e.get('date') or '9999') < today for e in siblings)
@@ -825,12 +843,12 @@ def make_series_history(ev, ctx):
                       '新しい掲載は<a href="/new/">新着ページ</a>から確認できます。</p>\n')
     return (
         f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title">このイベントの開催履歴・関連回</h2>\n'
-        f'          <p>当サイトに掲載している同シリーズの開催情報です。回ごとの会場・規模の変化は、次回参加を検討する際の参考になります。</p>\n'
-        f'          <ul class="series-list">\n{items_html}\n          </ul>\n'
+        f'          <h2 class="detail-section-title" data-kicker="SERIES">このイベントの開催履歴・関連回</h2>\n'
+        f'          <div class="mini-grid">{cards}</div>\n'
         f'{watch_note}'
         f'        </div>\n'
     )
+
 
 # --- 近隣・今後のイベント (静的リンク。クローラからも見える) ---
 
@@ -853,8 +871,11 @@ def make_nearby_events(ev, ctx):
         if not picks:
             return ''
         scope = '全国'
+    elif all(e.get('prefecture') == pref for e in picks):
+        # 全件が同一都道府県のときだけ県名を名乗る(見出しと中身の不一致防止)
+        scope = html_escape(pref)
     else:
-        scope = html_escape(pref or region or '近隣')
+        scope = html_escape(region or '近隣') + 'エリア'
 
     d_end = ev.get('dateEnd') or ev.get('date') or ''
     is_past = bool(d_end) and d_end < today
@@ -863,28 +884,16 @@ def make_nearby_events(ev, ctx):
     else:
         lead = f'{scope}で今後開催が予定されている植物イベントです。あわせて予定を立てる際の参考にどうぞ。'
 
-    items = []
-    for e in picks:
-        dd = make_compact_date(e)
-        place = e.get('prefecture') or e.get('region') or ''
-        venue = e.get('location') or e.get('venue') or ''
-        if venue in _VAGUE_VENUES or venue == place:
-            venue = ''
-        meta = ' / '.join(x for x in [place, venue] if x)
-        meta_html = ('<span class="nearby-meta">' + html_escape(meta) + '</span>') if meta else ''
-        items.append(
-            f'            <li><span class="nearby-date">{html_escape(dd)}</span> '
-            f'<a href="/events/{e["slug"]}.html">{html_escape(e.get("name",""))}</a>{meta_html}</li>'
-        )
-    items_html = '\n'.join(items)
+    cards = ''.join(make_mini_card(e, today, show_state=False) for e in picks)
     title = f'{scope}の今後の植物イベント'
     return (
         f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title">{title}</h2>\n'
-        f'          <p>{lead}</p>\n'
-        f'          <ul class="nearby-list">\n{items_html}\n          </ul>\n'
+        f'          <h2 class="detail-section-title" data-kicker="UPCOMING">{title}</h2>\n'
+        f'          <p class="section-note">{lead}</p>\n'
+        f'          <div class="mini-grid">{cards}</div>\n'
         f'        </div>\n'
     )
+
 
 # --- 同会場の他イベント ---
 
@@ -897,21 +906,16 @@ def make_venue_history(ev, ctx):
     if not others:
         return ''
     others = sorted(others, key=lambda e: e.get('date') or '', reverse=True)[:5]
-    items = []
-    for e in others:
-        dd = make_compact_date(e)
-        items.append(
-            f'            <li><span class="nearby-date">{html_escape(dd)}</span> '
-            f'<a href="/events/{e["slug"]}.html">{html_escape(e.get("name",""))}</a></li>'
-        )
-    items_html = '\n'.join(items)
+    today = ctx['today']
+    cards = ''.join(make_mini_card(e, today) for e in others)
     return (
         f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title">{html_escape(v)}で開催される他のイベント</h2>\n'
-        f'          <p>同じ会場「{html_escape(v)}」での開催情報です。会場の雰囲気やアクセスの参考になります。</p>\n'
-        f'          <ul class="nearby-list">\n{items_html}\n          </ul>\n'
+        f'          <h2 class="detail-section-title" data-kicker="VENUE">{html_escape(v)}で開催される他のイベント</h2>\n'
+        f'          <p class="section-note">同じ会場での開催情報です。会場の雰囲気やアクセスの参考になります。</p>\n'
+        f'          <div class="mini-grid">{cards}</div>\n'
         f'        </div>\n'
     )
+
 
 # --- よくある質問 (実データのみ + FAQPage JSON-LD) ---
 
@@ -983,7 +987,7 @@ def make_event_faq(ev, ctx):
     ld_str = _json.dumps(ld, ensure_ascii=False)
     return (
         f'        <div class="detail-section detail-enriched detail-faq">\n'
-        f'          <h2 class="detail-section-title">よくある質問</h2>\n{rows_html}\n'
+        f'          <h2 class="detail-section-title" data-kicker="FAQ">よくある質問</h2>\n{rows_html}\n'
         f'        </div>\n'
         f'        <script type="application/ld+json">{ld_str}</script>\n'
     )
@@ -1089,8 +1093,8 @@ def make_related_guides(ev):
 
     return (
         f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title">あわせて読みたい栽培ガイド</h2>\n'
-        f'          <p>このイベントで出会える植物の管理・購入判断に役立つ、本サイト独自のガイド記事です。</p>\n'
+        f'          <h2 class="detail-section-title" data-kicker="GUIDE">あわせて読みたい栽培ガイド</h2>\n'
+        f'          <p class="section-note">このイベントで出会える植物の管理・購入判断に役立つ、本サイト独自のガイド記事です。</p>\n'
         f'          <ul class="related-guides-list">\n{items_html}\n          </ul>\n'
         f'          <p class="related-guides-more"><a href="/guides/">栽培ガイド一覧を見る →</a></p>\n'
         f'        </div>\n'
