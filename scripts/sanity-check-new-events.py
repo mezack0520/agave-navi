@@ -67,7 +67,7 @@ def reasons(ev):
             rs.append(f'ticketing-domain: {d}')
             break
     for d in UNRELATED_EVENT_DOMAINS:
-        if d in u:
+        if d in full:
             rs.append(f'unrelated-event-domain: {d}')
     for d in AGGREGATOR_DOMAINS:
         if d in full:
