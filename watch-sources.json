@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-11 07:03 JST",
+ "generated": "2026-07-12 06:50 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 85,
-  "awaitingNextEdition": 139,
+  "awaitingNextEdition": 140,
   "officialSiteCandidates": 37
  },
  "igAccounts": [
@@ -13,15 +13,6 @@
    "eventCount": 5,
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "plant_fks",
-   "url": "https://www.instagram.com/plant_fks/",
-   "eventCount": 2,
-   "lastEventName": "PLANT FREAKS vol.6",
-   "lastEventDate": "2026-07-10",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -67,6 +58,15 @@
    "eventCount": 2,
    "lastEventName": "サボテン多肉植物フェア 夏 (札幌)",
    "lastEventDate": "2026-07-03",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
+   "handle": "plant_fks",
+   "url": "https://www.instagram.com/plant_fks/",
+   "eventCount": 2,
+   "lastEventName": "PLANT FREAKS vol.6",
+   "lastEventDate": "2026-07-10",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -775,6 +775,16 @@
  ],
  "awaitingNextEdition": [
   {
+   "series": "PLANT FREAKS vol.6",
+   "lastSlug": "plant-freaks-vol6-2026-07",
+   "lastDate": "2026-07-10",
+   "lastEnd": "2026-07-11",
+   "monthsSinceLast": 0,
+   "igHandle": "plant_fks",
+   "officialUrl": "https://www.instagram.com/plant_fks/",
+   "recurring": true
+  },
+  {
    "series": "妙高多肉市場 vol.14",
    "lastSlug": "myoko-taniku-market-14th-2026",
    "lastDate": "2026-06-21",
@@ -1162,16 +1172,6 @@
    "monthsSinceLast": 1,
    "igHandle": "spine_note_official",
    "officialUrl": "https://www.instagram.com/spine_note_official/",
-   "recurring": false
-  },
-  {
-   "series": "魚町ボダニカルナイトマーケット",
-   "lastSlug": "uomachi-botanical-night-market-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://uomachi-mirai.com/news/417/",
    "recurring": false
   }
  ],
