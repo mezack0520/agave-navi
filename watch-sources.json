@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-12 21:47 JST",
+ "generated": "2026-07-13 06:50 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 85,
-  "awaitingNextEdition": 140,
+  "awaitingNextEdition": 148,
   "officialSiteCandidates": 38
  },
  "igAccounts": [
@@ -68,60 +68,6 @@
    "lastEventName": "PLANT FREAKS vol.6",
    "lastEventDate": "2026-07-10",
    "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "hakuhoen_enchou",
-   "url": "https://www.instagram.com/hakuhoen_enchou/",
-   "eventCount": 1,
-   "lastEventName": "多肉植物まつり2026（夜越山）",
-   "lastEventDate": "2026-07-04",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "botanical.botanical",
-   "url": "https://www.instagram.com/botanical.botanical/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL BOTANICAL KASHIMA",
-   "lastEventDate": "2026-07-11",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "yugo.black",
-   "url": "https://www.instagram.com/yugo.black/",
-   "eventCount": 1,
-   "lastEventName": "自由草市 connecting smiles VOL.1 滋賀",
-   "lastEventDate": "2026-07-11",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "green_days2026",
-   "url": "https://www.instagram.com/green_days2026/",
-   "eventCount": 1,
-   "lastEventName": "GREEN DAY'Z in HIGASHIKAWA",
-   "lastEventDate": "2026-07-11",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "delahaie_plants",
-   "url": "https://www.instagram.com/delahaie_plants/",
-   "eventCount": 1,
-   "lastEventName": "Agave Pop-Up Market in Nagoya",
-   "lastEventDate": "2026-07-12",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "joy_grove_0501",
-   "url": "https://www.instagram.com/joy_grove_0501/",
-   "eventCount": 1,
-   "lastEventName": "WILD GREEN JAM VOL.3",
-   "lastEventDate": "2026-07-12",
-   "hasUpcoming": true,
    "priority": 1
   },
   {
@@ -755,6 +701,15 @@
    "priority": 2
   },
   {
+   "handle": "hakuhoen_enchou",
+   "url": "https://www.instagram.com/hakuhoen_enchou/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物まつり2026（夜越山）",
+   "lastEventDate": "2026-07-04",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "hashisiruku",
    "url": "https://www.instagram.com/hashisiruku/",
    "eventCount": 1,
@@ -769,6 +724,51 @@
    "eventCount": 1,
    "lastEventName": "多肉祭りin石見",
    "lastEventDate": "2026-07-05",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "botanical.botanical",
+   "url": "https://www.instagram.com/botanical.botanical/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL BOTANICAL KASHIMA",
+   "lastEventDate": "2026-07-11",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "yugo.black",
+   "url": "https://www.instagram.com/yugo.black/",
+   "eventCount": 1,
+   "lastEventName": "自由草市 connecting smiles VOL.1 滋賀",
+   "lastEventDate": "2026-07-11",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "green_days2026",
+   "url": "https://www.instagram.com/green_days2026/",
+   "eventCount": 1,
+   "lastEventName": "GREEN DAY'Z in HIGASHIKAWA",
+   "lastEventDate": "2026-07-11",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "delahaie_plants",
+   "url": "https://www.instagram.com/delahaie_plants/",
+   "eventCount": 1,
+   "lastEventName": "Agave Pop-Up Market in Nagoya",
+   "lastEventDate": "2026-07-12",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "joy_grove_0501",
+   "url": "https://www.instagram.com/joy_grove_0501/",
+   "eventCount": 1,
+   "lastEventName": "WILD GREEN JAM VOL.3",
+   "lastEventDate": "2026-07-12",
    "hasUpcoming": false,
    "priority": 2
   }
@@ -912,6 +912,86 @@
    "monthsSinceLast": 0,
    "igHandle": "d.plants.s",
    "officialUrl": "https://www.instagram.com/d.plants.s/",
+   "recurring": false
+  },
+  {
+   "series": "多肉植物まつり2026（夜越山）",
+   "lastSlug": "yogoshiyama-taniku-matsuri-2026-07",
+   "lastDate": "2026-07-04",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": "hakuhoen_enchou",
+   "officialUrl": "https://www.instagram.com/hakuhoen_enchou/",
+   "recurring": false
+  },
+  {
+   "series": "BOTANICAL BOTANICAL KASHIMA",
+   "lastSlug": "botanical-botanical-kashima-2026-07",
+   "lastDate": "2026-07-11",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": "botanical.botanical",
+   "officialUrl": "https://www.instagram.com/botanical.botanical/",
+   "recurring": false
+  },
+  {
+   "series": "自由草市 connecting smiles VOL.1 滋賀",
+   "lastSlug": "jiyu-kusaichi-vol1-shiga-2026-07",
+   "lastDate": "2026-07-11",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": "yugo.black",
+   "officialUrl": "https://www.instagram.com/yugo.black/",
+   "recurring": false
+  },
+  {
+   "series": "GREEN DAY'Z in HIGASHIKAWA",
+   "lastSlug": "green-dayz-higashikawa-2026-07",
+   "lastDate": "2026-07-11",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": "green_days2026",
+   "officialUrl": "https://www.instagram.com/green_days2026/",
+   "recurring": false
+  },
+  {
+   "series": "BINGO BOTANICAL BASE vol.1",
+   "lastSlug": "bingo-botanical-base-vol1-fukuyama-2026-07",
+   "lastDate": "2026-07-12",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": null,
+   "recurring": false
+  },
+  {
+   "series": "Plants Hobbyist",
+   "lastSlug": "plants-hobbyist-niigata-2026-07",
+   "lastDate": "2026-07-12",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.instagram.com/p/DYzZjhGD92z/",
+   "recurring": false
+  },
+  {
+   "series": "Agave Pop-Up Market in Nagoya",
+   "lastSlug": "agave-popup-market-nagoya-2026-07",
+   "lastDate": "2026-07-12",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": "delahaie_plants",
+   "officialUrl": "https://www.instagram.com/delahaie_plants/",
+   "recurring": false
+  },
+  {
+   "series": "WILD GREEN JAM VOL.3",
+   "lastSlug": "wild-green-jam-vol3-2026-07",
+   "lastDate": "2026-07-12",
+   "lastEnd": "2026-07-12",
+   "monthsSinceLast": 0,
+   "igHandle": "joy_grove_0501",
+   "officialUrl": "https://www.instagram.com/joy_grove_0501/",
    "recurring": false
   },
   {
@@ -1092,86 +1172,6 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": null,
-   "recurring": false
-  },
-  {
-   "series": "古民家さぼてんオープンハウス",
-   "lastSlug": "kominka-saboten-openhouse-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-13",
-   "monthsSinceLast": 1,
-   "igHandle": "kominkasaboten",
-   "officialUrl": "https://www.instagram.com/kominkasaboten/",
-   "recurring": false
-  },
-  {
-   "series": "サボテン・多肉植物展 ーユーフォルビア属ー",
-   "lastSlug": "sakuya-konohana-cactus-succulent-euphorbia-2026-06",
-   "lastDate": "2026-06-11",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://www.sakuyakonohana.jp/event/22013/",
-   "recurring": false
-  },
-  {
-   "series": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
-   "lastSlug": "wako-jurin-unique-plants-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://www.seibu-green.co.jp/wako-jurin/event/2026050316455312458.html",
-   "recurring": false
-  },
-  {
-   "series": "PLANTS JAMBOREE 2026",
-   "lastSlug": "plants-jamboree-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": "plants_jamboree",
-   "officialUrl": "https://www.instagram.com/plants_jamboree/",
-   "recurring": false
-  },
-  {
-   "series": "BOTANICAL BREAK 2026",
-   "lastSlug": "botanical-break-natori-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://kuro-shiba.net/succulentplant-043/",
-   "recurring": false
-  },
-  {
-   "series": "植祭 植物で暮らしを楽しくする",
-   "lastSlug": "shokusai-kakegawa-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": false
-  },
-  {
-   "series": "第4回 蝙蝠蘭の市",
-   "lastSlug": "koumori-ran-no-ichi-vol4-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://www.enjoytokyo.jp/event/2002278/",
-   "recurring": false
-  },
-  {
-   "series": "SPINE NOTE",
-   "lastSlug": "spine-note-shimonoseki-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-14",
-   "monthsSinceLast": 1,
-   "igHandle": "spine_note_official",
-   "officialUrl": "https://www.instagram.com/spine_note_official/",
    "recurring": false
   }
  ],
