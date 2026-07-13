@@ -153,9 +153,28 @@ jobs:
           except Exception:
               pass
           today = date.today().strftime('%Y/%m/%d')
+          # 要人間判断キュー(各スケジュールタスクが積む)を読み込み
+          judgments = []
+          try:
+              with open('pending-judgments.json') as f:
+                  judgments = json.load(f).get('items', [])
+          except Exception:
+              pass
           lines = []
           lines.append("【アガベイベントナビ】イベント定期チェック結果")
           lines.append(f"チェック日: {today}")
+          if judgments:
+              lines.append("")
+              lines.append(f"━━━ 🙋 あなたの判断が必要です（{len(judgments)}件）━━━")
+              for j in judgments:
+                  lines.append(f"■ [{j.get('source','?')}] {j.get('title','')} ({j.get('date','')})")
+                  if j.get('detail'):
+                      lines.append(f"  {j['detail']}")
+                  if j.get('proposal'):
+                      lines.append(f"  → 提案: {j['proposal']}")
+                  lines.append("")
+              lines.append("対応はCoworkでClaudeに指示してください（例:「キューの◯◯を承認」）。対応済みの項目は各タスクが自動で消し込みます。")
+              lines.append("")
           lines.append("")
           lines.append("━━━ サマリー ━━━")
           lines.append(f"総イベント数: {data['total_events']}")
@@ -213,6 +232,10 @@ jobs:
           lines.append("アガベイベントナビ https://agave-navi.com")
           with open('email-body.txt', 'w') as f:
               f.write('\n'.join(lines))
+          subj_prefix = f"【要判断{len(judgments)}件】" if judgments else ""
+          import os
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"subj_prefix={subj_prefix}\n")
           print('\n'.join(lines))
           PYEOF
           else
@@ -229,7 +252,7 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "【アガベイベント】定期チェック結果 agave-navi ${{ steps.date.outputs.today }}"
+          subject: "${{ steps.emailbody.outputs.subj_prefix }}【アガベイベント】定期チェック結果 agave-navi ${{ steps.date.outputs.today }}"
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: file://email-body.txt
