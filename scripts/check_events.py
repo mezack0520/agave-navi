@@ -61,7 +61,8 @@ def main():
         'past_events': [],
         'upcoming_events': [],
         'today_events': [],
-        'url_results': []
+        'url_results': [],
+        'implausible': []
     }
 
     for ev in events:
@@ -118,6 +119,34 @@ def main():
             if not url_result['alive'] and status_code != 0:
                 results['dead_links'].append(url_result)
 
+        # 出力妥当性チェック(開催前のみ)。実例: 入場料33,000円(アパレル価格の混入)、
+        # 別イベントの説明文混入、日付なしupcoming — いずれも「機構は正常・中身が異常」で
+        # 人間の指摘まで表面化しなかったクラスの問題を毎日検知する。
+        _end_pl = ev.get('dateEnd') or ev_date
+        _is_future = (not _end_pl) or _end_pl >= today
+        if _is_future and ev.get('status') == 'upcoming':
+            _issues = []
+            import re as _re_pl
+            _adm = ev.get('admission') or ''
+            _m = _re_pl.search(r'(\d{1,3}(?:,\d{3})+|\d{4,})', _adm.replace('￥','').replace('¥',''))
+            if _m:
+                _val = int(_m.group(1).replace(',', ''))
+                if _val >= 5000:
+                    _issues.append(f'入場料が異常に高い({_adm}) — 別商品の価格混入の疑い')
+            _desc = ev.get('description') or ''
+            for _kw in ('新作コレクション', 'アパレル販売', 'フィギュア', 'ワンマンライブ', 'チケット絶賛', 'コスメ'):
+                if _kw in _desc:
+                    _issues.append(f'説明文に植物イベントらしくない語({_kw}) — 別イベント文の混入の疑い')
+                    break
+            if not ev_date:
+                _issues.append('開催日なしのupcoming — 日付の裏取りが必要')
+            _name_l = (name or '').lower()
+            _u_l = ((ev.get('url') or '') + (ev.get('sourceUrl') or '')).lower()
+            if _u_l and any(x in _u_l for x in ('goodsmile', 'comiket', 'wonfes', 'designfesta')):
+                _issues.append('URLが植物と無関係の有名イベントドメイン')
+            if _issues:
+                results['implausible'].append({'slug': slug, 'name': name, 'issues': _issues})
+
         # 今後のイベント
         if ev_date and ev_date >= today:
             results['upcoming_events'].append({
@@ -151,6 +180,7 @@ def main():
     print(f"今後のイベント: {len(results['upcoming_events'])}")
     print(f"過去のイベント: {len(results['past_events'])}")
     print(f"詳細未定(TBD): {len(results['tbd_events'])}")
+    print(f"内容妥当性フラグ: {len(results['implausible'])}")
     print(f"リンク切れ: {len(results['dead_links'])}")
     print()
 

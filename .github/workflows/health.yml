@@ -212,6 +212,14 @@ jobs:
                   lines.append(f"  ステータス: HTTP {dl['statusCode']}")
                   lines.append(f"  詳細: https://agave-navi.com/events/{dl['slug']}.html")
                   lines.append("")
+          if data.get('implausible'):
+              lines.append("━━━ 🧪 内容の異常を自動検知（要確認） ━━━")
+              for ip in data['implausible']:
+                  lines.append(f"・{ip['name']}")
+                  for iss in ip['issues']:
+                      lines.append(f"  - {iss}")
+                  lines.append(f"  詳細: https://agave-navi.com/events/{ip['slug']}.html")
+                  lines.append("")
           if data['tbd_events']:
               lines.append("━━━ 📋 詳細未定イベント（要確認） ━━━")
               for tbd in data['tbd_events']:

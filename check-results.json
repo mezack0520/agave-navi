@@ -1,7 +1,15 @@
 {
   "check_date": "2026-07-13",
-  "total_events": 210,
-  "dead_links": [],
+  "total_events": 219,
+  "dead_links": [
+    {
+      "slug": "green-days-amu-oita-2026-07",
+      "name": "GREEN DAYS at AMU",
+      "sourceUrl": "https://www.vandaka-plants.com/",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [],
   "past_events": [
     {
@@ -1391,9 +1399,91 @@
       "location": "二子玉川ライズ",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.rise.sc/"
+    },
+    {
+      "slug": "botanical-market-mie-2026-07",
+      "name": "BOTANICAL MARKET MIE vol.last",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-20",
+      "location": "三重明和インキュベーションセンター（ブライトガーデン明和内）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/botanical.market.mie/"
+    },
+    {
+      "slug": "seedpot-summer-fair-2026",
+      "name": "Seedpot Summer Fair 2026",
+      "date": "2026-07-17",
+      "dateEnd": "2026-07-19",
+      "location": "小島舎Seedpot温室",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://x.com/Seedpot_/status/2050021426590363724"
+    },
+    {
+      "slug": "tropical-fes-kanazawabunko-2026-07",
+      "name": "トロピカルフェス 2026",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-19",
+      "location": "グリーンファーム金沢本店",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/greenfarmkanazawa/"
+    },
+    {
+      "slug": "sakura-night-marche-2026-07",
+      "name": "ナイトマルシェ（さくら植物園）",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-18",
+      "location": "さくら植物園",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/sakura_shokubutsuen/"
+    },
+    {
+      "slug": "playfulness-nagoya-2026-07",
+      "name": "PLAYFULNESS",
+      "date": "2026-07-19",
+      "dateEnd": "2026-07-19",
+      "location": "Rental space shinsakae",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DaCo91tEdz4/"
+    },
+    {
+      "slug": "botanical-ajito-fukuoka-2026-07",
+      "name": "BOTANICAL AJITO",
+      "date": "2026-07-20",
+      "dateEnd": "2026-07-20",
+      "location": "FUKUOKA EFFECT本館",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/fukuoka_effect/"
+    },
+    {
+      "slug": "green-days-amu-oita-2026-07",
+      "name": "GREEN DAYS at AMU",
+      "date": "2026-07-17",
+      "dateEnd": "2026-07-20",
+      "location": "アミュプラザおおいた 1階イーストガーデン",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.vandaka-plants.com/"
+    },
+    {
+      "slug": "townpal-commons-ishigaki-2026-07",
+      "name": "珍奇植物イベント「本屋はもっと、楽しくなる」",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-25",
+      "location": "TOWNPAL COMMONS（タウンパルやまだ）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/yamada_ishigaki/"
     }
   ],
-  "today_events": [],
+  "today_events": [
+    {
+      "slug": "mollis-exhibit-kinto-2026",
+      "name": "MOLLIS EXHIBIT 2026",
+      "date": "2026-07-10",
+      "dateEnd": "2026-08-27",
+      "location": "KINTO STORE Tokyo（中目黒）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://kinto.co.jp/blogs/news/mollis-exhibit-2026"
+    }
+  ],
   "url_results": [
     {
       "slug": "plants-united-kumamoto-2026-08",
@@ -1457,6 +1547,70 @@
       "sourceUrl": "https://www.rise.sc/",
       "statusCode": 200,
       "alive": true
+    },
+    {
+      "slug": "botanical-market-mie-2026-07",
+      "name": "BOTANICAL MARKET MIE vol.last",
+      "sourceUrl": "https://www.instagram.com/botanical.market.mie/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "seedpot-summer-fair-2026",
+      "name": "Seedpot Summer Fair 2026",
+      "sourceUrl": "https://x.com/Seedpot_/status/2050021426590363724",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "tropical-fes-kanazawabunko-2026-07",
+      "name": "トロピカルフェス 2026",
+      "sourceUrl": "https://www.instagram.com/greenfarmkanazawa/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "sakura-night-marche-2026-07",
+      "name": "ナイトマルシェ（さくら植物園）",
+      "sourceUrl": "https://www.instagram.com/sakura_shokubutsuen/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "playfulness-nagoya-2026-07",
+      "name": "PLAYFULNESS",
+      "sourceUrl": "https://www.instagram.com/p/DaCo91tEdz4/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "botanical-ajito-fukuoka-2026-07",
+      "name": "BOTANICAL AJITO",
+      "sourceUrl": "https://www.instagram.com/fukuoka_effect/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "green-days-amu-oita-2026-07",
+      "name": "GREEN DAYS at AMU",
+      "sourceUrl": "https://www.vandaka-plants.com/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "townpal-commons-ishigaki-2026-07",
+      "name": "珍奇植物イベント「本屋はもっと、楽しくなる」",
+      "sourceUrl": "https://www.instagram.com/yamada_ishigaki/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "mollis-exhibit-kinto-2026",
+      "name": "MOLLIS EXHIBIT 2026",
+      "sourceUrl": "https://kinto.co.jp/blogs/news/mollis-exhibit-2026",
+      "statusCode": 200,
+      "alive": true
     }
-  ]
+  ],
+  "implausible": []
 }
