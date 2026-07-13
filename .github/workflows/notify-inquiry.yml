@@ -1,0 +1,31 @@
+# 問い合わせ通知メール — repository_dispatch(notify-inquiry) で発火
+# スケジュールタスク(event-listing-review)がフォーム回答の新着を検知して叩く。
+# 認証は health.yml と同じ GMAIL_USER / GMAIL_APP_PASSWORD secrets を流用。
+name: Notify Inquiry
+
+on:
+  repository_dispatch:
+    types: [notify-inquiry]
+
+jobs:
+  mail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send inquiry notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "【アガベイベントナビ】問い合わせ: ${{ github.event.client_payload.subject }}"
+          to: yuji.mezaki@gmail.com
+          from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
+          body: |
+            サイトのお問い合わせフォームに新しい回答があります。
+
+            ${{ github.event.client_payload.body }}
+
+            回答シート:
+            https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit
