@@ -186,6 +186,10 @@ jobs:
           lines.append(f"詳細未定(TBD): {len(data['tbd_events'])}")
           lines.append(f"リンク切れ: {len(data['dead_links'])}")
           lines.append("")
+          lines.append("━━━ ✅ 自動チェック結果（毎日実行・0件が正常） ━━━")
+          lines.append(f"要判断キュー: {len(judgments)}件 / 内容異常の検知: {len(data.get('implausible') or [])}件 / リンク切れ: {len(data['dead_links'])}件 / 詳細未定: {len(data['tbd_events'])}件")
+          lines.append("※件数が1以上のときだけ、このすぐ下に詳細が展開されます。")
+          lines.append("")
           if new_added['count'] > 0:
               lines.append(f"━━━ 🆕 本日追加イベント（{new_added['count']}件） ━━━")
               for ne in new_added['events']:

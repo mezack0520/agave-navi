@@ -95,6 +95,14 @@ def main():
                 'note': '日時・詳細未確定'
             })
 
+        # bot遮断ドメインは死活チェック対象外(人間には正常表示・機械検証不能。
+        # 実例: vandaka-plants.com が statusCode -1 で誤検知 2026-07-14)
+        BOT_WALLED = ('x.com', 'twitter.com', 'instagram.com', 'facebook.com', 'vandaka-plants.com')
+        if source_url and any(d in source_url.lower() for d in BOT_WALLED):
+            source_url_check_skip = True
+        else:
+            source_url_check_skip = False
+
         # URL死活チェック(終了30日超のイベントは対象外。
         # 主催者が告知ページを消すのは自然で、古い切れリンクを毎日報告しても積み上がるだけのため)
         from datetime import datetime as _dt, timedelta as _td
@@ -105,7 +113,7 @@ def main():
                 _recent = _dt.strptime(_end, '%Y-%m-%d') >= _dt.strptime(today, '%Y-%m-%d') - _td(days=30)
             except ValueError:
                 pass
-        if source_url and _recent:
+        if source_url and _recent and not source_url_check_skip:
             status_code = check_url(source_url)
             url_result = {
                 'slug': slug,
