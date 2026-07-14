@@ -1,4 +1,29 @@
 {
- "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
- "items": []
+  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
+  "items": [
+    {
+      "id": "event-monitor:date:shokuchu-tokubetsu-tenji-flowercenter-2026-07",
+      "date": "2026-07-14",
+      "source": "event-monitor",
+      "title": "shokuchu-tokubetsu-tenji-flowercenter-2026-07 の日付要確認",
+      "detail": "shokuchu-tokubetsu-tenji-flowercenter-2026-07: 日付崩れだがtime等で確定不能・要確認 (2026-07-18~2026-08-25)",
+      "proposal": "会期が31日超のため機械検出。長期展示/フェスなら正常。公式ソースで会期を確認のうえ、正しければ該当イベントに autoDateUpdate:false を付けて再検出停止、誤りなら正しい日付をご指示ください。"
+    },
+    {
+      "id": "event-monitor:date:fumakilla-kadan-fes-2026",
+      "date": "2026-07-14",
+      "source": "event-monitor",
+      "title": "fumakilla-kadan-fes-2026 の日付要確認",
+      "detail": "fumakilla-kadan-fes-2026: 日付崩れだがtime等で確定不能・要確認 (2026-03-16~2026-04-26)",
+      "proposal": "会期が31日超のため機械検出。長期展示/フェスなら正常。公式ソースで会期を確認のうえ、正しければ該当イベントに autoDateUpdate:false を付けて再検出停止、誤りなら正しい日付をご指示ください。"
+    },
+    {
+      "id": "event-monitor:url:nagomi-marche-kazo-2026-11",
+      "date": "2026-07-14",
+      "source": "event-monitor",
+      "title": "nagomi-marche-kazo-2026-11 のURL要確認",
+      "detail": "nagomi-marche-kazo-2026-11: urlが2023年のURLを参照(イベント2026年) https://www.instagram.com/nagomi_marche_2023/ / nagomi-marche-kazo-2026-11: sourceUrlが2023年のURLを参照(イベント2026年) https://www.instagram.com/nagomi_marche_2023/",
+      "proposal": "URLに過年の数字を含むため機械検出。Instagramハンドル名(例: _2023)に年が入るだけの恒常アカウントなら正常でURLは正しい。公式アカウントか確認のうえ、正しければ対応不要・誤りなら正しいURLをご指示ください。"
+    }
+  ]
 }
