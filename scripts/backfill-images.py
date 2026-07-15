@@ -64,6 +64,8 @@ def is_quality_image_url(img_url):
     """Image URL acceptance: reject aggregator-sourced / generic-named / unrelated-domain images."""
     if not img_url:
         return False
+    if img_url.startswith('http://'):
+        return False  # 混在コンテンツ防止(httpsのみ受け入れ)
     if _url_contains_aggregator(img_url):
         return False
     if _GENERIC_IMG_RE.search(img_url):

@@ -3,7 +3,7 @@
    Airbnb-inspired, No Green, Sharp & Modern
    ======================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+/* Webフォント廃止(2026-07-15): @import連鎖でFCP+約8秒。システムフォントで描画する */
 
 :root {
     --black: #111;
@@ -14,7 +14,7 @@
     --gray-100: #fafafa;
     --gray-200: #f0f0f0;
     --gray-300: #ddd;
-    --gray-400: #b0b0b0;
+    --gray-400: #767676;
     --gray-500: #717171;
     --gray-600: #484848;
     --text-color: #222;
@@ -37,7 +37,7 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic UI', Meiryo, 'Noto Sans JP', sans-serif;
     background-color: var(--white);
     color: var(--text-color);
     line-height: 1.6;
@@ -737,7 +737,7 @@ body.no-scroll {
     display: inline-block;
     padding: 0.15rem 0.55rem;
     background-color: #eef2f7;
-    color: #4a6fa5;
+    color: #3d5c88;
     border-radius: 4px;
     font-size: 0.7rem;
     font-weight: 600;
@@ -838,8 +838,12 @@ main {
     transform: translateY(-2px);
 }
 
-.event-card.event-ended {
-    opacity: 0.5;
+.event-card.event-ended .event-thumb {
+    opacity: 0.55;
+}
+.event-card.event-ended .event-title,
+.event-card.event-ended .event-description {
+    color: var(--gray-500);
 }
 
 /* Card thumbnail image */
@@ -1006,8 +1010,8 @@ main {
     background-color: #636e72;
 }
 .event-status.status-ended {
-    background-color: #b2bec3;
-    color: var(--gray-500);
+    background-color: #e6e6e6;
+    color: #444;
 }
 
 .event-title {
@@ -1726,7 +1730,7 @@ main {
 }
 
 .footer-nav a {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.78);
     font-size: 0.85rem;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -1741,7 +1745,7 @@ main {
 .footer-copy {
     text-align: center;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.66);
     padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
