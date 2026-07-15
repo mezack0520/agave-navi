@@ -1,4 +1,21 @@
 {
  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
- "items": []
+ "items": [
+  {
+   "id": "event-monitor:url:mebuki-sai-2026",
+   "date": "2026-07-15",
+   "source": "event-monitor",
+   "title": "mebuki-sai-2026 の日付/URL要確認",
+   "detail": "mebuki-sai-2026: urlが2024年のURLを参照(イベント2026年) https://www.toritsuko.metro.tokyo.lg.jp/event/20240909-16660/",
+   "proposal": "正しければ『◯◯は正しい』とCoworkで一言（urlCheckOk:trueを付けます）。修正が必要なら正しいURLを指示"
+  },
+  {
+   "id": "event-monitor:url:plants-2306-3rd-anniversary-2026",
+   "date": "2026-07-15",
+   "source": "event-monitor",
+   "title": "plants-2306-3rd-anniversary-2026 の日付/URL要確認",
+   "detail": "plants-2306-3rd-anniversary-2026: urlが2025年のURLを参照(イベント2026年) https://takez.jp/event-calendar-kyushu-shikoku-2025/",
+   "proposal": "正しければ『◯◯は正しい』とCoworkで一言（urlCheckOk:trueを付けます）。修正が必要なら正しいURLを指示"
+  }
+ ]
 }
