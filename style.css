@@ -2947,15 +2947,15 @@ main {
 .series-list li:last-child,.nearby-list li:last-child{border-bottom:none}
 .series-list a,.nearby-list a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}
 .series-list a:hover,.nearby-list a:hover{text-decoration-color:#111}
-.series-meta,.nearby-meta{display:block;font-size:.82em;color:#888;margin-top:.15em}
-.series-state{display:inline-block;font-size:.72em;color:#999;border:1px solid #ddd;border-radius:3px;padding:0 .4em;margin-left:.5em;vertical-align:middle}
+.series-meta,.nearby-meta{display:block;font-size:.82em;color:#6e6e6e;margin-top:.15em}
+.series-state{display:inline-block;font-size:.72em;color:#6e6e6e;border:1px solid #ddd;border-radius:3px;padding:0 .4em;margin-left:.5em;vertical-align:middle}
 .nearby-date{font-weight:700;font-size:.88em;color:#333;margin-right:.4em;font-variant-numeric:tabular-nums}
 .detail-faq .faq-item{margin:.9em 0;padding-bottom:.9em;border-bottom:1px solid #efefef}
 .detail-faq .faq-item:last-of-type{border-bottom:none;padding-bottom:0}
 .detail-faq .faq-q{font-size:.98em;font-weight:700;color:#111;margin:0 0 .35em}
-.detail-faq .faq-q::before{content:"Q. ";color:#999}
+.detail-faq .faq-q::before{content:"Q. ";color:#6e6e6e}
 .detail-faq .faq-a{margin:0;color:#444;line-height:1.75}
-.detail-faq .faq-a::before{content:"A. ";color:#999;font-weight:700}
+.detail-faq .faq-a::before{content:"A. ";color:#6e6e6e;font-weight:700}
 .detail-mission{background:#fafafa;border:1px solid #eee;border-radius:8px;padding:.8em 1em}
 .mission-note{margin:0;font-size:.85em;color:#666;line-height:1.7}
 .mission-note a{color:#444}
@@ -3003,10 +3003,10 @@ main {
 
 /* === detail 見出し/カードUI刷新 2026-07 === */
 .detail-section-title{position:relative;font-size:1.15rem;font-weight:900;letter-spacing:-.01em;color:#111;margin:0 0 .8em;padding-bottom:.55em;border-bottom:2px solid #111}
-.detail-section-title::before{content:attr(data-kicker);display:block;font-size:.62rem;font-weight:700;letter-spacing:.22em;color:#b5b5b5;margin-bottom:.35em}
+.detail-section-title::before{content:attr(data-kicker);display:block;font-size:.62rem;font-weight:700;letter-spacing:.22em;color:#767676;margin-bottom:.35em}
 .detail-section-title:not([data-kicker])::before{content:none}
 .detail-section{margin:2.4rem 0}
-.section-note{font-size:.85rem;color:#888;line-height:1.75;margin:.2em 0 1em}
+.section-note{font-size:.85rem;color:#6e6e6e;line-height:1.75;margin:.2em 0 1em}
 
 .mini-grid{display:grid;grid-template-columns:1fr;gap:.5rem;margin-top:.9em}
 .mini-card{display:flex;align-items:center;gap:.85rem;border:1px solid #e7e7e7;border-radius:9px;padding:.62rem .85rem;text-decoration:none;color:inherit;background:#fff;transition:border-color .15s,transform .15s,box-shadow .15s}
@@ -3017,8 +3017,8 @@ main {
 .mini-card.is-ended .mc-date{color:#b0b0b0}
 .mc-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:.15em}
 .mc-name{font-weight:700;font-size:.95rem;color:#111;line-height:1.4}
-.mc-meta{font-size:.78rem;color:#999}
-.mc-state{flex:none;margin-left:auto;font-size:.7rem;color:#999;border:1px solid #ddd;border-radius:4px;padding:.15em .5em}
+.mc-meta{font-size:.78rem;color:#6e6e6e}
+.mc-state{flex:none;margin-left:auto;font-size:.7rem;color:#6e6e6e;border:1px solid #ddd;border-radius:4px;padding:.15em .5em}
 @media (min-width:769px){.mini-grid{grid-template-columns:1fr 1fr}}
 
 /* === event-hero 編集誌型レイアウト 2026-07 === */
@@ -3030,7 +3030,7 @@ main {
 .eh-title{font-size:clamp(1.75rem,5.2vw,2.7rem);font-weight:900;letter-spacing:-.022em;line-height:1.16;margin:.45em 0 .55em;color:#111}
 .eh-spec{border-top:2px solid #111;margin-top:.2rem}
 .eh-spec .info-row{display:grid;grid-template-columns:7.2em 1fr;gap:0 1rem;align-items:baseline;padding:.72em .1em;border-bottom:1px solid #eaeaea;margin:0}
-.eh-spec .info-label{font-size:.78rem;font-weight:700;color:#999;letter-spacing:.05em}
+.eh-spec .info-label{font-size:.78rem;font-weight:700;color:#707070;letter-spacing:.05em}
 .eh-spec .info-label .i{vertical-align:-2px;margin-right:.4em;color:#c2c2c2}
 .eh-spec .info-value{font-size:.95rem;color:#111;line-height:1.65;text-align:left}
 .eh-spec .info-value a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}

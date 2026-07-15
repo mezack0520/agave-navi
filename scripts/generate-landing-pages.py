@@ -405,7 +405,7 @@ def main():
         title='新着掲載イベント', description='アガベ・塊根植物・多肉植物イベントの新着掲載情報。当サイトに最近追加されたイベントを掲載日順に一覧できます。',
         keywords='新着,植物イベント,アガベ,即売会', canonical=f'{DOMAIN}/new/', root='../',
         breadcrumb_jsonld=bc_jsonld(n_bc), robots_meta='<meta name="robots" content="index,follow">')
-    n_style = '<style>.new-badge{display:inline-block;font-size:.62em;font-weight:700;color:#fff;background:#111;border-radius:3px;padding:.1em .45em;margin-left:.5em;vertical-align:middle}.lc-added{font-size:.78rem;color:#999;margin-top:.35rem}.ended-note{color:#999;font-size:.85em;margin-left:.3em}</style>'
+    n_style = '<style>.new-badge{display:inline-block;font-size:.62em;font-weight:700;color:#fff;background:#111;border-radius:3px;padding:.1em .45em;margin-left:.5em;vertical-align:middle}.lc-added{font-size:.78rem;color:#6e6e6e;margin-top:.35rem}.ended-note{color:#999;font-size:.85em;margin-left:.3em}</style>'
     n_intro = ('<p>当サイトのデータベースに最近追加されたイベント30件を、掲載日の新しい順に並べています。'
                '毎日の自動収集と手動確認で随時追加しているため、定期的にチェックすると新しいイベントをいち早く見つけられます。'
                '開催日順に探す場合は<a href="/">イベント一覧</a>、購読型で受け取りたい場合は<a href="/calendar.html">カレンダー(iCal対応)</a>や<a href="/rss.xml">RSS</a>もご利用ください。</p>')

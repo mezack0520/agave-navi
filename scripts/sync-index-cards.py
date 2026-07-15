@@ -33,7 +33,7 @@ def img_html(image_url, alt, eager=False):
     # 先頭カード(LCP候補)はeager+fetchpriority、それ以外はlazyで初期ロードを軽くする
     perf = 'decoding="async" fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     return (f'<div class="event-thumb"><img src="{html_attr_escape(image_url)}" '
-            f'alt="{html_attr_escape(alt)}" {perf} referrerpolicy="no-referrer" '
+            f'alt="{html_attr_escape(alt)}" width="640" height="360" {perf} referrerpolicy="no-referrer" '
             f"onerror=\"this.parentElement.classList.add('event-no-image');this.remove();\""
             f'></div>')
 
@@ -109,6 +109,28 @@ def main():
     html, stale_removed = remove_stale_cards(html, set(by_slug.keys()))
     if stale_removed:
         print(f'stale cards removed: {stale_removed}')
+
+    # 終了イベントカードの間引き: 直近12件のみ静的DOMに残す。
+    # 全終了カード(168件超)を埋め込むとHTML450KB/DOM4900ノードになり
+    # モバイルのパース・レイアウトが重くなるため(2026-07-15 PageSpeed対応)。
+    # 古い終了イベントはアーカイブページ(/archive/)で閲覧できる。
+    from datetime import date as _date
+    _today = _date.today().isoformat()
+    KEEP_PAST = 12
+    past_cards = []  # (end_date, slug)
+    for m in re.finditer(r'<div class="event-card[^"]*"[^>]*data-slug="([^"]+)"[^>]*>', html):
+        slug_m = m.group(1)
+        ev_m = by_slug.get(slug_m)
+        if not ev_m:
+            continue
+        end_m = ev_m.get('dateEnd') or ev_m.get('date') or ''
+        if end_m and end_m < _today:
+            past_cards.append((end_m, slug_m))
+    past_cards.sort(reverse=True)
+    prune = {s for _, s in past_cards[KEEP_PAST:]}
+    if prune:
+        html, _removed2 = remove_stale_cards(html, set(by_slug.keys()) - prune)
+        print(f'pruned old past cards: {len(prune)} (kept latest {KEEP_PAST})')
 
     new_chunks = []
     last_end = 0
