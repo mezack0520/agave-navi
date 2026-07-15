@@ -1,10 +1,10 @@
 {
- "generated": "2026-07-15 09:40 JST",
+ "generated": "2026-07-15 14:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 96,
+  "igAccounts": 97,
   "awaitingNextEdition": 148,
-  "officialSiteCandidates": 42
+  "officialSiteCandidates": 43
  },
  "igAccounts": [
   {
@@ -138,6 +138,15 @@
    "url": "https://www.instagram.com/yukuhashisyokubutsuen/",
    "eventCount": 1,
    "lastEventName": "BOTANICAL AJITO（ゆくはし植物園）",
+   "lastEventDate": "2026-07-19",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "plants.revel",
+   "url": "https://www.instagram.com/plants.revel/",
+   "eventCount": 1,
+   "lastEventName": "プチ植物フリマ in 二和園",
    "lastEventDate": "2026-07-19",
    "hasUpcoming": true,
    "priority": 1
@@ -1336,6 +1345,12 @@
    "eventDate": "2026-12-19"
   },
   {
+   "domain": "fumakilla.co.jp",
+   "url": "https://www.fumakilla.co.jp/new/6926/",
+   "eventName": "カダンフェス2026 春",
+   "eventDate": "2026-04-25"
+  },
+  {
    "domain": "toritsuko.metro.tokyo.lg.jp",
    "url": "https://www.toritsuko.metro.tokyo.lg.jp/event/20240909-16660/",
    "eventName": "芽吹祭",
@@ -1448,12 +1463,6 @@
    "url": "https://event.joyfulhonda.com/single-exp.php?id=12921&store=hitachinaka",
    "eventName": "Happy Joyful",
    "eventDate": "2026-06-06"
-  },
-  {
-   "domain": "botanicbomb.studio.site",
-   "url": "https://botanicbomb.studio.site/",
-   "eventName": "BOTANIC BOMB 10TH（ボタニックボム）",
-   "eventDate": "2026-06-07"
   }
  ]
 }
