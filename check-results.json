@@ -1,6 +1,6 @@
 {
-  "check_date": "2026-07-17",
-  "total_events": 231,
+  "check_date": "2026-07-18",
+  "total_events": 232,
   "dead_links": [],
   "tbd_events": [],
   "past_events": [
@@ -1015,24 +1015,6 @@
   ],
   "upcoming_events": [
     {
-      "slug": "seedpot-summer-fair-2026",
-      "name": "Seedpot Summer Fair 2026",
-      "date": "2026-07-17",
-      "dateEnd": "2026-07-19",
-      "location": "小島舎Seedpot温室",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://x.com/Seedpot_/status/2050021426590363724"
-    },
-    {
-      "slug": "green-days-amu-oita-2026-07",
-      "name": "GREEN DAYS at AMU",
-      "date": "2026-07-17",
-      "dateEnd": "2026-07-20",
-      "location": "アミュプラザおおいた 1階イーストガーデン",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.vandaka-plants.com/"
-    },
-    {
       "slug": "shokuchu-tokubetsu-tenji-flowercenter-2026-07",
       "name": "食虫植物特別展示",
       "date": "2026-07-18",
@@ -1220,6 +1202,15 @@
       "location": "展示会場 南船場 drapeau MINAMI SENBA",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/yell_green/"
+    },
+    {
+      "slug": "isij-summer-festival-2026",
+      "name": "多肉植物サマーフェスティバル 2026",
+      "date": "2026-07-26",
+      "dateEnd": "2026-07-26",
+      "location": "狭山スキー場",
+      "eventStatus": "confirmed",
+      "sourceUrl": "http://isij.net/"
     },
     {
       "slug": "plants-united-kumamoto-2026-08",
@@ -1600,6 +1591,51 @@
       "location": "アミュプラザおおいた 1階イーストガーデン",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.vandaka-plants.com/"
+    },
+    {
+      "slug": "shokuchu-tokubetsu-tenji-flowercenter-2026-07",
+      "name": "食虫植物特別展示",
+      "date": "2026-07-18",
+      "dateEnd": "2026-08-25",
+      "location": "兵庫県立フラワーセンター 大温室",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
+      "slug": "botanical-market-mie-2026-07",
+      "name": "BOTANICAL MARKET MIE vol.last",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-20",
+      "location": "三重明和インキュベーションセンター（ブライトガーデン明和内）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/botanical.market.mie/"
+    },
+    {
+      "slug": "tropical-fes-kanazawabunko-2026-07",
+      "name": "トロピカルフェス 2026",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-19",
+      "location": "グリーンファーム金沢本店",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/greenfarmkanazawa/"
+    },
+    {
+      "slug": "sakura-night-marche-2026-07",
+      "name": "ナイトマルシェ（さくら植物園）",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-18",
+      "location": "さくら植物園",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/sakura_shokubutsuen/"
+    },
+    {
+      "slug": "townpal-commons-ishigaki-2026-07",
+      "name": "珍奇植物イベント「本屋はもっと、楽しくなる」",
+      "date": "2026-07-18",
+      "dateEnd": "2026-07-25",
+      "location": "TOWNPAL COMMONS（タウンパルやまだ）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/yamada_ishigaki/"
     }
   ],
   "url_results": [
@@ -1607,6 +1643,13 @@
       "slug": "mollis-exhibit-kinto-2026",
       "name": "MOLLIS EXHIBIT 2026",
       "sourceUrl": "https://kinto.co.jp/blogs/news/mollis-exhibit-2026",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "isij-summer-festival-2026",
+      "name": "多肉植物サマーフェスティバル 2026",
+      "sourceUrl": "http://isij.net/",
       "statusCode": 200,
       "alive": true
     },
