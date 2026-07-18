@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-18 08:17 JST",
+ "generated": "2026-07-19 06:51 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 102,
-  "awaitingNextEdition": 148,
+  "awaitingNextEdition": 149,
   "officialSiteCandidates": 46
  },
  "igAccounts": [
@@ -93,15 +93,6 @@
    "url": "https://www.instagram.com/greenfarmkanazawa/",
    "eventCount": 1,
    "lastEventName": "トロピカルフェス 2026",
-   "lastEventDate": "2026-07-18",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "sakura_shokubutsuen",
-   "url": "https://www.instagram.com/sakura_shokubutsuen/",
-   "eventCount": 1,
-   "lastEventName": "ナイトマルシェ（さくら植物園）",
    "lastEventDate": "2026-07-18",
    "hasUpcoming": true,
    "priority": 1
@@ -924,6 +915,15 @@
    "lastEventDate": "2026-07-12",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "sakura_shokubutsuen",
+   "url": "https://www.instagram.com/sakura_shokubutsuen/",
+   "eventCount": 1,
+   "lastEventName": "ナイトマルシェ（さくら植物園）",
+   "lastEventDate": "2026-07-18",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -1148,6 +1148,16 @@
    "recurring": false
   },
   {
+   "series": "ナイトマルシェ（さくら植物園）",
+   "lastSlug": "sakura-night-marche-2026-07",
+   "lastDate": "2026-07-18",
+   "lastEnd": "2026-07-18",
+   "monthsSinceLast": 0,
+   "igHandle": "sakura_shokubutsuen",
+   "officialUrl": "https://www.instagram.com/sakura_shokubutsuen/",
+   "recurring": false
+  },
+  {
    "series": "三浦園芸 レアアロイド即売会",
    "lastSlug": "miuraengei-rare-aroid-2026-06",
    "lastDate": "2026-06-06",
@@ -1315,16 +1325,6 @@
    "monthsSinceLast": 1,
    "igHandle": "botayoko",
    "officialUrl": "https://www.instagram.com/botayoko/",
-   "recurring": false
-  },
-  {
-   "series": "多肉植物サボテン展示即売会 in 敷島公園バラ園 2026",
-   "lastSlug": "gunma-cactus-shikishima-2026-06",
-   "lastDate": "2026-06-13",
-   "lastEnd": "2026-06-13",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": null,
    "recurring": false
   }
  ],
