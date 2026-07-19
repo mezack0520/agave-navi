@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-19 13:26 JST",
+ "generated": "2026-07-20 06:53 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 104,
-  "awaitingNextEdition": 149,
+  "awaitingNextEdition": 155,
   "officialSiteCandidates": 46
  },
  "igAccounts": [
@@ -98,15 +98,6 @@
    "priority": 1
   },
   {
-   "handle": "greenfarmkanazawa",
-   "url": "https://www.instagram.com/greenfarmkanazawa/",
-   "eventCount": 1,
-   "lastEventName": "トロピカルフェス 2026",
-   "lastEventDate": "2026-07-18",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "yamada_ishigaki",
    "url": "https://www.instagram.com/yamada_ishigaki/",
    "eventCount": 1,
@@ -116,37 +107,10 @@
    "priority": 1
   },
   {
-   "handle": "mirai_engei",
-   "url": "https://www.instagram.com/mirai_engei/",
-   "eventCount": 1,
-   "lastEventName": "ミライ園芸 辺境の植物展",
-   "lastEventDate": "2026-07-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "iwabaegarden",
    "url": "https://www.instagram.com/iwabaegarden/",
    "eventCount": 1,
    "lastEventName": "NAGASAKI BIZARRE MEET UP THE 6TH TIME",
-   "lastEventDate": "2026-07-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "yukuhashisyokubutsuen",
-   "url": "https://www.instagram.com/yukuhashisyokubutsuen/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL AJITO（ゆくはし植物園）",
-   "lastEventDate": "2026-07-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "plants.revel",
-   "url": "https://www.instagram.com/plants.revel/",
-   "eventCount": 1,
-   "lastEventName": "プチ植物フリマ in 二和園",
    "lastEventDate": "2026-07-19",
    "hasUpcoming": true,
    "priority": 1
@@ -935,11 +899,47 @@
    "priority": 2
   },
   {
+   "handle": "greenfarmkanazawa",
+   "url": "https://www.instagram.com/greenfarmkanazawa/",
+   "eventCount": 1,
+   "lastEventName": "トロピカルフェス 2026",
+   "lastEventDate": "2026-07-18",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 1,
    "lastEventName": "ナイトマルシェ（さくら植物園）",
    "lastEventDate": "2026-07-18",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "mirai_engei",
+   "url": "https://www.instagram.com/mirai_engei/",
+   "eventCount": 1,
+   "lastEventName": "ミライ園芸 辺境の植物展",
+   "lastEventDate": "2026-07-19",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "yukuhashisyokubutsuen",
+   "url": "https://www.instagram.com/yukuhashisyokubutsuen/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL AJITO（ゆくはし植物園）",
+   "lastEventDate": "2026-07-19",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "plants.revel",
+   "url": "https://www.instagram.com/plants.revel/",
+   "eventCount": 1,
+   "lastEventName": "プチ植物フリマ in 二和園",
+   "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
    "priority": 2
   }
@@ -1176,6 +1176,66 @@
    "recurring": false
   },
   {
+   "series": "Seedpot Summer Fair 2026",
+   "lastSlug": "seedpot-summer-fair-2026",
+   "lastDate": "2026-07-17",
+   "lastEnd": "2026-07-19",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://x.com/Seedpot_",
+   "recurring": false
+  },
+  {
+   "series": "トロピカルフェス 2026",
+   "lastSlug": "tropical-fes-kanazawabunko-2026-07",
+   "lastDate": "2026-07-18",
+   "lastEnd": "2026-07-19",
+   "monthsSinceLast": 0,
+   "igHandle": "greenfarmkanazawa",
+   "officialUrl": "https://www.instagram.com/greenfarmkanazawa/",
+   "recurring": false
+  },
+  {
+   "series": "ミライ園芸 辺境の植物展",
+   "lastSlug": "mirai-engei-henkyo-shokubutsuten-2026-07",
+   "lastDate": "2026-07-19",
+   "lastEnd": "2026-07-19",
+   "monthsSinceLast": 0,
+   "igHandle": "mirai_engei",
+   "officialUrl": "https://www.instagram.com/mirai_engei/",
+   "recurring": false
+  },
+  {
+   "series": "PLAYFULNESS",
+   "lastSlug": "playfulness-nagoya-2026-07",
+   "lastDate": "2026-07-19",
+   "lastEnd": "2026-07-19",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": null,
+   "recurring": false
+  },
+  {
+   "series": "BOTANICAL AJITO（ゆくはし植物園）",
+   "lastSlug": "botanical-ajito-yukuhashi-2026-07",
+   "lastDate": "2026-07-19",
+   "lastEnd": "2026-07-19",
+   "monthsSinceLast": 0,
+   "igHandle": "yukuhashisyokubutsuen",
+   "officialUrl": "https://www.instagram.com/p/DaNSSwdj9m8/",
+   "recurring": false
+  },
+  {
+   "series": "プチ植物フリマ in 二和園",
+   "lastSlug": "futawaen-petit-plant-flea-2026-07",
+   "lastDate": "2026-07-19",
+   "lastEnd": "2026-07-19",
+   "monthsSinceLast": 0,
+   "igHandle": "plants.revel",
+   "officialUrl": "https://minna-ta29.com/facilities/stf771-2/",
+   "recurring": false
+  },
+  {
    "series": "三浦園芸 レアアロイド即売会",
    "lastSlug": "miuraengei-rare-aroid-2026-06",
    "lastDate": "2026-06-06",
@@ -1283,66 +1343,6 @@
    "monthsSinceLast": 1,
    "igHandle": "botariba.event",
    "officialUrl": "https://www.instagram.com/botariba.event/",
-   "recurring": false
-  },
-  {
-   "series": "ボタり場",
-   "lastSlug": "botariba-toyohashi-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": "botariba.event",
-   "officialUrl": "https://www.instagram.com/botariba.event/",
-   "recurring": false
-  },
-  {
-   "series": "AGAVISTA vol.2 2026",
-   "lastSlug": "agavista-vol2-matsuyama-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://jpn.sika.com/ja/media/media-releases/2026.html",
-   "recurring": false
-  },
-  {
-   "series": "アロイドと着生植物の祭典",
-   "lastSlug": "aroid-chakusei-saiten-yashima-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": false
-  },
-  {
-   "series": "COLLECTION PLANTS production by miuraengei 2026",
-   "lastSlug": "collection-plants-miuraengei-yukuhashi-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://takez.jp/kanto-engei-event-calendar-2026/",
-   "recurring": false
-  },
-  {
-   "series": "第3回 がまごおり多肉フェスタ in和歌山",
-   "lastSlug": "gamagori-taniku-festa-wakayama-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": "gamagori_taniku_festa",
-   "officialUrl": "https://www.instagram.com/gamagori_taniku_festa/",
-   "recurring": false
-  },
-  {
-   "series": "ボタニカル横丁（2026年6月）",
-   "lastSlug": "botanical-yokocho-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": "botayoko",
-   "officialUrl": "https://www.instagram.com/botayoko/",
    "recurring": false
   }
  ],
