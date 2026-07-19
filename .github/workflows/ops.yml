@@ -1,0 +1,101 @@
+name: Ops Dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      ops:
+        description: 'JSON配列。例: [{"op":"set-field","slug":"foo-2026","field":"url","value":"https://..."}]'
+        required: true
+        type: string
+  repository_dispatch:
+    types: [ops]
+concurrency:
+  group: events-write
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  ops:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply ops
+        id: apply
+        env:
+          OPS_WD: ${{ inputs.ops }}
+          OPS_RD: ${{ toJson(github.event.client_payload.ops) }}
+        run: |
+          python3 << 'PYEOF'
+          import json, os, sys
+          raw = (os.environ.get('OPS_WD') or '').strip()
+          if not raw or raw == 'null':
+              raw = (os.environ.get('OPS_RD') or '').strip()
+          if not raw or raw == 'null':
+              print('::error::no ops payload'); sys.exit(1)
+          ops = json.loads(raw)
+          if isinstance(ops, dict):
+              ops = [ops]
+          events_changed = False
+          def load(p):
+              with open(p, encoding='utf-8') as f:
+                  return json.load(f)
+          def dump(p, data, indent):
+              with open(p, 'w', encoding='utf-8') as f:
+                  json.dump(data, f, indent=indent, ensure_ascii=False)
+          for o in ops:
+              op = o.get('op')
+              if op == 'set-field':
+                  events = load('events.json')
+                  hit = [e for e in events if e.get('slug') == o['slug']]
+                  if not hit:
+                      print(f"::error::slug not found: {o['slug']}"); sys.exit(1)
+                  hit[0][o['field']] = o['value']
+                  dump('events.json', events, 2)
+                  events_changed = True
+                  print(f"set-field: {o['slug']}.{o['field']} = {o['value']}")
+              elif op == 'write-file':
+                  p = o['path']
+                  if p.startswith(('/', '.github/')) or '..' in p:
+                      print(f"::error::path not allowed: {p}"); sys.exit(1)
+                  d = os.path.dirname(p)
+                  if d:
+                      os.makedirs(d, exist_ok=True)
+                  with open(p, 'w', encoding='utf-8') as f:
+                      f.write(o.get('content', ''))
+                  print(f"write-file: {p} ({len(o.get('content',''))} bytes)")
+              elif op == 'delete-file':
+                  p = o['path']
+                  if p.startswith(('/', '.github/')) or '..' in p:
+                      print(f"::error::path not allowed: {p}"); sys.exit(1)
+                  if os.path.exists(p):
+                      os.remove(p)
+                      print(f"delete-file: {p}")
+                  else:
+                      print(f"delete-file: {p} (not found, skip)")
+              elif op == 'queue-remove':
+                  q = load('pending-judgments.json')
+                  before = len(q['items'])
+                  q['items'] = [i for i in q['items'] if i.get('id') != o['id']]
+                  dump('pending-judgments.json', q, 1)
+                  print(f"queue-remove: {o['id']} ({before} -> {len(q['items'])})")
+              else:
+                  print(f"::error::unknown op: {op}"); sys.exit(1)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"events_changed={'1' if events_changed else '0'}\n")
+          PYEOF
+      - name: Regenerate all static files
+        if: steps.apply.outputs.events_changed == '1'
+        run: bash scripts/build-all.sh
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git reset HEAD -- "**/__pycache__" 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore(ops): apply dispatched ops"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            echo "::warning::push failed (attempt $attempt/5); pulling --rebase and retrying..."
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then echo "::error::push failed after 5 retries"; exit 1; fi
+          done
