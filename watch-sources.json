@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-20 22:54 JST",
+ "generated": "2026-07-21 06:59 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 104,
-  "awaitingNextEdition": 155,
+  "awaitingNextEdition": 159,
   "officialSiteCandidates": 45
  },
  "igAccounts": [
@@ -13,15 +13,6 @@
    "eventCount": 5,
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "fukuoka_effect",
-   "url": "https://www.instagram.com/fukuoka_effect/",
-   "eventCount": 2,
-   "lastEventName": "BOTANICAL AJITO",
-   "lastEventDate": "2026-07-20",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -80,6 +71,15 @@
    "priority": 1
   },
   {
+   "handle": "fukuoka_effect",
+   "url": "https://www.instagram.com/fukuoka_effect/",
+   "eventCount": 2,
+   "lastEventName": "BOTANICAL AJITO",
+   "lastEventDate": "2026-07-20",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
    "handle": "hikarudo.___",
    "url": "https://www.instagram.com/hikarudo.___/",
    "eventCount": 1,
@@ -89,29 +89,11 @@
    "priority": 1
   },
   {
-   "handle": "botanical.market.mie",
-   "url": "https://www.instagram.com/botanical.market.mie/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL MARKET MIE vol.last",
-   "lastEventDate": "2026-07-18",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "yamada_ishigaki",
    "url": "https://www.instagram.com/yamada_ishigaki/",
    "eventCount": 1,
    "lastEventName": "珍奇植物イベント「本屋はもっと、楽しくなる」",
    "lastEventDate": "2026-07-18",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "iwabaegarden",
-   "url": "https://www.instagram.com/iwabaegarden/",
-   "eventCount": 1,
-   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 6TH TIME",
-   "lastEventDate": "2026-07-19",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -899,6 +881,15 @@
    "priority": 2
   },
   {
+   "handle": "botanical.market.mie",
+   "url": "https://www.instagram.com/botanical.market.mie/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL MARKET MIE vol.last",
+   "lastEventDate": "2026-07-18",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "greenfarmkanazawa",
    "url": "https://www.instagram.com/greenfarmkanazawa/",
    "eventCount": 1,
@@ -913,6 +904,15 @@
    "eventCount": 1,
    "lastEventName": "ナイトマルシェ（さくら植物園）",
    "lastEventDate": "2026-07-18",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "iwabaegarden",
+   "url": "https://www.instagram.com/iwabaegarden/",
+   "eventCount": 1,
+   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 6TH TIME",
+   "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
    "priority": 2
   },
@@ -1236,6 +1236,46 @@
    "recurring": false
   },
   {
+   "series": "GREEN DAYS at AMU",
+   "lastSlug": "green-days-amu-oita-2026-07",
+   "lastDate": "2026-07-17",
+   "lastEnd": "2026-07-20",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.vandaka-plants.com/",
+   "recurring": false
+  },
+  {
+   "series": "BOTANICAL MARKET MIE vol.last",
+   "lastSlug": "botanical-market-mie-2026-07",
+   "lastDate": "2026-07-18",
+   "lastEnd": "2026-07-20",
+   "monthsSinceLast": 0,
+   "igHandle": "botanical.market.mie",
+   "officialUrl": "https://www.instagram.com/botanical.market.mie/",
+   "recurring": false
+  },
+  {
+   "series": "NAGASAKI BIZARRE MEET UP THE 6TH TIME",
+   "lastSlug": "nagasaki-bizarre-meetup-6th-2026-07",
+   "lastDate": "2026-07-19",
+   "lastEnd": "2026-07-20",
+   "monthsSinceLast": 0,
+   "igHandle": "iwabaegarden",
+   "officialUrl": "https://www.instagram.com/iwabaegarden/",
+   "recurring": false
+  },
+  {
+   "series": "BOTANICAL AJITO",
+   "lastSlug": "botanical-ajito-fukuoka-2026-07",
+   "lastDate": "2026-07-20",
+   "lastEnd": "2026-07-20",
+   "monthsSinceLast": 0,
+   "igHandle": "fukuoka_effect",
+   "officialUrl": "https://fukuoka-effect.jp/",
+   "recurring": false
+  },
+  {
    "series": "三浦園芸 レアアロイド即売会",
    "lastSlug": "miuraengei-rare-aroid-2026-06",
    "lastDate": "2026-06-06",
@@ -1303,46 +1343,6 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://www.flarie.jp/news/jungle-marche-2026.html",
-   "recurring": false
-  },
-  {
-   "series": "Wi-Wi BOTANICAL",
-   "lastSlug": "wi-wi-botanical-minokamo-2026-06",
-   "lastDate": "2026-06-06",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": "wi_wibotanical",
-   "officialUrl": "https://www.instagram.com/wi_wibotanical/",
-   "recurring": false
-  },
-  {
-   "series": "BOTANIC BOMB 10TH（ボタニックボム）",
-   "lastSlug": "botanic-bomb-10th-kyoto-2026",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://botanicbomb.studio.site/",
-   "recurring": false
-  },
-  {
-   "series": "姫路城 奇草天外な植物市",
-   "lastSlug": "himeji-kisotengai-shokubutsuichi-2026",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://www.himeji-kanko.jp/event/1620/",
-   "recurring": false
-  },
-  {
-   "series": "ボタり場 2026 初夏",
-   "lastSlug": "botariba-2026-06",
-   "lastDate": "2026-06-07",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": "botariba.event",
-   "officialUrl": "https://www.instagram.com/botariba.event/",
    "recurring": false
   }
  ],
