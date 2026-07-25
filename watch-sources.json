@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-25 07:04 JST",
+ "generated": "2026-07-26 06:56 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 106,
-  "awaitingNextEdition": 159,
+  "awaitingNextEdition": 162,
   "officialSiteCandidates": 45
  },
  "igAccounts": [
@@ -85,15 +85,6 @@
    "eventCount": 1,
    "lastEventName": "ORDINARY『GARDEN』",
    "lastEventDate": "2026-07-03",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "yamada_ishigaki",
-   "url": "https://www.instagram.com/yamada_ishigaki/",
-   "eventCount": 1,
-   "lastEventName": "珍奇植物イベント「本屋はもっと、楽しくなる」",
-   "lastEventDate": "2026-07-18",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -908,6 +899,15 @@
    "priority": 2
   },
   {
+   "handle": "yamada_ishigaki",
+   "url": "https://www.instagram.com/yamada_ishigaki/",
+   "eventCount": 1,
+   "lastEventName": "珍奇植物イベント「本屋はもっと、楽しくなる」",
+   "lastEventDate": "2026-07-18",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "greenfarmkanazawa",
    "url": "https://www.instagram.com/greenfarmkanazawa/",
    "eventCount": 1,
@@ -1294,6 +1294,36 @@
    "recurring": false
   },
   {
+   "series": "珍奇植物イベント「本屋はもっと、楽しくなる」",
+   "lastSlug": "townpal-commons-ishigaki-2026-07",
+   "lastDate": "2026-07-18",
+   "lastEnd": "2026-07-25",
+   "monthsSinceLast": 0,
+   "igHandle": "yamada_ishigaki",
+   "officialUrl": "https://www.instagram.com/yamada_ishigaki/",
+   "recurring": false
+  },
+  {
+   "series": "パキポの園",
+   "lastSlug": "pakipo-no-sono-2026-07",
+   "lastDate": "2026-07-25",
+   "lastEnd": "2026-07-25",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.instagram.com/p/DYCbvZXk4rw/",
+   "recurring": false
+  },
+  {
+   "series": "多肉植物の販売会（富士川楽座）",
+   "lastSlug": "taniku-hanbaikai-fujikawa-rakuza-2026-07",
+   "lastDate": "2026-07-25",
+   "lastEnd": "2026-07-25",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://fujikawarakuza.co.jp/event",
+   "recurring": false
+  },
+  {
    "series": "三浦園芸 レアアロイド即売会",
    "lastSlug": "miuraengei-rare-aroid-2026-06",
    "lastDate": "2026-06-06",
@@ -1331,36 +1361,6 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://greensnap.jp/event/events/greensnap-marche-toyosu-2026/",
-   "recurring": false
-  },
-  {
-   "series": "GREEN DAYS まつやま vol.3",
-   "lastSlug": "green-days-matsuyama-vol3-2026",
-   "lastDate": "2026-06-06",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": "greendays_matsuyama",
-   "officialUrl": "https://www.instagram.com/greendays_matsuyama/",
-   "recurring": false
-  },
-  {
-   "series": "AGAVE CROSS 2026",
-   "lastSlug": "agave-cross-2026-06",
-   "lastDate": "2026-06-06",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": false
-  },
-  {
-   "series": "ジャングルマルシェ2026",
-   "lastSlug": "jungle-marche-flarie-2026",
-   "lastDate": "2026-06-06",
-   "lastEnd": "2026-06-07",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://www.flarie.jp/news/jungle-marche-2026.html",
    "recurring": false
   }
  ],
