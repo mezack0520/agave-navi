@@ -8,6 +8,10 @@
 (function () {
   'use strict';
 
+  // AdSense審査中はアフィリエイト表示を停止する。承認後 true に戻す。
+  var AFFILIATE_ENABLED = false;
+  if (!AFFILIATE_ENABLED) return;
+
   var DISPLAY_COUNT = 4;
   var ICONS = {
     pot:   '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',

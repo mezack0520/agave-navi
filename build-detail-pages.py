@@ -969,7 +969,8 @@ def _faq_pairs(ev, ctx):
 
 def make_event_faq(ev, ctx):
     pairs = _faq_pairs(ev, ctx)
-    if len(pairs) < 2:
+    # 日付・会場を言い直すだけのFAQは出さない
+    if len(pairs) < 3:
         return ''
     rows = []
     for q, a in pairs:
@@ -1001,11 +1002,9 @@ def make_event_faq(ev, ctx):
 # --- 概要セクションに足す実データ・サマリ段落 ---
 
 def make_data_summary(ev, ctx):
-    stats = ctx['stats']
     sentences = []
     d = ev.get('date') or ''
     d_end = ev.get('dateEnd') or d
-    today = ctx['today']
 
     if d:
         try:
@@ -1024,25 +1023,9 @@ def make_data_summary(ev, ctx):
         except ValueError:
             pass
 
-    pref = ev.get('prefecture')
-    if pref and pref in stats['pref_counts']:
-        n = stats['pref_counts'][pref]
-        rank = stats['pref_rank'].get(pref)
-        if rank == 1:
-            sentences.append(f'会場のある{pref}は当サイト掲載分で{n}件と、全国で最も植物イベントが多い地域です。')
-        elif rank and rank <= 3:
-            sentences.append(f'会場のある{pref}は当サイト掲載分で{n}件と、全国{rank}番目に植物イベントが多い地域です。')
-        else:
-            sentences.append(f'会場のある{pref}の植物イベントは、当サイトに{n}件掲載しています。')
-
-    cat = detect_primary_category(ev)
-    pct = stats['cat_pct'].get(cat)
-    if pct:
-        sentences.append(f'{cat}形式のイベントは当サイト掲載全体の約{pct}%を占めます。')
-
     admission = (ev.get('admission') or '')
-    if '無料' in admission and stats.get('free_pct'):
-        sentences.append(f'本イベントは入場無料です(掲載イベント中、入場無料と確認できているのは約{stats["free_pct"]}%)。')
+    if '無料' in admission:
+        sentences.append('入場は無料です。')
 
     if not sentences:
         return ''

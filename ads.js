@@ -5,6 +5,9 @@
 (function() {
   'use strict';
 
+  // AdSense審査中はアフィリエイト表示を停止する。承認後 true に戻す。
+  var AFFILIATE_ENABLED = false;
+
   // Amazon Associates トラッキングID
   var AMAZON_TAG = 'agavenavi-22';
 
@@ -131,7 +134,7 @@
 
   // === アフィリエイト横スクロールバナー生成 ===
   function renderAffiliateBar(container, count) {
-    if (!container) return;
+    if (!AFFILIATE_ENABLED || !container) return;
     if (AFFILIATE_ITEMS.length === 0) return;
     var items = shuffle(AFFILIATE_ITEMS.slice()).slice(0, count || 5);
 
