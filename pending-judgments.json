@@ -1,4 +1,13 @@
 {
- "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
- "items": []
+  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
+  "items": [
+    {
+      "id": "health-check:upcoming-meta-description-too-short",
+      "date": "2026-07-27",
+      "source": "health-check",
+      "title": "開催予定イベント53件のうち28件、meta descriptionが70文字未満でSERPスニペット枠を使い切れていない",
+      "detail": "開催予定(status=upcoming)の詳細ページ53件を全件取得して計測。meta descriptionが70文字未満のページが28件(53%)、最短は28文字(garden-link-festa-2026-10)。Weekly Enrichmentを通ったページは160文字前後まで埋まっており(life-circle-world-2026-08 等)、未処理ページがevents.jsonのdescriptionをそのまま流用して短いまま残っている。日本語検索結果のスニペットは全角70〜90文字程度まで表示されるため、30〜50文字のページは表示枠の半分以上を空けている。同じ53件でFAQPage JSON-LDも17件のみ。",
+      "proposal": "Weekly Enrichmentの処理順を「開催予定 かつ meta descriptionが70文字未満」を優先するよう並べ替える。開催が近く未エンリッチのページから消化されるため、追加のワークフローもコストも増えない。あわせて、descriptionが70文字未満のまま公開されている開催予定ページ数をHealth Checkの計測項目に加えるかを判断したい。"
+    }
+  ]
 }
