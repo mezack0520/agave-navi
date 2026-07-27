@@ -95,3 +95,8 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - Instagram/nextmeetはサーバーから読めない → Google検索スニペット経由 or ユーザーChromeで読む
 - 挿入系スクリプトは必ず冪等設計(除去→再挿入)。過去にcalendar/mapが4.2MBまで肥大した事故あり
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
+
+## 8. 履歴
+- 2026-07-27: ClaudeをTeamプランへ移行(個人→Team組織)。Coworkスケジュールタスクは移行対象外で消失したため、
+  4本(agave-event-update / event-listing-review / agave-navi-event-monitor / agave-navi-site-health-check)を
+  本書§2・§3の仕様どおり同日再作成。スケジュール・フローの変更なし
