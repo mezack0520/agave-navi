@@ -706,6 +706,17 @@ def main():
             print(f"Event not found: {args.slug}")
             sys.exit(1)
 
+    # 優先順: 開催予定かつdescription70字未満(SERPスニペット枠を使い切れないページ)を先に、
+    # 次いでその他の開催予定、最後に過去分。同群内は開催日が近い順。
+    # --limit で先頭から打ち切られるため、この並びが実質的な処理対象の選択になる。
+    # (2026-07-27 要判断 health-check:upcoming-meta-description-too-short の恒久対応)
+    def _priority(e):
+        upcoming = e.get('status') == 'upcoming'
+        short_desc = len((e.get('description') or '').strip()) < 70
+        group = 0 if (upcoming and short_desc) else (1 if upcoming else 2)
+        return (group, e.get('date') or '9999-12-31')
+    events.sort(key=_priority)
+
     results = []
     count = 0
     for event in events:

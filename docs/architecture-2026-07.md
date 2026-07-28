@@ -12,6 +12,7 @@
 | `watch-sources.json` | ウォッチ対象(IG主催者/次回待ちシリーズ/公式サイト候補)。events.jsonから毎日自動導出 | generate-watchlist.py |
 | `pending-judgments.json` | 要人間判断キュー。健全性メールに集約表示 | 各Claudeタスク(id重複禁止・解消時自削除) |
 | `inquiries-processed.json` | フォーム回答の処理済み管理 | event-listing-review |
+| `rejected-events.json` | 掲載見送り決定の記録。event-updateは掲載中のイベントを再提案しない | ユーザー決定をClaudeが記録 |
 | `crawl-sources.json` | 週次クローラの巡回先(52+自動候補) | 手動+discover_sources |
 | `check-results.json` | 日次チェック結果(メール本文の素) | health.yml |
 | `scripts/sitelib.py` | 単一情報源(スラッグ表/日付整形/共通ヘッダフッタ/CSS版数) | 手動 |
@@ -100,3 +101,6 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: ClaudeをTeamプランへ移行(個人→Team組織)。Coworkスケジュールタスクは移行対象外で消失したため、
   4本(agave-event-update / event-listing-review / agave-navi-event-monitor / agave-navi-site-health-check)を
   本書§2・§3の仕様どおり同日再作成。スケジュール・フローの変更なし
+- 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
+  健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
+  掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧

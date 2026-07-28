@@ -184,6 +184,7 @@ jobs:
           lines.append(f"今後のイベント: {len(data['upcoming_events'])}")
           lines.append(f"終了済み: {len(data['past_events'])}")
           lines.append(f"詳細未定(TBD): {len(data['tbd_events'])}")
+          lines.append(f"✍️ 説明文70字未満(開催予定): {len(data.get('short_descriptions') or [])}件")
           lines.append(f"リンク切れ: {len(data['dead_links'])}")
           lines.append("")
           lines.append("━━━ ✅ 自動チェック結果（毎日実行・0件が正常） ━━━")

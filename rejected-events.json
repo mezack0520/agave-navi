@@ -1,0 +1,17 @@
+{
+  "description": "掲載見送りを決定したイベントの記録。agave-event-update は候補がここに載っていれば再提案せずスキップする。方針転換で掲載する場合はここから削除して new-events.json に追加する。",
+  "items": [
+    {
+      "key": "ferme-de-fes-vol29",
+      "name": "フェルム・ド・フェスVol.29 (2026-08-01/02 こもれび森のイバライド)",
+      "decided": "2026-07-27",
+      "reason": "植物比率が低くサイトの軸から外れる(公式SHOPリスト約120店中、植物系はBotanical6+Garden3)"
+    },
+    {
+      "key": "localgreen-festival-2026",
+      "name": "LOCALGREEN FESTIVAL'26 (2026-11-07/08 横浜赤レンガ倉庫)",
+      "decided": "2026-07-27",
+      "reason": "主体は音楽フェスでアガベ・塊根専門ではない"
+    }
+  ]
+}

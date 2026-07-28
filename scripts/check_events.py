@@ -62,7 +62,8 @@ def main():
         'upcoming_events': [],
         'today_events': [],
         'url_results': [],
-        'implausible': []
+        'implausible': [],
+        'short_descriptions': []
     }
 
     for ev in events:
@@ -154,6 +155,10 @@ def main():
                 _issues.append('URLが植物と無関係の有名イベントドメイン')
             if _issues:
                 results['implausible'].append({'slug': slug, 'name': name, 'issues': _issues})
+            # meta description(=description流用)が全角70字未満だとSERPスニペット枠を使い切れない
+            _dlen = len((_desc or '').strip())
+            if _dlen < 70:
+                results['short_descriptions'].append({'slug': slug, 'name': name, 'length': _dlen})
 
         # 今後のイベント
         if ev_date and ev_date >= today:
@@ -189,6 +194,7 @@ def main():
     print(f"過去のイベント: {len(results['past_events'])}")
     print(f"詳細未定(TBD): {len(results['tbd_events'])}")
     print(f"内容妥当性フラグ: {len(results['implausible'])}")
+    print(f"説明文70字未満(開催予定): {len(results['short_descriptions'])}")
     print(f"リンク切れ: {len(results['dead_links'])}")
     print()
 

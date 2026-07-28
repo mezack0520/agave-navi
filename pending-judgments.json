@@ -1,37 +1,4 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "health-check:upcoming-meta-description-too-short",
-      "date": "2026-07-27",
-      "source": "health-check",
-      "title": "開催予定イベント53件のうち28件、meta descriptionが70文字未満でSERPスニペット枠を使い切れていない",
-      "detail": "開催予定(status=upcoming)の詳細ページ53件を全件取得して計測。meta descriptionが70文字未満のページが28件(53%)、最短は28文字(garden-link-festa-2026-10)。Weekly Enrichmentを通ったページは160文字前後まで埋まっており(life-circle-world-2026-08 等)、未処理ページがevents.jsonのdescriptionをそのまま流用して短いまま残っている。日本語検索結果のスニペットは全角70〜90文字程度まで表示されるため、30〜50文字のページは表示枠の半分以上を空けている。同じ53件でFAQPage JSON-LDも17件のみ。",
-      "proposal": "Weekly Enrichmentの処理順を「開催予定 かつ meta descriptionが70文字未満」を優先するよう並べ替える。開催が近く未エンリッチのページから消化されるため、追加のワークフローもコストも増えない。あわせて、descriptionが70文字未満のまま公開されている開催予定ページ数をHealth Checkの計測項目に加えるかを判断したい。"
-    },
-    {
-      "id": "agave-event-update:ferme-de-fes-vol29-inclusion",
-      "date": "2026-07-27",
-      "source": "agave-event-update",
-      "title": "フェルム・ド・フェスVol.29（8/1-2 こもれび森のイバライド）を掲載するか",
-      "detail": "PUKUBOOKが多肉イベントとして掲載する関東最大級のアンティーク・クラフトマーケット。主催IKINA MARKET、公式ikinamarket.com、約120店。公式SHOPリストの植物系はBotanical6店+Garden3店で、アガベ・塊根・ビザール系の専門出店は確認できず。入園は前売800円・当日1,500円。",
-      "proposal": "植物比率が低くサイトの軸から外れるため自動追加は見送った。掲載するならnew-events.jsonに追加すれば次回sync-eventsで反映される。"
-    },
-    {
-      "id": "agave-event-update:localgreen-festival-26-inclusion",
-      "date": "2026-07-27",
-      "source": "agave-event-update",
-      "title": "LOCALGREEN FESTIVAL'26（11/7-8 横浜赤レンガ倉庫）を掲載するか",
-      "detail": "音楽×グリーンライフスタイルの大型フェス。2026年から入場無料のフリーフェスに刷新（公式localgreen.jp、Skream!報道2026-07）。例年植物マーケットを併設しPUKUBOOKは開催予定として掲載しているが、主体は音楽フェスでアガベ・塊根専門ではない。",
-      "proposal": "掲載可否を判断したい。掲載する場合は植物系出店者の発表を確認してからが安全。"
-    },
-    {
-      "id": "agave-event-update:write-access-blocked",
-      "date": "2026-07-27",
-      "source": "agave-event-update",
-      "title": "日次タスクからGitHubへ書き込めない。恒久対応の選択が必要",
-      "detail": "mzplantsのみ接続のセッションではC:\\Users\\yujim\\.agave-navi\\github.patをReadできない（接続フォルダ外）。サンドボックスはapi.github.com接続不可、ChromeのGitHubログインはYujiMezakiでpush権限なし。2026-07-27はユーザー立ち会いのもとEdge（mezack0520）から手動反映した。",
-      "proposal": "(a)スケジュールタスクのセッションに.agave-naviフォルダを接続する、(b)YujiMezakiをリポジトリのコラボレータに追加する、のどちらかで日次の自動反映を復旧する。"
-    }
-  ]
+  "items": []
 }
