@@ -1,4 +1,13 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": []
+  "items": [
+    {
+      "id": "agave-event-update:botanical-botanical-tour-2026h2",
+      "date": "2026-07-28",
+      "source": "agave-event-update",
+      "title": "BOTANICAL BOTANICAL 今後3公演(10/3-4福岡・10/31-11/1大阪・11/14-15沖縄)の先行掲載可否",
+      "detail": "公式Instagramプロフィール(botanical.botanical)に「10/3-10/4福岡←NEXT / 10/31-11/1大阪 / 11/14-11/15沖縄」と明記されているが、いずれも会場は未発表。公式サイト(botanicalbotanical.com)はオンラインショップのみで会場情報なし。KASHIMA(7/11-12)は掲載済みの主要シリーズ。",
+      "proposal": "会場未定のため今回は見送った。会場なしで先行掲載する運用にするか、会場発表を待つか判断したい。待つ場合はIGローテ(8日周期)で再検知するが、確実を期すならwatch優先度を上げる。"
+    }
+  ]
 }
