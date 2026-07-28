@@ -17,6 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # repository_dispatch のRunはdispatch時点のSHAにピン留めされるため、
+      # 多重dispatchで遅れて走ったRunが古いツリーを再処理しないよう最新mainに同期する。
+      # 消化済みならnew-events.jsonが無く、以降のステップは自然にno-opになる(2026-07-28 競合失敗の恒久対応)
+      - name: Sync to latest main (duplicate-dispatch safety)
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
 
       - name: Sanity-check new-events.json (drop ticketing/aggregator entries)
         run: |

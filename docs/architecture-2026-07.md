@@ -106,3 +106,5 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-28: sync-eventsに多重dispatch安全化(checkout後にorigin/mainへreset)。同日の4重dispatchで
+  余剰Runが古いSHAを再処理しpush競合失敗した件の恒久対応。dispatchは204空応答が正常・再送禁止
