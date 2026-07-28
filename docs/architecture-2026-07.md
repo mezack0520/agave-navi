@@ -94,6 +94,8 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   workflow_dispatch/Actions APIは403。定期失効するので401が出たら長期限で再発行
 - Claudeタスクは**Coworkアプリ起動中のみ**実行される。プロンプト変更後は「Run now」でツール事前承認
 - Instagram/nextmeetはサーバーから読めない → Google検索スニペット経由 or ユーザーChromeで読む
+- repository_dispatchをChromeで送るときは**agave-navi.comを開いてfetch**する。github.com上からは
+  GitHubのService Workerにfetchが握られたまま返らない(2026-07-28確認、api.github.comのCORSは任意originで許可済み)
 - 挿入系スクリプトは必ず冪等設計(除去→再挿入)。過去にcalendar/mapが4.2MBまで肥大した事故あり
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
