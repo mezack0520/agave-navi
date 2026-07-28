@@ -1,10 +1,10 @@
 {
- "generated": "2026-07-29 07:04 JST",
+ "generated": "2026-07-29 08:39 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 118,
-  "awaitingNextEdition": 171,
-  "officialSiteCandidates": 48
+  "igAccounts": 121,
+  "awaitingNextEdition": 170,
+  "officialSiteCandidates": 51
  },
  "igAccounts": [
   {
@@ -44,11 +44,38 @@
    "priority": 0
   },
   {
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "eventCount": 2,
+   "lastEventName": "木更津園芸市（2026年8月）",
+   "lastEventDate": "2026-08-11",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "botayoko",
+   "url": "https://www.instagram.com/botayoko/",
+   "eventCount": 2,
+   "lastEventName": "ボタの夏休み 2026",
+   "lastEventDate": "2026-08-24",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
    "handle": "fuji_taniku",
    "url": "https://www.instagram.com/fuji_taniku/",
    "eventCount": 2,
    "lastEventName": "富士多肉 多肉植物・サボテンの販売（富士川楽座）",
    "lastEventDate": "2026-08-29",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "wi_wibotanical",
+   "url": "https://www.instagram.com/wi_wibotanical/",
+   "eventCount": 2,
+   "lastEventName": "Wi-Wi BOTANICAL Vol.2",
+   "lastEventDate": "2026-09-20",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -355,6 +382,33 @@
    "eventCount": 1,
    "lastEventName": "ボタニカルフェスタ（ハオルチア界隈）",
    "lastEventDate": "2026-09-06",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "rojiuranogibousi",
+   "url": "https://www.instagram.com/rojiuranogibousi/",
+   "eventCount": 1,
+   "lastEventName": "第1回 ボタニカルX",
+   "lastEventDate": "2026-09-06",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "greenholic_nagoya",
+   "url": "https://www.instagram.com/greenholic_nagoya/",
+   "eventCount": 1,
+   "lastEventName": "GREEN HOLIC in KARIYA 2026",
+   "lastEventDate": "2026-09-06",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "tkc.2nd.life",
+   "url": "https://www.instagram.com/tkc.2nd.life/",
+   "eventCount": 1,
+   "lastEventName": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
+   "lastEventDate": "2026-09-20",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -719,24 +773,6 @@
    "priority": 2
   },
   {
-   "handle": "wi_wibotanical",
-   "url": "https://www.instagram.com/wi_wibotanical/",
-   "eventCount": 1,
-   "lastEventName": "Wi-Wi BOTANICAL",
-   "lastEventDate": "2026-06-06",
-   "hasUpcoming": false,
-   "priority": 2
-  },
-  {
-   "handle": "botayoko",
-   "url": "https://www.instagram.com/botayoko/",
-   "eventCount": 1,
-   "lastEventName": "ボタニカル横丁（2026年6月）",
-   "lastEventDate": "2026-06-07",
-   "hasUpcoming": false,
-   "priority": 2
-  },
-  {
    "handle": "plants_jamboree",
    "url": "https://www.instagram.com/plants_jamboree/",
    "eventCount": 1,
@@ -795,15 +831,6 @@
    "url": "https://www.instagram.com/ohana._.garden/",
    "eventCount": 1,
    "lastEventName": "オハナdeマルシェ",
-   "lastEventDate": "2026-06-20",
-   "hasUpcoming": false,
-   "priority": 2
-  },
-  {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
-   "eventCount": 1,
-   "lastEventName": "木更津園芸夜市",
    "lastEventDate": "2026-06-20",
    "hasUpcoming": false,
    "priority": 2
@@ -1516,6 +1543,12 @@
    "eventDate": "2026-08-29"
   },
   {
+   "domain": "kariya-urbanfes.com",
+   "url": "https://kariya-urbanfes.com/",
+   "eventName": "GREEN HOLIC in KARIYA 2026",
+   "eventDate": "2026-09-06"
+  },
+  {
    "domain": "h27664.wixsite.com",
    "url": "https://h27664.wixsite.com/orchidbotanical/en",
    "eventName": "オキボタ MAX 2026 in サンシャインシティ",
@@ -1526,6 +1559,18 @@
    "url": "https://kourep.jp",
    "eventName": "コウレプ2026秋",
    "eventDate": "2026-09-19"
+  },
+  {
+   "domain": "oneloveoneheart.jp",
+   "url": "https://oneloveoneheart.jp/live/",
+   "eventName": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
+   "eventDate": "2026-09-20"
+  },
+  {
+   "domain": "kani.goguynet.jp",
+   "url": "https://kani.goguynet.jp/2026/06/03/wi-wi-botanical/",
+   "eventName": "Wi-Wi BOTANICAL Vol.2",
+   "eventDate": "2026-09-20"
   },
   {
    "domain": "greensnap.jp",
@@ -1634,24 +1679,6 @@
    "url": "https://makeman.co.jp/event/event-10904/",
    "eventName": "ボタニカルマーケットVol.6",
    "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "fukui-bot.jp",
-   "url": "https://www.fukui-bot.jp/event/",
-   "eventName": "福井ボタニカルマルシェ2026",
-   "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "green-flash-fes.com",
-   "url": "https://green-flash-fes.com/",
-   "eventName": "GREEN BREEZE FES vol.3",
-   "eventDate": "2026-05-31"
-  },
-  {
-   "domain": "city.hanamaki.iwate.jp",
-   "url": "https://www.city.hanamaki.iwate.jp/kurashi/kankyo/hanaippai/1013528.html",
-   "eventName": "花と緑のまつり",
-   "eventDate": "2026-06-05"
   }
  ]
 }
