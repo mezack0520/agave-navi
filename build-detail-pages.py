@@ -546,8 +546,7 @@ def build_page(template, ev, ctx):
         '{{dataSourceRow}}': make_data_source_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{affiliateBlock}}': make_affiliate_block(ev),
-        '{{lastUpdatedText}}': make_last_updated_text(ev),
-        '{{dataSourceText}}': make_data_source_text(ev),
+        '{{heroMetaNote}}': make_hero_meta_note(ev),
         '{{dataSummary}}': make_data_summary(ev, ctx),
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),
         '{{weatherRow}}': make_weather_row(ev, ctx),
@@ -580,33 +579,38 @@ def make_last_updated_row(ev):
             '\n          </div>')
 
 
-def make_last_updated_text(ev):
-    """最終更新を脚注用の短文で返す。表の行と同じ情報を軽い見た目で出すためのもの。"""
+def make_hero_meta_note(ev):
+    """最終更新と出典を脚注1行にまとめる。about.html で参照元と最終更新日の明記を
+    掲載方針としているため、表から外しても情報自体は必ず残す。
+    片方が欠けても区切り文字が浮かないよう、ここで組み立てる。"""
+    parts = []
+
     last = ev.get('enrichedAt') or ev.get('addedDate')
-    if not last:
-        return ''
-    try:
-        from datetime import datetime as _dt
-        dt = _dt.strptime(last[:10], '%Y-%m-%d')
-        disp = f'{dt.year}年{dt.month}月{dt.day}日'
-    except (ValueError, TypeError):
-        disp = last
-    return f'最終更新 {html_escape(disp)}'
+    if last:
+        try:
+            from datetime import datetime as _dt
+            dt = _dt.strptime(last[:10], '%Y-%m-%d')
+            disp = f'{dt.year}年{dt.month}月{dt.day}日'
+        except (ValueError, TypeError):
+            disp = str(last)
+        parts.append(f'最終更新 {html_escape(disp)}')
 
-
-def make_data_source_text(ev):
-    """出典を脚注用の短文で返す。about.html で参照元の明記を掲載方針としているため
-    表から外しても情報自体は必ず残す。"""
     url = (ev.get('url') or '').strip()
-    if not url:
-        return ' / 出典: スタッフ収集情報'
-    label = '公式サイト'
-    if 'instagram.com' in url:
-        label = '公式Instagram'
-    elif 'twitter.com' in url or 'x.com' in url:
-        label = '公式X'
-    return (f' / 出典: <a href="{html_escape(url)}" target="_blank" rel="noopener">'
-            f'{label}</a>')
+    if url:
+        label = '公式サイト'
+        if 'instagram.com' in url:
+            label = '公式Instagram'
+        elif 'twitter.com' in url or 'x.com' in url:
+            label = '公式X'
+        parts.append(f'出典 <a href="{html_escape(url)}" target="_blank" '
+                     f'rel="noopener">{label}</a>')
+    else:
+        parts.append('出典 スタッフ収集情報')
+
+    if not parts:
+        return ''
+    return ('<p class="eh-meta-note">' + '<span class="ehm-sep">/</span>'.join(parts)
+            + '</p>')
 
 
 # ---------------------------------------------------------------------------
