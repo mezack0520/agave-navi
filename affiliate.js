@@ -181,13 +181,14 @@
       ? '本文で触れた資材を各ショップで探せます'
       : '当日の運搬と、帰宅後の植え替え・発根管理で必要になるもの';
 
-    var html = '<h3>' + title + ' <span class="aff-pr">PR</span></h3>';
+    var html = '<div class="aff-head"><h3>' + title + '</h3>'
+             + '<span class="aff-pr">PR</span></div>';
     html += '<p class="affiliate-desc">' + desc + '</p>';
     html += '<div class="affiliate-links">';
 
     var products = data._products || {};
 
-    items.forEach(function (item) {
+    items.forEach(function (item, idx) {
       var icon = ICONS[item.icon] || ICONS.plant;
       var aspLinks = buildAspLinks(item.keyword, aspConfig);
       if (!aspLinks.length) return;
@@ -213,15 +214,16 @@
       var primary = aspLinks[0];
       var alts = aspLinks.slice(1);
 
-      html += '<div class="affiliate-item">';
-      html += '<div class="affiliate-icon">' + icon + '</div>';
-      html += '<div class="affiliate-item-body">';
-      html += '<a class="affiliate-item-cta" href="' + primary.url + '"'
-        + ' target="_blank" rel="noopener sponsored">'
-        + item.label
-        + '<span class="aff-cta-go">' + primary.label + 'で見る</span></a>';
+      var featured = (idx === 0);
+      html += '<div class="affiliate-item' + (featured ? ' is-featured' : '') + '">';
+      html += '<a class="aff-row" href="' + primary.url + '" target="_blank" rel="noopener sponsored">';
+      html += '<span class="affiliate-icon">' + icon + '</span>';
+      html += '<span class="aff-row-body">';
+      html += '<span class="affiliate-item-label">' + item.label + '</span>';
+      html += '<span class="aff-cta-go">' + primary.label + 'で見る</span>';
+      html += '</span></a>';
       if (alts.length) {
-        html += '<div class="affiliate-asp-links"><span class="aff-alt-lead">ほかで探す:</span>';
+        html += '<div class="affiliate-asp-links"><span class="aff-alt-lead">ほかで探す</span>';
         alts.forEach(function (asp, i) {
           html += (i ? '<span class="aff-alt-sep">/</span>' : '')
             + '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
@@ -229,7 +231,7 @@
         });
         html += '</div>';
       }
-      html += '</div></div>';
+      html += '</div>';
     });
 
     html += '</div>';
