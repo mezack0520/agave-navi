@@ -167,9 +167,45 @@ def aff_block(root, noindex=False, tags=''):
     return (f'\n  <section class="affiliate-section"{attr} style="max-width:960px;margin:1.5rem auto 0;"></section>',
             f'  <script src="{root}affiliate.js"></script>\n')
 
+GENERATED_PAGES = set()
+
 def write_page(path, html):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path,'w',encoding='utf-8') as f: f.write(html)
+    GENERATED_PAGES.add(os.path.abspath(path))
+
+# このスクリプトが所有するディレクトリ。ここ配下の index.html は毎回生成される前提。
+OWNED_DIRS = ['tag', 'pref', 'region', 'archive', 'venue', 'category',
+              'this-weekend', 'this-month', 'new']
+
+
+def cleanup_orphans():
+    """今回生成されなかった配下ページを削除する。
+    対象が減った(該当イベントが0件になった等)ときに空ページが残り、
+    sitemapに載り続けるのを防ぐ。安全弁として、生成数が極端に少ない場合は何もしない。"""
+    if len(GENERATED_PAGES) < 20:
+        print('  cleanup: 生成数が少ないためスキップ(異常終了の可能性)')
+        return []
+    removed = []
+    for d in OWNED_DIRS:
+        root = os.path.join(REPO_ROOT, d)
+        if not os.path.isdir(root):
+            continue
+        for cur, _dirs, files in os.walk(root):
+            for fn in files:
+                if not fn.endswith('.html'):
+                    continue
+                fp = os.path.abspath(os.path.join(cur, fn))
+                if fp in GENERATED_PAGES:
+                    continue
+                os.remove(fp)
+                removed.append(os.path.relpath(fp, REPO_ROOT))
+        # 空になったディレクトリを畳む
+        for cur, dirs, files in os.walk(root, topdown=False):
+            if cur != root and not os.listdir(cur):
+                os.rmdir(cur)
+    return sorted(removed)
+
 
 def upcoming_then_past(evs):
     today=datetime.now(JST).strftime('%Y-%m-%d')
@@ -477,10 +513,14 @@ def main():
     with open(os.path.join(REPO_ROOT, 'scripts', 'landing-meta.json'), 'w', encoding='utf-8') as f:
         json.dump({'noindex': sorted(NOINDEX_PATHS)}, f, ensure_ascii=False, indent=1)
 
+    removed = cleanup_orphans()
+
     print('=== ランディングページ生成完了 ===')
     print(f'  noindex: {len(NOINDEX_PATHS)} pages')
     for k,v in sorted(counters.items()):
         print(f'  {k}: {v} pages')
+    if removed:
+        print(f'  孤児ページ削除: {len(removed)}件 — ' + ', '.join(removed))
 
 if __name__ == '__main__':
     main()
