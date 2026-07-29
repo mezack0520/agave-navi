@@ -153,8 +153,19 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
                 '<a href="/">ホーム</a>から最新の一覧を確認できます。</div>' + fb)
         stats = '<p class="landing-stats">該当イベント: 0件</p>'
     intro = f'\n  <section class="landing-intro">{intro_html}</section>' if intro_html else ''
-    body = f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1><p class="lead">{lead}</p>{stats}</section>{intro}\n{grid}\n  </main>\n{FOOTER}\n</body>\n</html>\n'
+    aff, aff_js = aff_block(root, noindex=noindex)
+    body = (f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1>'
+            f'<p class="lead">{lead}</p>{stats}</section>{intro}\n{grid}{aff}\n  </main>\n{FOOTER}\n'
+            f'{aff_js}</body>\n</html>\n')
     return head + '\n' + body
+
+def aff_block(root, noindex=False, tags=''):
+    """アフィリエイト枠。noindexの薄いページには出さない(薄頁×広告を避ける)。"""
+    if noindex:
+        return '', ''
+    attr = f' data-tags="{tags}"' if tags else ''
+    return (f'\n  <section class="affiliate-section"{attr} style="max-width:960px;margin:1.5rem auto 0;"></section>',
+            f'  <script src="{root}affiliate.js"></script>\n')
 
 def write_page(path, html):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -173,7 +184,10 @@ def index_page(out_path, title, desc, kw, canon, h1, lead, items, root='../'):
     bc = [('ホーム', DOMAIN+'/'), (title.replace('一覧','').replace('別',''), None)]
     head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon, root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta='<meta name="robots" content="index,follow">')
     bch = bc_html(bc)
-    body = f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1><p class="lead">{lead}</p></section>\n{grid}\n  </main>\n{FOOTER}\n</body>\n</html>\n'
+    aff, aff_js = aff_block(root)
+    body = (f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1>'
+            f'<p class="lead">{lead}</p></section>\n{grid}{aff}\n  </main>\n{FOOTER}\n'
+            f'{aff_js}</body>\n</html>\n')
     write_page(out_path, head + '\n' + body)
 
 THIN_THRESHOLD = 3  # 掲載イベントがこの件数未満のタグ/都道府県ページはnoindex
@@ -414,7 +428,8 @@ def main():
               f'<p class="lead">最近サイトに追加されたイベント(掲載日順)。</p>'
               f'<p class="landing-stats">直近{len(recent)}件を表示</p></section>'
               f'\n  <section class="landing-intro">{n_intro}</section>'
-              f'\n{n_grid}\n  </main>\n{FOOTER}\n</body>\n</html>\n')
+              f'\n{n_grid}{aff_block("../")[0]}\n  </main>\n{FOOTER}\n'
+              f'{aff_block("../")[1]}</body>\n</html>\n')
     write_page(os.path.join(REPO_ROOT, 'new', 'index.html'), n_head + n_style + '\n' + n_body)
     counters['new'] += 1
 

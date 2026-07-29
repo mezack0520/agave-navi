@@ -8,8 +8,8 @@
 (function () {
   'use strict';
 
-  // AdSense審査中はアフィリエイト表示を停止する。承認後 true に戻す。
-  var AFFILIATE_ENABLED = false;
+  // 表示の一括停止スイッチ。AdSense審査などで止めたいときだけ false にする。
+  var AFFILIATE_ENABLED = true;
   if (!AFFILIATE_ENABLED) return;
 
   var DISPLAY_COUNT = 4;
@@ -41,15 +41,18 @@
     }
   }
 
-  var container = document.querySelector('.affiliate-section');
-  if (!container) return;
-
-  var pageTags = (container.getAttribute('data-tags') || '').split(',').filter(Boolean);
+  var containers = document.querySelectorAll('.affiliate-section');
+  if (!containers.length) return;
 
   var jsonUrl = basePath + 'amazon-links.json?v=' + Date.now();
   fetch(jsonUrl)
     .then(function (r) { return r.json(); })
-    .then(function (data) { render(data, pageTags, container); })
+    .then(function (data) {
+      Array.prototype.forEach.call(containers, function (el) {
+        var tags = (el.getAttribute('data-tags') || '').split(',').filter(Boolean);
+        render(data, tags, el, el.getAttribute('data-guide') || '', el.getAttribute('data-heading') || '');
+      });
+    })
     .catch(function (e) { console.warn('affiliate.js:', e); });
 
   function shuffle(arr) {
@@ -60,7 +63,17 @@
     return arr;
   }
 
-  function pickItems(data, tags) {
+  function pickItems(data, tags, guideSlug) {
+    // ガイド記事: 記事本文が扱う対象をそのまま検索語にする(文脈が最も近く単価も高い)
+    if (guideSlug && data.guides && data.guides[guideSlug]) {
+      var g = data.guides[guideSlug].slice();
+      if (g.length >= DISPLAY_COUNT) return g.slice(0, DISPLAY_COUNT);
+      var gKws = {};
+      g.forEach(function (x) { gKws[x.keyword] = true; });
+      var fill = (data.common || []).filter(function (c) { return !gKws[c.keyword]; });
+      return g.concat(shuffle(fill).slice(0, DISPLAY_COUNT - g.length));
+    }
+
     var catItems = [];
     var cats = data.categories || {};
     tags.forEach(function (tag) {
@@ -139,12 +152,18 @@
     return links;
   }
 
-  function render(data, tags, el) {
-    var items = pickItems(data, tags);
+  function render(data, tags, el, guideSlug, heading) {
+    var items = pickItems(data, tags, guideSlug);
+    if (!items.length) return;
     var aspConfig = data.asp || { amazon: { tag: data.tag || 'agavenavi-22', searchUrl: 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}', label: 'Amazon' } };
 
-    var html = '<h3>イベント準備におすすめ</h3>';
-    html += '<p class="affiliate-desc">イベントをもっと楽しむためのアイテムをチェック</p>';
+    var title = heading || (guideSlug ? 'この記事で使う道具・資材' : 'イベント準備におすすめ');
+    var desc = guideSlug
+      ? '本文で触れた資材を各ショップで探せます'
+      : 'イベントをもっと楽しむためのアイテムをチェック';
+
+    var html = '<h3>' + title + ' <span class="aff-pr">PR</span></h3>';
+    html += '<p class="affiliate-desc">' + desc + '</p>';
     html += '<div class="affiliate-links">';
 
     items.forEach(function (item) {

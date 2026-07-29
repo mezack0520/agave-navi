@@ -20,53 +20,524 @@
     }
   },
   "common": [
-    { "keyword": "アガベ 鉢", "label": "アガベ用の鉢を探す", "icon": "pot" },
-    { "keyword": "多肉植物 土", "label": "多肉植物用の土を探す", "icon": "soil" },
-    { "keyword": "園芸 ツール セット", "label": "園芸ツールを探す", "icon": "tool" },
-    { "keyword": "植物育成ライト LED", "label": "育成ライトを探す", "icon": "light" },
-    { "keyword": "アガベ 苗", "label": "アガベの苗を探す", "icon": "plant" },
-    { "keyword": "アガベ チタノタ", "label": "チタノタを探す", "icon": "plant" },
-    { "keyword": "塊根植物", "label": "塊根植物を探す", "icon": "plant" },
-    { "keyword": "多肉植物 レア", "label": "レア多肉を探す", "icon": "plant" },
-    { "keyword": "サボテン 種", "label": "サボテンの種を探す", "icon": "plant" },
-    { "keyword": "植物 棚 ラック", "label": "植物用ラックを探す", "icon": "shelf" },
-    { "keyword": "霧吹き 植物", "label": "霧吹きを探す", "icon": "tool" },
-    { "keyword": "観葉植物 肥料", "label": "肥料を探す", "icon": "soil" },
-    { "keyword": "アガベ 本 図鑑", "label": "アガベの図鑑を探す", "icon": "book" },
-    { "keyword": "多肉植物 プランター おしゃれ", "label": "おしゃれなプランターを探す", "icon": "pot" },
-    { "keyword": "園芸 手袋", "label": "園芸用グローブを探す", "icon": "tool" },
-    { "keyword": "植物 温室 小型", "label": "小型温室を探す", "icon": "shelf" },
-    { "keyword": "ビザールプランツ", "label": "ビザールプランツを探す", "icon": "plant" },
-    { "keyword": "パキポディウム", "label": "パキポディウムを探す", "icon": "plant" },
-    { "keyword": "ユーフォルビア 植物", "label": "ユーフォルビアを探す", "icon": "plant" },
-    { "keyword": "エケベリア 苗", "label": "エケベリアを探す", "icon": "plant" }
+    {
+      "keyword": "植物育成ライト LED 植物用",
+      "label": "植物育成LEDを探す",
+      "icon": "light"
+    },
+    {
+      "keyword": "アガベ 鉢 プラ鉢 スリット",
+      "label": "アガベ向けの鉢を探す",
+      "icon": "pot"
+    },
+    {
+      "keyword": "多肉植物 培養土 硬質赤玉土",
+      "label": "多肉・塊根用の土を探す",
+      "icon": "soil"
+    },
+    {
+      "keyword": "サーキュレーター 静音",
+      "label": "サーキュレーターを探す",
+      "icon": "tool"
+    },
+    {
+      "keyword": "多肉植物 図鑑",
+      "label": "多肉・塊根の図鑑を探す",
+      "icon": "book"
+    },
+    {
+      "keyword": "園芸 ハサミ 剪定",
+      "label": "剪定ハサミを探す",
+      "icon": "tool"
+    }
   ],
   "categories": {
     "即売会": [
-      { "keyword": "アガベ チタノタ", "label": "チタノタを探す", "icon": "plant" },
-      { "keyword": "多肉植物 レア", "label": "レア多肉を探す", "icon": "plant" },
-      { "keyword": "塊根植物 種子", "label": "塊根植物の種子を探す", "icon": "plant" },
-      { "keyword": "アガベ 鉢 黒", "label": "アガベ用の黒鉢を探す", "icon": "pot" },
-      { "keyword": "キャリーカート 折りたたみ", "label": "即売会用カートを探す", "icon": "tool" },
-      { "keyword": "エコバッグ 大容量", "label": "大容量エコバッグを探す", "icon": "tool" }
+      {
+        "keyword": "アガベ チタノタ",
+        "label": "チタノタを探す",
+        "icon": "plant"
+      },
+      {
+        "keyword": "多肉植物 レア",
+        "label": "レア多肉を探す",
+        "icon": "plant"
+      },
+      {
+        "keyword": "塊根植物 種子",
+        "label": "塊根植物の種子を探す",
+        "icon": "plant"
+      },
+      {
+        "keyword": "アガベ 鉢 黒",
+        "label": "アガベ用の黒鉢を探す",
+        "icon": "pot"
+      },
+      {
+        "keyword": "キャリーカート 折りたたみ",
+        "label": "即売会用カートを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "エコバッグ 大容量",
+        "label": "大容量エコバッグを探す",
+        "icon": "tool"
+      }
     ],
     "マルシェ": [
-      { "keyword": "多肉植物 寄せ植え セット", "label": "寄せ植えセットを探す", "icon": "plant" },
-      { "keyword": "ガーデニング おしゃれ 雑貨", "label": "ガーデニング雑貨を探す", "icon": "tool" },
-      { "keyword": "テラコッタ 鉢", "label": "テラコッタ鉢を探す", "icon": "pot" },
-      { "keyword": "多肉植物 インテリア", "label": "インテリア向け多肉を探す", "icon": "plant" }
+      {
+        "keyword": "多肉植物 寄せ植え セット",
+        "label": "寄せ植えセットを探す",
+        "icon": "plant"
+      },
+      {
+        "keyword": "ガーデニング おしゃれ 雑貨",
+        "label": "ガーデニング雑貨を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "テラコッタ 鉢",
+        "label": "テラコッタ鉢を探す",
+        "icon": "pot"
+      },
+      {
+        "keyword": "多肉植物 インテリア",
+        "label": "インテリア向け多肉を探す",
+        "icon": "plant"
+      }
     ],
     "大型": [
-      { "keyword": "アガベ 大株", "label": "アガベ大株を探す", "icon": "plant" },
-      { "keyword": "園芸 リュック 大容量", "label": "大容量リュックを探す", "icon": "tool" },
-      { "keyword": "ビザールプランツ 図鑑", "label": "ビザールプランツ図鑑を探す", "icon": "book" },
-      { "keyword": "パキポディウム グラキリス", "label": "グラキリスを探す", "icon": "plant" }
+      {
+        "keyword": "アガベ 大株",
+        "label": "アガベ大株を探す",
+        "icon": "plant"
+      },
+      {
+        "keyword": "園芸 リュック 大容量",
+        "label": "大容量リュックを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ビザールプランツ 図鑑",
+        "label": "ビザールプランツ図鑑を探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "パキポディウム グラキリス",
+        "label": "グラキリスを探す",
+        "icon": "plant"
+      }
     ],
     "展示会": [
-      { "keyword": "アガベ 本 図鑑", "label": "アガベの図鑑を探す", "icon": "book" },
-      { "keyword": "多肉植物 写真集", "label": "多肉植物の写真集を探す", "icon": "book" },
-      { "keyword": "植物 カメラ マクロレンズ", "label": "マクロレンズを探す", "icon": "tool" },
-      { "keyword": "園芸 ノート", "label": "園芸ノートを探す", "icon": "book" }
+      {
+        "keyword": "アガベ 本 図鑑",
+        "label": "アガベの図鑑を探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "多肉植物 写真集",
+        "label": "多肉植物の写真集を探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "植物 カメラ マクロレンズ",
+        "label": "マクロレンズを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "園芸 ノート",
+        "label": "園芸ノートを探す",
+        "icon": "book"
+      }
+    ]
+  },
+  "guides": {
+    "grow-light-basics": [
+      {
+        "keyword": "植物育成ライト LED 高PPFD",
+        "label": "高PPFDの育成LEDを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "植物育成ライト スタンド",
+        "label": "ライトスタンドを探す",
+        "icon": "shelf"
+      },
+      {
+        "keyword": "スマートプラグ タイマー",
+        "label": "タイマーを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "PPFD 照度計",
+        "label": "照度計を探す",
+        "icon": "tool"
+      }
+    ],
+    "wintering-tokyo": [
+      {
+        "keyword": "簡易温室 ビニール 大型",
+        "label": "簡易温室を探す",
+        "icon": "shelf"
+      },
+      {
+        "keyword": "園芸 パネルヒーター",
+        "label": "パネルヒーターを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "サーモスタット 園芸",
+        "label": "サーモスタットを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "最高最低温度計 デジタル",
+        "label": "温湿度計を探す",
+        "icon": "tool"
+      }
+    ],
+    "agave-winter-hardiness": [
+      {
+        "keyword": "園芸 パネルヒーター",
+        "label": "パネルヒーターを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "簡易温室 ビニール",
+        "label": "簡易温室を探す",
+        "icon": "shelf"
+      },
+      {
+        "keyword": "最高最低温度計 デジタル",
+        "label": "温湿度計を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "不織布 霜よけ 寒冷紗",
+        "label": "霜よけ資材を探す",
+        "icon": "soil"
+      }
+    ],
+    "adenium-wintering": [
+      {
+        "keyword": "園芸 パネルヒーター",
+        "label": "パネルヒーターを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "サーモスタット 園芸",
+        "label": "サーモスタットを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "簡易温室 ビニール",
+        "label": "簡易温室を探す",
+        "icon": "shelf"
+      }
+    ],
+    "agave-seedling": [
+      {
+        "keyword": "育苗 トレイ プラグトレイ",
+        "label": "育苗トレイを探す",
+        "icon": "pot"
+      },
+      {
+        "keyword": "植物育成ライト LED 実生",
+        "label": "実生用の育成LEDを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "バーミキュライト 細粒",
+        "label": "実生用の用土を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "ベンレート 水和剤",
+        "label": "殺菌剤を探す",
+        "icon": "tool"
+      }
+    ],
+    "agave-bareroot-rooting": [
+      {
+        "keyword": "ルートン 発根促進剤",
+        "label": "発根促進剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ベンレート 水和剤",
+        "label": "殺菌剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "水苔 ミズゴケ 発根",
+        "label": "水苔を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "アガベ 鉢 スリット",
+        "label": "発根管理用の鉢を探す",
+        "icon": "pot"
+      }
+    ],
+    "soil-pot-repot": [
+      {
+        "keyword": "硬質赤玉土 小粒",
+        "label": "赤玉土を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "軽石 日向土 小粒",
+        "label": "軽石・日向土を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "アガベ 鉢 プラ鉢 スリット",
+        "label": "スリット鉢を探す",
+        "icon": "pot"
+      },
+      {
+        "keyword": "園芸 ふるい 土",
+        "label": "土ふるいを探す",
+        "icon": "tool"
+      }
+    ],
+    "pest-treatment": [
+      {
+        "keyword": "オルトラン DX 粒剤",
+        "label": "浸透移行性の殺虫剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ベニカ スプレー 観葉植物",
+        "label": "殺虫殺菌スプレーを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ダニ 殺虫剤 園芸",
+        "label": "ハダニ用の薬剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ルーペ 拡大鏡 30倍",
+        "label": "ルーペを探す",
+        "icon": "tool"
+      }
+    ],
+    "plant-health-check": [
+      {
+        "keyword": "ルーペ 拡大鏡 30倍",
+        "label": "ルーペを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "オルトラン DX 粒剤",
+        "label": "浸透移行性の殺虫剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "土壌水分計 園芸",
+        "label": "水分計を探す",
+        "icon": "tool"
+      }
+    ],
+    "rainy-season-care": [
+      {
+        "keyword": "サーキュレーター 静音",
+        "label": "サーキュレーターを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ベンレート 水和剤",
+        "label": "殺菌剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "土壌水分計 園芸",
+        "label": "水分計を探す",
+        "icon": "tool"
+      }
+    ],
+    "offsets-guide": [
+      {
+        "keyword": "園芸 ナイフ 消毒",
+        "label": "園芸ナイフを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "ベンレート 水和剤",
+        "label": "殺菌剤を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "アガベ 鉢 2号 3号",
+        "label": "子株用の小鉢を探す",
+        "icon": "pot"
+      }
+    ],
+    "agave-titanota-care": [
+      {
+        "keyword": "植物育成ライト LED 高PPFD",
+        "label": "育成LEDを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "アガベ 鉢 プラ鉢 スリット",
+        "label": "アガベ向けの鉢を探す",
+        "icon": "pot"
+      },
+      {
+        "keyword": "硬質赤玉土 小粒",
+        "label": "用土を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "アガベ 図鑑 チタノタ",
+        "label": "アガベの図鑑を探す",
+        "icon": "book"
+      }
+    ],
+    "pachypodium-gracilius": [
+      {
+        "keyword": "塊根植物 用土 プレミアム",
+        "label": "塊根用の土を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "植物育成ライト LED",
+        "label": "育成LEDを探す",
+        "icon": "light"
+      },
+      {
+        "keyword": "コーデックス 鉢 鉢底石",
+        "label": "鉢・鉢底石を探す",
+        "icon": "pot"
+      },
+      {
+        "keyword": "パキポディウム 図鑑",
+        "label": "塊根植物の図鑑を探す",
+        "icon": "book"
+      }
+    ],
+    "caudex-intro": [
+      {
+        "keyword": "塊根植物 図鑑 入門",
+        "label": "塊根植物の図鑑を探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "塊根植物 用土",
+        "label": "塊根用の土を探す",
+        "icon": "soil"
+      },
+      {
+        "keyword": "植物育成ライト LED",
+        "label": "育成LEDを探す",
+        "icon": "light"
+      }
+    ],
+    "titanota-oteroi-labels": [
+      {
+        "keyword": "アガベ 図鑑 チタノタ",
+        "label": "アガベの図鑑を探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "植物 ラベル 名札 園芸",
+        "label": "植物ラベルを探す",
+        "icon": "tool"
+      }
+    ],
+    "failure-analysis": [
+      {
+        "keyword": "土壌水分計 園芸",
+        "label": "水分計を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "サーキュレーター 静音",
+        "label": "サーキュレーターを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "植物育成ライト LED",
+        "label": "育成LEDを探す",
+        "icon": "light"
+      }
+    ],
+    "annual-calendar": [
+      {
+        "keyword": "最高最低温度計 デジタル",
+        "label": "温湿度計を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "園芸 ノート 栽培記録",
+        "label": "栽培記録ノートを探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "植物育成ライト LED",
+        "label": "育成LEDを探す",
+        "icon": "light"
+      }
+    ],
+    "glossary": [
+      {
+        "keyword": "多肉植物 図鑑",
+        "label": "多肉・塊根の図鑑を探す",
+        "icon": "book"
+      },
+      {
+        "keyword": "アガベ 図鑑 チタノタ",
+        "label": "アガベの図鑑を探す",
+        "icon": "book"
+      }
+    ],
+    "sokubaikai-tips": [
+      {
+        "keyword": "キャリーカート 折りたたみ 園芸",
+        "label": "運搬用カートを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "植物 輸送 箱 緩衝材",
+        "label": "梱包・緩衝材を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "アガベ 鉢 プラ鉢 スリット",
+        "label": "植え替え用の鉢を探す",
+        "icon": "pot"
+      }
+    ],
+    "event-types-guide": [
+      {
+        "keyword": "キャリーカート 折りたたみ 園芸",
+        "label": "運搬用カートを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "多肉植物 図鑑",
+        "label": "多肉・塊根の図鑑を探す",
+        "icon": "book"
+      }
+    ],
+    "event-data-2026": [
+      {
+        "keyword": "キャリーカート 折りたたみ 園芸",
+        "label": "運搬用カートを探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "植物 輸送 箱 緩衝材",
+        "label": "梱包・緩衝材を探す",
+        "icon": "tool"
+      },
+      {
+        "keyword": "多肉植物 図鑑",
+        "label": "多肉・塊根の図鑑を探す",
+        "icon": "book"
+      }
     ]
   }
 }

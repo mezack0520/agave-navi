@@ -260,6 +260,16 @@ def _is_thin_event(ev):
     return not (has_src and has_substance)
 
 
+def make_affiliate_block(ev):
+    """アフィリエイト枠。「薄い」ページにだけ出さない。
+    薄頁×広告はAdSense審査で最も嫌われる形なので除外する。一方 終了30日超のnoindexは
+    内容が薄いのではなく検索面から下げているだけで流入も残るため、枠は出す。"""
+    if _is_thin_event(ev):
+        return ''
+    tags = make_tags_csv(ev)
+    return (f'        <section class="affiliate-section" data-tags="{tags}"></section>')
+
+
 def make_robots_meta(ev):
     """終了30日超 または 有用性の低い(薄い)イベントには noindex を付与。"""
     from datetime import datetime, timedelta
@@ -535,6 +545,7 @@ def build_page(template, ev, ctx):
         '{{lastUpdatedRow}}': make_last_updated_row(ev),
         '{{dataSourceRow}}': make_data_source_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
+        '{{affiliateBlock}}': make_affiliate_block(ev),
         '{{dataSummary}}': make_data_summary(ev, ctx),
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),
         '{{weatherRow}}': make_weather_row(ev, ctx),

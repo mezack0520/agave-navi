@@ -186,10 +186,12 @@ def render_guide(meta, md, related):
                  f'      <p style="color:#555;line-height:1.7">{meta["lead"]}</p>\n'
                  f'    </section>\n{toc_html}\n'
                  f'    <article class="guide-body">\n{body}\n    </article>\n'
+                 f'    <section class="affiliate-section" data-guide="{meta["slug"]}"></section>\n'
                  f'    <section class="guide-author">'
                  f'<strong>このガイドについて</strong> — 当サイト運営者が実際に管理している植物の栽培記録(関東・東京)と、複数の文献・公的データ(USDA耐寒帯など)を参照して作成しました。'
                  f'掲載情報に誤りや改善提案がございましたら <a href="/contact.html">お問い合わせ</a> よりご連絡ください。'
-                 f'</section>\n{rel_html}\n  </div>\n  </main>\n{FOOTER}\n</body>\n</html>')
+                 f'</section>\n{rel_html}\n  </div>\n  </main>\n{FOOTER}\n'
+                 f'  <script src="../affiliate.js"></script>\n</body>\n</html>')
     return head + '\n' + body_html
 
 
