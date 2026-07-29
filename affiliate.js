@@ -12,7 +12,7 @@
   var AFFILIATE_ENABLED = true;
   if (!AFFILIATE_ENABLED) return;
 
-  var DISPLAY_COUNT = 4;
+  var DISPLAY_COUNT = 3;
   var ICONS = {
     pot:   '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
     soil:  '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
@@ -169,18 +169,29 @@
     items.forEach(function (item) {
       var icon = ICONS[item.icon] || ICONS.plant;
       var aspLinks = buildAspLinks(item.keyword, aspConfig);
+      if (!aspLinks.length) return;
+
+      // 主リンク(先頭ASP)を行の主動線にする。店を選ばせる前に商品へ向かわせる
+      var primary = aspLinks[0];
+      var alts = aspLinks.slice(1);
 
       html += '<div class="affiliate-item">';
       html += '<div class="affiliate-icon">' + icon + '</div>';
       html += '<div class="affiliate-item-body">';
-      html += '<span class="affiliate-item-label">' + item.label + '</span>';
-      html += '<div class="affiliate-asp-links">';
-      aspLinks.forEach(function (asp) {
-        html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-          + ' class="asp-badge" style="background:' + asp.color + '">'
-          + asp.label + '</a>';
-      });
-      html += '</div></div></div>';
+      html += '<a class="affiliate-item-cta" href="' + primary.url + '"'
+        + ' target="_blank" rel="noopener sponsored">'
+        + item.label
+        + '<span class="aff-cta-go">' + primary.label + 'で見る</span></a>';
+      if (alts.length) {
+        html += '<div class="affiliate-asp-links"><span class="aff-alt-lead">ほかで探す:</span>';
+        alts.forEach(function (asp, i) {
+          html += (i ? '<span class="aff-alt-sep">/</span>' : '')
+            + '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+            + ' class="aff-alt-link">' + asp.label + '</a>';
+        });
+        html += '</div>';
+      }
+      html += '</div></div>';
     });
 
     html += '</div>';

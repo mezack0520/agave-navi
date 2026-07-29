@@ -2420,11 +2420,12 @@ main {
    ======================================== */
 
 .affiliate-section {
-    margin-top: 1rem;
-    background: #fafafa;
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 1.25rem;
+    margin-top: 1.5rem;
+    background: #fff;
+    border: none;
+    border-top: 2px solid #111;
+    border-radius: 0;
+    padding: 1.1rem 0 0;
 }
 .affiliate-section h3 {
     font-size: 0.95rem;
@@ -2444,21 +2445,59 @@ main {
 }
 .affiliate-item {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.7rem 0.85rem;
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
-    color: #333;
-    font-size: 0.85rem;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.75rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #eee;
+    border-radius: 0;
+    color: #222;
+    font-size: 0.9rem;
     font-weight: 500;
-    transition: border-color 0.2s, box-shadow 0.2s;
 }
-.affiliate-item:hover {
-    border-color: #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+.affiliate-item:last-of-type {
+    border-bottom: none;
 }
+/* 主動線: 理由を書いた一文をそのままリンクにする */
+.affiliate-item-cta {
+    display: block;
+    color: #111;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+.affiliate-item-cta:hover {
+    text-decoration: underline;
+}
+.aff-cta-go {
+    display: inline-block;
+    margin-left: .5em;
+    padding: .12em .5em;
+    background: #111;
+    color: #fff;
+    border-radius: 4px;
+    font-size: .72rem;
+    font-weight: 700;
+    white-space: nowrap;
+    vertical-align: 2px;
+}
+.affiliate-item-cta:hover .aff-cta-go {
+    background: #333;
+}
+.aff-alt-lead {
+    font-size: .72rem;
+    color: #999;
+    margin-right: .1em;
+}
+.aff-alt-link {
+    font-size: .72rem;
+    color: #777;
+    text-decoration: underline;
+}
+.aff-alt-link:hover { color: #111; }
+.aff-alt-sep { color: #ccc; font-size: .72rem; }
 .affiliate-icon {
     flex-shrink: 0;
     width: 36px;
@@ -2484,8 +2523,10 @@ main {
 }
 .affiliate-asp-links {
     display: flex;
-    gap: 0.35rem;
+    align-items: center;
+    gap: 0.3rem;
     flex-wrap: wrap;
+    margin-top: 0.3rem;
 }
 .asp-badge {
     display: inline-block;
@@ -2500,6 +2541,36 @@ main {
 }
 .asp-badge:hover {
     opacity: 0.8;
+}
+/* 文中アフィリエイトリンク: 意図がピークする段落に埋める主動線 */
+.aff-inline {
+    color: #111;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+}
+.aff-inline:hover { background: #f5f5dc; }
+.aff-inline-pr {
+    display: inline-block;
+    margin-left: .3em;
+    font-size: .62em;
+    font-weight: 700;
+    color: #fff;
+    background: #999;
+    border-radius: 3px;
+    padding: .08em .32em;
+    vertical-align: 1px;
+    text-decoration: none;
+}
+.aff-disclosure {
+    font-size: .78rem;
+    color: #777;
+    background: #fafafa;
+    border-left: 3px solid #ddd;
+    padding: .5rem .7rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
 }
 .affiliate-notice {
     font-size: 0.7rem;

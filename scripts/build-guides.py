@@ -140,9 +140,43 @@ def render_markdown(md):
     return '\n'.join(out)
 
 
+_ASP = None
+
+
+def _asp_config():
+    """amazon-links.json の asp 設定を読む(主リンク = Amazon)。"""
+    global _ASP
+    if _ASP is None:
+        with open(os.path.join(REPO_ROOT, 'amazon-links.json'), encoding='utf-8') as f:
+            _ASP = json.load(f).get('asp', {})
+    return _ASP
+
+
+def expand_aff(s):
+    """{{aff:検索語|リンク文}} → 文中アフィリエイトリンク。
+    ステマ規制対応として各リンクに PR 表示を付ける。"""
+    from urllib.parse import quote
+
+    def repl(m):
+        keyword, label = m.group(1), m.group(2)
+        amz = _asp_config().get('amazon') or {}
+        tag = amz.get('tag', '')
+        url = (amz.get('searchUrl') or 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}')
+        url = url.replace('{keyword}', quote(keyword)).replace('{tag}', tag)
+        return (f'<a class="aff-inline" href="{url}" target="_blank" rel="noopener sponsored">'
+                f'{label}<span class="aff-inline-pr">PR</span></a>')
+
+    return re.sub(r'\{\{aff:([^|}]+)\|([^}]+)\}\}', repl, s)
+
+
+def has_aff(md):
+    return '{{aff:' in md
+
+
 def inline_md(s):
     s = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s)
     s = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', s)
+    s = expand_aff(s)
     return s
 
 
@@ -165,6 +199,9 @@ def render_guide(meta, md, related):
                     ''.join(f'<li><a href="#{s}">{t}</a></li>' for t, s in toc) +
                     '</ol></div>')
     body = render_markdown(md)
+    disclosure = ('  <p class="aff-disclosure">本記事には広告(アフィリエイトリンク)を含みます。'
+                  'リンク先での購入により当サイトが紹介料を受け取る場合がありますが、'
+                  '紹介料の有無で内容を変えることはしません。</p>\n') if has_aff(md) else ''
     rel_html = ''
     if related:
         items = ''.join(f'<li><a href="{u}">{n}</a></li>' for n, u in related)
@@ -184,7 +221,7 @@ def render_guide(meta, md, related):
                  f'最終更新: {date_iso} / 読了目安: {meta["read_min"]}分</div>\n'
                  f'      <h1>{meta["title"]}</h1>\n'
                  f'      <p style="color:#555;line-height:1.7">{meta["lead"]}</p>\n'
-                 f'    </section>\n{toc_html}\n'
+                 f'    </section>\n{disclosure}{toc_html}\n'
                  f'    <article class="guide-body">\n{body}\n    </article>\n'
                  f'    <section class="affiliate-section" data-guide="{meta["slug"]}"></section>\n'
                  f'    <section class="guide-author">'
