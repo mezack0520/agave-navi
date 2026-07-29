@@ -16,6 +16,7 @@
 | `listing-policy.json` | 掲載基準の機械可読版。event-updateが判断に使い、書いていない類型だけキューに積む | 人間の決定をClaudeが記録 |
 | `crawl-sources.json` | 週次クローラの巡回先(52+自動候補) | 手動+discover_sources |
 | `check-results.json` | 日次チェック結果(メール本文の素) | health.yml |
+| `audit-results.json` | 整合監査の結果。除外・欠落・孤児を毎ビルドで記録 | scripts/audit.py |
 | `scripts/sitelib.py` | 単一情報源(スラッグ表/日付整形/共通ヘッダフッタ/CSS版数) | 手動 |
 
 ## 2. 毎日のタイムライン (JST)
@@ -107,6 +108,11 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-30: scripts/audit.py を新設し build-all.sh の最後に組み込んだ。各スクリプトが
+  成功件数だけを出力し除外・欠落・孤児を黙っていたため、問題が指摘されるまで表面化しなかった。
+  slug重複/同名同日の二重掲載/孤児・欠落ページ/sitemapの死活/見送りと掲載の矛盾/
+  status矛盾/フィード件数/ガイドリンク死活/CSS版数乖離/未参照スクリプト/楽天キャッシュ網羅率を
+  毎回検査し、重要項目は日次メールに出す。初回検査で二重掲載1件(春のサボテン多肉植物フェア)を検出
 - 2026-07-30: 掲載基準を listing-policy.json に機械可読化。同じ類型の掲載可否を毎回人間に
   問い直していたため、一次情報の要件・複合イベントの閾値(植物出店3割以上または著名店3者以上)・
   会場未発表時のTBD掲載・矛盾データの削除を明文化した。rejected-events に reasonType を導入し

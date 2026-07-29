@@ -1,0 +1,230 @@
+{
+  "total": 167,
+  "findings": {
+    "duplicate_slugs": {
+      "title": "events.json内のslug重複",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "duplicate_name_date": {
+      "title": "同名・同日で別slug(二重掲載の疑い)",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "orphan_detail_pages": {
+      "title": "events.jsonに無いのに残っている詳細ページ",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "missing_detail_pages": {
+      "title": "events.jsonにあるのに詳細ページが無い",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "sitemap_dead_entries": {
+      "title": "sitemapに載っているがファイルが存在しないURL",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "rejected_but_listed": {
+      "title": "見送り記録があるのに掲載されているイベント",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "unresolved_ig_handles": {
+      "title": "IGのURLはあるが主催者ハンドルが取れずウォッチ対象外",
+      "count": 14,
+      "items": [
+        "gunpari-gpf-kanshasai-2026-08",
+        "chinki-plants-flea-market-2026-08",
+        "plants-up-satsuma-2026-08",
+        "purari-plants-vol3-2026-11",
+        "mebuki-sai-2026",
+        "plants-2306-3rd-anniversary-2026",
+        "shoku-sai-vol9-izumo-2026",
+        "plants-garage-market-2026-tsukumi",
+        "gunma-cactus-shikishima-2026-06",
+        "planchu-marche-vol1-yomitan-2026-06",
+        "taniku-sukijaken-ichi-3rd-2026-06",
+        "plants-hobbyist-niigata-2026-07",
+        "playfulness-nagoya-2026-07",
+        "pakipo-no-sono-2026-07"
+      ],
+      "note": "organizerIg を入れれば解消する"
+    },
+    "thin_events": {
+      "title": "薄い判定(noindex かつアフィリエイト枠なし)",
+      "count": 91,
+      "items": [
+        "agave-cross-2026-06",
+        "agave-meeting-2026-kobe",
+        "agave-popup-market-nagoya-2026-07",
+        "agavista-vol2-matsuyama-2026-06",
+        "aichi-plants-fes-vol1",
+        "aroid-chakusei-saiten-yashima-2026-06",
+        "awajishima-taniku-smile-marche-3rd-2026",
+        "bingo-botanical-base-vol1-fukuyama-2026-07",
+        "bop-with-needles-nagoya-2026-06",
+        "border-break-6th-2026",
+        "botanical-botanical-osaka",
+        "botanical-botanical-tokyo-2026",
+        "botanical-festa-hawo-kumagaya-2026-09",
+        "botanical-marche-kanazawa-2026",
+        "botanical-market-akita-2026",
+        "botanoichi-senju-2026-05",
+        "bromeliad-festa-spring-2026",
+        "bts-beppu-taniku-show-2026",
+        "chinki-shokubutsu-fair-4th-kasugai-2026",
+        "chinki-shokubutsu-freemarket-machida-2026",
+        "chinki-shokubutsu-ichiba-vol8-2026",
+        "coco-et-nico-bond-project-2026",
+        "enjoy-place-outside-2nd-2026-11",
+        "ensoukai-fuchu-2026-07",
+        "eternal-plants-built-to-survive-gunma-2026",
+        "fuji-taniku-plants-marche-2026",
+        "fujisan-festa",
+        "fukuoka-green-party-7th-2026",
+        "fushimi-daisakusen-vol2",
+        "garden-link-festa-2026-10",
+        "gifu-midori-marche-2nd-2026-09",
+        "gunma-cactus-shikishima-2026-06",
+        "hanauchu-dream-garden-26",
+        "haru-cactus-succulent-kuro-toyama-2026",
+        "haru-cactus-succulent-yuriga-hara-2026",
+        "hobby-plants-freaks-vol5",
+        "ibaraki-sky-palette-2026",
+        "icchan-no-taniku-garden-okayama-2026",
+        "iku-matsuri-ichinomiya-spring",
+        "iwate-hana-midori-matsuri-2026"
+      ],
+      "note": "url欠落 または time/imageUrl/説明50字以上のいずれも無い"
+    },
+    "short_descriptions": {
+      "title": "開催予定で説明文70字未満(SERPスニペット枠を使い切れない)",
+      "count": 24,
+      "items": [
+        "awajishima-taniku-smile-marche-3rd-2026(42字)",
+        "botanical-festa-hawo-kumagaya-2026-09(45字)",
+        "chinki-shokubutsu-fair-4th-kasugai-2026(36字)",
+        "collect-plants-2026-09(59字)",
+        "enjoy-place-5th-2026-10(51字)",
+        "enjoy-place-outside-2nd-2026-11(40字)",
+        "fukuoka-green-party-7th-2026(47字)",
+        "garden-link-festa-2026-10(28字)",
+        "gifu-midori-marche-2nd-2026-09(30字)",
+        "greensnap-marche-yokohama-2026-autumn(43字)",
+        "hanatomofesta-2026(53字)",
+        "ibatama-vol9-2026-10(54字)",
+        "isij-big-bazaar-2026-09-27(59字)",
+        "isij-big-bazaar-2026-11-22(62字)",
+        "kyoto-midori-marche-ibaraki-2026-09(48字)",
+        "kyoto-midorino-marche-bangaihen-vol10-2026(44字)",
+        "nagomi-marche-kazo-2026-11(31字)",
+        "narabikakufes-vol2-2026(60字)",
+        "on-the-plants-vol9-fukuoka-2026-10(67字)",
+        "plant-to-new-home-2026-09(63字)",
+        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(65字)",
+        "taniku-midori-marche-flarie-2026-10(67字)",
+        "the-botanical-show-6th-2026(45字)",
+        "tochigi-tanippe-2026-10(56字)"
+      ],
+      "note": ""
+    },
+    "status_date_mismatch": {
+      "title": "statusと日付の矛盾",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "feed_count_mismatch": {
+      "title": "配布フィードの件数がevents.jsonと不一致",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "dead_guide_links": {
+      "title": "詳細ページから貼っているガイドが存在しない",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "css_version_drift": {
+      "title": "CSS版数が正規値(20260730a)と違うページ",
+      "count": 0,
+      "items": [],
+      "note": "sync-footers.py が正規化する"
+    },
+    "unreferenced_scripts": {
+      "title": "build-all.shもworkflowも参照していないスクリプト",
+      "count": 1,
+      "items": [
+        "add-from-instagram.py"
+      ],
+      "note": "使われていないか、呼び出しが失われている"
+    },
+    "workflow_secrets": {
+      "title": "workflowが参照しているsecret",
+      "count": 7,
+      "items": [
+        "BRAVE_API_KEY",
+        "GITHUB_TOKEN",
+        "GMAIL_APP_PASSWORD",
+        "GMAIL_USER",
+        "GOOGLE_API_KEY",
+        "GOOGLE_CSE_ID",
+        "RAKUTEN_APP_ID"
+      ],
+      "note": "未設定でも多くのstepは失敗せず黙って空値で動く"
+    },
+    "product_cache_missing": {
+      "title": "楽天商品キャッシュが無い検索語(テキスト表示にフォールバック)",
+      "count": 37,
+      "items": [
+        "アガベ 図鑑 チタノタ",
+        "アガベ 鉢 2号 3号",
+        "アガベ 鉢 スリット",
+        "アガベ 鉢 プラ鉢 スリット",
+        "オルトラン DX 粒剤",
+        "キャリーカート 折りたたみ 園芸",
+        "サーキュレーター 静音",
+        "サーモスタット 園芸",
+        "スマートプラグ タイマー",
+        "パキポディウム 図鑑",
+        "ベニカ スプレー 観葉植物",
+        "ベンレート 水和剤",
+        "ルートン 発根促進剤",
+        "ルーペ 拡大鏡 30倍",
+        "不織布 霜よけ 寒冷紗",
+        "園芸 ふるい 土",
+        "園芸 ナイフ 消毒",
+        "園芸 ノート 栽培記録",
+        "園芸 パネルヒーター",
+        "土壌水分計 園芸",
+        "塊根植物 図鑑 入門",
+        "塊根植物 用土",
+        "塊根植物 用土 プレミアム",
+        "多肉植物 図鑑",
+        "多肉植物 培養土 硬質赤玉土",
+        "最高最低温度計 デジタル",
+        "植物 ラベル 名札 園芸",
+        "植物 輸送 箱 緩衝材",
+        "植物育成ライト LED",
+        "植物育成ライト LED 実生",
+        "植物育成ライト LED 植物用",
+        "植物育成ライト LED 高PPFD",
+        "植物育成ライト スタンド",
+        "硬質赤玉土 小粒",
+        "簡易温室 ビニール 大型",
+        "育苗 トレイ プラグトレイ",
+        "軽石 日向土 小粒"
+      ],
+      "note": "RAKUTEN_APP_ID 未設定なら全件が該当する"
+    }
+  }
+}

@@ -1,11 +1,11 @@
 {
- "generated": "2026-07-30 00:56 JST",
+ "generated": "2026-07-30 01:11 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 122,
   "awaitingNextEdition": 169,
   "officialSiteCandidates": 51,
-  "unresolvedIgHandles": 15
+  "unresolvedIgHandles": 14
  },
  "igAccounts": [
   {
@@ -108,6 +108,15 @@
    "priority": 0
   },
   {
+   "handle": "sapporo.cactus.club",
+   "url": "https://www.instagram.com/sapporo.cactus.club/",
+   "eventCount": 3,
+   "lastEventName": "サボテン多肉植物フェア 夏 (札幌)",
+   "lastEventDate": "2026-07-03",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
    "handle": "botariba.event",
    "url": "https://www.instagram.com/botariba.event/",
    "eventCount": 2,
@@ -122,15 +131,6 @@
    "eventCount": 2,
    "lastEventName": "妙高多肉市場 vol.14",
    "lastEventDate": "2026-06-21",
-   "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "sapporo.cactus.club",
-   "url": "https://www.instagram.com/sapporo.cactus.club/",
-   "eventCount": 2,
-   "lastEventName": "サボテン多肉植物フェア 夏 (札幌)",
-   "lastEventDate": "2026-07-03",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -1179,16 +1179,6 @@
    "recurring": true
   },
   {
-   "series": "春のサボテン多肉植物フェア",
-   "lastSlug": "haru-saboten-taniku-fair-2026",
-   "lastDate": "2026-04-24",
-   "lastEnd": "2026-04-26",
-   "monthsSinceLast": 3,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": true
-  },
-  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1507,6 +1497,16 @@
    "igHandle": "lucky_gardening",
    "officialUrl": "https://www.instagram.com/lucky_gardening/",
    "recurring": false
+  },
+  {
+   "series": "ART FAIR NAGANO 2026",
+   "lastSlug": "art-fair-nagano-2026-07",
+   "lastDate": "2026-07-25",
+   "lastEnd": "2026-07-26",
+   "monthsSinceLast": 0,
+   "igHandle": "aobouzu_caudex",
+   "officialUrl": "https://aobouzu.official.ec/blog/2026/06/01/194023",
+   "recurring": false
   }
  ],
  "officialSiteCandidates": [
@@ -1721,11 +1721,6 @@
    "slug": "plants-2306-3rd-anniversary-2026",
    "name": "PLANTS 2306 3rd ANNIVERSARY FESTIVAL",
    "igUrl": "https://www.instagram.com/p/DV5jlbngcH-/"
-  },
-  {
-   "slug": "haru-saboten-taniku-fair-sapporo-2026",
-   "name": "春のサボテン多肉植物フェア",
-   "igUrl": "https://www.instagram.com/p/DVxEjm0iWCA/"
   },
   {
    "slug": "shoku-sai-vol9-izumo-2026",

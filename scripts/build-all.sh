@@ -18,4 +18,7 @@ python3 scripts/generate-watchlist.py
 python3 scripts/sync-footers.py
 python3 scripts/generate_sitemap.py
 
+# 整合監査(読み取り専用)。除外・欠落・孤児を毎回出力し、黙って落ちるのを防ぐ。
+python3 scripts/audit.py || echo "::warning::audit.py が失敗しました"
+
 echo "build-all: done"
