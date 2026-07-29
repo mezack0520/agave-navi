@@ -3254,3 +3254,151 @@ main {
 .eh-meta-note a:hover { color: #111; }
 .eh-body { min-width: 0; }
 .eh-meta-note .ehm-sep { margin: 0 .45em; color: #d0d0d0; }
+
+/* ========================================
+   AFFILIATE BLOCK — 目立たせるための上書き (2026-07-30)
+   既存定義は変更せず、後勝ちで上書きする(範囲置換で他を壊した事故の再発防止)。
+   モノクロ基調を崩さず、サイズ・太さ・黒ベタだけで階層をつける。
+   ======================================== */
+.affiliate-section {
+    margin: 2rem 0 1.5rem;
+    background: #fff;
+    border: 1px solid #111;
+    border-top: 1px solid #111;
+    border-radius: 12px;
+    padding: 1.2rem 1.1rem 1rem;
+}
+.aff-head {
+    display: flex;
+    align-items: baseline;
+    gap: .55rem;
+    margin-bottom: .2rem;
+}
+.affiliate-section h3 {
+    font-size: 1.08rem;
+    font-weight: 900;
+    letter-spacing: -.015em;
+    color: #111;
+    margin: 0;
+    line-height: 1.35;
+}
+.affiliate-section .affiliate-desc {
+    font-size: .8rem;
+    color: #777;
+    margin: 0 0 1rem;
+    line-height: 1.55;
+}
+.affiliate-section .affiliate-links {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+.affiliate-section .affiliate-item {
+    display: block;
+    border: 1px solid #e6e6e6;
+    border-radius: 9px;
+    padding: .1rem;
+    background: #fff;
+    font-size: inherit;
+    transition: border-color .15s, box-shadow .15s;
+}
+.affiliate-section .affiliate-item:hover {
+    border-color: #111;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+.affiliate-section .aff-row {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .7rem .75rem;
+    text-decoration: none;
+    color: #111;
+}
+.affiliate-section .affiliate-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    border-radius: 8px;
+}
+.affiliate-section .aff-row-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .7rem;
+    flex: 1;
+    min-width: 0;
+}
+.affiliate-section .affiliate-item-label {
+    display: block;
+    font-size: .9rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #111;
+    margin: 0;
+}
+.affiliate-section .aff-cta-go {
+    flex-shrink: 0;
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    border-radius: 6px;
+    padding: .48em .9em;
+    font-size: .76rem;
+    font-weight: 800;
+    white-space: nowrap;
+    margin: 0;
+    vertical-align: baseline;
+}
+.affiliate-section .affiliate-item:hover .aff-cta-go { background: #333; }
+
+/* 1件目を主役として扱う */
+.affiliate-section .affiliate-item.is-featured { border-color: #111; }
+.affiliate-section .affiliate-item.is-featured .aff-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .6rem;
+    padding: .95rem .9rem .9rem;
+}
+.affiliate-section .affiliate-item.is-featured .affiliate-icon { width: 42px; height: 42px; }
+.affiliate-section .affiliate-item.is-featured .aff-row-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .7rem;
+}
+.affiliate-section .affiliate-item.is-featured .affiliate-item-label {
+    font-size: 1.02rem;
+    font-weight: 800;
+    line-height: 1.5;
+}
+.affiliate-section .affiliate-item.is-featured .aff-cta-go {
+    text-align: center;
+    padding: .72em 1em;
+    font-size: .85rem;
+    border-radius: 7px;
+}
+
+.affiliate-section .affiliate-asp-links {
+    display: flex;
+    align-items: center;
+    gap: .32rem;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0 .8rem .6rem;
+}
+.affiliate-section .aff-alt-lead { font-size: .7rem; color: #aaa; margin-right: .15em; }
+.affiliate-section .aff-alt-link { font-size: .72rem; color: #777; text-decoration: underline; }
+.affiliate-section .aff-alt-link:hover { color: #111; }
+.affiliate-section .aff-alt-sep { color: #ddd; font-size: .72rem; }
+
+@media (max-width: 560px) {
+    .affiliate-section { padding: 1.05rem .9rem .85rem; margin: 1.6rem 0 1.2rem; }
+    .affiliate-section h3 { font-size: 1rem; }
+    /* 通常行もモバイルでは縦積みにしてタップ範囲を確保する */
+    .affiliate-section .aff-row-body { flex-direction: column; align-items: stretch; gap: .55rem; }
+    .affiliate-section .aff-cta-go { text-align: center; padding: .68em 1em; font-size: .82rem; }
+    .affiliate-section .affiliate-item.is-featured .affiliate-item-label { font-size: .98rem; }
+}
