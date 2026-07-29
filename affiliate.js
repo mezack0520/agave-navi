@@ -176,10 +176,10 @@
     if (!items.length) return;
     var aspConfig = data.asp || { amazon: { tag: data.tag || 'agavenavi-22', searchUrl: 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}', label: 'Amazon' } };
 
-    var title = heading || (guideSlug ? 'この記事で使う道具・資材' : 'イベント準備におすすめ');
+    var title = heading || (guideSlug ? 'この記事で使う道具・資材' : '株を持ち帰る前に揃えるもの');
     var desc = guideSlug
       ? '本文で触れた資材を各ショップで探せます'
-      : 'イベントをもっと楽しむためのアイテムをチェック';
+      : '当日の運搬と、帰宅後の植え替え・発根管理で必要になるもの';
 
     var html = '<h3>' + title + ' <span class="aff-pr">PR</span></h3>';
     html += '<p class="affiliate-desc">' + desc + '</p>';

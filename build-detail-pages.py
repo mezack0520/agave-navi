@@ -1215,24 +1215,10 @@ def icon(name):
     return _ICONS.get(name, '')
 
 def make_weather_row(ev, ctx):
-    """未来のイベントに会場周辺の天気検索リンクを出す(実用リンク・データ不要)。"""
-    d = ev.get('date') or ''
-    if not d or d < ctx['today']:
-        return ''
-    venue = (ev.get('location') or ev.get('venue') or '').strip()
-    pref = ev.get('prefecture') or ev.get('region') or ''
-    place = venue if venue and venue not in _VAGUE_VENUES else pref
-    if not place:
-        return ''
-    try:
-        dt = datetime.strptime(d, '%Y-%m-%d')
-        q = quote(f'{place} 天気 {dt.month}月{dt.day}日')
-    except ValueError:
-        q = quote(f'{place} 天気')
-    return ('\n          <div class="info-row">'
-            '\n            <span class="info-label">' + icon('weather') + '天気</span>'
-            f'\n            <span class="info-value"><a href="https://www.google.com/search?q={q}" target="_blank" rel="noopener">会場周辺の天気を確認 ↗</a></span>'
-            '\n          </div>')
+    """天気行は撤去した(2026-07-30)。
+    Google検索に送り出すだけで、収益も回遊も生まないうえ検索結果で競合サイトに
+    出会わせる離脱動線になっていた。天気は読者が自分で見る。"""
+    return ''
 
 def make_data_source_row(ev):
     """データソース表示。url があれば公式参照を、なければ自社収集を明記。"""
