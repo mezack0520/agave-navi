@@ -25,9 +25,10 @@
 
   // ASP brand colors for badges
   var ASP_COLORS = {
-    amazon: '#ff9900',
+    amazon:  '#ff9900',
     rakuten: '#bf0000',
-    yahoo:  '#ff0033'
+    yahoo:   '#ff0033',
+    yahuoku: '#ff0033'
   };
 
   // Detect base path
@@ -44,16 +45,21 @@
   var containers = document.querySelectorAll('.affiliate-section');
   if (!containers.length) return;
 
-  var jsonUrl = basePath + 'amazon-links.json?v=' + Date.now();
-  fetch(jsonUrl)
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      Array.prototype.forEach.call(containers, function (el) {
-        var tags = (el.getAttribute('data-tags') || '').split(',').filter(Boolean);
-        render(data, tags, el, el.getAttribute('data-guide') || '', el.getAttribute('data-heading') || '');
-      });
-    })
-    .catch(function (e) { console.warn('affiliate.js:', e); });
+  var v = '?v=' + Date.now();
+  Promise.all([
+    fetch(basePath + 'amazon-links.json' + v).then(function (r) { return r.json(); }),
+    // 実商品キャッシュ(楽天API由来)。無ければテキスト表示にフォールバックする
+    fetch(basePath + 'product-cache.json' + v)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+  ]).then(function (res) {
+    var data = res[0];
+    data._products = (res[1] && res[1].items) || {};
+    Array.prototype.forEach.call(containers, function (el) {
+      var tags = (el.getAttribute('data-tags') || '').split(',').filter(Boolean);
+      render(data, tags, el, el.getAttribute('data-guide') || '', el.getAttribute('data-heading') || '');
+    });
+  }).catch(function (e) { console.warn('affiliate.js:', e); });
 
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
@@ -149,6 +155,19 @@
       });
     }
 
+    // ヤフオク(バリューコマース) — sid/pid が設定済みの場合のみ表示。
+    // 株そのものが数千〜数万円で動く場なので、相場を見る導線として効く。
+    var auc = aspConfig.yahuoku;
+    if (auc && auc.sid && auc.pid) {
+      links.push({
+        label: auc.label || 'ヤフオク',
+        url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + auc.sid
+          + '&pid=' + auc.pid
+          + '&vc_url=' + encodeURIComponent('https://auctions.yahoo.co.jp/search/search?p=' + keyword),
+        color: ASP_COLORS.yahuoku
+      });
+    }
+
     return links;
   }
 
@@ -166,10 +185,29 @@
     html += '<p class="affiliate-desc">' + desc + '</p>';
     html += '<div class="affiliate-links">';
 
+    var products = data._products || {};
+
     items.forEach(function (item) {
       var icon = ICONS[item.icon] || ICONS.plant;
       var aspLinks = buildAspLinks(item.keyword, aspConfig);
       if (!aspLinks.length) return;
+
+      // 実商品カード: 画像・商品名・価格。価格は取得時点である旨を添える
+      var p = products[item.keyword];
+      if (p && p.image && p.url) {
+        html += '<a class="aff-card" href="' + p.url + '" target="_blank" rel="noopener sponsored">';
+        html += '<img class="aff-card-img" src="' + p.image + '" alt="" loading="lazy"'
+             +  ' referrerpolicy="no-referrer-when-downgrade">';
+        html += '<span class="aff-card-body">';
+        html += '<span class="aff-card-why">' + item.label + '</span>';
+        html += '<span class="aff-card-name">' + p.name + '</span>';
+        html += '<span class="aff-card-meta">';
+        if (p.price) html += '<span class="aff-card-price">' + Number(p.price).toLocaleString('ja-JP') + '円</span>';
+        if (p.reviewCount) html += '<span class="aff-card-rev">レビュー' + p.reviewCount + '件</span>';
+        html += '<span class="aff-card-shop">楽天市場</span>';
+        html += '</span></span></a>';
+        return;
+      }
 
       // 主リンク(先頭ASP)を行の主動線にする。店を選ばせる前に商品へ向かわせる
       var primary = aspLinks[0];
@@ -200,7 +238,15 @@
     var notices = [];
     if (aspConfig.amazon && aspConfig.amazon.tag) notices.push('Amazon.co.jpアソシエイト');
     if (aspConfig.rakuten) notices.push('楽天アフィリエイト');
-    if (aspConfig.yahoo && aspConfig.yahoo.sid && aspConfig.yahoo.pid) notices.push('バリューコマース');
+    if ((aspConfig.yahoo && aspConfig.yahoo.sid && aspConfig.yahoo.pid)
+        || (aspConfig.yahuoku && aspConfig.yahuoku.sid && aspConfig.yahuoku.pid)) notices.push('バリューコマース');
+    var priceShown = items.some(function (it) {
+      var p = (data._products || {})[it.keyword];
+      return p && p.image && p.url && p.price;
+    });
+    if (priceShown) {
+      notices.unshift('価格・在庫は表示時点のものではなく取得時点のためリンク先をご確認ください');
+    }
     html += '<p class="affiliate-notice">※ ' + notices.join(' / ') + '</p>';
 
     el.innerHTML = html;

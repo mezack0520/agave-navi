@@ -17,6 +17,13 @@
       "searchUrl": "https://shopping.yahoo.co.jp/search?p={keyword}",
       "label": "Yahoo!ショッピング",
       "_note": "バリューコマース経由。vcpid/sid/pid取得後に設定。URL形式は https://ck.jp.ap.valuecommerce.com/servlet/referral?sid={sid}&pid={pid}&vc_url=https://shopping.yahoo.co.jp/search?p={keyword}"
+    },
+    "yahuoku": {
+      "sid": "",
+      "pid": "",
+      "searchUrl": "https://auctions.yahoo.co.jp/search/search?p={keyword}",
+      "label": "ヤフオク",
+      "_note": "バリューコマースの Yahoo!オークション プログラム。提携承認後に sid/pid を入れると表示が有効になる。空のままなら出ない。リンク形式は Yahoo!ショッピングと同じ ck.jp.ap.valuecommerce.com 経由で vc_url に auctions.yahoo.co.jp の検索URLを渡す。"
     }
   },
   "common": [

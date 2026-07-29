@@ -1,0 +1,69 @@
+name: Rakuten Product Refresh
+
+# アフィリエイト枠に出す実商品(画像・価格・アフィリエイトURL)を楽天商品検索APIから
+# 取得して product-cache.json に固める。静的サイトなのでビルド時に取り、
+# 閲覧時はJSONを読むだけにする(appIdを露出させず、レート制限も踏まない)。
+#
+# 毎週月曜 08:00 JST。価格変動をならすため週1で十分。
+# secrets.RAKUTEN_APP_ID が未設定のときはスクリプト側でスキップされる。
+
+on:
+  schedule:
+    - cron: '0 23 * * 0'   # 月 08:00 JST
+  repository_dispatch:
+    types: [rakuten-products]
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: '検索語の件数上限 (0=全件)'
+        required: false
+        default: '0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: events-write
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync to latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch Rakuten products
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          LIMIT: ${{ github.event.inputs.limit || '0' }}
+        run: python3 scripts/fetch-rakuten-products.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add product-cache.json
+          if git diff --staged --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "chore(affiliate): 楽天商品キャッシュを更新 [rakuten-products]"
+          for attempt in 1 2 3 4 5; do
+            if git push; then break; fi
+            echo "::warning::push failed (attempt $attempt/5); rebase して再試行"
+            git pull --rebase || true
+            sleep $((RANDOM % 5 + 2))
+            if [ $attempt -eq 5 ]; then echo "::error::push failed"; exit 1; fi
+          done
