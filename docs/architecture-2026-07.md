@@ -13,6 +13,7 @@
 | `pending-judgments.json` | 要人間判断キュー。健全性メールに集約表示 | 各Claudeタスク(id重複禁止・解消時自削除) |
 | `inquiries-processed.json` | フォーム回答の処理済み管理 | event-listing-review |
 | `rejected-events.json` | 掲載見送り決定の記録。event-updateは掲載中のイベントを再提案しない | ユーザー決定をClaudeが記録 |
+| `listing-policy.json` | 掲載基準の機械可読版。event-updateが判断に使い、書いていない類型だけキューに積む | 人間の決定をClaudeが記録 |
 | `crawl-sources.json` | 週次クローラの巡回先(52+自動候補) | 手動+discover_sources |
 | `check-results.json` | 日次チェック結果(メール本文の素) | health.yml |
 | `scripts/sitelib.py` | 単一情報源(スラッグ表/日付整形/共通ヘッダフッタ/CSS版数) | 手動 |
@@ -106,6 +107,12 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-30: 掲載基準を listing-policy.json に機械可読化。同じ類型の掲載可否を毎回人間に
+  問い直していたため、一次情報の要件・複合イベントの閾値(植物出店3割以上または著名店3者以上)・
+  会場未発表時のTBD掲載・矛盾データの削除を明文化した。rejected-events に reasonType を導入し
+  「方針として載せない(policy)」と「一次情報待ち(unverified/revisit)」を区別
+- 2026-07-30: 孤児ページの掃除を詳細ページにも追加。events.jsonから削除した回のHTMLが
+  本番に残りsitemapに載り続けていた(二子玉川の削除で発覚)。ランディング側と同じ穴
 - 2026-07-30: 自己拡張ループの穴を塞いだ。裸の投稿URL(instagram.com/p/XXXX/)しか持たない回は
   IGハンドルが取れずウォッチ対象から静かに漏れていた(16件)。organizerIg フィールドの明示指定に
   対応し、未解決件数を watch-sources.json の stats・ビルドログ・日次メールに出すようにした。

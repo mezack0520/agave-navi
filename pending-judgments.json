@@ -2,38 +2,6 @@
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
   "items": [
     {
-      "id": "agave-event-update:botanical-botanical-tour-2026h2",
-      "date": "2026-07-28",
-      "source": "agave-event-update",
-      "title": "BOTANICAL BOTANICAL 今後3公演(10/3-4福岡・10/31-11/1大阪・11/14-15沖縄)の先行掲載可否",
-      "detail": "公式Instagramプロフィール(botanical.botanical)に「10/3-10/4福岡←NEXT / 10/31-11/1大阪 / 11/14-11/15沖縄」と明記されているが、いずれも会場は未発表。公式サイト(botanicalbotanical.com)はオンラインショップのみで会場情報なし。KASHIMA(7/11-12)は掲載済みの主要シリーズ。",
-      "proposal": "会場未定のため今回は見送った。会場なしで先行掲載する運用にするか、会場発表を待つか判断したい。待つ場合はIGローテ(8日周期)で再検知するが、確実を期すならwatch優先度を上げる。"
-    },
-    {
-      "id": "event-monitor:futakotamagawa-botanical-2026",
-      "date": "2026-07-28",
-      "source": "event-monitor",
-      "title": "二子玉川ボタニカルフェスタ 2026春: 名称・date・statusが矛盾し機械修正不能",
-      "detail": "名称は「2026春」だが date=2026-08-12(未来) で status=past。履歴では7/15以前から date=2026-07-26・status=past のまま推移し、7/21の event-monitor が date を 08-12 に変更(dateDisplayも追随)したが status は past のまま。sourceUrl は https://www.rise.sc/ (施設トップ)で一次情報に到達できず実開催日を確定できない。日付が7/26→8/12と動いており date 自体が信頼できないため、past→upcoming の自動昇格は誤掲載リスクがあり見送った。",
-      "proposal": "公式発表を確認のうえ (a)実開催日に修正して status を直す、(b)開催実績を確認できなければエントリを削除する、のいずれかを指示してください。"
-    },
-    {
-      "id": "agave-event-update:gardens-umekita-2nd-anniversary",
-      "date": "2026-07-29",
-      "source": "agave-event-update",
-      "title": "コーナン gardens umekita 2周年イベント(9/5-6・グラングリーン大阪)の掲載可否",
-      "detail": "三浦園芸(レアアロイド)とカクト・ロコ(ビザールプランツ)の即売を含む店舗周年イベント。公式IG(@gardens_umekita 投稿DacJ_uDJDAh)で9月の周年イベント開催は確認したが、9/5-6の日付と両ナーセリー出店の明細はフライヤー画像内でテキストでは未確認(リーフラ記事は9/5 10-17時・9/6 10-16時と記載)。",
-      "proposal": "ホームセンター店舗イベントだが出店2社は著名ナーセリー。掲載するなら日付の画像確認ののち追加する。見送りならrejected-eventsに記録する。"
-    },
-    {
-      "id": "agave-event-update:gan-shizuoka-series",
-      "date": "2026-07-29",
-      "source": "agave-event-update",
-      "title": "愿シリーズ2件(9/12-13清水・10/3-4富士)の掲載可否",
-      "detail": "愿2026(9/12-13 エスパルスドリームプラザやすらぎ広場)は施設公式発信で開催確認できるが、日毎60店×2日の雑貨・飲食・音楽を含む総合マーケットで植物出店比率が不明。愿とぼっち植堂コラボ第二弾(10/3-4 富士中央公園)は「秋のボタニカルマーケット」と植物軸だが主催者一次情報が未特定。",
-      "proposal": "フェルム・ド・フェス見送り(植物比率低)と同基準で判断したい。掲載する場合は主催者IGを特定して裏取りする。"
-    },
-    {
       "id": "affiliate:thin-past-events-no-monetization",
       "date": "2026-07-29",
       "source": "affiliate-setup",

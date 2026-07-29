@@ -1,0 +1,52 @@
+{
+  "_note": "掲載基準の機械可読版。agave-event-update が判断に使う。about.html の掲載基準と整合させること。ここに書いていない類型に出会ったときだけ pending-judgments に積む(同じ問いを繰り返し人間に投げないため)。",
+  "updated": "2026-07-30",
+  "primarySource": {
+    "rule": "主催者の公式サイト・公式SNSに当該回の告知があることを必須とする",
+    "insufficient": [
+      "アグリゲータ・まとめサイトのみに情報がある",
+      "施設のトップページしか出典にできない",
+      "主催者が未特定"
+    ],
+    "action": "満たさない場合は掲載しない。植物軸が明示されている回は rejected-events に reason=unverified / revisit=true で記録し、一次情報が出たら再評価する"
+  },
+  "plantCentric": {
+    "rule": "アガベ・塊根植物・多肉植物・サボテン・ビザールプランツが主役の回だけ掲載する",
+    "autoInclude": "イベント名または主催者告知で植物が主題(即売会・展示会・ボタニカルマーケット等)",
+    "compositeEvents": {
+      "description": "クラフト市・音楽フェス・アンティーク市・店舗周年など、植物以外が主体の総合イベント",
+      "includeIf": "植物系出店が全出店の3割以上、または著名ナーセリー・専門店の出店が3者以上",
+      "elseAction": "掲載しない。rejected-events に reason=policy で記録する",
+      "precedents": [
+        "フェルム・ド・フェスVol.29: 約120店中 植物系9店(7.5%) → 見送り",
+        "LOCALGREEN FESTIVAL'26: 主体が音楽フェス → 見送り",
+        "gardens umekita 2周年: 著名ナーセリー2社(3社未満)の店舗周年 → 見送り",
+        "愿2026: 60店規模の総合マーケットで植物比率不明 → 見送り"
+      ]
+    }
+  },
+  "venueUnannounced": {
+    "rule": "日付が一次情報で確定していれば、会場未発表でも掲載する",
+    "how": "venue と location を '調整中' にし eventStatus を 'tbd' にする。description に会場未発表であることを明記する",
+    "why": "既知シリーズの次回日程は読者価値が高い。tbd は日次メールに件数が出るため埋め忘れが表面化する",
+    "doNotList": "日付も未確定の場合は掲載しない"
+  },
+  "contradictoryData": {
+    "rule": "名称・日付・statusが矛盾し、一次情報で実開催を確認できない回はエントリを削除する",
+    "why": "誤情報を残す害のほうが大きい。about.html の除外基準『公式情報が確認できないもの』に該当する",
+    "precedents": [
+      "二子玉川ボタニカルフェスタ 2026春: 名称は春だがdate=8/12、出典は施設トップのみ、施設公式カレンダーとWeb検索に痕跡なし → 削除(2026-07-30)"
+    ]
+  },
+  "blockedUrlDomains": {
+    "rule": "url / sourceUrl に使用してはならないドメイン。手がかりとして参照するのは可",
+    "domains": [
+      "nextmeet.app", "botanical-zone.tokyo", "leaf-laboratory.com",
+      "tochinavi.net", "pukubook.jp", "fukuoka-now.com", "churatoku.net"
+    ]
+  },
+  "escalate": {
+    "rule": "上記で判断できない類型に限り pending-judgments に積む",
+    "requirement": "積むときは、次に同じ問いが来ないよう policy への追記案をあわせて書く"
+  }
+}

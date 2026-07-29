@@ -1301,6 +1301,23 @@ def main():
             _meta_json.dump({'noindex': sorted(set(NOINDEX_EVENT_SLUGS))}, f, ensure_ascii=False, indent=2)
         print(f'noindex events: {len(set(NOINDEX_EVENT_SLUGS))} -> scripts/events-meta.json')
 
+        # events.json から消えたイベントの詳細ページを掃除する。
+        # 残しておくと本番に生き続け sitemap にも載り続ける(2026-07-30に発覚)。
+        # 生成数が極端に少ない場合は異常終了とみなし何もしない。
+        if generated >= 20:
+            import glob as _glob
+            live = {e.get('slug') for e in events}
+            removed = []
+            for fp in _glob.glob(os.path.join(OUTPUT_DIR, "*.html")):
+                slug_f = os.path.basename(fp)[:-5]
+                if slug_f not in live:
+                    os.remove(fp)
+                    removed.append(slug_f)
+            if removed:
+                print(f'孤児ページ削除: {len(removed)}件 — ' + ', '.join(sorted(removed)))
+        else:
+            print('孤児ページ掃除: 生成数が少ないためスキップ(異常終了の可能性)')
+
 
 if __name__ == '__main__':
     main()

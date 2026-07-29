@@ -5,13 +5,41 @@
       "key": "ferme-de-fes-vol29",
       "name": "フェルム・ド・フェスVol.29 (2026-08-01/02 こもれび森のイバライド)",
       "decided": "2026-07-27",
-      "reason": "植物比率が低くサイトの軸から外れる(公式SHOPリスト約120店中、植物系はBotanical6+Garden3)"
+      "reason": "植物比率が低くサイトの軸から外れる(公式SHOPリスト約120店中、植物系はBotanical6+Garden3)",
+      "reasonType": "policy"
     },
     {
       "key": "localgreen-festival-2026",
       "name": "LOCALGREEN FESTIVAL'26 (2026-11-07/08 横浜赤レンガ倉庫)",
       "decided": "2026-07-27",
-      "reason": "主体は音楽フェスでアガベ・塊根専門ではない"
+      "reason": "主体は音楽フェスでアガベ・塊根専門ではない",
+      "reasonType": "policy"
+    },
+    {
+      "key": "gardens-umekita-2nd-anniversary-2026",
+      "reasonType": "policy",
+      "name": "コーナン gardens umekita 2周年イベント (2026-09-05/06 グラングリーン大阪)",
+      "decided": "2026-07-30",
+      "reason": "ホームセンター店舗の周年イベント。著名ナーセリーは三浦園芸・カクト・ロコの2社で、複合イベントの掲載閾値(3社以上)に届かない"
+    },
+    {
+      "key": "gen-2026-shimizu",
+      "reasonType": "policy",
+      "name": "愿2026 (2026-09-12/13 エスパルスドリームプラザやすらぎ広場)",
+      "decided": "2026-07-30",
+      "reason": "日毎60店規模の雑貨・飲食・音楽を含む総合マーケットで、植物出店比率が確認できない"
+    },
+    {
+      "key": "gen-x-bocchi-shokudo-2026-10",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "愿×ぼっち植堂コラボ第二弾 (2026-10-03/04 富士中央公園)",
+      "decided": "2026-07-30",
+      "reason": "「秋のボタニカルマーケット」と植物軸は明示されており基準上は掲載対象。ただし主催者の一次情報が特定できていない。主催者アカウントが判明し当該回の告知が確認できれば掲載する"
     }
-  ]
+  ],
+  "_reasonTypes": {
+    "policy": "掲載基準に照らして載せないと決めた。再提案しない",
+    "unverified": "植物軸はあるが一次情報が確認できず今は載せない。revisit=true なら一次情報が出たら再評価する"
+  }
 }
