@@ -40,6 +40,11 @@ EXCLUDED_DOMAINS = (
 
 
 def ig_handle(ev):
+    # 明示指定を最優先。裸の投稿URL(instagram.com/p/XXXX/)しか手元にない回でも
+    # ここに主催者ハンドルを入れておけばウォッチ対象に載る。
+    explicit = (ev.get('organizerIg') or '').strip().lstrip('@').lower()
+    if explicit and explicit not in NON_HANDLES:
+        return explicit
     for k in ('instagramUrl', 'sourceUrl', 'url'):
         u = ev.get(k) or ''
         m = IG_RE.search(u)
@@ -142,6 +147,16 @@ def main():
                 'eventName': e.get('name'), 'eventDate': e.get('date'),
             }
 
+    # IGのURLは持っているのにハンドルが解決できない回。organizerIg を入れれば解消する。
+    unresolved = []
+    for e in events:
+        if ig_handle(e):
+            continue
+        if any('instagram.com' in (e.get(k) or '') for k in ('instagramUrl', 'sourceUrl', 'url')):
+            unresolved.append({'slug': e.get('slug'), 'name': e.get('name'),
+                               'igUrl': next((e.get(k) for k in ('instagramUrl', 'sourceUrl', 'url')
+                                              if 'instagram.com' in (e.get(k) or '')), '')})
+
     out = {
         'generated': now_jst().strftime('%Y-%m-%d %H:%M JST'),
         'description': 'events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。',
@@ -149,14 +164,20 @@ def main():
             'igAccounts': len(ig_accounts),
             'awaitingNextEdition': len(awaiting),
             'officialSiteCandidates': len(site_candidates),
+            'unresolvedIgHandles': len(unresolved),
         },
         'igAccounts': ig_accounts,
         'awaitingNextEdition': awaiting[:40],
         'officialSiteCandidates': list(site_candidates.values())[:30],
+        'unresolvedIgHandles': unresolved,
     }
     with open(OUT, 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print(f"watch-sources.json: IG {len(ig_accounts)}件 / 次回待ちシリーズ {len(awaiting)}件 / サイト候補 {len(site_candidates)}件")
+    if unresolved:
+        print(f"  ⚠ IGハンドル未解決 {len(unresolved)}件 — organizerIg を入れるまでウォッチ対象外: "
+              + ', '.join(u['slug'] for u in unresolved[:5])
+              + (' ...' if len(unresolved) > 5 else ''))
 
 
 if __name__ == '__main__':

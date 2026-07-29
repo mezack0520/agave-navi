@@ -128,6 +128,22 @@ def main():
             kept.append(ev)
 
     print(f'Total: {len(events)}, OK: {len(kept)}, Rejected: {len(rejected)}')
+
+    # ウォッチ対象に載るかの確認。裸の投稿URL(instagram.com/p/XXXX/)だけだと
+    # 主催者ハンドルが取れず自己拡張ループから漏れる。拒否はせず警告する。
+    import re as _re
+    _IG = _re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?')
+    _NON = {'p', 'reel', 'reels', 'tv', 'explore', 'stories', 'accounts'}
+    for ev in kept:
+        if (ev.get('organizerIg') or '').strip():
+            continue
+        urls = [(ev.get(k) or '') for k in ('instagramUrl', 'sourceUrl', 'url')]
+        if not any('instagram.com' in u for u in urls):
+            continue
+        if any((_IG.search(u) and _IG.search(u).group(1).lower() not in _NON) for u in urls):
+            continue
+        print(f"  WARNING {ev.get('slug')}: IGのURLから主催者ハンドルが取れません。"
+              f"organizerIg に主催者アカウント名を入れないとウォッチ対象になりません")
     for slug, name, rs in rejected:
         print(f'  REJECT: {slug} ({name}) — {rs}')
 

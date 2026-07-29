@@ -63,7 +63,8 @@ def main():
         'today_events': [],
         'url_results': [],
         'implausible': [],
-        'short_descriptions': []
+        'short_descriptions': [],
+        'unresolved_ig': []
     }
 
     for ev in events:
@@ -186,6 +187,15 @@ def main():
                     'sourceUrl': source_url,
                 })
 
+    # ウォッチ対象に載らない回(IGのURLはあるが主催者ハンドルが取れない)。
+    # 自己拡張ループから漏れ、次回開催を自動検知できなくなる。
+    try:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'watch-sources.json'),
+                  encoding='utf-8') as _wf:
+            results['unresolved_ig'] = (json.load(_wf).get('unresolvedIgHandles') or [])
+    except (OSError, ValueError):
+        pass
+
     # サマリー出力
     print(f"=== イベントチェック結果 ({today}) ===")
     print(f"総イベント数: {results['total_events']}")
@@ -195,6 +205,7 @@ def main():
     print(f"詳細未定(TBD): {len(results['tbd_events'])}")
     print(f"内容妥当性フラグ: {len(results['implausible'])}")
     print(f"説明文70字未満(開催予定): {len(results['short_descriptions'])}")
+    print(f"IGハンドル未解決(ウォッチ対象外): {len(results['unresolved_ig'])}")
     print(f"リンク切れ: {len(results['dead_links'])}")
     print()
 

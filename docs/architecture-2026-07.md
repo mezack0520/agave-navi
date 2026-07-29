@@ -106,6 +106,10 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-30: 自己拡張ループの穴を塞いだ。裸の投稿URL(instagram.com/p/XXXX/)しか持たない回は
+  IGハンドルが取れずウォッチ対象から静かに漏れていた(16件)。organizerIg フィールドの明示指定に
+  対応し、未解決件数を watch-sources.json の stats・ビルドログ・日次メールに出すようにした。
+  sanity-check も新規追加時に警告する
 - 2026-07-29: アフィリエイト導線を再設計。affiliate.js + amazon-links.json に一本化し
   (ads.jsの画像URL/価格べた書き実装151行は廃止)、ランディング系・ガイド21本・イベント詳細171件に
   .affiliate-section を設置。ガイドは記事別キーワード(育成ライト/温室/薬剤等の高単価帯)を文脈連動。
