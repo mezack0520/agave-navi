@@ -1280,9 +1280,9 @@ main {
 }
 
 .detail-hero {
-    margin: 0 -2rem;
+    margin: 0 0 1.1rem;
     overflow: hidden;
-    border-radius: 0 0 var(--radius) var(--radius);
+    border-radius: var(--radius);
 }
 
 .detail-hero-img {
@@ -3104,6 +3104,7 @@ main {
 .eh-chip-ghost{background:none;color:#555;border:1px solid #ccc}
 .eh-title{font-size:clamp(1.75rem,5.2vw,2.7rem);font-weight:900;letter-spacing:-.022em;line-height:1.16;margin:.45em 0 .55em;color:#111}
 .eh-spec{border-top:2px solid #111;margin-top:.2rem}
+.detail-hero+.eh-spec{margin-top:0}
 .eh-spec .info-row{display:grid;grid-template-columns:7.2em 1fr;gap:0 1rem;align-items:baseline;padding:.72em .1em;border-bottom:1px solid #eaeaea;margin:0}
 .eh-spec .info-label{font-size:.78rem;font-weight:700;color:#707070;letter-spacing:.05em}
 .eh-spec .info-label .i{vertical-align:-2px;margin-right:.4em;color:#c2c2c2}
@@ -3118,7 +3119,7 @@ main {
 .eh-actions .detail-share{display:inline-flex;align-items:center;gap:.45rem;background:none;padding:0;margin:0;border:none}
 .eh-actions .detail-share-label{display:none}
 .detail-main{padding-top:.6rem}
-.detail-hero{margin-top:1.4rem}
+.detail-hero{margin:.2rem 0 1rem}
 .detail-hero-img{width:100%;border-radius:12px;border:1px solid #eee}
 @media (max-width:480px){
   .eh-spec .info-row{grid-template-columns:5.6em 1fr}
