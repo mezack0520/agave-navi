@@ -546,6 +546,8 @@ def build_page(template, ev, ctx):
         '{{dataSourceRow}}': make_data_source_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{affiliateBlock}}': make_affiliate_block(ev),
+        '{{lastUpdatedText}}': make_last_updated_text(ev),
+        '{{dataSourceText}}': make_data_source_text(ev),
         '{{dataSummary}}': make_data_summary(ev, ctx),
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),
         '{{weatherRow}}': make_weather_row(ev, ctx),
@@ -576,6 +578,35 @@ def make_last_updated_row(ev):
             '\n            <span class="info-label">' + icon('update') + '最終更新</span>'
             f'\n            <span class="info-value">{disp}</span>'
             '\n          </div>')
+
+
+def make_last_updated_text(ev):
+    """最終更新を脚注用の短文で返す。表の行と同じ情報を軽い見た目で出すためのもの。"""
+    last = ev.get('enrichedAt') or ev.get('addedDate')
+    if not last:
+        return ''
+    try:
+        from datetime import datetime as _dt
+        dt = _dt.strptime(last[:10], '%Y-%m-%d')
+        disp = f'{dt.year}年{dt.month}月{dt.day}日'
+    except (ValueError, TypeError):
+        disp = last
+    return f'最終更新 {html_escape(disp)}'
+
+
+def make_data_source_text(ev):
+    """出典を脚注用の短文で返す。about.html で参照元の明記を掲載方針としているため
+    表から外しても情報自体は必ず残す。"""
+    url = (ev.get('url') or '').strip()
+    if not url:
+        return ' / 出典: スタッフ収集情報'
+    label = '公式サイト'
+    if 'instagram.com' in url:
+        label = '公式Instagram'
+    elif 'twitter.com' in url or 'x.com' in url:
+        label = '公式X'
+    return (f' / 出典: <a href="{html_escape(url)}" target="_blank" rel="noopener">'
+            f'{label}</a>')
 
 
 # ---------------------------------------------------------------------------

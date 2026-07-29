@@ -3190,3 +3190,65 @@ main {
     .aff-card-img { width: 66px; height: 66px; }
     .aff-card-why { font-size: .84rem; }
 }
+
+/* ========================================
+   EVENT HERO 情報の並び (2026-07-29 調整)
+   画像は補助。日時・会場が最初に目に入るよう横並びにする。
+   ======================================== */
+.eh-lead {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: 1.4rem;
+    align-items: start;
+    margin-top: .9rem;
+}
+.eh-lead .detail-hero {
+    margin: 0;
+    border-radius: 10px;
+    border: 1px solid #ececec;
+    overflow: hidden;
+}
+/* フライヤーは縦長・正方形が多い。16:9で切ると会期や会場名が落ちるため
+   全体を収める。背景は薄いグレーで余白を埋める。 */
+.eh-lead .detail-hero-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: none;
+    object-fit: contain;
+    background: #f7f7f7;
+}
+.eh-lead .eh-spec { margin-top: 0; }
+
+/* 画像がない回は表を全幅で使う(空きスペースを作らない) */
+.event-hero .eh-lead:not(:has(.detail-hero)) {
+    grid-template-columns: 1fr;
+}
+
+@media (max-width: 720px) {
+    .eh-lead {
+        grid-template-columns: 1fr;
+        gap: .9rem;
+    }
+    /* モバイルは画像を先に出すが、日時が画面内に残る高さに抑える */
+    .eh-lead .detail-hero-img {
+        aspect-ratio: 16 / 10;
+        max-height: 240px;
+    }
+}
+
+/* 共有系は主動線ではないので視覚的な重みを落とす */
+.eh-actions .share-btn,
+.eh-actions .detail-share .share-btn {
+    transform: scale(.92);
+    transform-origin: left center;
+    opacity: .88;
+}
+.eh-actions .share-btn:hover { opacity: 1; }
+.eh-meta-note {
+    font-size: .72rem;
+    color: #9a9a9a;
+    margin: .55rem 0 0;
+    line-height: 1.6;
+}
+.eh-meta-note a { color: #7a7a7a; text-decoration: underline; }
+.eh-meta-note a:hover { color: #111; }
