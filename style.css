@@ -3495,3 +3495,81 @@ main {
     overflow: hidden;
     -webkit-line-clamp: unset;
 }
+
+/* ========================================
+   RAKUTEN PRODUCT CARD (.rk-*) — 2026-07-30
+   旧実装(ads.jsの横スクロールカード)の .aff-card 系CSSがstyle.cssに残っており、
+   flex:0 0 130px と overflow:hidden が縦並びコンテナで高さを固定して
+   価格行を切り捨てていた。上書きで戦わずクラス名を分離する。
+   ======================================== */
+.affiliate-section .rk-card {
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    padding: .85rem .8rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 9px;
+    background: #fff;
+    text-decoration: none;
+    color: #111;
+    transition: border-color .15s, box-shadow .15s;
+}
+.affiliate-section .rk-card:hover {
+    border-color: #111;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+.affiliate-section .rk-card + .rk-card { margin-top: .55rem; }
+.affiliate-section .rk-card-img {
+    flex: 0 0 auto;
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+.affiliate-section .rk-card-body { flex: 1 1 auto; min-width: 0; }
+.affiliate-section .rk-card-why {
+    display: block;
+    font-size: .93rem;
+    font-weight: 800;
+    line-height: 1.45;
+    color: #111;
+    margin-bottom: .28rem;
+}
+.affiliate-section .rk-card-name {
+    display: block;
+    max-height: 2.3em;
+    overflow: hidden;
+    font-size: .74rem;
+    line-height: 1.5;
+    color: #6b6b6b;
+    margin-bottom: .45rem;
+}
+.affiliate-section .rk-card-meta {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+.affiliate-section .rk-card-price {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #111;
+    letter-spacing: -.01em;
+}
+.affiliate-section .rk-card-rev { font-size: .7rem; color: #999; }
+.affiliate-section .rk-card-shop {
+    font-size: .64rem;
+    font-weight: 700;
+    color: #fff;
+    background: #bf0000;
+    border-radius: 3px;
+    padding: .16em .45em;
+    white-space: nowrap;
+}
+@media (max-width: 480px) {
+    .affiliate-section .rk-card { gap: .7rem; padding: .75rem .65rem; }
+    .affiliate-section .rk-card-img { width: 72px; height: 72px; }
+    .affiliate-section .rk-card-why { font-size: .88rem; }
+}

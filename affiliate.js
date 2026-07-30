@@ -278,16 +278,16 @@
       // 実商品カード: 画像・商品名・価格。価格は取得時点である旨を添える
       var p = products[item.keyword];
       if (p && p.image && p.url) {
-        html += '<a class="aff-card" href="' + p.url + '" target="_blank" rel="noopener sponsored">';
-        html += '<img class="aff-card-img" src="' + p.image + '" alt="" loading="lazy"'
+        html += '<a class="rk-card" href="' + p.url + '" target="_blank" rel="noopener sponsored">';
+        html += '<img class="rk-card-img" src="' + p.image + '" alt="" loading="lazy"'
              +  ' referrerpolicy="no-referrer-when-downgrade">';
-        html += '<span class="aff-card-body">';
-        html += '<span class="aff-card-why">' + item.label + '</span>';
-        html += '<span class="aff-card-name">' + p.name + '</span>';
-        html += '<span class="aff-card-meta">';
-        if (p.price) html += '<span class="aff-card-price">' + Number(p.price).toLocaleString('ja-JP') + '円</span>';
-        if (p.reviewCount) html += '<span class="aff-card-rev">レビュー' + p.reviewCount + '件</span>';
-        html += '<span class="aff-card-shop">楽天市場</span>';
+        html += '<span class="rk-card-body">';
+        html += '<span class="rk-card-why">' + item.label + '</span>';
+        html += '<span class="rk-card-name">' + p.name + '</span>';
+        html += '<span class="rk-card-meta">';
+        if (p.price) html += '<span class="rk-card-price">' + Number(p.price).toLocaleString('ja-JP') + '円</span>';
+        if (p.reviewCount) html += '<span class="rk-card-rev">レビュー' + p.reviewCount + '件</span>';
+        html += '<span class="rk-card-shop">楽天市場</span>';
         html += '</span></span></a>';
         return;
       }
