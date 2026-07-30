@@ -59,20 +59,27 @@
   }
 
   // 楽天商品検索API(ブラウザから呼ぶ前提。リファラ制限が鍵の保護になっている)
-  function fetchProduct(keyword, rk) {
+  function fetchProduct(keyword, rk, opts) {
     var q = new URLSearchParams({
       applicationId: rk.applicationId, accessKey: rk.accessKey,
       affiliateId: rk.affiliateId || '', format: 'json', formatVersion: '2',
-      hits: '5', imageFlag: '1', sort: '-reviewCount', keyword: keyword
+      hits: '10', imageFlag: '1', sort: '-reviewCount', keyword: keyword
     });
+    // 商品ごとの想定価格帯。セット商品や業務用が混ざるのを防ぐ。
+    if (opts && opts.maxPrice) q.set('maxPrice', String(opts.maxPrice));
+    if (opts && opts.minPrice) q.set('minPrice', String(opts.minPrice));
     return fetch(rk.apiEndpoint + '?' + q)
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         var arr = (j && (j.items || j.Items)) || [];
         // 極端な価格帯とレビュー0件を避ける
+        var lo = (opts && opts.minPrice) || 300;
+        var hi = (opts && opts.maxPrice) || 200000;
         var it = arr.filter(function (x) {
-          return x.itemPrice >= 300 && x.itemPrice <= 200000 && (x.reviewCount || 0) >= 1;
-        })[0] || arr[0];
+          return x.itemPrice >= lo && x.itemPrice <= hi && (x.reviewCount || 0) >= 1;
+        })[0] || arr.filter(function (x) {
+          return x.itemPrice >= lo && x.itemPrice <= hi;
+        })[0];
         if (!it) return null;
         var urls = it.mediumImageUrls || [];
         var img = urls.length ? (typeof urls[0] === 'string' ? urls[0] : urls[0].imageUrl) : '';
@@ -109,8 +116,10 @@
       var store = cacheRead();
       var now = Date.now();
       var need = [];
+      var opts = {};
       plan.forEach(function (p) {
         p.items.forEach(function (it) {
+          opts[it.keyword] = { minPrice: it.minPrice, maxPrice: it.maxPrice };
           var c = store[it.keyword];
           if (c && c.at && (now - c.at) < CACHE_TTL) data._products[it.keyword] = c;
           else if (canFetch && need.indexOf(it.keyword) < 0) need.push(it.keyword);
@@ -130,7 +139,7 @@
       (function next() {
         if (i >= need.length) { cacheWrite(store); draw(); return; }
         var kw = need[i++];
-        fetchProduct(kw, rk).then(function (prod) {
+        fetchProduct(kw, rk, opts[kw]).then(function (prod) {
           if (prod) { data._products[kw] = prod; store[kw] = prod; }
           setTimeout(next, 350);
         });
@@ -166,16 +175,12 @@
     // 記事側の並び順が編集意図なので rank より優先し、ジャンル重複だけ落とす。
     if (guideSlug && data.guides && data.guides[guideSlug]) {
       var g = data.guides[guideSlug].slice();
-      var seenG = {};
-      g = g.filter(function (it) {
-        var k = it.group || it.keyword;
-        if (seenG[k]) return false;
-        seenG[k] = true;
-        return true;
-      });
       if (g.length >= DISPLAY_COUNT) return g.slice(0, DISPLAY_COUNT);
+      // 記事の並びは編集意図なのでそのまま使う。埋める分だけジャンル重複を避ける。
+      var used = {};
+      g.forEach(function (it) { used[it.group || it.keyword] = true; });
       var fill = (data.common || []).filter(function (c) {
-        return !seenG[c.group || c.keyword];
+        return !used[c.group || c.keyword];
       });
       return g.concat(narrow(fill, DISPLAY_COUNT - g.length));
     }
@@ -280,9 +285,11 @@
       // 実商品カード: 画像・商品名・価格。価格は取得時点である旨を添える
       var p = products[item.keyword];
       if (p && p.image && p.url) {
+        html += '<div class="affiliate-item">';
         html += '<a class="rk-card" href="' + p.url + '" target="_blank" rel="noopener sponsored">';
         html += '<img class="rk-card-img" src="' + p.image + '" alt="" loading="lazy"'
-             +  ' referrerpolicy="no-referrer-when-downgrade">';
+             +  ' referrerpolicy="no-referrer-when-downgrade"'
+             +  ' onerror="this.style.visibility=\'hidden\'">';
         html += '<span class="rk-card-body">';
         html += '<span class="rk-card-why">' + item.label + '</span>';
         html += '<span class="rk-card-name">' + p.name + '</span>';
@@ -291,6 +298,19 @@
         if (p.reviewCount) html += '<span class="rk-card-rev">レビュー' + p.reviewCount + '件</span>';
         html += '<span class="rk-card-shop">楽天市場</span>';
         html += '</span></span></a>';
+        // 楽天以外(Amazon / Yahoo!ショッピング / ヤフオク)も残す。
+        // カードだけ出して他店リンクを消していたのは実装漏れ。
+        var others = aspLinks.filter(function (a) { return a.label !== '楽天市場'; });
+        if (others.length) {
+          html += '<div class="affiliate-asp-links"><span class="aff-alt-lead">ほかで探す</span>';
+          others.forEach(function (asp, k) {
+            html += (k ? '<span class="aff-alt-sep">/</span>' : '')
+              + '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+              + ' class="aff-alt-link">' + asp.label + '</a>';
+          });
+          html += '</div>';
+        }
+        html += '</div>';
         return;
       }
 

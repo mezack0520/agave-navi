@@ -43,28 +43,32 @@
       "label": "根詰まりを防ぐスリット鉢を号数で選ぶ",
       "icon": "pot",
       "group": "pot",
-      "rank": 2
+      "rank": 2,
+      "maxPrice": 6000
     },
     {
       "keyword": "多肉植物 培養土 硬質赤玉土",
       "label": "水はけ重視の多肉・塊根用の土",
       "icon": "soil",
       "group": "soil",
-      "rank": 2
+      "rank": 2,
+      "maxPrice": 6000
     },
     {
       "keyword": "サーキュレーター 静音",
       "label": "梅雨と夏の蒸れ対策に効く送風",
       "icon": "tool",
       "group": "air",
-      "rank": 3
+      "rank": 3,
+      "maxPrice": 15000
     },
     {
       "keyword": "多肉植物 図鑑",
       "label": "品種名で迷わなくなる図鑑",
       "icon": "book",
       "group": "book",
-      "rank": 4
+      "rank": 4,
+      "maxPrice": 5000
     }
   ],
   "categories": {
@@ -74,28 +78,32 @@
         "label": "買った株をすぐ植え替える鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "硬質赤玉土 小粒",
         "label": "植え替え用の水はけ重視の用土",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "ルートン 発根促進剤",
         "label": "抜き苗の発根管理に使う発根促進剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 3000
       },
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "戦利品を持ち帰る運搬カート",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       }
     ],
     "マルシェ": [
@@ -104,21 +112,24 @@
         "label": "持ち帰った株を植える鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "多肉植物 培養土 硬質赤玉土",
         "label": "多肉・塊根向けの培養土",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "会場から持ち帰る運搬カート",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       }
     ],
     "大型": [
@@ -127,14 +138,16 @@
         "label": "遠方から傷めずに持ち帰る緩衝材",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 6000
       },
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "混雑する会場で使う運搬カート",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       },
       {
         "keyword": "植物育成ライト LED 高PPFD",
@@ -148,7 +161,8 @@
         "label": "帰宅後の植え替え用の鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       }
     ],
     "展示会": [
@@ -157,14 +171,16 @@
         "label": "見た品種を後で調べられる図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 6000
       },
       {
         "keyword": "植物 ラベル 名札 園芸",
         "label": "入手した株の名前を残すラベル",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 3000
       },
       {
         "keyword": "植物育成ライト LED",
@@ -196,7 +212,8 @@
         "label": "8〜12時間の点灯を自動化するタイマー",
         "icon": "tool",
         "group": "light",
-        "rank": 1
+        "rank": 1,
+        "maxPrice": 4000
       }
     ],
     "wintering-tokyo": [
@@ -228,7 +245,8 @@
         "label": "置き場所の最低気温を実測する温度計",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       },
       {
         "keyword": "園芸 パネルヒーター",
@@ -242,7 +260,8 @@
         "label": "屋外株の霜よけに使う不織布",
         "icon": "soil",
         "group": "cover",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 5000
       }
     ],
     "adenium-wintering": [
@@ -265,7 +284,8 @@
         "label": "越冬場所の最低気温を実測する温度計",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       }
     ],
     "agave-seedling": [
@@ -281,14 +301,16 @@
         "label": "腰水管理しやすい育苗トレイ",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 5000
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "実生でカビを出さないための殺菌剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       }
     ],
     "agave-bareroot-rooting": [
@@ -297,21 +319,24 @@
         "label": "発根管理で使う発根促進剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 3000
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "切り口の腐りを防ぐ殺菌剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       },
       {
         "keyword": "アガベ 鉢 スリット",
         "label": "発根管理に向くスリット鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       }
     ],
     "soil-pot-repot": [
@@ -320,21 +345,32 @@
         "label": "崩れにくい硬質赤玉土を粒度で選ぶ",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
+      },
+      {
+        "keyword": "アガベ 鉢 プラ鉢 スリット",
+        "label": "根を回しやすいスリット鉢を号数で選ぶ",
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "軽石 日向土 小粒",
         "label": "水はけを上げる軽石・日向土",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "園芸 ふるい 土",
         "label": "微塵を抜くための土ふるい",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 4000
       }
     ],
     "pest-treatment": [
@@ -343,21 +379,24 @@
         "label": "本文の浸透移行性にあたる薬剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       },
       {
         "keyword": "ベニカ スプレー 観葉植物",
         "label": "見つけたその場で使う殺虫殺菌スプレー",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       },
       {
         "keyword": "ルーペ 拡大鏡 30倍",
         "label": "ハダニを肉眼で見落とさないルーペ",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 4000
       }
     ],
     "plant-health-check": [
@@ -366,21 +405,24 @@
         "label": "葉裏の初期症状を確認するルーペ",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 4000
       },
       {
         "keyword": "オルトラン DX 粒剤",
         "label": "予防で置いておく浸透移行性の薬剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       },
       {
         "keyword": "土壌水分計 園芸",
         "label": "水やり判断を数値にする水分計",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       }
     ],
     "rainy-season-care": [
@@ -389,21 +431,24 @@
         "label": "梅雨の蒸れを抜く送風",
         "icon": "tool",
         "group": "air",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "長雨前に予防散布する殺菌剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       },
       {
         "keyword": "土壌水分計 園芸",
         "label": "乾かし具合を数値で見る水分計",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       }
     ],
     "offsets-guide": [
@@ -412,21 +457,24 @@
         "label": "子株を外すときの園芸ナイフ",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "切り口を保護する殺菌剤",
         "icon": "tool",
         "group": "chem",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       },
       {
         "keyword": "アガベ 鉢 2号 3号",
         "label": "外した子株を植える小鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 4000
       }
     ],
     "agave-titanota-care": [
@@ -442,14 +490,16 @@
         "label": "根を回しやすいスリット鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "硬質赤玉土 小粒",
         "label": "締めて育てる水はけ重視の用土",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       }
     ],
     "pachypodium-gracilius": [
@@ -458,7 +508,8 @@
         "label": "塊根向けに配合済みの用土",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 8000
       },
       {
         "keyword": "植物育成ライト LED",
@@ -472,7 +523,8 @@
         "label": "近縁種の見分けがつく図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 6000
       }
     ],
     "caudex-intro": [
@@ -481,14 +533,16 @@
         "label": "最初の1冊にする塊根植物の図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       },
       {
         "keyword": "塊根植物 用土",
         "label": "塊根向けに配合済みの用土",
         "icon": "soil",
         "group": "soil",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       },
       {
         "keyword": "植物育成ライト LED",
@@ -504,14 +558,16 @@
         "label": "ラベル名の混乱を整理できる図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 6000
       },
       {
         "keyword": "植物 ラベル 名札 園芸",
         "label": "入手時の名前を残す植物ラベル",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 3000
       }
     ],
     "failure-analysis": [
@@ -520,14 +576,16 @@
         "label": "根腐れの原因になる過湿を数値で見る",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       },
       {
         "keyword": "サーキュレーター 静音",
         "label": "蒸れによる失敗を減らす送風",
         "icon": "tool",
         "group": "air",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       },
       {
         "keyword": "植物育成ライト LED",
@@ -543,14 +601,16 @@
         "label": "季節の切り替え判断に使う温度計",
         "icon": "tool",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       },
       {
         "keyword": "園芸 ノート 栽培記録",
         "label": "作業時期を残す栽培記録ノート",
         "icon": "book",
         "group": "tool",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 3000
       }
     ],
     "glossary": [
@@ -559,14 +619,16 @@
         "label": "用語と実物を結びつける図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       },
       {
         "keyword": "アガベ 図鑑 チタノタ",
         "label": "系統名を確認できるアガベの図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 6000
       }
     ],
     "sokubaikai-tips": [
@@ -575,21 +637,24 @@
         "label": "戦利品を持ち帰るための運搬カート",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       },
       {
         "keyword": "植物 輸送 箱 緩衝材",
         "label": "抜き苗を傷めずに運ぶ緩衝材",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 6000
       },
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
         "label": "帰宅後の植え替え用の鉢",
         "icon": "pot",
         "group": "pot",
-        "rank": 2
+        "rank": 2,
+        "maxPrice": 6000
       }
     ],
     "event-types-guide": [
@@ -598,14 +663,16 @@
         "label": "即売会で使う運搬カート",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       },
       {
         "keyword": "多肉植物 図鑑",
         "label": "会場で品種を確認できる図鑑",
         "icon": "book",
         "group": "book",
-        "rank": 4
+        "rank": 4,
+        "maxPrice": 5000
       }
     ],
     "event-data-2026": [
@@ -614,14 +681,16 @@
         "label": "混雑する大型イベント用の運搬カート",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 15000
       },
       {
         "keyword": "植物 輸送 箱 緩衝材",
         "label": "遠方イベントからの持ち帰りに使う緩衝材",
         "icon": "tool",
         "group": "carry",
-        "rank": 3
+        "rank": 3,
+        "maxPrice": 6000
       }
     ]
   }
