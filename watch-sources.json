@@ -1,9 +1,9 @@
 {
- "generated": "2026-07-30 09:39 JST",
+ "generated": "2026-07-30 09:47 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 134,
-  "awaitingNextEdition": 169,
+  "awaitingNextEdition": 168,
   "officialSiteCandidates": 51,
   "unresolvedIgHandles": 1
  },
@@ -14,6 +14,15 @@
    "eventCount": 5,
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "_myoko_plants_market_",
+   "url": "https://www.instagram.com/_myoko_plants_market_/",
+   "eventCount": 4,
+   "lastEventName": "妙高多肉大市 2026",
+   "lastEventDate": "2026-10-31",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -131,15 +140,6 @@
    "eventCount": 2,
    "lastEventName": "ボタり場",
    "lastEventDate": "2026-06-07",
-   "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "_myoko_plants_market_",
-   "url": "https://www.instagram.com/_myoko_plants_market_/",
-   "eventCount": 2,
-   "lastEventName": "妙高多肉市場 vol.14",
-   "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -1227,16 +1227,6 @@
    "recurring": true
   },
   {
-   "series": "妙高多肉市場 vol.14",
-   "lastSlug": "myoko-taniku-market-14th-2026",
-   "lastDate": "2026-06-21",
-   "lastEnd": "2026-06-21",
-   "monthsSinceLast": 1,
-   "igHandle": "_myoko_plants_market_",
-   "officialUrl": "https://www.instagram.com/_myoko_plants_market_/",
-   "recurring": true
-  },
-  {
    "series": "富士多肉プランツマルシェ",
    "lastSlug": "fuji-taniku-plants-marche-2026-06",
    "lastDate": "2026-06-27",
@@ -1615,6 +1605,16 @@
    "igHandle": "aobouzu_caudex",
    "officialUrl": "https://aobouzu.official.ec/blog/2026/06/01/194023",
    "recurring": false
+  },
+  {
+   "series": "PLANT & POTTERY EXHIBITION \"Meet\" vol.07 in HARAJUKU",
+   "lastSlug": "meet-vol7-harajuku-2026-07",
+   "lastDate": "2026-07-25",
+   "lastEnd": "2026-07-26",
+   "monthsSinceLast": 0,
+   "igHandle": "cool.cactus_",
+   "officialUrl": null,
+   "recurring": false
   }
  ],
  "officialSiteCandidates": [
@@ -1668,7 +1668,7 @@
   },
   {
    "domain": "h27664.wixsite.com",
-   "url": "https://h27664.wixsite.com/orchidbotanical/en",
+   "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotamax2026",
    "eventName": "オキボタ MAX 2026 in サンシャインシティ",
    "eventDate": "2026-09-19"
   },
