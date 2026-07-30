@@ -52,6 +52,7 @@ jobs:
         run: python3 scripts/fetch-rakuten-products.py
 
       - name: Commit and push
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -68,3 +69,22 @@ jobs:
             sleep $((RANDOM % 5 + 2))
             if [ $attempt -eq 5 ]; then echo "::error::push failed"; exit 1; fi
           done
+
+      # 取得0件のまま成功扱いにしない。診断はコミット済みなので原因は追える。
+      - name: Fail if nothing was fetched
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          try:
+              d = json.load(open('product-cache.json', encoding='utf-8'))
+          except Exception as e:
+              print(f'::error::product-cache.json を読めません: {e}')
+              sys.exit(1)
+          n = len(d.get('items') or {})
+          if n == 0:
+              diag = d.get('_diagnostic') or {}
+              print(f'::error::楽天APIから1件も取得できていません。診断: {json.dumps(diag, ensure_ascii=False)}')
+              sys.exit(1)
+          print(f'取得済み {n} 件')
+          PY

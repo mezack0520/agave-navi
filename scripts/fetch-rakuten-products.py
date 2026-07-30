@@ -57,6 +57,20 @@ def collect_keywords(links):
     return seen
 
 
+LAST_ERROR = {}
+
+
+def _request(url, access_key, referer=None):
+    headers = {'User-Agent': 'agave-navi/1.0', 'accessKey': access_key}
+    if referer:
+        # アプリ種別が Web Application の場合、許可ドメインからのリクエストしか通らない。
+        # 自サイト(agave-navi.com)のための自前ビルドからの呼び出しであることを示す。
+        headers['Referer'] = referer
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.loads(r.read().decode('utf-8'))
+
+
 def search(keyword, app_id, access_key, affiliate_id):
     params = {
         'applicationId': app_id,
@@ -74,13 +88,27 @@ def search(keyword, app_id, access_key, affiliate_id):
     if affiliate_id:
         params['affiliateId'] = affiliate_id
     url = API + '?' + urllib.parse.urlencode(params)
-    # accessKey はヘッダで送る(URLに載せるとログや履歴に残るため)
-    req = urllib.request.Request(url, headers={
-        'User-Agent': 'agave-navi/1.0',
-        'accessKey': access_key,
-    })
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return json.loads(r.read().decode('utf-8'))
+    # accessKey はヘッダで送る(URLに載せるとログや履歴に残るため)。
+    # まず素で叩き、拒否されたら Referer 付きで再試行して、どちらで通るかを記録する。
+    attempts = [(None, 'no-referer'), ('https://agave-navi.com/', 'with-referer')]
+    last = None
+    for referer, label in attempts:
+        try:
+            res = _request(url, access_key, referer)
+            LAST_ERROR['succeededWith'] = label
+            return res
+        except urllib.error.HTTPError as e:
+            body = ''
+            try:
+                body = e.read().decode('utf-8', 'replace')[:200]
+            except Exception:
+                pass
+            last = f'{label}: HTTP {e.code} {body}'
+            LAST_ERROR['detail'] = last
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            last = f'{label}: {type(e).__name__} {str(e)[:120]}'
+            LAST_ERROR['detail'] = last
+    raise RuntimeError(last or 'unknown error')
 
 
 def pick(items):
@@ -170,16 +198,31 @@ def main():
             fail_n += 1
         time.sleep(SLEEP_SEC)
 
+    payload = {
+        '_note': ('楽天商品検索APIのキャッシュ。scripts/fetch-rakuten-products.py が生成。'
+                  '手で編集しても次回実行で上書きされる。'),
+        'updatedAt': now,
+        'stats': {'updated': ok_n, 'failed': fail_n, 'cached': len(cache)},
+        'items': cache,
+    }
+    # 全滅したときは原因を残す。Actionsのログを読めない状況でも追跡できるようにする。
+    if ok_n == 0:
+        payload['_diagnostic'] = {
+            'endpoint': API,
+            'appIdLength': len(app_id),
+            'accessKeyLength': len(access_key),
+            'affiliateIdSet': bool(affiliate_id),
+            'lastError': LAST_ERROR.get('detail', '(記録なし)'),
+            'succeededWith': LAST_ERROR.get('succeededWith'),
+        }
+
     with open(CACHE_PATH, 'w', encoding='utf-8') as f:
-        json.dump({
-            '_note': ('楽天商品検索APIのキャッシュ。scripts/fetch-rakuten-products.py が生成。'
-                      '手で編集しても次回実行で上書きされる。'),
-            'updatedAt': now,
-            'items': cache,
-        }, f, ensure_ascii=False, indent=2)
+        json.dump(payload, f, ensure_ascii=False, indent=2)
         f.write('\n')
 
     print(f'完了: 更新{ok_n}件 / 失敗{fail_n}件 / キャッシュ総数{len(cache)}件')
+    if ok_n == 0:
+        print(f'::error::楽天APIから1件も取得できませんでした: {LAST_ERROR.get("detail")}')
     return 0
 
 
