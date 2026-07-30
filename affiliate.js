@@ -68,6 +68,8 @@
     // 商品ごとの想定価格帯。セット商品や業務用が混ざるのを防ぐ。
     if (opts && opts.maxPrice) q.set('maxPrice', String(opts.maxPrice));
     if (opts && opts.minPrice) q.set('minPrice', String(opts.minPrice));
+    // 無関係な商品を除外する(例: ルーペ検索に化粧用の女優ミラーが混ざる)
+    if (opts && opts.ngKeyword) q.set('NGKeyword', opts.ngKeyword);
     return fetch(rk.apiEndpoint + '?' + q)
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
@@ -119,7 +121,8 @@
       var opts = {};
       plan.forEach(function (p) {
         p.items.forEach(function (it) {
-          opts[it.keyword] = { minPrice: it.minPrice, maxPrice: it.maxPrice };
+          opts[it.keyword] = { minPrice: it.minPrice, maxPrice: it.maxPrice,
+                               ngKeyword: it.ngKeyword };
           var c = store[it.keyword];
           if (c && c.at && (now - c.at) < CACHE_TTL) data._products[it.keyword] = c;
           else if (canFetch && need.indexOf(it.keyword) < 0) need.push(it.keyword);
@@ -363,23 +366,20 @@
       var primary = aspLinks[0];
       var alts = aspLinks.slice(1);
 
-      var featured = (idx === 0);
-      html += '<div class="affiliate-item' + (featured ? ' is-featured' : '') + '">';
-      html += '<a class="aff-row" href="' + primary.url + '" target="_blank" rel="noopener sponsored">';
+      // 商品が取れなかった行。カード行と見た目を揃え、店は全部ボタンで並べる。
+      html += '<div class="affiliate-item">';
+      html += '<div class="aff-row aff-row-plain">';
       html += '<span class="affiliate-icon">' + icon + '</span>';
       html += '<span class="aff-row-body">';
       html += '<span class="affiliate-item-label">' + item.label + '</span>';
-      html += '<span class="aff-cta-go">' + primary.label + 'で見る</span>';
-      html += '</span></a>';
-      if (alts.length) {
-        html += '<div class="aff-shop-btns">';
-        alts.forEach(function (asp) {
-          html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-            + ' class="aff-shop-btn" data-shop="' + shopKey(asp.label) + '">'
-            + asp.label + 'で探す</a>';
-        });
-        html += '</div>';
-      }
+      html += '</span></div>';
+      html += '<div class="aff-shop-btns">';
+      aspLinks.forEach(function (asp) {
+        html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+          + ' class="aff-shop-btn" data-shop="' + shopKey(asp.label) + '">'
+          + asp.label + 'で探す</a>';
+      });
+      html += '</div>';
       html += '</div>';
     });
 

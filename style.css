@@ -3334,3 +3334,7 @@ main {
     .affiliate-section .aff-shop-btns { padding: .1rem .65rem .7rem; }
     .affiliate-section .aff-shop-btn { min-height: 44px; font-size: .82rem; }
 }
+
+/* 商品が取れなかった行。カード行と余白を揃える (2026-07-30) */
+.affiliate-section .aff-row-plain { padding: .8rem .8rem .55rem; }
+.affiliate-section .aff-row-plain .affiliate-item-label { font-size: .93rem; font-weight: 800; }
