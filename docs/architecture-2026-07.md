@@ -108,6 +108,10 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-30: JS参照に版数を導入。affiliate.js と ads.js に ?v= が付いておらず(status-auto.js だけ
+  付いていた)、JSの変更が閲覧者のキャッシュを越えず届いていなかった。楽天カードが本番で
+  出なかった直接の原因。sync-footers.py でCSSと同様に正規化し、audit.py に乖離検査を追加、
+  日次メールの通知対象にも入れた
 - 2026-07-30: 楽天商品カードをブラウザ側取得に切り替えて稼働開始。サーバー側(GitHub Actions)からは
   403 REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING で拒否される(アプリ種別 Web Application の
   リファラ制限。Refererヘッダを付けても通らない)。accessKeyは pk_ 始まりの publishable key で

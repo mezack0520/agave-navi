@@ -19,6 +19,8 @@ TARGETS = [f for f in glob.glob(os.path.join(REPO_ROOT, '*.html'))
 
 FOOTER_RE = re.compile(r'[ \t]*<footer class="footer">.*?</footer>', re.S)
 CSSVER_RE = re.compile(r'(style\.css)(\?v=[0-9a-zA-Z]*)?')
+# ローカルJSも版数を付ける。付いていないと変更が閲覧者のキャッシュに届かない。
+JSVER_RE = re.compile(r'((?:affiliate|ads|status-auto)\.js)(\?v=[0-9a-zA-Z]*)?')
 
 def main():
     canonical = sitelib.site_footer().rstrip('\n')
@@ -43,15 +45,22 @@ def main():
             html = new_html
             reasons.append('cssver')
 
+        # JS版数を正規化
+        want_js = f'?v={sitelib.JS_VERSION}'
+        new_html, n = JSVER_RE.subn(lambda mo: mo.group(1) + want_js, html)
+        if n and new_html != html:
+            html = new_html
+            reasons.append('jsver')
+
         if html != orig:
             open(fp, 'w', encoding='utf-8').write(html)
             if 'footer' in reasons:
                 changed += 1
-            if 'cssver' in reasons:
+            if 'cssver' in reasons or 'jsver' in reasons:
                 ver_changed += 1
             print(f'  synced({"+".join(reasons)}): {os.path.basename(fp)}')
-    print(f'sync-footers: footer {changed}件 / CSS版数 {ver_changed}件 更新 '
-          f'(版数={sitelib.CSS_VERSION})')
+    print(f'sync-footers: footer {changed}件 / 版数 {ver_changed}件 更新 '
+          f'(CSS={sitelib.CSS_VERSION} JS={sitelib.JS_VERSION})')
 
 if __name__ == '__main__':
     main()

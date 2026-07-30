@@ -195,6 +195,30 @@ def main():
     add('css_version_drift', f'CSS版数が正規値({want})と違うページ', sorted(set(drift)),
         'sync-footers.py が正規化する')
 
+    # 13b. JS版数の乖離。版数が付いていないと変更が閲覧者のキャッシュに届かない。
+    want_js = None
+    try:
+        want_js = sitelib.JS_VERSION
+    except Exception:
+        pass
+    js_drift = []
+    if want_js:
+        jsre = re.compile(r'((?:affiliate|ads|status-auto)\.js)(\?v=([0-9a-zA-Z]*))?')
+        for f in glob.glob(rp('**', '*.html'), recursive=True):
+            if '/.git/' in f or '/templates/' in f:
+                continue
+            try:
+                h = open(f, encoding='utf-8').read()
+            except OSError:
+                continue
+            for m in jsre.finditer(h):
+                if (m.group(3) or '') != want_js:
+                    js_drift.append(os.path.relpath(f, REPO))
+                    break
+    add('js_version_drift', f'JS版数が正規値({want_js})と違う/付いていないページ',
+        sorted(set(js_drift)),
+        '版数なしだとJSの変更がキャッシュを越えず届かない')
+
     # 13. build-all.sh から呼ばれていないスクリプト(死んだ資産)
     try:
         with open(rp('scripts', 'build-all.sh'), encoding='utf-8') as f:

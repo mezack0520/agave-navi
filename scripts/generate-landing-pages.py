@@ -165,7 +165,7 @@ def aff_block(root, noindex=False, tags=''):
         return '', ''
     attr = f' data-tags="{tags}"' if tags else ''
     return (f'\n  <section class="affiliate-section"{attr} style="max-width:960px;margin:1.5rem auto 0;"></section>',
-            f'  <script src="{root}affiliate.js"></script>\n')
+            f'  <script src="{root}affiliate.js?v={sitelib.JS_VERSION}"></script>\n')
 
 GENERATED_PAGES = set()
 
