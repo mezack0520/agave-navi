@@ -69,15 +69,38 @@
     return arr;
   }
 
+  // 同ジャンル(group)が枠を食い合わないように1つずつに絞り、rank順に並べる。
+  // rank が小さいほど単価と購買意図が高い想定。先頭が主役枠になる。
+  function narrow(items, count) {
+    var byGroup = {};
+    var out = [];
+    items.forEach(function (it) {
+      var g = it.group || it.keyword;
+      if (byGroup[g]) return;      // 同ジャンルは1つまで
+      byGroup[g] = true;
+      out.push(it);
+    });
+    out.sort(function (a, b) { return (a.rank || 9) - (b.rank || 9); });
+    return out.slice(0, count);
+  }
+
   function pickItems(data, tags, guideSlug) {
-    // ガイド記事: 記事本文が扱う対象をそのまま検索語にする(文脈が最も近く単価も高い)
+    // ガイド記事: 記事本文が扱う対象をそのまま検索語にする(文脈が最も近く単価も高い)。
+    // 記事側の並び順が編集意図なので rank より優先し、ジャンル重複だけ落とす。
     if (guideSlug && data.guides && data.guides[guideSlug]) {
       var g = data.guides[guideSlug].slice();
+      var seenG = {};
+      g = g.filter(function (it) {
+        var k = it.group || it.keyword;
+        if (seenG[k]) return false;
+        seenG[k] = true;
+        return true;
+      });
       if (g.length >= DISPLAY_COUNT) return g.slice(0, DISPLAY_COUNT);
-      var gKws = {};
-      g.forEach(function (x) { gKws[x.keyword] = true; });
-      var fill = (data.common || []).filter(function (c) { return !gKws[c.keyword]; });
-      return g.concat(shuffle(fill).slice(0, DISPLAY_COUNT - g.length));
+      var fill = (data.common || []).filter(function (c) {
+        return !seenG[c.group || c.keyword];
+      });
+      return g.concat(narrow(fill, DISPLAY_COUNT - g.length));
     }
 
     var catItems = [];
@@ -86,25 +109,9 @@
       if (cats[tag]) catItems = catItems.concat(cats[tag]);
     });
 
-    var seen = {};
-    var deduped = [];
-    catItems.concat(data.common || []).forEach(function (item) {
-      if (!seen[item.keyword]) {
-        seen[item.keyword] = true;
-        deduped.push(item);
-      }
-    });
-
-    if (catItems.length >= 2) {
-      var catPicks = shuffle(catItems.slice()).slice(0, 2);
-      var catKws = {};
-      catPicks.forEach(function (p) { catKws[p.keyword] = true; });
-      var commonFiltered = (data.common || []).filter(function (c) { return !catKws[c.keyword]; });
-      var commonPicks = shuffle(commonFiltered).slice(0, DISPLAY_COUNT - catPicks.length);
-      return shuffle(catPicks.concat(commonPicks));
-    }
-
-    return shuffle(deduped).slice(0, DISPLAY_COUNT);
+    // タグ由来を優先し、足りない分を common で埋める。
+    // 主役枠が毎回ラベルや図鑑になるのを避けるため rank 順に整える。
+    return narrow(catItems.concat(data.common || []), DISPLAY_COUNT);
   }
 
   /**

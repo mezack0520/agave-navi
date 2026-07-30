@@ -30,27 +30,37 @@
     {
       "keyword": "植物育成ライト LED 植物用",
       "label": "冬の室内管理で徒長させないための育成LED",
-      "icon": "light"
+      "icon": "light",
+      "group": "light",
+      "rank": 1
     },
     {
       "keyword": "アガベ 鉢 プラ鉢 スリット",
       "label": "根詰まりを防ぐスリット鉢を号数で選ぶ",
-      "icon": "pot"
+      "icon": "pot",
+      "group": "pot",
+      "rank": 2
     },
     {
       "keyword": "多肉植物 培養土 硬質赤玉土",
       "label": "水はけ重視の多肉・塊根用の土",
-      "icon": "soil"
+      "icon": "soil",
+      "group": "soil",
+      "rank": 2
     },
     {
       "keyword": "サーキュレーター 静音",
       "label": "梅雨と夏の蒸れ対策に効く送風",
-      "icon": "tool"
+      "icon": "tool",
+      "group": "air",
+      "rank": 3
     },
     {
       "keyword": "多肉植物 図鑑",
       "label": "品種名で迷わなくなる図鑑",
-      "icon": "book"
+      "icon": "book",
+      "group": "book",
+      "rank": 4
     }
   ],
   "categories": {
@@ -58,78 +68,106 @@
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
         "label": "買った株をすぐ植え替える鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       },
       {
         "keyword": "硬質赤玉土 小粒",
         "label": "植え替え用の水はけ重視の用土",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       },
       {
         "keyword": "ルートン 発根促進剤",
         "label": "抜き苗の発根管理に使う発根促進剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "戦利品を持ち帰る運搬カート",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       }
     ],
     "マルシェ": [
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
         "label": "持ち帰った株を植える鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       },
       {
         "keyword": "多肉植物 培養土 硬質赤玉土",
         "label": "多肉・塊根向けの培養土",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       },
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "会場から持ち帰る運搬カート",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       }
     ],
     "大型": [
       {
         "keyword": "植物 輸送 箱 緩衝材",
         "label": "遠方から傷めずに持ち帰る緩衝材",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       },
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "混雑する会場で使う運搬カート",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       },
       {
         "keyword": "植物育成ライト LED 高PPFD",
         "label": "買った株を室内で維持する育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       },
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
         "label": "帰宅後の植え替え用の鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       }
     ],
     "展示会": [
       {
         "keyword": "アガベ 図鑑 チタノタ",
         "label": "見た品種を後で調べられる図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       },
       {
         "keyword": "植物 ラベル 名札 園芸",
         "label": "入手した株の名前を残すラベル",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       },
       {
         "keyword": "植物育成ライト LED",
         "label": "室内管理を始めるための育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       }
     ]
   },
@@ -138,332 +176,448 @@
       {
         "keyword": "植物育成ライト LED 高PPFD",
         "label": "本文の目安(数百µmol級)を満たす育成LEDを価格帯で比べる",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       },
       {
         "keyword": "植物育成ライト スタンド",
         "label": "真上から当てるためのライトスタンド",
-        "icon": "shelf"
+        "icon": "shelf",
+        "group": "light",
+        "rank": 1
       },
       {
         "keyword": "スマートプラグ タイマー",
         "label": "8〜12時間の点灯を自動化するタイマー",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "light",
+        "rank": 1
       }
     ],
     "wintering-tokyo": [
       {
         "keyword": "簡易温室 ビニール 大型",
         "label": "取り込み株をまとめて置ける簡易温室",
-        "icon": "shelf"
+        "icon": "shelf",
+        "group": "winter",
+        "rank": 1
       },
       {
         "keyword": "園芸 パネルヒーター",
         "label": "最低気温を数℃持ち上げるパネルヒーター",
-        "icon": "light"
+        "icon": "light",
+        "group": "winter",
+        "rank": 1
       },
       {
         "keyword": "サーモスタット 園芸",
         "label": "設定温度で自動オンオフするサーモスタット",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "winter",
+        "rank": 1
       }
     ],
     "agave-winter-hardiness": [
       {
         "keyword": "最高最低温度計 デジタル",
         "label": "置き場所の最低気温を実測する温度計",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       },
       {
         "keyword": "園芸 パネルヒーター",
         "label": "耐寒限界を下回る夜に備えるヒーター",
-        "icon": "light"
+        "icon": "light",
+        "group": "winter",
+        "rank": 1
       },
       {
         "keyword": "不織布 霜よけ 寒冷紗",
         "label": "屋外株の霜よけに使う不織布",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "cover",
+        "rank": 3
       }
     ],
     "adenium-wintering": [
       {
         "keyword": "園芸 パネルヒーター",
         "label": "落葉後も最低温度を保つためのヒーター",
-        "icon": "light"
+        "icon": "light",
+        "group": "winter",
+        "rank": 1
       },
       {
         "keyword": "サーモスタット 園芸",
         "label": "設定温度で自動オンオフするサーモスタット",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "winter",
+        "rank": 1
       },
       {
         "keyword": "最高最低温度計 デジタル",
         "label": "越冬場所の最低気温を実測する温度計",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "agave-seedling": [
       {
         "keyword": "植物育成ライト LED 実生",
         "label": "実生1年目の徒長を防ぐ育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       },
       {
         "keyword": "育苗 トレイ プラグトレイ",
         "label": "腰水管理しやすい育苗トレイ",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "実生でカビを出さないための殺菌剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       }
     ],
     "agave-bareroot-rooting": [
       {
         "keyword": "ルートン 発根促進剤",
         "label": "発根管理で使う発根促進剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "切り口の腐りを防ぐ殺菌剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "アガベ 鉢 スリット",
         "label": "発根管理に向くスリット鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       }
     ],
     "soil-pot-repot": [
       {
         "keyword": "硬質赤玉土 小粒",
         "label": "崩れにくい硬質赤玉土を粒度で選ぶ",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       },
       {
         "keyword": "軽石 日向土 小粒",
         "label": "水はけを上げる軽石・日向土",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       },
       {
         "keyword": "園芸 ふるい 土",
         "label": "微塵を抜くための土ふるい",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "pest-treatment": [
       {
         "keyword": "オルトラン DX 粒剤",
         "label": "本文の浸透移行性にあたる薬剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "ベニカ スプレー 観葉植物",
         "label": "見つけたその場で使う殺虫殺菌スプレー",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "ルーペ 拡大鏡 30倍",
         "label": "ハダニを肉眼で見落とさないルーペ",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "plant-health-check": [
       {
         "keyword": "ルーペ 拡大鏡 30倍",
         "label": "葉裏の初期症状を確認するルーペ",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       },
       {
         "keyword": "オルトラン DX 粒剤",
         "label": "予防で置いておく浸透移行性の薬剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "土壌水分計 園芸",
         "label": "水やり判断を数値にする水分計",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "rainy-season-care": [
       {
         "keyword": "サーキュレーター 静音",
         "label": "梅雨の蒸れを抜く送風",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "air",
+        "rank": 3
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "長雨前に予防散布する殺菌剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "土壌水分計 園芸",
         "label": "乾かし具合を数値で見る水分計",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "offsets-guide": [
       {
         "keyword": "園芸 ナイフ 消毒",
         "label": "子株を外すときの園芸ナイフ",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       },
       {
         "keyword": "ベンレート 水和剤",
         "label": "切り口を保護する殺菌剤",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "chem",
+        "rank": 2
       },
       {
         "keyword": "アガベ 鉢 2号 3号",
         "label": "外した子株を植える小鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       }
     ],
     "agave-titanota-care": [
       {
         "keyword": "植物育成ライト LED 高PPFD",
         "label": "締まった株姿を維持するための育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       },
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
         "label": "根を回しやすいスリット鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       },
       {
         "keyword": "硬質赤玉土 小粒",
         "label": "締めて育てる水はけ重視の用土",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       }
     ],
     "pachypodium-gracilius": [
       {
         "keyword": "塊根植物 用土 プレミアム",
         "label": "塊根向けに配合済みの用土",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       },
       {
         "keyword": "植物育成ライト LED",
         "label": "室内で徒長させないための育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       },
       {
         "keyword": "パキポディウム 図鑑",
         "label": "近縁種の見分けがつく図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       }
     ],
     "caudex-intro": [
       {
         "keyword": "塊根植物 図鑑 入門",
         "label": "最初の1冊にする塊根植物の図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       },
       {
         "keyword": "塊根植物 用土",
         "label": "塊根向けに配合済みの用土",
-        "icon": "soil"
+        "icon": "soil",
+        "group": "soil",
+        "rank": 2
       },
       {
         "keyword": "植物育成ライト LED",
         "label": "室内管理を前提にした育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       }
     ],
     "titanota-oteroi-labels": [
       {
         "keyword": "アガベ 図鑑 チタノタ",
         "label": "ラベル名の混乱を整理できる図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       },
       {
         "keyword": "植物 ラベル 名札 園芸",
         "label": "入手時の名前を残す植物ラベル",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "failure-analysis": [
       {
         "keyword": "土壌水分計 園芸",
         "label": "根腐れの原因になる過湿を数値で見る",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       },
       {
         "keyword": "サーキュレーター 静音",
         "label": "蒸れによる失敗を減らす送風",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "air",
+        "rank": 3
       },
       {
         "keyword": "植物育成ライト LED",
         "label": "光量不足の徒長を止める育成LED",
-        "icon": "light"
+        "icon": "light",
+        "group": "light",
+        "rank": 1
       }
     ],
     "annual-calendar": [
       {
         "keyword": "最高最低温度計 デジタル",
         "label": "季節の切り替え判断に使う温度計",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "tool",
+        "rank": 4
       },
       {
         "keyword": "園芸 ノート 栽培記録",
         "label": "作業時期を残す栽培記録ノート",
-        "icon": "book"
+        "icon": "book",
+        "group": "tool",
+        "rank": 4
       }
     ],
     "glossary": [
       {
         "keyword": "多肉植物 図鑑",
         "label": "用語と実物を結びつける図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       },
       {
         "keyword": "アガベ 図鑑 チタノタ",
         "label": "系統名を確認できるアガベの図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       }
     ],
     "sokubaikai-tips": [
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "戦利品を持ち帰るための運搬カート",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       },
       {
         "keyword": "植物 輸送 箱 緩衝材",
         "label": "抜き苗を傷めずに運ぶ緩衝材",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       },
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
         "label": "帰宅後の植え替え用の鉢",
-        "icon": "pot"
+        "icon": "pot",
+        "group": "pot",
+        "rank": 2
       }
     ],
     "event-types-guide": [
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "即売会で使う運搬カート",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       },
       {
         "keyword": "多肉植物 図鑑",
         "label": "会場で品種を確認できる図鑑",
-        "icon": "book"
+        "icon": "book",
+        "group": "book",
+        "rank": 4
       }
     ],
     "event-data-2026": [
       {
         "keyword": "キャリーカート 折りたたみ 園芸",
         "label": "混雑する大型イベント用の運搬カート",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       },
       {
         "keyword": "植物 輸送 箱 緩衝材",
         "label": "遠方イベントからの持ち帰りに使う緩衝材",
-        "icon": "tool"
+        "icon": "tool",
+        "group": "carry",
+        "rank": 3
       }
     ]
   }
