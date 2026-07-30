@@ -37,7 +37,9 @@
   for (var i = 0; i < scripts.length; i++) {
     var src = scripts[i].getAttribute('src') || '';
     if (src.indexOf('affiliate.js') !== -1) {
-      basePath = src.replace('affiliate.js', '');
+      // 'affiliate.js?v=xxxx' のようにクエリが付くため、ファイル名以降を丸ごと落とす。
+      // replace('affiliate.js','') だとクエリが残り、JSONのURLが壊れる。
+      basePath = src.replace(/affiliate\.js.*$/, '');
       break;
     }
   }
