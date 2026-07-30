@@ -1,5 +1,5 @@
 {
-  "total": 153,
+  "total": 141,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -47,22 +47,18 @@
     },
     "thin_fixable": {
       "title": "薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)",
-      "count": 42,
+      "count": 36,
       "items": [
         "agavista-vol2-matsuyama-2026-06(22字)",
         "awajishima-taniku-smile-marche-3rd-2026(42字・開催予定)",
         "bop-with-needles-nagoya-2026-06(44字)",
         "border-break-6th-2026(47字)",
         "botanical-botanical-osaka(46字)",
-        "botanical-festa-hawo-kumagaya-2026-09(45字・開催予定)",
         "botanoichi-senju-2026-05(33字)",
-        "chinki-shokubutsu-fair-4th-kasugai-2026(36字・開催予定)",
         "coco-et-nico-bond-project-2026(41字)",
         "enjoy-place-outside-2nd-2026-11(40字・開催予定)",
         "eternal-plants-built-to-survive-gunma-2026(49字)",
         "fujisan-festa(34字)",
-        "fukuoka-green-party-7th-2026(47字・開催予定)",
-        "garden-link-festa-2026-10(28字・開催予定)",
         "gifu-midori-marche-2nd-2026-09(30字・開催予定)",
         "haru-cactus-succulent-yuriga-hara-2026(48字)",
         "ibaraki-sky-palette-2026(22字)",
@@ -78,7 +74,6 @@
         "mr-plants-market-niigata-2026-06(42字)",
         "myoko-taniku-market-14th-2026(39字)",
         "nagasaki-plants-classic-2026-06(44字)",
-        "nagomi-marche-kazo-2026-11(31字・開催予定)",
         "nara-botanical-garden-2026(46字)",
         "natsu-cactus-succulent-fair-sapporo-2026(28字)",
         "plant-freaks-4th-2026(18字)",
@@ -88,7 +83,8 @@
         "taniku-moromoro-2026-spring(48字)",
         "taniku-sukijaken-ichi-3rd-2026-06(45字)",
         "tenkaichi-2026(46字)",
-        "the-botanical-show-6th-2026(45字・開催予定)"
+        "wakayama-green-marche(41字)",
+        "yamaguchi-plants-market-2026(38字)"
       ],
       "note": "開催予定のものから優先する"
     },
@@ -147,16 +143,12 @@
     },
     "short_descriptions": {
       "title": "開催予定で説明文70字未満(SERPスニペット枠を使い切れない)",
-      "count": 24,
+      "count": 18,
       "items": [
         "awajishima-taniku-smile-marche-3rd-2026(42字)",
-        "botanical-festa-hawo-kumagaya-2026-09(45字)",
-        "chinki-shokubutsu-fair-4th-kasugai-2026(36字)",
         "collect-plants-2026-09(59字)",
         "enjoy-place-5th-2026-10(51字)",
         "enjoy-place-outside-2nd-2026-11(40字)",
-        "fukuoka-green-party-7th-2026(47字)",
-        "garden-link-festa-2026-10(28字)",
         "gifu-midori-marche-2nd-2026-09(30字)",
         "greensnap-marche-yokohama-2026-autumn(43字)",
         "hanatomofesta-2026(53字)",
@@ -165,13 +157,11 @@
         "isij-big-bazaar-2026-11-22(62字)",
         "kyoto-midori-marche-ibaraki-2026-09(48字)",
         "kyoto-midorino-marche-bangaihen-vol10-2026(44字)",
-        "nagomi-marche-kazo-2026-11(31字)",
         "narabikakufes-vol2-2026(60字)",
         "on-the-plants-vol9-fukuoka-2026-10(67字)",
         "plant-to-new-home-2026-09(63字)",
         "shokuchu-tokubetsu-tenji-flowercenter-2026-07(65字)",
         "taniku-midori-marche-flarie-2026-10(67字)",
-        "the-botanical-show-6th-2026(45字)",
         "tochigi-tanippe-2026-10(56字)"
       ],
       "note": ""
