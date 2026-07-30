@@ -6,9 +6,10 @@
       "label": "Amazon"
     },
     "rakuten": {
-      "affiliateId": "5251fbf3.21164c54.5251fbf4.7818a8f3",
+      "affiliateId": "0e86e911.418545eb.0e86e912.75300281",
       "searchUrl": "https://search.rakuten.co.jp/search/mall/{keyword}/",
-      "label": "楽天市場"
+      "label": "楽天市場",
+      "_note": "楽天アフィリエイトIDはアカウント単位で1つ。楽天ウェブサービスのアプリ管理画面が表示している値を正とする。2026-07-30に旧値(5251fbf3…)から差し替えた。差し替え前の値が誤っていた場合、それまでのクリックと購入は成果計上されていない。"
     },
     "yahoo": {
       "vcpid": "",

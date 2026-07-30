@@ -41,12 +41,23 @@
   "blockedUrlDomains": {
     "rule": "url / sourceUrl に使用してはならないドメイン。手がかりとして参照するのは可",
     "domains": [
-      "nextmeet.app", "botanical-zone.tokyo", "leaf-laboratory.com",
-      "tochinavi.net", "pukubook.jp", "fukuoka-now.com", "churatoku.net"
+      "nextmeet.app",
+      "botanical-zone.tokyo",
+      "leaf-laboratory.com",
+      "tochinavi.net",
+      "pukubook.jp",
+      "fukuoka-now.com",
+      "churatoku.net"
     ]
   },
   "escalate": {
     "rule": "上記で判断できない類型に限り pending-judgments に積む",
     "requirement": "積むときは、次に同じ問いが来ないよう policy への追記案をあわせて書く"
+  },
+  "shortDescriptions": {
+    "rule": "開催予定で説明文が短い回は、キューに積まず週次エンリッチに任せる",
+    "decided": "2026-07-30",
+    "why": "主催者が当該回の詳細をまだ出していないことが原因で、推測で埋めれば2026-07-26に削除した自動生成文と同じものになる。開催が近づけば主催者が詳細を出すため自然に解消する。enrich_events.py は開催予定×70字未満を優先処理する設定にしてある",
+    "doNotEscalate": true
   }
 }
