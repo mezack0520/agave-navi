@@ -99,9 +99,29 @@ def main():
                 or len(d) >= 50)
         return not (has_src and subs)
 
-    add('thin_events', '薄い判定(noindex かつアフィリエイト枠なし)',
-        sorted(e['slug'] for e in events if is_thin(e)),
-        'url欠落 または time/imageUrl/説明50字以上のいずれも無い')
+    # 薄い判定を「直すべきもの」と「アーカイブとして許容するもの」に分ける。
+    # 終了済みで出典もない回は、noindexで検索に出ず広告も出ないアーカイブであり、
+    # 裏取りできない=誤りではない。全件を毎日警告すると監査が無視されるようになる。
+    today_s = os.environ.get('AUDIT_TODAY') or __import__('datetime').date.today().isoformat()
+
+    def has_src(e):
+        return bool((e.get('url') or '').strip()) or bool((e.get('sourceUrl') or '').strip())
+
+    def is_future(e):
+        return (e.get('dateEnd') or e.get('date') or '') >= today_s
+
+    thin_all = [e for e in events if is_thin(e)]
+    add('thin_fixable', '薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)',
+        sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字"
+               f"{'・開催予定' if is_future(e) else ''})"
+               for e in thin_all if has_src(e)),
+        '開催予定のものから優先する')
+    add('thin_archived', '薄い判定のうちアーカイブ許容(終了済み・出典なし)',
+        sorted(e['slug'] for e in thin_all if not has_src(e) and not is_future(e)),
+        '検索に出ず広告も出ない履歴データ。対処不要')
+    add('thin_needs_source', '薄い判定で開催予定なのに出典がない(要対処)',
+        sorted(e['slug'] for e in thin_all if not has_src(e) and is_future(e)),
+        '一次情報を見つけるか、見つからなければ掲載基準により削除')
 
     # 8. 説明文が短い開催予定
     add('short_descriptions', '開催予定で説明文70字未満(SERPスニペット枠を使い切れない)',

@@ -35,7 +35,7 @@ Instagram投稿や公式サイトの情報を元に、必要なフィールド�
   "venue": "会場名",
   "location": "会場名（venueと同じ）",
   "prefecture": "都道府県名（県は省略: 東京、大阪、福岡 等）",
-  "organizerIg": "主催者のInstagramアカウント名（@なし）。url/sourceUrl が投稿URL（instagram.com/p/XXXX/）だけの場合は必須。これが無いとウォッチ対象に載らず次回開催を自動検知できない",
+  "organizerIg": "当該回を告知したInstagramアカウント名（@なし）。次回開催を検知するための巡回先として使う。主催者本人が理想だが、会場アカウントや出店者アカウントでも次回を告知する見込みがあれば可。url/sourceUrl が投稿URL（instagram.com/p/XXXX/）だけの場合は必須で、これが無いとウォッチ対象に載らない",
   "region": "地域（北海道/東北/関東/東海/北陸/関西/中国/四国/九州/沖縄 のいずれか）",
   "mapQuery": "Google Mapsで検索するクエリ（会場名 or 住所）",
   "description": "イベント概要（100〜200文字程度。会場・内容・特徴を含む）",
