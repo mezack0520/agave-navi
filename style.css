@@ -3485,3 +3485,13 @@ main {
     .affiliate-section .aff-card .aff-card-img { width: 72px; height: 72px; }
     .affiliate-section .aff-card .aff-card-why { font-size: .88rem; }
 }
+
+/* 商品名の行数制限を max-height 方式にする (2026-07-30)
+   -webkit-line-clamp は display:-webkit-box が前提で、計算値が flow-root に
+   なる環境があり効かなかった。max-height なら display に依存しない。 */
+.affiliate-section .aff-card .aff-card-name {
+    display: block;
+    max-height: 2.3em;          /* line-height 1.5 の約2行 */
+    overflow: hidden;
+    -webkit-line-clamp: unset;
+}
