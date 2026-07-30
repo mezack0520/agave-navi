@@ -11,9 +11,13 @@ product-cache.json にキャッシュする。
   価格と画像はAPIレスポンス由来のものだけを使う(スクレイピングした値は使わない)。
   価格は変動するため取得時刻を持たせ、表示側で「取得時点」を明示する。
 
+認証(2026-07-01版):
+  applicationId と accessKey の両方が必須。accessKey は秘密情報なので
+  クライアント側(ブラウザ)からは呼べない。サーバー側でのみ実行する。
+
 使い方:
-  RAKUTEN_APP_ID=xxxx python3 scripts/fetch-rakuten-products.py
-  未設定なら何もせず正常終了する(表示側はテキストリンクにフォールバック)。
+  RAKUTEN_APP_ID=xxxx RAKUTEN_ACCESS_KEY=yyyy python3 scripts/fetch-rakuten-products.py
+  どちらか未設定なら何もせず正常終了する(表示側はテキストリンクにフォールバック)。
 """
 import json
 import os
@@ -29,7 +33,9 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LINKS_PATH = os.path.join(REPO_ROOT, 'amazon-links.json')
 CACHE_PATH = os.path.join(REPO_ROOT, 'product-cache.json')
 
-API = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601'
+# 2026-07-01版。旧 app.rakuten.co.jp/services/api/.../20220601 は
+# 新規発行のUUID形式applicationIdを受け付けない(specify valid applicationId)。
+API = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701'
 SLEEP_SEC = 1.1          # 楽天APIは1秒1リクエスト程度が安全
 MIN_PRICE = 300          # 付属品・単品パーツの混入を除く
 MAX_PRICE = 200000       # 業務用・セット売りの混入を除く
@@ -51,7 +57,7 @@ def collect_keywords(links):
     return seen
 
 
-def search(keyword, app_id, affiliate_id):
+def search(keyword, app_id, access_key, affiliate_id):
     params = {
         'applicationId': app_id,
         'keyword': keyword,
@@ -68,7 +74,11 @@ def search(keyword, app_id, affiliate_id):
     if affiliate_id:
         params['affiliateId'] = affiliate_id
     url = API + '?' + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={'User-Agent': 'agave-navi/1.0'})
+    # accessKey はヘッダで送る(URLに載せるとログや履歴に残るため)
+    req = urllib.request.Request(url, headers={
+        'User-Agent': 'agave-navi/1.0',
+        'accessKey': access_key,
+    })
     with urllib.request.urlopen(req, timeout=20) as r:
         return json.loads(r.read().decode('utf-8'))
 
@@ -98,8 +108,11 @@ def image_url(it):
 
 def main():
     app_id = os.environ.get('RAKUTEN_APP_ID', '').strip()
-    if not app_id:
-        print('RAKUTEN_APP_ID が未設定のためスキップ'
+    access_key = os.environ.get('RAKUTEN_ACCESS_KEY', '').strip()
+    if not app_id or not access_key:
+        missing = [n for n, v in (('RAKUTEN_APP_ID', app_id),
+                                  ('RAKUTEN_ACCESS_KEY', access_key)) if not v]
+        print(f'{" / ".join(missing)} が未設定のためスキップ'
               '(表示側はテキストリンクにフォールバック)')
         return 0
 
@@ -125,8 +138,8 @@ def main():
     ok_n = fail_n = 0
     for i, kw in enumerate(keywords, 1):
         try:
-            res = search(kw, app_id, affiliate_id)
-            it = pick(res.get('Items') or [])
+            res = search(kw, app_id, access_key, affiliate_id)
+            it = pick(res.get('items') or res.get('Items') or [])
             if not it:
                 print(f'  [{i}/{len(keywords)}] {kw}: 該当なし')
                 fail_n += 1

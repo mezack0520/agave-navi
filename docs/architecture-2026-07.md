@@ -108,6 +108,12 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-30: 楽天ウェブサービスにアプリ登録(アガベイベントナビ/Web Application/agave-navi.com)。
+  API仕様が2026-07-01版に変わっており、エンドポイントが openapi.rakuten.co.jp/ichibams/... へ移行、
+  accessKey が applicationId と併用で必須になっていた。旧エンドポイントは新規発行のUUID形式
+  applicationId を受け付けない。accessKeyは秘密情報のためクライアント側からは呼べず、
+  ビルド時にサーバーから取得する設計が前提となる。secretsに RAKUTEN_APP_ID と
+  RAKUTEN_ACCESS_KEY の2つが必要
 - 2026-07-30: 監査の初回棚卸しを実施。IGハンドル未解決14→1件(投稿URLから告知アカウントを特定)、
   ウォッチ対象122→134アカウント、開催予定の薄い10→4件(公式プロフィールの事実で加筆)、
   未参照スクリプト1→0件(add-from-instagram.py削除)。薄い判定は「直せる」「アーカイブ許容」

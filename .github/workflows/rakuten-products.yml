@@ -5,7 +5,7 @@ name: Rakuten Product Refresh
 # 閲覧時はJSONを読むだけにする(appIdを露出させず、レート制限も踏まない)。
 #
 # 毎週月曜 08:00 JST。価格変動をならすため週1で十分。
-# secrets.RAKUTEN_APP_ID が未設定のときはスクリプト側でスキップされる。
+# secrets.RAKUTEN_APP_ID と RAKUTEN_ACCESS_KEY が必要。未設定ならスクリプト側でスキップされる。
 
 on:
   schedule:
@@ -47,6 +47,7 @@ jobs:
       - name: Fetch Rakuten products
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           LIMIT: ${{ github.event.inputs.limit || '0' }}
         run: python3 scripts/fetch-rakuten-products.py
 
