@@ -45,21 +45,96 @@
   var containers = document.querySelectorAll('.affiliate-section');
   if (!containers.length) return;
 
-  var v = '?v=' + Date.now();
-  Promise.all([
-    fetch(basePath + 'amazon-links.json' + v).then(function (r) { return r.json(); }),
-    // 実商品キャッシュ(楽天API由来)。無ければテキスト表示にフォールバックする
-    fetch(basePath + 'product-cache.json' + v)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; })
-  ]).then(function (res) {
-    var data = res[0];
-    data._products = (res[1] && res[1].items) || {};
-    Array.prototype.forEach.call(containers, function (el) {
-      var tags = (el.getAttribute('data-tags') || '').split(',').filter(Boolean);
-      render(data, tags, el, el.getAttribute('data-guide') || '', el.getAttribute('data-heading') || '');
+  var CACHE_KEY = 'agn_rk_v1';
+  var CACHE_TTL = 24 * 60 * 60 * 1000;   // 24時間
+
+  function cacheRead() {
+    try { return JSON.parse(localStorage.getItem(CACHE_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+  function cacheWrite(store) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(store)); } catch (e) {}
+  }
+
+  // 楽天商品検索API(ブラウザから呼ぶ前提。リファラ制限が鍵の保護になっている)
+  function fetchProduct(keyword, rk) {
+    var q = new URLSearchParams({
+      applicationId: rk.applicationId, accessKey: rk.accessKey,
+      affiliateId: rk.affiliateId || '', format: 'json', formatVersion: '2',
+      hits: '5', imageFlag: '1', sort: '-reviewCount', keyword: keyword
     });
-  }).catch(function (e) { console.warn('affiliate.js:', e); });
+    return fetch(rk.apiEndpoint + '?' + q)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var arr = (j && (j.items || j.Items)) || [];
+        // 極端な価格帯とレビュー0件を避ける
+        var it = arr.filter(function (x) {
+          return x.itemPrice >= 300 && x.itemPrice <= 200000 && (x.reviewCount || 0) >= 1;
+        })[0] || arr[0];
+        if (!it) return null;
+        var urls = it.mediumImageUrls || [];
+        var img = urls.length ? (typeof urls[0] === 'string' ? urls[0] : urls[0].imageUrl) : '';
+        if (!img || !it.affiliateUrl) return null;
+        return {
+          name: (it.itemName || '').slice(0, 90),
+          price: it.itemPrice,
+          image: img.replace('_ex=128x128', '_ex=300x300'),
+          url: it.affiliateUrl,
+          reviewCount: it.reviewCount || 0,
+          at: Date.now()
+        };
+      })
+      .catch(function () { return null; });
+  }
+
+  fetch(basePath + 'amazon-links.json?v=' + Date.now())
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var rk = (data.asp || {}).rakuten || {};
+      var canFetch = !!(rk.applicationId && rk.accessKey && rk.apiEndpoint);
+
+      // 先にテキスト表示で描画し、商品が取れたら差し替える(表示が遅れない)
+      var plan = [];
+      Array.prototype.forEach.call(containers, function (el) {
+        var tags = (el.getAttribute('data-tags') || '').split(',').filter(Boolean);
+        var guide = el.getAttribute('data-guide') || '';
+        var items = pickItems(data, tags, guide);
+        plan.push({ el: el, items: items, guide: guide,
+                    heading: el.getAttribute('data-heading') || '' });
+      });
+
+      data._products = {};
+      var store = cacheRead();
+      var now = Date.now();
+      var need = [];
+      plan.forEach(function (p) {
+        p.items.forEach(function (it) {
+          var c = store[it.keyword];
+          if (c && c.at && (now - c.at) < CACHE_TTL) data._products[it.keyword] = c;
+          else if (canFetch && need.indexOf(it.keyword) < 0) need.push(it.keyword);
+        });
+      });
+
+      function draw() {
+        plan.forEach(function (p) {
+          render(data, [], p.el, p.guide, p.heading, p.items);
+        });
+      }
+      draw();
+
+      if (!need.length) return;
+      // レート制限(1秒1件程度)に配慮して直列に取得する
+      var i = 0;
+      (function next() {
+        if (i >= need.length) { cacheWrite(store); draw(); return; }
+        var kw = need[i++];
+        fetchProduct(kw, rk).then(function (prod) {
+          if (prod) { data._products[kw] = prod; store[kw] = prod; }
+          setTimeout(next, 350);
+        });
+      })();
+    })
+    .catch(function (e) { console.warn('affiliate.js:', e); });
 
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
@@ -178,8 +253,8 @@
     return links;
   }
 
-  function render(data, tags, el, guideSlug, heading) {
-    var items = pickItems(data, tags, guideSlug);
+  function render(data, tags, el, guideSlug, heading, presetItems) {
+    var items = presetItems || pickItems(data, tags, guideSlug);
     if (!items.length) return;
     var aspConfig = data.asp || { amazon: { tag: data.tag || 'agavenavi-22', searchUrl: 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}', label: 'Amazon' } };
 

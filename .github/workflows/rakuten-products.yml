@@ -7,9 +7,11 @@ name: Rakuten Product Refresh
 # 毎週月曜 08:00 JST。価格変動をならすため週1で十分。
 # secrets.RAKUTEN_APP_ID と RAKUTEN_ACCESS_KEY が必要。未設定ならスクリプト側でスキップされる。
 
+# 2026-07-30: サーバー側からの呼び出しは 403 REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING で
+# 拒否されるため定期実行を停止した。アプリ種別 Web Application はリファラ制限があり、
+# Refererヘッダを付けても通らない。現在はブラウザ側(affiliate.js)から直接呼んでいる。
+# アプリ種別を API/Backend Service に変更して固定IPから叩く構成に変えるなら復活できる。
 on:
-  schedule:
-    - cron: '0 23 * * 0'   # 月 08:00 JST
   repository_dispatch:
     types: [rakuten-products]
   workflow_dispatch:

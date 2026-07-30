@@ -108,6 +108,12 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-30: 楽天商品カードをブラウザ側取得に切り替えて稼働開始。サーバー側(GitHub Actions)からは
+  403 REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING で拒否される(アプリ種別 Web Application の
+  リファラ制限。Refererヘッダを付けても通らない)。accessKeyは pk_ 始まりの publishable key で
+  クライアント公開が前提の設計。affiliate.js から都度取得し localStorage に24時間キャッシュ、
+  レート制限に配慮して直列取得する。先にテキストで描画し取得後に差し替えるため表示は遅れない。
+  rakuten-products.yml の定期実行は停止(手動/dispatchのみ残置)、product-cache.json は削除
 - 2026-07-30: 楽天アフィリエイトIDをコンソール表示値(0e86e911…)に差し替え。設定値は
   5251fbf3… だった。楽天アフィリエイトIDはアカウント単位で1つ発行され(サイト登録一覧に
   サイト別IDの表示はない)、正値は楽天ウェブサービスのアプリ管理画面が示すもの。

@@ -9,7 +9,10 @@
       "affiliateId": "0e86e911.418545eb.0e86e912.75300281",
       "searchUrl": "https://search.rakuten.co.jp/search/mall/{keyword}/",
       "label": "楽天市場",
-      "_note": "楽天アフィリエイトIDはアカウント単位で1つ。楽天ウェブサービスのアプリ管理画面が表示している値を正とする。2026-07-30に旧値(5251fbf3…)から差し替えた。差し替え前の値が誤っていた場合、それまでのクリックと購入は成果計上されていない。"
+      "_note": "applicationId と accessKey はブラウザから呼ぶ前提で公開している。アプリ種別 Web Application のリファラ制限により agave-navi.com 以外からは使えない。サーバー側(GitHub Actions)からの呼び出しは 403 REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING で拒否されるため使えない。",
+      "applicationId": "2ceed43d-9232-4938-8c88-b04e18de4358",
+      "accessKey": "pk_jwRgfZv8ST2zfjf7KwJVYfj64C4shRJGo3mvYigpxt0",
+      "apiEndpoint": "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
     },
     "yahoo": {
       "vcpid": "",

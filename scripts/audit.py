@@ -228,10 +228,13 @@ def main():
         for v in (links.get(grp) or {}).values():
             for it in v:
                 kws.add(it.get('keyword'))
-    cache = (load_json('product-cache.json', {}).get('items') or {})
-    add('product_cache_missing', '楽天商品キャッシュが無い検索語(テキスト表示にフォールバック)',
-        sorted(k for k in kws if k and k not in cache),
-        'RAKUTEN_APP_ID 未設定なら全件が該当する')
+    # 楽天は2026-07-30からブラウザ側で都度取得+localStorageキャッシュに移行した。
+    # サーバー側の事前キャッシュは403で不可のため、ここでは設定の有無だけ検査する。
+    rk = (links.get('asp') or {}).get('rakuten') or {}
+    missing_cfg = [k for k in ('applicationId', 'accessKey', 'apiEndpoint', 'affiliateId')
+                   if not rk.get(k)]
+    add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
+        missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する')
 
     # --- 出力 ---
     total = sum(v['count'] for k, v in findings.items()
