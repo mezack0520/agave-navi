@@ -1,4 +1,13 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": []
+  "items": [
+    {
+      "id": "data:okinawa-region-taxonomy",
+      "date": "2026-07-30",
+      "source": "event-monitor",
+      "title": "沖縄県のイベント7件が region=九州(5件)と region=沖縄(2件)に割れている",
+      "detail": "九州側: chinki-shokubutsu-ichiba-vol8-2026 / must-buy-market-okinawa-2026-05 / botanical-market-vol6-urasoe-2026 / planchu-marche-vol1-yomitan-2026-06 / townpal-commons-ishigaki-2026-07。沖縄側: paradise-garage-tomoya-farm-2026-08 / botanical-botanical-okinawa-2026-11。スクリプト側の定義も食い違っていて、data-integrity-check.py は 沖縄→沖縄、build-static-html.py の PREF_TO_REGION は 沖縄→九州、issue-to-shops.py は 九州・沖縄。さらに sitelib.py の REGION_ROMAJI に沖縄が無いため region=沖縄 の2件は /region/region-b2e5cfe1/ というハッシュURLの頁に載っている(2件<3件なのでnoindex・sitemap除外中)。どちらが正かはサイトの地域分類そのものの決定なので自動修正していない。",
+      "proposal": "(a)沖縄を独立地域にする: 5件を region=沖縄 に寄せ、REGION_ROMAJI に '沖縄':'okinawa' を追加、build-static-html.py の PREF_TO_REGION も沖縄へ修正。7件になり /region/okinawa/ が正規URLでsitemapに載る。(b)九州に含める: 2件を region=九州 に寄せ、data-integrity-check.py の PREF_TO_REGION を沖縄→九州に直し、region-b2e5cfe1 の頁を削除する。どちらでもスクリプト3本の定義を1つに揃える必要があり、放置すると新規登録のたびに割れ続ける。"
+    }
+  ]
 }
