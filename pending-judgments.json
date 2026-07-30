@@ -8,6 +8,14 @@
       "title": "沖縄県のイベント7件が region=九州(5件)と region=沖縄(2件)に割れている",
       "detail": "九州側: chinki-shokubutsu-ichiba-vol8-2026 / must-buy-market-okinawa-2026-05 / botanical-market-vol6-urasoe-2026 / planchu-marche-vol1-yomitan-2026-06 / townpal-commons-ishigaki-2026-07。沖縄側: paradise-garage-tomoya-farm-2026-08 / botanical-botanical-okinawa-2026-11。スクリプト側の定義も食い違っていて、data-integrity-check.py は 沖縄→沖縄、build-static-html.py の PREF_TO_REGION は 沖縄→九州、issue-to-shops.py は 九州・沖縄。さらに sitelib.py の REGION_ROMAJI に沖縄が無いため region=沖縄 の2件は /region/region-b2e5cfe1/ というハッシュURLの頁に載っている(2件<3件なのでnoindex・sitemap除外中)。どちらが正かはサイトの地域分類そのものの決定なので自動修正していない。",
       "proposal": "(a)沖縄を独立地域にする: 5件を region=沖縄 に寄せ、REGION_ROMAJI に '沖縄':'okinawa' を追加、build-static-html.py の PREF_TO_REGION も沖縄へ修正。7件になり /region/okinawa/ が正規URLでsitemapに載る。(b)九州に含める: 2件を region=九州 に寄せ、data-integrity-check.py の PREF_TO_REGION を沖縄→九州に直し、region-b2e5cfe1 の頁を削除する。どちらでもスクリプト3本の定義を1つに揃える必要があり、放置すると新規登録のたびに割れ続ける。"
+    },
+    {
+      "id": "ops:repository-dispatch-blocked-in-chrome",
+      "date": "2026-07-30",
+      "source": "event-monitor",
+      "title": "Chrome経由の repository_dispatch が送れなくなった。docs/architecture-2026-07.md §7 の手順が現状では機能しない",
+      "detail": "agave-navi.com 上で javascript_tool から api.github.com/repos/.../dispatches に Authorization: Bearer 付きで fetch すると、1回目はCDPの45秒タイムアウト、2回目はツールが結果を『[BLOCKED: Cookie/query string data]』に差し替え、Promiseは60秒以上たっても pending のまま解決も拒否もされなかった。トークンを含まない素のJS評価は同一タブで正常に動き、navigator.serviceWorker.controller は null なので、doc §7 が書いているSW干渉ではなく、Chromeツール側が認証ヘッダ付きリクエストを遮断していると見られる。サンドボックスからの api.github.com 直叩き(curl)は従来どおり不通(HTTP 000)。今回は結果的に、並行タスクのローカルビルド(11:19)が修正後のevents.jsonから全ページを再生成済みで、再ビルドは不要だった。",
+      "proposal": "(a)daily.yml に on.push(paths: events.json)を足し、pushだけで再生成が走るようにする。dispatchへの依存自体を無くせるので恒久策としてはこれが本命。concurrency: events-write が既にあるので多重実行は詰まらない。(b)Claudeタスク側はローカルで scripts/build-all.sh を回して生成物ごとpushする(fed0bd7 と同じやり方)。サンドボックスで完走することは今回確認済み。(c)PATをブラウザに渡す前提の §7 手順は、遮断が仕様なら doc から落とす。"
     }
   ]
 }
