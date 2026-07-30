@@ -2,20 +2,12 @@
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
   "items": [
     {
-      "id": "affiliate:thin-past-events-no-monetization",
-      "date": "2026-07-29",
-      "source": "affiliate-setup",
-      "title": "薄い判定のイベント93件が noindex かつ収益枠なし。うち1件はサイト5番目の流入ページ",
-      "detail": "アフィリエイト枠の設置時に判明。_is_thin_event(出典あり かつ time/imageUrl/説明50字以上 のいずれか)で264件中93件が薄い判定。この93件はnoindexかつ広告枠も出さない設計にした。ところが tenkaichi-2026(第6回 天下一植物界、京セラドーム大阪、約75店舗)は説明文が46字でしきい値50字に4字足りないだけで薄い判定に入っており、Search Consoleでは90日間194クリック・4,598表示でサイト5番目の流入ページ。終了済みイベントは週次エンリッチの優先順でも最後尾のため、この穴は自然に埋まらない。",
-      "proposal": "薄い93件のうち検索流入が実際にあるものを対象に、既存データ(会場・出店規模・入場方式)の範囲で説明文を100字程度まで加筆する。新事実の創作はせず、events.jsonに既にある事実の文章化のみ。対象の特定にはSearch Consoleの流入上位と薄い判定の突き合わせが必要なので、実行可否を判断したい。"
-    },
-    {
-      "id": "watchlist:unresolved-ig-handles",
+      "id": "data:remaining-thin-upcoming",
       "date": "2026-07-30",
-      "source": "watchlist",
-      "title": "15件が主催者IGハンドル未設定でウォッチ対象から漏れている",
-      "detail": "自己拡張ループ(登録→翌日watch-sources自動追加→日次巡回→次回開催検知)は移行後も動作しているが、url/sourceUrl が裸の投稿URL(instagram.com/p/XXXX/)だけの回はハンドルが取れず静かに除外されていた。generate-watchlist.py に organizerIg の明示指定を追加し、未解決件数を可視化・日次メールに追加した。残り15件は主催者アカウントの特定が必要: gunpari-gpf-kanshasai-2026-08, chinki-plants-flea-market-2026-08, plants-up-satsuma-2026-08, purari-plants-vol3-2026-11, mebuki-sai-2026, plants-2306-3rd-anniversary-2026, haru-saboten-taniku-fair-sapporo-2026, shoku-sai-vol9-izumo-2026, plants-garage-market-2026-tsukumi, gunma-cactus-shikishima-2026-06, planchu-marche-vol1-yomitan-2026-06, taniku-sukijaken-ichi-3rd-2026-06, plants-hobbyist-niigata-2026-07, playfulness-nagoya-2026-07, pakipo-no-sono-2026-07",
-      "proposal": "各イベントの投稿URLを開いて投稿主(主催者)のアカウント名を確認し、events.json の organizerIg に入れる。日次タスクで1日数件ずつ消化させるか、まとめて処理するかを判断したい。設定後は翌日のビルドで自動的にウォッチ対象に載り、次回開催が検知されるようになる。"
+      "source": "audit",
+      "title": "開催予定4件が説明文不足のまま。公式に当該回の具体情報がなく推測で埋めていない",
+      "detail": "gifu-midori-marche-2nd-2026-09(30字) / enjoy-place-outside-2nd-2026-11(40字) / awajishima-taniku-smile-marche-3rd-2026(42字) / kyoto-midorino-marche-bangaihen-vol10-2026(44字)。主催アカウントのプロフィールは確認したが、会場・時間・出店構成といった当該回の具体情報が記載されておらず、事実で埋められなかったため加筆していない。京都みどりのマルシェは公式が『詳細は @eyepanch で発信する』と案内しているため、そちらを見れば情報が取れる可能性がある。",
+      "proposal": "(a)各主催の投稿一覧まで遡って当該回の告知を探す、(b)週次エンリッチ(開催予定×70字未満を優先する設定済み)に任せて放置する、のどちらかを選びたい。開催が近づけば主催者が詳細を出すため(b)でも自然に解消する見込み。"
     }
   ]
 }
