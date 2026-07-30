@@ -6,10 +6,10 @@
       "label": "Amazon"
     },
     "rakuten": {
-      "affiliateId": "0e86e911.418545eb.0e86e912.75300281",
+      "affiliateId": "5251fbf3.21164c54.5251fbf4.7818a8f3",
       "searchUrl": "https://search.rakuten.co.jp/search/mall/{keyword}/",
       "label": "楽天市場",
-      "_note": "applicationId と accessKey はブラウザから呼ぶ前提で公開している。アプリ種別 Web Application のリファラ制限により agave-navi.com 以外からは使えない。サーバー側(GitHub Actions)からの呼び出しは 403 REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING で拒否されるため使えない。",
+      "_note": "affiliateId は元の 5251fbf3… を正とする。2026-07-30にアプリ管理画面の表示値(0e86e911…)へ差し替えたが成果が計上されなかったため差し戻した。コンソールの表示は必ずしも計上先のIDではない。今後この値はレポートのクリック数が実際に増えることを確認せずに変更しない。applicationId と accessKey はブラウザから呼ぶ前提で公開している(Web Applicationのリファラ制限が保護)。",
       "applicationId": "2ceed43d-9232-4938-8c88-b04e18de4358",
       "accessKey": "pk_jwRgfZv8ST2zfjf7KwJVYfj64C4shRJGo3mvYigpxt0",
       "apiEndpoint": "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
