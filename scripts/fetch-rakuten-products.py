@@ -138,10 +138,36 @@ def main():
     app_id = os.environ.get('RAKUTEN_APP_ID', '').strip()
     access_key = os.environ.get('RAKUTEN_ACCESS_KEY', '').strip()
     if not app_id or not access_key:
-        missing = [n for n, v in (('RAKUTEN_APP_ID', app_id),
-                                  ('RAKUTEN_ACCESS_KEY', access_key)) if not v]
-        print(f'{" / ".join(missing)} が未設定のためスキップ'
-              '(表示側はテキストリンクにフォールバック)')
+        present = {'RAKUTEN_APP_ID': len(app_id), 'RAKUTEN_ACCESS_KEY': len(access_key)}
+        missing = [n for n, v in present.items() if not v]
+        msg = f'{" / ".join(missing)} が未設定'
+        print(f'{msg}のためスキップ(表示側はテキストリンクにフォールバック)')
+        # 何が欠けているかを成果物に残す。書かずに返すと前回の内容が残り原因が追えない。
+        now_s = datetime.now(JST).isoformat(timespec='seconds')
+        cache_prev = {}
+        if os.path.exists(CACHE_PATH):
+            try:
+                with open(CACHE_PATH, encoding='utf-8') as f:
+                    cache_prev = (json.load(f).get('items') or {})
+            except (OSError, ValueError):
+                pass
+        with open(CACHE_PATH, 'w', encoding='utf-8') as f:
+            json.dump({
+                '_note': ('楽天商品検索APIのキャッシュ。'
+                          'scripts/fetch-rakuten-products.py が生成。'),
+                'updatedAt': now_s,
+                'stats': {'updated': 0, 'failed': 0, 'cached': len(cache_prev)},
+                '_diagnostic': {
+                    'reason': 'credentials-missing',
+                    'missing': missing,
+                    'lengths': present,
+                    'hint': ('GitHub の Settings > Secrets and variables > Actions で '
+                             'Repository secrets に登録されているか、名前が完全一致か、'
+                             'Variables 側に入っていないかを確認する'),
+                },
+                'items': cache_prev,
+            }, f, ensure_ascii=False, indent=2)
+            f.write('\n')
         return 0
 
     with open(LINKS_PATH, encoding='utf-8') as f:
