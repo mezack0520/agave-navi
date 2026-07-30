@@ -49,7 +49,7 @@ def main():
 
         # ヘッダーのロゴを正規化
         canon_logo = ('<a href="/" class="logo">'
-                      '<span class="logo-en logo-mark">アガナビ</span>'
+                      '<span class="logo-en">AGA NAVI</span>'
                       '<span class="logo-jp">アガベイベントナビ</span></a>')
         new_html, n = LOGO_RE.subn(lambda _m: canon_logo, html)
         if n and new_html != html:
