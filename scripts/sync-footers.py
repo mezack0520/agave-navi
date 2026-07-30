@@ -21,6 +21,8 @@ FOOTER_RE = re.compile(r'[ \t]*<footer class="footer">.*?</footer>', re.S)
 CSSVER_RE = re.compile(r'(style\.css)(\?v=[0-9a-zA-Z]*)?')
 # ローカルJSも版数を付ける。付いていないと変更が閲覧者のキャッシュに届かない。
 JSVER_RE = re.compile(r'((?:affiliate|ads|status-auto)\.js)(\?v=[0-9a-zA-Z]*)?')
+# ヘッダーのロゴも正規化する。408ファイルに直書きされており手で直すと必ず乖離する。
+LOGO_RE = re.compile(r'<a href="/" class="logo">.*?</a>', re.S)
 
 def main():
     canonical = sitelib.site_footer().rstrip('\n')
@@ -45,6 +47,15 @@ def main():
             html = new_html
             reasons.append('cssver')
 
+        # ヘッダーのロゴを正規化
+        canon_logo = ('<a href="/" class="logo">'
+                      '<span class="logo-en logo-mark">アガナビ</span>'
+                      '<span class="logo-jp">アガベイベントナビ</span></a>')
+        new_html, n = LOGO_RE.subn(lambda _m: canon_logo, html)
+        if n and new_html != html:
+            html = new_html
+            reasons.append('logo')
+
         # JS版数を正規化
         want_js = f'?v={sitelib.JS_VERSION}'
         new_html, n = JSVER_RE.subn(lambda mo: mo.group(1) + want_js, html)
@@ -56,7 +67,7 @@ def main():
             open(fp, 'w', encoding='utf-8').write(html)
             if 'footer' in reasons:
                 changed += 1
-            if 'cssver' in reasons or 'jsver' in reasons:
+            if 'cssver' in reasons or 'jsver' in reasons or 'logo' in reasons:
                 ver_changed += 1
             print(f'  synced({"+".join(reasons)}): {os.path.basename(fp)}')
     print(f'sync-footers: footer {changed}件 / 版数 {ver_changed}件 更新 '

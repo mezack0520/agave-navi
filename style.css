@@ -3451,3 +3451,18 @@ main {
 @media (min-width: 721px) {
     .aff-bar { display: none; }
 }
+
+/* サイトの愛称ロゴ「アガナビ」 (2026-07-30)
+   .logo-en はラテン文字前提の字間(0.12em)なので、和文用に詰めて少し大きくする。
+   正式名称「アガベイベントナビ」は .logo-jp に残し、title/h1 は変更しない。 */
+.logo .logo-mark {
+    font-size: 1.2rem;
+    letter-spacing: .04em;
+    line-height: 1.15;
+}
+@media (max-width: 768px) {
+    .logo .logo-mark { font-size: 1.05rem; }
+}
+@media (max-width: 480px) {
+    .logo .logo-mark { font-size: 1rem; }
+}
