@@ -134,7 +134,36 @@ def image_url(it):
     return u.replace('_ex=128x128', '_ex=300x300')
 
 
+def _write_cache(payload):
+    with open(CACHE_PATH, 'w', encoding='utf-8') as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+        f.write('\n')
+
+
 def main():
+    try:
+        return _run()
+    except Exception as e:  # noqa: BLE001
+        # ここに来るのは想定外の不具合。診断だけは必ず残す。
+        print(f'::error::想定外の例外: {type(e).__name__} {e}')
+        try:
+            _write_cache({
+                '_note': '楽天商品検索APIのキャッシュ(異常終了時)。',
+                'updatedAt': datetime.now(JST).isoformat(timespec='seconds'),
+                'stats': {'updated': 0, 'failed': 0, 'cached': 0},
+                '_diagnostic': {
+                    'reason': 'unexpected-exception',
+                    'exception': f'{type(e).__name__}: {str(e)[:300]}',
+                    'lastError': LAST_ERROR.get('detail'),
+                },
+                'items': {},
+            })
+        except OSError:
+            pass
+        return 0
+
+
+def _run():
     app_id = os.environ.get('RAKUTEN_APP_ID', '').strip()
     access_key = os.environ.get('RAKUTEN_ACCESS_KEY', '').strip()
     if not app_id or not access_key:
@@ -218,9 +247,9 @@ def main():
             ok_n += 1
             print(f'  [{i}/{len(keywords)}] {kw}: '
                   f'{cache[kw]["name"][:34]} / {cache[kw]["price"]}円')
-        except (urllib.error.HTTPError, urllib.error.URLError,
-                ValueError, TimeoutError, OSError) as e:
-            print(f'  [{i}/{len(keywords)}] {kw}: 取得失敗 {e}')
+        except Exception as e:  # noqa: BLE001 — 1件の失敗で全体を止めない
+            print(f'  [{i}/{len(keywords)}] {kw}: 取得失敗 {type(e).__name__} {e}')
+            LAST_ERROR.setdefault('detail', f'{type(e).__name__}: {e}')
             fail_n += 1
         time.sleep(SLEEP_SEC)
 
