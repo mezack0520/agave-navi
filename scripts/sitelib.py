@@ -14,8 +14,8 @@ from datetime import datetime, timezone, timedelta
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260730g'
-JS_VERSION = '20260730f'
+CSS_VERSION = '20260730h'
+JS_VERSION = '20260730g'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 

@@ -133,6 +133,7 @@
         plan.forEach(function (p) {
           render(data, [], p.el, p.guide, p.heading, p.items);
         });
+        buildStickyBar(data, plan);
       }
       draw();
 
@@ -169,6 +170,73 @@
       h = Math.imul(h, 16777619);
     }
     return h >>> 0;
+  }
+
+  // ===== スマホ用の固定バー =====
+  var stickyDone = false;
+
+  function buildStickyBar(data, plan) {
+    if (stickyDone) return;
+    if (window.matchMedia && !window.matchMedia('(max-width: 720px)').matches) return;
+    try {
+      if (sessionStorage.getItem('agn_aff_bar_closed') === '1') return;
+    } catch (e) {}
+    if (!plan.length) return;
+
+    var products = data._products || {};
+    var pick = null;
+    for (var i = 0; i < plan[0].items.length && !pick; i++) {
+      var it = plan[0].items[i];
+      var p = products[it.keyword];
+      if (p && p.image && p.url) pick = { item: it, prod: p };
+    }
+    if (!pick) return;   // 実商品が取れないうちは出さない
+    stickyDone = true;
+
+    var bar = document.createElement('div');
+    bar.className = 'aff-bar';
+    bar.setAttribute('aria-label', '広告');
+    bar.innerHTML =
+      '<a class="aff-bar-link" href="' + pick.prod.url + '" target="_blank" rel="noopener sponsored">'
+      + '<img class="aff-bar-img" src="' + pick.prod.image + '" alt="" loading="lazy"'
+      + ' onerror="this.style.visibility=\'hidden\'">'
+      + '<span class="aff-bar-body">'
+      + '<span class="aff-bar-why">' + pick.item.label + '<span class="aff-bar-pr">PR</span></span>'
+      + '<span class="aff-bar-meta">'
+      + (pick.prod.price ? '<span class="aff-bar-price">'
+          + Number(pick.prod.price).toLocaleString('ja-JP') + '円</span>' : '')
+      + '<span class="aff-bar-shop">楽天市場</span></span>'
+      + '</span>'
+      + '<span class="aff-bar-go">見る</span></a>'
+      + '<button class="aff-bar-close" type="button" aria-label="閉じる">×</button>';
+    document.body.appendChild(bar);
+
+    bar.querySelector('.aff-bar-close').addEventListener('click', function () {
+      bar.classList.remove('is-shown');
+      try { sessionStorage.setItem('agn_aff_bar_closed', '1'); } catch (e) {}
+      setTimeout(function () { bar.remove(); }, 250);
+    });
+
+    // 本文中の枠が見えている間は隠す(同じものを二重に出さない)
+    var boxVisible = false;
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        boxVisible = entries.some(function (e) { return e.isIntersecting; });
+        update();
+      }, { threshold: 0.15 });
+      plan.forEach(function (p) { io.observe(p.el); });
+    }
+
+    function update() {
+      var doc = document.documentElement;
+      var scrolled = (window.scrollY || doc.scrollTop);
+      var total = Math.max(1, doc.scrollHeight - window.innerHeight);
+      var past = (scrolled / total) > 0.45;   // 1画面目は日時・会場を読む場所なので出さない
+      bar.classList.toggle('is-shown', past && !boxVisible);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   }
 
   function shopKey(label) {
