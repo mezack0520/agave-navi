@@ -155,18 +155,63 @@
     return arr;
   }
 
-  // 同ジャンル(group)が枠を食い合わないように1つずつに絞り、rank順に並べる。
-  // rank が小さいほど単価と購買意図が高い想定。先頭が主役枠になる。
+  // 表示の種。ページごと・日ごとに変えて同じ並びを出し続けないようにする。
+  // リロードで毎回変わると落ち着かないため、同じページ・同じ日なら同じ並びになる。
+  function seed() {
+    var d = new Date();
+    var s = location.pathname + '|' + d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function shopKey(label) {
+    if (label.indexOf('Amazon') >= 0) return 'amazon';
+    if (label.indexOf('楽天') >= 0) return 'rakuten';
+    if (label.indexOf('ヤフオク') >= 0) return 'yahuoku';
+    if (label.indexOf('Yahoo') >= 0) return 'yahoo';
+    return 'other';
+  }
+
+  var RND_STATE = seed();
+  function rnd() {
+    // xorshift。種が同じなら同じ順序になる
+    RND_STATE ^= RND_STATE << 13; RND_STATE >>>= 0;
+    RND_STATE ^= RND_STATE >>> 17;
+    RND_STATE ^= RND_STATE << 5;  RND_STATE >>>= 0;
+    return RND_STATE / 4294967296;
+  }
+  function seededShuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(rnd() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  // 同ジャンル(group)が枠を食い合わないように1つずつに絞る。
+  // rank の階層は保ちつつ、同じ rank の中は種で入れ替えて並びを固定しない。
   function narrow(items, count) {
     var byGroup = {};
-    var out = [];
+    var pool = [];
     items.forEach(function (it) {
       var g = it.group || it.keyword;
       if (byGroup[g]) return;      // 同ジャンルは1つまで
       byGroup[g] = true;
-      out.push(it);
+      pool.push(it);
     });
-    out.sort(function (a, b) { return (a.rank || 9) - (b.rank || 9); });
+    var tiers = {};
+    pool.forEach(function (it) {
+      var r = it.rank || 9;
+      (tiers[r] = tiers[r] || []).push(it);
+    });
+    var out = [];
+    Object.keys(tiers).map(Number).sort(function (a, b) { return a - b; })
+      .forEach(function (r) { out = out.concat(seededShuffle(tiers[r])); });
     return out.slice(0, count);
   }
 
@@ -302,11 +347,11 @@
         // カードだけ出して他店リンクを消していたのは実装漏れ。
         var others = aspLinks.filter(function (a) { return a.label !== '楽天市場'; });
         if (others.length) {
-          html += '<div class="affiliate-asp-links"><span class="aff-alt-lead">ほかで探す</span>';
-          others.forEach(function (asp, k) {
-            html += (k ? '<span class="aff-alt-sep">/</span>' : '')
-              + '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-              + ' class="aff-alt-link">' + asp.label + '</a>';
+          html += '<div class="aff-shop-btns">';
+          others.forEach(function (asp) {
+            html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+              + ' class="aff-shop-btn" data-shop="' + shopKey(asp.label) + '">'
+              + asp.label + 'で探す</a>';
           });
           html += '</div>';
         }
@@ -327,11 +372,11 @@
       html += '<span class="aff-cta-go">' + primary.label + 'で見る</span>';
       html += '</span></a>';
       if (alts.length) {
-        html += '<div class="affiliate-asp-links"><span class="aff-alt-lead">ほかで探す</span>';
-        alts.forEach(function (asp, i) {
-          html += (i ? '<span class="aff-alt-sep">/</span>' : '')
-            + '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-            + ' class="aff-alt-link">' + asp.label + '</a>';
+        html += '<div class="aff-shop-btns">';
+        alts.forEach(function (asp) {
+          html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+            + ' class="aff-shop-btn" data-shop="' + shopKey(asp.label) + '">'
+            + asp.label + 'で探す</a>';
         });
         html += '</div>';
       }

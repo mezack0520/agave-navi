@@ -3291,3 +3291,46 @@ main {
     .affiliate-section .rk-card-img { width: 72px; height: 72px; }
     .affiliate-section .rk-card-why { font-size: .88rem; }
 }
+
+/* ========================================
+   SHOP BUTTONS (.aff-shop-btn) — 2026-07-30
+   Amazon / Yahoo! への導線が 0.72rem の灰色下線テキストで押されない形だった。
+   タップ範囲を確保したボタンにする。店の識別色は枠線と文字色だけに使い、
+   モノクロ基調を崩さない。
+   ======================================== */
+.affiliate-section .aff-shop-btns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: .45rem;
+    padding: .1rem .8rem .75rem;
+}
+.affiliate-section .aff-shop-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: .55em .7em;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 7px;
+    background: #fff;
+    color: #333;
+    font-size: .8rem;
+    font-weight: 800;
+    text-decoration: none;
+    line-height: 1.25;
+    text-align: center;
+    transition: border-color .15s, color .15s, background .15s;
+}
+.affiliate-section .aff-shop-btn:hover { background: #fafafa; }
+.affiliate-section .aff-shop-btn[data-shop="amazon"] { border-color: #ff9900; color: #b36b00; }
+.affiliate-section .aff-shop-btn[data-shop="amazon"]:hover { background: #ff9900; color: #fff; }
+.affiliate-section .aff-shop-btn[data-shop="yahoo"],
+.affiliate-section .aff-shop-btn[data-shop="yahuoku"] { border-color: #ff0033; color: #c40028; }
+.affiliate-section .aff-shop-btn[data-shop="yahoo"]:hover,
+.affiliate-section .aff-shop-btn[data-shop="yahuoku"]:hover { background: #ff0033; color: #fff; }
+.affiliate-section .aff-shop-btn[data-shop="rakuten"] { border-color: #bf0000; color: #a10000; }
+.affiliate-section .aff-shop-btn[data-shop="rakuten"]:hover { background: #bf0000; color: #fff; }
+@media (max-width: 480px) {
+    .affiliate-section .aff-shop-btns { padding: .1rem .65rem .7rem; }
+    .affiliate-section .aff-shop-btn { min-height: 44px; font-size: .82rem; }
+}

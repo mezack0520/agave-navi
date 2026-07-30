@@ -36,7 +36,16 @@
       "label": "冬の室内管理で徒長させないための育成LED",
       "icon": "light",
       "group": "light",
-      "rank": 1
+      "rank": 1,
+      "maxPrice": 30000
+    },
+    {
+      "keyword": "簡易温室 ビニール",
+      "label": "取り込み株をまとめて置ける簡易温室",
+      "icon": "shelf",
+      "group": "shelf",
+      "rank": 1,
+      "maxPrice": 30000
     },
     {
       "keyword": "アガベ 鉢 プラ鉢 スリット",
@@ -55,6 +64,14 @@
       "maxPrice": 6000
     },
     {
+      "keyword": "オルトラン DX 粒剤",
+      "label": "植え込み時に混ぜておく浸透移行性の薬剤",
+      "icon": "tool",
+      "group": "chem",
+      "rank": 2,
+      "maxPrice": 4000
+    },
+    {
       "keyword": "サーキュレーター 静音",
       "label": "梅雨と夏の蒸れ対策に効く送風",
       "icon": "tool",
@@ -63,10 +80,50 @@
       "maxPrice": 15000
     },
     {
+      "keyword": "最高最低温度計 デジタル",
+      "label": "置き場所の最低気温を実測する温度計",
+      "icon": "tool",
+      "group": "tool",
+      "rank": 3,
+      "maxPrice": 5000
+    },
+    {
+      "keyword": "キャリーカート 折りたたみ 園芸",
+      "label": "イベントで買った株を持ち帰るカート",
+      "icon": "tool",
+      "group": "carry",
+      "rank": 3,
+      "maxPrice": 15000
+    },
+    {
       "keyword": "多肉植物 図鑑",
       "label": "品種名で迷わなくなる図鑑",
       "icon": "book",
       "group": "book",
+      "rank": 4,
+      "maxPrice": 5000
+    },
+    {
+      "keyword": "園芸 ハサミ 剪定",
+      "label": "子株外しや根の整理に使う剪定ハサミ",
+      "icon": "tool",
+      "group": "tool2",
+      "rank": 4,
+      "maxPrice": 6000
+    },
+    {
+      "keyword": "植物 ラベル 名札 園芸",
+      "label": "入手した株の名前を残すラベル",
+      "icon": "tool",
+      "group": "tool3",
+      "rank": 4,
+      "maxPrice": 3000
+    },
+    {
+      "keyword": "土壌水分計 園芸",
+      "label": "水やり判断を数値にする水分計",
+      "icon": "tool",
+      "group": "meter",
       "rank": 4,
       "maxPrice": 5000
     }
