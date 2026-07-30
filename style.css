@@ -2728,21 +2728,6 @@ main {
     margin-bottom: 4px;
     letter-spacing: 0.05em;
 }
-
-/* アフィリエイトセクション */
-.aff-section {
-    margin: 0;
-    padding: 1rem 0 0.5rem;
-}
-.aff-section-title {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--gray-600);
-    margin: 0 0 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
 .aff-pr {
     display: inline-block;
     font-size: 0.6rem;
@@ -2754,121 +2739,11 @@ main {
     letter-spacing: 0.05em;
     vertical-align: middle;
 }
-.aff-scroll {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
-    scrollbar-width: none;
-}
-.aff-scroll::-webkit-scrollbar {
-    display: none;
-}
-.aff-card {
-    flex: 0 0 130px;
-    scroll-snap-align: start;
-    background: #fff;
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s, transform 0.2s;
-    display: flex;
-    flex-direction: column;
-}
-.aff-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
-}
-.aff-card-img {
-    width: 100%;
-    height: 120px;
-    background: var(--gray-100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 8px;
-}
-.aff-card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-.aff-card-info {
-    padding: 8px 10px 10px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.aff-badge {
-    display: inline-block;
-    font-size: 0.6rem;
-    padding: 1px 6px;
-    border-radius: 3px;
-    font-weight: 600;
-    width: fit-content;
-}
-.aff-badge-rakuten {
-    background: #bf0000;
-    color: #fff;
-}
-.aff-badge-yahoo {
-    background: #ff0033;
-    color: #fff;
-}
-.aff-badge-amazon {
-    background: #ff9900;
-    color: #111;
-}
-.aff-card-title {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: var(--gray-700);
-    margin: 0;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.aff-card-price {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--accent-pop);
-    margin: 0;
-}
 
 /* アフィリエイトスロット */
 .aff-slot {
     margin: 0.75rem 0;
     padding: 0;
-}
-
-
-@media (min-width: 768px) {
-    .aff-card {
-        flex: 0 0 150px;
-    }
-    .aff-card-img {
-        height: 130px;
-    }
-}
-
-@media (min-width: 960px) {
-    .aff-scroll {
-        gap: 14px;
-    }
-    .aff-card {
-        flex: 0 0 168px;
-    }
-    .aff-card-img {
-        height: 140px;
-    }
 }
 
 /* マップで開くリンク非表示（地図埋め込みで代替） */
@@ -3128,70 +3003,6 @@ main {
 }
 
 /* ========================================
-   AFFILIATE PRODUCT CARD (楽天API由来の実商品)
-   ======================================== */
-.aff-card {
-    display: flex;
-    align-items: flex-start;
-    gap: .8rem;
-    padding: .8rem 0;
-    border-bottom: 1px solid #eee;
-    text-decoration: none;
-    color: #111;
-}
-.aff-card:last-of-type { border-bottom: none; }
-.aff-card:hover .aff-card-name { text-decoration: underline; }
-.aff-card-img {
-    flex-shrink: 0;
-    width: 82px;
-    height: 82px;
-    object-fit: contain;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 6px;
-}
-.aff-card-body { display: block; min-width: 0; }
-.aff-card-why {
-    display: block;
-    font-size: .88rem;
-    font-weight: 700;
-    color: #111;
-    line-height: 1.45;
-    margin-bottom: .18rem;
-}
-.aff-card-name {
-    display: block;
-    font-size: .76rem;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: .3rem;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-.aff-card-meta {
-    display: flex;
-    align-items: center;
-    gap: .45rem;
-    flex-wrap: wrap;
-}
-.aff-card-price { font-size: .95rem; font-weight: 800; color: #111; }
-.aff-card-rev { font-size: .7rem; color: #999; }
-.aff-card-shop {
-    font-size: .64rem;
-    font-weight: 700;
-    color: #fff;
-    background: #bf0000;
-    border-radius: 3px;
-    padding: .12em .4em;
-}
-@media (max-width: 480px) {
-    .aff-card-img { width: 66px; height: 66px; }
-    .aff-card-why { font-size: .84rem; }
-}
-
-/* ========================================
    EVENT HERO 情報の並び (2026-07-29 調整)
    画像は補助。日時・会場が最初に目に入るよう横並びにする。
    ======================================== */
@@ -3401,99 +3212,6 @@ main {
     .affiliate-section .aff-row-body { flex-direction: column; align-items: stretch; gap: .55rem; }
     .affiliate-section .aff-cta-go { text-align: center; padding: .68em 1em; font-size: .82rem; }
     .affiliate-section .affiliate-item.is-featured .affiliate-item-label { font-size: .98rem; }
-}
-
-/* ========================================
-   AFFILIATE PRODUCT CARD — 実商品カードの上書き (2026-07-30)
-   既存定義は触らず後勝ちで上書きする。
-   商品名のクランプが他ルールに display を奪われて効かず、名前が伸びて
-   カードが破綻していたため詳細度を上げる。
-   ======================================== */
-.affiliate-section .aff-card {
-    display: flex;
-    align-items: flex-start;
-    gap: .85rem;
-    padding: .85rem .8rem;
-    border: 1px solid #e6e6e6;
-    border-radius: 9px;
-    text-decoration: none;
-    color: #111;
-    transition: border-color .15s, box-shadow .15s;
-}
-.affiliate-section .aff-card:hover {
-    border-color: #111;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
-}
-.affiliate-section .aff-card + .aff-card { margin-top: .55rem; }
-.affiliate-section .aff-card .aff-card-img {
-    flex: 0 0 auto;
-    width: 88px;
-    height: 88px;
-    object-fit: contain;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 6px;
-}
-.affiliate-section .aff-card .aff-card-body {
-    display: block;
-    flex: 1 1 auto;
-    min-width: 0;
-}
-.affiliate-section .aff-card .aff-card-why {
-    display: block;
-    font-size: .93rem;
-    font-weight: 800;
-    line-height: 1.45;
-    color: #111;
-    margin-bottom: .25rem;
-}
-/* 商品名は2行で打ち切る。display を先に指定しないとクランプが効かない */
-.affiliate-section .aff-card .aff-card-name {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: .74rem;
-    line-height: 1.5;
-    color: #6b6b6b;
-    margin-bottom: .4rem;
-}
-.affiliate-section .aff-card .aff-card-meta {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    flex-wrap: wrap;
-}
-.affiliate-section .aff-card .aff-card-price {
-    font-size: 1rem;
-    font-weight: 900;
-    color: #111;
-    letter-spacing: -.01em;
-}
-.affiliate-section .aff-card .aff-card-rev { font-size: .7rem; color: #999; }
-.affiliate-section .aff-card .aff-card-shop {
-    font-size: .64rem;
-    font-weight: 700;
-    color: #fff;
-    background: #bf0000;
-    border-radius: 3px;
-    padding: .16em .45em;
-    white-space: nowrap;
-}
-@media (max-width: 480px) {
-    .affiliate-section .aff-card { gap: .7rem; padding: .75rem .65rem; }
-    .affiliate-section .aff-card .aff-card-img { width: 72px; height: 72px; }
-    .affiliate-section .aff-card .aff-card-why { font-size: .88rem; }
-}
-
-/* 商品名の行数制限を max-height 方式にする (2026-07-30)
-   -webkit-line-clamp は display:-webkit-box が前提で、計算値が flow-root に
-   なる環境があり効かなかった。max-height なら display に依存しない。 */
-.affiliate-section .aff-card .aff-card-name {
-    display: block;
-    max-height: 2.3em;          /* line-height 1.5 の約2行 */
-    overflow: hidden;
-    -webkit-line-clamp: unset;
 }
 
 /* ========================================
