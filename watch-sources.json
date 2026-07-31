@@ -1,10 +1,10 @@
 {
- "generated": "2026-07-31 09:23 JST",
+ "generated": "2026-07-31 09:51 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 134,
+  "igAccounts": 136,
   "awaitingNextEdition": 168,
-  "officialSiteCandidates": 51,
+  "officialSiteCandidates": 52,
   "unresolvedIgHandles": 1
  },
  "igAccounts": [
@@ -86,6 +86,15 @@
    "eventCount": 2,
    "lastEventName": "富士多肉 多肉植物・サボテンの販売（富士川楽座）",
    "lastEventDate": "2026-08-29",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "green_summit_touhoku",
+   "url": "https://www.instagram.com/green_summit_touhoku/",
+   "eventCount": 2,
+   "lastEventName": "Green Summit vol.22 in Yamagata",
+   "lastEventDate": "2026-09-06",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -405,15 +414,6 @@
    "priority": 1
   },
   {
-   "handle": "green_summit_touhoku",
-   "url": "https://www.instagram.com/green_summit_touhoku/",
-   "eventCount": 1,
-   "lastEventName": "Green Summit MORE vol.21",
-   "lastEventDate": "2026-08-23",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "nangokuchatan_tanikutta",
    "url": "https://www.instagram.com/nangokuchatan_tanikutta/",
    "eventCount": 1,
@@ -464,6 +464,15 @@
    "eventCount": 1,
    "lastEventName": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
    "lastEventDate": "2026-09-20",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "jusai_japan",
+   "url": "https://www.instagram.com/jusai_japan/",
+   "eventCount": 1,
+   "lastEventName": "樹祭 一宮 2026 Autumn",
+   "lastEventDate": "2026-09-21",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -545,6 +554,15 @@
    "eventCount": 1,
    "lastEventName": "ぷらりぷらんつ vol.3 × feel 15th Anniversary",
    "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "_wonder_market_",
+   "url": "https://www.instagram.com/_wonder_market_/",
+   "eventCount": 1,
+   "lastEventName": "Wonder Market（2026年11月）",
+   "lastEventDate": "2026-11-08",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -1691,6 +1709,12 @@
    "eventDate": "2026-09-20"
   },
   {
+   "domain": "jusai.link",
+   "url": "https://jusai.link/",
+   "eventName": "樹祭 一宮 2026 Autumn",
+   "eventDate": "2026-09-21"
+  },
+  {
    "domain": "greensnap.jp",
    "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
    "eventName": "GreenSnap Marche YOKOHAMA 2026 Autumn",
@@ -1790,12 +1814,6 @@
    "domain": "festival-life.com",
    "url": "https://festival-life.com/festival/area/tokai/aichi",
    "eventName": "Rhythms of Life",
-   "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "makeman.co.jp",
-   "url": "https://makeman.co.jp/event/event-10904/",
-   "eventName": "ボタニカルマーケットVol.6",
    "eventDate": "2026-05-30"
   }
  ],
