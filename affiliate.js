@@ -239,6 +239,40 @@
     update();
   }
 
+  // ads.js から移設(2026-07-30 AdSense撤去)。
+  // サイドバーの sticky 位置をアフィリエイト枠に重ならないよう制御する。
+  function initSidebarControl() {
+    var sidebar = document.querySelector('.detail-sidebar');
+    var affSection = document.querySelector('.affiliate-section');
+    if (!sidebar || !affSection) return;
+
+    var defaultTop = 70;
+
+    function update() {
+      var affTop = affSection.getBoundingClientRect().top;
+      var sidebarH = sidebar.offsetHeight;
+      var gap = 20;
+      var available = affTop - sidebarH - gap;
+
+      if (available < defaultTop) {
+        sidebar.style.top = available + 'px';
+      } else {
+        sidebar.style.top = defaultTop + 'px';
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
+
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSidebarControl);
+  } else {
+    initSidebarControl();
+  }
+
   function shopKey(label) {
     if (label.indexOf('Amazon') >= 0) return 'amazon';
     if (label.indexOf('楽天') >= 0) return 'rakuten';

@@ -261,10 +261,13 @@ def _is_thin_event(ev):
 
 
 def make_affiliate_block(ev):
-    """アフィリエイト枠。「薄い」ページにだけ出さない。
-    薄頁×広告はAdSense審査で最も嫌われる形なので除外する。一方 終了30日超のnoindexは
-    内容が薄いのではなく検索面から下げているだけで流入も残るため、枠は出す。"""
-    if _is_thin_event(ev):
+    """アフィリエイト枠。出典(url/sourceUrl)がある回には出す。
+
+    2026-07-30まではAdSense審査を意識して「薄い」判定の回を除外していたが、
+    審査を断念したため条件を緩めた。出典があれば実在が確認できたイベントであり、
+    説明文の長さで収益動線を落とす理由はない。
+    出典がまったく無い回(アーカイブの49件)だけ除外する。"""
+    if not ((ev.get('url') or '').strip() or (ev.get('sourceUrl') or '').strip()):
         return ''
     tags = make_tags_csv(ev)
     return (f'        <section class="affiliate-section" data-tags="{tags}"></section>')

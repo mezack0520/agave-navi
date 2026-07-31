@@ -261,8 +261,7 @@ MAP_JS_FIXED = '''<script>
             }
         } catch(e) {}
     })();
-    </script>
-<script src="ads.js"></script>'''
+    </script>'''
 
 
 CAL_JS_FIXED = '''<script>
@@ -407,8 +406,7 @@ CAL_JS_FIXED = '''<script>
             }
         } catch(e) {}
     })();
-    </script>
-<script src="ads.js"></script>'''
+    </script>'''
 
 
 
@@ -456,7 +454,7 @@ def rewrite_cal_html(html_src, events_list, inline_data_block):
     jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントカレンダー', 'https://agave-navi.com/calendar.html')
 
     # JS全体を置き換え: 元のスクリプトを新しいCAL_JS_FIXEDに差し替え
-    # マッチさせるパターン: <script>\n        // Menu toggle ... </script><script src="ads.js"></script>
+    # マッチさせるパターン: <script>\n        // Menu toggle ... </script>
     # 単純に "<script>\n        // Menu toggle" から最後の "</body>" 直前までを置換
     menu_marker = '<script>\n        // Menu toggle'
     body_close = '</body>'

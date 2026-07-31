@@ -20,7 +20,7 @@ TARGETS = [f for f in glob.glob(os.path.join(REPO_ROOT, '*.html'))
 FOOTER_RE = re.compile(r'[ \t]*<footer class="footer">.*?</footer>', re.S)
 CSSVER_RE = re.compile(r'(style\.css)(\?v=[0-9a-zA-Z]*)?')
 # ローカルJSも版数を付ける。付いていないと変更が閲覧者のキャッシュに届かない。
-JSVER_RE = re.compile(r'((?:affiliate|ads|status-auto)\.js)(\?v=[0-9a-zA-Z]*)?')
+JSVER_RE = re.compile(r'((?:affiliate|status-auto)\.js)(\?v=[0-9a-zA-Z]*)?')
 # ヘッダーのロゴも正規化する。408ファイルに直書きされており手で直すと必ず乖離する。
 LOGO_RE = re.compile(r'<a href="/" class="logo">.*?</a>', re.S)
 
@@ -47,6 +47,14 @@ def main():
             html = new_html
             reasons.append('cssver')
 
+        # AdSenseの撤去(2026-07-30 に利用を断念)。外部スクリプトを毎ページ読む無駄を消す。
+        h2 = re.sub(r'[ \t]*<script async src="https://pagead2\.googlesyndication\.com[^\n]*\n', '', html)
+        h2 = re.sub(r'[ \t]*<meta name="google-adsense-account"[^\n]*\n', '', h2)
+        h2 = re.sub(r'[ \t]*<script src="[^"]*ads\.js[^"]*"></script>\n', '', h2)
+        if h2 != html:
+            html = h2
+            reasons.append('adsense')
+
         # ヘッダーのロゴを正規化
         canon_logo = ('<a href="/" class="logo">'
                       '<span class="logo-en">AGA NAVI</span>'
@@ -67,7 +75,7 @@ def main():
             open(fp, 'w', encoding='utf-8').write(html)
             if 'footer' in reasons:
                 changed += 1
-            if 'cssver' in reasons or 'jsver' in reasons or 'logo' in reasons:
+            if [r for r in reasons if r != 'footer']:
                 ver_changed += 1
             print(f'  synced({"+".join(reasons)}): {os.path.basename(fp)}')
     print(f'sync-footers: footer {changed}件 / 版数 {ver_changed}件 更新 '

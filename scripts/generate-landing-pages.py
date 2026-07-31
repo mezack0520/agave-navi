@@ -28,9 +28,7 @@ HEAD = '''<!DOCTYPE html>
 <head>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-NKY8V1H8HY');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0790348660030345" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
-  <meta name="google-adsense-account" content="ca-pub-0790348660030345">
   {robots_meta}
   <link rel="canonical" href="{canonical}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
