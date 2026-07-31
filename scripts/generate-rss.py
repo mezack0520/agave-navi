@@ -15,8 +15,7 @@ EVENTS = os.path.join(ROOT, 'events.json')
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
 
-REGION_ROMAJI = {'北海道':'hokkaido','東北':'tohoku','関東':'kanto','北陸':'hokuriku',
-                 '東海':'tokai','関西':'kansai','中国':'chugoku','四国':'shikoku','九州':'kyushu'}
+from sitelib import REGION_ROMAJI  # 地域スラッグの単一情報源
 TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','展示会':'tenjikai',
               'ブロメリア':'bromelia','珍奇植物':'chinki','多肉':'tanniku',
               'コーデックス':'caudex','アガベ':'agave'}

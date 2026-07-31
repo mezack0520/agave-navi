@@ -197,7 +197,7 @@ jobs:
           _urgent = ['duplicate_slugs', 'duplicate_name_date', 'orphan_detail_pages',
                      'missing_detail_pages', 'sitemap_dead_entries', 'rejected_but_listed',
                      'status_date_mismatch', 'feed_count_mismatch', 'dead_guide_links',
-                     'css_version_drift', 'js_version_drift']
+                     'css_version_drift', 'js_version_drift', 'region_mismatch']
           _hit = [(_af[k]['title'], _af[k]['count']) for k in _urgent
                   if k in _af and _af[k]['count']]
           if _hit:

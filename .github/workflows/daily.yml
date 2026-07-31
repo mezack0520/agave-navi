@@ -9,6 +9,14 @@ name: Daily Maintenance
 on:
   schedule:
     - cron: '0 21 * * *'
+  # events.json が変わったpushで再生成する(2026-07-31)。
+  # Chrome経由のrepository_dispatchが認証ヘッダ遮断で送れなくなったため、
+  # dispatchに依存しない経路を用意した。GITHUB_TOKENのpushは
+  # ワークフローを再起動しない仕様なので自己ループしない。
+  push:
+    branches: [main]
+    paths:
+      - 'events.json'
   repository_dispatch:
     types: [daily]
   workflow_dispatch:
@@ -39,7 +47,8 @@ jobs:
         run: pip install requests beautifulsoup4 lxml
 
       - name: Check date updates (scrape official sources)
-        if: github.event.inputs.skip_date_check != 'true'
+        # pushトリガ(再生成目的)では外部サイトを叩かない
+        if: github.event_name != 'push' && github.event.inputs.skip_date_check != 'true'
         run: python3 scripts/check_date_updates.py || true
 
       - name: Auto status update (upcoming → past)

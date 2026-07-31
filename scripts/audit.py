@@ -243,6 +243,24 @@ def main():
         sorted(set(re.findall(r'secrets\.([A-Z_][A-Z0-9_]*)', wf))),
         '未設定でも多くのstepは失敗せず黙って空値で動く')
 
+    # 地域分類の整合。events.json の region が sitelib の定義と一致しているか、
+    # REGION_ROMAJI に無い地域名(=ハッシュURLの頁を生む)が混ざっていないかを見る。
+    # 各スクリプトが独自定義を持っていて沖縄と山梨・長野で割れていた(2026-07-31に統合)。
+    region_bad = []
+    try:
+        for e in events:
+            pref = (e.get('prefecture') or '').strip()
+            reg = (e.get('region') or '').strip()
+            want = sitelib.pref_to_region(pref) if pref else None
+            if want and reg and reg != want:
+                region_bad.append(f"{e.get('slug')}: {pref}={reg} (定義では{want})")
+            elif reg and reg not in sitelib.REGION_ROMAJI:
+                region_bad.append(f"{e.get('slug')}: region={reg} はREGION_ROMAJIに無い")
+    except Exception as _e:
+        region_bad.append(f'検査失敗: {_e}')
+    add('region_mismatch', 'regionが地域定義と不一致 / スラッグ未定義', sorted(set(region_bad)),
+        '定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION')
+
     # 15. 楽天商品キャッシュの網羅率
     links = load_json('amazon-links.json', {})
     kws = set()

@@ -12,18 +12,7 @@ import json, os, re, sys, argparse
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS = os.path.join(ROOT, 'events.json')
 
-PREF_TO_REGION = {
-    '北海道':'北海道',
-    '青森':'東北','岩手':'東北','宮城':'東北','秋田':'東北','山形':'東北','福島':'東北',
-    '茨城':'関東','栃木':'関東','群馬':'関東','埼玉':'関東','千葉':'関東','東京':'関東','神奈川':'関東',
-    '愛知':'東海','静岡':'東海','岐阜':'東海','三重':'東海',
-    '新潟':'北陸','富山':'北陸','石川':'北陸','福井':'北陸','山梨':'北陸','長野':'北陸',
-    '滋賀':'関西','京都':'関西','京都府':'関西','大阪':'関西','兵庫':'関西','奈良':'関西','和歌山':'関西',
-    '鳥取':'中国','島根':'中国','岡山':'中国','広島':'中国','山口':'中国',
-    '徳島':'四国','香川':'四国','愛媛':'四国','高知':'四国',
-    '福岡':'九州','佐賀':'九州','長崎':'九州','熊本':'九州','大分':'九州','宮崎':'九州','鹿児島':'九州',
-    '沖縄':'沖縄',
-}
+from sitelib import PREF_TO_REGION, pref_to_region  # 地域分類の単一情報源
 PLACEHOLDER = {'', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表'}
 
 def main():
@@ -48,7 +37,7 @@ def main():
         pref = ev.get('prefecture') or ''
         region = ev.get('region') or ''
         if pref and pref not in PLACEHOLDER:
-            expected_region = PREF_TO_REGION.get(pref.replace('府','').replace('県','').replace('都','').replace('道',''))
+            expected_region = pref_to_region(pref)
             if not expected_region:
                 # try direct
                 expected_region = PREF_TO_REGION.get(pref)

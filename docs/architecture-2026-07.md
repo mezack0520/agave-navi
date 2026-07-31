@@ -92,12 +92,28 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 新規主催者の発見はStep0カバレッジスイープが担う(ウォッチは既知主催者の再来専用)。
 
 ## 7. 制約・注意(ハマりどころ)
-- PAT(`C:\Users\yujim\.agave-navi\github.pat`)は**contents権限のみ**。repository_dispatchは可、
-  workflow_dispatch/Actions APIは403。定期失効するので401が出たら長期限で再発行
+- PAT(`mzplants\agave-navi\github.pat`)は**contents権限のみ**。workflow_dispatch/Actions APIは403。
+  定期失効するので401が出たら長期限で再発行
 - Claudeタスクは**Coworkアプリ起動中のみ**実行される。プロンプト変更後は「Run now」でツール事前承認
-- Instagram/nextmeetはサーバーから読めない → Google検索スニペット経由 or ユーザーChromeで読む
-- repository_dispatchをChromeで送るときは**agave-navi.comを開いてfetch**する。github.com上からは
-  GitHubのService Workerにfetchが握られたまま返らない(2026-07-28確認、api.github.comのCORSは任意originで許可済み)
+- Instagram/nextmeetはサーバーから読めない → **Chromeで google.com/search?hl=ja&tbs=qdr:w2** が主経路
+  (WebSearchのUS版ではIG告知がほぼ拾えない)
+- **repository_dispatchは使わない。** events.json / new-events.json のpushでワークフローが
+  起動する(daily.yml / sync-events.yml の on.push)。Chrome経由のdispatchは、認証ヘッダ付きfetchが
+  Chromeツール側で遮断されPromiseが解決しなくなったため2026-07-31に廃止した
+  (以前はService Worker干渉と見ていたが、SWは未登録で原因が別だった)。
+  サンドボックスからの api.github.com 直叩きも不通。**ローカルで build-all.sh を回して
+  生成物ごとpushする**のが標準手順
+- **GITHUB_TOKENによるpushはワークフローを再起動しない**(GitHubの仕様)。だからCI側の自動コミットで
+  ループしない。PATでpushしたときだけ on.push が発火する
+- sanity-check-new-events.py は既存slugを落とす。**既存イベントの修正は events.json を直接編集**する
+- サンドボックスの nohup バックグラウンド実行は呼び出し終了時に殺される。build-all.sh は45秒制限に
+  収まらないので scripts を4〜6本ずつ前景で順に叩く
+- pushが non-fast-forward で拒否されたら、生成物のrebaseは衝突する。**origin/main に reset --hard
+  → データ変更を再適用 → 再ビルド → push** の順でやり直す
+- CSS/JSを変えたら scripts/sitelib.py の CSS_VERSION / JS_VERSION を上げる。上げないと閲覧者の
+  キャッシュが更新されず変更が届かない
+- 都道府県→地域の定義は **scripts/sitelib.py の PREF_TO_REGION が単一情報源**。沖縄は九州、
+  山梨・長野は北陸。各スクリプトが独自定義を持っていて割れた事故がある
 - 挿入系スクリプトは必ず冪等設計(除去→再挿入)。過去にcalendar/mapが4.2MBまで肥大した事故あり
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
@@ -108,6 +124,16 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-31: repository_dispatch への依存を廃止。Chrome経由でAuthorizationヘッダ付きfetchを送ると
+  Chromeツール側で遮断されPromiseが解決しなくなったため(SW干渉ではなくツール側の挙動)。
+  代わりに daily.yml と sync-events.yml に on.push(paths: events.json / new-events.json)を追加し、
+  pushだけで再生成と取り込みが走るようにした。pushトリガ時は外部サイトのスクレイプをスキップする。
+  GITHUB_TOKENのpushはワークフローを再起動しない仕様なので自己ループしない
+- 2026-07-31: 都道府県→地域の定義を scripts/sitelib.py の PREF_TO_REGION に統合。沖縄が
+  九州(5件)と沖縄(2件)に割れ、山梨・長野も北陸と中部で食い違い、REGION_ROMAJIに無い地域名が
+  /region/region-b2e5cfe1/ というハッシュURLの頁を生んでいた。沖縄は九州に寄せ、
+  data-integrity-check.py / build-static-html.py / issue-to-shops.py / generate-rss.py の
+  独自定義を撤去して sitelib 参照に統一。audit.py に region_mismatch 検査を追加し日次メールにも出す
 - 2026-07-31: 作業ファイルの置き場を mzplants 配下に集約。従来の C:\Users\yujim\.agave-navi は空にした。
   新配置は mzplants\agave-navi\ 配下で github.pat / task-reports\ / work\。スケジュールタスク4本の
   プロンプトも接続先とレポート出力先を更新済み。PATはOneDrive同期される点をユーザーが承知のうえ移動

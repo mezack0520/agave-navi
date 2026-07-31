@@ -1,6 +1,12 @@
 name: Sync New Events
 
 on:
+  # new-events.json が置かれたpushで取り込む(2026-07-31)。dispatch依存を無くす。
+  # GITHUB_TOKENのpushはワークフローを再起動しない仕様なので自己ループしない。
+  push:
+    branches: [main]
+    paths:
+      - 'new-events.json'
   workflow_dispatch:
   repository_dispatch:
     types: [sync-events]

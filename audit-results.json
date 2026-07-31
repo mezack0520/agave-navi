@@ -217,6 +217,12 @@
       ],
       "note": "未設定でも多くのstepは失敗せず黙って空値で動く"
     },
+    "region_mismatch": {
+      "title": "regionが地域定義と不一致 / スラッグ未定義",
+      "count": 0,
+      "items": [],
+      "note": "定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION"
+    },
     "rakuten_config_missing": {
       "title": "楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)",
       "count": 0,
