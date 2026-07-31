@@ -108,6 +108,9 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-07-27: 要判断4件を処理。enrich_events.pyを「開催予定×説明文70字未満」優先処理に変更、
   健全性メールに同件数の計測を追加、フェルム・ド・フェスVol.29とLOCALGREEN FESTIVAL'26は
   掲載見送り(rejected-events.json新設)、タスクの書き込みは.agave-naviフォルダ接続方式で復旧
+- 2026-07-31: 作業ファイルの置き場を mzplants 配下に集約。従来の C:\Users\yujim\.agave-navi は空にした。
+  新配置は mzplants\agave-navi\ 配下で github.pat / task-reports\ / work\。スケジュールタスク4本の
+  プロンプトも接続先とレポート出力先を更新済み。PATはOneDrive同期される点をユーザーが承知のうえ移動
 - 2026-07-30: AdSenseの利用を断念し関連を全撤去。GSC実測でガイド21本の流入が90日クリック40件
   (全体の1.0%、うち34件が agave-winter-hardiness の1本)しかなく、審査対策として作った資産が
   機能していないことが確定したため。撤去内容: adsbygoogle.jsの読み込み(408頁)、
