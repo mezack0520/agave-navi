@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-01 11:10 JST",
+ "generated": "2026-08-02 06:57 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 136,
-  "awaitingNextEdition": 168,
+  "awaitingNextEdition": 172,
   "officialSiteCandidates": 52,
   "unresolvedIgHandles": 1
  },
@@ -180,24 +180,6 @@
    "priority": 1
   },
   {
-   "handle": "_plantsheaven_",
-   "url": "https://www.instagram.com/_plantsheaven_/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS UNITED 2026",
-   "lastEventDate": "2026-08-01",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "kaikon_ningen",
-   "url": "https://www.instagram.com/kaikon_ningen/",
-   "eventCount": 1,
-   "lastEventName": "bizarreplants Outlet vol.5",
-   "lastEventDate": "2026-08-01",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "king.plants.slugger",
    "url": "https://www.instagram.com/king.plants.slugger/",
    "eventCount": 1,
@@ -211,24 +193,6 @@
    "url": "https://www.instagram.com/_code.official_/",
    "eventCount": 1,
    "lastEventName": "CODE 単独東京POP UP",
-   "lastEventDate": "2026-08-01",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "yuya0860",
-   "url": "https://www.instagram.com/yuya0860/",
-   "eventCount": 1,
-   "lastEventName": "群パリ GPF感謝祭 2026",
-   "lastEventDate": "2026-08-01",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "kanzen.event",
-   "url": "https://www.instagram.com/kanzen.event/",
-   "eventCount": 1,
-   "lastEventName": "間然（KAN-ZEN）",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": true,
    "priority": 1
@@ -1231,6 +1195,42 @@
    "lastEventDate": "2026-07-26",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "_plantsheaven_",
+   "url": "https://www.instagram.com/_plantsheaven_/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS UNITED 2026",
+   "lastEventDate": "2026-08-01",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "kaikon_ningen",
+   "url": "https://www.instagram.com/kaikon_ningen/",
+   "eventCount": 1,
+   "lastEventName": "bizarreplants Outlet vol.5",
+   "lastEventDate": "2026-08-01",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "yuya0860",
+   "url": "https://www.instagram.com/yuya0860/",
+   "eventCount": 1,
+   "lastEventName": "群パリ GPF感謝祭 2026",
+   "lastEventDate": "2026-08-01",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "kanzen.event",
+   "url": "https://www.instagram.com/kanzen.event/",
+   "eventCount": 1,
+   "lastEventName": "間然（KAN-ZEN）",
+   "lastEventDate": "2026-08-01",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -1293,6 +1293,46 @@
    "igHandle": null,
    "officialUrl": null,
    "recurring": true
+  },
+  {
+   "series": "PLANTS UNITED 2026",
+   "lastSlug": "plants-united-kumamoto-2026-08",
+   "lastDate": "2026-08-01",
+   "lastEnd": "2026-08-01",
+   "monthsSinceLast": 0,
+   "igHandle": "_plantsheaven_",
+   "officialUrl": "https://www.instagram.com/_plantsheaven_/",
+   "recurring": false
+  },
+  {
+   "series": "bizarreplants Outlet vol.5",
+   "lastSlug": "bizarreplants-outlet-vol5-2026",
+   "lastDate": "2026-08-01",
+   "lastEnd": "2026-08-01",
+   "monthsSinceLast": 0,
+   "igHandle": "kaikon_ningen",
+   "officialUrl": "https://www.instagram.com/kaikon_ningen/",
+   "recurring": false
+  },
+  {
+   "series": "群パリ GPF感謝祭 2026",
+   "lastSlug": "gunpari-gpf-kanshasai-2026-08",
+   "lastDate": "2026-08-01",
+   "lastEnd": "2026-08-01",
+   "monthsSinceLast": 0,
+   "igHandle": "yuya0860",
+   "officialUrl": "https://www.instagram.com/p/DaXx4jCSon5/",
+   "recurring": false
+  },
+  {
+   "series": "間然（KAN-ZEN）",
+   "lastSlug": "kanzen-anjo-2026-08",
+   "lastDate": "2026-08-01",
+   "lastEnd": "2026-08-01",
+   "monthsSinceLast": 0,
+   "igHandle": "kanzen.event",
+   "officialUrl": "https://www.instagram.com/kanzen.event/",
+   "recurring": false
   },
   {
    "series": "番外編の番外編 夏祭り",
@@ -1592,46 +1632,6 @@
    "monthsSinceLast": 1,
    "igHandle": "501plants",
    "officialUrl": "https://www.instagram.com/501plants/",
-   "recurring": false
-  },
-  {
-   "series": "BOTANICAL GATHERING FUKUOKA Vol.2.0",
-   "lastSlug": "botanical-gathering-fukuoka-vol2-2026-07",
-   "lastDate": "2026-07-25",
-   "lastEnd": "2026-07-26",
-   "monthsSinceLast": 1,
-   "igHandle": "botanical_gathering_fukuoka",
-   "officialUrl": "https://www.instagram.com/botanical_gathering_fukuoka/",
-   "recurring": false
-  },
-  {
-   "series": "SUMORI Open garden 〜漢祭〜",
-   "lastSlug": "sumori-open-garden-otokomatsuri-2026-07",
-   "lastDate": "2026-07-25",
-   "lastEnd": "2026-07-26",
-   "monthsSinceLast": 1,
-   "igHandle": "lucky_gardening",
-   "officialUrl": "https://www.instagram.com/lucky_gardening/",
-   "recurring": false
-  },
-  {
-   "series": "ART FAIR NAGANO 2026",
-   "lastSlug": "art-fair-nagano-2026-07",
-   "lastDate": "2026-07-25",
-   "lastEnd": "2026-07-26",
-   "monthsSinceLast": 1,
-   "igHandle": "aobouzu_caudex",
-   "officialUrl": "https://aobouzu.official.ec/blog/2026/06/01/194023",
-   "recurring": false
-  },
-  {
-   "series": "PLANT & POTTERY EXHIBITION \"Meet\" vol.07 in HARAJUKU",
-   "lastSlug": "meet-vol7-harajuku-2026-07",
-   "lastDate": "2026-07-25",
-   "lastEnd": "2026-07-26",
-   "monthsSinceLast": 1,
-   "igHandle": "cool.cactus_",
-   "officialUrl": null,
    "recurring": false
   }
  ],
