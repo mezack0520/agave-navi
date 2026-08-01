@@ -1,5 +1,5 @@
 {
-  "total": 104,
+  "total": 106,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -168,6 +168,34 @@
     },
     "status_date_mismatch": {
       "title": "statusと日付の矛盾",
+      "count": 0,
+      "items": [],
+      "note": ""
+    },
+    "datedisplay_format": {
+      "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
+      "count": 0,
+      "items": [],
+      "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外"
+    },
+    "desc_date_mismatch": {
+      "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
+      "count": 1,
+      "items": [
+        "botanical-night-market-kurashiki-2026-08: 本文 8月23日 が 2026-08-22〜2026-08-22 の外"
+      ],
+      "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す"
+    },
+    "desc_stale_year": {
+      "title": "説明文が別年の日付を名指ししている(前年の告知文の使い回し)",
+      "count": 1,
+      "items": [
+        "botanical-night-market-kurashiki-2026-08: 本文に2025年8月23日 (開催は2026年)"
+      ],
+      "note": ""
+    },
+    "time_multiday_mismatch": {
+      "title": "timeが複数日を示すのに dateEnd が単日",
       "count": 0,
       "items": [],
       "note": ""

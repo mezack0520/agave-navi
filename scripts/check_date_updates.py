@@ -28,6 +28,8 @@ except ImportError:
     from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sitelib import compact_date  # dateDisplay整形の単一情報源
 
 AGGREGATOR_BLOCKLIST = (
     'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
@@ -314,7 +316,9 @@ def main():
                 new_display = f"{new_dt.year}年{new_dt.month}月{new_dt.day}日（{weekday}）"
 
                 ev["date"] = best["date"]
-                ev["dateDisplay"] = new_display
+                # dateDisplay はランディング/RSSがそのまま出す一覧表記。
+                # 和文表記を入れるとサイト内で書式が割れるので sitelib に合わせる。
+                ev["dateDisplay"] = compact_date(ev)
 
                 # 詳細ページ更新
                 update_detail_html(slug, current_date, best["date"], new_display)

@@ -143,6 +143,71 @@ def main():
             mism.append(f"{e['slug']}: 未来だが status=past")
     add('status_date_mismatch', 'statusと日付の矛盾', sorted(mism))
 
+    # 9b. dateDisplay の書式が sitelib.compact_date と違う
+    #     (ランディング/RSSは dateDisplay をそのまま出すため書式が割れると表示が不揃いになる)
+    try:
+        sys.path.insert(0, rp('scripts'))
+        from sitelib import compact_date as _cd
+        dd_bad = []
+        for e in events:
+            dd = (e.get('dateDisplay') or '').strip()
+            if not dd or not e.get('date'):
+                continue
+            exp = _cd(e)
+            if dd != exp and not re.search(r'(中旬|上旬|下旬|未定|調整中|頃|予定)', dd):
+                dd_bad.append(f"{e['slug']}: {dd} → {exp}")
+    except ImportError:
+        dd_bad = []
+    add('datedisplay_format', 'dateDisplayの書式がsitelib.compact_dateと不一致',
+        sorted(dd_bad), '一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外')
+
+    # 9c. 説明文・timeフィールドと date/dateEnd の矛盾
+    #     (自動生成ではなく人/LLMが書いた本文なので、日付欄だけ直して本文が古いまま残る事故が起きる)
+    import datetime as _dt
+
+    def _span(e):
+        d = e.get('date') or ''
+        if not re.match(r'^\d{4}-\d{2}-\d{2}$', d):
+            return None, set()
+        y = int(d[:4])
+        de = e.get('dateEnd') or d
+        try:
+            cur = _dt.date(*map(int, d.split('-')))
+            end = _dt.date(*map(int, de.split('-')))
+        except ValueError:
+            return y, set()
+        out = set()
+        while cur <= end and (end - cur).days < 400:
+            out.add((cur.month, cur.day))
+            cur += _dt.timedelta(days=1)
+        return y, out
+
+    # 前回開催・雨天予備日・別年の告知など、範囲外にあって当然の言及を落とす
+    _EXCUSE = re.compile(r'(予備日|延期|順延|前回|初回|第\s*1\s*回|昨年|去年|翌年|来年|同時開催|次回)')
+    desc_bad, stale_year, time_bad = [], [], []
+    for e in events:
+        desc = (e.get('description') or '').strip()
+        year, span = _span(e)
+        if not span:
+            continue
+        # 別年の日付を名指ししている(前年の告知文の使い回し)
+        for yy, mm, dd in re.findall(r'(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日', desc):
+            if int(yy) != year:
+                stale_year.append(f"{e['slug']}: 本文に{yy}年{mm}月{dd}日 (開催は{year}年)")
+        if desc and not _EXCUSE.search(desc):
+            out = sorted({(int(a), int(b)) for a, b in re.findall(r'(\d{1,2})月(\d{1,2})日', desc)} - span)
+            if out:
+                desc_bad.append(f"{e['slug']}: 本文 {'/'.join(f'{m}月{d}日' for m, d in out)} "
+                                f"が {e.get('date')}〜{e.get('dateEnd') or e.get('date')} の外")
+        # timeが「最終日」に言及しているのに単日
+        if '最終日' in (e.get('time') or '') and (e.get('dateEnd') or e.get('date')) == e.get('date'):
+            time_bad.append(f"{e['slug']}: time=\"{e.get('time')}\" だが dateEnd={e.get('dateEnd')} で単日")
+
+    add('desc_date_mismatch', '説明文の日付が開催日の範囲外(予備日・前回言及は除外)', sorted(desc_bad),
+        '本文か日付欄のどちらかが古い。一次情報で確認して直す')
+    add('desc_stale_year', '説明文が別年の日付を名指ししている(前年の告知文の使い回し)', sorted(stale_year))
+    add('time_multiday_mismatch', 'timeが複数日を示すのに dateEnd が単日', sorted(time_bad))
+
     # 10. 配布フィードの件数整合
     feed = {}
     try:

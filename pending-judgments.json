@@ -1,4 +1,44 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": []
+  "items": [
+    {
+      "id": "event-monitor:location-missing-19",
+      "source": "agave-navi-event-monitor",
+      "raised": "2026-08-01",
+      "title": "location欠落19件(終了済み)。会場グルーピングから漏れ、うち12件は本番で「会場未定」表示のまま",
+      "detail": "events.json の location が空のイベントが19件。全て status=past。うち7件は venue に会場名がある(mebuki-sai-2026 / sora-to-taiyo-marche-2026 / botanical-circus-7-2026 / fujiyama-days-little-green-park-2026 / raflum-popup-nagoya-takashimaya-2026 / petit-to-wonder-market-2026 / plants-garage-market)。詳細ページのスペック表は venue にフォールバックするので表示は正しいが、build-detail-pages.py の make_venue_history(957行)・会場集計(1168行) と generate-landing-pages.py(125/384/433行) は location しか読まないため、この7件は /venue/ ランディングと「同会場の他イベント」から漏れる。残る12件は venue も無く、終了済みなのに「会場未定」と表示され続けている。",
+      "options": [
+        "A: build側を location or venue に統一する(他の箇所は既にフォールバック済みで、この5箇所だけ不統一)。VAGUE_VENUES に無い『京橋』のような地名で会場頁が1件だけ生まれるが、3件未満はnoindex扱いなので実害は小さい",
+        "B: events.json 側で venue のある7件に location を補記する(表記は『会場名（都道府県+市区町村）』が既存慣例。市区町村は要調査のため機械的には確定できない)",
+        "C: 終了済み×会場情報なしの12件は『会場未定』ではなく『記録なし』と出す(build-detail-pages.py:527)。開催前の未定と終了後の不明は意味が違う"
+      ],
+      "policyProposal": "listing-policy.json に venueRecord を新設し、『location は会場グルーピングの単一キー。venue だけを持つエントリを作らない。終了済みで会場が不明な回は 会場未定 ではなく 記録なし と表示する』を明文化する。以後この類型はキューに積まず自動処理する",
+      "action": "Coworkで「キューの location-missing-19 を A で反映」等と指示",
+      "date": "2026-08-01",
+      "proposal": "listing-policy.json に venueRecord を新設し、『location は会場グルーピングの単一キー。venue だけを持つエントリを作らない。終了済みで会場が不明な回は 会場未定 ではなく 記録なし と表示する』を明文化する。以後この類型はキューに積まず自動処理する"
+    },
+    {
+      "id": "event-monitor:kurashiki-desc-2025",
+      "source": "agave-navi-event-monitor",
+      "raised": "2026-08-01",
+      "title": "botanical-night-market-kurashiki-2026-08 の説明文が2025年の告知文のまま",
+      "detail": "説明文が「提供元：ボタニカルナイトマーケット実行委員会 2025年8月23日（土）、…が開催されます」で始まり、前年回の告知をそのまま載せている。日付欄は date=dateEnd=2026-08-22(土) で、本文の2025年8月23日と食い違う。本文は「多肉植物」で途切れており文としても未完。閲覧者には終わった回の案内に読める。",
+      "needed": "2026年回の一次情報(url=https://kurashiki.ario.jp/event/2800008768 / sourceUrl=IG @ario_kurashiki)で開催日・時間・内容を確認し、本文を2026年回として書き直す。2026-08-22で正しいかもあわせて確認する",
+      "whyNotAuto": "本文を機械的に直すと年だけ差し替えた不正確な文になる。開催日そのものが2025年基準で登録されている可能性も否定できず、一次情報の確認が要る",
+      "policyProposal": "listing-policy.json に descriptionFreshness を新設し、『説明文に開催年と異なる年の日付が現れる回は前年告知の使い回しとみなし、一次情報で書き直すまで掲載保留にする』を明文化する。audit.py に desc_stale_year 検査を追加済みなので以後は自動検出される",
+      "action": "Coworkで「キューの kurashiki-desc-2025 を反映」と指示、または本文案を渡す",
+      "date": "2026-08-01",
+      "proposal": "listing-policy.json に descriptionFreshness を新設し、『説明文に開催年と異なる年の日付が現れる回は前年告知の使い回しとみなし、一次情報で書き直すまで掲載保留にする』を明文化する。audit.py に desc_stale_year 検査を追加済みなので以後は自動検出される"
+    },
+    {
+      "id": "event-monitor:health-mail-new-checks",
+      "source": "agave-navi-event-monitor",
+      "date": "2026-08-01",
+      "raised": "2026-08-01",
+      "title": "audit.pyに追加した3検査を日次メールに出すには health.yml の編集が必要(PAT権限不足でタスクからpushできない)",
+      "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。",
+      "proposal": "health.yml の _urgent に 'datedisplay_format', 'desc_date_mismatch', 'desc_stale_year', 'time_multiday_mismatch' の4キーを追加する。ユーザーがGitHub上で直接編集するか、workflow権限付きPATを用意する。恒久策としてはPATにworkflowスコープを付ける",
+      "action": "GitHubのWeb UIで .github/workflows/health.yml を編集するのが早い"
+    }
+  ]
 }
