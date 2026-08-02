@@ -39,6 +39,17 @@
       "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。",
       "proposal": "health.yml の _urgent に 'datedisplay_format', 'desc_date_mismatch', 'desc_stale_year', 'time_multiday_mismatch' の4キーを追加する。ユーザーがGitHub上で直接編集するか、workflow権限付きPATを用意する。恒久策としてはPATにworkflowスコープを付ける",
       "action": "GitHubのWeb UIで .github/workflows/health.yml を編集するのが早い"
+    },
+    {
+      "id": "event-monitor:daily-status-utc-jst",
+      "source": "agave-navi-event-monitor",
+      "date": "2026-08-02",
+      "raised": "2026-08-02",
+      "title": "daily.yml の upcoming→past 判定が UTC 基準で、終了翌日の丸一日「開催予定」と表示され続ける",
+      "detail": "daily.yml の Auto status update は date.today() を使う。GitHub Actions ランナーは UTC なので、06:00 JST 起動時のランナー時刻は前日 21:00 UTC。dateEnd が『JSTで昨日』のイベントは end < TODAY が成立せず past にならない。実際に本日 06:57 JST の daily 実行後も 2026-08-01 終了の4件(plants-united-kumamoto-2026-08 / bizarreplants-outlet-vol5-2026 / gunpari-gpf-kanshasai-2026-08 / kanzen-anjo-2026-08)が upcoming のまま残り、当タスクが手で直した。翌朝の実行では JST/UTC の日付が揃うため必ず1日遅れで自然解消する。つまり終了直後の1日だけ誤表示が出る構造で、毎日このタスクが同じ修正をしている。",
+      "proposal": "daily.yml の Auto status update を JST 基準にする。TODAY = date.today() を TODAY = (datetime.now(timezone.utc) + timedelta(hours=9)).date() に置き換える。同じ問題は index.html の upcoming バッジ集計にも波及する(同一ステップの判定結果を使うため自動的に直る)。PATは contents 権限のみでワークフローファイルの push が拒否されるため、当タスクからは実行できない。",
+      "whyNotAuto": "修正対象が .github/workflows/daily.yml で、PAT(contents権限のみ)では push が 403 になる",
+      "action": "GitHubのWeb UIで .github/workflows/daily.yml を編集する。event-monitor:health-mail-new-checks も同じ理由でワークフロー編集待ちなので、まとめて直すのが早い。恒久策はPATに workflow スコープを付与すること"
     }
   ]
 }
