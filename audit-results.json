@@ -1,5 +1,5 @@
 {
-  "total": 110,
+  "total": 106,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -168,13 +168,8 @@
     },
     "status_date_mismatch": {
       "title": "statusと日付の矛盾",
-      "count": 4,
-      "items": [
-        "bizarreplants-outlet-vol5-2026: 終了済みだが status=upcoming",
-        "gunpari-gpf-kanshasai-2026-08: 終了済みだが status=upcoming",
-        "kanzen-anjo-2026-08: 終了済みだが status=upcoming",
-        "plants-united-kumamoto-2026-08: 終了済みだが status=upcoming"
-      ],
+      "count": 0,
+      "items": [],
       "note": ""
     },
     "datedisplay_format": {
