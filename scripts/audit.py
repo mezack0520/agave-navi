@@ -197,7 +197,13 @@ def main():
             if int(yy) != year:
                 stale_year.append(f"{e['slug']}: 本文に{yy}年{mm}月{dd}日 (開催は{year}年)")
         if desc and not _EXCUSE.search(desc):
-            out = sorted({(int(a), int(b)) for a, b in re.findall(r'(\d{1,2})月(\d{1,2})日', desc)} - span)
+            # 「6月1日」形式に加えて「6/1(土)」形式も拾う。スラッシュ表記は前年告知の
+            # 貼り付けを実際に取り逃がした(fujiyama-days-little-green-park-2026)
+            _found = {(int(a), int(b)) for a, b in re.findall(r'(\d{1,2})月(\d{1,2})日', desc)}
+            _found |= {(int(a), int(b))
+                       for a, b in re.findall(r'(?<![\d:/])(\d{1,2})/(\d{1,2})(?![\d/])', desc)
+                       if 1 <= int(a) <= 12 and 1 <= int(b) <= 31}
+            out = sorted(_found - span)
             if out:
                 desc_bad.append(f"{e['slug']}: 本文 {'/'.join(f'{m}月{d}日' for m, d in out)} "
                                 f"が {e.get('date')}〜{e.get('dateEnd') or e.get('date')} の外")
@@ -209,6 +215,20 @@ def main():
         '本文か日付欄のどちらかが古い。一次情報で確認して直す')
     add('desc_stale_year', '説明文が別年の日付を名指ししている(前年の告知文の使い回し)', sorted(stale_year))
     add('time_multiday_mismatch', 'timeが複数日を示すのに dateEnd が単日', sorted(time_bad))
+
+    # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
+    #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する
+    junk = []
+    for e in events:
+        desc = (e.get('description') or '').strip()
+        if not desc:
+            continue
+        if re.search(r'https?://', desc):
+            junk.append(f"{e['slug']}: 本文にURLが混入")
+        if re.match(r'^(提供元|引用元|出典)\s*[:：]', desc):
+            junk.append(f"{e['slug']}: 本文が出典表記で始まる(スクレイプ結果の貼り付け)")
+    add('desc_scraped_junk', '説明文にスクレイプ由来の混入(URL・出典表記)', sorted(junk),
+        '本文はイベント説明だけにする。URLは url / sourceUrl に置く')
 
     # 10. 配布フィードの件数整合
     feed = {}

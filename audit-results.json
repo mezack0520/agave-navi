@@ -1,5 +1,5 @@
 {
-  "total": 106,
+  "total": 108,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -180,9 +180,10 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
+      "count": 2,
       "items": [
-        "botanical-night-market-kurashiki-2026-08: 本文 8月23日 が 2026-08-22〜2026-08-22 の外"
+        "botanical-night-market-kurashiki-2026-08: 本文 8月23日 が 2026-08-22〜2026-08-22 の外",
+        "fujiyama-days-little-green-park-2026: 本文 6月1日 が 2026-04-18〜2026-04-19 の外"
       ],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す"
     },
@@ -199,6 +200,14 @@
       "count": 0,
       "items": [],
       "note": ""
+    },
+    "desc_scraped_junk": {
+      "title": "説明文にスクレイプ由来の混入(URL・出典表記)",
+      "count": 1,
+      "items": [
+        "botanical-night-market-kurashiki-2026-08: 本文が出典表記で始まる(スクレイプ結果の貼り付け)"
+      ],
+      "note": "本文はイベント説明だけにする。URLは url / sourceUrl に置く"
     },
     "feed_count_mismatch": {
       "title": "配布フィードの件数がevents.jsonと不一致",
