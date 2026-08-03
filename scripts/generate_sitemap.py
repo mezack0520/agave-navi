@@ -45,7 +45,7 @@ def load_noindex_slugs():
     from datetime import timedelta
     with open(EVENTS_JSON, encoding='utf-8') as f:
         data = json.load(f)
-    cutoff = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+    cutoff = (sitelib.now_jst() - timedelta(days=30)).strftime('%Y-%m-%d')
     out = set()
     for e in data:
         end = e.get('dateEnd') or e.get('date') or ''

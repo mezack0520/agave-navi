@@ -21,6 +21,8 @@ import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
+sys.path.insert(0, SCRIPT_DIR)
+from sitelib import today_jst
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -114,8 +116,7 @@ def main():
     # 全終了カード(168件超)を埋め込むとHTML450KB/DOM4900ノードになり
     # モバイルのパース・レイアウトが重くなるため(2026-07-15 PageSpeed対応)。
     # 古い終了イベントはアーカイブページ(/archive/)で閲覧できる。
-    from datetime import date as _date
-    _today = _date.today().isoformat()
+    _today = today_jst()  # JSTで判定(UTCだと前日扱いになる)
     KEEP_PAST = 12
     past_cards = []  # (end_date, slug)
     for m in re.finditer(r'<div class="event-card[^"]*"[^>]*data-slug="([^"]+)"[^>]*>', html):

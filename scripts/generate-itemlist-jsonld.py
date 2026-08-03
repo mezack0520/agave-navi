@@ -2,10 +2,11 @@
 """
 generate-itemlist-jsonld.py — index.html に upcoming events から動的 ItemList JSON-LD を埋め込む
 """
-import json, os, re
-from datetime import date
+import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+from sitelib import today_jst
 EVENTS = os.path.join(ROOT, 'events.json')
 INDEX = os.path.join(ROOT, 'index.html')
 DOMAIN = 'https://agave-navi.com'
@@ -15,7 +16,7 @@ def html_attr(s): return (s or '').replace('"','\\"')
 def main():
     with open(EVENTS, encoding='utf-8') as f:
         d = json.load(f)
-    today = date.today().isoformat()
+    today = today_jst()  # JSTで判定(UTCだと前日扱いになる)
     upcoming = sorted(
         [e for e in d if e.get('status')=='upcoming' and (e.get('dateEnd') or e.get('date') or '') >= today and e.get('slug') and e.get('date')],
         key=lambda e: e.get('date','')

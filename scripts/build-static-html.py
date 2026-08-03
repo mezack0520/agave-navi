@@ -25,7 +25,7 @@ CAL_HTML = os.path.join(ROOT, 'calendar.html')
 
 # 地域分類の単一情報源は sitelib。独自定義で山梨・長野を「中部」としていたが
 # REGION_ROMAJI に中部が無くハッシュURLの頁を生むため統合した(2026-07-31)。
-from sitelib import PREF_TO_REGION as REGION_FROM_PREFECTURE
+from sitelib import PREF_TO_REGION as REGION_FROM_PREFECTURE, today_jst
 
 
 def esc(s):
@@ -37,7 +37,7 @@ def esc(s):
 
 
 def upcoming_events(events):
-    today_iso = date.today().isoformat()
+    today_iso = today_jst()  # JSTで判定(UTCだと06:00 JSTの日次実行で前日扱いになる)
     rows = []
     for e in events:
         if e.get('status') == 'past':

@@ -5,6 +5,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# status を JST 基準で確定させてから生成する。UTCのまま生成すると
+# 終了翌日の丸一日、ランディング頁とフィードに終了済みが開催予定として載る。
+python3 scripts/auto-status-jst.py
+
 python3 build-detail-pages.py
 python3 scripts/build-guides.py
 python3 scripts/build-static-html.py

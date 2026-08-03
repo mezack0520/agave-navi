@@ -16,6 +16,8 @@ import sys
 from collections import defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(REPO, 'scripts'))
+from sitelib import today_jst
 
 
 def rp(*a):
@@ -102,7 +104,7 @@ def main():
     # 薄い判定を「直すべきもの」と「アーカイブとして許容するもの」に分ける。
     # 終了済みで出典もない回は、noindexで検索に出ず広告も出ないアーカイブであり、
     # 裏取りできない=誤りではない。全件を毎日警告すると監査が無視されるようになる。
-    today_s = os.environ.get('AUDIT_TODAY') or __import__('datetime').date.today().isoformat()
+    today_s = os.environ.get('AUDIT_TODAY') or today_jst()
 
     def has_src(e):
         return bool((e.get('url') or '').strip()) or bool((e.get('sourceUrl') or '').strip())
@@ -130,7 +132,7 @@ def main():
                if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 70))
 
     # 9. status と日付の矛盾
-    today = os.environ.get('AUDIT_TODAY') or __import__('datetime').date.today().isoformat()
+    today = os.environ.get('AUDIT_TODAY') or today_jst()
     mism = []
     for e in events:
         end = e.get('dateEnd') or e.get('date') or ''

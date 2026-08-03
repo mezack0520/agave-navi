@@ -13,6 +13,8 @@ import os
 from datetime import datetime, date
 
 EVENTS_JSON = os.path.join(os.path.dirname(__file__), '..', 'events.json')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import today_jst
 
 def check_url(url, timeout=15):
     """URLの死活チェック。ステータスコードを返す。エラー時は-1"""
@@ -52,7 +54,7 @@ def main():
     with open(EVENTS_JSON, 'r', encoding='utf-8') as f:
         events = json.load(f)
 
-    today = date.today().isoformat()
+    today = today_jst()  # JSTで判定(UTCだと前日扱いになる)
     results = {
         'check_date': today,
         'total_events': len(events),
