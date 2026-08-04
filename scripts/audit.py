@@ -296,6 +296,50 @@ def main():
         sorted(set(access_bad)),
         'access は当該会場の一次情報から書く。裏取りできなければ消す')
 
+    # 9c-3. venue / mapQuery / location が別県の住所を名乗っていないか。
+    #       venue は location より優先して詳細ページのスペック表・FAQ・JSON-LD の
+    #       Place.name に入り、mapQuery は埋め込み地図の座標そのものになる。
+    #       2026-08-04: 2件が同一の「岩手県花巻市松園町50」を持つなど、別ページの住所を
+    #       まとめて貼った回が9件あった(静岡の道の駅に岩手の住所、北海道の回に
+    #       インテックス大阪)。JSON-LD では Place.name=岩手の住所 /
+    #       addressRegion=北海道 という矛盾した構造化データを出していた。
+    #       「東京都府中市」から「京都府」を拾うような部分一致を避けるため、
+    #       都道府県は「〜県 / 〜府 / 東京都 / 北海道」の明示形だけを見る。
+    #       会場名だけの表記(インテックス大阪)は会場辞書が要るのでこの検査では拾えない。
+    from sitelib import PREF_TO_REGION as _P2R
+
+    def _named_prefs(text):
+        t = text.replace('東京都', '\x00')
+        out = set()
+        if '\x00' in t:
+            out.add('東京')
+        if '北海道' in t:
+            out.add('北海道')
+        for _p in _P2R:
+            if _p in ('東京', '北海道'):
+                continue
+            if _p + '県' in t or (_p in ('大阪', '京都') and _p + '府' in t):
+                out.add(_p)
+        return out
+
+    place_bad = []
+    for e in events:
+        pref = (e.get('prefecture') or '').strip()
+        if not pref or pref == '調整中':
+            continue
+        for f in ('venue', 'mapQuery', 'location'):
+            val = (e.get(f) or '').strip()
+            if not val:
+                continue
+            named = _named_prefs(val)
+            if named and pref not in named:
+                place_bad.append(f"{e['slug']}: {f}=\"{val[:40]}\" は"
+                                 f"{'/'.join(sorted(named))}の住所だが prefecture={pref}")
+    add('venue_pref_mismatch', '会場・地図クエリが別県の住所になっている(別ページの貼り付け)',
+        sorted(set(place_bad)),
+        'venue は location より優先して表示・JSON-LDに入り、mapQuery は地図の座標になる。'
+        '裏取りできなければ消して location + prefecture のフォールバックに任せる')
+
     # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
     #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する
     junk = []

@@ -223,6 +223,12 @@
       "items": [],
       "note": "access は当該会場の一次情報から書く。裏取りできなければ消す"
     },
+    "venue_pref_mismatch": {
+      "title": "会場・地図クエリが別県の住所になっている(別ページの貼り付け)",
+      "count": 0,
+      "items": [],
+      "note": "venue は location より優先して表示・JSON-LDに入り、mapQuery は地図の座標になる。裏取りできなければ消して location + prefecture のフォールバックに任せる"
+    },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記)",
       "count": 1,
