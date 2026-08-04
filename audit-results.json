@@ -1,5 +1,5 @@
 {
-  "total": 108,
+  "total": 111,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -31,6 +31,12 @@
       "items": [],
       "note": ""
     },
+    "sitemap_noindex_listed": {
+      "title": "noindexの頁がsitemapに載っている(sitemap再生成の漏れ)",
+      "count": 0,
+      "items": [],
+      "note": "詳細頁を作り直したら scripts/generate_sitemap.py も回す"
+    },
     "rejected_but_listed": {
       "title": "見送り記録があるのに掲載されているイベント",
       "count": 0,
@@ -47,7 +53,7 @@
     },
     "thin_fixable": {
       "title": "薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)",
-      "count": 36,
+      "count": 38,
       "items": [
         "agavista-vol2-matsuyama-2026-06(22字)",
         "awajishima-taniku-smile-marche-3rd-2026(42字・開催予定)",
@@ -60,9 +66,11 @@
         "eternal-plants-built-to-survive-gunma-2026(49字)",
         "fujisan-festa(34字)",
         "gifu-midori-marche-2nd-2026-09(30字・開催予定)",
+        "green-breeze-fes-vol3(46字)",
         "haru-cactus-succulent-yuriga-hara-2026(48字)",
         "ibaraki-sky-palette-2026(22字)",
         "icchan-no-taniku-garden-okayama-2026(42字)",
+        "iku-matsuri-utsunomiya-2026(47字)",
         "iwate-hana-midori-matsuri-2026(21字)",
         "kominka-saboten-openhouse-2026-06(46字)",
         "kumagaya-taniku-fes-2026(22字)",
@@ -200,6 +208,20 @@
       "count": 0,
       "items": [],
       "note": ""
+    },
+    "time_implausible": {
+      "title": "開催時間の幅が2時間未満(経路検索など別データの貼り付けの疑い)",
+      "count": 1,
+      "items": [
+        "picnic-garden-vol21-is-new-base-2026: time=\"10:00〜11:30\" は90分"
+      ],
+      "note": "即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す"
+    },
+    "access_pref_mismatch": {
+      "title": "アクセス文の路線が開催県を通っていない(別会場の案内の貼り付け)",
+      "count": 0,
+      "items": [],
+      "note": "access は当該会場の一次情報から書く。裏取りできなければ消す"
     },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記)",

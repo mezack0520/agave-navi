@@ -36,8 +36,8 @@
       "date": "2026-08-01",
       "raised": "2026-08-01",
       "title": "audit.pyに追加した3検査を日次メールに出すには health.yml の編集が必要(PAT権限不足でタスクからpushできない)",
-      "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。 / 2026-08-03追記: daily.yml の Auto status update ステップ(UTC判定)は scripts/auto-status-jst.py が build-all.sh 先頭で JST 判定するようになったため冗長になった。workflowを触れる機会にこのステップごと削除してよい(残っていても害はない)。 / 2026-08-03追記: audit.py に desc_scraped_junk(説明文へのURL・出典表記の混入)を追加し、desc_date_mismatch を「6/1(土)」形式のスラッシュ日付も拾うよう拡張した。同様に _urgent に載っていないためメールには出ない。",
-      "proposal": "health.yml の _urgent に 'datedisplay_format', 'desc_date_mismatch', 'desc_stale_year', 'time_multiday_mismatch', 'desc_scraped_junk' の5キーを追加する。ユーザーがGitHub上で直接編集するか、workflow権限付きPATを用意する。恒久策としてはPATにworkflowスコープを付ける あわせて daily.yml の Auto status update ステップを削除する(scripts/auto-status-jst.py に移管済み)。",
+      "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。 / 2026-08-03追記: daily.yml の Auto status update ステップ(UTC判定)は scripts/auto-status-jst.py が build-all.sh 先頭で JST 判定するようになったため冗長になった。workflowを触れる機会にこのステップごと削除してよい(残っていても害はない)。 / 2026-08-03追記: audit.py に desc_scraped_junk(説明文へのURL・出典表記の混入)を追加し、desc_date_mismatch を「6/1(土)」形式のスラッシュ日付も拾うよう拡張した。同様に _urgent に載っていないためメールには出ない。 / 2026-08-04追記: audit.py に time_implausible(開催時間の幅が2時間未満)と access_pref_mismatch(アクセス文の路線が開催県を通っていない)を追加した。あわせて health.yml の image health ステップ(114-115行)が build-detail-pages.py と sync-index-cards.py だけを再実行して scripts/generate_sitemap.py を回さないため、終了30日超に入った回が noindex になっても sitemap には翌朝まで載り続ける事象を確認した(本日 8a786eb で4件。hentai-shokubutsu-fes-vol0-atc-2026-07 / okhotsk-taniku-festival-vol2-2026-07 / rekishi-domannaka-chokkyu-shokubutsu-2026-07 / taniku-matsuri-iwami-2026-07)。検出用に audit.py に sitemap_noindex_listed を追加した。",
+      "proposal": "health.yml の _urgent に 'datedisplay_format', 'desc_date_mismatch', 'desc_stale_year', 'time_multiday_mismatch', 'desc_scraped_junk' の5キーを追加する。ユーザーがGitHub上で直接編集するか、workflow権限付きPATを用意する。恒久策としてはPATにworkflowスコープを付ける あわせて daily.yml の Auto status update ステップを削除する(scripts/auto-status-jst.py に移管済み)。 あわせて health.yml の image health ステップに python3 scripts/generate_sitemap.py を1行足す(sitemapの取り残しの恒久対応)。_urgent には time_implausible / access_pref_mismatch / sitemap_noindex_listed も加える。",
       "action": "GitHubのWeb UIで .github/workflows/health.yml を編集するのが早い"
     },
     {
@@ -63,6 +63,18 @@
       "policyProposal": "listing-policy.json に descriptionProvenance を新設し、『説明文は当該回の一次情報から書く。協賛企業・出店者側の告知文を本文にしない。開催日と矛盾する日付を含む本文は無効とみなし、書き直せなければ本文を空にする』を明文化する。以後この類型は本文を空にして週次エンリッチに回し、キューには積まない",
       "action": "Coworkで「キューの fujiyama-desc-wrong-source を反映」または「削除」と指示",
       "proposal": "listing-policy.json に descriptionProvenance を新設し、協賛企業・出店者側の告知文を本文にしない旨を明文化する。書き直せない回は本文を空にして週次エンリッチに回す"
+    },
+    {
+      "id": "event-monitor:picnic-garden-time-90min",
+      "source": "agave-navi-event-monitor",
+      "date": "2026-08-04",
+      "raised": "2026-08-04",
+      "title": "picnic-garden-vol21-is-new-base-2026 の開催時間 10:00〜11:30(90分)が裏取りできない",
+      "detail": "本日 time / access のスクレイプ混入を洗い出し、明らかな誤値5件は削除した(isij-summer-festival-2026 の time=09:25〜09:40 と access=都営三田線 高島平 は経路検索結果の貼り付け、yokohama-flower-garden-fes-2026 の 14:00〜14:30 は会期3日、iku-matsuri-utsunomiya-2026 の 9:00〜10:00 は会期2日、haze-various-genres-marche-2026 と botanical-market-mie-2026-07 の access は別県の駅)。残る1件がこれで、単日開催なので会期との矛盾がなく機械的に否定できない。events.json 279件で time を持つ92件の実データは最短150分(kisarazu-engei-ichi-2026-08 の 18:00〜20:30)で、90分はその下にある。出典は会津若松市のイベントカレンダー(show_callen.php)で、当該回の一次情報ではない。status=past。",
+      "needed": "主催者(ピクニックガーデン)の告知で vol.21 の実際の開催時間を確認する。取れなければ time を消す",
+      "whyNotAuto": "90分のマルシェは短いが不可能ではない。会期1日で矛盾がなく、正値も分からないため機械的に確定できない",
+      "policyProposal": "listing-policy.json に fieldProvenance を新設し、『time / access は当該会場・当該回の一次情報からのみ入れる。会期と矛盾する値(会期2日以上で幅2時間未満)や開催県を通らない路線を含む値は無効とみなして消す。裏取りできない値は空にする(推測で埋めない)』を明文化する。以後この類型はキューに積まず自動で消す",
+      "action": "Coworkで「キューの picnic-garden-time-90min を反映」(=timeを消す)または時間を渡す"
     }
   ]
 }

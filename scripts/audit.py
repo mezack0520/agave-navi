@@ -81,6 +81,26 @@ def main():
             bad_sm.append(path)
     add('sitemap_dead_entries', 'sitemapに載っているがファイルが存在しないURL', sorted(bad_sm))
 
+    # 4b. sitemapに noindex 頁が載っていないか(生成順の崩れの検出)。
+    #     health.yml の image health ステップは build-detail-pages.py と sync-index-cards.py
+    #     だけを再実行して sitemap を作り直さない。終了30日超に入った回が noindex になっても
+    #     sitemap には翌朝の daily.yml まで載り続ける(2026-08-04 に4件で発生)。
+    #     build-all.sh 経由なら常に0。単独実行したときだけ意味を持つ検査。
+    noindexed = []
+    for _m in ('events-meta.json', 'landing-meta.json'):
+        _d = load_json(rp('scripts', _m), {}) or {}
+        noindexed += list(_d.get('noindex') or [])
+    _ni = set(noindexed)
+    sm_ni = []
+    for u in sm_urls:
+        path = re.sub(r'^https?://[^/]+/?', '', u)
+        base = os.path.basename(path)[:-5] if path.endswith('.html') else path.strip('/')
+        if base in _ni or path.strip('/') in _ni:
+            sm_ni.append(path)
+    add('sitemap_noindex_listed', 'noindexの頁がsitemapに載っている(sitemap再生成の漏れ)',
+        sorted(set(sm_ni)),
+        '詳細頁を作り直したら scripts/generate_sitemap.py も回す')
+
     # 5. rejected-eventsとevents.jsonの矛盾
     rej = load_json('rejected-events.json', {})
     rej_keys = [i.get('key', '') for i in (rej.get('items') or [])]
@@ -215,6 +235,66 @@ def main():
         '本文か日付欄のどちらかが古い。一次情報で確認して直す')
     add('desc_stale_year', '説明文が別年の日付を名指ししている(前年の告知文の使い回し)', sorted(stale_year))
     add('time_multiday_mismatch', 'timeが複数日を示すのに dateEnd が単日', sorted(time_bad))
+
+    # 9c-2. time / access のスクレイプ由来の混入。
+    #       time は詳細ページ本文・FAQ・JSON-LD(構造化データ)に直行するので、
+    #       誤値は検索結果にそのまま出る。access も同じ経路でFAQに入る。
+    #       2026-08-04: 経路検索ウィジェットの結果が time(09:25〜09:40)と
+    #       access(都営三田線 高島平…／会場は埼玉)として貼られていた事故を機に追加。
+    _TIME_RANGE = re.compile(r'^\s*(\d{1,2}):(\d{2})\s*[〜~\-ー–]\s*(\d{1,2}):(\d{2})')
+    time_odd = []
+    for e in events:
+        m = _TIME_RANGE.match(e.get('time') or '')
+        if not m:
+            continue
+        a = int(m.group(1)) * 60 + int(m.group(2))
+        b = int(m.group(3)) * 60 + int(m.group(4))
+        if b < a:            # 日付をまたぐ表記(23:00〜01:00)
+            b += 24 * 60
+        dur = b - a
+        days = 1
+        if re.match(r'^\d{4}-\d{2}-\d{2}$', e.get('date') or '') and e.get('dateEnd'):
+            try:
+                days = (_dt.date(*map(int, e['dateEnd'].split('-')))
+                        - _dt.date(*map(int, e['date'].split('-')))).days + 1
+            except ValueError:
+                days = 1
+        if dur < 120:
+            time_odd.append(f"{e['slug']}: time=\"{e.get('time')}\" は{dur}分"
+                            + (f"(会期{days}日)" if days > 1 else ''))
+    add('time_implausible', '開催時間の幅が2時間未満(経路検索など別データの貼り付けの疑い)',
+        sorted(time_odd),
+        '即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す')
+
+    # 事業者・路線ごとの営業県。ここに無い事業者は判定しない(誤検出を出さないため)。
+    # JRは全国なので事業者では見ず、線名だけを見る。
+    _RAIL_PREFS = {
+        '都営': {'東京'}, '東京メトロ': {'東京', '千葉', '埼玉'},
+        '西武': {'東京', '埼玉'}, '東武': {'東京', '埼玉', '千葉', '栃木', '群馬'},
+        '京王': {'東京', '神奈川'}, '小田急': {'東京', '神奈川', '静岡'},
+        '東急': {'東京', '神奈川'}, '京急': {'東京', '神奈川'},
+        '相鉄': {'神奈川', '東京'}, '京成': {'東京', '千葉'},
+        '名鉄': {'愛知', '岐阜'}, '近鉄': {'大阪', '奈良', '京都', '三重', '愛知'},
+        '南海': {'大阪', '和歌山'}, '阪急': {'大阪', '兵庫', '京都'},
+        '阪神': {'大阪', '兵庫'}, '西鉄': {'福岡'},
+        '東海道線': {'東京', '神奈川', '静岡', '愛知', '岐阜', '滋賀', '京都', '大阪', '兵庫'},
+        '東海道本線': {'東京', '神奈川', '静岡', '愛知', '岐阜', '滋賀', '京都', '大阪', '兵庫'},
+        '山手線': {'東京'}, '中央線': {'東京', '神奈川', '山梨', '長野', '岐阜', '愛知'},
+        '琵琶湖線': {'滋賀'}, '環状線': {'大阪'},
+    }
+    access_bad = []
+    for e in events:
+        acc = (e.get('access') or '').strip()
+        pref = (e.get('prefecture') or '').strip()
+        if not acc or not pref:
+            continue
+        for key, prefs in _RAIL_PREFS.items():
+            if key in acc and pref not in prefs:
+                access_bad.append(f"{e['slug']}: access に「{key}」(営業県 "
+                                  f"{'/'.join(sorted(prefs))}) だが prefecture={pref}")
+    add('access_pref_mismatch', 'アクセス文の路線が開催県を通っていない(別会場の案内の貼り付け)',
+        sorted(set(access_bad)),
+        'access は当該会場の一次情報から書く。裏取りできなければ消す')
 
     # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
     #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する
