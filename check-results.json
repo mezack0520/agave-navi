@@ -1,7 +1,15 @@
 {
-  "check_date": "2026-08-06",
+  "check_date": "2026-08-07",
   "total_events": 279,
-  "dead_links": [],
+  "dead_links": [
+    {
+      "slug": "kourep-2026-autumn",
+      "name": "コウレプ2026秋",
+      "sourceUrl": "https://kourep.jp",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "botanical-botanical-fukuoka-2026-10",
@@ -1979,8 +1987,8 @@
       "slug": "kourep-2026-autumn",
       "name": "コウレプ2026秋",
       "sourceUrl": "https://kourep.jp",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "jusai-ichinomiya-autumn-2026",
