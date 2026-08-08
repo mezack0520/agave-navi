@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-08 06:38 JST",
+ "generated": "2026-08-09 06:29 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 136,
-  "awaitingNextEdition": 184,
+  "awaitingNextEdition": 186,
   "officialSiteCandidates": 52,
   "unresolvedIgHandles": 1
  },
@@ -32,15 +32,6 @@
    "eventCount": 4,
    "lastEventName": "BOTANICAL BOTANICAL OKINAWA",
    "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "sakura_shokubutsuen",
-   "url": "https://www.instagram.com/sakura_shokubutsuen/",
-   "eventCount": 3,
-   "lastEventName": "ナイトマルシェ（さくら植物園）8月8日",
-   "lastEventDate": "2026-08-08",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -117,6 +108,15 @@
    "priority": 1
   },
   {
+   "handle": "sakura_shokubutsuen",
+   "url": "https://www.instagram.com/sakura_shokubutsuen/",
+   "eventCount": 3,
+   "lastEventName": "ナイトマルシェ（さくら植物園）8月8日",
+   "lastEventDate": "2026-08-08",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
    "handle": "plants.garage.market",
    "url": "https://www.instagram.com/plants.garage.market/",
    "eventCount": 2,
@@ -184,15 +184,6 @@
    "url": "https://www.instagram.com/gooddays_plants/",
    "eventCount": 1,
    "lastEventName": "GOOD DAYS POP UP（ホームシック スタイルショップ水戸店）",
-   "lastEventDate": "2026-08-08",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "gunmacactusclub",
-   "url": "https://www.instagram.com/gunmacactusclub/",
-   "eventCount": 1,
-   "lastEventName": "GUNMA CACTUS CLUB SUCCULENT FAIR 2026",
    "lastEventDate": "2026-08-08",
    "hasUpcoming": true,
    "priority": 1
@@ -1231,9 +1222,28 @@
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "gunmacactusclub",
+   "url": "https://www.instagram.com/gunmacactusclub/",
+   "eventCount": 1,
+   "lastEventName": "GUNMA CACTUS CLUB SUCCULENT FAIR 2026",
+   "lastEventDate": "2026-08-08",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
+  {
+   "series": "ナイトマルシェ（さくら植物園）8月8日",
+   "lastSlug": "sakura-night-marche-2026-08-08",
+   "lastDate": "2026-08-08",
+   "lastEnd": "2026-08-08",
+   "monthsSinceLast": 0,
+   "igHandle": "sakura_shokubutsuen",
+   "officialUrl": "https://www.instagram.com/sakura_shokubutsuen/",
+   "recurring": true
+  },
   {
    "series": "PLANT FREAKS vol.6",
    "lastSlug": "plant-freaks-vol6-2026-07",
@@ -1455,6 +1465,16 @@
    "recurring": false
   },
   {
+   "series": "GUNMA CACTUS CLUB SUCCULENT FAIR 2026",
+   "lastSlug": "gunma-cactus-club-succulent-fair-2026-08",
+   "lastDate": "2026-08-08",
+   "lastEnd": "2026-08-08",
+   "monthsSinceLast": 0,
+   "igHandle": "gunmacactusclub",
+   "officialUrl": "https://www.instagram.com/gunmacactusclub/",
+   "recurring": false
+  },
+  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1612,26 +1632,6 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://x.com/Seedpot_",
-   "recurring": false
-  },
-  {
-   "series": "トロピカルフェス 2026",
-   "lastSlug": "tropical-fes-kanazawabunko-2026-07",
-   "lastDate": "2026-07-18",
-   "lastEnd": "2026-07-19",
-   "monthsSinceLast": 1,
-   "igHandle": "greenfarmkanazawa",
-   "officialUrl": "https://www.instagram.com/greenfarmkanazawa/",
-   "recurring": false
-  },
-  {
-   "series": "ミライ園芸 辺境の植物展",
-   "lastSlug": "mirai-engei-henkyo-shokubutsuten-2026-07",
-   "lastDate": "2026-07-19",
-   "lastEnd": "2026-07-19",
-   "monthsSinceLast": 1,
-   "igHandle": "mirai_engei",
-   "officialUrl": "https://www.instagram.com/mirai_engei/",
    "recurring": false
   }
  ],
