@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-09 12:06 JST",
+ "generated": "2026-08-10 06:31 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 136,
-  "awaitingNextEdition": 186,
+  "awaitingNextEdition": 192,
   "officialSiteCandidates": 52,
   "unresolvedIgHandles": 1
  },
@@ -168,60 +168,6 @@
    "lastEventName": "がまごおり多肉フェスタ in八ヶ岳",
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "yokoen_tk",
-   "url": "https://www.instagram.com/yokoen_tk/",
-   "eventCount": 1,
-   "lastEventName": "金岡みどりのマルシェ（2026年8月）",
-   "lastEventDate": "2026-08-05",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "gooddays_plants",
-   "url": "https://www.instagram.com/gooddays_plants/",
-   "eventCount": 1,
-   "lastEventName": "GOOD DAYS POP UP（ホームシック スタイルショップ水戸店）",
-   "lastEventDate": "2026-08-08",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "menosyama_official",
-   "url": "https://www.instagram.com/menosyama_official/",
-   "eventCount": 1,
-   "lastEventName": "YAMAYAMA｜山山",
-   "lastEventDate": "2026-08-08",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "kagoshima_volcano_market",
-   "url": "https://www.instagram.com/kagoshima_volcano_market/",
-   "eventCount": 1,
-   "lastEventName": "KAGOSHIMA VOLCANO MARKET ボルマ vol.3",
-   "lastEventDate": "2026-08-09",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "kumagaya_fes",
-   "url": "https://www.instagram.com/kumagaya_fes/",
-   "eventCount": 1,
-   "lastEventName": "熊谷多肉フェス（2026年8月）",
-   "lastEventDate": "2026-08-09",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "banksia.111",
-   "url": "https://www.instagram.com/banksia.111/",
-   "eventCount": 1,
-   "lastEventName": "園日 Vol.17",
-   "lastEventDate": "2026-08-09",
-   "hasUpcoming": true,
    "priority": 1
   },
   {
@@ -1224,11 +1170,65 @@
    "priority": 2
   },
   {
+   "handle": "yokoen_tk",
+   "url": "https://www.instagram.com/yokoen_tk/",
+   "eventCount": 1,
+   "lastEventName": "金岡みどりのマルシェ（2026年8月）",
+   "lastEventDate": "2026-08-05",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "gooddays_plants",
+   "url": "https://www.instagram.com/gooddays_plants/",
+   "eventCount": 1,
+   "lastEventName": "GOOD DAYS POP UP（ホームシック スタイルショップ水戸店）",
+   "lastEventDate": "2026-08-08",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "gunmacactusclub",
    "url": "https://www.instagram.com/gunmacactusclub/",
    "eventCount": 1,
    "lastEventName": "GUNMA CACTUS CLUB SUCCULENT FAIR 2026",
    "lastEventDate": "2026-08-08",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "menosyama_official",
+   "url": "https://www.instagram.com/menosyama_official/",
+   "eventCount": 1,
+   "lastEventName": "YAMAYAMA｜山山",
+   "lastEventDate": "2026-08-08",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "kagoshima_volcano_market",
+   "url": "https://www.instagram.com/kagoshima_volcano_market/",
+   "eventCount": 1,
+   "lastEventName": "KAGOSHIMA VOLCANO MARKET ボルマ vol.3",
+   "lastEventDate": "2026-08-09",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "kumagaya_fes",
+   "url": "https://www.instagram.com/kumagaya_fes/",
+   "eventCount": 1,
+   "lastEventName": "熊谷多肉フェス（2026年8月）",
+   "lastEventDate": "2026-08-09",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "banksia.111",
+   "url": "https://www.instagram.com/banksia.111/",
+   "eventCount": 1,
+   "lastEventName": "園日 Vol.17",
+   "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
    "priority": 2
   }
@@ -1475,6 +1475,66 @@
    "recurring": false
   },
   {
+   "series": "金岡みどりのマルシェ（2026年8月）",
+   "lastSlug": "kanaoka-midori-marche-2026-08",
+   "lastDate": "2026-08-05",
+   "lastEnd": "2026-08-09",
+   "monthsSinceLast": 0,
+   "igHandle": "yokoen_tk",
+   "officialUrl": "https://www.instagram.com/yokoen_tk/",
+   "recurring": false
+  },
+  {
+   "series": "GOOD DAYS POP UP（ホームシック スタイルショップ水戸店）",
+   "lastSlug": "gooddays-homesic-mito-2026-08",
+   "lastDate": "2026-08-08",
+   "lastEnd": "2026-08-09",
+   "monthsSinceLast": 0,
+   "igHandle": "gooddays_plants",
+   "officialUrl": "https://www.instagram.com/gooddays_plants/",
+   "recurring": false
+  },
+  {
+   "series": "YAMAYAMA｜山山",
+   "lastSlug": "yamayama-menosyama-2026-08",
+   "lastDate": "2026-08-08",
+   "lastEnd": "2026-08-09",
+   "monthsSinceLast": 0,
+   "igHandle": "menosyama_official",
+   "officialUrl": "https://www.instagram.com/menosyama_official/",
+   "recurring": false
+  },
+  {
+   "series": "京都みどりのマルシェ 夏祭り vol.2",
+   "lastSlug": "kyoto-midori-marche-natsumatsuri-vol2-2026-08",
+   "lastDate": "2026-08-09",
+   "lastEnd": "2026-08-09",
+   "monthsSinceLast": 0,
+   "igHandle": "midorino_marche",
+   "officialUrl": "https://www.instagram.com/midorino_marche/",
+   "recurring": false
+  },
+  {
+   "series": "KAGOSHIMA VOLCANO MARKET ボルマ vol.3",
+   "lastSlug": "kagoshima-volcano-market-vol3-2026-08",
+   "lastDate": "2026-08-09",
+   "lastEnd": "2026-08-09",
+   "monthsSinceLast": 0,
+   "igHandle": "kagoshima_volcano_market",
+   "officialUrl": "https://www.instagram.com/kagoshima_volcano_market/",
+   "recurring": false
+  },
+  {
+   "series": "熊谷多肉フェス（2026年8月）",
+   "lastSlug": "kumagaya-taniku-fes-2026-08",
+   "lastDate": "2026-08-09",
+   "lastEnd": "2026-08-09",
+   "monthsSinceLast": 0,
+   "igHandle": "kumagaya_fes",
+   "officialUrl": "https://www.nittohmall.com/event.html",
+   "recurring": false
+  },
+  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1572,66 +1632,6 @@
    "monthsSinceLast": 1,
    "igHandle": "green_days2026",
    "officialUrl": "https://www.instagram.com/green_days2026/",
-   "recurring": false
-  },
-  {
-   "series": "BINGO BOTANICAL BASE vol.1",
-   "lastSlug": "bingo-botanical-base-vol1-fukuyama-2026-07",
-   "lastDate": "2026-07-12",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": false
-  },
-  {
-   "series": "Plants Hobbyist",
-   "lastSlug": "plants-hobbyist-niigata-2026-07",
-   "lastDate": "2026-07-12",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": "niigata_sabotenclub",
-   "officialUrl": "https://www.instagram.com/p/DYzZjhGD92z/",
-   "recurring": false
-  },
-  {
-   "series": "Agave Pop up market",
-   "lastSlug": "agave-popup-market-nagoya-2026-07",
-   "lastDate": "2026-07-12",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": false
-  },
-  {
-   "series": "WILD GREEN JAM VOL.3",
-   "lastSlug": "wild-green-jam-vol3-2026-07",
-   "lastDate": "2026-07-12",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": "joy_grove_0501",
-   "officialUrl": "https://www.instagram.com/joy_grove_0501/",
-   "recurring": false
-  },
-  {
-   "series": "ナイトマルシェ（さくら植物園）",
-   "lastSlug": "sakura-night-marche-2026-07",
-   "lastDate": "2026-07-18",
-   "lastEnd": "2026-07-18",
-   "monthsSinceLast": 1,
-   "igHandle": "sakura_shokubutsuen",
-   "officialUrl": "https://www.instagram.com/sakura_shokubutsuen/",
-   "recurring": false
-  },
-  {
-   "series": "Seedpot Summer Fair 2026",
-   "lastSlug": "seedpot-summer-fair-2026",
-   "lastDate": "2026-07-17",
-   "lastEnd": "2026-07-19",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://x.com/Seedpot_",
    "recurring": false
   }
  ],
