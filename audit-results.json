@@ -5,13 +5,15 @@
       "title": "events.json内のslug重複",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "duplicate_name_date": {
       "title": "同名・同日で別slug(二重掲載の疑い)",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "duplicate_venue_date": {
       "title": "同日・同会場で別slug(名称の表記ゆれによる二重掲載の疑い)",
@@ -19,37 +21,43 @@
       "items": [
         "2026-05-30 イリノベ倉庫: plants-garage-market-2026-spring / plants-garage-market-2026-tsukumi"
       ],
-      "note": "同一回なら片方を削除し、残す側に一次情報を寄せる。本当に同会場で別イベントなら名称で区別できるようにする"
+      "note": "同一回なら片方を削除し、残す側に一次情報を寄せる。本当に同会場で別イベントなら名称で区別できるようにする",
+      "severity": "urgent"
     },
     "orphan_detail_pages": {
       "title": "events.jsonに無いのに残っている詳細ページ",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "missing_detail_pages": {
       "title": "events.jsonにあるのに詳細ページが無い",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "sitemap_dead_entries": {
       "title": "sitemapに載っているがファイルが存在しないURL",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "sitemap_noindex_listed": {
       "title": "noindexの頁がsitemapに載っている(sitemap再生成の漏れ)",
       "count": 0,
       "items": [],
-      "note": "詳細頁を作り直したら scripts/generate_sitemap.py も回す"
+      "note": "詳細頁を作り直したら scripts/generate_sitemap.py も回す",
+      "severity": "urgent"
     },
     "rejected_but_listed": {
       "title": "見送り記録があるのに掲載されているイベント",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "unresolved_ig_handles": {
       "title": "IGのURLはあるが主催者ハンドルが取れずウォッチ対象外",
@@ -57,7 +65,8 @@
       "items": [
         "taniku-sukijaken-ichi-3rd-2026-06"
       ],
-      "note": "organizerIg を入れれば解消する"
+      "note": "organizerIg を入れれば解消する",
+      "severity": "urgent"
     },
     "thin_fixable": {
       "title": "薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)",
@@ -102,7 +111,8 @@
         "wakayama-green-marche(41字)",
         "yamaguchi-plants-market-2026(38字)"
       ],
-      "note": "開催予定のものから優先する"
+      "note": "開催予定のものから優先する",
+      "severity": "info"
     },
     "thin_archived": {
       "title": "薄い判定のうちアーカイブ許容(終了済み・出典なし)",
@@ -149,13 +159,15 @@
         "sippo-de-marche-fukushima-2026",
         "sora-to-taiyo-marche-2026"
       ],
-      "note": "検索に出ず広告も出ない履歴データ。対処不要"
+      "note": "検索に出ず広告も出ない履歴データ。対処不要",
+      "severity": "info"
     },
     "thin_needs_source": {
       "title": "薄い判定で開催予定なのに出典がない(要対処)",
       "count": 0,
       "items": [],
-      "note": "一次情報を見つけるか、見つからなければ掲載基準により削除"
+      "note": "一次情報を見つけるか、見つからなければ掲載基準により削除",
+      "severity": "urgent"
     },
     "short_descriptions": {
       "title": "開催予定で説明文70字未満(SERPスニペット枠を使い切れない)",
@@ -180,19 +192,22 @@
         "taniku-midori-marche-flarie-2026-10(67字)",
         "tochigi-tanippe-2026-10(56字)"
       ],
-      "note": ""
+      "note": "",
+      "severity": "info"
     },
     "status_date_mismatch": {
       "title": "statusと日付の矛盾",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
       "count": 0,
       "items": [],
-      "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外"
+      "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
+      "severity": "urgent"
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
@@ -201,7 +216,8 @@
         "botanical-night-market-kurashiki-2026-08: 本文 8月23日 が 2026-08-22〜2026-08-22 の外",
         "fujiyama-days-little-green-park-2026: 本文 6月1日 が 2026-04-18〜2026-04-19 の外"
       ],
-      "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す"
+      "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
+      "severity": "urgent"
     },
     "desc_stale_year": {
       "title": "説明文が別年の日付を名指ししている(前年の告知文の使い回し)",
@@ -209,13 +225,15 @@
       "items": [
         "botanical-night-market-kurashiki-2026-08: 本文に2025年8月23日 (開催は2026年)"
       ],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "time_multiday_mismatch": {
       "title": "timeが複数日を示すのに dateEnd が単日",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "time_implausible": {
       "title": "開催時間の幅が2時間未満(経路検索など別データの貼り付けの疑い)",
@@ -223,25 +241,29 @@
       "items": [
         "picnic-garden-vol21-is-new-base-2026: time=\"10:00〜11:30\" は90分"
       ],
-      "note": "即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す"
+      "note": "即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す",
+      "severity": "urgent"
     },
     "access_pref_mismatch": {
       "title": "アクセス文の路線が開催県を通っていない(別会場の案内の貼り付け)",
       "count": 0,
       "items": [],
-      "note": "access は当該会場の一次情報から書く。裏取りできなければ消す"
+      "note": "access は当該会場の一次情報から書く。裏取りできなければ消す",
+      "severity": "urgent"
     },
     "venue_pref_mismatch": {
       "title": "会場・地図クエリが別県の住所になっている(別ページの貼り付け)",
       "count": 0,
       "items": [],
-      "note": "venue は location より優先して表示・JSON-LDに入り、mapQuery は地図の座標になる。裏取りできなければ消して location + prefecture のフォールバックに任せる"
+      "note": "venue は location より優先して表示・JSON-LDに入り、mapQuery は地図の座標になる。裏取りできなければ消して location + prefecture のフォールバックに任せる",
+      "severity": "urgent"
     },
     "venue_postal_address": {
       "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
       "count": 0,
       "items": [],
-      "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる"
+      "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
+      "severity": "urgent"
     },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記)",
@@ -249,37 +271,43 @@
       "items": [
         "botanical-night-market-kurashiki-2026-08: 本文が出典表記で始まる(スクレイプ結果の貼り付け)"
       ],
-      "note": "本文はイベント説明だけにする。URLは url / sourceUrl に置く"
+      "note": "本文はイベント説明だけにする。URLは url / sourceUrl に置く",
+      "severity": "urgent"
     },
     "feed_count_mismatch": {
       "title": "配布フィードの件数がevents.jsonと不一致",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "dead_guide_links": {
       "title": "詳細ページから貼っているガイドが存在しない",
       "count": 0,
       "items": [],
-      "note": ""
+      "note": "",
+      "severity": "urgent"
     },
     "css_version_drift": {
       "title": "CSS版数が正規値(20260730k)と違うページ",
       "count": 0,
       "items": [],
-      "note": "sync-footers.py が正規化する"
+      "note": "sync-footers.py が正規化する",
+      "severity": "urgent"
     },
     "js_version_drift": {
       "title": "JS版数が正規値(20260810a)と違う/付いていないページ",
       "count": 0,
       "items": [],
-      "note": "版数なしだとJSの変更がキャッシュを越えず届かない"
+      "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
+      "severity": "urgent"
     },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowも参照していないスクリプト",
       "count": 0,
       "items": [],
-      "note": "使われていないか、呼び出しが失われている"
+      "note": "使われていないか、呼び出しが失われている",
+      "severity": "urgent"
     },
     "workflow_secrets": {
       "title": "workflowが参照しているsecret",
@@ -294,19 +322,22 @@
         "RAKUTEN_ACCESS_KEY",
         "RAKUTEN_APP_ID"
       ],
-      "note": "未設定でも多くのstepは失敗せず黙って空値で動く"
+      "note": "未設定でも多くのstepは失敗せず黙って空値で動く",
+      "severity": "info"
     },
     "region_mismatch": {
       "title": "regionが地域定義と不一致 / スラッグ未定義",
       "count": 0,
       "items": [],
-      "note": "定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION"
+      "note": "定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION",
+      "severity": "urgent"
     },
     "rakuten_config_missing": {
       "title": "楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)",
       "count": 0,
       "items": [],
-      "note": "検索語 39 件がこの設定に依存する"
+      "note": "検索語 39 件がこの設定に依存する",
+      "severity": "info"
     }
   }
 }

@@ -125,6 +125,16 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-10: 運用の総点検。(1)health.yml が監査項目名をハードコードしていたため、audit.py に
+  検査を追加するたびワークフロー編集が必要だった。重要度(severity)を audit.py 側に持たせ
+  health.yml は動的に全項目を読むよう変更。以後は audit.py だけ直せば日次メールに反映される。
+  常時0にならない項目(薄い判定・説明文70字未満・secrets)は info に落として参考行にまとめた。
+  毎日叫ぶ項目が混ざると監査全体が無視されるため。
+  (2)統合済みで放置されていたワークフロー13本を削除(21→8本)。すべて統合先ヘッダに「統合元」と
+  明記済み。とくに auto-status-update.yml は build-all.sh を使わず9ステップを個別列挙しており、
+  sync-footers(CSS/JS版数とロゴの正規化)・build-guides・generate-watchlist・audit が抜けた
+  古い生成手順のままで、誤実行すると不整合な生成物が出る状態だった
+
 - 2026-08-10: PATでワークフローファイルをpushできることを実測で確認した。docs §7 とキュー項目は『contents権限のみ、ワークフローは触れない』と記録していたが誤りで、notify-inquiry.yml の差し替えはそのままpushできた。この誤記のせいで7/31以降の通知経路の断絶とhealth.ymlの未反映検査がユーザー作業待ちのまま滞留していた。Actions API(workflow_dispatch)が403なのは事実なので、ワークフローの起動はpushトリガのみという運用は変えない
 - 2026-08-10: 問い合わせの即時メール経路を push に移した。7/31に dispatch を廃止したとき notify-inquiry.yml だけ切り替え漏れがあり、発火条件が repository_dispatch のみのまま10日間 通知手段が存在しない状態になっていた(新着ゼロで実害はなし)。new-inquiries.json を新設し、event-listing-review が新着要約を書いてpushするとメールが飛ぶ。items空のpushでは送らないので消し込みで空メールは出ない。client_payload経路も互換で残してある。ワークフローファイルはcontents権限のPATでpushできないため、YAMLはユーザーがWeb UIで反映する
 - 2026-07-27: ClaudeをTeamプランへ移行(個人→Team組織)。Coworkスケジュールタスクは移行対象外で消失したため、

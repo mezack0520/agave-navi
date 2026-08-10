@@ -36,9 +36,13 @@ def main():
     events = load_json('events.json', [])
     findings = {}
 
-    def add(key, title, items, note=''):
+    # severity='urgent' は日次メールに出す。'info' は参考行にまとめる。
+    # health.yml 側に項目名をハードコードすると、検査を追加するたびに
+    # ワークフローの編集が必要になり改善が止まるため移した(2026-08-10)。
+    def add(key, title, items, note='', severity='urgent'):
         findings[key] = {'title': title, 'count': len(items),
-                         'items': items[:40], 'note': note}
+                         'items': items[:40], 'note': note,
+                         'severity': severity}
 
     slugs = [e.get('slug') for e in events]
     slug_set = set(slugs)
@@ -161,10 +165,10 @@ def main():
         sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字"
                f"{'・開催予定' if is_future(e) else ''})"
                for e in thin_all if has_src(e)),
-        '開催予定のものから優先する')
+        '開催予定のものから優先する', severity='info')
     add('thin_archived', '薄い判定のうちアーカイブ許容(終了済み・出典なし)',
         sorted(e['slug'] for e in thin_all if not has_src(e) and not is_future(e)),
-        '検索に出ず広告も出ない履歴データ。対処不要')
+        '検索に出ず広告も出ない履歴データ。対処不要', severity='info')
     add('thin_needs_source', '薄い判定で開催予定なのに出典がない(要対処)',
         sorted(e['slug'] for e in thin_all if not has_src(e) and is_future(e)),
         '一次情報を見つけるか、見つからなければ掲載基準により削除')
@@ -173,7 +177,7 @@ def main():
     add('short_descriptions', '開催予定で説明文70字未満(SERPスニペット枠を使い切れない)',
         sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
                for e in events
-               if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 70))
+               if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 70), severity='info')
 
     # 9. status と日付の矛盾
     today = os.environ.get('AUDIT_TODAY') or today_jst()
@@ -493,7 +497,7 @@ def main():
     # 14. workflowが参照するsecretの一覧(未設定だと黙って空になる)
     add('workflow_secrets', 'workflowが参照しているsecret',
         sorted(set(re.findall(r'secrets\.([A-Z_][A-Z0-9_]*)', wf))),
-        '未設定でも多くのstepは失敗せず黙って空値で動く')
+        '未設定でも多くのstepは失敗せず黙って空値で動く', severity='info')
 
     # 地域分類の整合。events.json の region が sitelib の定義と一致しているか、
     # REGION_ROMAJI に無い地域名(=ハッシュURLの頁を生む)が混ざっていないかを見る。
@@ -528,7 +532,7 @@ def main():
     missing_cfg = [k for k in ('applicationId', 'accessKey', 'apiEndpoint', 'affiliateId')
                    if not rk.get(k)]
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
-        missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する')
+        missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
 
     # --- 出力 ---
     total = sum(v['count'] for k, v in findings.items()

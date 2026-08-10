@@ -193,22 +193,26 @@ jobs:
           lines.append(f"詳細未定(TBD): {len(data['tbd_events'])}")
           lines.append(f"✍️ 説明文70字未満(開催予定): {len(data.get('short_descriptions') or [])}件")
           lines.append(f"👀 IGハンドル未解決(ウォッチ対象外): {len(data.get('unresolved_ig') or [])}件")
+          # 出す項目は audit.py 側の severity で決まる。ここに項目名を書かない。
           _af = (audit.get('findings') or {})
-          _urgent = ['duplicate_slugs', 'duplicate_name_date', 'orphan_detail_pages',
-                     'missing_detail_pages', 'sitemap_dead_entries', 'rejected_but_listed',
-                     'status_date_mismatch', 'feed_count_mismatch', 'dead_guide_links',
-                     'css_version_drift', 'js_version_drift', 'region_mismatch']
-          _hit = [(_af[k]['title'], _af[k]['count']) for k in _urgent
-                  if k in _af and _af[k]['count']]
+          _hit = [(k, v) for k, v in _af.items()
+                  if v.get('severity', 'urgent') == 'urgent' and v.get('count')]
           if _hit:
               lines.append("")
               lines.append("━━━ 🔧 整合監査で検出(0件が正常) ━━━")
-              for _t, _c in _hit:
-                  lines.append(f"・{_t}: {_c}件")
-                  for _it in (_af[[k for k in _urgent if k in _af and _af[k]['title'] == _t][0]]['items'])[:5]:
+              for _k, _v in _hit:
+                  lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
+                  for _it in (_v.get('items') or [])[:5]:
                       lines.append(f"    - {_it}")
+                  if _v.get('note'):
+                      lines.append(f"    → {_v['note']}")
           else:
               lines.append("🔧 整合監査: 検出なし")
+          _info = [(k, v) for k, v in _af.items()
+                   if v.get('severity') == 'info' and v.get('count')]
+          if _info:
+              lines.append("(参考) " + " / ".join(
+                  f"{v.get('title', k)}: {v.get('count')}件" for k, v in _info))
           lines.append(f"リンク切れ: {len(data['dead_links'])}")
           lines.append("")
           lines.append("━━━ ✅ 自動チェック結果（毎日実行・0件が正常） ━━━")
