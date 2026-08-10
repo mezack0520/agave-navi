@@ -31,16 +31,6 @@
       "proposal": "listing-policy.json に descriptionFreshness を新設し、『説明文に開催年と異なる年の日付が現れる回は前年告知の使い回しとみなし、一次情報で書き直すまで掲載保留にする』を明文化する。audit.py に desc_stale_year 検査を追加済みなので以後は自動検出される"
     },
     {
-      "id": "event-monitor:health-mail-new-checks",
-      "source": "agave-navi-event-monitor",
-      "date": "2026-08-01",
-      "raised": "2026-08-01",
-      "title": "audit.pyに追加した検査群が日次メールに出ていない(health.yml の _urgent 未登録。PATでpush可能と判明したので反映するだけ)",
-      "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。 / 2026-08-03追記: daily.yml の Auto status update ステップ(UTC判定)は scripts/auto-status-jst.py が build-all.sh 先頭で JST 判定するようになったため冗長になった。workflowを触れる機会にこのステップごと削除してよい(残っていても害はない)。 / 2026-08-03追記: audit.py に desc_scraped_junk(説明文へのURL・出典表記の混入)を追加し、desc_date_mismatch を「6/1(土)」形式のスラッシュ日付も拾うよう拡張した。同様に _urgent に載っていないためメールには出ない。 / 2026-08-04追記: audit.py に time_implausible(開催時間の幅が2時間未満)と access_pref_mismatch(アクセス文の路線が開催県を通っていない)を追加した。あわせて health.yml の image health ステップ(114-115行)が build-detail-pages.py と sync-index-cards.py だけを再実行して scripts/generate_sitemap.py を回さないため、終了30日超に入った回が noindex になっても sitemap には翌朝まで載り続ける事象を確認した(本日 8a786eb で4件。hentai-shokubutsu-fes-vol0-atc-2026-07 / okhotsk-taniku-festival-vol2-2026-07 / rekishi-domannaka-chokkyu-shokubutsu-2026-07 / taniku-matsuri-iwami-2026-07)。検出用に audit.py に sitemap_noindex_listed を追加した。 / 2026-08-10追記: audit.py に venue_postal_address(venue が会場名でなく郵便番号付き住所)と duplicate_venue_date(同日・同会場で名称の表記ゆれによる二重掲載)を追加した。前者は venue_pref_mismatch が県違いしか見ないため同一県内で別地点の住所を貼った9件が通り抜けていた事象、後者は duplicate_name_date が完全一致のため表記ゆれの重複を拾えなかった事象への恒久対応。いずれも同様に _urgent 未登録のためメールには出ない。 / 2026-08-10追記: 前提が誤っていた。PATでワークフローファイルをpushできることを実測で確認した(notify-inquiry.yml の差し替えが通った)。よって本項目は『PAT権限不足でタスクからpushできない』のではなく、単に未実施。次回のタスク実行、またはCoworkでの指示で反映できる。",
-      "proposal": "health.yml の _urgent に 'datedisplay_format', 'desc_date_mismatch', 'desc_stale_year', 'time_multiday_mismatch', 'desc_scraped_junk' の5キーを追加する。ユーザーがGitHub上で直接編集するか、workflow権限付きPATを用意する。恒久策としてはPATにworkflowスコープを付ける あわせて daily.yml の Auto status update ステップを削除する(scripts/auto-status-jst.py に移管済み)。 あわせて health.yml の image health ステップに python3 scripts/generate_sitemap.py を1行足す(sitemapの取り残しの恒久対応)。_urgent には time_implausible / access_pref_mismatch / sitemap_noindex_listed も加える。 _urgent に 'venue_postal_address' と 'duplicate_venue_date' も加える。",
-      "action": "Coworkで「キューの health-mail-new-checks を反映」と指示すればこちらで health.yml と daily.yml を直してpushする(PATで可能なことを2026-08-10に確認済み)"
-    },
-    {
       "id": "site-health:affiliate-season",
       "source": "agave-navi-site-health-check",
       "date": "2026-08-10",

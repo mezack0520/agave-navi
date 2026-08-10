@@ -26,7 +26,8 @@
 ```
 06:00  [GitHub] daily.yml
        check_date_updates.py(公式ソースから日付スクレイプ照合)
-       → status自動更新(upcoming→past) → eventCountバッジ → build-all.sh → push
+       → build-all.sh → push
+       (status自動更新と eventCountバッジ は build-all.sh 内に移管。2026-08-10)
 08:06  [Claude] agave-event-update
        Step0 直近14日カバレッジスイープ(日付明示のWeb検索+pukubook地域頁+leaf個別記事)
        → watch-sources巡回(次回待ちシリーズ10+IG主催者ローテ約10/日・8日で一巡)
@@ -72,7 +73,7 @@ build-detail-pages.py   詳細205頁: ヒーロー/スペック表/地図(会場
                         近隣イベント/FAQ(JSON-LD)/折りたたみガイド/関連記事(スコア2+分散2)
 build-guides.py         ガイド21本(統計記事はevents.jsonから自動集計)
 build-static-html.py    map/calendar SSR埋め込み(冪等・除去→再挿入)
-sync-index-cards.py     indexサムネ同期+削除イベントのカード自動除去
+sync-index-cards.py     indexサムネ同期+削除イベントのカード自動除去+開催予定バッジ更新
 generate-rss.py / generate-itemlist-jsonld.py
 generate-landing-pages.py  tag/pref/region/venue/archive/category/new/this-weekend等
                         (イベント<3件はnoindex,follow+sitemap除外、固有解説文、空頁fallback)
@@ -138,7 +139,8 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   古い生成手順のままで、誤実行すると不整合な生成物が出る状態だった
 
 - 2026-08-10: PATでワークフローファイルをpushできることを実測で確認した。docs §7 とキュー項目は『contents権限のみ、ワークフローは触れない』と記録していたが誤りで、notify-inquiry.yml の差し替えはそのままpushできた。この誤記のせいで7/31以降の通知経路の断絶とhealth.ymlの未反映検査がユーザー作業待ちのまま滞留していた。Actions API(workflow_dispatch)が403なのは事実なので、ワークフローの起動はpushトリガのみという運用は変えない
-- 2026-08-10: 問い合わせの即時メール経路を push に移した。7/31に dispatch を廃止したとき notify-inquiry.yml だけ切り替え漏れがあり、発火条件が repository_dispatch のみのまま10日間 通知手段が存在しない状態になっていた(新着ゼロで実害はなし)。new-inquiries.json を新設し、event-listing-review が新着要約を書いてpushするとメールが飛ぶ。items空のpushでは送らないので消し込みで空メールは出ない。client_payload経路も互換で残してある。ワークフローファイルはcontents権限のPATでpushできないため、YAMLはユーザーがWeb UIで反映する
+- 2026-08-10: 問い合わせの即時メール経路を push に移した。7/31に dispatch を廃止したとき notify-inquiry.yml だけ切り替え漏れがあり、発火条件が repository_dispatch のみのまま10日間 通知手段が存在しない状態になっていた(新着ゼロで実害はなし)。new-inquiries.json を新設し、event-listing-review が新着要約を書いてpushするとメールが飛ぶ。items空のpushでは送らないので消し込みで空メールは出ない。client_payload経路も互換で残してある。当初『ワークフローはPATでpushできない』と書いていたが誤りで、同日タスク側からpushして反映済み
+- 2026-08-10: daily.yml から2ステップを削除した。UTC判定の Auto status update は 8/3 に scripts/auto-status-jst.py へ移管済みで冗長だった。eventCountバッジ更新は build-all.sh より前に走るため status 更新前の値を数えており、さらに sync-events / weekly-enrichment 経由のビルドでは誰も更新していなかった。sync-index-cards.py に移して build-all.sh を通る全経路で揃うようにした。あわせて health.yml の image health が events.json を書き換えたときに generate_sitemap.py を回すようにした(終了30日超で noindex になった回が翌朝まで sitemap に残っていた)
 - 2026-07-27: ClaudeをTeamプランへ移行(個人→Team組織)。Coworkスケジュールタスクは移行対象外で消失したため、
   4本(agave-event-update / event-listing-review / agave-navi-event-monitor / agave-navi-site-health-check)を
   本書§2・§3の仕様どおり同日再作成。スケジュール・フローの変更なし
