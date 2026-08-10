@@ -91,6 +91,23 @@
       "whyNotAuto": "どちらのURLを残すかは公開済みページの取り下げになるため機械的に決められない。両ページとも公開済みで検索インデックスに載っている可能性がある",
       "policyProposal": "listing-policy.json に duplicateListing を新設し、『同日・同会場で名称の表記ゆれがある回は同一回とみなす。主催者公式を出典に持つ側を残し、他方の固有情報(共同開催者・出典URL)を残す側へ寄せて削除する』を明文化する。以後この類型はキューに積まず自動で統合する",
       "action": "Coworkで「キューの plants-garage-market-dup を A で反映」等と指示"
+    },
+    {
+      "id": "listing-review:notify-inquiry-trigger-dead",
+      "source": "event-listing-review",
+      "date": "2026-08-10",
+      "raised": "2026-08-10",
+      "title": "問い合わせの即時メール経路が2026-07-31から機能していない(notify-inquiry.yml の発火条件が repository_dispatch だけ)",
+      "detail": "notify-inquiry.yml の on: は repository_dispatch(types: [notify-inquiry]) のみ。しかし docs/architecture-2026-07.md §7 のとおり dispatch は 2026-07-31 に廃止され(Chrome経由の認証ヘッダ付きfetchが遮断されPromiseが解決しない/サンドボックスから api.github.com は不通)、PATもcontents権限のみでActions APIは403。つまり本タスクが新着回答を検知しても即時メールを送る手段が存在しない。7/2の見逃し事故への恒久対応として作った通知が10日間空回りしている。本日時点では回答が全2件(2026/04/27・2026/07/02)でどちらも処理済みのため実害は出ていないが、次の新着で確実に見逃す。あわせてスケジュールタスク event-listing-review のプロンプト本文が今も「repository_dispatch: notify-inquiry を叩く」と指示しており、docsと矛盾している。",
+      "options": [
+        "A(推奨): work/new-inquiries.json を新設し、本タスクが新着回答の要約をそこへ書いてpushする。notify-inquiry.yml に on.push(paths: work/new-inquiries.json) を足し、ファイル内容をメール本文にする。以後の運用はcontents権限のpushだけで完結する(ワークフロー編集の1回だけ workflow スコープが必要)",
+        "B: 新着を pending-judgments.json に積み、翌朝09:00の健全性メールで拾う。ワークフロー編集は不要だが本タスクは10:09実行なので通知が最大約23時間遅れる。即時性を捨てる代わりに恒久性は担保できるのでAの補助として併用する",
+        "C: PATに workflow スコープを付け、以後タスク側からワークフローも直せるようにする(event-monitor:health-mail-new-checks と同じ根本要因)"
+      ],
+      "whyNotAuto": "notify-inquiry.yml はワークフローファイルで、contents権限のみのPATではpushが拒否される。どの経路を正とするか(即時性を取るか、メール本数を増やさないか)は運用方針の判断でもある",
+      "policyProposal": "docs/architecture-2026-07.md §2 の event-listing-review 行と §5 の『問い合わせは受信の都度 notify-inquiry で即時メール』を、採用した経路の表現に書き換える。§7 の『repository_dispatchは使わない』と食い違ったまま残さない。スケジュールタスクのプロンプトも同時に更新する",
+      "proposal": "A: work/new-inquiries.json を新設し notify-inquiry.yml を on.push(paths: work/new-inquiries.json) に変更する。1回だけGitHubのWeb UIでワークフローを編集すれば、以後はcontents権限のpushだけで即時メールが飛ぶ。BをAの補助として併用し、経路が再び死んでも翌朝の健全性メールで気づけるようにする",
+      "action": "GitHubのWeb UIで .github/workflows/notify-inquiry.yml の on: を編集する(A)。CoworkでAまたはBを指示すればデータ側とプロンプトはこちらで整える"
     }
   ]
 }
