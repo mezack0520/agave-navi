@@ -37,7 +37,8 @@
       "icon": "light",
       "group": "light",
       "rank": 1,
-      "maxPrice": 30000
+      "maxPrice": 30000,
+      "season": [9, 10, 11, 12, 1, 2, 3, 4]
     },
     {
       "keyword": "簡易温室 ビニール",
@@ -45,7 +46,8 @@
       "icon": "shelf",
       "group": "shelf",
       "rank": 1,
-      "maxPrice": 30000
+      "maxPrice": 30000,
+      "season": [10, 11, 12, 1, 2, 3]
     },
     {
       "keyword": "アガベ 鉢 プラ鉢 スリット",
@@ -78,7 +80,8 @@
       "group": "air",
       "rank": 3,
       "maxPrice": 15000,
-      "ngKeyword": "車載 ハンディ 首掛け"
+      "ngKeyword": "車載 ハンディ 首掛け",
+      "season": [5, 6, 7, 8, 9]
     },
     {
       "keyword": "最高最低温度計 デジタル",
@@ -87,7 +90,8 @@
       "group": "tool",
       "rank": 3,
       "maxPrice": 5000,
-      "ngKeyword": "体温計 水槽 冷蔵庫"
+      "ngKeyword": "体温計 水槽 冷蔵庫",
+      "season": [10, 11, 12, 1, 2, 3]
     },
     {
       "keyword": "キャリーカート 折りたたみ 園芸",
@@ -221,7 +225,8 @@
         "label": "買った株を室内で維持する育成LED",
         "icon": "light",
         "group": "light",
-        "rank": 1
+        "rank": 1,
+        "season": [9, 10, 11, 12, 1, 2, 3, 4]
       },
       {
         "keyword": "アガベ 鉢 プラ鉢 スリット",
@@ -255,7 +260,8 @@
         "label": "室内管理を始めるための育成LED",
         "icon": "light",
         "group": "light",
-        "rank": 1
+        "rank": 1,
+        "season": [9, 10, 11, 12, 1, 2, 3, 4]
       }
     ]
   },

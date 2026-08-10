@@ -298,6 +298,20 @@
     return a;
   }
 
+  // 季節の重み付け。amazon-links.json の season(旬の月の配列)を持つ品目だけ、
+  // 旬なら rank を上げ、旬を外れていれば下げる。season の無い品目は通年扱いで不変。
+  // 8月に「冬の室内管理で徒長させないための育成LED」「取り込み株をまとめて置ける簡易温室」が
+  // 最上位に出ていたため導入(2026-08-10)。判定は閲覧者の時計ではなく JST の月で行う。
+  var JST_MONTH = (function () {
+    var now = new Date();
+    return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (9 * 3600000)).getMonth() + 1;
+  })();
+  function effectiveRank(it) {
+    var r = it.rank || 9;
+    if (!it.season || !it.season.length) return r;
+    return it.season.indexOf(JST_MONTH) >= 0 ? Math.max(1, r - 2) : r + 4;
+  }
+
   // 同ジャンル(group)が枠を食い合わないように1つずつに絞る。
   // rank の階層は保ちつつ、同じ rank の中は種で入れ替えて並びを固定しない。
   function narrow(items, count) {
@@ -311,7 +325,7 @@
     });
     var tiers = {};
     pool.forEach(function (it) {
-      var r = it.rank || 9;
+      var r = effectiveRank(it);
       (tiers[r] = tiers[r] || []).push(it);
     });
     var out = [];
