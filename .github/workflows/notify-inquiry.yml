@@ -1,17 +1,75 @@
-# 問い合わせ通知メール — repository_dispatch(notify-inquiry) で発火
-# スケジュールタスク(event-listing-review)がフォーム回答の新着を検知して叩く。
+# 問い合わせ通知メール
+#
+# 経路: event-listing-review タスクが new-inquiries.json を書いて push → このワークフローが発火。
+#       repository_dispatch は 2026-07-31 に廃止した(Chrome側で認証ヘッダ付きfetchが遮断され、
+#       サンドボックスから api.github.com も不通、PATはcontents権限のみでActions APIは403)。
+#       トリガ自体は互換のため残すが、通常経路は push。
 # 認証は health.yml と同じ GMAIL_USER / GMAIL_APP_PASSWORD secrets を流用。
+#
+# new-inquiries.json の形: {"items": [{timestamp, type, eventName, name, email, body}, ...]}
+# items が空の push ではメールを送らない(消し込み後の push で空メールを出さないため)。
 name: Notify Inquiry
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'new-inquiries.json'
   repository_dispatch:
     types: [notify-inquiry]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   mail:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Build mail content
+        id: mail
+        env:
+          PAYLOAD_SUBJECT: ${{ github.event.client_payload.subject }}
+          PAYLOAD_BODY: ${{ github.event.client_payload.body }}
+        run: |
+          python3 - >> "$GITHUB_OUTPUT" <<'PY'
+          import json, os, pathlib
+
+          subject = (os.environ.get('PAYLOAD_SUBJECT') or '').strip()
+          body = (os.environ.get('PAYLOAD_BODY') or '').strip()
+          send = bool(subject or body)
+
+          if not send:
+              p = pathlib.Path('new-inquiries.json')
+              if p.exists():
+                  try:
+                      items = json.loads(p.read_text(encoding='utf-8')).get('items', [])
+                  except Exception as e:
+                      items, subject, body, send = [], '読み取り失敗', f'new-inquiries.json のJSONが壊れています: {e}', True
+                  if items:
+                      send = True
+                      subject = f'新着{len(items)}件'
+                      blocks = []
+                      for i in items:
+                          blocks.append('\n'.join([
+                              f"■ {i.get('timestamp', '')} / {i.get('type', '')}",
+                              f"  イベント名: {i.get('eventName', '')}",
+                              f"  お名前: {i.get('name', '')} <{i.get('email', '')}>",
+                              f"  内容: {i.get('body', '')}",
+                          ]))
+                      body = '\n\n'.join(blocks)
+
+          print('send=' + ('true' if send else 'false'))
+          print('subject=' + (subject or '新着あり').replace('\n', ' '))
+          print('body<<AGAVE_BODY_EOF')
+          print(body or '(本文なし)')
+          print('AGAVE_BODY_EOF')
+          PY
+
       - name: Send inquiry notification
+        if: steps.mail.outputs.send == 'true'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -19,13 +77,13 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "【アガベイベントナビ】問い合わせ: ${{ github.event.client_payload.subject }}"
+          subject: "【アガベイベントナビ】問い合わせ: ${{ steps.mail.outputs.subject }}"
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: |
             サイトのお問い合わせフォームに新しい回答があります。
 
-            ${{ github.event.client_payload.body }}
+            ${{ steps.mail.outputs.body }}
 
             回答シート:
             https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit
