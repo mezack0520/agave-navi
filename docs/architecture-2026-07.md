@@ -12,6 +12,7 @@
 | `watch-sources.json` | ウォッチ対象(IG主催者/次回待ちシリーズ/公式サイト候補)。events.jsonから毎日自動導出 | generate-watchlist.py |
 | `pending-judgments.json` | 要人間判断キュー。健全性メールに集約表示 | 各Claudeタスク(id重複禁止・解消時自削除) |
 | `inquiries-processed.json` | フォーム回答の処理済み管理 | event-listing-review |
+| `new-inquiries.json` | 問い合わせ新着の受け渡し箱。pushで notify-inquiry.yml が発火しメール送信 | event-listing-review |
 | `rejected-events.json` | 掲載見送り決定の記録。event-updateは掲載中のイベントを再提案しない | ユーザー決定をClaudeが記録 |
 | `listing-policy.json` | 掲載基準の機械可読版。event-updateが判断に使い、書いていない類型だけキューに積む | 人間の決定をClaudeが記録 |
 | `crawl-sources.json` | 週次クローラの巡回先(52+自動候補) | 手動+discover_sources |
@@ -35,7 +36,8 @@
        → pending-judgments.jsonを集約した日次メールをGmail送信
        (件名に【要判断n件】/ 新着・本日開催・今後一覧・異常検知)
 10:09  [Claude] event-listing-review
-       回答シート(Google Form)をChromeで読取 → 新着は種別問わず dispatch(notify-inquiry)=即メール
+       回答シート(Google Form)をChromeで読取 → 新着は種別問わず new-inquiries.json に書いてpush
+       (=notify-inquiry.ymlが発火し即メール)
        → 掲載リクエスト:裏取り→new-events.json+sync-events / 修正・訂正:キュー積み(自動書換なし)
        → inquiries-processed.json更新
 11:00  [Claude] agave-navi-event-monitor
@@ -44,7 +46,8 @@
 随時    [GitHub] sync-events.yml (dispatch: sync-events)
        new-events.json → sanity-check(チケット/aggregator/無関係イベントドメイン拒否)
        → events.jsonへマージ → enrich → indexカード追加 → build-all.sh → push
-随時    [GitHub] notify-inquiry.yml (dispatch: notify-inquiry) → Gmail即時送信
+随時    [GitHub] notify-inquiry.yml (push: new-inquiries.json) → Gmail即時送信
+       items空のpushでは送らない。送信後の消し込みは次回タスクが行う
 push毎  [GitHub] pages build and deployment → 本番反映(CDNキャッシュ~10分)
 ```
 
@@ -80,7 +83,8 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 ## 5. 通知と判断の一元化ルール
 - **自動修正できるもの** → 各タスク/ワークフローが黙って実行(コミットメッセージに主体を明記)
 - **人間の判断が必要なもの** → `pending-judgments.json` に積む → 翌日の健全性メール件名に【要判断n件】
-- **問い合わせ** → 受信の都度 notify-inquiry で即時メール(7/2見逃し事故の恒久対応)
+- **問い合わせ** → 受信の都度 new-inquiries.json のpushで即時メール(7/2見逃し事故の恒久対応)。
+  dispatchではなくpushで発火する(§7)
 - Cowork上のタスク報告は3行以内(見なくてよい設計)
 - ユーザーの操作: メールを見る → 必要ならCoworkで「キューの◯◯を反映/却下」と指示するだけ
 
@@ -97,7 +101,7 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - Claudeタスクは**Coworkアプリ起動中のみ**実行される。プロンプト変更後は「Run now」でツール事前承認
 - Instagram/nextmeetはサーバーから読めない → **Chromeで google.com/search?hl=ja&tbs=qdr:w2** が主経路
   (WebSearchのUS版ではIG告知がほぼ拾えない)
-- **repository_dispatchは使わない。** events.json / new-events.json のpushでワークフローが
+- **repository_dispatchは使わない。** events.json / new-events.json / new-inquiries.json のpushでワークフローが
   起動する(daily.yml / sync-events.yml の on.push)。Chrome経由のdispatchは、認証ヘッダ付きfetchが
   Chromeツール側で遮断されPromiseが解決しなくなったため2026-07-31に廃止した
   (以前はService Worker干渉と見ていたが、SWは未登録で原因が別だった)。
@@ -118,6 +122,7 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-10: 問い合わせの即時メール経路を push に移した。7/31に dispatch を廃止したとき notify-inquiry.yml だけ切り替え漏れがあり、発火条件が repository_dispatch のみのまま10日間 通知手段が存在しない状態になっていた(新着ゼロで実害はなし)。new-inquiries.json を新設し、event-listing-review が新着要約を書いてpushするとメールが飛ぶ。items空のpushでは送らないので消し込みで空メールは出ない。client_payload経路も互換で残してある。ワークフローファイルはcontents権限のPATでpushできないため、YAMLはユーザーがWeb UIで反映する
 - 2026-07-27: ClaudeをTeamプランへ移行(個人→Team組織)。Coworkスケジュールタスクは移行対象外で消失したため、
   4本(agave-event-update / event-listing-review / agave-navi-event-monitor / agave-navi-site-health-check)を
   本書§2・§3の仕様どおり同日再作成。スケジュール・フローの変更なし
