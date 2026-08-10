@@ -409,7 +409,7 @@ def strip_previous_insertions(html_src):
     これが無いとビルドのたびに1セットずつ蓄積する(2026-06-11に4.2MBまで肥大したバグの恒久対策)。
 
     末尾の改行は \n* で全て食う。\n? だと挿入側が付ける改行を1本ずつ取り残し、
-    ビルドのたびに空行が1行増え続ける(2026-08-10時点で map/calendar に30行たまっていた)。"""
+    ビルドのたびに空行が1行増え続ける(2026-08-10時点で map/calendar に251行ずつたまっていた)。"""
     # ItemList JSON-LD (このスクリプトが挿入したもの)
     html_src = _re_cleanup.sub(
         r'<script type="application/ld\+json">\s*\{"@context":"https://schema\.org","@type":"ItemList".*?</script>\n*',
