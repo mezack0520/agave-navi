@@ -182,6 +182,16 @@ def main():
     new_chunks.append(html[last_end:])
     new_html = ''.join(new_chunks)
 
+    # 開催予定件数のバッジ。以前は daily.yml のステップが更新していたが、
+    # そのステップは build-all.sh(=auto-status-jst.py)より前に走るため
+    # 終了に変わる回を数え落とし、さらに sync-events / weekly-enrichment 経由の
+    # ビルドでは誰も更新しなかった。build-all.sh に載っているここへ移した。
+    up_count = sum(1 for e in events if e.get('status') == 'upcoming')
+    new_html, n_badge = re.subn(
+        r'(<span class="event-count" id="eventCount">)\d+(件</span>)',
+        lambda m: m.group(1) + str(up_count) + m.group(2), new_html)
+    print(f'upcoming badge:      {up_count}件 ({n_badge} 箇所)')
+
     print(f'cards processed:     {swapped_to_img + swapped_to_noimg + unchanged}')
     print(f'  → swapped to img:  {swapped_to_img}')
     print(f'  → swapped to no-image: {swapped_to_noimg}')

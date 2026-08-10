@@ -113,6 +113,9 @@ jobs:
           if ! git diff --quiet events.json; then
             python3 build-detail-pages.py
             python3 scripts/sync-index-cards.py
+            # 終了30日超に入った回は build-detail-pages.py で noindex になるが、
+            # sitemap を作り直さないと翌朝の daily まで載り続ける(2026-08-04に4件)。
+            python3 scripts/generate_sitemap.py
           fi
 
       - name: 4. Domain/SSL check
