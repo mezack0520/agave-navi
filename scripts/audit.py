@@ -541,6 +541,40 @@ def main():
         json.dump({'total': total, 'findings': findings}, f, ensure_ascii=False, indent=2)
         f.write('\n')
 
+    # 推移を残す。1回の値だけでは改善か悪化かが判断できない。
+    hist_path = rp('audit-history.json')
+    try:
+        with open(hist_path, encoding='utf-8') as f:
+            hist = json.load(f)
+    except (OSError, ValueError):
+        hist = {'_note': '監査結果の推移。scripts/audit.py が追記する。'
+                         '直近90件のみ保持。改善/悪化の判断に使う。', 'runs': []}
+    today_key = __import__('datetime').date.today().isoformat()
+    entry = {'date': today_key,
+             'urgent': {k: v['count'] for k, v in findings.items()
+                        if v.get('severity', 'urgent') == 'urgent' and v['count']},
+             'info': {k: v['count'] for k, v in findings.items()
+                      if v.get('severity') == 'info' and v['count']},
+             'events': len(events)}
+    runs = [r for r in (hist.get('runs') or []) if r.get('date') != today_key]
+    runs.append(entry)
+    hist['runs'] = runs[-90:]
+    with open(hist_path, 'w', encoding='utf-8') as f:
+        json.dump(hist, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+
+    # 前回との差分を出す
+    prev = runs[-2] if len(runs) >= 2 else None
+    if prev:
+        cur_u, prev_u = entry['urgent'], prev.get('urgent', {})
+        worse = [f'{k} {prev_u.get(k, 0)}→{v}' for k, v in cur_u.items()
+                 if v > prev_u.get(k, 0)]
+        fixed = [k for k in prev_u if k not in cur_u]
+        if worse:
+            print('  ⚠ 悪化: ' + ', '.join(worse))
+        if fixed:
+            print('  ✔ 解消: ' + ', '.join(fixed))
+
     print(f'=== 監査結果: 検出 {total}件 ===')
     for k, v in findings.items():
         mark = '  ' if v['count'] == 0 else '⚠ '

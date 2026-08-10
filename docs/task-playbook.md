@@ -1,0 +1,109 @@
+# タスク運用プレイブック
+
+スケジュールタスク共通の手順書。**タスク自身がこのファイルを更新してよい。**
+
+## なぜこのファイルがあるか
+
+タスクのプロンプト(SKILL.md)は保護された場所にあり、**タスクは自分のプロンプトを編集できない**。
+そのため運用知識をプロンプトに書くと、気づいたことがあっても恒久化できず、
+毎回同じ失敗を繰り返す。知識はここに書く。プロンプトは「このファイルを読め」とだけ言う。
+
+**改善したら必ずここに追記すること。** それが唯一の恒久化手段。
+
+---
+
+## 1. 起動時の手順
+
+1. `request_cowork_directory` で `C:\Users\yujim\OneDrive\Documents\Claude\Projects\mzplants` を接続
+   （既に接続済みなら何もしない）
+2. リポジトリを clone
+3. このファイル、`docs/architecture-2026-07.md`、`listing-policy.json` を読む
+4. プロンプトとここに差異があれば**こちらが正**
+
+置き場:
+- PAT: `mzplants\agave-navi\github.pat`
+- 実行レポート: `mzplants\agave-navi\task-reports\<taskId>_YYYY-MM-DD.md`
+- 受け渡しJSON: `mzplants\agave-navi\work\`
+
+## 2. 書き込み手順
+
+- コミットは `git push`（`https://github.com`、名義 `mezack0520 <88774621+mezack0520@users.noreply.github.com>`）
+- **PATは `.github/workflows/` も含めてpushできる**（2026-08-10に実証。以前「権限不足」と
+  記録していたのは誤り）。Actions API と workflow_dispatch は403で使えない
+- サンドボックスから `api.github.com` は不通。`github.com`(git) のみ
+- **`repository_dispatch` は使わない**。`events.json` / `new-events.json` /
+  `new-inquiries.json` の push でワークフローが発火する
+- `GITHUB_TOKEN` によるCI側のpushはワークフローを再起動しない仕様。だからループしない。
+  PATでpushしたときだけ `on.push` が発火する
+- PATの値は出力・ログ・レポートに残さない。401ならPAT再発行が必要な旨をキューに積んで終了
+
+## 3. 既知のハマりどころ
+
+- **既存イベントの修正は `events.json` を直接編集する。**
+  `sanity-check-new-events.py` は既存slugを "slug already exists" で落とすため
+  `new-events.json` 経由では通らない
+- **nohup のバックグラウンド実行は呼び出し終了時に殺される。**
+  `build-all.sh` は45秒制限に収まらないので、`scripts` を4〜6本ずつ前景で順に叩く
+- **push が non-fast-forward で拒否されたら、生成物のrebaseは必ず衝突する。**
+  `origin/main` に `reset --hard` → データ変更を再適用 → 再ビルド → push の順でやり直す
+- **CSS/JSを変えたら `scripts/sitelib.py` の `CSS_VERSION` / `JS_VERSION` を上げる。**
+  上げないと閲覧者のキャッシュが更新されず変更が届かない
+- **Instagram告知は WebSearch(US版)ではほぼ拾えない。**
+  Chromeで `google.com/search?hl=ja&tbs=qdr:w2` を叩くのが主経路
+- 都道府県→地域は `scripts/sitelib.py` の `PREF_TO_REGION` が単一情報源。
+  沖縄は九州、山梨・長野は北陸
+- 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
+
+## 4. 自己改善のやり方
+
+**気づいたことは必ずリポジトリに残す。** 手段は次の4つ。
+
+| 気づいたこと | 書く場所 |
+|---|---|
+| 手順・ハマりどころ | このファイルの §3 |
+| データの不整合を機械検出したい | `scripts/audit.py` に検査を追加 |
+| 掲載可否の判断基準 | `listing-policy.json` |
+| 構成の変更履歴 | `docs/architecture-2026-07.md` の §8 |
+
+### audit.py に検査を足すとき
+
+```python
+add('key_name', '日本語のタイトル', items, note='対処のヒント', severity='urgent')
+```
+
+- `severity='urgent'` … 日次メールに出る。**0件が正常なものだけ**にする
+- `severity='info'` … 参考行にまとめる。常時0にならないものはこちら
+- **health.yml の編集は不要。** メールは `severity` を見て動的に出す
+- 検査を足したら1回実行し、誤検知が出ないことを確認してから push する
+- 誤検知が止まらない検査は消す。**測れない検査は無いほうがよい**
+
+### 判断の記録
+
+- 見送りは `rejected-events.json` に `reasonType` 付きで記録（`policy` / `unverified`）
+- 人間の判断が要るものだけ `pending-judgments.json` に積む。
+  そのとき **`listing-policy.json` への追記案を必ず添える**。同じ問いを翌日も投げないため
+- 説明文が短いだけの回はキューに積まない（週次エンリッチに任せる方針で確定済み）
+
+## 5. 自分を疑うこと
+
+- **存在確認ではなく機能確認をする。** 「枠が存在する」ではなく「見える位置にあるか」、
+  「生成された」ではなく「全件載っているか」を見る
+- **スクリプトは成功件数だけでなく除外・欠落も出力する。** 黙って落ちると誰も気づかない
+- **検算は「増えたか」ではなく「減っていないか」を見る。**
+  CSSの範囲置換で1,100行を誤削除したとき、中括弧バランスは0のままで検出できなかった
+- 視覚的な変更はスクリーンショットを見るまで完了と言わない
+- `audit-history.json` に推移が残る。**前回より悪化していたら、自分の変更を疑う**
+
+## 6. 週次の自己点検（site-health-check が実施）
+
+毎週、次を見て**プレイブック自体を更新する**。
+
+1.  の直近7日分を読む。
+   同じ失敗が2回以上出ていたら §3 に追記する
+2.  の推移を見る。
+   - urgent が前週より増えていれば原因を特定して直す
+   - 何週間も同じ値のまま動かない項目は、対処されていないか検査が不適切。どちらかを直す
+   - 常に0の項目が続くなら  に落とすことを検討（メールのノイズを減らす）
+3.  が3件以上溜まっていたら、
+   人間の判断が本当に要るのか見直す。要らないものは  に基準を書いて自動化する
+4. 上記でプレイブックを更新したら、何を変えたかレポートに1行で書く

@@ -14,6 +14,8 @@
 | `inquiries-processed.json` | フォーム回答の処理済み管理 | event-listing-review |
 | `new-inquiries.json` | 問い合わせ新着の受け渡し箱。pushで notify-inquiry.yml が発火しメール送信 | event-listing-review |
 | `rejected-events.json` | 掲載見送り決定の記録。event-updateは掲載中のイベントを再提案しない | ユーザー決定をClaudeが記録 |
+| `docs/task-playbook.md` | タスク共通の運用手順。**タスク自身が更新してよい**唯一の恒久化先 | 各Claudeタスク |
+| `audit-history.json` | 監査結果の推移(直近90件)。改善/悪化の判断に使う | scripts/audit.py |
 | `listing-policy.json` | 掲載基準の機械可読版。event-updateが判断に使い、書いていない類型だけキューに積む | 人間の決定をClaudeが記録 |
 | `crawl-sources.json` | 週次クローラの巡回先(52+自動候補) | 手動+discover_sources |
 | `check-results.json` | 日次チェック結果(メール本文の素) | health.yml |
