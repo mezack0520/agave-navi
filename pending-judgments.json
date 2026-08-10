@@ -108,6 +108,19 @@
       "policyProposal": "docs/architecture-2026-07.md §2 の event-listing-review 行と §5 の『問い合わせは受信の都度 notify-inquiry で即時メール』を、採用した経路の表現に書き換える。§7 の『repository_dispatchは使わない』と食い違ったまま残さない。スケジュールタスクのプロンプトも同時に更新する",
       "proposal": "A: work/new-inquiries.json を新設し notify-inquiry.yml を on.push(paths: work/new-inquiries.json) に変更する。1回だけGitHubのWeb UIでワークフローを編集すれば、以後はcontents権限のpushだけで即時メールが飛ぶ。BをAの補助として併用し、経路が再び死んでも翌朝の健全性メールで気づけるようにする",
       "action": "GitHubのWeb UIで .github/workflows/notify-inquiry.yml の on: を編集する(A)。CoworkでAまたはBを指示すればデータ側とプロンプトはこちらで整える"
+    },
+    {
+      "id": "event-update:composite-ratio-unverifiable",
+      "source": "agave-event-update",
+      "raised": "2026-08-10",
+      "title": "listing-policy に「複合イベントの植物比率が検証できない場合」の扱いがない",
+      "detail": "listing-policy.json の compositeEvents は『植物系出店が3割以上、または著名ナーセリー・専門店が3者以上なら掲載』と決めているが、出店者リストが非公開で比率を数えられない回の扱いが書かれていない。2026-08-10 に第4回にしかんボタニカル蚤の市(主催の一次情報あり・全21店・内訳非公開)でこの穴に当たった。現状は reasonType=unverified / revisit=true で見送りにしたが、unverified の定義は『一次情報が確認できず』なので実態と合っていない。",
+      "options": [
+        "A: compositeEvents に unverifiableRatio を追加し『一次情報はあるが比率が検証できない回は見送り、出店者リストが公開されたら再判定。rejected には reasonType=unverified / revisit=true で記録する』と明文化する(現在の運用をそのまま規則にする)",
+        "B: reasonType に ratio-unknown を新設して unverified と区別する",
+        "C: イベント名に植物語(ボタニカル/多肉/植物)が入り主催者が植物軸を明示している回は比率不明でも掲載する、と閾値を緩める"
+      ],
+      "recommendation": "A。運用実態と一致し、reasonType を増やさずに済む。C は フェルム・ド・フェス の見送り基準と衝突する"
     }
   ]
 }
