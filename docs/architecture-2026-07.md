@@ -96,8 +96,11 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 新規主催者の発見はStep0カバレッジスイープが担う(ウォッチは既知主催者の再来専用)。
 
 ## 7. 制約・注意(ハマりどころ)
-- PAT(`mzplants\agave-navi\github.pat`)は**contents権限のみ**。workflow_dispatch/Actions APIは403。
-  定期失効するので401が出たら長期限で再発行
+- PAT(`mzplants\agave-navi\github.pat`)は**ワークフローファイルのpushができる**(2026-08-10に実測)。
+  `.github/workflows/` 配下も git push で更新できる。workflow_dispatch/Actions APIは403のままで、
+  サンドボックスから api.github.com も不通。定期失効するので401が出たら長期限で再発行。
+  2026-08-10まで『contents権限のみでワークフローは触れない』と誤って記録されており、
+  この思い込みで notify-inquiry.yml の修正が10日間放置された
 - Claudeタスクは**Coworkアプリ起動中のみ**実行される。プロンプト変更後は「Run now」でツール事前承認
 - Instagram/nextmeetはサーバーから読めない → **Chromeで google.com/search?hl=ja&tbs=qdr:w2** が主経路
   (WebSearchのUS版ではIG告知がほぼ拾えない)
@@ -122,6 +125,7 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-10: PATでワークフローファイルをpushできることを実測で確認した。docs §7 とキュー項目は『contents権限のみ、ワークフローは触れない』と記録していたが誤りで、notify-inquiry.yml の差し替えはそのままpushできた。この誤記のせいで7/31以降の通知経路の断絶とhealth.ymlの未反映検査がユーザー作業待ちのまま滞留していた。Actions API(workflow_dispatch)が403なのは事実なので、ワークフローの起動はpushトリガのみという運用は変えない
 - 2026-08-10: 問い合わせの即時メール経路を push に移した。7/31に dispatch を廃止したとき notify-inquiry.yml だけ切り替え漏れがあり、発火条件が repository_dispatch のみのまま10日間 通知手段が存在しない状態になっていた(新着ゼロで実害はなし)。new-inquiries.json を新設し、event-listing-review が新着要約を書いてpushするとメールが飛ぶ。items空のpushでは送らないので消し込みで空メールは出ない。client_payload経路も互換で残してある。ワークフローファイルはcontents権限のPATでpushできないため、YAMLはユーザーがWeb UIで反映する
 - 2026-07-27: ClaudeをTeamプランへ移行(個人→Team組織)。Coworkスケジュールタスクは移行対象外で消失したため、
   4本(agave-event-update / event-listing-review / agave-navi-event-monitor / agave-navi-site-health-check)を

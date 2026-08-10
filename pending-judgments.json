@@ -35,10 +35,10 @@
       "source": "agave-navi-event-monitor",
       "date": "2026-08-01",
       "raised": "2026-08-01",
-      "title": "audit.pyに追加した3検査を日次メールに出すには health.yml の編集が必要(PAT権限不足でタスクからpushできない)",
-      "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。 / 2026-08-03追記: daily.yml の Auto status update ステップ(UTC判定)は scripts/auto-status-jst.py が build-all.sh 先頭で JST 判定するようになったため冗長になった。workflowを触れる機会にこのステップごと削除してよい(残っていても害はない)。 / 2026-08-03追記: audit.py に desc_scraped_junk(説明文へのURL・出典表記の混入)を追加し、desc_date_mismatch を「6/1(土)」形式のスラッシュ日付も拾うよう拡張した。同様に _urgent に載っていないためメールには出ない。 / 2026-08-04追記: audit.py に time_implausible(開催時間の幅が2時間未満)と access_pref_mismatch(アクセス文の路線が開催県を通っていない)を追加した。あわせて health.yml の image health ステップ(114-115行)が build-detail-pages.py と sync-index-cards.py だけを再実行して scripts/generate_sitemap.py を回さないため、終了30日超に入った回が noindex になっても sitemap には翌朝まで載り続ける事象を確認した(本日 8a786eb で4件。hentai-shokubutsu-fes-vol0-atc-2026-07 / okhotsk-taniku-festival-vol2-2026-07 / rekishi-domannaka-chokkyu-shokubutsu-2026-07 / taniku-matsuri-iwami-2026-07)。検出用に audit.py に sitemap_noindex_listed を追加した。 / 2026-08-10追記: audit.py に venue_postal_address(venue が会場名でなく郵便番号付き住所)と duplicate_venue_date(同日・同会場で名称の表記ゆれによる二重掲載)を追加した。前者は venue_pref_mismatch が県違いしか見ないため同一県内で別地点の住所を貼った9件が通り抜けていた事象、後者は duplicate_name_date が完全一致のため表記ゆれの重複を拾えなかった事象への恒久対応。いずれも同様に _urgent 未登録のためメールには出ない。",
+      "title": "audit.pyに追加した検査群が日次メールに出ていない(health.yml の _urgent 未登録。PATでpush可能と判明したので反映するだけ)",
+      "detail": "本日 audit.py に datedisplay_format / desc_date_mismatch / desc_stale_year / time_multiday_mismatch を追加した。audit-results.json には出るが、.github/workflows/health.yml の _urgent リスト(196-201行)に載っていないため日次メールには出ない。PATはcontents権限のみでワークフローファイルのpushが拒否されるため、このタスクからは直せない。 / 2026-08-03追記: daily.yml の Auto status update ステップ(UTC判定)は scripts/auto-status-jst.py が build-all.sh 先頭で JST 判定するようになったため冗長になった。workflowを触れる機会にこのステップごと削除してよい(残っていても害はない)。 / 2026-08-03追記: audit.py に desc_scraped_junk(説明文へのURL・出典表記の混入)を追加し、desc_date_mismatch を「6/1(土)」形式のスラッシュ日付も拾うよう拡張した。同様に _urgent に載っていないためメールには出ない。 / 2026-08-04追記: audit.py に time_implausible(開催時間の幅が2時間未満)と access_pref_mismatch(アクセス文の路線が開催県を通っていない)を追加した。あわせて health.yml の image health ステップ(114-115行)が build-detail-pages.py と sync-index-cards.py だけを再実行して scripts/generate_sitemap.py を回さないため、終了30日超に入った回が noindex になっても sitemap には翌朝まで載り続ける事象を確認した(本日 8a786eb で4件。hentai-shokubutsu-fes-vol0-atc-2026-07 / okhotsk-taniku-festival-vol2-2026-07 / rekishi-domannaka-chokkyu-shokubutsu-2026-07 / taniku-matsuri-iwami-2026-07)。検出用に audit.py に sitemap_noindex_listed を追加した。 / 2026-08-10追記: audit.py に venue_postal_address(venue が会場名でなく郵便番号付き住所)と duplicate_venue_date(同日・同会場で名称の表記ゆれによる二重掲載)を追加した。前者は venue_pref_mismatch が県違いしか見ないため同一県内で別地点の住所を貼った9件が通り抜けていた事象、後者は duplicate_name_date が完全一致のため表記ゆれの重複を拾えなかった事象への恒久対応。いずれも同様に _urgent 未登録のためメールには出ない。 / 2026-08-10追記: 前提が誤っていた。PATでワークフローファイルをpushできることを実測で確認した(notify-inquiry.yml の差し替えが通った)。よって本項目は『PAT権限不足でタスクからpushできない』のではなく、単に未実施。次回のタスク実行、またはCoworkでの指示で反映できる。",
       "proposal": "health.yml の _urgent に 'datedisplay_format', 'desc_date_mismatch', 'desc_stale_year', 'time_multiday_mismatch', 'desc_scraped_junk' の5キーを追加する。ユーザーがGitHub上で直接編集するか、workflow権限付きPATを用意する。恒久策としてはPATにworkflowスコープを付ける あわせて daily.yml の Auto status update ステップを削除する(scripts/auto-status-jst.py に移管済み)。 あわせて health.yml の image health ステップに python3 scripts/generate_sitemap.py を1行足す(sitemapの取り残しの恒久対応)。_urgent には time_implausible / access_pref_mismatch / sitemap_noindex_listed も加える。 _urgent に 'venue_postal_address' と 'duplicate_venue_date' も加える。",
-      "action": "GitHubのWeb UIで .github/workflows/health.yml を編集するのが早い"
+      "action": "Coworkで「キューの health-mail-new-checks を反映」と指示すればこちらで health.yml と daily.yml を直してpushする(PATで可能なことを2026-08-10に確認済み)"
     },
     {
       "id": "site-health:affiliate-season",
@@ -91,23 +91,6 @@
       "whyNotAuto": "どちらのURLを残すかは公開済みページの取り下げになるため機械的に決められない。両ページとも公開済みで検索インデックスに載っている可能性がある",
       "policyProposal": "listing-policy.json に duplicateListing を新設し、『同日・同会場で名称の表記ゆれがある回は同一回とみなす。主催者公式を出典に持つ側を残し、他方の固有情報(共同開催者・出典URL)を残す側へ寄せて削除する』を明文化する。以後この類型はキューに積まず自動で統合する",
       "action": "Coworkで「キューの plants-garage-market-dup を A で反映」等と指示"
-    },
-    {
-      "id": "listing-review:notify-inquiry-trigger-dead",
-      "source": "event-listing-review",
-      "date": "2026-08-10",
-      "raised": "2026-08-10",
-      "title": "問い合わせ即時メールの復旧に、notify-inquiry.yml の差し替えが1点だけ残っている(PATのcontents権限ではpush不可)",
-      "detail": "notify-inquiry.yml の on: は repository_dispatch(types: [notify-inquiry]) のみ。しかし docs/architecture-2026-07.md §7 のとおり dispatch は 2026-07-31 に廃止され(Chrome経由の認証ヘッダ付きfetchが遮断されPromiseが解決しない/サンドボックスから api.github.com は不通)、PATもcontents権限のみでActions APIは403。つまり本タスクが新着回答を検知しても即時メールを送る手段が存在しない。7/2の見逃し事故への恒久対応として作った通知が10日間空回りしている。本日時点では回答が全2件(2026/04/27・2026/07/02)でどちらも処理済みのため実害は出ていないが、次の新着で確実に見逃す。あわせてスケジュールタスク event-listing-review のプロンプト本文が今も「repository_dispatch: notify-inquiry を叩く」と指示しており、docsと矛盾している。 / 2026-08-10追記: Aで進めることにした。new-inquiries.json(受け渡し箱)・docs・タスクプロンプトはこちらで反映済み。残るのは .github/workflows/notify-inquiry.yml の差し替え1点のみで、これはcontents権限のPATではpushできないためユーザー作業。差し替えるまで新着の即時メールは飛ばない。",
-      "options": [
-        "A(採用・反映待ち): new-inquiries.json を新設し、本タスクが新着要約をそこへ書いてpushする。notify-inquiry.yml を on.push(paths: new-inquiries.json) に変更する。差し替え用のYAML全文は mzplants\\agave-navi\\notify-inquiry.yml に用意済み。GitHubのWeb UIで .github/workflows/notify-inquiry.yml をこの内容に置き換えれば経路が復活する。以後の運用はcontents権限のpushだけで完結する",
-        "B: 新着を pending-judgments.json に積み、翌朝09:00の健全性メールで拾う。ワークフロー編集は不要だが本タスクは10:09実行なので通知が最大約23時間遅れる",
-        "C: PATに workflow スコープを付け、以後タスク側からワークフローも直せるようにする(event-monitor:health-mail-new-checks と同じ根本要因)"
-      ],
-      "whyNotAuto": "notify-inquiry.yml はワークフローファイルで、contents権限のみのPATではpushが拒否される。どの経路を正とするか(即時性を取るか、メール本数を増やさないか)は運用方針の判断でもある",
-      "policyProposal": "docs/architecture-2026-07.md §2 の event-listing-review 行と §5 の『問い合わせは受信の都度 notify-inquiry で即時メール』を、採用した経路の表現に書き換える。§7 の『repository_dispatchは使わない』と食い違ったまま残さない。スケジュールタスクのプロンプトも同時に更新する",
-      "proposal": "差し替え用YAML(mzplants\\agave-navi\\notify-inquiry.yml)をGitHubのWeb UIで .github/workflows/notify-inquiry.yml に貼る。これだけで問い合わせの即時メールが復活する。データ側・docs・タスクプロンプトは2026-08-10に反映済み",
-      "action": "GitHubのWeb UIで .github/workflows/notify-inquiry.yml を mzplants\\agave-navi\\notify-inquiry.yml の内容に差し替える。反映したらCoworkで「notify-inquiry 反映した」と伝えればキューから消し込む"
     },
     {
       "id": "event-update:composite-ratio-unverifiable",
