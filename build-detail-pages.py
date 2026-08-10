@@ -794,7 +794,10 @@ def make_visit_tips(ev):
     cat = detect_primary_category(ev)
     region = ev.get('region') or ''
     pref = ev.get('prefecture') or ''
-    venue = ev.get('venue') or ''
+    # venue は location へフォールバックさせる(他の会場表示は 339/513/1008行で
+    # 既にフォールバック済みで、ここだけ venue 単独だった)。どちらも無い回は
+    # 「会場は東京(会場)です」という空括弧が出ていたため括弧ごと省く(2026-08-10: 123頁)。
+    venue = ev.get('venue') or ev.get('location') or ''
     admission = (ev.get('admission') or '').strip()
     time_str = (ev.get('time') or '').strip()
     is_free = '無料' in admission
@@ -806,7 +809,9 @@ def make_visit_tips(ev):
 
     if region:
         tips.append(
-            f'会場は{html_escape(pref or region)}({html_escape(venue or "会場")})です。'
+            f'会場は{html_escape(pref or region)}'
+            + (f'({html_escape(venue)})' if venue and venue not in _VAGUE_VENUES else '')
+            + 'です。'
             '公共交通機関でのアクセスを基本に、休日の駐車場混雑・周辺道路の状況も'
             '合わせて確認しておくと当日のスケジュールが組みやすくなります。'
         )
