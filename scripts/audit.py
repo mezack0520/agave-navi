@@ -56,6 +56,30 @@ def main():
     add('duplicate_name_date', '同名・同日で別slug(二重掲載の疑い)',
         [f'{n} {d}: ' + ', '.join(v) for (n, d), v in seen.items() if len(v) > 1])
 
+    # 2b. 同日・同会場で名前だけ違う二重掲載。2 の完全一致では
+    #     「Plants garage market 2026」と「Plants garage market 2026 -SPRING & SUMMER-」
+    #     のような表記ゆれを拾えず、同一回が2ページ生まれていた(2026-08-10に検出)。
+    #     会場は記号と括弧内の地名を落として比較する。会場が同じで日付も同じなら
+    #     別イベントである可能性は低い。
+    def _venue_key(e):
+        v = (e.get('location') or e.get('venue') or '').strip()
+        v = re.sub(r'[（(].*?[)）]', '', v)
+        v = re.sub(r'[\s　・\-—〜~]', '', v)
+        return v
+
+    seen_vd = defaultdict(list)
+    for e in events:
+        vk = _venue_key(e)
+        d = e.get('date') or ''
+        if vk and d and vk not in ('調整中', '未定', '会場未定'):
+            seen_vd[(vk, d)].append(e.get('slug'))
+    dup_vd = sorted(f"{k[1]} {k[0]}: {' / '.join(sorted(v))}"
+                    for k, v in seen_vd.items() if len(v) > 1)
+    add('duplicate_venue_date', '同日・同会場で別slug(名称の表記ゆれによる二重掲載の疑い)',
+        dup_vd,
+        '同一回なら片方を削除し、残す側に一次情報を寄せる。'
+        '本当に同会場で別イベントなら名称で区別できるようにする')
+
     # 3. 詳細ページの孤児と欠落
     files = {os.path.basename(f)[:-5] for f in glob.glob(rp('events', '*.html'))}
     add('orphan_detail_pages', 'events.jsonに無いのに残っている詳細ページ',
@@ -339,6 +363,23 @@ def main():
         sorted(set(place_bad)),
         'venue は location より優先して表示・JSON-LDに入り、mapQuery は地図の座標になる。'
         '裏取りできなければ消して location + prefecture のフォールバックに任せる')
+
+    # 9c-4. venue が会場名ではなく郵便番号付きの住所になっていないか。
+    #       venue_pref_mismatch は県が食い違う場合しか拾えないため、同一県内で
+    #       別地点の住所を貼った回(2026-08-10時点で9件)が通り抜けていた。
+    #       venue は build-detail-pages.py:339 で location より優先されるので、
+    #       スペック表・FAQ本文・JSON-LD の Place.name に生の住所が出る
+    #       (例: code-tokyo-popup-2026-08 は大井町開催なのに「会場は東京
+    #       (〒171-0022 東京都豊島区南池袋1丁目)です」と出ていた)。住所は mapQuery の役割。
+    postal_venue = []
+    for e in events:
+        val = (e.get('venue') or '').strip()
+        if val.startswith('〒') or re.match(r'^\d{3}-\d{4}', val):
+            postal_venue.append(f"{e['slug']}: venue=\"{val[:40]}\"")
+    add('venue_postal_address', 'venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)',
+        sorted(postal_venue),
+        '住所は mapQuery に置き、venue は会場名だけにする。'
+        '会場名が location にあるなら venue を削除して location へフォールバックさせる')
 
     # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
     #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する

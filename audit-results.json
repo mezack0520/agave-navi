@@ -1,5 +1,5 @@
 {
-  "total": 111,
+  "total": 112,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -12,6 +12,14 @@
       "count": 0,
       "items": [],
       "note": ""
+    },
+    "duplicate_venue_date": {
+      "title": "同日・同会場で別slug(名称の表記ゆれによる二重掲載の疑い)",
+      "count": 1,
+      "items": [
+        "2026-05-30 イリノベ倉庫: plants-garage-market-2026-spring / plants-garage-market-2026-tsukumi"
+      ],
+      "note": "同一回なら片方を削除し、残す側に一次情報を寄せる。本当に同会場で別イベントなら名称で区別できるようにする"
     },
     "orphan_detail_pages": {
       "title": "events.jsonに無いのに残っている詳細ページ",
@@ -228,6 +236,12 @@
       "count": 0,
       "items": [],
       "note": "venue は location より優先して表示・JSON-LDに入り、mapQuery は地図の座標になる。裏取りできなければ消して location + prefecture のフォールバックに任せる"
+    },
+    "venue_postal_address": {
+      "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
+      "count": 0,
+      "items": [],
+      "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる"
     },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記)",
