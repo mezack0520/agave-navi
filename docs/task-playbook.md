@@ -42,8 +42,11 @@
 - **既存イベントの修正は `events.json` を直接編集する。**
   `sanity-check-new-events.py` は既存slugを "slug already exists" で落とすため
   `new-events.json` 経由では通らない
-- **nohup のバックグラウンド実行は呼び出し終了時に殺される。**
-  `build-all.sh` は45秒制限に収まらないので、`scripts` を4〜6本ずつ前景で順に叩く
+- **nohup のバックグラウンド実行は呼び出し終了時に殺される。前景で叩く。**
+  `build-all.sh` は前景で完走する。2026-08-11 の実測で全289件の詳細ページ+ガイド+
+  ランディング+フィード+sitemap が **1.2秒**。分割して叩く必要はない
+  (以前「45秒制限に収まらない」と書いていたのは誤り。遅いのは
+  `check_date_updates.py` と `check-links.sh` のようなネットワークを叩く側だけ)
 - **push が non-fast-forward で拒否されたら、生成物のrebaseは必ず衝突する。**
   `origin/main` に `reset --hard` → データ変更を再適用 → 再ビルド → push の順でやり直す
 - **CSS/JSを変えたら `scripts/sitelib.py` の `CSS_VERSION` / `JS_VERSION` を上げる。**
@@ -57,6 +60,10 @@
   htmlview の読み取りは失敗しても例外にならず0行や見出しだけで返る。
   `inquiries-processed.json` の件数を下回る行しか取れていないなら読み取り失敗として扱い、
   再試行する。黙って「新着なし」と報告すると申請を取りこぼす
+- **`/tmp` に clone すると Read/Write/Edit ツールが届かない。**
+  ファイルツールと bash は別のファイルシステムを見ているため、
+  マウント外に clone した場合はリポジトリの編集も `bash` + `python3` のヒアドキュメントでやる。
+  置換は `assert s.count(old)==1` を挟んでから書き戻すと、当てが外れたまま進むのを防げる
 - **clone 先を outputs マウント配下に置くと失敗する。**
   `.git/config.lock` を unlink できず `fatal: could not set 'remote.origin.fetch'` で止まる。
   `/tmp/<name>` か `$HOME/<name>` に取る。マウント外に clone した場合
@@ -88,8 +95,13 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 - `severity='urgent'` … 日次メールに出る。**0件が正常なものだけ**にする
 - `severity='info'` … 参考行にまとめる。常時0にならないものはこちら
 - **health.yml の編集は不要。** メールは `severity` を見て動的に出す
-- 検査を足したら1回実行し、誤検知が出ないことを確認してから push する
+- 検査を足したら1回実行し、誤検知が出ないことを確認してから push する。
+  **修正前のデータにも当てて、狙った件数が出ることを確かめる**。
+  0を返す検査は、壊れていても0を返す
 - 誤検知が止まらない検査は消す。**測れない検査は無いほうがよい**
+- **`events.json` にキーを増やしたら `audit.py` の `KNOWN_EVENT_FIELDS` にも足す。**
+  足さないと `unknown_event_fields` が毎日鳴る。逆に、読む側のコードが無いキーは
+  この検査で止まる(2026-08-11に `organizerUrl` / `urlCheckOk` / `_htmlName` を検出)
 
 ### 判断の記録
 

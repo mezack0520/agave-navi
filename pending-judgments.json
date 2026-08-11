@@ -6,16 +6,17 @@
       "source": "agave-navi-event-monitor",
       "raised": "2026-08-01",
       "title": "location欠落19件(終了済み)。会場グルーピングから漏れ、うち12件は本番で「会場未定」表示のまま",
-      "detail": "events.json の location が空のイベントが19件。全て status=past。うち7件は venue に会場名がある(mebuki-sai-2026 / sora-to-taiyo-marche-2026 / botanical-circus-7-2026 / fujiyama-days-little-green-park-2026 / raflum-popup-nagoya-takashimaya-2026 / petit-to-wonder-market-2026 / plants-garage-market)。詳細ページのスペック表は venue にフォールバックするので表示は正しいが、build-detail-pages.py の make_venue_history(957行)・会場集計(1168行) と generate-landing-pages.py(125/384/433行) は location しか読まないため、この7件は /venue/ ランディングと「同会場の他イベント」から漏れる。残る12件は venue も無く、終了済みなのに「会場未定」と表示され続けている。",
+      "detail": "events.json の location が空のイベントが19件。全て status=past。うち6件は venue に会場名がある(mebuki-sai-2026 / sora-to-taiyo-marche-2026 / botanical-circus-7-2026 / fujiyama-days-little-green-park-2026 / raflum-popup-nagoya-takashimaya-2026 / petit-to-wonder-market-2026)。plants-garage-market は 2026-08-10 に venue の住所貼り付けを削除したため、venueもlocationも無い側に移った。詳細ページのスペック表は venue にフォールバックするので表示は正しいが、build-detail-pages.py の make_venue_history(957行)・会場集計(1168行) と generate-landing-pages.py(125/384/433行) は location しか読まないため、この6件は /venue/ ランディングと「同会場の他イベント」から漏れる。残る13件は venue も無く、終了済みなのに「会場未定」と表示され続けている。",
       "options": [
         "A: build側を location or venue に統一する(他の箇所は既にフォールバック済みで、この5箇所だけ不統一)。VAGUE_VENUES に無い『京橋』のような地名で会場頁が1件だけ生まれるが、3件未満はnoindex扱いなので実害は小さい",
-        "B: events.json 側で venue のある7件に location を補記する(表記は『会場名（都道府県+市区町村）』が既存慣例。市区町村は要調査のため機械的には確定できない)",
-        "C: 終了済み×会場情報なしの12件は『会場未定』ではなく『記録なし』と出す(build-detail-pages.py:527)。開催前の未定と終了後の不明は意味が違う"
+        "B: events.json 側で venue のある6件に location を補記する(表記は『会場名（都道府県+市区町村）』が既存慣例。市区町村は要調査のため機械的には確定できない)",
+        "C: 終了済み×会場情報なしの13件は『会場未定』ではなく『記録なし』と出す(build-detail-pages.py:527)。開催前の未定と終了後の不明は意味が違う"
       ],
       "policyProposal": "listing-policy.json に venueRecord を新設し、『location は会場グルーピングの単一キー。venue だけを持つエントリを作らない。終了済みで会場が不明な回は 会場未定 ではなく 記録なし と表示する』を明文化する。以後この類型はキューに積まず自動処理する",
       "action": "Coworkで「キューの location-missing-19 を A で反映」等と指示",
       "date": "2026-08-01",
-      "proposal": "listing-policy.json に venueRecord を新設し、『location は会場グルーピングの単一キー。venue だけを持つエントリを作らない。終了済みで会場が不明な回は 会場未定 ではなく 記録なし と表示する』を明文化する。以後この類型はキューに積まず自動処理する"
+      "proposal": "listing-policy.json に venueRecord を新設し、『location は会場グルーピングの単一キー。venue だけを持つエントリを作らない。終了済みで会場が不明な回は 会場未定 ではなく 記録なし と表示する』を明文化する。以後この類型はキューに積まず自動処理する",
+      "recheckedOn": "2026-08-11"
     },
     {
       "id": "event-monitor:kurashiki-desc-2025",
@@ -94,6 +95,24 @@
         "C: イベント名に植物語(ボタニカル/多肉/植物)が入り主催者が植物軸を明示している回は比率不明でも掲載する、と閾値を緩める"
       ],
       "recommendation": "A。運用実態と一致し、reasonType を増やさずに済む。C は フェルム・ド・フェス の見送り基準と衝突する"
+    },
+    {
+      "id": "event-monitor:tenkaichi-borderbreak-dup",
+      "source": "agave-navi-event-monitor",
+      "date": "2026-08-11",
+      "raised": "2026-08-11",
+      "title": "tenkaichi-2026 と border-break-6th-2026 が同日・同会場。同一回の二重掲載か同時開催の別イベントか判別できない",
+      "detail": "どちらも 2026-05-23〜05-24・京セラドーム大阪 スカイホールA/B・出典 https://no1plantae.com/ で、名称が「第6回 天下一植物界」と「BORDER BREAK!! 6th」。tenkaichi-2026 が持っていた残骸フィールド _htmlName の値が「第6回 天下一植物界 BORDER BREAK BEYOND」で、告知が両方の名称をひとつに並べていたことを示す。crawl-sources.json のウォッチ対象も「天下一植物界 BORDER BREAK（公式）」(IG @borderbreakbeyond)として1件で登録されている。location の粒度が「京セラドーム大阪」と「京セラドーム大阪 スカイホール」で違うため duplicate_venue_date の完全一致を通り抜けていた。本日 audit.py に前方一致の比較を足して検出した(_htmlName は削除済みなので、この経緯は本キューが唯一の記録)。",
+      "options": [
+        "A: 同一回だった場合。docs/architecture-2026-07.md によると tenkaichi-2026 の詳細ページは90日で194クリックの流入がある。tenkaichi-2026 を残し、border-break-6th-2026 の説明文(熱帯植物のトレードフェアという内容)を寄せて削除する",
+        "B: 同時開催の別イベントだった場合。両方残したまま、名称に同時開催であることを書き、location を「京セラドーム大阪 スカイホールA・B」に揃えて重複検査から外す",
+        "C: 名称を「第6回 天下一植物界 BORDER BREAK BEYOND」の1件に統合し、slug は流入のある tenkaichi-2026 側に寄せる"
+      ],
+      "needed": "主催者(no1plantae / IG @borderbreakbeyond)の 2026-05-23〜24 回の告知で、天下一植物界と BORDER BREAK が同一イベントの名称かを確認する",
+      "whyNotAuto": "どちらも公開済みで、tenkaichi-2026 には実際の検索流入がある。ページの取り下げになるため機械的に決められない。ブラウザを使わない本タスクでは一次情報を当たれない",
+      "policyProposal": "listing-policy.json に duplicateListing(plants-garage-market-dup で提案済み)を新設するとき、『同日・同会場で名称が違う回は、同時開催の別イベントである可能性を先に潰す。同一回なら検索流入の多い slug を残す』を条件に加える",
+      "action": "Coworkで「キューの tenkaichi-borderbreak-dup を A で反映」等と指示"
     }
-  ]
+  ],
+  "updated": "2026-08-11"
 }

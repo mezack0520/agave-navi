@@ -8,6 +8,7 @@
 読み取り専用。何も変更しない。検出結果を JSON とテキストで出す。
 終了コードは常に0(検出は失敗ではない)。件数は日次メールに載せる。
 """
+import html as _html
 import json
 import os
 import re
@@ -17,7 +18,20 @@ from collections import defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
-from sitelib import today_jst
+from sitelib import today_jst, VAGUE_VENUES
+
+# events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
+# 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
+# _htmlName の3種を検出)。フィールド名の打ち間違いもここで止まる。
+# 追加するときは、そのキーを読む側のコードを先に書くこと。
+KNOWN_EVENT_FIELDS = {
+    'slug', 'name', 'date', 'dateEnd', 'dateDisplay', 'time',
+    'location', 'venue', 'mapQuery', 'access', 'prefecture', 'region',
+    'description', 'tags', 'status', 'eventStatus', 'admission',
+    'url', 'sourceUrl', 'imageUrl', 'instagramUrl', 'instagramPostId',
+    'organizer', 'organizerIg', 'recurring', 'autoDateUpdate',
+    'addedDate', 'dataSource',
+}
 
 
 def rp(*a):
@@ -67,18 +81,42 @@ def main():
     #     別イベントである可能性は低い。
     def _venue_key(e):
         v = (e.get('location') or e.get('venue') or '').strip()
+        v = re.sub(r'<[^>]+>', ' ', v)
         v = re.sub(r'[（(].*?[)）]', '', v)
         v = re.sub(r'[\s　・\-—〜~]', '', v)
         return v
+
+    # 会場名の粒度が違うだけの同一回も拾う(2026-08-11に検出)。
+    # 「京セラドーム大阪」と「京セラドーム大阪スカイホール」は完全一致では別会場に見える。
+    # 誤検出を防ぐため、短いほう(=接頭辞側)が6文字以上で、かつ
+    # 「東京都内」「岐阜県内」のような広域指定でないときだけ同一とみなす。
+    _AREA_ONLY = re.compile(r'(都|道|府|県|市|区|町|村)内$')
+
+    def _vague(v):
+        return v in VAGUE_VENUES or bool(_AREA_ONLY.search(v))
 
     seen_vd = defaultdict(list)
     for e in events:
         vk = _venue_key(e)
         d = e.get('date') or ''
-        if vk and d and vk not in ('調整中', '未定', '会場未定'):
+        if vk and d and not _vague(vk):
             seen_vd[(vk, d)].append(e.get('slug'))
     dup_vd = sorted(f"{k[1]} {k[0]}: {' / '.join(sorted(v))}"
                     for k, v in seen_vd.items() if len(v) > 1)
+
+    by_date_v = defaultdict(list)
+    for (vk, d), slugs_v in seen_vd.items():
+        by_date_v[d].append((vk, slugs_v))
+    for d, lst in by_date_v.items():
+        for i in range(len(lst)):
+            for j in range(i + 1, len(lst)):
+                a, b = lst[i], lst[j]
+                short, long_ = sorted((a[0], b[0]), key=len)
+                if len(short) < 6 or not long_.startswith(short):
+                    continue
+                dup_vd.append(f"{d} {short} ⊂ {long_}: "
+                              + ' / '.join(sorted(a[1] + b[1])))
+    dup_vd = sorted(set(dup_vd))
     add('duplicate_venue_date', '同日・同会場で別slug(名称の表記ゆれによる二重掲載の疑い)',
         dup_vd,
         '同一回なら片方を削除し、残す側に一次情報を寄せる。'
@@ -396,8 +434,65 @@ def main():
             junk.append(f"{e['slug']}: 本文にURLが混入")
         if re.match(r'^(提供元|引用元|出典)\s*[:：]', desc):
             junk.append(f"{e['slug']}: 本文が出典表記で始まる(スクレイプ結果の貼り付け)")
-    add('desc_scraped_junk', '説明文にスクレイプ由来の混入(URL・出典表記)', sorted(junk),
+        # リンク先を伴わない角括弧ラベルは、記事のアンカーテキストだけが
+        # 残ったもの(2026-08-11に mollis-exhibit-kinto-2026 で検出)
+        m = re.search(r'\[[^\]]{2,120}\]', desc)
+        if m:
+            junk.append(f"{e['slug']}: 本文にリンクテキストの残骸 {m.group(0)[:30]}")
+    add('desc_scraped_junk', '説明文にスクレイプ由来の混入(URL・出典表記・リンク残骸)',
+        sorted(junk),
         '本文はイベント説明だけにする。URLは url / sourceUrl に置く')
+
+    # 9c. 説明文が途中で切れている。スクレイプが本文の途中で打ち切られた回は
+    #     括弧が閉じないまま終わる / 句点で終わらない。閲覧者には文の欠けた
+    #     案内が出る(2026-08-11に検査化。既知の2件がこれに当たる)。
+    trunc = []
+    for e in events:
+        desc = (e.get('description') or '').strip()
+        if not desc:
+            continue
+        for o, c in (('「', '」'), ('（', '）'), ('(', ')'), ('『', '』')):
+            if desc.count(o) != desc.count(c):
+                trunc.append(f"{e['slug']}: 括弧 {o}{c} が閉じていない …{desc[-24:]}")
+                break
+        else:
+            if desc[-1] not in '。」』）)！!？?…':
+                trunc.append(f"{e['slug']}: 文末が句点で終わらない …{desc[-24:]}")
+    add('desc_truncated', '説明文が途中で切れている(括弧未閉じ・文末が句点でない)',
+        sorted(trunc),
+        '一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す')
+
+    # 9d. events.json のスキーマ外キー。読む側が無いキーは値が入っていても
+    #     どこにも出ないので、入力ミスが黙って通る(2026-08-11に3種を検出)。
+    unknown = []
+    for e in events:
+        for k in e:
+            if k not in KNOWN_EVENT_FIELDS:
+                unknown.append(f"{e.get('slug')}: {k} = {str(e[k])[:40]}")
+    add('unknown_event_fields', 'events.jsonにスキーマ外のキー(どのスクリプトも読まない)',
+        sorted(unknown),
+        '既存キーに寄せるか、読む側のコードを書いて audit.py の '
+        'KNOWN_EVENT_FIELDS に追加する')
+
+    # 9e. データにHTMLタグ・実体参照が混入。build側は html_escape するので
+    #     生タグは literal で表示され、JSON-LD の Place.name にも出る
+    #     (2026-08-11に venue の <br> を2件検出)。
+    _TAG = re.compile(r'</?[a-zA-Z][a-zA-Z0-9]*\s*/?>')
+    _ENT = re.compile(r'&(?:amp|lt|gt|quot|apos|nbsp|#\d+|#x[0-9a-fA-F]+);')
+    htmlish = []
+    for e in events:
+        for k, v in e.items():
+            if not isinstance(v, str):
+                continue
+            if _TAG.search(v):
+                htmlish.append(f"{e.get('slug')}: {k} にHTMLタグ {v[:40]}")
+            elif _ENT.search(v):
+                htmlish.append(f"{e.get('slug')}: {k} に実体参照 {v[:40]}")
+            elif '\n' in v or '\t' in v:
+                htmlish.append(f"{e.get('slug')}: {k} に改行/タブ {v[:40]!r}")
+    add('html_in_data', 'events.jsonの値にHTMLタグ・実体参照・改行が混入',
+        sorted(htmlish),
+        'データは素のテキストで持つ。改行や強調はbuild側で付ける')
 
     # 10. 配布フィードの件数整合
     feed = {}
@@ -531,6 +626,56 @@ def main():
     rk = (links.get('asp') or {}).get('rakuten') or {}
     missing_cfg = [k for k in ('applicationId', 'accessKey', 'apiEndpoint', 'affiliateId')
                    if not rk.get(k)]
+    # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
+    #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
+    #     さらに Event の日付・名称が events.json と一致するかを見る。
+    #     不一致は詳細ページの再生成漏れ(2026-08-11に検査化)。
+    _LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+    ld_bad, ld_drift = [], []
+    ev_by_slug = {e.get('slug'): e for e in events}
+    for f in sorted(glob.glob(rp('**', '*.html'), recursive=True)):
+        rel = os.path.relpath(f, REPO).replace(os.sep, '/')
+        # templates/ は {{placeholder}} を含む素材なのでJSONにならない
+        if rel.startswith(('archive/', 'staging/', 'new/', 'templates/')):
+            continue
+        try:
+            txt = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        blocks = []
+        for m in _LD.finditer(txt):
+            try:
+                blocks.append(json.loads(m.group(1)))
+            except ValueError as ex:
+                ld_bad.append(f'{rel}: {ex}'[:140])
+        slug = os.path.basename(rel)[:-5]
+        ev = ev_by_slug.get(slug) if rel.startswith('events/') else None
+        if not ev:
+            continue
+        node = None
+        for b in blocks:
+            for c in (b if isinstance(b, list) else [b]):
+                if isinstance(c, dict) and c.get('@type') == 'Event':
+                    node = c
+        if node is None:
+            ld_drift.append(f'{slug}: Event の JSON-LD が無い')
+            continue
+        want_end = ev.get('dateEnd') or ev.get('date')
+        for label, got, want in (
+                ('startDate', (node.get('startDate') or '')[:10], ev.get('date')),
+                ('endDate', (node.get('endDate') or '')[:10], want_end),
+                ('name', _html.unescape(node.get('name') or ''), ev.get('name'))):
+            if label == 'endDate' and not got:
+                continue
+            if got != want:
+                ld_drift.append(f'{slug}: {label} 頁={got!r} data={want!r}')
+    add('jsonld_invalid', 'JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)',
+        sorted(ld_bad),
+        'データ側にエスケープされていない引用符・制御文字が無いか見る')
+    add('jsonld_data_drift', '詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)',
+        sorted(ld_drift),
+        'build-detail-pages.py を回す。差分が残るならテンプレート側を疑う')
+
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
 
