@@ -260,6 +260,17 @@ def _is_thin_event(ev):
     return not (has_src and has_substance)
 
 
+def _venue_placeholder(ev):
+    """会場が無いときの表示。終了済みに「会場未定」は誤り(未定=これから決まる)。
+    終わった回で会場が分からないものは記録が無いだけなので「記録なし」と出す。"""
+    end = (ev.get('dateEnd') or ev.get('date') or '')
+    import datetime as _dt
+    today = _dt.date.today().isoformat()
+    if end and end < today:
+        return '記録なし'
+    return '会場未定'
+
+
 def make_affiliate_block(ev):
     """アフィリエイト枠。出典(url/sourceUrl)がある回には出す。
 
@@ -524,7 +535,7 @@ def build_page(template, ev, ctx):
         '{{regionEncoded}}': quote(region),
         '{{prefecture}}': prefecture,
         '{{prefectureOrRegion}}': prefecture or region,
-        '{{venue}}': html_escape(venue) if venue else '会場未定',
+        '{{venue}}': html_escape(venue) if venue else _venue_placeholder(ev),
         '{{description}}': html_escape(ev.get('description', '')),
         '{{metaDescription}}': html_escape(make_meta_description(ev)),
         '{{gcalUrl}}': make_gcal_url(ev),

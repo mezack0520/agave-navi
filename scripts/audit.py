@@ -112,6 +112,15 @@ def main():
             for j in range(i + 1, len(lst)):
                 a, b = lst[i], lst[j]
                 short, long_ = sorted((a[0], b[0]), key=len)
+                # 長い側が「ホール」「館」「階」などの下位区画を足しているだけの場合は
+                # 同一建物内の別会場なので二重掲載ではない(2026-08-10 誤検知対応)。
+                # 例: 京セラドーム大阪 と 京セラドーム大阪スカイホール は別イベント
+                suffix = long_[len(short):] if long_.startswith(short) else ''
+                import re as _re_sub
+                if suffix and _re_sub.search(
+                        r'ホール|会館|館|階|[0-9]+F|催事場|広場|会議室|展示場|棟|ルーム|コート|アリーナ',
+                        suffix):
+                    continue
                 if len(short) < 6 or not long_.startswith(short):
                     continue
                 dup_vd.append(f"{d} {short} ⊂ {long_}: "

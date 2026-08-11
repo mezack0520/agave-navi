@@ -1,5 +1,5 @@
 {
-  "total": 115,
+  "total": 106,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -17,11 +17,8 @@
     },
     "duplicate_venue_date": {
       "title": "同日・同会場で別slug(名称の表記ゆれによる二重掲載の疑い)",
-      "count": 2,
-      "items": [
-        "2026-05-23 京セラドーム大阪 ⊂ 京セラドーム大阪スカイホール: border-break-6th-2026 / tenkaichi-2026",
-        "2026-05-30 イリノベ倉庫: plants-garage-market-2026-spring / plants-garage-market-2026-tsukumi"
-      ],
+      "count": 0,
+      "items": [],
       "note": "同一回なら片方を削除し、残す側に一次情報を寄せる。本当に同会場で別イベントなら名称で区別できるようにする",
       "severity": "urgent"
     },
@@ -212,20 +209,15 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 2,
-      "items": [
-        "botanical-night-market-kurashiki-2026-08: 本文 8月23日 が 2026-08-22〜2026-08-22 の外",
-        "fujiyama-days-little-green-park-2026: 本文 6月1日 が 2026-04-18〜2026-04-19 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
     "desc_stale_year": {
       "title": "説明文が別年の日付を名指ししている(前年の告知文の使い回し)",
-      "count": 1,
-      "items": [
-        "botanical-night-market-kurashiki-2026-08: 本文に2025年8月23日 (開催は2026年)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "",
       "severity": "urgent"
     },
@@ -238,10 +230,8 @@
     },
     "time_implausible": {
       "title": "開催時間の幅が2時間未満(経路検索など別データの貼り付けの疑い)",
-      "count": 1,
-      "items": [
-        "picnic-garden-vol21-is-new-base-2026: time=\"10:00〜11:30\" は90分"
-      ],
+      "count": 0,
+      "items": [],
       "note": "即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す",
       "severity": "urgent"
     },
@@ -268,20 +258,15 @@
     },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記・リンク残骸)",
-      "count": 1,
-      "items": [
-        "botanical-night-market-kurashiki-2026-08: 本文が出典表記で始まる(スクレイプ結果の貼り付け)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文はイベント説明だけにする。URLは url / sourceUrl に置く",
       "severity": "urgent"
     },
     "desc_truncated": {
       "title": "説明文が途中で切れている(括弧未閉じ・文末が句点でない)",
-      "count": 2,
-      "items": [
-        "botanical-night-market-kurashiki-2026-08: 文末が句点で終わらない …が開催されます。会場には盆栽、観葉植物、多肉植物",
-        "fujiyama-days-little-green-park-2026: 括弧 「」 が閉じていない …toku住宅が協賛させていただいているイベント「"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す",
       "severity": "urgent"
     },
@@ -375,7 +360,7 @@
       "title": "楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)",
       "count": 0,
       "items": [],
-      "note": "検索語 39 件がこの設定に依存する",
+      "note": "検索語 40 件がこの設定に依存する",
       "severity": "info"
     }
   }
