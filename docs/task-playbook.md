@@ -48,6 +48,20 @@
   `origin/main` に `reset --hard` → データ変更を再適用 → 再ビルド → push の順でやり直す
 - **CSS/JSを変えたら `scripts/sitelib.py` の `CSS_VERSION` / `JS_VERSION` を上げる。**
   上げないと閲覧者のキャッシュが更新されず変更が届かない
+- **Googleフォームの回答は htmlview の iframe 内にある。**
+  `docs.google.com/spreadsheets/d/<id>/htmlview` を開き
+  `document.querySelector('iframe').contentDocument` から table を読む。
+  `get_page_text` ではシートタブ名しか取れない。
+  `javascript_tool` の戻り値に URL を含めると応答がブロックされるので、返すのは値だけにする
+- **読み取り行数が処理済み件数を下回ったら「新着なし」と結論しない。**
+  htmlview の読み取りは失敗しても例外にならず0行や見出しだけで返る。
+  `inquiries-processed.json` の件数を下回る行しか取れていないなら読み取り失敗として扱い、
+  再試行する。黙って「新着なし」と報告すると申請を取りこぼす
+- **clone 先を outputs マウント配下に置くと失敗する。**
+  `.git/config.lock` を unlink できず `fatal: could not set 'remote.origin.fetch'` で止まる。
+  `/tmp/<name>` か `$HOME/<name>` に取る。マウント外に clone した場合
+  `git config --global --add safe.directory <path>` が要ることがある。
+  JSONの照合だけなら `--depth 1 --filter=blob:none --no-checkout` + `git show HEAD:<file>` で足りる
 - **Instagram告知は WebSearch(US版)ではほぼ拾えない。**
   Chromeで `google.com/search?hl=ja&tbs=qdr:w2` を叩くのが主経路
 - 都道府県→地域は `scripts/sitelib.py` の `PREF_TO_REGION` が単一情報源。
