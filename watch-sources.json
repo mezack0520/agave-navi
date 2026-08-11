@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-11 20:33 JST",
+ "generated": "2026-08-12 06:47 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 143,
-  "awaitingNextEdition": 191,
+  "awaitingNextEdition": 193,
   "officialSiteCandidates": 53,
   "unresolvedIgHandles": 1
  },
@@ -41,15 +41,6 @@
    "eventCount": 3,
    "lastEventName": "ピクニックガーデン vol.24",
    "lastEventDate": "2026-09-06",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
-   "eventCount": 2,
-   "lastEventName": "木更津園芸市（2026年8月）",
-   "lastEventDate": "2026-08-11",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -162,12 +153,12 @@
    "priority": 1
   },
   {
-   "handle": "kobe_agave_shop",
-   "url": "https://www.instagram.com/kobe_agave_shop/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS UP SATSUMA",
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "eventCount": 2,
+   "lastEventName": "木更津園芸市（2026年8月）",
    "lastEventDate": "2026-08-11",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1
   },
   {
@@ -1294,6 +1285,15 @@
    "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "kobe_agave_shop",
+   "url": "https://www.instagram.com/kobe_agave_shop/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS UP SATSUMA",
+   "lastEventDate": "2026-08-11",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -1598,6 +1598,26 @@
    "recurring": false
   },
   {
+   "series": "PLANTS UP SATSUMA",
+   "lastSlug": "plants-up-satsuma-2026-08",
+   "lastDate": "2026-08-11",
+   "lastEnd": "2026-08-11",
+   "monthsSinceLast": 0,
+   "igHandle": "kobe_agave_shop",
+   "officialUrl": "https://www.instagram.com/p/DakTMN5hBhi/",
+   "recurring": false
+  },
+  {
+   "series": "木更津園芸市（2026年8月）",
+   "lastSlug": "kisarazu-engei-ichi-2026-08",
+   "lastDate": "2026-08-11",
+   "lastEnd": "2026-08-11",
+   "monthsSinceLast": 0,
+   "igHandle": "chiba_c_and_s_association",
+   "officialUrl": "",
+   "recurring": false
+  },
+  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1675,26 +1695,6 @@
    "monthsSinceLast": 1,
    "igHandle": "botanical.botanical",
    "officialUrl": "https://www.instagram.com/botanical.botanical/",
-   "recurring": false
-  },
-  {
-   "series": "自由草市 connecting smiles VOL.1 滋賀",
-   "lastSlug": "jiyu-kusaichi-vol1-shiga-2026-07",
-   "lastDate": "2026-07-11",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": "yugo.black",
-   "officialUrl": "https://www.instagram.com/yugo.black/",
-   "recurring": false
-  },
-  {
-   "series": "GREEN DAY'Z in HIGASHIKAWA",
-   "lastSlug": "green-dayz-higashikawa-2026-07",
-   "lastDate": "2026-07-11",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": "green_days2026",
-   "officialUrl": "https://www.instagram.com/green_days2026/",
    "recurring": false
   }
  ],
