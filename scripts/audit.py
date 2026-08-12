@@ -382,6 +382,7 @@ def main():
     #       都道府県は「〜県 / 〜府 / 東京都 / 北海道」の明示形だけを見る。
     #       会場名だけの表記(インテックス大阪)は会場辞書が要るのでこの検査では拾えない。
     from sitelib import PREF_TO_REGION as _P2R
+    from sitelib import VAGUE_VENUES as _VAGUE
 
     def _named_prefs(text):
         t = text.replace('東京都', '\x00')
@@ -431,6 +432,91 @@ def main():
         sorted(postal_venue),
         '住所は mapQuery に置き、venue は会場名だけにする。'
         '会場名が location にあるなら venue を削除して location へフォールバックさせる')
+
+    # 9c-5. venue / mapQuery が「会場名」として成立していないもの。
+    #       venue は location より優先して スペック表・FAQ・JSON-LD の Place.name に入り、
+    #       mapQuery は埋め込み地図の検索語そのものになる。したがってここに会場名以外が
+    #       入ると、地図が県全体や無関係な語を指し、構造化データの Place.name が
+    #       会場でなくなる。venue_postal_address は 〒 始まりしか見ないため素通りしていた。
+    #       2026-08-12 に検出した実例:
+    #         - venue=mapQuery="愛知県" (location に「すいとぴあ江南」があるのに未使用)。
+    #           地図は県全体を指し、JSON-LD は Place.name="愛知県" を出していた。9件
+    #         - venue=mapQuery="6月10日（水）～" (hankyu-green-expo-2026)。
+    #           日付をスクレイプして会場欄に貼った回。地図が日付文字列を検索していた
+    #         - venue=mapQuery="B1F 1番地　マルチスクエア前"。建物名を欠く館内スポットのみ
+    _PREF_SUFFIXED = {p + '都' if p == '東京' else
+                      p + '府' if p in ('大阪', '京都') else
+                      p if p == '北海道' else p + '県'
+                      for p in _P2R}
+    place_bad2 = []
+    for e in events:
+        for f in ('venue', 'mapQuery', 'location'):
+            val = (e.get(f) or '').strip()
+            if not val:
+                continue
+            # (a) venue / mapQuery が都道府県名だけ。venue は JSON-LD の Place.name に
+            #     そのまま入り、mapQuery は地図の検索語になるので、県名だけだと
+            #     地図が県全体を指し構造化データの会場名が県名になる。
+            #     location は会場が本当に分からない回の置き場なので対象外
+            #     (sitelib.VAGUE_VENUES 側で「記録なし」表示に落ちる)。
+            if f != 'location' and (val in _PREF_SUFFIXED or val in _P2R):
+                place_bad2.append(
+                    f"{e['slug']}: {f}=\"{val}\" は都道府県名だけで会場名がない")
+            # (b) 実在する都道府県名に誤った接尾辞が付いた表記(「京都県」「大阪県」)。
+            #     「やまぎん県民ホール」のような施設名を拾わないよう、
+            #     実在の県名+誤接尾辞の組み合わせだけを名指しで見る
+            for _wrong in ('京都県', '大阪県', '東京県', '東京府', '北海道県'):
+                if _wrong in val:
+                    place_bad2.append(
+                        f"{e['slug']}: {f}=\"{val[:30]}\" に存在しない"
+                        f"都道府県表記「{_wrong}」")
+            # (c) 日付・時刻表現。会場欄に日付をスクレイプして貼った回
+            if re.search(r'\d{1,2}月\d{1,2}日|\d{1,2}/\d{1,2}[^0-9]|\d{1,2}:\d{2}|'
+                         r'[（(][月火水木金土日][）)]|\d{4}年', val):
+                place_bad2.append(f"{e['slug']}: {f}=\"{val[:30]}\" に日付・時刻表現")
+    add('place_field_not_a_venue', 'venue/mapQuery/location が会場名になっていない'
+        '(地図とJSON-LDのPlace.nameが壊れる)', sorted(set(place_bad2)),
+        '会場名が location にあるなら venue と mapQuery を削除して '
+        'location + prefecture のフォールバックに任せる')
+
+    # 9c-6. venue と location が一文字も共有せず、別々の施設名を名乗っている回。
+    #       どちらか一方が別イベントからの貼り付けである可能性が高い。
+    #       venue が優先されるので、間違っているのが venue 側だと
+    #       スペック表・JSON-LD・地図の3つが揃って別会場を指す。
+    #       2026-08-12 の実例: hachimon-plants-festa-5th-ueda-2026-06 は
+    #       venue="B1F 1番地　マルチスクエア前"(建物名を欠く館内スポット)に対し
+    #       location="カクイチA-SITE上田店" で、地図が館内スポット名を検索していた。
+    #       一次情報を見ないとどちらが正しいか決まらないので info に置く。
+    def _place_norm(t):
+        return re.sub(r'[\s\u3000+（）()、,・]', '', t)
+
+    def _longest_common(a, b):
+        best = 0
+        for i in range(len(a)):
+            for j in range(i + best + 1, len(a) + 1):
+                if a[i:j] in b:
+                    best = j - i
+                else:
+                    break
+        return best
+
+    disagree = []
+    for e in events:
+        v = _place_norm((e.get('venue') or '').strip())
+        loc = _place_norm((e.get('location') or '').strip())
+        if not v or not loc:
+            continue
+        if (e.get('venue') or '').strip() in _VAGUE or \
+                (e.get('location') or '').strip() in _VAGUE:
+            continue
+        if _longest_common(v, loc) < 2:
+            disagree.append(f"{e['slug']}: venue=\"{e['venue'][:28]}\" と "
+                            f"location=\"{e['location'][:28]}\" が別の施設名")
+    add('venue_location_disagree', 'venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)',
+        sorted(disagree),
+        '一次情報で正しい会場を確認し、誤っている側を消す。'
+        '同一建物内の区画なら venue を「建物名 区画」の形にまとめる',
+        severity='info')
 
     # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
     #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する

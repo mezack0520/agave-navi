@@ -1,5 +1,5 @@
 {
-  "total": 106,
+  "total": 108,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -255,6 +255,23 @@
       "items": [],
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
+    },
+    "place_field_not_a_venue": {
+      "title": "venue/mapQuery/location が会場名になっていない(地図とJSON-LDのPlace.nameが壊れる)",
+      "count": 0,
+      "items": [],
+      "note": "会場名が location にあるなら venue と mapQuery を削除して location + prefecture のフォールバックに任せる",
+      "severity": "urgent"
+    },
+    "venue_location_disagree": {
+      "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
+      "count": 2,
+      "items": [
+        "jiyu-kusaichi-vol1-shiga-2026-07: venue=\"大津市リサイクルセンター木戸（大津市木戸29-3）\" と location=\"BORN FREE MEGA STORE\" が別の施設名",
+        "koumori-ran-no-ichi-vol4-2026-06: venue=\"荻窪タウンセブン8階あおぞらぱーく\" と location=\"SPROUT BRITOMART店\" が別の施設名"
+      ],
+      "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
+      "severity": "info"
     },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記・リンク残骸)",

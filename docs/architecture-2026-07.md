@@ -128,6 +128,17 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-12: 会場フィールドの不整合17件を修正し、audit.py に検査2本を追加した。`venue` は
+  `location` より優先して スペック表・JSON-LD の `Place.name`・埋め込み地図に入るのに、
+  `venue`=`mapQuery`=「愛知県」のように都道府県名だけの回が9件、`venue`=「6月10日（水）～」と
+  日付を貼った回が1件、建物名を欠く館内スポットだけの回が2件あり、地図が県全体や日付文字列を
+  検索していた。会場名は `location` 側にあったので `venue`/`mapQuery` を削除して
+  フォールバックさせた(館内スポットの2件は「建物名 区画」に統合)。あわせて
+  `sitelib.VAGUE_VENUES` に全都道府県名を追加した。従来は東京・大阪・名古屋だけの列挙で、
+  `venue`=「岩手」「広島」「和歌山」の回が会場名として扱われていた。
+  追加した検査は `place_field_not_a_venue`(urgent・修正前32件→0件)と
+  `venue_location_disagree`(info・修正前7件→2件)。後者の残り2件は
+  venue と location が別事業者名を名乗っており一次情報が要るためキューに積んだ
 - 2026-08-10: 要判断キュー7件を一括処理し、同じ類型が再び上がらないよう listing-policy に
   4項目を追加(venueRecord / descriptionFreshness / descriptionProvenance /
   compositeEvents.undisclosedBreakdown)。データ側は二重掲載1件の統合、前年告知の使い回し1件の

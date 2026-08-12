@@ -1,5 +1,37 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [],
-  "updated": "2026-08-11"
+  "items": [
+    {
+      "source": "agave-navi-event-monitor",
+      "raised": "2026-08-12",
+      "date": "2026-08-12",
+      "id": "event-monitor:venue-location-disagree-2",
+      "title": "venue と location が別々の施設名になっている2件。venue が優先されるためスペック表・JSON-LD・地図の3つが揃って別会場を指す可能性がある",
+      "detail": "jiyu-kusaichi-vol1-shiga-2026-07 は venue=\"大津市リサイクルセンター木戸（大津市木戸29-3）\" / location=\"BORN FREE MEGA STORE\"。koumori-ran-no-ichi-vol4-2026-06 は venue=\"荻窪タウンセブン8階あおぞらぱーく\" / location=\"SPROUT BRITOMART店\"。どちらも同一建物内の区画違いではなく別々の事業者名・施設名で、片方が別イベントからの貼り付けである可能性が高い。build-detail-pages.py は venue を優先するので、誤っているのが venue 側ならスペック表・JSON-LD の Place.name・地図の検索語がまとめて別会場を指す。同種の3件目 shoka-no-greencenter-matsuri-2026 は venue=\"芝生広場（正門入ってすぐ）\" が location の敷地内であることが値自体から確定できたため「川口市立グリーンセンター 芝生広場」に統合済み。残る2件は一次情報を見ないとどちらが正しいか決まらない。本タスクはブラウザを使わないため当たれない。2026-08-12 に audit.py へ venue_location_disagree(info) を追加し、以後は毎日可視化される",
+      "options": [
+        "A: 主催者の告知で会場を確認し、誤っている側のフィールドを消す",
+        "B: 同一建物内の区画違いだった場合は venue を「建物名 区画」の形にまとめる(shoka と同じ処理)",
+        "C: 裏取りできなければ venue を消して location + prefecture のフォールバックに任せる"
+      ],
+      "policyProposal": "listing-policy.json の venueRecord に「venue と location が別々の施設名を名乗る状態を作らない。同一建物内の区画は venue を『建物名 区画』の一本にまとめ、別施設なら誤っている側を消す」を追記する",
+      "action": "Coworkで「キューの venue-location-disagree-2 を A で反映」等と指示"
+    },
+    {
+      "source": "agave-navi-event-monitor",
+      "raised": "2026-08-12",
+      "date": "2026-08-12",
+      "id": "event-monitor:jsonld-place-name-is-pref",
+      "title": "会場名が分からない18件で JSON-LD の Place.name が都道府県名や「調整中」になっている",
+      "detail": "build-detail-pages.py:350 と 538 は venue or location を素通しで使うため、会場が未定・不明な回では JSON-LD の Place.name とスペック表の「会場」欄が「東京」「岩手」「調整中」などになる。地図とFAQ側は sitelib.VAGUE_VENUES を見て既に抑止されており、2026-08-12 に VAGUE_VENUES へ全都道府県名を追加したので地図は出なくなった。残るのは Place.name とスペック表の2箇所。スペック表を _venue_placeholder(「会場未定」/「記録なし」)に切り替えると整合はするが、詳細ページのスペック表には都道府県の行が無いため、「東京」→「記録なし」で唯一の地理情報が消える。表示の設計判断が要るので自動修正しなかった。対象18件: botanical-botanical-fukuoka-2026-10 / botanical-botanical-osaka-2026-10 / myoko-taniku-oichi-2026-11 / botanical-botanical-okinawa-2026-11 / isij-big-bazaar-2027(01-10・03-14・05-23・07-11・09-26・11-28) / plant-freaks-4th-2026 / botanical-botanical-osaka / wakayama-green-marche / shokubutsu-hyakkaten-2026 / sumi-no-engei-2026-05-02 / sumi-no-engei-2026-05-09 / botanical-botanical-tokyo-2026 / iwate-hana-midori-matsuri-2026",
+      "options": [
+        "A: スペック表に「開催地(都道府県)」の行を足したうえで、会場欄を _venue_placeholder に切り替える",
+        "B: 会場欄を「東京都内（会場未定）」のように都道府県+状態の複合表示にする",
+        "C: 表示は現状のままとし、JSON-LD の Place.name だけ「(都道府県)+ 会場未定」に揃える",
+        "D: 何もしない。会場名が判明した時点で自然に解消する"
+      ],
+      "policyProposal": "listing-policy.json の venueRecord に「会場名が未確定の回の表示は都道府県を残したうえで未確定であることを明示する」を追記し、どの表記に揃えるかを決める",
+      "action": "Coworkで「キューの jsonld-place-name-is-pref を A で反映」等と指示"
+    }
+  ],
+  "updated": "2026-08-12"
 }
