@@ -1,6 +1,6 @@
 {
   "_note": "掲載基準の機械可読版。agave-event-update が判断に使う。about.html の掲載基準と整合させること。ここに書いていない類型に出会ったときだけ pending-judgments に積む(同じ問いを繰り返し人間に投げないため)。",
-  "updated": "2026-07-30",
+  "updated": "2026-08-12",
   "primarySource": {
     "rule": "主催者の公式サイト・公式SNSに当該回の告知があることを必須とする",
     "insufficient": [
@@ -87,6 +87,21 @@
     "detail": "『◯◯がブース出店いたします』のような出店者視点の文、『提供元：』などの出典表記で始まる文、スクレイプ由来のURL混入は本文に使わない。イベント自体の説明になっていないため",
     "action": "主催者の一次情報で書き直す。書き直せない回は本文を空にして週次エンリッチに回す",
     "detection": "audit.py の desc_date_mismatch / desc_scraped_junk が自動検出する",
+    "doNotEscalate": true
+  },
+  "cancelledOrPostponed": {
+    "rule": "アグリゲータが『近日開催』として載せていても、主催者の一次情報が中止・休会・延期を告知している回は掲載しない",
+    "decided": "2026-08-12",
+    "detail": "pukubook / nextmeet / leaf-laboratory は開催予定を先に登録し、中止・休会を反映しないことがある。定例会や毎月開催のシリーズでとくに起きる",
+    "action": "rejected-events に reasonType=cancelled で記録する。次回回が別日で告知されたらそちらを新規エントリとして扱う",
+    "precedent": "I.S.I.J. 東京例会 2026-08-23 は pukubook が近日開催として掲載していたが、isij.net のスケジュールに『休会とさせていただきます』と明記されていた(2026-08-12)",
+    "doNotEscalate": true
+  },
+  "aggregatorSweep": {
+    "rule": "アグリゲータの一覧は掲載可否の根拠ではなく、探索の入口として使う",
+    "decided": "2026-08-12",
+    "detail": "pukubook の /events/ 一覧を1回読むだけで、Web検索だけでは拾えていなかった開催予定が複数出る(2026-08-12 に8件、うち6件が掲載相当)。blockedUrlDomains にあるのは url/sourceUrl への使用禁止であって、参照の禁止ではない",
+    "action": "拾った候補は必ず主催者の一次情報で日付・会場・時間・入場料を裏取りしてから登録する",
     "doNotEscalate": true
   }
 }

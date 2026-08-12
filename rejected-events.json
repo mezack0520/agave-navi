@@ -80,11 +80,65 @@
       "name": "第22回 わっさまるしぇ (2026-09-12 米沢総合公園)",
       "decided": "2026-08-10",
       "reason": "地域の総合マルシェ。出店者情報で植物系は露苦出凪刺plantsなど少数にとどまり、植物が主役の回ではない"
+    },
+    {
+      "key": "connect-noasobi-market-2026",
+      "reasonType": "policy",
+      "name": "CONNECT-noasobi market- 2026 (2026-10-03 NOASOBI camp field・飛騨市)",
+      "decided": "2026-08-12",
+      "reason": "主催 @connect_noasobi の告知はあるが『こだわりのフードやクラフト、音楽、空間』を掲げる総合アウトドアマーケット。名称も中立で植物出店の内訳は非公開。listing-policy の compositeEvents.undisclosedBreakdown の exclude に該当"
+    },
+    {
+      "key": "neighborhood-marche-vol5-2026",
+      "reasonType": "policy",
+      "name": "NEIGHBORHOOD MARCHE vol.5 (2026-08-22/23 幕張ベイパーク)",
+      "decided": "2026-08-12",
+      "reason": "主催 @neighborhood_marche の告知はあるが地域のナイトマルシェ。名称が中立で植物出店の内訳も非公開。undisclosedBreakdown の exclude に該当"
+    },
+    {
+      "key": "roots-and-sun-esaka-2026",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "ROOTS & SUN (アメニティ江坂・大阪府吹田市)",
+      "decided": "2026-08-12",
+      "reason": "主催 KUSABI @kusabi_official が『2026年10月開催』として出店者を募集中だが開催日が未確定。listing-policy の venueUnannounced.doNotList（日付未確定は掲載しない）に該当。日付が確定したら掲載する"
+    },
+    {
+      "key": "plant-and-pot-vol15-2026-09",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "PLANT & POT Vol.15 (2026-09-12/13 BaBaBa・東京都新宿区下落合)",
+      "decided": "2026-08-12",
+      "reason": "leaf-laboratory のみが日程・会場を報じており、主催者を特定できず一次情報に到達できない。過去回(Vol.14)はザ・グリーンショップトーキョー目黒店開催で主催アカウントが不明。主催者の告知が見つかったら掲載する"
+    },
+    {
+      "key": "gujo-de-cactus-night-market-2026-08",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "郡上 de サボテン多肉植物夜市 (2026-08-16 cafe finkys・岐阜県郡上市白鳥町)",
+      "decided": "2026-08-12",
+      "reason": "pukubook のイベントカレンダーにのみ掲載。同カレンダーは会期を『8月1日〜8月31日』と書く回もあり日付が揺れている。主催者・cafe finkys 側の当該回の告知が確認できない"
+    },
+    {
+      "key": "aki-no-shokubutsu-no-ichi-2026-10",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "秋の植物の市 (2026-10-04)",
+      "decided": "2026-08-12",
+      "reason": "複数の出店者アカウントが『10月4日日曜日、秋の植物の市、開催決定』と同一文面で告知しているが、会場も主催者も判明しない。会場が特定できたら掲載する"
+    },
+    {
+      "key": "isij-tokyo-reikai-2026-08-23",
+      "reasonType": "cancelled",
+      "name": "I.S.I.J. 東京例会 (2026-08-23 板橋区立熱帯環境植物館)",
+      "decided": "2026-08-12",
+      "reason": "pukubook が『近日開催』として掲載しているが、主催の国際多肉植物協会 isij.net のイベントスケジュールに『8/23（日）東京例会 → 休会とさせていただきます』と明記されている。アグリゲータが中止・休会を反映していない例"
     }
   ],
   "_reasonTypes": {
     "policy": "掲載基準に照らして載せないと決めた。再提案しない",
     "unverified": "植物軸はあるが一次情報が確認できず今は載せない。revisit=true なら一次情報が出たら再評価する",
-    "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する"
+    "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
+    "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   }
 }
