@@ -60,6 +60,11 @@
   htmlview の読み取りは失敗しても例外にならず0行や見出しだけで返る。
   `inquiries-processed.json` の件数を下回る行しか取れていないなら読み取り失敗として扱い、
   再試行する。黙って「新着なし」と報告すると申請を取りこぼす
+- **この検算で数えるのは `tr` の数ではなく「タイムスタンプが入った行」の数。**
+  回答シートの table は 1行目=列記号(A B C…)、2行目=見出し、3行目=空行 で、
+  データ2件でも `tr` は5個ある。`tr` の数で検算すると、データを1行も読めていなくても
+  5 ≥ 2 で通ってしまい、検算が意味を失う。A列の連番か1列目の日時でデータ行を判定する
+  (2026-08-12 の実測: `tr`=5 / データ行=2)
 - **`/tmp` に clone すると Read/Write/Edit ツールが届かない。**
   ファイルツールと bash は別のファイルシステムを見ているため、
   マウント外に clone した場合はリポジトリの編集も `bash` + `python3` のヒアドキュメントでやる。
@@ -114,6 +119,12 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 
 ### 判断の記録
 
+- **問い合わせを処理済みにするときは `inquiries-processed.json` の `outcomes` に
+  何をしたかも書く。** `processed` のタイムスタンプだけでは、処理済みにしたが実際には
+  何も反映していない取りこぼしを後から検出できない。
+  形: `{timestamp, type, eventName, action, detail, verifiedOn}`。
+  `action` は `listed` / `rejected` / `queued` / `no-action`。
+  このファイルを読むコードは無いのでキーを増やしてよい(2026-08-12に確認)
 - 見送りは `rejected-events.json` に `reasonType` 付きで記録（`policy` / `unverified`）
 - 人間の判断が要るものだけ `pending-judgments.json` に積む。
   そのとき **`listing-policy.json` への追記案を必ず添える**。同じ問いを翌日も投げないため

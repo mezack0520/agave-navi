@@ -1,7 +1,25 @@
 {
-  "description": "掲載申請フォームの処理済み回答タイムスタンプ。event-listing-reviewタスクが管理。",
+  "description": "掲載申請フォームの処理済み回答タイムスタンプ。event-listing-reviewタスクが管理。processed は重複判定用。outcomes は各回答をどう処理したかの記録(後から追跡できるようにするため。timestamp は processed と同じ値を使う)。",
   "processed": [
     "2026/04/27 18:19:12",
     "2026/07/02 22:50:09"
+  ],
+  "outcomes": [
+    {
+      "timestamp": "2026/04/27 18:19:12",
+      "type": "情報の修正・訂正",
+      "eventName": "サボテン・多肉植物ビッグバザール",
+      "action": "listed",
+      "detail": "5/24開催の指摘を反映。events.json の isij-big-bazaar-2026-05-24 として掲載済み",
+      "verifiedOn": "2026-08-12"
+    },
+    {
+      "timestamp": "2026/07/02 22:50:09",
+      "type": "情報の修正・訂正",
+      "eventName": "Agave Pop up market",
+      "action": "listed",
+      "detail": "種別は修正・訂正だが内容は新規掲載依頼。events.json の agave-popup-market-nagoya-2026-07 として掲載済み",
+      "verifiedOn": "2026-08-12"
+    }
   ]
 }
