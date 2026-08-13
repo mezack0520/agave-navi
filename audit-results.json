@@ -1,5 +1,5 @@
 {
-  "total": 108,
+  "total": 106,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -265,11 +265,8 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 2,
-      "items": [
-        "jiyu-kusaichi-vol1-shiga-2026-07: venue=\"大津市リサイクルセンター木戸（大津市木戸29-3）\" と location=\"BORN FREE MEGA STORE\" が別の施設名",
-        "koumori-ran-no-ichi-vol4-2026-06: venue=\"荻窪タウンセブン8階あおぞらぱーく\" と location=\"SPROUT BRITOMART店\" が別の施設名"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },

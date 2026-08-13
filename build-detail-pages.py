@@ -260,6 +260,22 @@ def _is_thin_event(ev):
     return not (has_src and has_substance)
 
 
+def make_prefecture_row(ev):
+    """会場名が出せない回に都道府県の行を足す。
+    スペック表には都道府県の行が無いため、会場欄を「記録なし」にすると
+    地理情報が完全に消えてしまう(2026-08-13)。"""
+    venue = (ev.get('venue') or ev.get('location') or '').strip()
+    if venue and venue not in sitelib.VAGUE_VENUES:
+        return ''
+    pref = (ev.get('prefecture') or '').strip() or (ev.get('region') or '').strip()
+    if not pref:
+        return ''
+    return ('\n          <div class="info-row">'
+            '\n            <span class="info-label">地域</span>'
+            f'\n            <span class="info-value">{html_escape(pref)}</span>'
+            '\n          </div>')
+
+
 def _venue_placeholder(ev):
     """会場が無いときの表示。終了済みに「会場未定」は誤り(未定=これから決まる)。
     終わった回で会場が分からないものは記録が無いだけなので「記録なし」と出す。"""
@@ -347,7 +363,10 @@ def make_event_jsonld(ev):
     name = html_escape(ev.get('name', ''))
     date = ev.get('date', '')
     end = ev.get('dateEnd') or date
-    venue = html_escape(ev.get('venue') or ev.get('location') or '')
+    _raw_venue = (ev.get('venue') or ev.get('location') or '').strip()
+    # 都道府県名・「調整中」等は会場名ではない。Place.name に入れると
+    # 構造化データが誤った施設を指すため、その場合は名前を持たせない。
+    venue = html_escape(_raw_venue) if _raw_venue not in sitelib.VAGUE_VENUES else ''
     pref = ev.get('prefecture', '') or ev.get('region', '')
     desc = html_escape(make_meta_description(ev))
     image_url = (ev.get('imageUrl') or '').replace('"', '&quot;')
@@ -535,7 +554,10 @@ def build_page(template, ev, ctx):
         '{{regionEncoded}}': quote(region),
         '{{prefecture}}': prefecture,
         '{{prefectureOrRegion}}': prefecture or region,
-        '{{venue}}': html_escape(venue) if venue else _venue_placeholder(ev),
+        '{{venue}}': (html_escape(venue)
+                      if venue and venue not in sitelib.VAGUE_VENUES
+                      else _venue_placeholder(ev)),
+        '{{prefectureRow}}': make_prefecture_row(ev),
         '{{description}}': html_escape(ev.get('description', '')),
         '{{metaDescription}}': html_escape(make_meta_description(ev)),
         '{{gcalUrl}}': make_gcal_url(ev),
