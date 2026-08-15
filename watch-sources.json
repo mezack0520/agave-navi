@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-15 06:24 JST",
+ "generated": "2026-08-16 06:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 152,
-  "awaitingNextEdition": 193,
+  "awaitingNextEdition": 194,
   "officialSiteCandidates": 52,
   "unresolvedIgHandles": 1
  },
@@ -193,15 +193,6 @@
    "url": "https://www.instagram.com/global_botanical_jam/",
    "eventCount": 1,
    "lastEventName": "植祭 Global Botanical Jam 2026夏",
-   "lastEventDate": "2026-08-15",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "f.r.w.plants123",
-   "url": "https://www.instagram.com/f.r.w.plants123/",
-   "eventCount": 1,
-   "lastEventName": "アクア＆グリーンフェス 縁日",
    "lastEventDate": "2026-08-15",
    "hasUpcoming": true,
    "priority": 1
@@ -1375,6 +1366,15 @@
    "lastEventDate": "2026-08-11",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "f.r.w.plants123",
+   "url": "https://www.instagram.com/f.r.w.plants123/",
+   "eventCount": 1,
+   "lastEventName": "アクア＆グリーンフェス 縁日",
+   "lastEventDate": "2026-08-15",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -1699,6 +1699,16 @@
    "recurring": false
   },
   {
+   "series": "アクア＆グリーンフェス 縁日",
+   "lastSlug": "aqua-green-fes-enichi-2026-08",
+   "lastDate": "2026-08-15",
+   "lastEnd": "2026-08-15",
+   "monthsSinceLast": 0,
+   "igHandle": "f.r.w.plants123",
+   "officialUrl": "https://www.instagram.com/f.r.w.plants123/",
+   "recurring": false
+  },
+  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1766,16 +1776,6 @@
    "monthsSinceLast": 1,
    "igHandle": "hakuhoen_enchou",
    "officialUrl": "https://www.instagram.com/hakuhoen_enchou/",
-   "recurring": false
-  },
-  {
-   "series": "BOTANICAL BOTANICAL KASHIMA",
-   "lastSlug": "botanical-botanical-kashima-2026-07",
-   "lastDate": "2026-07-11",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": "botanical.botanical",
-   "officialUrl": "https://www.instagram.com/botanical.botanical/",
    "recurring": false
   }
  ],
