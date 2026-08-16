@@ -1,5 +1,5 @@
 {
-  "total": 106,
+  "total": 108,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -251,8 +251,10 @@
     },
     "venue_postal_address": {
       "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plant-to-new-home-2026-09: venue=\"〒460-0011 名古屋市中区大須四丁目4番1号\""
+      ],
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
     },
@@ -265,8 +267,10 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plant-to-new-home-2026-09: venue=\"〒460-0011 名古屋市中区大須四丁目4番1号\" と location=\"久屋大通庭園フラリエ\" が別の施設名"
+      ],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },
