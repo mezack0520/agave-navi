@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-16 11:25 JST",
+ "generated": "2026-08-17 06:19 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 152,
-  "awaitingNextEdition": 194,
+  "awaitingNextEdition": 198,
   "officialSiteCandidates": 52,
   "unresolvedIgHandles": 1
  },
@@ -186,33 +186,6 @@
    "lastEventName": "木更津園芸市（2026年8月）",
    "lastEventDate": "2026-08-11",
    "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "global_botanical_jam",
-   "url": "https://www.instagram.com/global_botanical_jam/",
-   "eventCount": 1,
-   "lastEventName": "植祭 Global Botanical Jam 2026夏",
-   "lastEventDate": "2026-08-15",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "urinchi2026",
-   "url": "https://www.instagram.com/urinchi2026/",
-   "eventCount": 1,
-   "lastEventName": "雨林ノ市 第貳陣",
-   "lastEventDate": "2026-08-15",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "cosmicoplants",
-   "url": "https://www.instagram.com/cosmicoplants/",
-   "eventCount": 1,
-   "lastEventName": "From seed to landscape",
-   "lastEventDate": "2026-08-16",
-   "hasUpcoming": true,
    "priority": 1
   },
   {
@@ -1368,11 +1341,38 @@
    "priority": 2
   },
   {
+   "handle": "global_botanical_jam",
+   "url": "https://www.instagram.com/global_botanical_jam/",
+   "eventCount": 1,
+   "lastEventName": "植祭 Global Botanical Jam 2026夏",
+   "lastEventDate": "2026-08-15",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "f.r.w.plants123",
    "url": "https://www.instagram.com/f.r.w.plants123/",
    "eventCount": 1,
    "lastEventName": "アクア＆グリーンフェス 縁日",
    "lastEventDate": "2026-08-15",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "urinchi2026",
+   "url": "https://www.instagram.com/urinchi2026/",
+   "eventCount": 1,
+   "lastEventName": "雨林ノ市 第貳陣",
+   "lastEventDate": "2026-08-15",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "cosmicoplants",
+   "url": "https://www.instagram.com/cosmicoplants/",
+   "eventCount": 1,
+   "lastEventName": "From seed to landscape",
+   "lastEventDate": "2026-08-16",
    "hasUpcoming": false,
    "priority": 2
   }
@@ -1709,6 +1709,46 @@
    "recurring": false
   },
   {
+   "series": "植祭 Global Botanical Jam 2026夏",
+   "lastSlug": "shokusai-global-botanical-jam-2026-08",
+   "lastDate": "2026-08-15",
+   "lastEnd": "2026-08-16",
+   "monthsSinceLast": 0,
+   "igHandle": "global_botanical_jam",
+   "officialUrl": "https://www.instagram.com/global_botanical_jam/",
+   "recurring": false
+  },
+  {
+   "series": "雨林ノ市 第貳陣",
+   "lastSlug": "urin-no-ichi-2nd-2026-08",
+   "lastDate": "2026-08-15",
+   "lastEnd": "2026-08-16",
+   "monthsSinceLast": 0,
+   "igHandle": "urinchi2026",
+   "officialUrl": "https://www.instagram.com/urinchi2026/",
+   "recurring": false
+  },
+  {
+   "series": "BOTANICAL EVENING MARCHE",
+   "lastSlug": "botanical-evening-marche-oyabe-2026-08",
+   "lastDate": "2026-08-16",
+   "lastEnd": "2026-08-16",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://mitsui-shopping-park.com/mop/oyabe/event/3491823.html",
+   "recurring": false
+  },
+  {
+   "series": "From seed to landscape",
+   "lastSlug": "from-seed-to-landscape-2026",
+   "lastDate": "2026-08-16",
+   "lastEnd": "2026-08-16",
+   "monthsSinceLast": 0,
+   "igHandle": "cosmicoplants",
+   "officialUrl": "https://www.instagram.com/p/DbYGBFgk-eK/",
+   "recurring": false
+  },
+  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1736,46 +1776,6 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://www.tv-osaka.co.jp/event/reptiles2026/project/",
-   "recurring": false
-  },
-  {
-   "series": "第3回 歴史ど真ん中～直球植物～古都の宴",
-   "lastSlug": "rekishi-domannaka-chokkyu-shokubutsu-2026-07",
-   "lastDate": "2026-07-04",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/dai3kai-rekishidomannaka-chokkyushokubutsu-kotonoutage",
-   "recurring": false
-  },
-  {
-   "series": "オホーツク多肉Festival 2026 vol.2",
-   "lastSlug": "okhotsk-taniku-festival-vol2-2026-07",
-   "lastDate": "2026-07-05",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": "hashisiruku",
-   "officialUrl": "https://www.instagram.com/hashisiruku/",
-   "recurring": false
-  },
-  {
-   "series": "多肉祭りin石見",
-   "lastSlug": "taniku-matsuri-iwami-2026-07",
-   "lastDate": "2026-07-05",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": "d.plants.s",
-   "officialUrl": "https://www.instagram.com/d.plants.s/",
-   "recurring": false
-  },
-  {
-   "series": "多肉植物まつり2026（夜越山）",
-   "lastSlug": "yogoshiyama-taniku-matsuri-2026-07",
-   "lastDate": "2026-07-04",
-   "lastEnd": "2026-07-12",
-   "monthsSinceLast": 1,
-   "igHandle": "hakuhoen_enchou",
-   "officialUrl": "https://www.instagram.com/hakuhoen_enchou/",
    "recurring": false
   }
  ],
