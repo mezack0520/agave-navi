@@ -598,8 +598,8 @@ def build_page(template, ev, ctx):
 
 
 def make_last_updated_row(ev):
-    """イベント情報の最終更新日表示。enrichedAt > addedDate を優先。"""
-    last = ev.get('enrichedAt') or ev.get('addedDate')
+    """イベント情報の最終更新日表示。updatedAt > enrichedAt > addedDate を優先。"""
+    last = ev.get('updatedAt') or ev.get('enrichedAt') or ev.get('addedDate')
     if not last:
         return ''
     try:
@@ -621,7 +621,7 @@ def make_hero_meta_note(ev):
     片方が欠けても区切り文字が浮かないよう、ここで組み立てる。"""
     parts = []
 
-    last = ev.get('enrichedAt') or ev.get('addedDate')
+    last = ev.get('updatedAt') or ev.get('enrichedAt') or ev.get('addedDate')
     if last:
         try:
             from datetime import datetime as _dt

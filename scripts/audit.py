@@ -30,7 +30,7 @@ KNOWN_EVENT_FIELDS = {
     'description', 'tags', 'status', 'eventStatus', 'admission',
     'url', 'sourceUrl', 'imageUrl', 'instagramUrl', 'instagramPostId',
     'organizer', 'organizerIg', 'recurring', 'autoDateUpdate',
-    'addedDate', 'dataSource',
+    'addedDate', 'updatedAt', 'enrichedAt', 'dataSource',
 }
 
 
