@@ -14,14 +14,15 @@
 
 ## 1. 起動時の手順
 
-1. `request_cowork_directory` で `C:\Users\yujim\OneDrive\Documents\Claude\Projects\mzplants` を接続
+1. `request_cowork_directory` で `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` を接続
+   （2026-08-18に OneDrive から iCloud Drive へ移行。古いパスは存在しない）
    （既に接続済みなら何もしない）
 2. リポジトリを clone
 3. このファイル、`docs/architecture-2026-07.md`、`listing-policy.json` を読む
 4. プロンプトとここに差異があれば**こちらが正**
 
-置き場:
-- PAT: `mzplants\agave-navi\github.pat`
+置き場（すべて `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` 配下）:
+- PAT: `agave-navi\github.pat`
 - 実行レポート: `mzplants\agave-navi\task-reports\<taskId>_YYYY-MM-DD.md`
 - 受け渡しJSON: `mzplants\agave-navi\work\`
 

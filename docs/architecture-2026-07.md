@@ -128,6 +128,12 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-18: 作業フォルダが OneDrive から iCloud Drive へ移行していた。
+  正しいパスは C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants。
+  スケジュールタスク4本のプロンプトとプレイブックが旧パス(OneDrive)を指していたため、
+  接続に失敗して以後の実行が全て止まる状態だった。両方を更新。
+  タスクの保存先も iCloudDrive\Claude\Scheduled に移っている
+
 - 2026-08-13: 監査の検出3件を解消。多肉すきじゃけん市は出典の投稿が削除されていて主催を
   特定できなかったが、イベント公式アカウント(@ta29sukijaken_ichi)が別に存在したので出典ごと
   差し替え、会場・時間・説明文も補完。plant to new home は venue が郵便番号付き住所だったため
