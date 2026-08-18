@@ -1,11 +1,11 @@
 {
- "generated": "2026-08-18 06:26 JST",
+ "generated": "2026-08-18 10:03 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 152,
+  "igAccounts": 153,
   "awaitingNextEdition": 198,
   "officialSiteCandidates": 52,
-  "unresolvedIgHandles": 1
+  "unresolvedIgHandles": 0
  },
  "igAccounts": [
   {
@@ -904,6 +904,15 @@
    "url": "https://www.instagram.com/_sunnydrop_/",
    "eventCount": 1,
    "lastEventName": "On The Deck 3rd",
+   "lastEventDate": "2026-06-21",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "ta29sukijaken_ichi",
+   "url": "https://www.instagram.com/ta29sukijaken_ichi/",
+   "eventCount": 1,
+   "lastEventName": "第3回 多肉すきじゃけん市",
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
    "priority": 2
@@ -1961,11 +1970,5 @@
    "eventDate": "2026-05-30"
   }
  ],
- "unresolvedIgHandles": [
-  {
-   "slug": "taniku-sukijaken-ichi-3rd-2026-06",
-   "name": "第3回 多肉すきじゃけん市",
-   "igUrl": "https://www.instagram.com/p/DYmMxpgk0Xo/"
-  }
- ]
+ "unresolvedIgHandles": []
 }

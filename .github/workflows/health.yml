@@ -163,7 +163,7 @@ jobs:
                   judgments = json.load(f).get('items', [])
           except Exception:
               pass
-          # 整合監査(audit.py)の結果。0件が正常。
+          # 整合監査(audit.py)の結果。検出があれば要修正。
           audit = {}
           try:
               with open('audit-results.json') as f:
@@ -202,7 +202,7 @@ jobs:
                   if v.get('severity', 'urgent') == 'urgent' and v.get('count')]
           if _hit:
               lines.append("")
-              lines.append("━━━ 🔧 整合監査で検出(0件が正常) ━━━")
+              lines.append("━━━ 🔧 整合監査：要修正 ━━━")
               for _k, _v in _hit:
                   lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
                   for _it in (_v.get('items') or [])[:5]:
@@ -210,17 +210,19 @@ jobs:
                   if _v.get('note'):
                       lines.append(f"    → {_v['note']}")
           else:
-              lines.append("🔧 整合監査: 検出なし")
+              lines.append("🔧 整合監査：異常なし")
           _info = [(k, v) for k, v in _af.items()
                    if v.get('severity') == 'info' and v.get('count')]
           if _info:
-              lines.append("(参考) " + " / ".join(
-                  f"{v.get('title', k)}: {v.get('count')}件" for k, v in _info))
+              lines.append("")
+              lines.append("━━━ 📊 積み残し（急がないが減らしたい） ━━━")
+              for _k, _v in _info:
+                  lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
           lines.append(f"リンク切れ: {len(data['dead_links'])}")
           lines.append("")
-          lines.append("━━━ ✅ 自動チェック結果（毎日実行・0件が正常） ━━━")
+          lines.append("━━━ ✅ 毎日の自動チェック ━━━")
           lines.append(f"要判断キュー: {len(judgments)}件 / 内容異常の検知: {len(data.get('implausible') or [])}件 / リンク切れ: {len(data['dead_links'])}件 / 詳細未定: {len(data['tbd_events'])}件")
-          lines.append("※件数が1以上のときだけ、このすぐ下に詳細が展開されます。")
+          lines.append("※いずれも0件なら対応不要です。1件以上ある項目だけ、下に内訳が出ます。")
           lines.append("")
           if new_added['count'] > 0:
               lines.append(f"━━━ 🆕 本日追加イベント（{new_added['count']}件） ━━━")

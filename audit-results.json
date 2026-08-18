@@ -1,5 +1,5 @@
 {
-  "total": 108,
+  "total": 104,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -59,16 +59,14 @@
     },
     "unresolved_ig_handles": {
       "title": "IGのURLはあるが主催者ハンドルが取れずウォッチ対象外",
-      "count": 1,
-      "items": [
-        "taniku-sukijaken-ichi-3rd-2026-06"
-      ],
+      "count": 0,
+      "items": [],
       "note": "organizerIg を入れれば解消する",
       "severity": "urgent"
     },
     "thin_fixable": {
       "title": "薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)",
-      "count": 38,
+      "count": 37,
       "items": [
         "agavista-vol2-matsuyama-2026-06(22字)",
         "awajishima-taniku-smile-marche-3rd-2026(42字・開催予定)",
@@ -104,7 +102,6 @@
         "rhythms-of-life-2026(16字)",
         "shoku-sai-vol9-izumo-2026(40字)",
         "taniku-moromoro-2026-spring(48字)",
-        "taniku-sukijaken-ichi-3rd-2026-06(45字)",
         "tenkaichi-2026(46字)",
         "wakayama-green-marche(41字)",
         "yamaguchi-plants-market-2026(38字)"
@@ -251,10 +248,8 @@
     },
     "venue_postal_address": {
       "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
-      "count": 1,
-      "items": [
-        "plant-to-new-home-2026-09: venue=\"〒460-0011 名古屋市中区大須四丁目4番1号\""
-      ],
+      "count": 0,
+      "items": [],
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
     },
@@ -267,10 +262,8 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 1,
-      "items": [
-        "plant-to-new-home-2026-09: venue=\"〒460-0011 名古屋市中区大須四丁目4番1号\" と location=\"久屋大通庭園フラリエ\" が別の施設名"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },
