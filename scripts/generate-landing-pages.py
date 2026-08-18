@@ -127,9 +127,18 @@ def card(e):
     return f'<article class="landing-card"><a href="/events/{slug}.html"><div class="lc-date">{dd}</div><h2 class="lc-name">{name}</h2><div class="lc-meta">{meta}</div></a></article>'
 
 NOINDEX_PATHS = []  # sitemap除外用(リポジトリ相対パス)。main()終了時にmanifest出力。
+CANONICALIZED_PATHS = []  # canonicalを他URLに向けた頁。noindexではないがsitemapには載せない。
 
 def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
-           noindex=False, intro_html='', fallback_evs=None, rel_path=None):
+           noindex=False, intro_html='', fallback_evs=None, rel_path=None,
+           canonical_of=None):
+    # canonical_of: 別URLと内容が完全に重複する頁で、正規URLをそちらに寄せる。
+    # noindexにはしない(利用者には見える・リンクも辿らせる)が、
+    # 自分自身を指さないcanonicalとsitemap掲載は矛盾するのでsitemapからは外す。
+    if canonical_of:
+        canon = canonical_of
+        if rel_path:
+            CANONICALIZED_PATHS.append(rel_path)
     robots_meta = '<meta name="robots" content="noindex,follow">' if noindex else '<meta name="robots" content="index,follow">'
     if noindex and rel_path:
         NOINDEX_PATHS.append(rel_path)
@@ -303,13 +312,20 @@ def main():
         if prefs_in:
             links = '、'.join(f'<a href="/pref/{pref_slug(pp)}/">{pp}</a>' for pp in prefs_in)
             intro_html += f'<p>都道府県別: {links}</p>'
+        # 掲載イベントが1県に閉じている地域は /pref/<県>/ と掲載内容もtitleも完全に一致する。
+        # 北海道は PREF_TO_REGION 上そもそも1県=1地方なので構造的に必ずこうなる。
+        # 両方をindexさせると同一内容の2URLが競合するため、正規URLを県頁に寄せる。
+        canonical_of = None
+        if len(prefs_in) == 1:
+            canonical_of = f'{DOMAIN}/pref/{pref_slug(prefs_in[0])}/'
         write_page(os.path.join(REPO_ROOT, 'region', sl, 'index.html'),
             render(f'{r}のアガベ・植物イベント', f'{r}地方で開催されるアガベ・多肉植物のイベント情報。{len(evs)}件掲載。',
                    f'{r},アガベ,イベント', f'{DOMAIN}/region/{sl}/',
                    [('ホーム',DOMAIN+'/'),('地域別','/region/'),(r,None)],
                    f'{r}地方のイベント', f'{r}地方で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
-                   fallback_evs=fallback5, rel_path=f'region/{sl}/index.html'))
+                   fallback_evs=fallback5, rel_path=f'region/{sl}/index.html',
+                   canonical_of=canonical_of))
         counters['region']+=1
 
     # Archive YM
@@ -369,8 +385,12 @@ def main():
     # this-month
     cur_ym = today.strftime('%Y-%m')
     me = [e for e in events if e.get('date','').startswith(cur_ym)]
+    # titleは常設URL向けに「今月の」で固定する。
+    # 「{年}年{月}月のアガベ・植物イベント」にすると /archive/{ym}/ と毎月必ず
+    # 同titleになり、同一内容のindex対象URLが2つ並ぶ(2026-08-18に検出)。
+    # アーカイブ側はその月の恒久URL、こちらは毎月中身が入れ替わる常設URLで役割が違う。
     write_page(os.path.join(REPO_ROOT, 'this-month', 'index.html'),
-        render(f'{today.year}年{today.month}月のアガベ・植物イベント', f'今月開催の全{len(me)}件。',
+        render('今月のアガベ・植物イベント', f'今月({today.year}年{today.month}月)開催の全{len(me)}件。',
                f'今月,{today.year}年{today.month}月,アガベ,イベント', f'{DOMAIN}/this-month/',
                [('ホーム',DOMAIN+'/'),(f'{today.year}年{today.month}月',None)],
                f'今月のイベント({today.year}年{today.month}月)', '今月開催されるイベント一覧。',
@@ -509,7 +529,8 @@ def main():
 
     # sitemap 除外用 manifest
     with open(os.path.join(REPO_ROOT, 'scripts', 'landing-meta.json'), 'w', encoding='utf-8') as f:
-        json.dump({'noindex': sorted(NOINDEX_PATHS)}, f, ensure_ascii=False, indent=1)
+        json.dump({'noindex': sorted(NOINDEX_PATHS),
+                   'canonicalized': sorted(CANONICALIZED_PATHS)}, f, ensure_ascii=False, indent=1)
 
     removed = cleanup_orphans()
 

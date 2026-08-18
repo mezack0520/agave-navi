@@ -129,6 +129,25 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-18: 重複コンテンツと空値の類型を潰し、audit.py に検査5本を追加した。
+  (1) `/pref/hokkaido/` と `/region/hokkaido/` が同title・同一掲載8件で両方index対象だった。
+  北海道は PREF_TO_REGION 上1県=1地方なので構造的に必ずこうなる。`render()` に
+  `canonical_of` を足し、掲載が1県に閉じている地域の正規URLを県頁へ寄せた。
+  noindexにはせずcanonicalだけ寄せ、`landing-meta.json` の `canonicalized` 経由で
+  sitemapから外す(自分を指さないcanonicalとsitemap掲載は矛盾するため)。sitemap 242→241。
+  (2) `/this-month/` のtitleが `{年}年{月}月のアガベ・植物イベント` で
+  `/archive/{ym}/` と毎月必ず衝突していた。常設URLなので「今月の」で固定。
+  (3) `fujiyama-days-little-green-park-2026` の `description` が空文字で、
+  meta description / og:description / JSON-LD description が空のまま出ていた。
+  同じ回の `url` は2024年開催の別回(LIFE STYLE FESTA)についての協賛企業の告知で
+  この回を裏付けていなかったので外した。`has_src` はURLの有無しか見ないため、
+  中身が別イベントでも薄頁判定を外れる。
+  (4) `code-tokyo-popup-2026-08` の `imageUrl` が `http://` で、
+  混在コンテンツとして止まり og:image / twitter:image / JSON-LD image / `<img>` の
+  4箇所が同時に落ちていた。
+  (5) 「値が無い」が `null`(28) と空文字(36) で混在していたのでキーごと削除して統一。
+  追加した検査: `required_field_empty` / `blank_optional_fields`(info) /
+  `insecure_image_url` / `unknown_event_status` / `duplicate_indexable_title`
 - 2026-08-18: 作業フォルダが OneDrive から iCloud Drive へ移行していた。
   正しいパスは C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants。
   スケジュールタスク4本のプロンプトとプレイブックが旧パス(OneDrive)を指していたため、

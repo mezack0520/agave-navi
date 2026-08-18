@@ -127,6 +127,40 @@
   `LIMIT="${{ github.event.inputs.limit || '20' }}"` は cron 実行だと inputs が空なので常に20。
   `enrich_events.py` の `_priority` が短文の開催予定を先頭に並べるため、
   この20枠はほぼ `short_descriptions` の18件に使われる
+- **`url` は「在るか」しか見られていない。中身が別イベントでも noindex を外す。**
+  `_is_thin_event` の `has_src` は `url` / `sourceUrl` の文字列長しか見ない。
+  そのため出典が**その回を裏付けていなくても**薄頁判定を外れ、index対象になる。
+  2026-08-18に `fujiyama-days-little-green-park-2026` の `url` が
+  2024年開催の別回(LIFE STYLE FESTA / 6月1-2日)についての協賛企業の告知だった。
+  出典を疑うときは URL を開いて、**日付・イベント名・会場がその回と一致するか**を見る。
+  一致しないなら出典ごと外す(残すと裏取り済みに見える)
+- **「値が無い」は `null` と空文字が混在していた。2026-08-18にキーごと削除で統一。**
+  `image-health-check.py` は死んだ `imageUrl` を `None` にし、別経路は空文字を書いていた。
+  読む側は全部 `(x or '')` で吸収しているので実害は無かったが、
+  `is None` や `k in e` で書いた検査を1つ足すと片方だけ拾って静かに漏れる。
+  **値が無いならキーごと消す。** `blank_optional_fields` が0以外になったら
+  どこかが空を書き戻している
+- **`imageUrl` は https でないと画像が3箇所同時に落ちる。**
+  サイトはHTTPSなので `http://` の画像は混在コンテンツで止まり、
+  `<img>` の `onerror` でヒーロー画像ごと消える。同じ値が og:image / twitter:image /
+  JSON-LD の image にも入るのでSNSカードとリッチリザルトの画像も落ちる
+  (2026-08-18に `code-tokyo-popup-2026-08` で4箇所への露出を確認)。
+  `url` / `sourceUrl` は外部リンクなので http のままでよい(isij.net は18件ある)
+- **`eventStatus` の未知の値は黙って `EventScheduled` になる。**
+  `build-detail-pages.py` の `status_map` に無い値は
+  `status_map.get(x, 'EventScheduled')` で素通りする。
+  `canceled`(lが1つ)のような綴り違いを書くと、中止の回を「開催予定」として
+  リッチリザルトに出す。`tbd` はサイト独自の既知値
+- **`/pref/hokkaido/` と `/region/hokkaido/` は構造的に必ず同一内容になる。**
+  `PREF_TO_REGION` 上、北海道は1県=1地方。掲載イベントもtitleも完全に一致し、
+  2026-08-18まで両方index対象で競合していた。
+  `render()` に `canonical_of` を足し、掲載が1県に閉じている地域は
+  正規URLを県頁に寄せるようにした。noindexにはしない(利用者には見えるしADも出す)。
+  自分を指さないcanonicalとsitemap掲載は矛盾するので、
+  `landing-meta.json` に `canonicalized` を出して `generate_sitemap.py` 側で除外する
+- **`/this-month/` の title は「今月の」で固定する。**
+  `{年}年{月}月のアガベ・植物イベント` にすると `/archive/{ym}/` と毎月必ず同titleになる。
+  常設URLと月の恒久URLは役割が違うので、titleを役割で書き分ける
 - 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
 
 ## 4. 自己改善のやり方

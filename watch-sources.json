@@ -1,10 +1,10 @@
 {
- "generated": "2026-08-18 10:08 JST",
+ "generated": "2026-08-18 10:33 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 153,
   "awaitingNextEdition": 198,
-  "officialSiteCandidates": 52,
+  "officialSiteCandidates": 51,
   "unresolvedIgHandles": 0
  },
  "igAccounts": [
@@ -1704,7 +1704,7 @@
    "lastEnd": "2026-08-11",
    "monthsSinceLast": 0,
    "igHandle": "chiba_c_and_s_association",
-   "officialUrl": "",
+   "officialUrl": null,
    "recurring": false
   },
   {
@@ -1880,12 +1880,6 @@
    "eventDate": "2026-12-19"
   },
   {
-   "domain": "nattoku.jp",
-   "url": "https://www.nattoku.jp/event/p42164/",
-   "eventName": "FUJIYAMA DAYS LITTLE GREEN PARK",
-   "eventDate": "2026-04-18"
-  },
-  {
    "domain": "raflum.com",
    "url": "https://raflum.com/",
    "eventName": "RAFLUM POP-UP（ジェイアール名古屋タカシマヤ）",
@@ -1968,6 +1962,12 @@
    "url": "https://www.fukui-bot.jp/event/",
    "eventName": "福井ボタニカルマルシェ2026",
    "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "green-flash-fes.com",
+   "url": "https://green-flash-fes.com/",
+   "eventName": "GREEN BREEZE FES vol.3",
+   "eventDate": "2026-05-31"
   }
  ],
  "unresolvedIgHandles": []

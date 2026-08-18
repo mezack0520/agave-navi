@@ -329,6 +329,34 @@
       "note": "一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す",
       "severity": "urgent"
     },
+    "required_field_empty": {
+      "title": "必須フィールドが空(キーは在るが値が無い)",
+      "count": 0,
+      "items": [],
+      "note": "description が空だと meta/og/JSON-LD の説明が空文字で出る。一次情報から埋める。埋められないなら出典を外して薄頁(noindex)に落とす",
+      "severity": "urgent"
+    },
+    "blank_optional_fields": {
+      "title": "任意フィールドが空(nullと空文字が混在)",
+      "count": 0,
+      "items": [],
+      "note": "値が無いならキーごと消す。残すなら null に統一する",
+      "severity": "info"
+    },
+    "insecure_image_url": {
+      "title": "imageUrl が https でない(混在コンテンツで画像が出ない)",
+      "count": 0,
+      "items": [],
+      "note": "https:// で取得できるなら書き換える。取得できないなら imageUrl を消す",
+      "severity": "urgent"
+    },
+    "unknown_event_status": {
+      "title": "eventStatusが未知の値(黙ってEventScheduledになる)",
+      "count": 0,
+      "items": [],
+      "note": "build-detail-pages.py の status_map にある値に直す。新しい状態を足すなら status_map と この検査の両方に足す",
+      "severity": "urgent"
+    },
     "unknown_event_fields": {
       "title": "events.jsonにスキーマ外のキー(どのスクリプトも読まない)",
       "count": 0,
@@ -369,6 +397,13 @@
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
+      "severity": "urgent"
+    },
+    "duplicate_indexable_title": {
+      "title": "index対象の別URLが同じtitle(重複コンテンツ)",
+      "count": 0,
+      "items": [],
+      "note": "内容も同じなら片方のcanonicalをもう片方に向ける。内容が違うなら title を書き分ける",
       "severity": "urgent"
     },
     "unreferenced_scripts": {

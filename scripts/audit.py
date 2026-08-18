@@ -567,6 +567,80 @@ def main():
         sorted(trunc),
         '一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す')
 
+    # 9f. 必須フィールドが空。値が空でもキーは在るので unknown_event_fields も
+    #     data-integrity-check も通り、thin判定も time/imageUrl があれば
+    #     substance 有りとみなすため素通りする。description が空だと
+    #     meta description / og:description / JSON-LD description が
+    #     まとめて空文字で出る(2026-08-18に fujiyama-days-little-green-park-2026 で検出。
+    #     この回は終了30日超でnoindexだったためSERPには影響しなかったが、
+    #     og:description はnoindexでも効くのでSNSシェアは説明なしで出ていた。
+    #     開催予定の回で起きればそのままSERPのスニペットが空になる)。
+    REQUIRED_EVENT_FIELDS = ('slug', 'name', 'date', 'dateDisplay',
+                             'prefecture', 'region', 'status', 'description')
+    empty_req = []
+    for e in events:
+        for k in REQUIRED_EVENT_FIELDS:
+            v = e.get(k)
+            if v is None or (isinstance(v, str) and not v.strip()):
+                empty_req.append(f"{e.get('slug') or '(slug無し)'}: {k} が空")
+    add('required_field_empty', '必須フィールドが空(キーは在るが値が無い)',
+        sorted(empty_req),
+        'description が空だと meta/og/JSON-LD の説明が空文字で出る。'
+        '一次情報から埋める。埋められないなら出典を外して薄頁(noindex)に落とす')
+
+    # 9g. 「値が無い」の表現が null と空文字で混在している。
+    #     image-health-check.py は死んだ imageUrl を None にし、
+    #     エンリッチ側は空文字を書くため2通りが同居する。
+    #     読む側は (x or '') で吸収しているので今は実害が無いが、
+    #     `is None` や `in e` で書かれた検査を1つ足すと片方だけ拾って静かに漏れる。
+    blanks = []
+    for e in events:
+        for k, v in e.items():
+            if k in REQUIRED_EVENT_FIELDS:
+                continue
+            if v is None:
+                blanks.append(f"{e.get('slug')}: {k} = null")
+            elif isinstance(v, str) and not v.strip():
+                blanks.append(f"{e.get('slug')}: {k} = 空文字")
+            elif isinstance(v, list) and not v:
+                blanks.append(f"{e.get('slug')}: {k} = 空配列")
+    add('blank_optional_fields', '任意フィールドが空(nullと空文字が混在)',
+        sorted(blanks),
+        '値が無いならキーごと消す。残すなら null に統一する',
+        severity='info')
+
+    # 9h. imageUrl が https でない。サイトはHTTPSなので http:// の画像は
+    #     混在コンテンツとしてブラウザに止められ、<img> の onerror でヒーロー画像ごと
+    #     消える。加えて og:image / twitter:image / JSON-LD の image にも
+    #     そのまま入るので、SNSカードとリッチリザルトの画像も落ちる
+    #     (2026-08-18に code-tokyo-popup-2026-08 で4箇所への露出を確認)。
+    #     url / sourceUrl は外部サイトへのリンクで、http でも遷移は成立するため対象外。
+    insecure = []
+    for e in events:
+        u = (e.get('imageUrl') or '').strip()
+        if u and not u.startswith('https://'):
+            insecure.append(f"{e.get('slug')}: imageUrl = {u[:60]}")
+    add('insecure_image_url', 'imageUrl が https でない(混在コンテンツで画像が出ない)',
+        sorted(insecure),
+        'https:// で取得できるなら書き換える。取得できないなら imageUrl を消す')
+
+    # 9i. eventStatus が build-detail-pages.py の status_map に無い値。
+    #     知らない値は黙って EventScheduled にフォールバックするので、
+    #     'canceled'(l1つ)のような綴り違いを書くと、中止のイベントを
+    #     「開催予定」としてリッチリザルトに出す。tbd はサイト独自の値で
+    #     check_events.py が別途扱うため既知として許す。
+    KNOWN_EVENT_STATUS = {'confirmed', 'tbd', 'cancelled', 'postponed',
+                          'rescheduled', 'movedonline'}
+    bad_status = []
+    for e in events:
+        v = e.get('eventStatus')
+        if v is not None and str(v).strip().lower() not in KNOWN_EVENT_STATUS:
+            bad_status.append(f"{e.get('slug')}: eventStatus = {v!r}")
+    add('unknown_event_status', 'eventStatusが未知の値(黙ってEventScheduledになる)',
+        sorted(bad_status),
+        'build-detail-pages.py の status_map にある値に直す。'
+        '新しい状態を足すなら status_map と この検査の両方に足す')
+
     # 9d. events.json のスキーマ外キー。読む側が無いキーは値が入っていても
     #     どこにも出ないので、入力ミスが黙って通る(2026-08-11に3種を検出)。
     unknown = []
@@ -674,6 +748,43 @@ def main():
     add('js_version_drift', f'JS版数が正規値({want_js})と違う/付いていないページ',
         sorted(set(js_drift)),
         '版数なしだとJSの変更がキャッシュを越えず届かない')
+
+    # 13c. index対象の別URLが同じ <title> を持っている。
+    #      同じtitleで内容も同じURLが2つあると、検索側はどちらを出すか選べず
+    #      両方の評価が割れる。noindexの頁と、canonicalを他URLに向けた頁は
+    #      検索対象ではないので除く。
+    #      北海道は PREF_TO_REGION 上 1県=1地方なので /pref/hokkaido/ と
+    #      /region/hokkaido/ が構造的に必ず同一内容になり、
+    #      2026-08-18時点で両方index対象・同titleだった(掲載8件も完全一致)。
+    titles = {}
+    for f in glob.glob(rp('**', '*.html'), recursive=True):
+        rel = os.path.relpath(f, REPO)
+        if rel.startswith(('.git', 'templates', 'staging')):
+            continue
+        try:
+            h = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        if re.search(r'<meta[^>]+name="robots"[^>]+noindex', h):
+            continue
+        m_can = re.search(r'<link rel="canonical" href="([^"]+)"', h)
+        if m_can:
+            # canonicalが自分自身を指していない = 検索対象は別URL
+            own = '/' + rel.replace(os.sep, '/')
+            if own.endswith('/index.html'):
+                own = own[:-len('index.html')]
+            if not m_can.group(1).endswith(own):
+                continue
+        m = re.search(r'<title>(.*?)</title>', h, re.S)
+        if not m:
+            continue
+        titles.setdefault(m.group(1).strip(), []).append(rel)
+    dup_titles = [f"{t[:44]} → {', '.join(sorted(v))}"
+                  for t, v in titles.items() if len(v) > 1]
+    add('duplicate_indexable_title', 'index対象の別URLが同じtitle(重複コンテンツ)',
+        sorted(dup_titles),
+        '内容も同じなら片方のcanonicalをもう片方に向ける。'
+        '内容が違うなら title を書き分ける')
 
     # 13. build-all.sh から呼ばれていないスクリプト(死んだ資産)
     try:

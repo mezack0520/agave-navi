@@ -58,11 +58,14 @@ def load_noindex_slugs():
     return out
 
 def load_noindex_landing():
-    """generate-landing-pages.py が出力した noindex manifest。"""
+    """generate-landing-pages.py が出力した sitemap除外 manifest。
+    noindex に加え、canonical を他URLに向けた頁も外す。
+    自分自身を指さないcanonicalとsitemap掲載は矛盾した信号になるため。"""
     mpath = os.path.join(REPO_ROOT, 'scripts', 'landing-meta.json')
     if not os.path.exists(mpath): return set()
     with open(mpath, encoding='utf-8') as f:
-        return set(json.load(f).get('noindex', []))
+        m = json.load(f)
+    return set(m.get('noindex', [])) | set(m.get('canonicalized', []))
 
 # 内部ツール・noindexページはsitemapに載せない
 EXCLUDE_BASENAMES = {'dashboard.html'}
