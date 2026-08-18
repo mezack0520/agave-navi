@@ -1,5 +1,5 @@
 {
-  "total": 177,
+  "total": 172,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -247,10 +247,8 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 1,
-      "items": [
-        "engei-raku-2026-09: 2026.09.21〜09.22 → 2026.09.21-22"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -326,10 +324,8 @@
     },
     "desc_truncated": {
       "title": "説明文が途中で切れている(括弧未閉じ・文末が句点でない)",
-      "count": 1,
-      "items": [
-        "souransai-koshigaya-2026-10: 文末が句点で終わらない …oogleマップで開く\n© 2026 草乱祭公式"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す",
       "severity": "urgent"
     },
@@ -370,10 +366,8 @@
     },
     "html_in_data": {
       "title": "events.jsonの値にHTMLタグ・実体参照・改行が混入",
-      "count": 1,
-      "items": [
-        "souransai-koshigaya-2026-10: description に改行/タブ '草乱祭公式\\nTOP\\n出店者一覧\\n来場者注意事項\\n過去イベント\\n開催決定\\n草乱祭w'"
-      ],
+      "count": 0,
+      "items": [],
       "note": "データは素のテキストで持つ。改行や強調はbuild側で付ける",
       "severity": "urgent"
     },
@@ -444,19 +438,15 @@
     },
     "jsonld_invalid": {
       "title": "JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)",
-      "count": 1,
-      "items": [
-        "events/souransai-koshigaya-2026-10.html: Invalid control character at: line 26 column 26 (char 774)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "データ側にエスケープされていない引用符・制御文字が無いか見る",
       "severity": "urgent"
     },
     "jsonld_data_drift": {
       "title": "詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)",
-      "count": 1,
-      "items": [
-        "souransai-koshigaya-2026-10: Event の JSON-LD が無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "build-detail-pages.py を回す。差分が残るならテンプレート側を疑う",
       "severity": "urgent"
     },

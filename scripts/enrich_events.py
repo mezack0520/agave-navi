@@ -828,6 +828,13 @@ def main():
             def _quality_ok(cand, ev_name, ev_venue):
                 if not cand or len(cand) < 120:
                     return False, 'too short'
+                # 改行を含む候補は「段落を切り出せていない」= ページ全文の貼り付け。
+                # long_description は空行(\n{2,})で段落を割るため、単一改行だけで
+                # 組まれた1枚もののサイトではナビ・見出し・フッタごと1段落になる。
+                # そのまま入ると description に改行が残り、詳細ページの JSON-LD が
+                # 制御文字で壊れる(2026-08-18 souransai-koshigaya-2026-10 で発生)
+                if '\n' in cand or '\t' in cand:
+                    return False, 'multi-line (page dump, not a paragraph)'
                 # Reject aggregator/boilerplate phrases
                 blocklist = [
                     'イベント情報をまとめ', '次回のイベント', '関連するタグ',
