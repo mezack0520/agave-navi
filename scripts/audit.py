@@ -624,6 +624,68 @@ def main():
         sorted(insecure),
         'https:// で取得できるなら書き換える。取得できないなら imageUrl を消す')
 
+    # 9j. imageUrl がイベントの画像ではなくサイト共通アセット(ロゴ・OGP既定・
+    #     ファビコン・テーマ内の共通画像)を指している。enrich が og:image を
+    #     そのまま採るため、告知ページに固有画像が無いサイトではサイトロゴが入る。
+    #     imageUrl は カード / og:image / twitter:image / JSON-LD の image の
+    #     4箇所に同じ値が出るので、1件で4箇所が別イベントの絵になる
+    #     (2026-08-18に13件を検出。うち3件は開催予定)。
+    #     WordPress のアップロード先は wp-content/uploads なので、
+    #     themes/ 配下や common/images/ 配下はイベント固有画像になり得ない。
+    #     直し方は差し替えではなく imageUrl のキー削除。無い状態が正しい。
+    _GENERIC_IMG = re.compile(
+        r'(/wp-content/themes?/|/theme/[^/]+/assets/|/common/images?/'
+        r'|/images?/common/|/shared/images?/|web_clip|apple-touch|favicon'
+        r'|logo[_-]?ogp|ogp[_-]?logo|ogp[_-]?img|og_?_?images?\.|ogImg'
+        r'|opengraph-image|site_config|/og\.(png|jpe?g|gif|webp)'
+        r'|no[-_]?image|placeholder|/logo\.|logo_[a-z]+\.svg)', re.I)
+    generic_img = []
+    for e in events:
+        u = (e.get('imageUrl') or '').strip()
+        if u and _GENERIC_IMG.search(u):
+            generic_img.append(f"{e.get('slug')}: {u[:70]}")
+    add('generic_image_asset', 'imageUrlがサイト共通ロゴ・OGP既定(4箇所に別物の絵が出る)',
+        sorted(generic_img),
+        'イベント固有の画像に差し替えるか、無ければ imageUrl をキーごと削除する')
+
+    # 9k. 別イベントが同じ imageUrl を指している。主催者のブランド画像を
+    #     シリーズで共用する正当な場合があるので info。
+    #     同一シリーズでない組が出たら、片方が別イベントからの貼り付け。
+    _by_img = defaultdict(list)
+    for e in events:
+        u = (e.get('imageUrl') or '').strip()
+        if u:
+            _by_img[u].append(e.get('slug'))
+    dup_img = [f"{u[:55]} → {', '.join(sorted(set(v)))}"
+               for u, v in _by_img.items() if len(set(v)) > 1]
+    add('duplicate_image_url', '同じimageUrlを複数イベントが使用', sorted(dup_img),
+        '同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス',
+        severity='info')
+
+    # 9l. slug に埋め込んだ年月が date とも dateEnd とも一致しない。
+    #     日付を直したのに slug(=URL)が旧月のまま残ると、URL・
+    #     /archive/{ym}/ の所属・パンくずが実際の開催月とずれる。
+    #     延期でこれが起きる(2026-08-18時点では0件)。
+    #     会期が月をまたぐ回は dateEnd 側で一致すればよい
+    #     (例 myoko-taniku-oichi-2026-11 は 10/31〜11/01)。
+    slug_ym = []
+    for e in events:
+        sl = e.get('slug') or ''
+        d = e.get('date') or ''
+        de = e.get('dateEnd') or d
+        m = re.search(r'(20\d{2})-(\d{2})(?!\d)', sl)
+        if m and len(d) >= 7:
+            if m.group(1) + '-' + m.group(2) not in (d[:7], de[:7]):
+                slug_ym.append(f"{sl}: slug={m.group(1)}-{m.group(2)} date={d}..{de}")
+            continue
+        m2 = re.search(r'-(20\d{2})$', sl)
+        if m2 and len(d) >= 4 and m2.group(1) not in (d[:4], de[:4]):
+            slug_ym.append(f"{sl}: slug年={m2.group(1)} date={d}..{de}")
+    add('slug_date_mismatch', 'slugの年月が開催日と不一致(日付だけ直してURLが旧月のまま)',
+        sorted(slug_ym),
+        '延期でずれたなら slug を作り直し、旧URLから301で送る。'
+        'slugを変えないなら archive の所属が実態とずれることを承知で残す')
+
     # 9i. eventStatus が build-detail-pages.py の status_map に無い値。
     #     知らない値は黙って EventScheduled にフォールバックするので、
     #     'canceled'(l1つ)のような綴り違いを書くと、中止のイベントを
@@ -690,6 +752,45 @@ def main():
     add('feed_count_mismatch', '配布フィードの件数がevents.jsonと不一致',
         [f'{k}: {v}件 (events.json {len(events)}件)'
          for k, v in feed.items() if v != len(events)])
+
+    # 10b. 開催中(開始済み・未終了)のイベントが「今」の枠から落ちていないか。
+    #      リポジトリ内には「今」の定義が4通りあり、うち this-month と
+    #      配布ics の2つだけが開始日基準だった(2026-08-18に検出)。
+    #        auto-status-jst.py : dateEnd or date >= today → status
+    #        this-weekend       : 会期と土日の重なり
+    #        this-month(頁/ics) : date.startswith(今月)   ← 開始日基準
+    #        upcoming.ics       : date >= today            ← 開始日基準
+    #      会期が月をまたぐ展示(39〜49日の回が実在する)は、開催中でも
+    #      今月の一覧と配布フィードから消える。今まさに行ける催しが
+    #      「今月のイベント」に出ないのが一番効く壊れ方なので urgent。
+    _today = today_jst()
+    _cur_ym = _today[:7]
+    dropped = []
+    _ongoing = [e for e in events
+                if (e.get('date') or '') < _today
+                <= (e.get('dateEnd') or e.get('date') or '')]
+    for name, path, kind in (('/this-month/', 'this-month/index.html', 'html'),
+                             ('this-month.ics', 'this-month.ics', 'ics'),
+                             ('upcoming.ics', 'upcoming.ics', 'ics')):
+        try:
+            with open(rp(path), encoding='utf-8') as f:
+                body = f.read()
+        except OSError:
+            dropped.append(f'{name}: 生成されていない')
+            continue
+        for e in _ongoing:
+            sl = e.get('slug') or ''
+            # this-month は今月に会期が掛かる回だけが対象
+            if name != 'upcoming.ics' and not (
+                    (e.get('date') or '')[:7] <= _cur_ym
+                    <= (e.get('dateEnd') or e.get('date') or '')[:7]):
+                continue
+            if sl and sl not in body:
+                dropped.append(f'{name}: {sl} ({e.get("date")}..{e.get("dateEnd")}) が無い')
+    add('ongoing_event_dropped', '開催中のイベントが今月頁・配布フィードから落ちている',
+        sorted(dropped),
+        '会期の重なりで採る(date[:7] <= 今月 <= dateEnd[:7])。'
+        '開始日基準にすると先月始まりの会期物が消える')
 
     # 11. ガイド記事リンクの死活(詳細ページから貼っているガイド)
     guide_files = {os.path.basename(f) for f in glob.glob(rp('guides', '*.html'))}

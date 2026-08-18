@@ -384,7 +384,14 @@ def main():
 
     # this-month
     cur_ym = today.strftime('%Y-%m')
-    me = [e for e in events if e.get('date','').startswith(cur_ym)]
+    # 開始日ではなく「会期が今月に掛かるか」で採る。
+    # 先月に始まって今月まで続く展示(会期39〜49日の回が実在する)が
+    # startswith(cur_ym) だと落ち、今行ける催しが今月の一覧から消える。
+    # status(auto-status-jst.py) と this-weekend は既に dateEnd を見ており、
+    # ここだけ開始日基準で「今」の定義が3通りに割れていた(2026-08-18に検出)。
+    me = [e for e in events
+          if e.get('date','')[:7] <= cur_ym <= (e.get('dateEnd') or e.get('date',''))[:7]
+          and e.get('date','')]
     # titleは常設URL向けに「今月の」で固定する。
     # 「{年}年{月}月のアガベ・植物イベント」にすると /archive/{ym}/ と毎月必ず
     # 同titleになり、同一内容のindex対象URLが2つ並ぶ(2026-08-18に検出)。

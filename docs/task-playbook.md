@@ -185,6 +185,31 @@
 - **`/this-month/` の title は「今月の」で固定する。**
   `{年}年{月}月のアガベ・植物イベント` にすると `/archive/{ym}/` と毎月必ず同titleになる。
   常設URLと月の恒久URLは役割が違うので、titleを役割で書き分ける
+- **「今」の定義がリポジトリ内で4通りに割れていた。会期物は開始日基準の枠から落ちる。**
+  `status`(`auto-status-jst.py`) と `this-weekend` は `dateEnd` を見るが、
+  `/this-month/` と `this-month.ics` は `date.startswith(今月)`、`upcoming.ics` は
+  `date >= today` で、どちらも開始日基準だった。先月に始まって今月まで続く展示
+  (会期39〜49日の回が実在する)は、**今まさに開催中でも今月の一覧と配布フィードから消える**。
+  2026-08-18に `/this-month/` 48→51件、`upcoming.ics` 83→85件で解消。
+  期間を持つデータを月や週で切るときは、必ず
+  `date[:7] <= 対象月 <= (dateEnd or date)[:7]` の重なりで採る。
+  `upcoming.ics` は `(dateEnd or date) >= today`。
+  `/archive/{ym}/` だけは開始月で固定してよい(その月の恒久URLで役割が違う)
+- **`imageUrl` は enrich が og:image を素通しで採るので、告知ページに固有画像が無いサイトでは
+  サイトロゴ・OGP既定画像が入る。** 2026-08-18に13件を検出(55件中)。
+  露出は5箇所: カード / og:image / twitter:image / JSON-LD の image /
+  **`sitemap.xml` の `image:image`**。sitemap にはイベント名が `image:title` として付くので、
+  Facebookアイコンが「富士多肉 多肉植物・サボテンの販売」の画像としてGoogleに登録されていた。
+  WordPress のアップロード先は `wp-content/uploads` なので **`themes/` 配下・
+  `common/images/` 配下・`logo_ogp` や `ogImg` や `opengraph-image` を含むURLは
+  イベント固有画像になり得ない**。差し替えではなく `imageUrl` をキーごと削除するのが正しい。
+  検査は `generic_image_asset`
+- **`is_thin` は `imageUrl` があるだけで substance 有りとみなす。**
+  つまりサイトロゴが入っているだけで薄頁判定を外れる。
+  上の13件を消したとき `thin_fixable` が37→38に増えた(`haze-various-genres-marche-2026`)。
+  **これは悪化ではなく、ロゴが隠していた薄さが表に出ただけ**。
+  同様に `upcoming_no_image` は68→71になる。
+  画像を消す変更をしたら、この2項目の増加は想定内としてレポートに書く
 - 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
 
 ## 4. 自己改善のやり方

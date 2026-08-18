@@ -1,5 +1,5 @@
 {
-  "total": 172,
+  "total": 177,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -66,7 +66,7 @@
     },
     "thin_fixable": {
       "title": "薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)",
-      "count": 37,
+      "count": 38,
       "items": [
         "agavista-vol2-matsuyama-2026-06(22字)",
         "awajishima-taniku-smile-marche-3rd-2026(42字・開催予定)",
@@ -81,6 +81,7 @@
         "gifu-midori-marche-2nd-2026-09(30字・開催予定)",
         "green-breeze-fes-vol3(46字)",
         "haru-cactus-succulent-yuriga-hara-2026(48字)",
+        "haze-various-genres-marche-2026(38字)",
         "ibaraki-sky-palette-2026(22字)",
         "icchan-no-taniku-garden-okayama-2026(42字)",
         "iku-matsuri-utsunomiya-2026(47字)",
@@ -192,7 +193,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
-      "count": 68,
+      "count": 71,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -216,6 +217,7 @@
         "engei-raku-2026-09",
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
+        "fuji-taniku-fujikawa-rakuza-2026-08",
         "fukuoka-green-party-7th-2026",
         "gamagori-taniku-festa-wakayama-4th-2026-08",
         "garden-link-festa-2026-10",
@@ -232,8 +234,7 @@
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
         "isij-big-bazaar-2027-07-11",
-        "isij-big-bazaar-2027-09-26",
-        "isij-big-bazaar-2027-11-28"
+        "isij-big-bazaar-2027-09-26"
       ],
       "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
       "severity": "info"
@@ -350,6 +351,29 @@
       "note": "https:// で取得できるなら書き換える。取得できないなら imageUrl を消す",
       "severity": "urgent"
     },
+    "generic_image_asset": {
+      "title": "imageUrlがサイト共通ロゴ・OGP既定(4箇所に別物の絵が出る)",
+      "count": 0,
+      "items": [],
+      "note": "イベント固有の画像に差し替えるか、無ければ imageUrl をキーごと削除する",
+      "severity": "urgent"
+    },
+    "duplicate_image_url": {
+      "title": "同じimageUrlを複数イベントが使用",
+      "count": 1,
+      "items": [
+        "https://static.wixstatic.com/media/4c353f_931106b8e6a74 → okibota-december-2026-sunshine, tokai-okibota-2026"
+      ],
+      "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
+      "severity": "info"
+    },
+    "slug_date_mismatch": {
+      "title": "slugの年月が開催日と不一致(日付だけ直してURLが旧月のまま)",
+      "count": 0,
+      "items": [],
+      "note": "延期でずれたなら slug を作り直し、旧URLから301で送る。slugを変えないなら archive の所属が実態とずれることを承知で残す",
+      "severity": "urgent"
+    },
     "unknown_event_status": {
       "title": "eventStatusが未知の値(黙ってEventScheduledになる)",
       "count": 0,
@@ -376,6 +400,13 @@
       "count": 0,
       "items": [],
       "note": "",
+      "severity": "urgent"
+    },
+    "ongoing_event_dropped": {
+      "title": "開催中のイベントが今月頁・配布フィードから落ちている",
+      "count": 0,
+      "items": [],
+      "note": "会期の重なりで採る(date[:7] <= 今月 <= dateEnd[:7])。開始日基準にすると先月始まりの会期物が消える",
       "severity": "urgent"
     },
     "dead_guide_links": {

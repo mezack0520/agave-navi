@@ -129,6 +129,24 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-18(2回目): 「今」の定義の割れと、イベント画像に化けたサイトロゴを潰し、
+  audit.py に検査4本を追加した。
+  (1) 会期を持つイベントの扱いが枠ごとに違っていた。`status` と `this-weekend` は
+  `dateEnd` を見るのに、`/this-month/`・`this-month.ics` は `date.startswith(今月)`、
+  `upcoming.ics` は `date >= today` で開始日基準だった。先月に始まって今月まで続く展示
+  (`mollis-exhibit-kinto-2026` 7/10-8/27、`shokuchu-tokubetsu-tenji-flowercenter-2026-07`
+  7/18-8/25)が、開催中にもかかわらず今月の一覧と配布フィードから消えていた。
+  会期の重なりで採るように統一。`/this-month/` 48→51件、`this-month.ics` 48→51件、
+  `upcoming.ics` 83→85件(= `status=upcoming` の85件と一致)。
+  `/archive/{ym}/` は月の恒久URLなので開始月固定のまま。
+  (2) `imageUrl` の13件がイベント画像ではなくサイトのロゴ・OGP既定画像だった
+  (`themes/theme_rakuza/common/images/facebook.png` など)。enrich が og:image を
+  素通しで採るため、告知ページに固有画像が無いサイトでロゴが入る。
+  露出は カード / og:image / twitter:image / JSON-LD image / sitemap の `image:image`
+  の5箇所で、sitemap にはイベント名が `image:title` として付いていた。キーごと削除。
+  副作用として `upcoming_no_image` 68→71、`thin_fixable` 37→38(ロゴが薄さを隠していた分)。
+  追加した検査: `ongoing_event_dropped` / `generic_image_asset` /
+  `slug_date_mismatch` / `duplicate_image_url`(info)。
 - 2026-08-18: 重複コンテンツと空値の類型を潰し、audit.py に検査5本を追加した。
   (1) `/pref/hokkaido/` と `/region/hokkaido/` が同title・同一掲載8件で両方index対象だった。
   北海道は PREF_TO_REGION 上1県=1地方なので構造的に必ずこうなる。`render()` に

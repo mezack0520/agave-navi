@@ -101,10 +101,10 @@ def main():
         f.write(make_calendar('アガベイベントナビ - 全イベント', events))
     # 今月
     with open(os.path.join(REPO_ROOT, 'this-month.ics'), 'w', encoding='utf-8') as f:
-        f.write(make_calendar('アガベイベントナビ - 今月', [e for e in events if e.get('date','').startswith(cur_ym)]))
+        f.write(make_calendar('アガベイベントナビ - 今月', [e for e in events if e.get('date','') and e.get('date','')[:7] <= cur_ym <= (e.get('dateEnd') or e.get('date',''))[:7]]))
     # 開催予定
     with open(os.path.join(REPO_ROOT, 'upcoming.ics'), 'w', encoding='utf-8') as f:
-        f.write(make_calendar('アガベイベントナビ - 開催予定', [e for e in events if e.get('date','') >= today]))
+        f.write(make_calendar('アガベイベントナビ - 開催予定', [e for e in events if (e.get('dateEnd') or e.get('date','')) >= today]))
 
     print(f'Generated: events.ics ({len(events)} events), this-month.ics, upcoming.ics')
 
