@@ -1,5 +1,5 @@
 {
-  "total": 104,
+  "total": 165,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -188,6 +188,54 @@
         "tochigi-tanippe-2026-10(56字)"
       ],
       "note": "",
+      "severity": "info"
+    },
+    "upcoming_no_image": {
+      "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
+      "count": 61,
+      "items": [
+        "awajishima-taniku-smile-marche-3rd-2026",
+        "bota-no-natsuyasumi-2026",
+        "botajam-2026",
+        "botanical-auction-3rd-hamamatsu-2026-09",
+        "botanical-botanical-fukuoka-2026-10",
+        "botanical-botanical-okinawa-2026-11",
+        "botanical-botanical-osaka-2026-10",
+        "botanical-festa-hawo-kumagaya-2026-09",
+        "botanical-garden-plaza-hana-2026-08",
+        "botanical-life-arita-2026-09",
+        "botanical-x-vol1-2026",
+        "botanical-yoichi-3rd-ebina-2026-08",
+        "chinki-shokubutsu-fair-4th-kasugai-2026",
+        "chinki-shokubutsu-ichiba-vol9-2026",
+        "chuushokushobutsusai-2026",
+        "dio-plants-fes-vol1-kusatsu-2026-09",
+        "enjoy-place-5th-2026-10",
+        "enjoy-place-outside-2nd-2026-11",
+        "fukuoka-green-party-7th-2026",
+        "garden-link-festa-2026-10",
+        "gen-x-bocchi-botanical-market-2026-10",
+        "gifu-midori-marche-2nd-2026-09",
+        "green-base-market-vol1-nishikata-2026-10",
+        "green-summit-more-vol21-2026-08",
+        "green-summit-vol22-yamagata-2026",
+        "grow-jam-presents-01-soka-2026-08",
+        "ibatama-vol9-2026-10",
+        "isij-big-bazaar-2026-09-27",
+        "isij-big-bazaar-2026-11-22",
+        "isij-big-bazaar-2027-01-10",
+        "isij-big-bazaar-2027-03-14",
+        "isij-big-bazaar-2027-05-23",
+        "isij-big-bazaar-2027-07-11",
+        "isij-big-bazaar-2027-09-26",
+        "isij-big-bazaar-2027-11-28",
+        "kourep-2026-autumn",
+        "kyoto-midori-marche-ibaraki-2026-09",
+        "kyoto-midorino-marche-bangaihen-vol10-2026",
+        "little-green-marche-mitoyo-2026-09",
+        "minori-kaboku-cactus-agave-2026-08"
+      ],
+      "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
       "severity": "info"
     },
     "status_date_mismatch": {
