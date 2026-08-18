@@ -37,10 +37,14 @@
 - `GITHUB_TOKEN` によるCI側のpushはワークフローを再起動しない仕様。だからループしない。
   PATでpushしたときだけ `on.push` が発火する
 - PATの値は出力・ログ・レポートに残さない。401ならPAT再発行が必要な旨をキューに積んで終了
-- **ブラウザのGitHubはWeb編集に使えない。** Chromeは仕事用の `YujiMezaki` でログインしており、
-  `mezack0520` のリポジトリはWeb UIから編集できない。読み取り（無認証の `api.github.com` GET・
-  Actionsの実行結果閲覧）は通る。Windows Edge のみ `mezack0520` でログイン済みなので、
-  目崎が立ち会えるときだけ `switch_browser` で Run workflow ボタン等を押せる
+- **GitHubへの書き込み経路は PAT の `git push` だけ。** ブラウザからは一切書けない。
+  Chromeは仕事用の `YujiMezaki` でログインしており `mezack0520` のリポジトリはWeb UIから編集できない。
+  以前は Edge が `mezack0520` でログイン済みで `switch_browser` の逃げ道があったが、
+  **Edge は2026-08-18に廃止した。代替のブラウザは無い。**
+  したがって Run workflow ボタンを押す・Web UIでファイルを直す・Actions を手動再実行する、は**できない**。
+  `workflow_dispatch` はPATでも403なので、ワークフローを動かしたいときは
+  対象ファイルを push して `on.push` を発火させるしかない。
+  読み取り（無認証の `api.github.com` GET・Actionsの実行結果閲覧）はブラウザから通る
 
 ## 3. 既知のハマりどころ
 
