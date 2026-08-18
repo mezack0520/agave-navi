@@ -1,8 +1,8 @@
 {
- "generated": "2026-08-18 10:34 JST",
+ "generated": "2026-08-18 10:35 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 153,
+  "igAccounts": 157,
   "awaitingNextEdition": 198,
   "officialSiteCandidates": 51,
   "unresolvedIgHandles": 0
@@ -32,6 +32,15 @@
    "eventCount": 4,
    "lastEventName": "BOTANICAL BOTANICAL OKINAWA",
    "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "gamagori_taniku_festa",
+   "url": "https://www.instagram.com/gamagori_taniku_festa/",
+   "eventCount": 3,
+   "lastEventName": "第4回 がまごおり多肉フェスタ in 和歌山",
+   "lastEventDate": "2026-08-30",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -108,6 +117,24 @@
    "priority": 0
   },
   {
+   "handle": "minicar_ya_san",
+   "url": "https://www.instagram.com/minicar_ya_san/",
+   "eventCount": 2,
+   "lastEventName": "空のえき「そ・ら・ら」in 多肉祭",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "hokuriku.saboten.club",
+   "url": "https://www.instagram.com/hokuriku.saboten.club/",
+   "eventCount": 2,
+   "lastEventName": "ボタニカルマルシェ富山2026",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
    "handle": "taniten_kengo202",
    "url": "https://www.instagram.com/taniten_kengo202/",
    "eventCount": 2,
@@ -167,15 +194,6 @@
    "eventCount": 2,
    "lastEventName": "BOTANICAL AJITO",
    "lastEventDate": "2026-07-20",
-   "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "gamagori_taniku_festa",
-   "url": "https://www.instagram.com/gamagori_taniku_festa/",
-   "eventCount": 2,
-   "lastEventName": "がまごおり多肉フェスタ in八ヶ岳",
-   "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -324,6 +342,15 @@
    "priority": 1
   },
   {
+   "handle": "engei_raku",
+   "url": "https://www.instagram.com/engei_raku/",
+   "eventCount": 1,
+   "lastEventName": "園芸楽 2026",
+   "lastEventDate": "2026-09-21",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "bwoocraftplants",
    "url": "https://www.instagram.com/bwoocraftplants/",
    "eventCount": 1,
@@ -378,6 +405,15 @@
    "priority": 1
   },
   {
+   "handle": "souransai",
+   "url": "https://www.instagram.com/souransai/",
+   "eventCount": 1,
+   "lastEventName": "草乱祭with月刊チューズデイ - World Plant Market -",
+   "lastEventDate": "2026-10-04",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "taniku_to_midori_no_marche",
    "url": "https://www.instagram.com/taniku_to_midori_no_marche/",
    "eventCount": 1,
@@ -400,15 +436,6 @@
    "url": "https://www.instagram.com/ibatama.ta29/",
    "eventCount": 1,
    "lastEventName": "いばたま vol.9",
-   "lastEventDate": "2026-10-11",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "minicar_ya_san",
-   "url": "https://www.instagram.com/minicar_ya_san/",
-   "eventCount": 1,
-   "lastEventName": "空のえき「そ・ら・ら」in 多肉祭",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
    "priority": 1
@@ -490,6 +517,15 @@
    "url": "https://www.instagram.com/nagomi_marche_2023/",
    "eventCount": 1,
    "lastEventName": "和 -NAGOMI- 多肉と雑貨のガーデンマルシェ",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "windplants_shop",
+   "url": "https://www.instagram.com/windplants_shop/",
+   "eventCount": 1,
+   "lastEventName": "植友広場 〜秋の陣〜 2026",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 1
@@ -1796,12 +1832,6 @@
    "eventDate": "2026-07-10"
   },
   {
-   "domain": "mitsui-shopping-park.com",
-   "url": "https://mitsui-shopping-park.com/mop/oyabe/event/3491823.html",
-   "eventName": "BOTANICAL EVENING MARCHE",
-   "eventDate": "2026-08-16"
-  },
-  {
    "domain": "kurashiki.ario.jp",
    "url": "https://kurashiki.ario.jp/event/2800008768",
    "eventName": "BOTANICAL NIGHT MARKET 2026",
@@ -1866,6 +1896,12 @@
    "url": "https://ontheplants.com/",
    "eventName": "On the Plants Vol.09",
    "eventDate": "2026-10-03"
+  },
+  {
+   "domain": "soransai.com",
+   "url": "https://soransai.com/",
+   "eventName": "草乱祭with月刊チューズデイ - World Plant Market -",
+   "eventDate": "2026-10-04"
   },
   {
    "domain": "helisgarden.wraptas.site",
