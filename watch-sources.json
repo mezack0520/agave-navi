@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-18 10:35 JST",
+ "generated": "2026-08-18 10:37 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 157,
-  "awaitingNextEdition": 198,
+  "awaitingNextEdition": 197,
   "officialSiteCandidates": 51,
   "unresolvedIgHandles": 0
  },
@@ -76,6 +76,15 @@
    "url": "https://www.instagram.com/fuji_taniku/",
    "eventCount": 2,
    "lastEventName": "富士多肉 多肉植物・サボテンの販売（富士川楽座）",
+   "lastEventDate": "2026-08-29",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "eventCount": 2,
+   "lastEventName": "木更津園芸市（2026年8月）",
    "lastEventDate": "2026-08-29",
    "hasUpcoming": true,
    "priority": 0
@@ -194,15 +203,6 @@
    "eventCount": 2,
    "lastEventName": "BOTANICAL AJITO",
    "lastEventDate": "2026-07-20",
-   "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
-   "eventCount": 2,
-   "lastEventName": "木更津園芸市（2026年8月）",
-   "lastEventDate": "2026-08-11",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -1734,16 +1734,6 @@
    "recurring": false
   },
   {
-   "series": "木更津園芸市（2026年8月）",
-   "lastSlug": "kisarazu-engei-ichi-2026-08",
-   "lastDate": "2026-08-11",
-   "lastEnd": "2026-08-11",
-   "monthsSinceLast": 0,
-   "igHandle": "chiba_c_and_s_association",
-   "officialUrl": null,
-   "recurring": false
-  },
-  {
    "series": "アクア＆グリーンフェス 縁日",
    "lastSlug": "aqua-green-fes-enichi-2026-08",
    "lastDate": "2026-08-15",
@@ -1821,6 +1811,16 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://www.tv-osaka.co.jp/event/reptiles2026/project/",
+   "recurring": false
+  },
+  {
+   "series": "第3回 歴史ど真ん中～直球植物～古都の宴",
+   "lastSlug": "rekishi-domannaka-chokkyu-shokubutsu-2026-07",
+   "lastDate": "2026-07-04",
+   "lastEnd": "2026-07-05",
+   "monthsSinceLast": 1,
+   "igHandle": null,
+   "officialUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/dai3kai-rekishidomannaka-chokkyushokubutsu-kotonoutage",
    "recurring": false
   }
  ],
