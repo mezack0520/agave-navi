@@ -133,6 +133,43 @@
       "name": "I.S.I.J. 東京例会 (2026-08-23 板橋区立熱帯環境植物館)",
       "decided": "2026-08-12",
       "reason": "pukubook が『近日開催』として掲載しているが、主催の国際多肉植物協会 isij.net のイベントスケジュールに『8/23（日）東京例会 → 休会とさせていただきます』と明記されている。アグリゲータが中止・休会を反映していない例"
+    },
+    {
+      "key": "taniku-torai-ki-ryuo-2026-09",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "多肉渡来記 (2026-09-06 アグリパーク竜王・滋賀県蒲生郡竜王町)",
+      "decided": "2026-08-18",
+      "reason": "出店側 @koron_shop の告知のみで、主催として名指しされている @nicori.25 / @nagomitaniku の当該回の告知を確認できない。イベント名で検索してもこの1投稿しか出ず、主催者が特定できない。主催の告知が出たら再評価する"
+    },
+    {
+      "key": "machi-towns-marche-7th-2026-09",
+      "reasonType": "policy",
+      "name": "第7回 街＊TOWNS＊マルシェ (2026-09-13 研究学園駅前公園・茨城県つくば市)",
+      "decided": "2026-08-18",
+      "reason": "キッチンカー・餃子・ハンドメイドを含む地域の総合マルシェで、植物は出店の一部。名称も中立で出店内訳は非公開。compositeEvents.undisclosedBreakdown の exclude に該当"
+    },
+    {
+      "key": "crafters-marche-hanazono-2026-09",
+      "reasonType": "policy",
+      "name": "CRAFTERS MARCHE 9月 (2026-09-12/13 道の駅はなぞの芝生広場・埼玉県深谷市)",
+      "decided": "2026-08-18",
+      "reason": "クラフト作家中心のマルシェで多肉は出店の一部。名称が中立で出店内訳も非公開。compositeEvents.undisclosedBreakdown の exclude に該当"
+    },
+    {
+      "key": "sumori-sai-2026-aki",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "スモリ祭 2026秋 (スモリの家 ムサシ名取展示場・宮城県名取市)",
+      "decided": "2026-08-18",
+      "reason": "pukubook が『仮予定／非公式・秋』として掲載しているのみで開催日が未確定。主催の一次情報も見つからない。venueUnannounced.doNotList（日付も未確定なら掲載しない）に該当。日程が告知されたら再評価する"
+    },
+    {
+      "key": "plants-only-bbq-2026-09",
+      "reasonType": "policy",
+      "name": "PLANTS ONLY BBQ (2026-09-22 X-PLANTS)",
+      "decided": "2026-08-18",
+      "reason": "参加費5,000円・持ち物指定ありの愛好家向け交流会（植物トーク・交換会・抽選会）で、一般来場者が立ち寄れる販売会ではない。closedGatherings に該当"
     }
   ],
   "_reasonTypes": {
@@ -140,5 +177,6 @@
     "unverified": "植物軸はあるが一次情報が確認できず今は載せない。revisit=true なら一次情報が出たら再評価する",
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
-  }
+  },
+  "updated": "2026-08-18"
 }

@@ -144,6 +144,24 @@ def main():
             continue
         print(f"  WARNING {ev.get('slug')}: IGのURLから主催者ハンドルが取れません。"
               f"organizerIg に主催者アカウント名を入れないとウォッチ対象になりません")
+    # 名称の先頭が曜日語 → Googleの画像OCRが日付の曜日を名前に食い込ませた疑い。
+    # 例: "2026.10.18. SUN GREEN BASE MARKET" の SUN は 10/18(日) の曜日。
+    # date の曜日と一致したときだけ警告する(SUNSET等の正当な名前で鳴らないよう完全一致に限る)。
+    import datetime as _dt
+    _WD = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
+    for ev in kept:
+        head = (ev.get('name') or '').strip().split(' ')[0].upper().strip('.,:')
+        if head not in _WD:
+            continue
+        try:
+            wd = _WD[_dt.date.fromisoformat(ev.get('date', '')).weekday()]
+        except ValueError:
+            continue
+        if head == wd:
+            print(f"  WARNING {ev.get('slug')}: 名称が曜日語 '{head}' で始まり date の曜日と一致します。"
+                  f"Googleの画像OCRが日付の曜日を名前に食い込ませた可能性があります。"
+                  f"主催者の告知で正式名称を確認してください")
+
     for slug, name, rs in rejected:
         print(f'  REJECT: {slug} ({name}) — {rs}')
 
