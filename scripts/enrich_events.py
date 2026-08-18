@@ -32,6 +32,11 @@ REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 EVENTS_PATH = os.path.join(REPO_ROOT, 'events.json')
 EVENTS_DIR = os.path.join(REPO_ROOT, 'events')
 REPORT_PATH = '/tmp/enrich-report.md'
+
+# 短文(70字未満)の開催予定イベントで説明文を差し替えなかった理由の記録。
+# 標準出力だけだと CI ログに埋もれ、翌週も同じ推測をやり直すことになるため
+# 週次レポート(Issue)に出す。形: (slug, 現在の字数, 候補の字数, 理由)
+DESC_SKIPS = []
 DATA_PATH = '/tmp/enrich-data.json'
 
 HEADERS = {
@@ -506,11 +511,21 @@ def process_event(event, force=False):
         if isinstance(v, str) and v.strip() in _PLACEHOLDER_VALUES and v.strip():
             placeholder_fields.append(f)
 
+    # 開催予定で説明文が70字未満なら、詳細ページ側が整っていても対象にする。
+    # これが無いと _priority が先頭に並べた短文イベントのうち、OGP画像を持つものが
+    # 毎週 'Already enriched, skipping' で落ち、監査の short_descriptions が動かない。
+    # (2026-08-18: 18件中5件がこの経路で9週間ぶん取りこぼされていた)
+    short_upcoming_desc = (
+        event.get('status') == 'upcoming'
+        and len((event.get('description') or '').strip()) < 70
+    )
+
     needs_update = (
         page_state.get('has_generic_desc', False) or
         page_state.get('has_template_text', False) or
         not page_state.get('has_ogp_image', False) or
-        bool(placeholder_fields)
+        bool(placeholder_fields) or
+        short_upcoming_desc
     )
     if placeholder_fields:
         print(f"  Placeholders detected in: {placeholder_fields}")
@@ -673,6 +688,16 @@ def generate_report(results, removed_names=None):
         report += "\n"
         report += "※ 復元する場合は、公式サイトURLを見つけた上でイベントを再登録してください。\n\n"
 
+    # === Section 3: 短文のまま残ったイベントと、その理由 ===
+    if DESC_SKIPS:
+        report += "### ✍️ 説明文が短いまま残った開催予定イベント\n\n"
+        report += "監査の `short_descriptions` が動かない原因はここに出る。"
+        report += "`candidate identical` が続く回は出典側に本文が無い。\n\n"
+        report += "| slug | 現在 | 候補 | 差し替えなかった理由 |\n|---|---|---|---|\n"
+        for slug, cur_n, cand_n, why in DESC_SKIPS:
+            report += f"| `{slug}` | {cur_n}字 | {cand_n}字 | {why} |\n"
+        report += "\n"
+
     report += "\n---\n"
     report += "*このレポートは自動エンリッチメントスクリプトで生成されました。*\n"
     report += "*✅の情報は自動抽出のため、正確性を確認の上で更新してください。*\n"
@@ -831,13 +856,22 @@ def main():
                 return True, None
 
             ok, reason = _quality_ok(candidate_desc, ev.get('name',''), ev.get('venue',''))
-            if (ok and candidate_desc != cur_desc
-                    and (len(cur_desc) < 80 or len(candidate_desc) >= int(len(cur_desc) * 1.2))):
+            long_enough = (len(cur_desc) < 80
+                           or len(candidate_desc) >= int(len(cur_desc) * 1.2))
+            if ok and candidate_desc != cur_desc and long_enough:
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')
-            elif not ok and len(cur_desc) < 80:
-                # Log skipped but don't write
-                print(f"    DESC-REJECTED for {ev['slug']}: {reason}")
+            elif len(cur_desc) < 70 and ev.get('status') == 'upcoming':
+                # 短文のまま残る回は理由を残す。ok=True でも差し替わらない経路
+                # (候補が現状と同一・伸び幅不足)があり、理由を分けないと原因を追えない
+                if not ok:
+                    why = reason or 'quality check failed'
+                elif candidate_desc == cur_desc:
+                    why = 'candidate identical to current'
+                else:
+                    why = 'candidate not longer than current'
+                DESC_SKIPS.append((ev['slug'], len(cur_desc), len(candidate_desc), why))
+                print(f"    DESC-REJECTED for {ev['slug']}: {why}")
 
             # time (only if empty)
             times_found = info.get('times_found') or []

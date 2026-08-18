@@ -111,8 +111,9 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   起動する(daily.yml / sync-events.yml の on.push)。Chrome経由のdispatchは、認証ヘッダ付きfetchが
   Chromeツール側で遮断されPromiseが解決しなくなったため2026-07-31に廃止した
   (以前はService Worker干渉と見ていたが、SWは未登録で原因が別だった)。
-  サンドボックスからの api.github.com 直叩きも不通。**ローカルで build-all.sh を回して
-  生成物ごとpushする**のが標準手順
+  サンドボックスからの api.github.com 直叩きは不通。ただし**Chromeからの無認証GETは通る**
+  (2026-08-10・08-18の2回で確認。公開repoなので Actions の run 一覧はこれで読める)。
+  書き込み系は依然403なので、**ローカルで build-all.sh を回して生成物ごとpushする**のが標準手順
 - **GITHUB_TOKENによるpushはワークフローを再起動しない**(GitHubの仕様)。だからCI側の自動コミットで
   ループしない。PATでpushしたときだけ on.push が発火する
 - sanity-check-new-events.py は既存slugを落とす。**既存イベントの修正は events.json を直接編集**する
@@ -245,6 +246,17 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   slug重複/同名同日の二重掲載/孤児・欠落ページ/sitemapの死活/見送りと掲載の矛盾/
   status矛盾/フィード件数/ガイドリンク死活/CSS版数乖離/未参照スクリプト/楽天キャッシュ網羅率を
   毎回検査し、重要項目は日次メールに出す。初回検査で二重掲載1件(春のサボテン多肉植物フェア)を検出
+- 2026-08-18: 週次エンリッチメントが短文イベントに手を付けられていなかったのを解消。
+  `enrich_events.py` の `_priority` は説明文70字未満の開催予定を処理順の先頭に並べるが、
+  `process_event` の `needs_update` にはテンプレ概要文・OGP画像なし・プレースホルダーしか
+  条件が無く、詳細ページが整っている短文イベント5件が毎週 `Already enriched, skipping` で
+  落ちていた。監査の `short_descriptions` が9週間18のまま動かなかった原因。
+  `needs_update` に「開催予定かつ70字未満」を追加(18件中の未処理を5→0)。
+  あわせて、差し替えなかった理由(quality check / 候補が現状と同一 / 伸び幅不足)を
+  `DESC_SKIPS` に集めて週次Issueの表に出すようにした。ログにしか出ないと翌週も原因を推測し直すため
+- 2026-08-18: 監査に `upcoming_no_image` を追加(info)。開催予定77件のうち61件が
+  `imageUrl` を持たず、トップと一覧のカードが「NO IMAGE」で並んでいる。
+  backfill-images.py が効いているかを件数の推移でしか判定できなかったため、推移を残す
 - 2026-07-30: 掲載基準を listing-policy.json に機械可読化。同じ類型の掲載可否を毎回人間に
   問い直していたため、一次情報の要件・複合イベントの閾値(植物出店3割以上または著名店3者以上)・
   会場未発表時のTBD掲載・矛盾データの削除を明文化した。rejected-events に reasonType を導入し

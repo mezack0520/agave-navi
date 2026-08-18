@@ -111,6 +111,22 @@
   (2) `grep -rlo "<フォームID>" --include=*.html .` が `contact.html` を返すこと
   (2026-08-13 実施。直近回答が 2026-07-02 で6週間空いていたため確認した。両方とも正常。
   サイト内でこのフォームIDを参照しているのは `contact.html` の1ファイルだけ)
+- **Chromeのプロファイルは前回の実行のlocalStorageを引きずる。本番の見え方を「壊れている」と
+  判定する前に localStorage を読む。** 2026-08-18、トップの件数バッジが 30件(実データは開催予定77件)で
+  47件が非表示になっており、掲載漏れの重大バグに見えた。原因は前回のチェックが残した
+  `aen_region="関東"` で、サイトは正しく動いていた。`index.html` の `initRegion()` が
+  地域選択を localStorage から復元する仕様。表示件数・表示要素を疑ったら、まず
+  `Object.keys(localStorage)` を出してから結論する
+- **`.aff-bar`(スマホ固定バー)はデスクトップ幅ではDOMに存在しないのが正常。**
+  `affiliate.js` が `matchMedia('(max-width: 720px)')` で生成自体を止めている。
+  かつ `resize_window` は効かない(420px を指定しても `innerWidth` は 1478 のまま)。
+  機能確認は **matchMedia を差し替えてから `affiliate.js` を再注入**し、
+  45%までスクロールして `.aff-bar.is-shown` と実商品リンク(`hb.afl.rakuten.co.jp`)が
+  出ることを見る。`display:none` は min-width:721px のCSSによるもので異常ではない
+- **weekly-enrichment のスケジュール実行は毎回20件しか処理しない。**
+  `LIMIT="${{ github.event.inputs.limit || '20' }}"` は cron 実行だと inputs が空なので常に20。
+  `enrich_events.py` の `_priority` が短文の開催予定を先頭に並べるため、
+  この20枠はほぼ `short_descriptions` の18件に使われる
 - 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
 
 ## 4. 自己改善のやり方
@@ -178,6 +194,12 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 2. `audit-history.json` の推移を見る。
    - urgent が前週より増えていれば原因を特定して直す
    - 何週間も同じ値のまま動かない項目は、対処されていないか検査が不適切。どちらかを直す
+   - **「対処されていない」と決める前に、対処する側のコードが入口で落ちていないかを読む。**
+     2026-08-18、`short_descriptions` が9週間18のまま動かなかった原因は、
+     enrichment が短文イベントを優先度1位に並べておきながら、`needs_update` の条件に
+     説明文の長さが入っておらず `Already enriched, skipping` で即座に落としていたこと。
+     「手が足りていない」ではなく「手が届く前に return していた」。
+     推移が動かない項目は、まず担当スクリプトのスキップ条件を読む
    - 常に0が続く項目は `severity='info'` に落とすことを検討（メールのノイズを減らす）
 3. `pending-judgments.json` が3件以上溜まっていたら、人間の判断が本当に要るのか見直す。
    要らないものは `listing-policy.json` に基準を書いて自動化する

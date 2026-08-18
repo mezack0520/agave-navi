@@ -226,6 +226,16 @@ def main():
                for e in events
                if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 70), severity='info')
 
+    # 8b. サムネイルの無い開催予定
+    # トップと一覧のカードが「NO IMAGE」になる。weekly-enrichment の
+    # backfill-images.py が効いているかは、この件数が週ごとに減るかでしか分からない。
+    # 常時0にはならないので info。(2026-08-18 追加。追加時 61/77件)
+    add('upcoming_no_image', '開催予定でimageUrlが無い(カードがNO IMAGE表示になる)',
+        sorted(e['slug'] for e in events
+               if e.get('status') == 'upcoming' and not (e.get('imageUrl') or '').strip()),
+        'weekly-enrichment の backfill-images.py が拾えていない回。'
+        '減っていなければ og:image を出さない出典が続いている', severity='info')
+
     # 9. status と日付の矛盾
     today = os.environ.get('AUDIT_TODAY') or today_jst()
     mism = []
