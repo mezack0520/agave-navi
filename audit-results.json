@@ -481,6 +481,13 @@
       "note": "build-detail-pages.py を回す。差分が残るならテンプレート側を疑う",
       "severity": "urgent"
     },
+    "jsonld_blank_value": {
+      "title": "JSON-LDに空文字の値(値が無いのではなく空を主張してしまう)",
+      "count": 0,
+      "items": [],
+      "note": "会場や主催が不明な回は、空文字を入れずキーごと省く。build-detail-pages.py のテンプレート側で分岐する",
+      "severity": "urgent"
+    },
     "rakuten_config_missing": {
       "title": "楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)",
       "count": 0,

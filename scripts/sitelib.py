@@ -214,3 +214,19 @@ def site_footer():
       <p class="footer-copy">&copy; 2025-{year} アガベイベントナビ</p>
     </div>
   </footer>"""
+
+
+_VAGUE_MARKER = re.compile(r'(未定|未確定|調整中)')
+
+
+def is_vague_venue(v):
+    """会場として使えない値か。
+
+    完全一致の VAGUE_VENUES だけでは「金沢（会場未確定）」のように
+    未定であることを括弧書きで補った値を取りこぼす。
+    地図・JSON-LDのPlace・FAQに、会場名として出してはいけない値を1か所で判定する。
+    """
+    v = (v or '').strip()
+    if not v:
+        return True
+    return v in VAGUE_VENUES or bool(_VAGUE_MARKER.search(v))

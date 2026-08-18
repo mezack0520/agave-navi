@@ -37,8 +37,22 @@
 - `GITHUB_TOKEN` によるCI側のpushはワークフローを再起動しない仕様。だからループしない。
   PATでpushしたときだけ `on.push` が発火する
 - PATの値は出力・ログ・レポートに残さない。401ならPAT再発行が必要な旨をキューに積んで終了
+- **ブラウザのGitHubはWeb編集に使えない。** Chromeは仕事用の `YujiMezaki` でログインしており、
+  `mezack0520` のリポジトリはWeb UIから編集できない。読み取り（無認証の `api.github.com` GET・
+  Actionsの実行結果閲覧）は通る。Windows Edge のみ `mezack0520` でログイン済みなので、
+  目崎が立ち会えるときだけ `switch_browser` で Run workflow ボタン等を押せる
 
 ## 3. 既知のハマりどころ
+
+- **会場が「未定」かどうかの判定は `sitelib.is_vague_venue()` を使う。**
+  `VAGUE_VENUES` への完全一致だけだと「金沢（会場未確定）」のように
+  括弧書きで未定を補った値を取りこぼす。取りこぼすと地図・FAQ・JSON-LDのPlaceに
+  会場名として出てしまう（2026-08-18に検出・統一）
+- **JSON-LDに空文字の値を出さない。** 会場不明の回で `"name": ""` を出していた（31頁）。
+  空文字は「値が無い」ではなく「空という値がある」と読まれる。キーごと省く。
+  `audit.py` の `jsonld_blank_value` が検出する
+- **FAQの会場文は `location` に住所が入っていると括弧が二重になる。**
+  「◯◯（静岡県富士市…）(静岡)です」。`location` に県名が既にあるときは `(県)` を足さない（38頁で発生）
 
 - **既存イベントの修正は `events.json` を直接編集する。**
   `sanity-check-new-events.py` は既存slugを "slug already exists" で落とすため

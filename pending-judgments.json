@@ -1,14 +1,5 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "event-monitor:fujiyama-little-green-park-unverified",
-      "raisedOn": "2026-08-18",
-      "summary": "fujiyama-days-little-green-park-2026 の開催実態が裏取りできていない",
-      "detail": "出典に入っていた https://www.nattoku.jp/event/p42164/ は2024年開催の別回「FUJIYAMA DAYS LIFE STYLE FESTA」(6/1-6/2)についての協賛企業の告知で、この回(LITTLE GREEN PARK / 2026-04-18〜19 / 10:00〜17:00 / 入場無料)を一切裏付けていなかったため外した。残る出典は @fujiyama_days のIGのみ。会場(富士中央公園・静岡県富士市)は誤った出典側でも一致していたので確からしいが、LITTLE GREEN PARK という回が2026-04-18〜19に実在したかは未確認。終了30日超でnoindexのアーカイブ記録なので実害は小さい。",
-      "askedOf": "event-listing-review",
-      "proposal": "@fujiyama_days の投稿で 2026-04-18〜19 の回を確認する。確認できたら出典をその投稿に差し替える。見つからなければ rejected-events.json に reasonType=unverified で移す。あわせて listing-policy.json に『出典URLは日付・イベント名・会場がその回と一致することを確認してから登録する』を追記する"
-    }
-  ],
+  "items": [],
   "updated": "2026-08-18"
 }

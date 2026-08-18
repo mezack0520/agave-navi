@@ -948,7 +948,7 @@ def main():
     #     さらに Event の日付・名称が events.json と一致するかを見る。
     #     不一致は詳細ページの再生成漏れ(2026-08-11に検査化)。
     _LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
-    ld_bad, ld_drift = [], []
+    ld_bad, ld_drift, ld_blank = [], [], []
     ev_by_slug = {e.get('slug'): e for e in events}
     for f in sorted(glob.glob(rp('**', '*.html'), recursive=True)):
         rel = os.path.relpath(f, REPO).replace(os.sep, '/')
@@ -977,6 +977,14 @@ def main():
         if node is None:
             ld_drift.append(f'{slug}: Event の JSON-LD が無い')
             continue
+        # 空文字のキーは「値が無い」ではなく「空という値がある」と解釈される。
+        # 会場不明の回は Place.name をキーごと省くのが正で、'' を出しては駄目。
+        for _k, _v in (('location', node.get('location')), ('organizer', node.get('organizer'))):
+            if isinstance(_v, dict):
+                for _kk, _vv in _v.items():
+                    if isinstance(_vv, str) and _vv.strip() == '':
+                        ld_blank.append(f'{slug}: {_k}.{_kk} が空文字')
+
         want_end = ev.get('dateEnd') or ev.get('date')
         for label, got, want in (
                 ('startDate', (node.get('startDate') or '')[:10], ev.get('date')),
@@ -992,6 +1000,9 @@ def main():
     add('jsonld_data_drift', '詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)',
         sorted(ld_drift),
         'build-detail-pages.py を回す。差分が残るならテンプレート側を疑う')
+    add('jsonld_blank_value', 'JSON-LDに空文字の値(値が無いのではなく空を主張してしまう)',
+        sorted(ld_blank),
+        '会場や主催が不明な回は、空文字を入れずキーごと省く。build-detail-pages.py のテンプレート側で分岐する')
 
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')

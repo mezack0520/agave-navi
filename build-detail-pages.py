@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scr
 import sitelib
 from sitelib import (
     html_escape, compact_date as make_compact_date, normalize_series_name,
-    VAGUE_VENUES as _VAGUE_VENUES, WEEKDAYS_JA, slug_hash as _slug_hash,
+    is_vague_venue as _is_vague, WEEKDAYS_JA, slug_hash as _slug_hash,
     date_to_japanese,
 )
 
@@ -138,7 +138,7 @@ def make_map_section(ev):
     if not map_query:
         venue = (ev.get('location') or ev.get('venue') or '').strip()
         pref = (ev.get('prefecture') or '').strip()
-        if venue and venue not in _VAGUE_VENUES:
+        if venue and not _is_vague(venue):
             map_query = f'{venue} {pref}'.strip()
     if not map_query:
         return ''
@@ -265,7 +265,7 @@ def make_prefecture_row(ev):
     スペック表には都道府県の行が無いため、会場欄を「記録なし」にすると
     地理情報が完全に消えてしまう(2026-08-13)。"""
     venue = (ev.get('venue') or ev.get('location') or '').strip()
-    if venue and venue not in sitelib.VAGUE_VENUES:
+    if venue and not _is_vague(venue):
         return ''
     pref = (ev.get('prefecture') or '').strip() or (ev.get('region') or '').strip()
     if not pref:
@@ -366,7 +366,10 @@ def make_event_jsonld(ev):
     _raw_venue = (ev.get('venue') or ev.get('location') or '').strip()
     # 都道府県名・「調整中」等は会場名ではない。Place.name に入れると
     # 構造化データが誤った施設を指すため、その場合は名前を持たせない。
-    venue = html_escape(_raw_venue) if _raw_venue not in sitelib.VAGUE_VENUES else ''
+    venue = html_escape(_raw_venue) if not _is_vague(_raw_venue) else ''
+    # 空文字の name を出すと、構造化データ上「名前が空の会場」を主張することになる。
+    # 会場が分からない回はキーごと省く。
+    venue_name_field = f'\n      "name": "{venue}",' if venue else ''
     pref = ev.get('prefecture', '') or ev.get('region', '')
     desc = html_escape(make_meta_description(ev))
     image_url = (ev.get('imageUrl') or '').replace('"', '&quot;')
@@ -411,8 +414,7 @@ def make_event_jsonld(ev):
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/{schema_status}",
     "location": {{
-      "@type": "Place",
-      "name": "{venue}",
+      "@type": "Place",{venue_name_field}
       "address": {{
         "@type": "PostalAddress",
         "addressRegion": "{pref}",
@@ -555,7 +557,7 @@ def build_page(template, ev, ctx):
         '{{prefecture}}': prefecture,
         '{{prefectureOrRegion}}': prefecture or region,
         '{{venue}}': (html_escape(venue)
-                      if venue and venue not in sitelib.VAGUE_VENUES
+                      if venue and not _is_vague(venue)
                       else _venue_placeholder(ev)),
         '{{prefectureRow}}': make_prefecture_row(ev),
         '{{description}}': html_escape(ev.get('description', '')),
@@ -843,7 +845,7 @@ def make_visit_tips(ev):
     if region:
         tips.append(
             f'会場は{html_escape(pref or region)}'
-            + (f'({html_escape(venue)})' if venue and venue not in _VAGUE_VENUES else '')
+            + (f'({html_escape(venue)})' if venue and not _is_vague(venue) else '')
             + 'です。'
             '公共交通機関でのアクセスを基本に、休日の駐車場混雑・周辺道路の状況も'
             '合わせて確認しておくと当日のスケジュールが組みやすくなります。'
@@ -904,7 +906,7 @@ def make_mini_card(e, today, show_state=True):
     dd = make_chip_date(e, today)
     place = e.get('prefecture') or e.get('region') or ''
     venue = e.get('location') or e.get('venue') or ''
-    if venue in _VAGUE_VENUES or venue == place:
+    if _is_vague(venue) or venue == place:
         venue = ''
     meta = ' / '.join(x for x in [place, venue] if x)
     d_end = e.get('dateEnd') or e.get('date') or ''
@@ -993,7 +995,7 @@ def make_nearby_events(ev, ctx):
 
 def make_venue_history(ev, ctx):
     v = (ev.get('location') or '').strip()
-    if not v or v in _VAGUE_VENUES:
+    if _is_vague(v):
         return ''
     others = [e for e in ctx['venues'].get(v, []) if e.get('slug') != ev.get('slug')]
     if not others:
@@ -1044,9 +1046,11 @@ def _faq_pairs(ev, ctx):
         pairs.append(('開催時間は何時から何時までですか？', f'開催時間は{time_str}{verb}。整理券配布や入場列は開場前に始まることがあります。'))
 
     venue = (ev.get('location') or ev.get('venue') or '').strip()
-    if venue and venue not in _VAGUE_VENUES:
+    if venue and not _is_vague(venue):
         pref = ev.get('prefecture') or ev.get('region') or ''
-        a = f'会場は{venue}({pref})です。'
+        # location に住所が入っている回は県名が本文に既にある。
+        # そのまま (県) を足すと「◯◯（静岡県富士市…）(静岡)です」と括弧が二重になる。
+        a = f'会場は{venue}({pref})です。' if pref and pref not in venue else f'会場は{venue}です。'
         access = (ev.get('access') or '').strip()
         if access:
             a += f'アクセス: {access}'
@@ -1203,7 +1207,7 @@ def build_context(events):
         if len(k) >= 4:
             series.setdefault(k, []).append(e)
         v = (e.get('location') or '').strip()
-        if v and v not in _VAGUE_VENUES:
+        if v and not _is_vague(v):
             venues.setdefault(v, []).append(e)
         p = e.get('prefecture')
         if p:

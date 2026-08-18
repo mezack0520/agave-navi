@@ -112,5 +112,12 @@
     "exclude": "交流会・交換会・BBQ 単独の回。rejected-events に reasonType=policy で記録する",
     "precedent": "PLANTS ONLY BBQ 2026-09-22 (X-PLANTS・参加費5,000円・持ち物『塊根植物(任意)』・内容は植物トーク/交換会/抽選会) → 見送り(2026-08-18)",
     "doNotEscalate": true
+  },
+  "sourceUrlMatch": {
+    "rule": "出典URLは、日付・イベント名・会場がその回と一致することを確認してから登録する",
+    "decided": "2026-08-18",
+    "detail": "同じ主催・同じ会場でシリーズ化しているイベントは、別回や別名義の告知が検索で上位に来る。fujiyama-days-little-green-park-2026 に、2024年開催の別回『FUJIYAMA DAYS LIFE STYLE FESTA』(6/1-6/2)についての協賛企業の告知が sourceUrl として入っていた。会場が一致していたため気づきにくかった",
+    "action": "登録前に、出典ページ上に(1)開催日 (2)その回の名称 (3)会場 の3点が揃っていることを確認する。会場だけの一致は裏取りにならない。3点が揃わない場合は主催者の公式SNS/公式サイトを出典にする",
+    "detection": "audit.py では検出できない。登録時と、出典を差し替えるときの手順として守る"
   }
 }
