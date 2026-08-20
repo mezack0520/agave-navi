@@ -59,7 +59,7 @@ HEAD = '''<!DOCTYPE html>
   <script src="{root}list-ui.js?v=20260820a"></script>
 </head>'''
 HEAD = HEAD.replace('style.css?v=20260611a', 'style.css?v=' + sitelib.CSS_VERSION)
-HEAD = HEAD.replace('list-ui.js?v=20260820a', 'list-ui.js?v=' + sitelib.JS_VERSION)
+HEAD = HEAD.replace('list-ui.js?v=20260820a', 'list-ui.js?v=' + sitelib.JS_VERSION)  # 版数の正はsitelib
 
 HEADER = sitelib.site_header()
 FOOTER = sitelib.site_footer()

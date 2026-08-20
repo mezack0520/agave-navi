@@ -396,3 +396,19 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 3. `pending-judgments.json` が3件以上溜まっていたら、人間の判断が本当に要るのか見直す。
    要らないものは `listing-policy.json` に基準を書いて自動化する
 4. 上記でプレイブックを更新したら、何を変えたかレポートに1行で書く
+
+## JS/CSS を直したら版数を上げる (2026-08-20)
+
+`status-auto.js` / `list-ui.js` / `affiliate.js` / `style.css` の中身を変えたら、
+**必ず `scripts/sitelib.py` の `JS_VERSION` / `CSS_VERSION` を上げる。**
+
+版数を据え置いて中身だけ差し替えると、URL が変わらないので CDN と閲覧者の
+ブラウザが旧ファイルを配り続ける。直したつもりで本番は直っていない状態になる。
+2026-08-20 に status-auto.js を3回直したが、版数が `20260820a` のままで
+本番には初回の版が配信され続けていた。修正の確認は
+`https://agave-navi.com/status-auto.js` を直接取得して中身を見ること。
+
+`sync-footers.py` が静的ページの `?v=` を sitelib の値に揃え、
+`audit.py` の `css_version_drift` / `js_version_drift` が乖離を検出する。
+検出できるのは「ページの参照が正規値と違う」ことだけで、
+「正規値を上げ忘れた」ことは検出できない。ここは人が守る。
