@@ -193,7 +193,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
-      "count": 71,
+      "count": 69,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -217,7 +217,6 @@
         "engei-raku-2026-09",
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
-        "fuji-taniku-fujikawa-rakuza-2026-08",
         "fukuoka-green-party-7th-2026",
         "gamagori-taniku-festa-wakayama-4th-2026-08",
         "garden-link-festa-2026-10",
@@ -234,7 +233,8 @@
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
         "isij-big-bazaar-2027-07-11",
-        "isij-big-bazaar-2027-09-26"
+        "isij-big-bazaar-2027-09-26",
+        "isij-big-bazaar-2027-11-28"
       ],
       "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
       "severity": "info"
@@ -353,8 +353,11 @@
     },
     "generic_image_asset": {
       "title": "imageUrlがサイト共通ロゴ・OGP既定(4箇所に別物の絵が出る)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "fuji-taniku-fujikawa-rakuza-2026-08: https://fujikawarakuza.co.jp/wordpress/wp-content/themes/theme_rakuza/",
+        "one-love-sano-2026: https://oneloveoneheart.jp/wp/wp-content/themes/oneloveoneheart/assets"
+      ],
       "note": "イベント固有の画像に差し替えるか、無ければ imageUrl をキーごと削除する",
       "severity": "urgent"
     },
