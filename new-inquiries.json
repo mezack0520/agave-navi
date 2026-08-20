@@ -1,5 +1,5 @@
 {
   "_note": "問い合わせ新着の受け渡し箱。event-listing-review が新着回答を書いてpushすると notify-inquiry.yml が発火しメールを送る。送信済みの回は次回実行時に items から消す(空itemsのpushではメールは飛ばない)。1件の形: {timestamp, type, eventName, name, email, body} lastChecked は最終確認日(発火テストと監視用)。",
   "items": [],
-  "lastChecked": "2026-08-18"
+  "lastChecked": "2026-08-20"
 }

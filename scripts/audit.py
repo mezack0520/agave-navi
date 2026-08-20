@@ -1040,6 +1040,34 @@ def main():
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
 
+    # 掲載申請フォームの確認が止まっていないか。
+    # event-listing-review は回答シートを読むたびに new-inquiries.json の
+    # lastChecked を当日にして push する。新着ゼロの日でもこの値だけは動く。
+    # 逆に言うと、ここが止まっていれば「申請が来ていない」ではなく
+    # 「確認する側が動いていない」。2026-08-14〜17 と 08-19 に実行が抜けたが、
+    # repo には痕跡が残らず、次に動いた日まで誰も気づけなかった(2026-08-20に検査を追加)。
+    # 4日目から鳴らす。1日の抜けで鳴らすと、実行時刻とCIの時差だけで誤検知する。
+    inq_stale = []
+    _ni = load_json('new-inquiries.json', {})
+    _lc = str(_ni.get('lastChecked') or '').strip()
+    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _lc):
+        inq_stale.append(f'lastChecked が日付として読めない: {_lc!r}')
+    else:
+        import datetime as _dtm
+        try:
+            _gap = (_dtm.date.fromisoformat(today_jst())
+                    - _dtm.date.fromisoformat(_lc)).days
+        except ValueError:
+            _gap = None
+            inq_stale.append(f'lastChecked が日付として読めない: {_lc!r}')
+        if _gap is not None and _gap > 3:
+            inq_stale.append(
+                f'lastChecked={_lc} / {_gap}日前。掲載申請フォームの確認が止まっている')
+    add('inquiry_check_stale', '掲載申請フォームの確認が止まっている',
+        inq_stale,
+        'event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。'
+        '止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない')
+
     # --- 出力 ---
     total = sum(v['count'] for k, v in findings.items()
                 if k not in ('workflow_secrets',))
