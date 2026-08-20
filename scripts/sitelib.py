@@ -504,10 +504,12 @@ def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
     desc = '' if compact else (e.get('description') or '').strip()
     desc_html = f'<p class="event-description">{html_escape(desc)}</p>' if desc else ''
 
+    # 会場名は venue_display で住所の括弧書きを落とす。生の location だと
+    # 「TITANOTA BASE（埼玉県草加市西町1270-3）」がカードに丸ごと出る。
     venue = (e.get('location') or '').strip()
     meta = f'<span class="event-region">{html_escape(pref or region)}</span>'
     if not is_vague_venue(venue):
-        meta += f'<span class="event-venue">{html_escape(venue)}</span>'
+        meta += f'<span class="event-venue">{html_escape(venue_display(venue))}</span>'
     meta += extra_meta
 
     status = 'past' if event_phase(e, today) == 'past' else 'upcoming'
