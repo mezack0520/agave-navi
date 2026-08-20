@@ -25,7 +25,8 @@ CAL_HTML = os.path.join(ROOT, 'calendar.html')
 
 # 地域分類の単一情報源は sitelib。独自定義で山梨・長野を「中部」としていたが
 # REGION_ROMAJI に中部が無くハッシュURLの頁を生むため統合した(2026-07-31)。
-from sitelib import PREF_TO_REGION as REGION_FROM_PREFECTURE, today_jst
+from sitelib import (PREF_TO_REGION as REGION_FROM_PREFECTURE, today_jst,
+                     is_upcoming, split_ongoing)
 
 
 def esc(s):
@@ -38,16 +39,11 @@ def esc(s):
 
 def upcoming_events(events):
     today_iso = today_jst()  # JSTで判定(UTCだと06:00 JSTの日次実行で前日扱いになる)
-    rows = []
-    for e in events:
-        if e.get('status') == 'past':
-            continue
-        d_end = e.get('dateEnd') or e.get('date') or ''
-        if d_end and d_end < today_iso:
-            continue
-        rows.append(e)
-    rows.sort(key=lambda e: (e.get('date') or '9999', e.get('name') or ''))
-    return rows
+    rows = [e for e in events
+            if e.get('status') != 'past' and is_upcoming(e, today_iso)]
+    # 並び順は sitelib が単一情報源。開始日で並べると会期の長い回が先頭に居座る。
+    ongoing, rest = split_ongoing(rows, today_iso)
+    return ongoing + rest
 
 
 def render_fallback_list(events_list, heading):

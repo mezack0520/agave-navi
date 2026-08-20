@@ -997,6 +997,11 @@ main {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.75; }
 }
+/* 開催中(会期2日目以降)。会期の長い展示が最緊急色で出続けるのを避け、
+   落ち着いた色にする。緊急度の序列は 本日 > 明日/3日以内 > 開催中。 */
+.event-status.status-ongoing {
+    background-color: #4a8a7b;
+}
 .event-status.status-thisweek {
     background-color: #d63031;
 }

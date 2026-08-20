@@ -18,6 +18,7 @@ import sitelib
 from sitelib import (
     JST, DOMAIN, html_escape, pref_slug, region_slug, tag_slug, venue_slug,
     PREF_ROMAJI, REGION_ROMAJI, TAG_ROMAJI, VENUE_ROMAJI, VAGUE_VENUES, safe_slug,
+    is_upcoming, is_ongoing, list_sort_key, split_ongoing,
 )
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -214,11 +215,23 @@ def cleanup_orphans():
     return sorted(removed)
 
 
+def listed(evs, today_str):
+    """一覧に出す順に並べる。開催中の長期開催を先頭、以降は sitelib の並び順。"""
+    ongoing, rest = split_ongoing(evs, today_str)
+    return ongoing + rest
+
+
 def upcoming_then_past(evs):
+    """開催予定(開催中を含む) → 終了 の順。判定と並びは sitelib が単一情報源。
+
+    date >= today で切っていたため、開催中の長期イベントが終了側に落ちていた
+    (2026-08-20)。開催予定/終了の別は必ず dateEnd で判定する。
+    """
     today=datetime.now(JST).strftime('%Y-%m-%d')
-    up=sorted([e for e in evs if e.get('date','')>=today], key=lambda e:e.get('date',''))
-    past=sorted([e for e in evs if e.get('date','')<today], key=lambda e:e.get('date',''), reverse=True)
-    return up + past
+    ongoing, rest = split_ongoing([e for e in evs if is_upcoming(e, today)], today)
+    past=sorted([e for e in evs if not is_upcoming(e, today)],
+                key=lambda e:e.get('date',''), reverse=True)
+    return ongoing + rest + past
 
 def index_page(out_path, title, desc, kw, canon, h1, lead, items, root='../'):
     """items: list of (name, url, count)"""
@@ -237,12 +250,17 @@ THIN_THRESHOLD = 3  # 掲載イベントがこの件数未満のタグ/都道府
 
 def dyn_facts(evs, today_str):
     """イベント群から事実ベースの動的な紹介文を作る。"""
-    up = sorted([e for e in evs if (e.get('date') or '') >= today_str], key=lambda e: e.get('date',''))
+    ongoing, rest = split_ongoing([e for e in evs if is_upcoming(e, today_str)], today_str)
+    up = ongoing + rest
     parts = []
-    if up:
-        nxt = up[0]
+    if ongoing:
+        o = ongoing[0]
+        parts.append(f"現在開催中は「{o.get('name','')}」({o.get('dateDisplay') or o.get('date','')})です。")
+    nxt = next((e for e in rest if not is_ongoing(e, today_str)), None)
+    if nxt:
         dd = nxt.get('dateDisplay') or nxt.get('date','')
         parts.append(f"直近の開催予定は「{nxt.get('name','')}」({dd})です。")
+    if up:
         parts.append(f"今後の開催予定は{len(up)}件掲載しています。")
     return ' '.join(parts)
 
@@ -251,7 +269,8 @@ def main():
         events = json.load(f)
     today = datetime.now(JST)
     today_str = today.strftime('%Y-%m-%d')
-    upcoming_all = sorted([e for e in events if (e.get('date') or '') >= today_str], key=lambda e: e.get('date',''))
+    _up_ongoing, _up_rest = split_ongoing([e for e in events if is_upcoming(e, today_str)], today_str)
+    upcoming_all = _up_ongoing + _up_rest
     fallback5 = upcoming_all[:5]
     counters = defaultdict(int)
 
@@ -343,7 +362,7 @@ def main():
                    f'{y}年{m_int}月,アガベ,イベント', f'{DOMAIN}/archive/{ym}/',
                    [('ホーム',DOMAIN+'/'),('アーカイブ','/archive/'),(f'{y}年{m_int}月',None)],
                    f'{y}年{m_int}月のイベント', f'{y}年{m_int}月に{label}の一覧です。',
-                   sorted(evs, key=lambda e:e.get('date','')), '../../',
+                   sorted(evs, key=lambda e:e.get('date','')), '../../',  # start-date-ok: 月別アーカイブは開始日の時系列
                    noindex=(len(evs) < 2), rel_path=f'archive/{ym}/index.html'))
         counters['archive_ym']+=1
 
@@ -358,7 +377,7 @@ def main():
                    f'{y}年,アガベ,イベント,まとめ', f'{DOMAIN}/archive/{y}/',
                    [('ホーム',DOMAIN+'/'),('アーカイブ','/archive/'),(f'{y}年',None)],
                    f'{y}年のイベントまとめ', f'{y}年に開催された全イベント。',
-                   sorted(evs, key=lambda e:e.get('date','')), '../../'))
+                   sorted(evs, key=lambda e:e.get('date','')), '../../'))  # start-date-ok: 年別アーカイブは開始日の時系列
         counters['archive_y']+=1
 
     # this-weekend
@@ -378,7 +397,7 @@ def main():
                '今週末,アガベ,イベント', f'{DOMAIN}/this-weekend/',
                [('ホーム',DOMAIN+'/'),('今週末',None)],
                '今週末のイベント', f'今週末({label})に開催されるイベント一覧。',
-               sorted(we, key=lambda e:e.get('date','')), '../',
+               listed(we, today_str), '../',
                noindex=(len(we) == 0), fallback_evs=fallback5, rel_path='this-weekend/index.html'))
     counters['this_weekend']+=1
 
@@ -401,7 +420,7 @@ def main():
                f'今月,{today.year}年{today.month}月,アガベ,イベント', f'{DOMAIN}/this-month/',
                [('ホーム',DOMAIN+'/'),(f'{today.year}年{today.month}月',None)],
                f'今月のイベント({today.year}年{today.month}月)', '今月開催されるイベント一覧。',
-               sorted(me, key=lambda e:e.get('date','')), '../',
+               listed(me, today_str), '../',
                noindex=(len(me) == 0), fallback_evs=fallback5, rel_path='this-month/index.html'))
     counters['this_month']+=1
 

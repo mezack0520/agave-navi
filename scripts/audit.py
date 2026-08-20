@@ -19,7 +19,8 @@ from collections import defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
-from sitelib import today_jst, VAGUE_VENUES, is_generic_image_url
+from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
+                     event_phase, is_long_run, event_days, LONG_RUN_DAYS)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -938,6 +939,67 @@ def main():
             unused.append(bn)
     add('unreferenced_scripts', 'build-all.shもworkflowも参照していないスクリプト',
         unused, '使われていないか、呼び出しが失われている')
+
+    # 時間軸の規則の一貫性。開始日(date)を単一の時間キーにすると、同じ原因から
+    # 逆向きの事故が2つ出る(2026-08-20に是正)。
+    #   1. 会期の長い回が開始日の古さで一覧の先頭に居座る
+    #   2. date >= today を外れるので、開催中の回がランディングで終了扱いに落ちる
+    # 「今」の定義は sitelib(event_phase / list_sort_key)が単一情報源。
+    # 規則を持ち込み直したコードを毎ビルドで拾う。
+    ongoing_now = [e for e in events if event_phase(e) == 'ongoing']
+    add('ongoing_events', f'現在開催中のイベント(会期{LONG_RUN_DAYS}日以上は一覧の「開催中」枠)',
+        sorted(f"{e.get('slug')}({e.get('date')}〜{e.get('dateEnd') or e.get('date')}"
+               f"/{event_days(e)}日{'/長期' if is_long_run(e) else ''})"
+               for e in ongoing_now),
+        'status は upcoming のままでよい。past にすると一覧から消える', severity='info')
+
+    add('ongoing_marked_past', '開催中なのに status が upcoming でないイベント',
+        sorted(e.get('slug') or '' for e in ongoing_now
+               if e.get('status') != 'upcoming'),
+        'auto-status-jst.py は dateEnd で判定する。ここに出るのは手で書き換えた回')
+
+    # 開始日を単独の時間キーにしているコードの検出。
+    # sitelib の event_phase / is_upcoming / list_sort_key / split_ongoing を
+    # 経由しない生の比較・ソートが入ると、上の2つの事故がまた起きる。
+    START_ONLY_PATTERNS = [
+        # sorted(..., key=lambda e: e.get('date'...)) のような開始日単独ソート
+        (re.compile(r"key\s*=\s*lambda\s+\w+\s*:\s*\w+\.get\(\s*'date'"),
+         '開始日だけでソートしている'),
+        # e.get('date') >= today のような開始日での開催予定判定
+        (re.compile(r"\.get\(\s*'date'\s*(?:,[^)]*)?\)\s*[<>]=?\s*today"),
+         '開始日だけで開催予定を判定している'),
+    ]
+    # 終了側・開催履歴の降順、max/min、明示マーカーは開始日基準で正しい。
+    START_ONLY_ALLOW = re.compile(r'reverse\s*=\s*True|\bmax\(|\bmin\(|start-date-ok')
+    start_only = []
+    for f in (sorted(glob.glob(rp('scripts', '*.py'))) + [rp('build-detail-pages.py')]):
+        bn = os.path.basename(f)
+        if bn in ('sitelib.py', 'audit.py'):
+            continue
+        try:
+            src = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        for i, line in enumerate(src.splitlines(), 1):
+            if START_ONLY_ALLOW.search(line):
+                continue
+            for rx, why in START_ONLY_PATTERNS:
+                if rx.search(line):
+                    start_only.append(f'{bn}:{i} {why}')
+    # フロント側(index.html のインラインJS)にも規則を再実装させない。
+    try:
+        idx = open(rp('index.html'), encoding='utf-8').read()
+    except OSError:
+        idx = ''
+    for bad, why in (('function getCardDate', 'index.html に日付解釈の再実装がある'),
+                     ('function autoExpireEvents', 'index.html に終了判定の再実装がある')):
+        if bad in idx:
+            start_only.append(f'index.html {why}')
+    if 'AEN_LIST' not in idx and idx:
+        start_only.append('index.html が status-auto.js の並び替え(AEN_LIST)を使っていない')
+    add('start_date_only_ordering', '開始日を単独の時間キーにしているコード',
+        sorted(set(start_only)),
+        'sitelib の event_phase / is_upcoming / list_sort_key / split_ongoing を使う')
 
     # 14. workflowが参照するsecretの一覧(未設定だと黙って空になる)
     add('workflow_secrets', 'workflowが参照しているsecret',

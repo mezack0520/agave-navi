@@ -9,13 +9,13 @@ generate_sitemap / guides_content の動的記事)がここを import する。
 import re
 import unicodedata
 import hashlib
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, date, timezone, timedelta
 
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260730k'
-JS_VERSION = '20260810a'
+CSS_VERSION = '20260820a'
+JS_VERSION = '20260820a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -145,6 +145,109 @@ def compact_date(e):
     if de and de != d:
         s += f"-{de[8:10]}" if de[5:7] == d[5:7] else f"-{de[5:7]}.{de[8:10]}"
     return s
+
+# --- 時間軸 (単一情報源) ---
+# 一覧の並び順と「開催予定」の判定に開始日だけを使うと、同じ原因から
+# 逆向きの事故が2つ出る。
+#   1. 会期の長い回が開始日の古さで一覧の先頭に居座る
+#      (MOLLIS EXHIBIT 2026 は会期49日、トップ一覧の1位を1か月以上占有)
+#   2. date >= today を外れるので、開催中の回がランディングで終了扱いに落ちる
+#      (/pref/tokyo/ で開催中の MOLLIS が終了済みの回に混ざり23番目)
+# this-month が 2026-08-18 に同じ型の不具合で dateEnd 基準へ直されたが、
+# 規則が各ジェネレータとフロントに散っていたため他が直らなかった。
+# 「今」の定義はここだけに置く。ジェネレータもフロント(status-auto.js)も従う。
+
+LONG_RUN_DAYS = 4      # 会期がこの日数以上を「長期開催」とみなす
+FAR_FUTURE = '9999-12-31'
+
+
+def event_span(e):
+    """(開始日, 終了日) を ISO 文字列で返す。開始日が無ければ ('', '')。"""
+    d = (e.get('date') or '').strip()
+    if not d:
+        return '', ''
+    return d, ((e.get('dateEnd') or '').strip() or d)
+
+
+def event_days(e):
+    """会期日数。開始日が無い / 日付が壊れている回は None。"""
+    d, de = event_span(e)
+    if not d:
+        return None
+    try:
+        return (date.fromisoformat(de) - date.fromisoformat(d)).days + 1
+    except ValueError:
+        return None
+
+
+def is_long_run(e, threshold=LONG_RUN_DAYS):
+    """長期開催か。2〜3日の週末開催は一覧本体に混ぜるので長期に含めない。"""
+    n = event_days(e)
+    return n is not None and n >= threshold
+
+
+def event_phase(e, today=None):
+    """'past' | 'ongoing' | 'upcoming' | 'undated'
+
+    終了日で判定する。開始日で判定すると開催中の回が終了扱いになる。
+    """
+    d, de = event_span(e)
+    if not d:
+        return 'undated'
+    t = today or today_jst()
+    if de < t:
+        return 'past'
+    if d <= t:
+        return 'ongoing'
+    return 'upcoming'
+
+
+def is_upcoming(e, today=None):
+    """一覧・フィード・ランディングの「開催予定」側に出すか。開催中を含む。"""
+    return event_phase(e, today) in ('ongoing', 'upcoming', 'undated')
+
+
+def is_ongoing(e, today=None):
+    return event_phase(e, today) == 'ongoing'
+
+
+def is_long_ongoing(e, today=None, threshold=LONG_RUN_DAYS):
+    """一覧本体から外して「開催中」の枠に出す回。"""
+    return event_phase(e, today) == 'ongoing' and is_long_run(e, threshold)
+
+
+def list_sort_key(e, today=None):
+    """一覧の並び順(昇順)の単一情報源。
+
+    開催中の回は「今日始まる回」と同じ位置に置く。開始日のままだと
+    会期の長さに比例して先頭へ寄り、会期のあいだ居座る。
+    同じ日付では今日始まる回を先に、会期の途中の回を後ろに置く。
+    """
+    t = today or today_jst()
+    d, de = event_span(e)
+    name = e.get('name') or ''
+    if not d:
+        return (FAR_FUTURE, 2, FAR_FUTURE, name)
+    if de < t:
+        return (d, 0, d, name)          # past はここでは順序を変えない
+    return ((d if d > t else t), (1 if d < t else 0), d, name)
+
+
+def ongoing_sort_key(e, today=None):
+    """「開催中」枠の並び順。会期の終わりが近い回を先に出す。"""
+    d, de = event_span(e)
+    return (de or FAR_FUTURE, d or FAR_FUTURE, e.get('name') or '')
+
+
+def split_ongoing(evs, today=None, threshold=LONG_RUN_DAYS):
+    """(開催中の長期, 一覧本体) に分ける。どちらも規定の順に並べて返す。"""
+    t = today or today_jst()
+    ong = [e for e in evs if is_long_ongoing(e, t, threshold)]
+    rest = [e for e in evs if not is_long_ongoing(e, t, threshold)]
+    ong.sort(key=lambda e: ongoing_sort_key(e, t))
+    rest.sort(key=lambda e: list_sort_key(e, t))
+    return ong, rest
+
 
 # --- シリーズ名正規化 (開催履歴の同名イベント束ね) ---
 

@@ -21,7 +21,7 @@ import sitelib
 from sitelib import (
     html_escape, compact_date as make_compact_date, normalize_series_name,
     is_vague_venue as _is_vague, WEEKDAYS_JA, slug_hash as _slug_hash,
-    date_to_japanese,
+    date_to_japanese, is_upcoming, list_sort_key, split_ongoing,
 )
 
 # ---------------------------------------------------------------------------
@@ -949,20 +949,22 @@ def make_series_history(ev, ctx):
 
 def make_nearby_events(ev, ctx):
     today = ctx['today']
+    # 開始日で切ると、いま開催中の回が「今後のイベント」から落ちる。
+    # 開催予定/終了の別は sitelib(dateEnd基準)が単一情報源。
     pool = [e for e in ctx['events']
-            if e.get('slug') != ev.get('slug') and (e.get('date') or '') >= today]
+            if e.get('slug') != ev.get('slug') and is_upcoming(e, today)]
     skey = normalize_series_name(ev.get('name'))
     if len(skey) >= 4:
         pool = [e for e in pool if normalize_series_name(e.get('name')) != skey]
     pref = ev.get('prefecture')
     region = ev.get('region')
     same_pref = sorted([e for e in pool if pref and e.get('prefecture') == pref],
-                       key=lambda e: e.get('date') or '')
+                       key=lambda e: list_sort_key(e, today))
     same_region = sorted([e for e in pool if e.get('region') == region and e not in same_pref],
-                         key=lambda e: e.get('date') or '')
+                         key=lambda e: list_sort_key(e, today))
     picks = (same_pref + same_region)[:5]
     if not picks:
-        picks = sorted(pool, key=lambda e: e.get('date') or '')[:5]
+        picks = sorted(pool, key=lambda e: list_sort_key(e, today))[:5]
         if not picks:
             return ''
         scope = '全国'

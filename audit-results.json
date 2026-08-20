@@ -1,5 +1,5 @@
 {
-  "total": 185,
+  "total": 187,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -424,14 +424,14 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260730k)と違うページ",
+      "title": "CSS版数が正規値(20260820a)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260810a)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260820a)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -449,6 +449,30 @@
       "count": 0,
       "items": [],
       "note": "使われていないか、呼び出しが失われている",
+      "severity": "urgent"
+    },
+    "ongoing_events": {
+      "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
+      "count": 2,
+      "items": [
+        "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
+        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
+      ],
+      "note": "status は upcoming のままでよい。past にすると一覧から消える",
+      "severity": "info"
+    },
+    "ongoing_marked_past": {
+      "title": "開催中なのに status が upcoming でないイベント",
+      "count": 0,
+      "items": [],
+      "note": "auto-status-jst.py は dateEnd で判定する。ここに出るのは手で書き換えた回",
+      "severity": "urgent"
+    },
+    "start_date_only_ordering": {
+      "title": "開始日を単独の時間キーにしているコード",
+      "count": 0,
+      "items": [],
+      "note": "sitelib の event_phase / is_upcoming / list_sort_key / split_ongoing を使う",
       "severity": "urgent"
     },
     "workflow_secrets": {
@@ -501,6 +525,13 @@
       "items": [],
       "note": "検索語 40 件がこの設定に依存する",
       "severity": "info"
+    },
+    "inquiry_check_stale": {
+      "title": "掲載申請フォームの確認が止まっている",
+      "count": 0,
+      "items": [],
+      "note": "event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない",
+      "severity": "urgent"
     }
   }
 }

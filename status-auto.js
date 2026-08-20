@@ -5,8 +5,73 @@
 (function () {
   'use strict';
 
+  // --- 時間軸 (フロント側の単一情報源) ---
+  // scripts/sitelib.py の event_phase / list_sort_key / is_long_run と同じ規則。
+  // 以前は index.html のインラインJSに getCardDate / autoExpireEvents / sortAndFilter
+  // の別実装があり、開始日だけで並べていたため会期の長い回が一覧の先頭に居座った。
+  // 規則をここに集約し、index.html は UI のフックだけを持つ。
+  var AEN_TIME = (function () {
+    var LONG_RUN_DAYS = 4;      // sitelib.LONG_RUN_DAYS と同値
+    var FAR_FUTURE = '9999-12-31';
+    function todayJST() {
+      var n = new Date();
+      var j = new Date(n.getTime() + (n.getTimezoneOffset() * 60000) + (9 * 3600000));
+      return j.getUTCFullYear() + '-' + String(j.getUTCMonth() + 1).padStart(2, '0')
+             + '-' + String(j.getUTCDate()).padStart(2, '0');
+    }
+    function diffDays(from, to) {
+      return Math.round((new Date(to + 'T00:00:00+09:00') - new Date(from + 'T00:00:00+09:00')) / 86400000);
+    }
+    function days(start, end) {
+      if (!start) return null;
+      return diffDays(start, end || start) + 1;
+    }
+    function isLongRun(start, end) {
+      var n = days(start, end);
+      return n !== null && n >= LONG_RUN_DAYS;
+    }
+    function phase(start, end, today) {
+      if (!start) return 'undated';
+      var t = today || todayJST();
+      var e = end || start;
+      if (e < t) return 'past';
+      if (start <= t) return 'ongoing';
+      return 'upcoming';
+    }
+    // 開催中の回は「今日始まる回」と同じ位置に置く。同じ日付では
+    // 今日始まる回を先に、会期の途中の回を後ろに。
+    function listSortKey(start, end, today, name) {
+      var t = today || todayJST();
+      if (!start) return [FAR_FUTURE, 2, FAR_FUTURE, name || ''];
+      var e = end || start;
+      if (e < t) return [start, 0, start, name || ''];
+      return [(start > t ? start : t), (start < t ? 1 : 0), start, name || ''];
+    }
+    function ongoingSortKey(start, end, name) {
+      return [(end || start || FAR_FUTURE), (start || FAR_FUTURE), name || ''];
+    }
+    function cmpKey(a, b) {
+      for (var i = 0; i < a.length; i++) {
+        if (a[i] < b[i]) return -1;
+        if (a[i] > b[i]) return 1;
+      }
+      return 0;
+    }
+    function md(iso) {
+      if (!iso || iso.length < 10) return '';
+      return String(parseInt(iso.slice(5, 7), 10)) + '/' + String(parseInt(iso.slice(8, 10), 10));
+    }
+    return {
+      LONG_RUN_DAYS: LONG_RUN_DAYS, todayJST: todayJST, diffDays: diffDays,
+      days: days, isLongRun: isLongRun, phase: phase, listSortKey: listSortKey,
+      ongoingSortKey: ongoingSortKey, cmpKey: cmpKey, md: md
+    };
+  })();
+  window.AEN_TIME = AEN_TIME;
+
   var STATUS = {
     today:    { label: '本日開催', cls: 'status-today' },
+    ongoing:  { cls: 'status-ongoing' },     // 開催中 〜M/D (会期2日目以降)
     tomorrow: { label: '明日開催', cls: 'status-thisweek' },
     soonD:    { cls: 'status-thisweek' },   // あとN日 (1-3日)
     weekD:    { cls: 'status-soon' },        // あとN日 (4-13日)
@@ -32,22 +97,18 @@
   }
 
   function getStatus(dateStr, dateEndStr) {
-    // JST calendar-day based comparison
-    var now = new Date();
-    var jstMs = now.getTime() + (now.getTimezoneOffset()*60000) + (9*3600000);
-    var j = new Date(jstMs);
-    var todayStr = j.getUTCFullYear() + '-' + String(j.getUTCMonth()+1).padStart(2,'0') + '-' + String(j.getUTCDate()).padStart(2,'0');
-    var todayJST = new Date(todayStr + 'T00:00:00+09:00');
-    var eventDate = new Date(dateStr + 'T00:00:00+09:00');
-    var endDate = (dateEndStr ? new Date(dateEndStr + 'T00:00:00+09:00') : eventDate);
-    var diff = Math.round((eventDate - todayJST) / 86400000);
-    var diffEnd = Math.round((endDate - todayJST) / 86400000);
-
-    // 本日開催中
-    if (diff <= 0 && diffEnd >= 0) return STATUS.today;
-    // 終了
-    if (diffEnd < 0) return STATUS.ended;
-    // 明日
+    var today = AEN_TIME.todayJST();
+    var ph = AEN_TIME.phase(dateStr, dateEndStr, today);
+    if (ph === 'past') return STATUS.ended;
+    if (ph === 'ongoing') {
+      // 初日は「本日開催」。2日目以降を「本日開催」のままにすると、
+      // 会期49日の展示が最緊急ラベルで1か月以上出続ける。
+      if (dateStr === today) return STATUS.today;
+      var o = Object.assign({}, STATUS.ongoing);
+      o.label = '開催中 〜' + AEN_TIME.md(dateEndStr || dateStr);
+      return o;
+    }
+    var diff = AEN_TIME.diffDays(today, dateStr);
     if (diff === 1) return STATUS.tomorrow;
     // あとN日 — 緊急度に応じてクラス分け
     var s;
@@ -59,8 +120,82 @@
     return s;
   }
 
+  function cardSpan(card) {
+    var st = card.getAttribute('data-date') || '';
+    var en = card.getAttribute('data-date-end') || '';
+    if (!st) {
+      var p = parseDateFromText(card);
+      st = p.start;
+      if (!en) en = p.end;
+    }
+    return { start: st, end: en || st };
+  }
+
+  // 一覧の振り分けと並び替え。開催中の長期開催は「開催中」枠へ、
+  // 終了は「終了したイベント」へ、残りを一覧本体に置いて時系列に並べる。
+  function arrangeList() {
+    var grid = document.getElementById('eventsGrid');
+    if (!grid) return;
+    var ongoingGrid = document.getElementById('ongoingEventsGrid');
+    var pastGrid = document.getElementById('pastEventsGrid');
+    var today = AEN_TIME.todayJST();
+    var orderEl = document.getElementById('sortOrder');
+    var desc = !!orderEl && orderEl.value === 'date-desc';
+
+    var pools = [grid];
+    if (ongoingGrid) pools.push(ongoingGrid);
+    if (pastGrid) pools.push(pastGrid);
+    var cards = [];
+    pools.forEach(function (g) {
+      Array.prototype.push.apply(cards, Array.prototype.slice.call(g.querySelectorAll('.event-card')));
+    });
+
+    var ongoing = [], main = [], past = [];
+    cards.forEach(function (card) {
+      var sp = cardSpan(card);
+      card.__aenSpan = sp;
+      var ph = AEN_TIME.phase(sp.start, sp.end, today);
+      if (ph === 'past') {
+        card.classList.add('event-ended');
+        card.setAttribute('data-status', 'past');
+        past.push(card);
+      } else {
+        card.classList.remove('event-ended');
+        if (card.getAttribute('data-status') === 'past') card.setAttribute('data-status', 'upcoming');
+        if (ongoingGrid && ph === 'ongoing' && AEN_TIME.isLongRun(sp.start, sp.end)) ongoing.push(card);
+        else main.push(card);
+      }
+    });
+
+    function nameOf(c) {
+      var t = c.querySelector('.event-title');
+      return t ? t.textContent : '';
+    }
+    ongoing.sort(function (a, b) {
+      return AEN_TIME.cmpKey(AEN_TIME.ongoingSortKey(a.__aenSpan.start, a.__aenSpan.end, nameOf(a)),
+                             AEN_TIME.ongoingSortKey(b.__aenSpan.start, b.__aenSpan.end, nameOf(b)));
+    });
+    main.sort(function (a, b) {
+      var r = AEN_TIME.cmpKey(AEN_TIME.listSortKey(a.__aenSpan.start, a.__aenSpan.end, today, nameOf(a)),
+                              AEN_TIME.listSortKey(b.__aenSpan.start, b.__aenSpan.end, today, nameOf(b)));
+      return desc ? -r : r;
+    });
+    past.sort(function (a, b) { return AEN_TIME.cmpKey([b.__aenSpan.end], [a.__aenSpan.end]); });
+
+    if (ongoingGrid) ongoing.forEach(function (c) { ongoingGrid.appendChild(c); });
+    main.forEach(function (c) { grid.appendChild(c); });
+    if (pastGrid) past.forEach(function (c) { pastGrid.appendChild(c); });
+
+    var show = ongoing.length > 0;
+    var oh = document.getElementById('ongoingHeading');
+    var uh = document.getElementById('upcomingHeading');
+    if (ongoingGrid) ongoingGrid.style.display = show ? '' : 'none';
+    if (oh) oh.style.display = show ? '' : 'none';
+    if (uh) uh.style.display = show ? '' : 'none';
+  }
+  window.AEN_LIST = { arrange: arrangeList };
+
   // index / category ページ: .event-card の .event-status を更新
-  var endedCards = [];
   document.querySelectorAll('.event-card').forEach(function (card) {
     var dateStr = card.getAttribute('data-date');
     var dateEndStr = card.getAttribute('data-date-end') || '';
@@ -83,11 +218,6 @@
     var status = getStatus(dateStr, dateEndStr);
     statusEl.textContent = status.label;
     statusEl.className = 'event-status ' + status.cls;
-
-    // 終了したイベントを記録
-    if (status === STATUS.ended) {
-      endedCards.push(card);
-    }
   });
 
   // 新着バッジを追加: addedDate が7日以内のイベントに表示
@@ -109,44 +239,36 @@
     }
   });
 
-  // 終了イベントを自動で「終了したイベント」セクションに移動
+  // 開催中/開催予定/終了への振り分けと並び替え(単一実装)
+  arrangeList();
+
   var pastGrid = document.getElementById('pastEventsGrid');
-  if (pastGrid && endedCards.length > 0) {
-    endedCards.forEach(function (card) {
-      // 既に終了セクションにある場合はスキップ
-      if (card.closest('#pastEventsGrid')) return;
-      // カードを開催中グリッドから終了グリッドに移動
-      card.classList.add('event-ended');
-      pastGrid.insertBefore(card, pastGrid.firstChild);
-    });
-
-    // 終了セクションの見出しを表示（非表示の場合）
-    var pastHeading = pastGrid.previousElementSibling;
-    if (pastHeading && pastHeading.style) {
-      pastHeading.style.display = '';
+  if (pastGrid) {
+    var pastHeading0 = document.getElementById('pastEventsHeading') || pastGrid.previousElementSibling;
+    if (pastHeading0 && pastHeading0.style && pastGrid.querySelector('.event-card')) {
+      pastHeading0.style.display = '';
     }
-
     // 開催予定の件数を更新
     var countBadge = document.querySelector('.section-heading .count-badge, .event-count');
-    if (countBadge) {
-      var activeGrid = document.getElementById('eventsGrid');
-      if (activeGrid) {
-        var activeCards = activeGrid.querySelectorAll('.event-card');
-        countBadge.textContent = activeCards.length + '件';
-      }
+    var activeGrid = document.getElementById('eventsGrid');
+    var ongoingGrid0 = document.getElementById('ongoingEventsGrid');
+    if (countBadge && activeGrid) {
+      var n = activeGrid.querySelectorAll('.event-card').length
+              + (ongoingGrid0 ? ongoingGrid0.querySelectorAll('.event-card').length : 0);
+      countBadge.textContent = n + '件';
     }
   }
 
   // 2週間以上前の終了イベントを非表示（ページ肥大化防止）
+  // 会期の終わりからの経過日数で判定する。開始日で数えると、
+  // 会期の長い回が終わった直後から非表示になる。
   var HIDE_AFTER_DAYS = 14;
   if (pastGrid) {
+    var _today = AEN_TIME.todayJST();
     pastGrid.querySelectorAll('.event-card').forEach(function (card) {
-      var dateStr = card.getAttribute('data-date');
-      if (!dateStr) return;
-      var today = new Date(); today.setHours(0, 0, 0, 0);
-      var eventDate = new Date(dateStr + 'T00:00:00');
-      var daysSince = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
-      if (daysSince > HIDE_AFTER_DAYS) {
+      var sp = card.__aenSpan || cardSpan(card);
+      if (!sp.start) return;
+      if (AEN_TIME.diffDays(sp.end || sp.start, _today) > HIDE_AFTER_DAYS) {
         card.style.display = 'none';
       }
     });
@@ -190,6 +312,7 @@
       badge.textContent = status.label;
       var colors = {
         'status-today': '#e84393',
+        'status-ongoing': '#4a8a7b',
         'status-thisweek': '#d63031',
         'status-soon': '#e17055',
         'status-month': '#f39c12',

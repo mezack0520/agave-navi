@@ -6,7 +6,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
-from sitelib import today_jst
+from sitelib import today_jst, is_upcoming, split_ongoing
 EVENTS = os.path.join(ROOT, 'events.json')
 INDEX = os.path.join(ROOT, 'index.html')
 DOMAIN = 'https://agave-navi.com'
@@ -17,10 +17,12 @@ def main():
     with open(EVENTS, encoding='utf-8') as f:
         d = json.load(f)
     today = today_jst()  # JSTで判定(UTCだと前日扱いになる)
-    upcoming = sorted(
-        [e for e in d if e.get('status')=='upcoming' and (e.get('dateEnd') or e.get('date') or '') >= today and e.get('slug') and e.get('date')],
-        key=lambda e: e.get('date','')
-    )[:12]
+    # 並び順はページの表示順と揃える(sitelib が単一情報源)。
+    # 開始日で並べると会期49日の回が ItemList の1位を1か月占める。
+    cand = [e for e in d if e.get('status') == 'upcoming' and e.get('slug')
+            and e.get('date') and is_upcoming(e, today)]
+    ongoing, rest = split_ongoing(cand, today)
+    upcoming = (ongoing + rest)[:12]
     items = []
     for i, e in enumerate(upcoming, 1):
         ev_obj = {
