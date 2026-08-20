@@ -283,6 +283,16 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   slug重複/同名同日の二重掲載/孤児・欠落ページ/sitemapの死活/見送りと掲載の矛盾/
   status矛盾/フィード件数/ガイドリンク死活/CSS版数乖離/未参照スクリプト/楽天キャッシュ網羅率を
   毎回検査し、重要項目は日次メールに出す。初回検査で二重掲載1件(春のサボテン多肉植物フェア)を検出
+- 2026-08-20: 画像の「イベント固有か」判定を `sitelib.is_generic_image_url()` に集約。
+  08-18に `themes/` 配下・`common/images/` 配下のサイト共通アセット13件を消したが、
+  規則を書いた先が `audit.py` だけで、`enrich_events.py` / `backfill-images.py` の
+  `is_quality_image_url()` はファイル名しか見ない正規表現のままだった。
+  08-20の weekly-enrichment が同じ2件を書き戻し、`generic_image_asset` が 0→2 に戻った。
+  検出側1本と書き込み側2本が同じ関数を見るようにした
+- 2026-08-20: 監査に `duplicate_event_entry` を追加(urgent)。同じ回が別slugで
+  二重登録されているのを検査する。`sanity-check-new-events.py` の重複検出は
+  `new-events.json` 経由の流入しか見ないため、それ以前に入った重複と
+  `events.json` 直接編集で入った重複を誰も見ていなかった。2組を検出・統合(317→315件)
 - 2026-08-18: 週次エンリッチメントが短文イベントに手を付けられていなかったのを解消。
   `enrich_events.py` の `_priority` は説明文70字未満の開催予定を処理順の先頭に並べるが、
   `process_event` の `needs_update` にはテンプレ概要文・OGP画像なし・プレースホルダーしか

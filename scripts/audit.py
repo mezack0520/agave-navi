@@ -13,12 +13,13 @@ import json
 import os
 import re
 import glob
+import unicodedata
 import sys
 from collections import defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
-from sitelib import today_jst, VAGUE_VENUES
+from sitelib import today_jst, VAGUE_VENUES, is_generic_image_url
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -633,16 +634,14 @@ def main():
     #     WordPress のアップロード先は wp-content/uploads なので、
     #     themes/ 配下や common/images/ 配下はイベント固有画像になり得ない。
     #     直し方は差し替えではなく imageUrl のキー削除。無い状態が正しい。
-    _GENERIC_IMG = re.compile(
-        r'(/wp-content/themes?/|/theme/[^/]+/assets/|/common/images?/'
-        r'|/images?/common/|/shared/images?/|web_clip|apple-touch|favicon'
-        r'|logo[_-]?ogp|ogp[_-]?logo|ogp[_-]?img|og_?_?images?\.|ogImg'
-        r'|opengraph-image|site_config|/og\.(png|jpe?g|gif|webp)'
-        r'|no[-_]?image|placeholder|/logo\.|logo_[a-z]+\.svg)', re.I)
+    #     判定は sitelib.is_generic_image_url() が単一情報源。
+    #     enrich_events.py / backfill-images.py も同じ関数で弾く
+    #     (検出側だけに規則があった間、weekly-enrichment が削除済みの
+    #      2件を2日で書き戻していた。2026-08-20)。
     generic_img = []
     for e in events:
         u = (e.get('imageUrl') or '').strip()
-        if u and _GENERIC_IMG.search(u):
+        if is_generic_image_url(u):
             generic_img.append(f"{e.get('slug')}: {u[:70]}")
     add('generic_image_asset', 'imageUrlがサイト共通ロゴ・OGP既定(4箇所に別物の絵が出る)',
         sorted(generic_img),
@@ -661,6 +660,40 @@ def main():
     add('duplicate_image_url', '同じimageUrlを複数イベントが使用', sorted(dup_img),
         '同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス',
         severity='info')
+
+    # 9k. 同じ回が別slugで二重登録されている。
+    #     sanity-check-new-events.py は new-events.json 経由の流入だけを見るので、
+    #     その検査より前に入った重複と、events.json を直接編集して入れた重複は
+    #     どこも見ていない(2026-08-20に2組を手作業で発見)。
+    #     二重登録は詳細ページ・sitemap・県頁・icsの全てで同じ回が2回出る。
+    #     判定は sanity-check と同じ「同日 + 名前の正規化一致または包含」に、
+    #     県の一致を足したもの。県まで一致していれば別会場の同名回ではない。
+    def _norm_name(x):
+        x = unicodedata.normalize('NFKC', x or '').lower()
+        return re.sub(r'[\s\u3000!！?？「」『』()（）\"\'\-–—〜~・･./、,]+', '', x)
+
+    dup_ev = []
+    _seen_pair = set()
+    for i, a in enumerate(events):
+        for b in events[i + 1:]:
+            if not a.get('date') or a.get('date') != b.get('date'):
+                continue
+            if a.get('prefecture') != b.get('prefecture'):
+                continue
+            na, nb = _norm_name(a.get('name')), _norm_name(b.get('name'))
+            if not na or not nb:
+                continue
+            if na == nb or (min(len(na), len(nb)) >= 4 and (na in nb or nb in na)):
+                key = tuple(sorted((a.get('slug') or '', b.get('slug') or '')))
+                if key in _seen_pair:
+                    continue
+                _seen_pair.add(key)
+                dup_ev.append(f"{a.get('date')} {a.get('prefecture')}: "
+                              f"{a.get('slug')} ({a.get('name')}) / "
+                              f"{b.get('slug')} ({b.get('name')})")
+    add('duplicate_event_entry', '同じ回が別slugで二重登録されている', sorted(dup_ev),
+        '内容の濃いほうに寄せて片方を削除し、events/<slug>.html も消す。'
+        '残す側は命名規約(イベント名-地名-年月)に合うほうを選ぶ')
 
     # 9l. slug に埋め込んだ年月が date とも dateEnd とも一致しない。
     #     日付を直したのに slug(=URL)が旧月のまま残ると、URL・

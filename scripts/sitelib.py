@@ -230,3 +230,28 @@ def is_vague_venue(v):
     if not v:
         return True
     return v in VAGUE_VENUES or bool(_VAGUE_MARKER.search(v))
+
+
+# --- imageUrl がイベント固有画像か ------------------------------------------
+# WordPress のアップロード先は wp-content/uploads なので、themes/ 配下や
+# common/images/ 配下はテーマ同梱のアセットで、イベント固有画像になり得ない。
+# ファイル名だけを見る判定(/logo.png 等)では
+# /wp-content/themes/theme_rakuza/common/images/facebook.png を通してしまう。
+# 2026-08-18に13件を削除したが、2026-08-20の weekly-enrichment が
+# 同じ2件を書き戻した。検出(audit)側だけに規則があり、
+# 書き込み(enrich / backfill)側に無かったのが原因。ここを単一情報源にする。
+GENERIC_IMAGE_RE = re.compile(
+    r'(/wp-content/themes?/|/theme/[^/]+/assets/|/common/images?/'
+    r'|/images?/common/|/shared/images?/|web_clip|apple-touch|favicon'
+    r'|logo[_-]?ogp|ogp[_-]?logo|ogp[_-]?img|og_?_?images?\.|ogImg'
+    r'|opengraph-image|site_config|/og\.(png|jpe?g|gif|webp)'
+    r'|no[-_]?image|placeholder|/logo\.|logo_[a-z]+\.svg)', re.I)
+
+
+def is_generic_image_url(u):
+    """サイト共通アセット(ロゴ・OGP既定・ファビコン・テーマ内画像)なら True。
+
+    True の値を imageUrl に入れてはいけない。露出は5箇所
+    (カード / og:image / twitter:image / JSON-LD image / sitemap の image:image)。
+    """
+    return bool(u) and bool(GENERIC_IMAGE_RE.search(u))

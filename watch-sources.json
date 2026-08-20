@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-20 10:14 JST",
+ "generated": "2026-08-20 10:16 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 160,
-  "awaitingNextEdition": 197,
+  "awaitingNextEdition": 196,
   "officialSiteCandidates": 53,
   "unresolvedIgHandles": 0
  },
@@ -212,15 +212,6 @@
    "eventCount": 3,
    "lastEventName": "ナイトマルシェ（さくら植物園）8月8日",
    "lastEventDate": "2026-08-08",
-   "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "botariba.event",
-   "url": "https://www.instagram.com/botariba.event/",
-   "eventCount": 2,
-   "lastEventName": "ボタり場",
-   "lastEventDate": "2026-06-07",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -860,6 +851,15 @@
    "eventCount": 1,
    "lastEventName": "GREEN DAYS まつやま vol.3",
    "lastEventDate": "2026-06-06",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "botariba.event",
+   "url": "https://www.instagram.com/botariba.event/",
+   "eventCount": 1,
+   "lastEventName": "ボタり場 2026 初夏",
+   "lastEventDate": "2026-06-07",
    "hasUpcoming": false,
    "priority": 2
   },
@@ -1511,16 +1511,6 @@
    "recurring": true
   },
   {
-   "series": "PLANTS FES Vol.3",
-   "lastSlug": "plants-fes-vol3-ehime-2026",
-   "lastDate": "2026-04-19",
-   "lastEnd": "2026-04-19",
-   "monthsSinceLast": 4,
-   "igHandle": null,
-   "officialUrl": null,
-   "recurring": true
-  },
-  {
    "series": "PLANTS UNITED 2026",
    "lastSlug": "plants-united-kumamoto-2026-08",
    "lastDate": "2026-08-01",
@@ -1848,6 +1838,16 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/dai3kai-rekishidomannaka-chokkyushokubutsu-kotonoutage",
+   "recurring": false
+  },
+  {
+   "series": "オホーツク多肉Festival 2026 vol.2",
+   "lastSlug": "okhotsk-taniku-festival-vol2-2026-07",
+   "lastDate": "2026-07-05",
+   "lastEnd": "2026-07-05",
+   "monthsSinceLast": 1,
+   "igHandle": "hashisiruku",
+   "officialUrl": "https://www.instagram.com/hashisiruku/",
    "recurring": false
   }
  ],

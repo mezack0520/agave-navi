@@ -236,6 +236,29 @@
   **これは悪化ではなく、ロゴが隠していた薄さが表に出ただけ**。
   同様に `upcoming_no_image` は68→71になる。
   画像を消す変更をしたら、この2項目の増加は想定内としてレポートに書く
+- **検出側だけに規則を書くと、書き込み側が翌日それを戻す。**
+  2026-08-18に「WordPress のアップロード先は wp-content/uploads だから `themes/` 配下・
+  `common/images/` 配下はイベント固有画像になり得ない」と気づいて13件消したが、
+  規則を書いた先は `audit.py` の `generic_image_asset` だけだった。
+  `enrich_events.py` / `backfill-images.py` の `is_quality_image_url()` は
+  **ファイル名しか見ない** `_GENERIC_IMG_RE`（`/logo.png` 等）のままだったので、
+  2026-08-20の weekly-enrichment が同じ2件を書き戻した。
+  判定を `sitelib.is_generic_image_url()` に集約し、検出側と書き込み側の3本が
+  同じ関数を見るようにして解消。**「消して回る」で終わった修正は、
+  同じ値を書く側のコードを読むまで終わっていない。**
+- **同じ回の二重登録は、`sanity-check-new-events.py` を通らない経路では誰も見ていなかった。**
+  あの重複検出は `new-events.json` の流入だけを見るので、
+  検査ができる前に入った重複と、`events.json` を直接編集して入れた重複が素通りする。
+  2026-08-20に2組を発見（`plants-fes-vol3` / `plants-fes-vol3-ehime-2026`、
+  `botariba-2026-06` / `botariba-toyohashi-2026-06`）。どちらも同日・同県・同会場で、
+  詳細ページ・sitemap・県頁・icsに同じ回が2回出ていた。
+  `audit.py` の `duplicate_event_entry` で常時検査する。
+  **名前の包含判定の最小長は4字にする。**「ボタり場」が4字で、5字にすると取りこぼす
+- **消す側のフィールドを引き継ぐ前に、その値が正しいかを見る。**
+  `botariba-2026-06` の `imageUrl` は熱海のジャカランダ写真（`ataminews.gr.jp`）で、
+  豊橋の植物イベントとは無関係だった。重複の統合は「情報量の多いほうに寄せる」だが、
+  多い側が間違っている場合がある
+
 - 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
 
 ## 4. 自己改善のやり方

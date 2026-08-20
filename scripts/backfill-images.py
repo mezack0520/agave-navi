@@ -28,6 +28,9 @@ from urllib.parse import urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import is_generic_image_url as _sitelib_is_generic
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.normpath(os.path.join(SCRIPT_DIR, '..', 'events.json'))
 
@@ -69,6 +72,12 @@ def is_quality_image_url(img_url):
     if _url_contains_aggregator(img_url):
         return False
     if _GENERIC_IMG_RE.search(img_url):
+        return False
+    # サイト共通アセット(themes/ 配下・common/images/ 配下等)。
+    # _GENERIC_IMG_RE はファイル名しか見ないため、
+    # /wp-content/themes/.../common/images/facebook.png を通してしまう。
+    # 判定は sitelib が単一情報源(2026-08-20)。
+    if _sitelib_is_generic(img_url):
         return False
     u = img_url.lower()
     if any(d in u for d in UNRELATED_IMAGE_DOMAINS):

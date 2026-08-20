@@ -1,5 +1,5 @@
 {
-  "total": 185,
+  "total": 184,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -112,7 +112,7 @@
     },
     "thin_archived": {
       "title": "薄い判定のうちアーカイブ許容(終了済み・出典なし)",
-      "count": 49,
+      "count": 48,
       "items": [
         "agave-cross-2026-06",
         "agave-meeting-2026-kobe",
@@ -143,7 +143,6 @@
         "our-plants-2-03",
         "paludarium-collection-parcole-3rd-2026",
         "petit-to-wonder-market-2026",
-        "plants-fes-vol3",
         "plants-fes-vol3-ehime-2026",
         "plants-plants-plants-2026",
         "saikiengei-fukuyama-marche-2026",
@@ -153,7 +152,8 @@
         "shokuenseisai-5th",
         "shokusai-kakegawa-2026-06",
         "sippo-de-marche-fukushima-2026",
-        "sora-to-taiyo-marche-2026"
+        "sora-to-taiyo-marche-2026",
+        "sumi-no-engei-2026-05-02"
       ],
       "note": "検索に出ず広告も出ない履歴データ。対処不要",
       "severity": "info"
@@ -193,7 +193,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
-      "count": 77,
+      "count": 79,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -218,6 +218,7 @@
         "engei-raku-2026-09",
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
+        "fuji-taniku-fujikawa-rakuza-2026-08",
         "fukuoka-green-party-7th-2026",
         "gamagori-taniku-festa-wakayama-4th-2026-08",
         "garden-link-festa-2026-10",
@@ -233,8 +234,7 @@
         "isij-big-bazaar-2027-01-10",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
-        "isij-big-bazaar-2027-07-11",
-        "isij-big-bazaar-2027-09-26"
+        "isij-big-bazaar-2027-07-11"
       ],
       "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
       "severity": "info"
@@ -353,11 +353,8 @@
     },
     "generic_image_asset": {
       "title": "imageUrlがサイト共通ロゴ・OGP既定(4箇所に別物の絵が出る)",
-      "count": 2,
-      "items": [
-        "fuji-taniku-fujikawa-rakuza-2026-08: https://fujikawarakuza.co.jp/wordpress/wp-content/themes/theme_rakuza/",
-        "one-love-sano-2026: https://oneloveoneheart.jp/wp/wp-content/themes/oneloveoneheart/assets"
-      ],
+      "count": 0,
+      "items": [],
       "note": "イベント固有の画像に差し替えるか、無ければ imageUrl をキーごと削除する",
       "severity": "urgent"
     },
@@ -369,6 +366,13 @@
       ],
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
       "severity": "info"
+    },
+    "duplicate_event_entry": {
+      "title": "同じ回が別slugで二重登録されている",
+      "count": 0,
+      "items": [],
+      "note": "内容の濃いほうに寄せて片方を削除し、events/<slug>.html も消す。残す側は命名規約(イベント名-地名-年月)に合うほうを選ぶ",
+      "severity": "urgent"
     },
     "slug_date_mismatch": {
       "title": "slugの年月が開催日と不一致(日付だけ直してURLが旧月のまま)",
