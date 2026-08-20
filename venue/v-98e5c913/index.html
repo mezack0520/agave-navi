@@ -29,23 +29,7 @@
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agave-navi.com/"}, {"@type": "ListItem", "position": 2, "name": "会場別", "item": "/venue/"}, {"@type": "ListItem", "position": 3, "name": "さくら植物園"}]}
   </script>
-  <style>
-    .landing-hero{max-width:1200px;margin:1.2rem auto .6rem;padding:0 1rem}
-    .landing-hero h1{font-size:1.8rem;margin:.2rem 0;color:#111}
-    .landing-hero p.lead{color:#555;margin:.4rem 0 0}
-    .landing-stats{font-size:.9rem;color:#666;margin:.4rem 0}
-    .landing-grid{max-width:1200px;margin:1rem auto;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
-    .landing-card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;transition:transform .2s,box-shadow .2s}
-    .landing-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
-    .landing-card a{display:block;color:inherit;text-decoration:none;padding:1rem}
-    .landing-card .lc-date{font-weight:700;color:#111;font-size:.9rem}
-    .landing-card .lc-name{font-size:1.05rem;margin:.4rem 0 .3rem;line-height:1.35}
-    .landing-card .lc-meta{font-size:.85rem;color:#666}
-    .landing-empty{max-width:1200px;margin:2rem auto;padding:2rem 1rem;text-align:center;color:#666;background:#fff;border-radius:12px}
-    .landing-intro{max-width:1200px;margin:.4rem auto 0;padding:0 1rem;color:#444;font-size:.95rem;line-height:1.85}
-    .landing-intro p{margin:.5rem 0}
-    .landing-intro a{color:#111}
-  </style>
+  <script src="../../list-ui.js?v=20260820a"></script>
 </head>
 <body>
   <header class="header">
@@ -62,11 +46,16 @@
     <a href="https://agave-navi.com/">ホーム</a> &gt; <a href="/venue/">会場別</a> &gt; <span>さくら植物園</span>
   </nav>
   <main>
-  <section class="landing-hero"><h1>さくら植物園</h1><p class="lead">さくら植物園で過去/今後に開催されるイベント一覧。</p><p class="landing-stats">該当イベント: 3件</p></section>
+  <section class="landing-hero"><h1>さくら植物園</h1><p class="lead">さくら植物園で過去/今後に開催されるイベント一覧。</p></section>
   <section class="landing-intro"><p>さくら植物園(千葉)で開催される植物イベントの開催実績・予定をまとめています。同じ会場の過去回の様子は、規模感やアクセスの参考になります。</p></section>
-  <div class="landing-grid">
-<article class="landing-card"><a href="/events/sakura-night-marche-2026-08-08.html"><div class="lc-date">2026.08.08</div><h2 class="lc-name">ナイトマルシェ（さくら植物園）8月8日</h2><div class="lc-meta">千葉 / さくら植物園</div></a></article><article class="landing-card"><a href="/events/sakura-night-marche-2026-08-02.html"><div class="lc-date">2026.08.02</div><h2 class="lc-name">ナイトマルシェ（さくら植物園）8月2日</h2><div class="lc-meta">千葉 / さくら植物園</div></a></article><article class="landing-card"><a href="/events/sakura-night-marche-2026-07.html"><div class="lc-date">2026.07.18</div><h2 class="lc-name">ナイトマルシェ（さくら植物園）</h2><div class="lc-meta">千葉 / さくら植物園</div></a></article>
-  </div>
+  <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none"></h2>
+  <div class="events-grid" id="ongoingEventsGrid" style="display:none"></div>
+  <h2 class="section-heading section-heading--sub" id="upcomingHeading" style="display:none"></h2>
+  <div class="events-grid" id="eventsGrid" style="display:none"></div>
+  <div class="load-more-wrap" id="loadMoreWrap" style="display:none"><button class="load-more-btn" onclick="loadMoreEvents()"><span>もっと見る</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div>
+  <h3 class="section-heading section-heading--sub" id="pastEventsHeading">終了したイベント<span class="section-heading-note">2026年7月〜8月・3件</span></h3>
+  <div class="events-grid past-events" id="pastEventsGrid"><div class="event-card" data-tags="マルシェ,即売会" data-status="past" data-region="関東" data-pref="千葉" data-slug="sakura-night-marche-2026-08-08" data-date="2026-08-08" data-date-end="" data-added-date=""><div class="event-thumb event-no-image"></div><button class="fav-btn" onclick="toggleFav(event,'sakura-night-marche-2026-08-08')" aria-label="行きたい"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><div class="event-card-body"><div class="event-header"><span class="event-date">2026.08.08</span><span class="event-status"></span></div><h3 class="event-title"><a class="event-link" href="/events/sakura-night-marche-2026-08-08.html">ナイトマルシェ（さくら植物園）8月8日</a></h3><div class="event-meta-row"><span class="event-region">千葉</span><span class="event-venue">さくら植物園</span></div></div><div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>行きたい</span></div></div><div class="event-card" data-tags="マルシェ,即売会" data-status="past" data-region="関東" data-pref="千葉" data-slug="sakura-night-marche-2026-08-02" data-date="2026-08-02" data-date-end="" data-added-date=""><div class="event-thumb event-no-image"></div><button class="fav-btn" onclick="toggleFav(event,'sakura-night-marche-2026-08-02')" aria-label="行きたい"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><div class="event-card-body"><div class="event-header"><span class="event-date">2026.08.02</span><span class="event-status"></span></div><h3 class="event-title"><a class="event-link" href="/events/sakura-night-marche-2026-08-02.html">ナイトマルシェ（さくら植物園）8月2日</a></h3><div class="event-meta-row"><span class="event-region">千葉</span><span class="event-venue">さくら植物園</span></div></div><div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>行きたい</span></div></div><div class="event-card" data-tags="マルシェ" data-status="past" data-region="関東" data-pref="千葉" data-slug="sakura-night-marche-2026-07" data-date="2026-07-18" data-date-end="" data-added-date=""><div class="event-thumb event-no-image"></div><button class="fav-btn" onclick="toggleFav(event,'sakura-night-marche-2026-07')" aria-label="行きたい"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><div class="event-card-body"><div class="event-header"><span class="event-date">2026.07.18</span><span class="event-status"></span></div><h3 class="event-title"><a class="event-link" href="/events/sakura-night-marche-2026-07.html">ナイトマルシェ（さくら植物園）</a></h3><div class="event-meta-row"><span class="event-region">千葉</span><span class="event-venue">さくら植物園</span></div></div><div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>行きたい</span></div></div></div>
+  <div class="load-more-wrap" id="pastLoadMoreWrap" style="display:none"><button class="load-more-btn" onclick="loadMorePastEvents()"><span>もっと見る</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div>
   <section class="affiliate-section" style="max-width:960px;margin:1.5rem auto 0;"></section>
   </main>
   <footer class="footer">
@@ -95,5 +84,6 @@
     </div>
   </footer>
   <script src="../../affiliate.js?v=20260820a"></script>
+  <script src="../../status-auto.js?v=20260820a"></script>
 </body>
 </html>

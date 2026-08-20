@@ -25,6 +25,7 @@
     <meta name="theme-color" content="#111">
     <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ 新着イベント" href="/rss.xml">
     <link rel="stylesheet" href="style.css?v=20260820a">
+    <script src="list-ui.js?v=20260820a"></script>
 </head>
 <body>
     <header class="header">
@@ -146,42 +147,9 @@
             });
         });
 
-        function getFavs() {
-            try { return JSON.parse(localStorage.getItem('aen_favs') || '[]'); } catch(e) { return []; }
-        }
-        function toggleFav(e, slug) {
-            e.stopPropagation();
-            let favs = getFavs();
-            const idx = favs.indexOf(slug);
-            if (idx > -1) { favs.splice(idx, 1); } else { favs.push(slug); }
-            try { localStorage.setItem('aen_favs', JSON.stringify(favs)); } catch(e) {}
-            syncFavUI();
-        }
-        function syncFavUI() {
-            const favs = getFavs();
-            document.querySelectorAll('.fav-btn').forEach(btn => {
-                const card = btn.closest('.event-card');
-                const slug = card?.getAttribute('data-slug');
-                if (slug && favs.includes(slug)) {
-                    btn.classList.add('favorited');
-                } else {
-                    btn.classList.remove('favorited');
-                }
-            });
-            updateBadgeCount(favs);
-        }
-        function updateBadgeCount(favs) {
-            var b = document.getElementById('ikitaiBadge');
-            if (b) {
-                if (favs.length > 0) {
-                    b.textContent = favs.length;
-                    b.classList.add('has-count');
-                } else {
-                    b.textContent = '';
-                    b.classList.remove('has-count');
-                }
-            }
-        }
+        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260820a が単一実装。
+        // 以前は index.html とここに別実装があり、片方を直しても
+        // もう片方に効かなかった(2026-08-20に統合)。
         syncFavUI();
 
         // Load events.json and render favorites

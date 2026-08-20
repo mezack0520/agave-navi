@@ -867,7 +867,7 @@ def main():
         pass
     js_drift = []
     if want_js:
-        jsre = re.compile(r'((?:affiliate|ads|status-auto)\.js)(\?v=([0-9a-zA-Z]*))?')
+        jsre = re.compile(r'((?:affiliate|ads|status-auto|list-ui)\.js)(\?v=([0-9a-zA-Z]*))?')
         for f in glob.glob(rp('**', '*.html'), recursive=True):
             if '/.git/' in f or '/templates/' in f:
                 continue
@@ -999,6 +999,63 @@ def main():
     add('start_date_only_ordering', '開始日を単独の時間キーにしているコード',
         sorted(set(start_only)),
         'sitelib の event_phase / is_upcoming / list_sort_key / split_ongoing を使う')
+
+    # 一覧UIの二重実装。イベントカード・行きたい・もっと見るは
+    # sitelib.event_card_html と list-ui.js が単一情報源(2026-08-20に統合)。
+    # 以前はランディング106枚が landing-card という別実装で、画像・ステータス
+    # バッジ・行きたいが出ず、status-auto.js も効かなかった。
+    dup_ui = []
+    try:
+        glp = open(rp('scripts', 'generate-landing-pages.py'), encoding='utf-8').read()
+    except OSError:
+        glp = ''
+    if 'landing-card' in glp and 'event_card_html' not in glp:
+        dup_ui.append('generate-landing-pages.py がイベントカードを自前で組んでいる')
+    if re.search(r'\.landing-card[^\n]*\{', glp):
+        dup_ui.append('generate-landing-pages.py にインラインCSSが戻っている(style.cssへ)')
+    for f in ('index.html', 'ikitai.html'):
+        try:
+            h = open(rp(f), encoding='utf-8').read()
+        except OSError:
+            continue
+        for fn in ('getFavs', 'toggleFav', 'syncFavUI', 'initLoadMore', 'loadMoreEvents'):
+            if f'function {fn}(' in h:
+                dup_ui.append(f'{f} に {fn} の再実装がある(list-ui.jsが単一実装)')
+        if 'list-ui.js' not in h:
+            dup_ui.append(f'{f} が list-ui.js を読んでいない')
+    # ランディングがイベントカードを .landing-card で出していないか(生成物側)
+    lc_event = []
+    for f in glob.glob(rp('pref', '*', 'index.html')) + glob.glob(rp('region', '*', 'index.html')):
+        try:
+            h = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        if 'lc-date' in h:
+            lc_event.append(os.path.relpath(f, REPO))
+    add('list_ui_duplication', '一覧UIが二重実装になっている',
+        sorted(set(dup_ui)) + sorted(lc_event)[:10],
+        'カードは sitelib.event_card_html、行きたい/もっと見るは list-ui.js')
+
+    # 節の見出しに、その節に何が載っているかが書かれているか。
+    # 「終了したイベント」だけだと全件あるように見えるが、トップは
+    # PAST_KEEP_DAYS で切った直近ぶんしか載っていない(2026-08-20)。
+    note_missing = []
+    for f in ([rp('index.html')] + glob.glob(rp('pref', '*', 'index.html'))
+              + glob.glob(rp('region', '*', 'index.html'))):
+        try:
+            h = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        for m in re.finditer(r'id="(pastEventsHeading|ongoingHeading|upcomingHeading)"([^>]*)>(.*?)</h[23]>',
+                             h, re.S):
+            body = m.group(3)
+            if 'display:none' in m.group(2):
+                continue          # 空の節は見出しごと非表示
+            if 'section-heading-note' not in body:
+                note_missing.append(f'{os.path.relpath(f, REPO)} #{m.group(1)}')
+    add('section_note_missing', '節の見出しに載っている範囲が書かれていない',
+        sorted(set(note_missing))[:20],
+        'sitelib.section_heading_html を使う。トップは sync-index-cards.py が同期')
 
     # 14. workflowが参照するsecretの一覧(未設定だと黙って空になる)
     add('workflow_secrets', 'workflowが参照しているsecret',

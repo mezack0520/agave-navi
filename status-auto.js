@@ -12,6 +12,7 @@
   // 規則をここに集約し、index.html は UI のフックだけを持つ。
   var AEN_TIME = (function () {
     var LONG_RUN_DAYS = 4;      // sitelib.LONG_RUN_DAYS と同値
+    var PAST_KEEP_DAYS = 14;    // sitelib.PAST_KEEP_DAYS と同値
     var FAR_FUTURE = '9999-12-31';
     function todayJST() {
       var n = new Date();
@@ -62,7 +63,8 @@
       return String(parseInt(iso.slice(5, 7), 10)) + '/' + String(parseInt(iso.slice(8, 10), 10));
     }
     return {
-      LONG_RUN_DAYS: LONG_RUN_DAYS, todayJST: todayJST, diffDays: diffDays,
+      LONG_RUN_DAYS: LONG_RUN_DAYS, PAST_KEEP_DAYS: PAST_KEEP_DAYS,
+      todayJST: todayJST, diffDays: diffDays,
       days: days, isLongRun: isLongRun, phase: phase, listSortKey: listSortKey,
       ongoingSortKey: ongoingSortKey, cmpKey: cmpKey, md: md
     };
@@ -191,7 +193,11 @@
     var uh = document.getElementById('upcomingHeading');
     if (ongoingGrid) ongoingGrid.style.display = show ? '' : 'none';
     if (oh) oh.style.display = show ? '' : 'none';
-    if (uh) uh.style.display = show ? '' : 'none';
+    // トップは開催中が無ければ「これから開催」の見出しも消して元の見た目に戻す。
+    // ランディングは下に終了の節があるので見出しを残す。意図はDOM側に書く。
+    if (uh && uh.hasAttribute('data-hide-when-no-ongoing')) {
+      uh.style.display = show ? '' : 'none';
+    }
   }
   window.AEN_LIST = { arrange: arrangeList };
 
@@ -259,11 +265,16 @@
     }
   }
 
-  // 2週間以上前の終了イベントを非表示（ページ肥大化防止）
-  // 会期の終わりからの経過日数で判定する。開始日で数えると、
-  // 会期の長い回が終わった直後から非表示になる。
-  var HIDE_AFTER_DAYS = 14;
-  if (pastGrid) {
+  // 残す期間を過ぎた終了イベントを非表示。
+  // 期間は sitelib.PAST_KEEP_DAYS が単一情報源(HTMLからの物理削除は
+  // sync-index-cards.py が同じ定義で行う)。display:none 自体はDOMも
+  // HTMLの重さも減らさないので、ここは編集判断としての非表示。
+  // 適用するのは data-past-keep-days が付いている節だけ。
+  // ランディングは地域の開催実績も情報なので打ち切らない。
+  var HIDE_AFTER_DAYS = pastGrid && pastGrid.hasAttribute('data-past-keep-days')
+    ? (parseInt(pastGrid.getAttribute('data-past-keep-days'), 10) || AEN_TIME.PAST_KEEP_DAYS)
+    : null;
+  if (pastGrid && HIDE_AFTER_DAYS !== null) {
     var _today = AEN_TIME.todayJST();
     pastGrid.querySelectorAll('.event-card').forEach(function (card) {
       var sp = card.__aenSpan || cardSpan(card);

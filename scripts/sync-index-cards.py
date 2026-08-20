@@ -22,7 +22,9 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
 sys.path.insert(0, SCRIPT_DIR)
-from sitelib import today_jst
+from sitelib import (today_jst, is_recent_past, event_span,
+                     PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
+                     LONG_RUN_DAYS)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -112,26 +114,35 @@ def main():
     if stale_removed:
         print(f'stale cards removed: {stale_removed}')
 
-    # 終了イベントカードの間引き: 直近12件のみ静的DOMに残す。
+    # 終了イベントカードの間引き。
     # 全終了カード(168件超)を埋め込むとHTML450KB/DOM4900ノードになり
-    # モバイルのパース・レイアウトが重くなるため(2026-07-15 PageSpeed対応)。
+    # モバイルのパース・レイアウトが重くなる(2026-07-15 PageSpeed対応)。
+    # 残す範囲は sitelib.PAST_KEEP_DAYS が単一情報源。以前はここが件数(12件)、
+    # status-auto.js が日数(14日)で、全日程の26%で食い違っていた(2026-08-20統合)。
+    # 件数は異常時の安全弁として上限だけ見る。
     # 古い終了イベントはアーカイブページ(/archive/)で閲覧できる。
     _today = today_jst()  # JSTで判定(UTCだと前日扱いになる)
-    KEEP_PAST = 12
     past_cards = []  # (end_date, slug)
+    keep_slugs = set()
     for m in re.finditer(r'<div class="event-card[^"]*"[^>]*data-slug="([^"]+)"[^>]*>', html):
         slug_m = m.group(1)
         ev_m = by_slug.get(slug_m)
         if not ev_m:
             continue
-        end_m = ev_m.get('dateEnd') or ev_m.get('date') or ''
+        _st, end_m = event_span(ev_m)
         if end_m and end_m < _today:
             past_cards.append((end_m, slug_m))
+            if is_recent_past(ev_m, _today):
+                keep_slugs.add(slug_m)
     past_cards.sort(reverse=True)
-    prune = {s for _, s in past_cards[KEEP_PAST:]}
+    # 上限を超える分は新しい順に切る
+    keep_ordered = [sl for _, sl in past_cards if sl in keep_slugs][:PAST_KEEP_MAX]
+    keep_slugs = set(keep_ordered)
+    prune = {sl for _, sl in past_cards if sl not in keep_slugs}
     if prune:
         html, _removed2 = remove_stale_cards(html, set(by_slug.keys()) - prune)
-        print(f'pruned old past cards: {len(prune)} (kept latest {KEEP_PAST})')
+        print(f'pruned old past cards: {len(prune)} '
+              f'(kept {len(keep_slugs)} = {PAST_KEEP_LABEL}, 上限{PAST_KEEP_MAX})')
 
     new_chunks = []
     last_end = 0
@@ -181,6 +192,24 @@ def main():
 
     new_chunks.append(html[last_end:])
     new_html = ''.join(new_chunks)
+
+    # 終了セクションの見出しに、載っている範囲を明記する。
+    # 「終了したイベント」だけでは全件あるように見えるが、実際は
+    # sitelib.PAST_KEEP_DAYS で切った直近ぶんしか載っていない。
+    def _note(label):
+        return f'<span class="section-heading-note">{label}</span>'
+
+    new_html, n_ph = re.subn(
+        r'(id="pastEventsHeading">)終了したイベント'
+        r'(?:<span class="section-heading-note">[^<]*</span>)?(</h3>)',
+        lambda m: m.group(1) + '終了したイベント' + _note(PAST_KEEP_LABEL) + m.group(2),
+        new_html)
+    new_html, n_oh = re.subn(
+        r'(id="ongoingHeading"[^>]*>)開催中'
+        r'(?:<span class="section-heading-note">[^<]*</span>)?(</h2>)',
+        lambda m: m.group(1) + '開催中' + _note(f'会期{LONG_RUN_DAYS}日以上') + m.group(2),
+        new_html)
+    print(f'section headings:    終了={n_ph} 開催中={n_oh}')
 
     # 開催予定件数のバッジ。以前は daily.yml のステップが更新していたが、
     # そのステップは build-all.sh(=auto-status-jst.py)より前に走るため

@@ -997,6 +997,18 @@ main {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.75; }
 }
+/* 見出しの補足。その節に何が載っているかを見出し自身に書く
+   (「終了したイベント」だけでは全件あるように見える)。 */
+.section-heading-note {
+    display: inline-block;
+    margin-left: .6rem;
+    font-size: .72rem;
+    font-weight: 500;
+    color: var(--gray-500, #888);
+    letter-spacing: .02em;
+    vertical-align: middle;
+}
+
 /* 開催中(会期2日目以降)。会期の長い展示が最緊急色で出続けるのを避け、
    落ち着いた色にする。緊急度の序列は 本日 > 明日/3日以内 > 開催中。 */
 .event-status.status-ongoing {
@@ -3455,4 +3467,114 @@ main {
 
 @media (min-width: 721px) {
     .aff-bar { display: none; }
+}
+
+
+/* ============================================================
+   一覧UI(もっと見る)。index.html のインライン <style> にあったため
+   ランディング106枚に効かず、別のカード実装を持つ理由になっていた。
+   .event-card を使う全ページで同じ挙動にするため style.css に移した
+   (2026-08-20)。
+   ============================================================ */
+    /* Load More: 初回は12件表示（終了は4件）、残りはhidden（SEO: HTML上は全件存在） */
+    .events-grid .event-card.load-more-hidden {
+        display: none !important;
+    }
+    .past-events .event-card.past-load-more-hidden {
+        display: none !important;
+    }
+    .load-more-wrap {
+        text-align: center;
+        margin: 2rem 0 1rem;
+        padding: 0 1rem;
+        clear: both;
+    }
+    .load-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 2.5rem;
+        border: 1.5px solid #ddd;
+        border-radius: 30px;
+        background: #fff;
+        color: #484848;
+        font-family: inherit;
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        letter-spacing: 0.02em;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    .load-more-btn:hover,
+    .load-more-btn:active {
+        border-color: #222;
+        color: #222;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .load-more-btn svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.25s;
+    }
+    .load-more-btn:hover svg {
+        transform: translateY(2px);
+    }
+
+/* カードの会場名。曖昧値(「東京」「調整中」等)は sitelib.is_vague_venue が
+   落とすので、ここに出るのは実在の会場名だけ。 */
+.event-added {
+    display: block;
+    width: 100%;
+    font-size: 0.72rem;
+    color: var(--gray-500, #888);
+    margin-top: .3rem;
+}
+.event-venue {
+    font-size: 0.72rem;
+    color: var(--gray-500, #888);
+    margin-left: .5rem;
+}
+.event-title > .event-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ============================================================
+   ランディング(/pref/ /region/ /tag/ /venue/ /archive/ ...)
+   generate-landing-pages.py の HEAD 内インライン <style> にあった分。
+   CSS版数の同期対象に実体が乗るよう style.css へ移した(2026-08-20)。
+   .landing-card は索引ページのリンクタイル専用。イベントは .event-card。
+   ============================================================ */
+.landing-hero { max-width: 1200px; margin: 1.2rem auto .6rem; padding: 0 1rem; }
+.landing-hero h1 { font-size: 1.8rem; margin: .2rem 0; color: #111; }
+.landing-hero p.lead { color: #555; margin: .4rem 0 0; line-height: 1.7; }
+.landing-intro { max-width: 1200px; margin: .4rem auto 0; padding: 0 1rem; color: #444; font-size: .95rem; line-height: 1.85; }
+.landing-intro p { margin: .5rem 0; }
+.landing-intro a { color: #111; }
+.landing-empty { max-width: 1200px; margin: 2rem auto; padding: 2rem 1rem; text-align: center; color: #666; background: #fff; border-radius: 12px; }
+.landing-grid { max-width: 1200px; margin: 1rem auto; padding: 0 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.landing-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.landing-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.12); }
+.landing-card a { display: block; color: inherit; text-decoration: none; padding: 1rem; }
+.landing-card .lc-name { font-size: 1.05rem; margin: .4rem 0 .3rem; line-height: 1.35; }
+.landing-card .lc-meta { font-size: .85rem; color: #666; }
+
+/* ランディングでも一覧はトップと同じ横幅・段組にそろえる */
+.landing-hero ~ .events-grid,
+.landing-hero ~ .section-heading,
+.landing-hero ~ .load-more-wrap,
+.landing-intro ~ .events-grid,
+.landing-intro ~ .section-heading,
+.landing-intro ~ .load-more-wrap {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.landing-hero ~ .section-heading,
+.landing-intro ~ .section-heading {
+    padding: 0 1rem;
+    margin-top: 2rem;
 }

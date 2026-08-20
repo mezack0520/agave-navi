@@ -475,6 +475,20 @@
       "note": "sitelib の event_phase / is_upcoming / list_sort_key / split_ongoing を使う",
       "severity": "urgent"
     },
+    "list_ui_duplication": {
+      "title": "一覧UIが二重実装になっている",
+      "count": 0,
+      "items": [],
+      "note": "カードは sitelib.event_card_html、行きたい/もっと見るは list-ui.js",
+      "severity": "urgent"
+    },
+    "section_note_missing": {
+      "title": "節の見出しに載っている範囲が書かれていない",
+      "count": 0,
+      "items": [],
+      "note": "sitelib.section_heading_html を使う。トップは sync-index-cards.py が同期",
+      "severity": "urgent"
+    },
     "workflow_secrets": {
       "title": "workflowが参照しているsecret",
       "count": 8,

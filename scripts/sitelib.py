@@ -213,6 +213,19 @@ def compact_date(e):
 LONG_RUN_DAYS = 4      # 会期がこの日数以上を「長期開催」とみなす
 FAR_FUTURE = '9999-12-31'
 
+# 終了イベントを一覧に残す期間。「いつまで見せるか」の単一情報源。
+# 従来は status-auto.js の HIDE_AFTER_DAYS=14(display:none)と
+# sync-index-cards.py の KEEP_PAST=12(HTMLから物理削除)に別々の単位で置かれ、
+# 全日程の26%で両者が食い違っていた(2026-08-20に統合)。
+# display:none はDOMもHTMLの重さも減らさないので、肥大化を止めるのは物理削除の側。
+# 日数を主にし、件数は異常時の安全弁として上限だけ持つ。
+# 実測: ある日から見て直近14日に終わった回は中央値1件・最大34件(2026-08-03)。
+CARDS_PER_PAGE = 12    # 一覧の初期表示件数。list-ui.js と同値
+PAST_CARDS_INIT = 4    # 終了セクションの初期表示件数。list-ui.js と同値
+PAST_KEEP_DAYS = 14
+PAST_KEEP_MAX = 40     # 上限。実測最大34件を通し、暴走だけ止める
+PAST_KEEP_LABEL = f'過去{PAST_KEEP_DAYS}日以内'
+
 
 def event_span(e):
     """(開始日, 終了日) を ISO 文字列で返す。開始日が無ければ ('', '')。"""
@@ -267,6 +280,24 @@ def is_ongoing(e, today=None):
 def is_long_ongoing(e, today=None, threshold=LONG_RUN_DAYS):
     """一覧本体から外して「開催中」の枠に出す回。"""
     return event_phase(e, today) == 'ongoing' and is_long_run(e, threshold)
+
+
+def is_recent_past(e, today=None, keep_days=None):
+    """終了しているが一覧に残す範囲か。会期の終わりからの経過日数で判定する。
+
+    開始日で数えると、会期の長い回が終わった直後から消える。
+    """
+    d, de = event_span(e)
+    if not d:
+        return False
+    t = today or today_jst()
+    if de >= t:
+        return False
+    try:
+        gone = (date.fromisoformat(t) - date.fromisoformat(de)).days
+    except ValueError:
+        return False
+    return gone <= (keep_days if keep_days is not None else PAST_KEEP_DAYS)
 
 
 def list_sort_key(e, today=None):
@@ -420,3 +451,118 @@ def is_generic_image_url(u):
     (カード / og:image / twitter:image / JSON-LD image / sitemap の image:image)。
     """
     return bool(u) and bool(GENERIC_IMAGE_RE.search(u))
+
+
+# --- 一覧カード (単一情報源) -------------------------------------------------
+# トップ(index.html)・行きたい・ランディング全ページで同じ .event-card を使う。
+# 以前はランディング106枚だけ landing-card という別実装で、画像・ステータス
+# バッジ・行きたいボタンが無く、status-auto.js も効かなかった。生成もCSSも
+# 別だったため片方を直しても他方に効かない状態だった(2026-08-20に統合)。
+# 会場は is_vague_venue を通す。通さないと「東京 / 東京」「東京 / 調整中」が出る。
+
+HEART_SVG = ('<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 '
+             '5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 '
+             '1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>')
+
+
+def _attr(s):
+    return html_escape(s)
+
+
+def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
+                    extra_meta=''):
+    """一覧カード1枚のHTML。
+
+    heading: カード見出しのタグ。1ページに何十枚も並ぶので既定は h3。
+    eager:   先頭カード(LCP候補)だけ True。画像を遅延させない。
+    compact: 説明文を省く。終了イベントの節は既定で折り畳まれており、
+             説明文がページ重量の大半を占めるため(region/kanto は73件)。
+    extra_meta: メタ行に足すHTML。/new/ の「掲載: 2026.08.10」等。
+    """
+    slug = e.get('slug') or ''
+    if not slug:
+        return ''
+    name = e.get('name') or slug
+    pref = e.get('prefecture') or ''
+    region = e.get('region') or pref_to_region(pref) or ''
+    tags = ','.join(e.get('tags') or [])
+    d, de = event_span(e)
+    img = e.get('imageUrl') or ''
+    if img and (not img.startswith('https://') or is_generic_image_url(img)):
+        img = ''   # 混在コンテンツとサイト共通アセットはカードに出さない
+
+    if img:
+        perf = ('decoding="async" fetchpriority="high"' if eager
+                else 'loading="lazy" decoding="async"')
+        thumb = (f'<div class="event-thumb"><img src="{_attr(img)}" alt="{_attr(name)}" '
+                 f'width="640" height="360" {perf} referrerpolicy="no-referrer" '
+                 f'onerror="this.parentElement.classList.add(\'event-no-image\');this.remove();">'
+                 f'</div>')
+    else:
+        thumb = '<div class="event-thumb event-no-image"></div>'
+
+    desc = '' if compact else (e.get('description') or '').strip()
+    desc_html = f'<p class="event-description">{html_escape(desc)}</p>' if desc else ''
+
+    venue = (e.get('location') or '').strip()
+    meta = f'<span class="event-region">{html_escape(pref or region)}</span>'
+    if not is_vague_venue(venue):
+        meta += f'<span class="event-venue">{html_escape(venue)}</span>'
+    meta += extra_meta
+
+    status = 'past' if event_phase(e, today) == 'past' else 'upcoming'
+    return (
+        f'<div class="event-card" data-tags="{_attr(tags)}" data-status="{status}"'
+        f' data-region="{_attr(region)}" data-pref="{_attr(pref)}" data-slug="{_attr(slug)}"'
+        f' data-date="{_attr(d)}" data-date-end="{_attr(de if de != d else "")}"'
+        f' data-added-date="{_attr(e.get("addedDate") or "")}">'
+        f'{thumb}'
+        f'<button class="fav-btn" onclick="toggleFav(event,\'{_attr(slug)}\')" aria-label="行きたい">'
+        f'{HEART_SVG}</button>'
+        f'<div class="event-card-body">'
+        f'<div class="event-header"><span class="event-date">{html_escape(compact_date(e))}</span>'
+        f'<span class="event-status"></span></div>'
+        f'<{heading} class="event-title"><a class="event-link" href="/events/{_attr(slug)}.html">'
+        f'{html_escape(name)}</a></{heading}>'
+        f'{desc_html}'
+        f'<div class="event-meta-row">{meta}</div>'
+        f'</div>'
+        f'<div class="card-fav-bar" onclick="event.stopPropagation()">{HEART_SVG}'
+        f'<span>行きたい</span></div>'
+        f'</div>'
+    )
+
+
+def event_grid_html(evs, grid_id, extra_class='', grid_attrs='',
+                    heading='h3', eager_first=False, today=None, compact=False):
+    """カードのグリッド1つ。空でも要素は出す(status-auto.js が振り分け先に使う)。"""
+    cards = ''.join(event_card_html(e, heading=heading, compact=compact,
+                                    eager=(eager_first and i == 0), today=today)
+                    for i, e in enumerate(evs))
+    cls = f'events-grid {extra_class}'.strip()
+    hidden = '' if evs else ' style="display:none"'
+    return f'<div class="{cls}" id="{grid_id}"{grid_attrs}{hidden}>{cards}</div>'
+
+
+def section_heading_html(text, note='', tag='h2', el_id=''):
+    """節の見出し。その節に何が載っているかを見出し自身に書く。"""
+    note_html = (f'<span class="section-heading-note">{html_escape(note)}</span>'
+                 if (note and text) else '')
+    id_attr = f' id="{el_id}"' if el_id else ''
+    hidden = '' if text else ' style="display:none"'
+    return (f'<{tag} class="section-heading section-heading--sub"{id_attr}{hidden}>'
+            f'{html_escape(text)}{note_html}</{tag}>')
+
+
+def past_range_label(evs):
+    """終了イベント群の範囲。「2026年2月〜8月・31件」の形。"""
+    ends = sorted((event_span(e)[1] for e in evs if event_span(e)[1]))
+    if not ends:
+        return ''
+    a, b = ends[0], ends[-1]
+    if a[:4] == b[:4]:
+        span = (f'{int(a[:4])}年{int(a[5:7])}月' if a[:7] == b[:7]
+                else f'{int(a[:4])}年{int(a[5:7])}月〜{int(b[5:7])}月')
+    else:
+        span = f'{int(a[:4])}年{int(a[5:7])}月〜{int(b[:4])}年{int(b[5:7])}月'
+    return f'{span}・{len(evs)}件'

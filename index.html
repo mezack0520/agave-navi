@@ -41,55 +41,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
     <link rel="stylesheet" href="style.css?v=20260820a">
+    <!-- 一覧の共通UI(行きたい・もっと見る)。body内のインラインから呼ぶため head で同期読み込み -->
+    <script src="list-ui.js?v=20260820a"></script>
 
-    <style>
-    /* Load More: 初回は12件表示（終了は4件）、残りはhidden（SEO: HTML上は全件存在） */
-    .events-grid .event-card.load-more-hidden {
-        display: none !important;
-    }
-    .past-events .event-card.past-load-more-hidden {
-        display: none !important;
-    }
-    .load-more-wrap {
-        text-align: center;
-        margin: 2rem 0 1rem;
-        padding: 0 1rem;
-        clear: both;
-    }
-    .load-more-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 2.5rem;
-        border: 1.5px solid #ddd;
-        border-radius: 30px;
-        background: #fff;
-        color: #484848;
-        font-family: inherit;
-        font-size: 0.88rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.25s;
-        letter-spacing: 0.02em;
-        -webkit-tap-highlight-color: transparent;
-        -webkit-appearance: none;
-        appearance: none;
-    }
-    .load-more-btn:hover,
-    .load-more-btn:active {
-        border-color: #222;
-        color: #222;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .load-more-btn svg {
-        width: 16px;
-        height: 16px;
-        transition: transform 0.25s;
-    }
-    .load-more-btn:hover svg {
-        transform: translateY(2px);
-    }
-    </style>
 
     <script type="application/ld+json">
     {
@@ -490,9 +444,9 @@
                 <!-- 開催中(会期4日以上)。status-auto.js?v=20260820a が該当カードをここへ移す。
                      一覧本体に混ぜると会期の長さぶん先頭に居座るため枠を分けている。
                      該当0件のときは見出しごと非表示。 -->
-                <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none">開催中</h2>
+                <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none">開催中<span class="section-heading-note">会期4日以上</span></h2>
                 <div class="events-grid" id="ongoingEventsGrid" style="display:none"></div>
-                <h2 class="section-heading section-heading--sub" id="upcomingHeading" style="display:none">これから開催</h2>
+                <h2 class="section-heading section-heading--sub" id="upcomingHeading" data-hide-when-no-ongoing style="display:none">これから開催</h2>
 
                 <div class="events-grid" id="eventsGrid">
                     <div class="empty-state" id="emptyState">
@@ -2034,8 +1988,8 @@ Googleマップで開く
                 <section class="affiliate-section" data-tags="即売会"></section>
 
                 <!-- Past Events -->
-                <h3 class="section-heading section-heading--sub" id="pastEventsHeading">終了したイベント</h3>
-                <div class="events-grid past-events" id="pastEventsGrid">
+                <h3 class="section-heading section-heading--sub" id="pastEventsHeading">終了したイベント<span class="section-heading-note">過去14日以内</span></h3>
+                <div class="events-grid past-events" id="pastEventsGrid" data-past-keep-days="14">
                     </div>
                 <div class="load-more-wrap" id="pastLoadMoreWrap">
                     <button class="load-more-btn" id="pastLoadMoreBtn" onclick="loadMorePastEvents()">
@@ -2098,16 +2052,6 @@ Googleマップで開く
                 toggle.classList.remove('active');
                 overlay.classList.remove('active');
                 document.body.classList.remove('no-scroll');
-            });
-        });
-
-        // Make entire event card clickable (navigates by data-slug)
-        document.querySelectorAll('.event-card[data-slug]:not(.event-ended)').forEach(card => {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', function(e) {
-                if (e.target.closest('a, button, .card-fav-bar, .fav-btn')) return;
-                const slug = this.getAttribute('data-slug');
-                if (slug) window.location.href = 'events/' + slug + '.html';
             });
         });
 
@@ -2313,177 +2257,32 @@ Googleマップで開く
             }
         }
 
-        // ===== 行きたいリスト (localStorage, no login required) =====
-        function getFavs() {
-            try { return JSON.parse(localStorage.getItem('aen_favs') || '[]'); } catch(e) { return []; }
-        }
-
-        function toggleFav(e, slug) {
-            e.stopPropagation();
-            let favs = getFavs();
-            const idx = favs.indexOf(slug);
-            if (idx > -1) { favs.splice(idx, 1); } else { favs.push(slug); }
-            try { localStorage.setItem('aen_favs', JSON.stringify(favs)); } catch(e) {}
-            syncFavUI();
+        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260820a が単一実装。
+        // ここでは「行きたい」絞り込み中の再描画だけをフックで受ける。
+        window.AEN_ON_FAV_CHANGE = function() {
             if (activeTag === 'fav') applyFilters();
-        }
+        };
 
-        function syncFavUI() {
-            const favs = getFavs();
-            document.querySelectorAll('.fav-btn').forEach(btn => {
-                const card = btn.closest('.event-card');
-                const slug = card?.getAttribute('data-slug');
-                if (slug && favs.includes(slug)) {
-                    btn.classList.add('favorited');
-                } else {
-                    btn.classList.remove('favorited');
-                }
-            });
-            // Update header badge count in real-time
-            var b = document.getElementById('ikitaiBadge');
-            if (b) {
-                if (favs.length > 0) {
-                    b.textContent = favs.length;
-                    b.classList.add('has-count');
-                } else {
-                    b.textContent = '';
-                    b.classList.remove('has-count');
-                }
-            }
-            // Update mobile fav bar text
-            document.querySelectorAll('.card-fav-bar').forEach(function(bar) {
-                var card = bar.closest('.event-card');
-                var slug = card?.getAttribute('data-slug');
-                var span = bar.querySelector('span');
-                if (slug && span) {
-                    span.textContent = favs.includes(slug) ? '行きたい登録済み' : '行きたい';
-                }
-            });
-        }
-
-        // ========== もっと見る (Load More) ==========
-        const CARDS_PER_PAGE = 12;
-        let loadMoreShown = CARDS_PER_PAGE;
-
-        function initLoadMore() {
-            const grid = document.getElementById('eventsGrid');
-            const cards = Array.from(grid.querySelectorAll('.event-card'));
-            loadMoreShown = CARDS_PER_PAGE;
-            cards.forEach((card, i) => {
-                if (i >= CARDS_PER_PAGE) {
-                    card.classList.add('load-more-hidden');
-                } else {
-                    card.classList.remove('load-more-hidden');
-                }
-            });
-            updateLoadMoreBtn();
-        }
-
-        // 非表示カードの画像を再読み込み（display:noneで読み込み失敗した場合の対策）
-        function reloadCardImages(card) {
-            var img = card.querySelector('.event-thumb img');
-            if (img && !img.naturalWidth) {
-                var src = img.getAttribute('src');
-                img.setAttribute('src', '');
-                img.setAttribute('src', src);
-            }
-        }
-
-        function loadMoreEvents() {
-            const grid = document.getElementById('eventsGrid');
-            const cards = Array.from(grid.querySelectorAll('.event-card'));
-            const newLimit = loadMoreShown + CARDS_PER_PAGE;
-            let delay = 0;
-            cards.forEach((card, i) => {
-                if (i >= loadMoreShown && i < newLimit) {
-                    card.classList.remove('load-more-hidden');
-                    card.style.display = '';
-                    card.classList.add('filter-show');
-                    card.style.animationDelay = delay + 'ms';
-                    delay += 60;
-                    reloadCardImages(card);
-                }
-            });
-            loadMoreShown = newLimit;
-            updateLoadMoreBtn();
-        }
-
-        function updateLoadMoreBtn() {
-            const grid = document.getElementById('eventsGrid');
-            const total = grid.querySelectorAll('.event-card').length;
-            const wrap = document.getElementById('loadMoreWrap');
-            if (wrap) {
-                wrap.style.display = loadMoreShown >= total ? 'none' : '';
-            }
-        }
-
-        // 終了イベント: 初期4件表示、もっと見るで全件表示
-        const PAST_CARDS_INIT = 4;
-        function initPastLoadMore() {
-            const pastGrid = document.getElementById('pastEventsGrid');
-            if (!pastGrid) return;
-            const cards = Array.from(pastGrid.querySelectorAll('.event-card'));
-            cards.forEach((card, i) => {
-                if (i >= PAST_CARDS_INIT) {
-                    card.classList.add('past-load-more-hidden');
-                }else{card.classList.remove('load-more-hidden');}
-            });
-            const wrap = document.getElementById('pastLoadMoreWrap');
-            if (wrap) {
-                wrap.style.display = cards.length <= PAST_CARDS_INIT ? 'none' : '';
-            }
-        }
-        function loadMorePastEvents() {
-            const pastGrid = document.getElementById('pastEventsGrid');
-            if (!pastGrid) return;
-            const cards = Array.from(pastGrid.querySelectorAll('.event-card'));
-            let delay = 0;
-            cards.forEach((card) => {
-                if (card.classList.contains('past-load-more-hidden')) {
-                    card.classList.remove('past-load-more-hidden');
-                    card.style.display = '';
-                    card.classList.add('filter-show');
-                    card.style.animationDelay = delay + 'ms';
-                    delay += 60;
-                }
-            });
-            const wrap = document.getElementById('pastLoadMoreWrap');
-            if (wrap) wrap.style.display = 'none';
-        }
+        // もっと見る(initLoadMore / loadMoreEvents / initPastLoadMore)は
+        // list-ui.js?v=20260820a が単一実装。件数も list-ui.js?v=20260820a が持つ。
 
         // フィルター適用時はload-more制限を解除して全件対象にする
         const _origApplyFilters = applyFilters;
         applyFilters = function(query) {
-            const grid = document.getElementById('eventsGrid');
-            const cards = Array.from(grid.querySelectorAll('.event-card'));
             const isFiltering = activeTag !== 'all'
                 || activeRegion !== 'all'
                 || activePref !== 'all'
                 || (document.getElementById('searchInput').value || '').trim() !== '';
-
-            if (isFiltering) {
-                cards.forEach(c => { c.classList.remove('load-more-hidden'); reloadCardImages(c); });
-                const wrap = document.getElementById('loadMoreWrap');
-                if (wrap) wrap.style.display = 'none';
-            } else {
-                loadMoreShown = CARDS_PER_PAGE;
-                cards.forEach((c, i) => {
-                    if (i >= CARDS_PER_PAGE) {
-                        c.classList.add('load-more-hidden');
-                    } else {
-                        c.classList.remove('load-more-hidden');
-                    }
-                });
-                updateLoadMoreBtn();
+            if (window.AEN_LIST_UI) {
+                if (isFiltering) window.AEN_LIST_UI.showAll();
+                else window.AEN_LIST_UI.resetLoadMore();
             }
             _origApplyFilters(query);
         };
 
-        // ページ読み込み時に保存済みフィルターで初期表示
-        initLoadMore();
-        initPastLoadMore();
-        applyFilters();
-        syncFavUI();
+        // 初期表示(並び替え・もっと見る・行きたいの同期)は
+        // list-ui.js?v=20260820a と status-auto.js?v=20260820a が行う。ここで先に呼ぶと
+        // 規則を二重に持つことになる。
 
         // ========== モバイル: カード下部行きたいバー + スワイプ ==========
         function initMobileFav() {
@@ -2498,11 +2297,9 @@ Googleマップで開く
                     e.stopPropagation();
                     e.preventDefault();
                     toggleFav(e, slug);
-                    syncMobileBar(card, slug);
                 });
 
-                // Initial state
-                syncMobileBar(card, slug);
+                // 初期状態は list-ui.js?v=20260820a の syncFavUI が反映する
 
                 // Swipe gesture
                 let startX = 0, startY = 0, swiping = false;
@@ -2532,7 +2329,6 @@ Googleマップで開く
                     if (swiping && dx > 60) {
                         // Swipe right confirmed → toggle fav
                         toggleFav(e, slug);
-                        syncMobileBar(card, slug);
                         card.classList.add('swipe-confirm');
                         setTimeout(() => card.classList.remove('swipe-confirm'), 400);
                     }
@@ -2541,30 +2337,8 @@ Googleマップで開く
             });
         }
 
-        function syncMobileBar(card, slug) {
-            const bar = card.querySelector('.card-fav-bar');
-            if (!bar) return;
-            const isFav = getFavs().includes(slug);
-            const label = bar.querySelector('span');
-            if (isFav) {
-                bar.classList.add('is-fav');
-                if (label) label.textContent = '行きたい登録済み';
-            } else {
-                bar.classList.remove('is-fav');
-                if (label) label.textContent = '行きたい';
-            }
-        }
-
-        // Also patch syncFavUI to update mobile bars
-        const _origSyncFavUI = syncFavUI;
-        syncFavUI = function() {
-            _origSyncFavUI();
-            document.querySelectorAll('.event-card[data-slug]').forEach(card => {
-                syncMobileBar(card, card.getAttribute('data-slug'));
-            });
-        };
-
-        initMobileFav();
+        // バーの表示同期は list-ui.js?v=20260820a の syncFavUI が行う。
+        // initMobileFav の呼び出しも list-ui.js?v=20260820a の初期化から。
     // 初期の振り分け・並び替えは status-auto.js?v=20260820a が行う(規則の二重定義を避ける)。
     </script>
 <script>

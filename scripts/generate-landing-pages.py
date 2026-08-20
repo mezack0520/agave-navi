@@ -20,6 +20,8 @@ from sitelib import (
     PREF_ROMAJI, REGION_ROMAJI, TAG_ROMAJI, VENUE_ROMAJI, VAGUE_VENUES, safe_slug,
     is_upcoming, is_ongoing, list_sort_key, split_ongoing,
     is_vague_venue, venue_key, venue_display,
+    event_card_html, event_grid_html, section_heading_html, past_range_label,
+    event_span, LONG_RUN_DAYS, CARDS_PER_PAGE, PAST_CARDS_INIT,
 )
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,25 +56,10 @@ HEAD = '''<!DOCTYPE html>
   {{"@context":"https://schema.org","@type":"CollectionPage","name":"{title}","description":"{description}","url":"{canonical}","isPartOf":{{"@type":"WebSite","name":"アガベイベントナビ","url":"https://agave-navi.com/"}}}}
   </script>
 {breadcrumb_jsonld}
-  <style>
-    .landing-hero{{max-width:1200px;margin:1.2rem auto .6rem;padding:0 1rem}}
-    .landing-hero h1{{font-size:1.8rem;margin:.2rem 0;color:#111}}
-    .landing-hero p.lead{{color:#555;margin:.4rem 0 0}}
-    .landing-stats{{font-size:.9rem;color:#666;margin:.4rem 0}}
-    .landing-grid{{max-width:1200px;margin:1rem auto;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}}
-    .landing-card{{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;transition:transform .2s,box-shadow .2s}}
-    .landing-card:hover{{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}}
-    .landing-card a{{display:block;color:inherit;text-decoration:none;padding:1rem}}
-    .landing-card .lc-date{{font-weight:700;color:#111;font-size:.9rem}}
-    .landing-card .lc-name{{font-size:1.05rem;margin:.4rem 0 .3rem;line-height:1.35}}
-    .landing-card .lc-meta{{font-size:.85rem;color:#666}}
-    .landing-empty{{max-width:1200px;margin:2rem auto;padding:2rem 1rem;text-align:center;color:#666;background:#fff;border-radius:12px}}
-    .landing-intro{{max-width:1200px;margin:.4rem auto 0;padding:0 1rem;color:#444;font-size:.95rem;line-height:1.85}}
-    .landing-intro p{{margin:.5rem 0}}
-    .landing-intro a{{color:#111}}
-  </style>
+  <script src="{root}list-ui.js?v=20260820a"></script>
 </head>'''
 HEAD = HEAD.replace('style.css?v=20260611a', 'style.css?v=' + sitelib.CSS_VERSION)
+HEAD = HEAD.replace('list-ui.js?v=20260820a', 'list-ui.js?v=' + sitelib.JS_VERSION)
 
 HEADER = sitelib.site_header()
 FOOTER = sitelib.site_footer()
@@ -121,12 +108,48 @@ def bc_html(items):
         parts.append(f'<a href="{u}">{n}</a>' if (u and not last) else f'<span>{n}</span>')
     return '  <nav class="breadcrumb" aria-label="パンくずリスト">\n    ' + ' &gt; '.join(parts) + '\n  </nav>'
 
-def card(e):
-    slug=e.get('slug',''); name=e.get('name','')
-    dd=e.get('dateDisplay') or e.get('date','')
-    venue=e.get('location') or ''; pref=e.get('prefecture') or ''
-    meta=' / '.join(x for x in [pref,venue] if x)
-    return f'<article class="landing-card"><a href="/events/{slug}.html"><div class="lc-date">{dd}</div><h2 class="lc-name">{name}</h2><div class="lc-meta">{meta}</div></a></article>'
+# イベントカードは sitelib.event_card_html が単一情報源。
+# ここに独自実装(landing-card)を持っていたため、106ページで画像・ステータス
+# バッジ・行きたいが出ず、status-auto.js も効かなかった(2026-08-20に統合)。
+# .landing-card は /tag/ /pref/ /region/ の索引ページのリンクタイル専用に残す。
+
+def load_more_wrap(wrap_id, fn, show):
+    style = '' if show else ' style="display:none"'
+    return (f'<div class="load-more-wrap" id="{wrap_id}"{style}>'
+            f'<button class="load-more-btn" onclick="{fn}()"><span>もっと見る</span>'
+            f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            f'stroke-linecap="round" stroke-linejoin="round">'
+            f'<polyline points="6 9 12 15 18 9"></polyline></svg></button></div>')
+
+
+def event_sections(evs, today_str):
+    """開催中 / これから開催 / 終了 の3節。空の節は見出しごと出さない。
+
+    idは index.html と同じ。list-ui.js の「もっと見る」と
+    status-auto.js のステータス付与・振り分けがそのまま効く。
+    終了は打ち切らない。ランディングは地域の開催実績も情報なので、
+    トップの PAST_KEEP_DAYS(過去14日)は適用しない。
+    その意思は past グリッドに data-past-keep-days を付けないことで示す。
+    """
+    up = [e for e in evs if is_upcoming(e, today_str)]
+    past = [e for e in evs if not is_upcoming(e, today_str)]
+    ongoing, coming = split_ongoing(up, today_str)
+    past.sort(key=lambda e: (event_span(e)[1] or '', e.get('name') or ''), reverse=True)
+    parts = [
+        section_heading_html('開催中' if ongoing else '', f'会期{LONG_RUN_DAYS}日以上',
+                             'h2', 'ongoingHeading'),
+        event_grid_html(ongoing, 'ongoingEventsGrid', today=today_str),
+        section_heading_html('これから開催' if coming else '', f'{len(coming)}件',
+                             'h2', 'upcomingHeading'),
+        event_grid_html(coming, 'eventsGrid', eager_first=True, today=today_str),
+        load_more_wrap('loadMoreWrap', 'loadMoreEvents', len(coming) > CARDS_PER_PAGE),
+        section_heading_html('終了したイベント' if past else '', past_range_label(past),
+                             'h3', 'pastEventsHeading'),
+        event_grid_html(past, 'pastEventsGrid', extra_class='past-events',
+                        today=today_str, compact=True),
+        load_more_wrap('pastLoadMoreWrap', 'loadMorePastEvents', len(past) > PAST_CARDS_INIT),
+    ]
+    return '\n  '.join(parts)
 
 NOINDEX_PATHS = []  # sitemap除外用(リポジトリ相対パス)。main()終了時にmanifest出力。
 CANONICALIZED_PATHS = []  # canonicalを他URLに向けた頁。noindexではないがsitemapには載せない。
@@ -155,25 +178,26 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
             f'<link rel="alternate" type="application/rss+xml" '
             f'title="{html_escape(h1)}" href="{feed_href}">\n  <link rel="stylesheet"', 1)
     bch = bc_html(bc)
+    today_str = datetime.now(JST).strftime('%Y-%m-%d')
     if evs:
-        cards = ''.join(card(e) for e in evs)
-        grid = f'  <div class="landing-grid">\n{cards}\n  </div>'
-        stats = f'<p class="landing-stats">該当イベント: {len(evs)}件</p>'
+        # 件数は各節の見出しに出るので「該当イベント: N件」の行は持たない。
+        # h1・lead・intro・stats で同じことを4回言っていた(2026-08-20)。
+        grid = '  ' + event_sections(evs, today_str)
     else:
         fb = ''
         if fallback_evs:
-            fb_cards = ''.join(card(e) for e in fallback_evs)
-            fb = (f'\n  <section class="landing-hero" style="margin-top:1.5rem"><h2 style="font-size:1.15rem">'
-                  f'代わりに、全国の直近開催予定のイベントをご紹介します</h2></section>'
-                  f'\n  <div class="landing-grid">\n{fb_cards}\n  </div>')
+            fb = ('\n  <h2 class="section-heading section-heading--sub">'
+                  '全国の直近開催予定</h2>\n  '
+                  + event_grid_html(fallback_evs, 'eventsGrid',
+                                    eager_first=True, today=today_str))
         grid = ('  <div class="landing-empty">現在このページに該当するイベント情報はありません。'
                 '<a href="/">ホーム</a>から最新の一覧を確認できます。</div>' + fb)
-        stats = '<p class="landing-stats">該当イベント: 0件</p>'
     intro = f'\n  <section class="landing-intro">{intro_html}</section>' if intro_html else ''
     aff, aff_js = aff_block(root, noindex=noindex)
     body = (f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1>'
-            f'<p class="lead">{lead}</p>{stats}</section>{intro}\n{grid}{aff}\n  </main>\n{FOOTER}\n'
-            f'{aff_js}</body>\n</html>\n')
+            f'<p class="lead">{lead}</p></section>{intro}\n{grid}{aff}\n  </main>\n{FOOTER}\n'
+            f'{aff_js}  <script src="{root}status-auto.js?v={sitelib.JS_VERSION}"></script>\n'
+            f'</body>\n</html>\n')
     return head + '\n' + body
 
 def aff_block(root, noindex=False, tags=''):
@@ -244,7 +268,7 @@ def upcoming_then_past(evs):
 
 def index_page(out_path, title, desc, kw, canon, h1, lead, items, root='../'):
     """items: list of (name, url, count)"""
-    cards = ''.join(f'<article class="landing-card"><a href="{u}"><h2 class="lc-name">{n}</h2><div class="lc-meta">{c}件</div></a></article>' for n,u,c in items)
+    cards = ''.join(f'<article class="landing-card"><a href="{u}"><h2 class="lc-name">{n}</h2><div class="lc-meta">{c}件</div></a></article>' for n,u,c in items)  # 索引のリンクタイル(イベントカードではない)
     grid = f'  <div class="landing-grid">\n{cards}\n  </div>'
     bc = [('ホーム', DOMAIN+'/'), (title.replace('一覧','').replace('別',''), None)]
     head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon, root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta='<meta name="robots" content="index,follow">')
@@ -312,16 +336,18 @@ def main():
         sl = pref_slug(p)
         region = next((e.get('region') for e in evs if e.get('region')), None)
         facts = dyn_facts(evs, today_str)
-        intro_html = f'<p>{p}で開催されるアガベ・塊根植物・多肉植物・ビザールプランツのイベントをまとめています。当サイト掲載分は{len(evs)}件です。</p>'
-        if facts:
-            intro_html += f'<p>{facts}</p>'
+        # 前置きは lead と intro の2つに畳む。h1・lead・intro・stats で
+        # 同じことを言い直して画面の1/4を使っていた(2026-08-20)。
+        intro_html = f'<p>{facts}</p>' if facts else ''
         if region and region in REGION_ROMAJI:
             intro_html += f'<p>近隣で開催されるイベントは<a href="/region/{REGION_ROMAJI[region]}/">{region}地方のイベント一覧</a>からも探せます。</p>'
         write_page(os.path.join(REPO_ROOT, 'pref', sl, 'index.html'),
             render(f'{p}のアガベ・植物イベント', f'{p}で開催されるアガベ・多肉植物・塊根植物のイベント情報。{len(evs)}件掲載。',
                    f'{p},アガベ,多肉植物,イベント,即売会', f'{DOMAIN}/pref/{sl}/',
                    [('ホーム',DOMAIN+'/'),('都道府県別','/pref/'),(p,None)],
-                   f'{p}のイベント', f'{p}で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',
+                   f'{p}のイベント',
+                   f'{p}で開催されるアガベ・塊根植物・多肉植物・ビザールプランツのイベントをまとめています。掲載{len(evs)}件。',
+                   upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'pref/{sl}/index.html'))
         counters['pref']+=1
@@ -492,46 +518,33 @@ def main():
     added = [e for e in events if e.get('addedDate')]
     added.sort(key=lambda e: (e.get('addedDate',''), e.get('slug','')), reverse=True)
     recent = added[:30]
-    seven_days_ago = (today - timedelta(days=7)).strftime('%Y-%m-%d')
-    n_cards = []
-    for e in recent:
-        slug = e.get('slug',''); name = html_escape(e.get('name',''))
-        dd = e.get('dateDisplay') or e.get('date','') or '開催日未発表'
-        pref = e.get('prefecture') or e.get('region') or ''
-        venue_n = e.get('location') or ''
-        meta = ' / '.join(x for x in [pref, venue_n] if x)
-        ad = e.get('addedDate','')
-        ad_disp = ad.replace('-', '.')
-        is_new = ad >= seven_days_ago
-        badge = '<span class="new-badge">NEW</span>' if is_new else ''
-        ended = ''
-        d_end = e.get('dateEnd') or e.get('date') or ''
-        if d_end and d_end < today_str:
-            ended = '<span class="ended-note">(終了)</span>'
-        n_cards.append(
-            f'<article class="landing-card"><a href="/events/{slug}.html">'
-            f'<div class="lc-date">開催: {dd} {ended}</div>'
-            f'<h2 class="lc-name">{name}{badge}</h2>'
-            f'<div class="lc-meta">{html_escape(meta)}</div>'
-            f'<div class="lc-added">掲載: {ad_disp}</div>'
-            f'</a></article>')
-    n_grid = '  <div class="landing-grid">\n' + ''.join(n_cards) + '\n  </div>'
+    # カードは sitelib.event_card_html。ここにも独自実装があり、
+    # NEWバッジと(終了)注記を手で組んでいた。どちらも status-auto.js が
+    # data-added-date / data-date-end から出すので二重だった(2026-08-20)。
+    # 並びは掲載日順なので3節に分けず1グリッド。
+    n_cards = [event_card_html(
+        e, today=today_str,
+        extra_meta=f'<span class="event-added">掲載: {(e.get("addedDate") or "").replace("-", ".")}</span>')
+        for e in recent]
+    n_grid = ('  <div class="events-grid" id="eventsGrid">' + ''.join(n_cards) + '</div>\n  '
+              + load_more_wrap('loadMoreWrap', 'loadMoreEvents', len(recent) > CARDS_PER_PAGE))
     n_bc = [('ホーム', DOMAIN+'/'), ('新着', None)]
     n_head = HEAD.format(
         title='新着掲載イベント', description='アガベ・塊根植物・多肉植物イベントの新着掲載情報。当サイトに最近追加されたイベントを掲載日順に一覧できます。',
         keywords='新着,植物イベント,アガベ,即売会', canonical=f'{DOMAIN}/new/', root='../',
         breadcrumb_jsonld=bc_jsonld(n_bc), robots_meta='<meta name="robots" content="index,follow">')
-    n_style = '<style>.new-badge{display:inline-block;font-size:.62em;font-weight:700;color:#fff;background:#111;border-radius:3px;padding:.1em .45em;margin-left:.5em;vertical-align:middle}.lc-added{font-size:.78rem;color:#6e6e6e;margin-top:.35rem}.ended-note{color:#999;font-size:.85em;margin-left:.3em}</style>'
+    n_style = ''   # スタイルは style.css(.event-added)。インライン<style>は持たない
     n_intro = ('<p>当サイトのデータベースに最近追加されたイベント30件を、掲載日の新しい順に並べています。'
                '毎日の自動収集と手動確認で随時追加しているため、定期的にチェックすると新しいイベントをいち早く見つけられます。'
                '開催日順に探す場合は<a href="/">イベント一覧</a>、購読型で受け取りたい場合は<a href="/calendar.html">カレンダー(iCal対応)</a>や<a href="/rss.xml">RSS</a>もご利用ください。</p>')
     n_body = (f'<body>\n{HEADER}\n{bc_html(n_bc)}\n  <main>\n'
               f'  <section class="landing-hero"><h1>新着掲載イベント</h1>'
-              f'<p class="lead">最近サイトに追加されたイベント(掲載日順)。</p>'
-              f'<p class="landing-stats">直近{len(recent)}件を表示</p></section>'
+              f'<p class="lead">最近サイトに追加されたイベント{len(recent)}件を掲載日の新しい順に並べています。</p></section>'
               f'\n  <section class="landing-intro">{n_intro}</section>'
               f'\n{n_grid}{aff_block("../")[0]}\n  </main>\n{FOOTER}\n'
-              f'{aff_block("../")[1]}</body>\n</html>\n')
+              f'{aff_block("../")[1]}'
+              f'  <script src="../status-auto.js?v={sitelib.JS_VERSION}"></script>\n'
+              f'</body>\n</html>\n')
     write_page(os.path.join(REPO_ROOT, 'new', 'index.html'), n_head + n_style + '\n' + n_body)
     counters['new'] += 1
 

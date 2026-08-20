@@ -20,7 +20,7 @@ TARGETS = [f for f in glob.glob(os.path.join(REPO_ROOT, '*.html'))
 FOOTER_RE = re.compile(r'[ \t]*<footer class="footer">.*?</footer>', re.S)
 CSSVER_RE = re.compile(r'(style\.css)(\?v=[0-9a-zA-Z]*)?')
 # ローカルJSも版数を付ける。付いていないと変更が閲覧者のキャッシュに届かない。
-JSVER_RE = re.compile(r'((?:affiliate|status-auto)\.js)(\?v=[0-9a-zA-Z]*)?')
+JSVER_RE = re.compile(r'((?:affiliate|status-auto|list-ui)\.js)(\?v=[0-9a-zA-Z]*)?')
 # ヘッダーのロゴも正規化する。408ファイルに直書きされており手で直すと必ず乖離する。
 LOGO_RE = re.compile(r'<a href="/" class="logo">.*?</a>', re.S)
 
