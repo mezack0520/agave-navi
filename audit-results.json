@@ -1,5 +1,5 @@
 {
-  "total": 177,
+  "total": 185,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -193,7 +193,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
-      "count": 69,
+      "count": 77,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -210,6 +210,7 @@
         "botanical-marche-toyama-2026-10",
         "botanical-x-vol1-2026",
         "botanical-yoichi-3rd-ebina-2026-08",
+        "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chinki-shokubutsu-ichiba-vol9-2026",
         "chuushokushobutsusai-2026",
@@ -233,8 +234,7 @@
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
         "isij-big-bazaar-2027-07-11",
-        "isij-big-bazaar-2027-09-26",
-        "isij-big-bazaar-2027-11-28"
+        "isij-big-bazaar-2027-09-26"
       ],
       "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
       "severity": "info"
