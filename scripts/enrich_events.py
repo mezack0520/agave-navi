@@ -826,8 +826,12 @@ def main():
             cur_desc = (ev.get('description') or '').strip()
 
             def _quality_ok(cand, ev_name, ev_venue):
-                if not cand or len(cand) < 120:
-                    return False, 'too short'
+                # 下限は監査の thin_fixable と同じ50字。ここを120字にしていたため、
+                # 現状より明確に長い候補まで 'too short' で捨てていた
+                # (2026-08-20: narabikakufes 60→112字、greensnap横浜 43→69字)。
+                # 短すぎる断片を弾くのが目的で、長さの優劣は下の long_enough が見る。
+                if not cand or len(cand) < 50:
+                    return False, 'too short (<50字)'
                 # 改行を含む候補は「段落を切り出せていない」= ページ全文の貼り付け。
                 # long_description は空行(\n{2,})で段落を割るため、単一改行だけで
                 # 組まれた1枚もののサイトではナビ・見出し・フッタごと1段落になる。
@@ -863,8 +867,10 @@ def main():
                 return True, None
 
             ok, reason = _quality_ok(candidate_desc, ev.get('name',''), ev.get('venue',''))
-            long_enough = (len(cur_desc) < 80
-                           or len(candidate_desc) >= int(len(cur_desc) * 1.2))
+            # 現状より長いことを必ず要求する。cur_desc < 80 だけで通していたため、
+            # 短い現状を さらに短い候補で 上書きできる穴があった。
+            long_enough = len(candidate_desc) > len(cur_desc) and (
+                len(cur_desc) < 80 or len(candidate_desc) >= int(len(cur_desc) * 1.2))
             if ok and candidate_desc != cur_desc and long_enough:
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')

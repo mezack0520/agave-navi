@@ -1,6 +1,6 @@
 {
   "_note": "Weekly Enrichment の起動リクエスト。このファイルを書き換えてpushすると Weekly Enrichment が走る。repository_dispatch と workflow_dispatch はこのリポジトリでは使えない(PATはActions APIで403、ブラウザは認証ヘッダが遮断される、Web UIは別名義でログインしているため押せない)ので、これが週次cron以外の唯一の起動手段。requestedAt を現在時刻に書き換えてpushする。",
-  "requestedAt": "2026-08-18T12:00:00+09:00",
+  "requestedAt": "2026-08-20T10:07:20+09:00",
   "limit": 20,
   "slug": "",
   "removeOrphans": false
