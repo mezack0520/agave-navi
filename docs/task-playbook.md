@@ -48,6 +48,19 @@
 
 ## 3. 既知のハマりどころ
 
+- **品質の下限を緩めるときは、blocklistを同時に広げる。**
+  説明文の下限を120字→50字に下げたら、会場名+イベント名+定型文だけの
+  アグリゲータ見出しが通り、43字の実のある説明文を69字の定型文で上書きした
+  （2026-08-20 greensnap横浜）。**字数が増えたことは改善の証明にならない。**
+  エンリッチ実行後は件数ではなく、書き換わった本文そのものを読む
+- **画像がイベント固有かの判定は `sitelib.is_generic_image_url()` だけを使う。**
+  backfill-images.py 側にも `_GENERIC_IMG_RE` があるが、こちらはファイル名しか見ない。
+  規則を足すときは sitelib に足す。両方に書くと必ず食い違う。
+  接頭辞付きの `xxx-ogp.png` と、themes/ 配下にない素の `facebook.png` が
+  素通りしていたので sitelib 側に追加した（2026-08-20）。
+  `main` `thumb` を語頭一致で弾こうとすると `event-main-visual.jpg` を巻き込むので、
+  この2語は完全一致に留める
+
 - **Weekly Enrichment は `enrich-request.json` を push すると発火する**（2026-08-18に追加）。
   `repository_dispatch` も `workflow_dispatch` も送れないので、これが週次cron以外の唯一の起動手段。
   件数や対象slugもこのファイルで指定する（cron実行もこのファイルを読む）。

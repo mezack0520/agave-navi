@@ -245,7 +245,11 @@ GENERIC_IMAGE_RE = re.compile(
     r'|/images?/common/|/shared/images?/|web_clip|apple-touch|favicon'
     r'|logo[_-]?ogp|ogp[_-]?logo|ogp[_-]?img|og_?_?images?\.|ogImg'
     r'|opengraph-image|site_config|/og\.(png|jpe?g|gif|webp)'
-    r'|no[-_]?image|placeholder|/logo\.|logo_[a-z]+\.svg)', re.I)
+    r'|no[-_]?image|placeholder|/logo\.|logo_[a-z]+\.svg'
+    # 区切りの直後に来る ogp（going_under_ground-ogp.png のような接頭辞付き）と、
+    # themes/ 配下に無い素のSNSシェアアイコン。どちらも2026-08-20に素通りした
+    r'|[-_]ogp\.(png|jpe?g|gif|webp)'
+    r'|/(facebook|twitter|instagram)\.(png|jpe?g|gif|webp))', re.I)
 
 
 def is_generic_image_url(u):
