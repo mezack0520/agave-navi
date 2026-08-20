@@ -524,7 +524,7 @@ def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
         f'<div class="event-card-body">'
         f'<div class="event-header"><span class="event-date">{html_escape(compact_date(e))}</span>'
         f'<span class="event-status"></span></div>'
-        f'<{heading} class="event-title"><a class="event-link" href="/events/{_attr(slug)}.html">'
+        f'<{heading} class="event-title"><a class="event-title-link" href="/events/{_attr(slug)}.html">'
         f'{html_escape(name)}</a></{heading}>'
         f'{desc_html}'
         f'<div class="event-meta-row">{meta}</div>'
