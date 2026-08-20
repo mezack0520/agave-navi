@@ -48,6 +48,14 @@
 
 ## 3. 既知のハマりどころ
 
+- **Weekly Enrichment は `enrich-request.json` を push すると発火する**（2026-08-18に追加）。
+  `repository_dispatch` も `workflow_dispatch` も送れないので、これが週次cron以外の唯一の起動手段。
+  件数や対象slugもこのファイルで指定する（cron実行もこのファイルを読む）。
+  積み残し（`short_descriptions` / `thin_fixable` / `upcoming_no_image`）を崩したいときはここを叩く。
+  **「dispatchを送った」で終わったつもりにならないこと。送れていない。**
+  発火したかは `api.github.com/.../actions/workflows/weekly-enrichment.yml/runs` を
+  ブラウザで開いて `event` を見る。`schedule` しか並んでいなければ手動起動は一度も通っていない
+
 - **会場が「未定」かどうかの判定は `sitelib.is_vague_venue()` を使う。**
   `VAGUE_VENUES` への完全一致だけだと「金沢（会場未確定）」のように
   括弧書きで未定を補った値を取りこぼす。取りこぼすと地図・FAQ・JSON-LDのPlaceに

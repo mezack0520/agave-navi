@@ -9,6 +9,15 @@ name: Weekly Enrichment
 on:
   schedule:
     - cron: '0 1 * * 0'
+  # enrich-request.json の push で発火する。
+  # repository_dispatch も workflow_dispatch もこのリポジトリでは送れない
+  # (PATはActions APIで403 / ブラウザは認証ヘッダ遮断 / Web UIは別名義でログイン)。
+  # したがって週次cron以外の起動手段はこのpushだけ。無いと積み残しを崩せない。
+  # GITHUB_TOKEN のpushはワークフローを再起動しないので自己ループしない。
+  push:
+    branches: [main]
+    paths:
+      - 'enrich-request.json'
   repository_dispatch:
     types: [weekly-enrichment]
   workflow_dispatch:
@@ -47,6 +56,32 @@ jobs:
       - name: Install deps
         run: pip install requests beautifulsoup4 lxml
 
+      - name: Resolve parameters
+        id: p
+        env:
+          IN_LIMIT: ${{ github.event.inputs.limit }}
+          IN_SLUG: ${{ github.event.inputs.slug }}
+          IN_ORPH: ${{ github.event.inputs.remove_orphans }}
+        run: |
+          # 既定値は enrich-request.json。workflow_dispatch の入力があればそれで上書きする。
+          # cron 実行もこのファイルを読むので、恒久的に件数を変えたいならファイルを直す。
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, os
+          cfg = {}
+          try:
+              with open('enrich-request.json', encoding='utf-8') as f:
+                  cfg = json.load(f)
+          except (OSError, ValueError):
+              pass
+          limit = str(os.environ.get('IN_LIMIT') or cfg.get('limit') or 20)
+          slug = os.environ.get('IN_SLUG') or cfg.get('slug') or ''
+          orph = (os.environ.get('IN_ORPH') == 'true') or bool(cfg.get('removeOrphans'))
+          print(f'limit={limit}')
+          print(f'slug={slug}')
+          print(f'orphans={str(orph).lower()}')
+          EOF
+          cat "$GITHUB_OUTPUT"
+
       - name: Run enrichment (Brave Search + scrape)
         env:
           BRAVE_API_KEY:  ${{ secrets.BRAVE_API_KEY }}
@@ -54,16 +89,16 @@ jobs:
           GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
         run: |
           ARGS="--write-back"
-          if [ "${{ github.event.inputs.remove_orphans }}" != "true" ]; then
+          if [ "${{ steps.p.outputs.orphans }}" != "true" ]; then
             ARGS="$ARGS --no-remove"
           fi
-          if [ -n "${{ github.event.inputs.slug }}" ]; then
-            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          if [ -n "${{ steps.p.outputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ steps.p.outputs.slug }}"
           fi
-          LIMIT="${{ github.event.inputs.limit || '20' }}"
-          if [ "$LIMIT" != "0" ]; then
-            ARGS="$ARGS --limit $LIMIT"
+          if [ "${{ steps.p.outputs.limit }}" != "0" ]; then
+            ARGS="$ARGS --limit ${{ steps.p.outputs.limit }}"
           fi
+          echo "enrich_events.py $ARGS"
           python3 scripts/enrich_events.py $ARGS || true
 
       - name: Backfill missing images (og:image)
