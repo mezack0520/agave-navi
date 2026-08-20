@@ -97,10 +97,21 @@
     var wrap = document.getElementById('loadMoreWrap');
     if (wrap) wrap.style.display = shown >= mainCards().length ? 'none' : '';
   }
+  // load-more-hidden はこの関数が完全に所有する。
+  // 対象を #eventsGrid のカードだけに絞ると、status-auto.js が
+  // 「開催中」「終了」へ移したカードが古いクラスを持ち続け、
+  // .events-grid .event-card.load-more-hidden{display:none!important} で
+  // その節ごと消える(2026-08-20に本番で MOLLIS と終了12件が消えた)。
+  function clearClass(name) {
+    document.querySelectorAll('.event-card.' + name).forEach(function (c) {
+      c.classList.remove(name);
+    });
+  }
   function initLoadMore() {
     shown = CARDS_PER_PAGE;
+    clearClass('load-more-hidden');
     mainCards().forEach(function (card, i) {
-      card.classList.toggle('load-more-hidden', i >= CARDS_PER_PAGE);
+      if (i >= CARDS_PER_PAGE) card.classList.add('load-more-hidden');
     });
     updateLoadMoreBtn();
   }
@@ -121,7 +132,8 @@
   }
   // 絞り込み中は制限を外して全件を対象にする
   function showAllMain() {
-    mainCards().forEach(function (c) { c.classList.remove('load-more-hidden'); reloadCardImages(c); });
+    clearClass('load-more-hidden');
+    mainCards().forEach(function (c) { reloadCardImages(c); });
     var wrap = document.getElementById('loadMoreWrap');
     if (wrap) wrap.style.display = 'none';
   }
@@ -132,6 +144,7 @@
     return g ? Array.prototype.slice.call(g.querySelectorAll('.event-card')) : [];
   }
   function initPastLoadMore() {
+    clearClass('past-load-more-hidden');
     var cards = pastCards();
     if (!cards.length) {
       var w0 = document.getElementById('pastLoadMoreWrap');
@@ -140,7 +153,6 @@
     }
     cards.forEach(function (card, i) {
       if (i >= PAST_CARDS_INIT) card.classList.add('past-load-more-hidden');
-      else card.classList.remove('past-load-more-hidden');
     });
     var wrap = document.getElementById('pastLoadMoreWrap');
     if (wrap) wrap.style.display = cards.length <= PAST_CARDS_INIT ? 'none' : '';

@@ -198,6 +198,16 @@
     if (uh && uh.hasAttribute('data-hide-when-no-ongoing')) {
       uh.style.display = show ? '' : 'none';
     }
+    // 見出しには、その節に何件載っているかを書く。
+    if (uh) {
+      var note = uh.querySelector('.section-heading-note');
+      if (!note) {
+        note = document.createElement('span');
+        note.className = 'section-heading-note';
+        uh.appendChild(note);
+      }
+      note.textContent = main.length + '件';
+    }
   }
   window.AEN_LIST = { arrange: arrangeList };
 
