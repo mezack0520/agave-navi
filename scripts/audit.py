@@ -20,7 +20,9 @@ from collections import defaultdict
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
 from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
-                     event_phase, is_long_run, event_days, LONG_RUN_DAYS)
+                     event_phase, is_long_run, event_days, LONG_RUN_DAYS,
+                     is_vague_venue, venue_key, venue_slug,
+                     tag_slug, region_slug, pref_slug)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -92,10 +94,7 @@ def main():
     # 「京セラドーム大阪」と「京セラドーム大阪スカイホール」は完全一致では別会場に見える。
     # 誤検出を防ぐため、短いほう(=接頭辞側)が6文字以上で、かつ
     # 「東京都内」「岐阜県内」のような広域指定でないときだけ同一とみなす。
-    _AREA_ONLY = re.compile(r'(都|道|府|県|市|区|町|村)内$')
-
-    def _vague(v):
-        return v in VAGUE_VENUES or bool(_AREA_ONLY.search(v))
+    _vague = is_vague_venue
 
     seen_vd = defaultdict(list)
     for e in events:
@@ -1129,6 +1128,113 @@ def main():
         inq_stale,
         'event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。'
         '止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない')
+
+    # --- sitelib の規則を他スクリプトが写し取っていないか -------------------
+    # 検出側と書き込み側に同じ規則を二重に書くと、片方だけ更新されて必ず食い違う。
+    # 2026-08-20、generate-rss.py が TAG_ROMAJI と safe_slug を自前で持っており、
+    # sitelib に後から足した6タグを知らないまま feeds/tag-tag-<md5>.xml を吐いていた。
+    # タグ頁は /tag/aroid/ を名乗っていたので、フィードのURLと一致していなかった。
+    # DOMAIN / JST のような値だけの定数は挙動を持たないので対象外。
+    _SITELIB_TRIVIAL = {'DOMAIN', 'JST', 'REPO', 'REPO_ROOT'}
+    _sitelib_src = ''
+    try:
+        with open(rp('scripts', 'sitelib.py'), encoding='utf-8') as f:
+            _sitelib_src = f.read()
+    except OSError:
+        pass
+    _sitelib_names = set()
+    for m in re.finditer(r'^(?:def\s+(\w+)|([A-Z][A-Z0-9_]{2,})\s*=)', _sitelib_src, re.M):
+        _sitelib_names.add(m.group(1) or m.group(2))
+    _sitelib_names -= _SITELIB_TRIVIAL
+    dupe_rule = []
+    for path in sorted(glob.glob(rp('scripts', '*.py'))):
+        fn = os.path.basename(path)
+        if fn == 'sitelib.py':
+            continue
+        try:
+            with open(path, encoding='utf-8') as f:
+                src = f.read()
+        except OSError:
+            continue
+        for m in re.finditer(r'^(?:def\s+(\w+)|([A-Z][A-Z0-9_]{2,})\s*=)', src, re.M):
+            name = m.group(1) or m.group(2)
+            if name in _sitelib_names:
+                dupe_rule.append(f'{fn}: sitelib.{name} を自前で定義している')
+    add('sitelib_rule_duplicated', 'sitelib の規則を他スクリプトが二重に定義',
+        sorted(set(dupe_rule)),
+        'sitelib から import する。写しを置くと、規則を足した日にどちらか片方だけが更新される')
+
+    # --- ランディングURLの衝突・退化 ----------------------------------------
+    # 別のキーが同じURLに書かれると、後から書いたほうが前のページを黙って上書きする。
+    # cleanup_orphans は「生成されなかったファイル」を消すだけなので、
+    # 上書きされたページは生成済み扱いになり、消えたことに誰も気づけない。
+    # 2026-08-20 時点で venue に 1 / 1f / 2 / 2f / i / taut の6組の衝突があった
+    # (どれも片側が1件だったので、まだページにはなっていなかった)。
+    slug_owner = defaultdict(set)
+    for e in events:
+        for t in (e.get('tags') or []):
+            slug_owner[('tag', tag_slug(t))].add(t)
+        if e.get('region'):
+            slug_owner[('region', region_slug(e['region']))].add(e['region'])
+        if e.get('prefecture'):
+            slug_owner[('pref', pref_slug(e['prefecture']))].add(e['prefecture'])
+        loc = (e.get('location') or '').strip()
+        if loc and not is_vague_venue(loc):
+            slug_owner[('venue', venue_slug(loc))].add(venue_key(loc))
+    collide = [f'/{kind}/{sl}/ に {len(names)}つの名前: ' + ' / '.join(sorted(names))
+               for (kind, sl), names in slug_owner.items() if len(names) > 1]
+    add('landing_slug_collision', '複数の名前が同じランディングURLに書かれる',
+        sorted(collide),
+        'sitelib.safe_slug が非ASCII名から作る残渣は元の名前を代表しない。'
+        '衝突する側を *_ROMAJI に足すか、キーの正規化を見直す')
+
+    # --- 配布フィードとタグ・地域の対応 --------------------------------------
+    # generate-rss.py はタグ・地域ごとに feeds/*.xml を吐く。
+    # 対象が消えたフィードを消す掃除が無かったため、2026-06-11の「多肉」タグと
+    # 2026-07-31の沖縄地方のフィードが、その日の中身のまま公開され続けていた。
+    want_feeds = {f'tag-{tag_slug(t)}.xml' for e in events for t in (e.get('tags') or [])}
+    want_feeds |= {f'region-{region_slug(e["region"])}.xml'
+                   for e in events if e.get('region')}
+    have_feeds = {fn for fn in os.listdir(rp('feeds'))
+                  if fn.endswith('.xml') and fn.startswith(('tag-', 'region-'))} \
+        if os.path.isdir(rp('feeds')) else set()
+    feed_drift = ([f'孤児: feeds/{fn}(対応するタグ・地域が無い)' for fn in sorted(have_feeds - want_feeds)]
+                  + [f'欠落: feeds/{fn}(タグ・地域はあるがフィードが無い)' for fn in sorted(want_feeds - have_feeds)])
+    add('feed_slug_drift', '配布フィードが現行のタグ・地域と一対一でない', feed_drift,
+        'generate-rss.py が生成しなかった region-*/tag-*.xml を消す。'
+        'スラッグは sitelib の tag_slug / region_slug が単一情報源')
+
+    # --- サイト内リンクの参照先 ----------------------------------------------
+    # sitemap_dead_entries は sitemap に載っているURLしか見ない。
+    # ヘッダ・フッタ・ガイド・ランディングから貼っているリンクは対象外だった。
+    _LINK = re.compile(r'(?:href|src)="([^"]+)"')
+    dead_links = defaultdict(set)
+    for path in glob.glob(rp('**', '*.html'), recursive=True):
+        rel_html = os.path.relpath(path, REPO)
+        if rel_html.startswith('templates' + os.sep):
+            continue  # 置換前のプレースホルダが入っている
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                body = f.read()
+        except OSError:
+            continue
+        for href in set(_LINK.findall(body)):
+            if href.startswith(('http', '//', 'mailto:', 'tel:', 'javascript:', 'data:', '#')):
+                continue
+            if '${' in href or '{{' in href:
+                continue  # JSのテンプレートリテラル
+            target = href.split('#')[0].split('?')[0]
+            if not target:
+                continue
+            base = (os.path.join(REPO, target.lstrip('/')) if target.startswith('/')
+                    else os.path.normpath(os.path.join(os.path.dirname(path), target)))
+            if target.endswith('/'):
+                base = os.path.join(base, 'index.html')
+            if not os.path.exists(base):
+                dead_links[target].add(rel_html)
+    add('dead_internal_link', 'サイト内リンクの参照先が存在しない',
+        sorted(f'{k} ← {len(v)}頁 (例 {sorted(v)[0]})' for k, v in dead_links.items()),
+        '生成物の消し忘れか、リンク側がスラッグの変更に追随していない')
 
     # --- 出力 ---
     total = sum(v['count'] for k, v in findings.items()

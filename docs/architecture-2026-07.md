@@ -129,6 +129,21 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
+- 2026-08-20(event-monitor): URLスラッグの単一情報源化と、生成物の掃除・導線の穴を塞いだ。
+  audit.py に検査4本を追加(`sitelib_rule_duplicated` / `landing_slug_collision` /
+  `feed_slug_drift` / `dead_internal_link`)。
+  (1) `generate-rss.py` が `TAG_ROMAJI` と `safe_slug` を自前で持っており、
+  sitelib に後から足した6タグを知らずに `feeds/tag-tag-<md5>.xml` を吐いていた。
+  タグ頁の `/tag/aroid/` とフィードのURLが一致していなかったので sitelib に寄せた。
+  (2) `generate-rss.py` に孤児フィードの掃除が無く、対象が消えた9本が公開され続けていた。
+  (3) `safe_slug` の残渣が `/venue/4/`(町田パリオ 4階)・`/venue/1028-2/`(住所の一部)のような
+  URLを作り、6組が別会場と衝突していた。英字3文字未満はハッシュに、非ASCII名は残渣+ハッシュに。
+  (4) 会場ページのキーを `venue_key()`(住所の括弧書き除去・空白除去)に統一。
+  同じ会場が表記違いで割れていた10組を統合し、会場頁は12→22に。
+  (5) `is_vague_venue()` に `_AREA_ONLY`(「岐阜県内」等)を移した。
+  audit.py だけが持っていたため、`Place.name: "岐阜県内"` が5件そのまま出ていた。
+  (6) タグ頁・地域頁に自分のフィードへの `<link rel="alternate">` を追加。
+  23本が生成されるだけでどこからも辿れなかった。
 - 2026-08-18(2回目): 「今」の定義の割れと、イベント画像に化けたサイトロゴを潰し、
   audit.py に検査4本を追加した。
   (1) 会期を持つイベントの扱いが枠ごとに違っていた。`status` と `this-weekend` は

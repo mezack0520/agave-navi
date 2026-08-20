@@ -532,6 +532,34 @@
       "items": [],
       "note": "event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない",
       "severity": "urgent"
+    },
+    "sitelib_rule_duplicated": {
+      "title": "sitelib の規則を他スクリプトが二重に定義",
+      "count": 0,
+      "items": [],
+      "note": "sitelib から import する。写しを置くと、規則を足した日にどちらか片方だけが更新される",
+      "severity": "urgent"
+    },
+    "landing_slug_collision": {
+      "title": "複数の名前が同じランディングURLに書かれる",
+      "count": 0,
+      "items": [],
+      "note": "sitelib.safe_slug が非ASCII名から作る残渣は元の名前を代表しない。衝突する側を *_ROMAJI に足すか、キーの正規化を見直す",
+      "severity": "urgent"
+    },
+    "feed_slug_drift": {
+      "title": "配布フィードが現行のタグ・地域と一対一でない",
+      "count": 0,
+      "items": [],
+      "note": "generate-rss.py が生成しなかった region-*/tag-*.xml を消す。スラッグは sitelib の tag_slug / region_slug が単一情報源",
+      "severity": "urgent"
+    },
+    "dead_internal_link": {
+      "title": "サイト内リンクの参照先が存在しない",
+      "count": 0,
+      "items": [],
+      "note": "生成物の消し忘れか、リンク側がスラッグの変更に追随していない",
+      "severity": "urgent"
     }
   }
 }

@@ -5,7 +5,7 @@ events.json から RSS 2.0 feed を生成。
 - /feeds/region-<slug>.xml — 地域別
 - /feeds/tag-<slug>.xml — タグ別
 """
-import json, os, re, hashlib, unicodedata
+import json, os, re
 from datetime import datetime, timezone, timedelta
 from xml.sax.saxutils import escape
 from collections import defaultdict
@@ -15,17 +15,12 @@ EVENTS = os.path.join(ROOT, 'events.json')
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
 
-from sitelib import REGION_ROMAJI  # 地域スラッグの単一情報源
-TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','展示会':'tenjikai',
-              'ブロメリア':'bromelia','珍奇植物':'chinki','多肉':'tanniku',
-              'コーデックス':'caudex','アガベ':'agave'}
-
-
-def safe_slug(s, kind='gen'):
-    if not s: return ''
-    nfkd = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode('ascii').lower()
-    slug = re.sub(r'[^a-z0-9]+', '-', nfkd).strip('-')[:50]
-    return slug or f'{kind}-{hashlib.md5(s.encode()).hexdigest()[:8]}'
+# スラッグは sitelib が単一情報源。ここに写しを置くと必ず食い違う。
+# 2026-08-20まで TAG_ROMAJI と safe_slug をこのファイルで独自に持っており、
+# sitelib 側に後から足した6タグ(アロイド・サボテン・着生植物・塊根植物・
+# ビカクシダ・多肉植物)を知らないまま feeds/tag-tag-<md5>.xml を吐いていた。
+# タグページ側は /tag/aroid/ を名乗っており、フィードのURLと一致しなかった。
+from sitelib import REGION_ROMAJI, region_slug, tag_slug
 
 
 def render_rss(title, link, description, events, max_items=20):
@@ -83,13 +78,16 @@ def main():
     feeds_dir = os.path.join(ROOT, 'feeds')
     os.makedirs(feeds_dir, exist_ok=True)
 
+    written = set()
+
     # 2. 地域別
     by_region = defaultdict(list)
     for e in events:
         if e.get('region'): by_region[e['region']].append(e)
     region_count = 0
     for r, evs in by_region.items():
-        sl = REGION_ROMAJI.get(r) or safe_slug(r, 'region')
+        sl = region_slug(r)
+        written.add(f'region-{sl}.xml')
         with open(os.path.join(feeds_dir, f'region-{sl}.xml'), 'w', encoding='utf-8') as f:
             f.write(render_rss(f'アガベイベントナビ - {r}地方', f'{DOMAIN}/region/{sl}/',
                               f'{r}地方のアガベ・植物イベント新着情報', evs))
@@ -101,13 +99,28 @@ def main():
         for t in e.get('tags', []): by_tag[t].append(e)
     tag_count = 0
     for t, evs in by_tag.items():
-        sl = TAG_ROMAJI.get(t) or safe_slug(t, 'tag')
+        sl = tag_slug(t)
+        written.add(f'tag-{sl}.xml')
         with open(os.path.join(feeds_dir, f'tag-{sl}.xml'), 'w', encoding='utf-8') as f:
             f.write(render_rss(f'アガベイベントナビ - {t}', f'{DOMAIN}/tag/{sl}/',
                               f'{t}カテゴリのイベント新着情報', evs))
         tag_count += 1
 
+    # 生成しなかった region-*.xml / tag-*.xml を消す。
+    # 掃除が無いと、対象が消えたフィード(2026-07-31の沖縄地方、
+    # 2026-06-11の「多肉」タグ)がその日の中身のまま公開され続ける。
+    removed = []
+    for fn in sorted(os.listdir(feeds_dir)):
+        if not (fn.startswith(('region-', 'tag-')) and fn.endswith('.xml')):
+            continue
+        if fn in written:
+            continue
+        os.remove(os.path.join(feeds_dir, fn))
+        removed.append(fn)
+
     print(f'rss.xml: 1 (main) + {region_count} regions + {tag_count} tags = {1+region_count+tag_count} feeds')
+    if removed:
+        print(f'  孤児フィードを削除: {len(removed)}件 / ' + ', '.join(removed))
 
 
 if __name__ == '__main__':

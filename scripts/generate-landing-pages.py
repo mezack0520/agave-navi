@@ -19,6 +19,7 @@ from sitelib import (
     JST, DOMAIN, html_escape, pref_slug, region_slug, tag_slug, venue_slug,
     PREF_ROMAJI, REGION_ROMAJI, TAG_ROMAJI, VENUE_ROMAJI, VAGUE_VENUES, safe_slug,
     is_upcoming, is_ongoing, list_sort_key, split_ongoing,
+    is_vague_venue, venue_key, venue_display,
 )
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -132,7 +133,7 @@ CANONICALIZED_PATHS = []  # canonicalを他URLに向けた頁。noindexではな
 
 def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
            noindex=False, intro_html='', fallback_evs=None, rel_path=None,
-           canonical_of=None):
+           canonical_of=None, feed_href=None):
     # canonical_of: 別URLと内容が完全に重複する頁で、正規URLをそちらに寄せる。
     # noindexにはしない(利用者には見える・リンクも辿らせる)が、
     # 自分自身を指さないcanonicalとsitemap掲載は矛盾するのでsitemapからは外す。
@@ -145,6 +146,14 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
         NOINDEX_PATHS.append(rel_path)
     head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon,
                        root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta=robots_meta)
+    if feed_href:
+        # generate-rss.py が吐くタグ別・地域別フィードへの導線。
+        # 貼らないと、生成しているだけでどこからも辿れないファイルになる
+        # (2026-08-20まで23本が未参照だった)。
+        head = head.replace(
+            '<link rel="stylesheet"',
+            f'<link rel="alternate" type="application/rss+xml" '
+            f'title="{html_escape(h1)}" href="{feed_href}">\n  <link rel="stylesheet"', 1)
     bch = bc_html(bc)
     if evs:
         cards = ''.join(card(e) for e in evs)
@@ -291,7 +300,8 @@ def main():
                    [('ホーム',DOMAIN+'/'),('タグ別','/tag/'),(t,None)],
                    f'タグ: {t}', f'「{t}」のイベント一覧。直近の開催から過去の実績まで。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
-                   fallback_evs=fallback5, rel_path=f'tag/{sl}/index.html'))
+                   fallback_evs=fallback5, rel_path=f'tag/{sl}/index.html',
+                   feed_href=f'/feeds/tag-{sl}.xml'))
         counters['tag']+=1
 
     # Pref pages
@@ -344,7 +354,7 @@ def main():
                    f'{r}地方のイベント', f'{r}地方で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'region/{sl}/index.html',
-                   canonical_of=canonical_of))
+                   canonical_of=canonical_of, feed_href=f'/feeds/region-{sl}.xml'))
         counters['region']+=1
 
     # Archive YM
@@ -425,13 +435,25 @@ def main():
     counters['this_month']+=1
 
     # Venue (2件以上のみ)
+    # 束ねるキーは venue_key()。生の location で束ねると、住所の括弧書きの
+    # 有無や空白の入れ方だけで同じ会場が別ページに割れる。
+    # 未定判定は is_vague_venue() を使う(VAGUE_VENUES への完全一致だけだと
+    # 「金沢（会場未確定）」のような値を会場名として扱ってしまう)。
     by_venue = defaultdict(list)
+    venue_label = {}
     for e in events:
-        v = (e.get('location') or '').strip()
-        if v and v not in VAGUE_VENUES: by_venue[v].append(e)
-    for v, evs in by_venue.items():
+        raw = (e.get('location') or '').strip()
+        if not raw or is_vague_venue(raw):
+            continue
+        k = venue_key(raw)
+        by_venue[k].append(e)
+        disp = venue_display(raw)
+        if k not in venue_label or len(disp) < len(venue_label[k]):
+            venue_label[k] = disp
+    for k, evs in by_venue.items():
         if len(evs) < 2: continue
-        sl = venue_slug(v)
+        v = venue_label[k]
+        sl = venue_slug(k)
         pref_v = next((e.get('prefecture') for e in evs if e.get('prefecture')), '')
         facts = dyn_facts(evs, today_str)
         intro_html = f'<p>{v}({pref_v})で開催される植物イベントの開催実績・予定をまとめています。同じ会場の過去回の様子は、規模感やアクセスの参考になります。</p>'
@@ -546,7 +568,7 @@ def main():
     counters['index']+=1
 
     # Venue index
-    vi = sorted([(v,f'/venue/{venue_slug(v)}/',len(by_venue[v])) for v in by_venue if len(by_venue[v])>=2], key=lambda x:-x[2])
+    vi = sorted([(venue_label[k],f'/venue/{venue_slug(k)}/',len(by_venue[k])) for k in by_venue if len(by_venue[k])>=2], key=lambda x:-x[2])
     index_page(os.path.join(REPO_ROOT,'venue','index.html'),
         '会場別イベント一覧','複数開催実績のある会場のみ。','会場別,アガベ,イベント',
         f'{DOMAIN}/venue/','会場別イベント一覧','複数回開催実績のある会場のみ掲載。',

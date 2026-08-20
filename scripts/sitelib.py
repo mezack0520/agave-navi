@@ -84,8 +84,12 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
               'ブロメリア':'bromelia','珍奇植物':'chinki','多肉':'tanniku',
               'コーデックス':'caudex','アガベ':'agave',
               '塊根植物':'kaikon','多肉植物':'succulent','サボテン':'cactus',
-              'ビカクシダ':'platycerium','アロイド':'aroid','着生植物':'epiphyte'}
-VENUE_ROMAJI = {'五反田TOCビル 13階':'gotanda-toc','サンシャインシティ':'sunshine-city',
+              'ビカクシダ':'platycerium','アロイド':'aroid','着生植物':'epiphyte',
+              'ナイトマーケット':'night-market'}
+# キーは venue_key() を通した形(NFKC・末尾の括弧書き除去・空白除去)で持つ。
+# 生の表記で持つと、同じ会場でも空白や住所の有無で引けなくなる。
+# 正規化は _VENUE_ROMAJI_RAW の定義直後にまとめてかける。
+_VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc','サンシャインシティ':'sunshine-city',
                 '久屋大通庭園フラリエ':'flarie','研究学園駅前公園（つくば市）':'kenkyu-gakuen-park',
                 '千住本氷川神社':'senju-hikawa-jinja'}
 
@@ -110,17 +114,66 @@ def slug_hash(slug):
     return sum(ord(c) for c in (slug or ''))
 
 def safe_slug(s, kind='gen'):
+    """日本語名から URL スラッグを作る。
+
+    NFKD は日本語をほぼ全部落とすので、残るのは名前に紛れていた
+    半角英数字だけになる。「町田パリオ 4階」→ 4、
+    「…（群馬県館林市野辺町1028-2）」→ 1028-2 のような残渣は、
+    (1) URL として何も意味を伝えず、
+    (2) 別の会場と衝突して片方のページを黙って上書きする
+    (2026-08-20 時点で 1 / 1f / 2 / 2f / i / taut の6組が衝突していた)。
+    英字3文字以上の連なりが無い残渣は名前として使えないと見なし、
+    元文字列のハッシュに落として一意性を優先する。
+    """
     if not s: return ''
     nfkd = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode('ascii').lower()
     slug = re.sub(r'[^a-z0-9]+', '-', nfkd).strip('-')[:50]
-    if slug: return slug
-    h = hashlib.md5(s.encode('utf-8')).hexdigest()[:8]
-    return f'{kind}-{h}'
+    h = hashlib.md5(s.encode('utf-8')).hexdigest()
+    if not slug or not re.search(r'[a-z]{3}', slug):
+        return f'{kind}-{h[:8]}'
+    if re.search(r'[^\x00-\x7f]', s):
+        # 残渣は元の名前の一部でしかない。「ABCハウジングウェルビーみのお」→ abc、
+        # 「セラミックパークMINO」→ mino のように、無関係な会場と同じ綴りになる。
+        # ハッシュを足して、別の名前が同じURLに書かれないようにする。
+        return f'{slug}-{h[:4]}'
+    return slug
 
 def pref_slug(p): return PREF_ROMAJI.get(p) or safe_slug(p, 'pref')
 def region_slug(r): return REGION_ROMAJI.get(r) or safe_slug(r, 'region')
 def tag_slug(t): return TAG_ROMAJI.get(t) or safe_slug(t, 'tag')
-def venue_slug(v): return VENUE_ROMAJI.get(v) or safe_slug(v, 'v')
+def venue_slug(v):
+    v = venue_key(v)
+    return VENUE_ROMAJI.get(v) or safe_slug(v, 'v')
+
+
+_VENUE_PAREN = re.compile(r'[（(][^（()）]*[)）]\s*$')
+
+
+def venue_display(v):
+    """会場ページに出す表示名。住所の括弧書きだけを落とす。"""
+    v = (v or '').strip()
+    return _VENUE_PAREN.sub('', v).strip() or v
+
+
+def venue_key(v):
+    """会場ページを束ねるキー。表記の揺れで同じ会場が割れるのを防ぐ。
+
+    events.json の location は、新しく足した回ほど
+    「会場名（都道府県…住所）」の形で住所を括弧書きしている。
+    生の文字列でキーにすると、同じ会場でも住所の有無・空白の入れ方の
+    違いだけで別ページに割れ、「複数回開催実績のある会場のみ」という
+    会場ページの前提そのものが崩れる(2026-08-20 に9組の分裂を確認)。
+
+    グルーピングのキーとスラッグの元は必ず同じ値にすること。
+    別々にすると、キーは2つでスラッグは1つになり、
+    後から書いたほうが前のページを黙って上書きする。
+    """
+    v = unicodedata.normalize('NFKC', (v or '')).strip()
+    v = _VENUE_PAREN.sub('', v)
+    return re.sub(r'\s+', '', v)
+
+
+VENUE_ROMAJI = {venue_key(k): v for k, v in _VENUE_ROMAJI_RAW.items()}
 
 # --- 日付整形 ---
 
@@ -320,6 +373,10 @@ def site_footer():
 
 
 _VAGUE_MARKER = re.compile(r'(未定|未確定|調整中)')
+# 「岐阜県内」「別府市内」「茨城県内会場」のような広域指定。会場名ではない。
+# 2026-08-20まで audit.py だけがこの規則を持っていて sitelib は知らなかったため、
+# 検出はできるのに地図・JSON-LD・会場ページ側は素通しという食い違いがあった。
+_AREA_ONLY = re.compile(r'(都|道|府|県|市|区|町|村)内(会場)?$')
 
 
 def is_vague_venue(v):
@@ -332,7 +389,8 @@ def is_vague_venue(v):
     v = (v or '').strip()
     if not v:
         return True
-    return v in VAGUE_VENUES or bool(_VAGUE_MARKER.search(v))
+    return (v in VAGUE_VENUES or bool(_VAGUE_MARKER.search(v))
+            or bool(_AREA_ONLY.search(v)))
 
 
 # --- imageUrl がイベント固有画像か ------------------------------------------
