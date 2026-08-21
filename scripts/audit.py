@@ -21,7 +21,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
 from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      event_phase, is_long_run, event_days, LONG_RUN_DAYS,
-                     is_vague_venue, venue_key, venue_slug,
+                     is_vague_venue, venue_key, venue_slug, venue_display,
+                     VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
                      tag_slug, region_slug, pref_slug)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
@@ -1056,6 +1057,54 @@ def main():
     add('section_note_missing', '節の見出しに載っている範囲が書かれていない',
         sorted(set(note_missing))[:20],
         'sitelib.section_heading_html を使う。トップは sync-index-cards.py が同期')
+
+    # 会場URLの読みやすさ。safe_slug は日本語を落とすので VENUE_ROMAJI に
+    # 無い会場はハッシュURL(/venue/v-xxxxxxxx/)になる。
+    # 掲載が増えた会場を人が拾えるよう候補を出す。しきい値は sitelib。
+    # ローマ字を足すと既存URLが変わるので、追加は必ず
+    # VENUE_SLUG_REDIRECTS に旧slugを残してから行う。
+    v_groups = defaultdict(list)
+    for e in events:
+        loc = (e.get('location') or '').strip()
+        if is_vague_venue(loc):
+            continue
+        v_groups[venue_key(loc)].append(e)
+    romaji_cand = []
+    for k, evs in v_groups.items():
+        if len(evs) < VENUE_ROMAJI_MIN_EVENTS:
+            continue
+        if venue_slug(k).startswith('v-'):
+            romaji_cand.append(f'{venue_display(k)}({len(evs)}件) → /venue/{venue_slug(k)}/')
+    add('venue_slug_romaji_candidates',
+        f'掲載{VENUE_ROMAJI_MIN_EVENTS}件以上でURLがハッシュのままの会場',
+        sorted(romaji_cand),
+        'sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず '
+        '_VENUE_REDIRECTS_RAW に残す(URLが変わるため)')
+
+    # VENUE_ROMAJI に書いたが頁が立たないキー(会場ページは2件以上のみ)。
+    # 表記が変わって当たらなくなった項目が残ると、次に同じ会場を足すときに
+    # 二重定義になる。
+    unused_romaji = sorted(k for k in VENUE_ROMAJI
+                           if len(v_groups.get(k, [])) < 2)
+    add('venue_romaji_unused', 'VENUE_ROMAJIにあるが会場ページが立たないキー',
+        unused_romaji, '会場名の表記が変わって当たらなくなった項目。消すか合わせる',
+        severity='info')
+
+    # 中継頁の健全性。宛先が無い / 現役slugと衝突しているとリダイレクトが壊れる。
+    rd_bad = []
+    for old_slug, dest_key in VENUE_SLUG_REDIRECTS.items():
+        if not os.path.isdir(rp('venue', old_slug)):
+            rd_bad.append(f'{old_slug}: 中継頁が生成されていない')
+            continue
+        if dest_key is None:
+            continue
+        dest = venue_slug(dest_key)
+        if dest == old_slug:
+            rd_bad.append(f'{old_slug}: 宛先が自分自身')
+        elif not os.path.isfile(rp('venue', dest, 'index.html')):
+            rd_bad.append(f'{old_slug} → /venue/{dest}/ が存在しない')
+    add('venue_redirect_broken', '会場ページの旧URL中継が壊れている', sorted(rd_bad),
+        'sitelib._VENUE_REDIRECTS_RAW の宛先会場名を実データに合わせる')
 
     # 14. workflowが参照するsecretの一覧(未設定だと黙って空になる)
     add('workflow_secrets', 'workflowが参照しているsecret',

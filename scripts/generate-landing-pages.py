@@ -19,7 +19,7 @@ from sitelib import (
     JST, DOMAIN, html_escape, pref_slug, region_slug, tag_slug, venue_slug,
     PREF_ROMAJI, REGION_ROMAJI, TAG_ROMAJI, VENUE_ROMAJI, VAGUE_VENUES, safe_slug,
     is_upcoming, is_ongoing, list_sort_key, split_ongoing,
-    is_vague_venue, venue_key, venue_display,
+    is_vague_venue, venue_key, venue_display, VENUE_SLUG_REDIRECTS,
     event_card_html, event_grid_html, section_heading_html, past_range_label,
     event_span, LONG_RUN_DAYS, CARDS_PER_PAGE, PAST_CARDS_INIT,
 )
@@ -112,6 +112,38 @@ def bc_html(items):
 # ここに独自実装(landing-card)を持っていたため、106ページで画像・ステータス
 # バッジ・行きたいが出ず、status-auto.js も効かなかった(2026-08-20に統合)。
 # .landing-card は /tag/ /pref/ /region/ の索引ページのリンクタイル専用に残す。
+
+def redirect_page(dest, label, root='../../'):
+    """旧URL用の中継頁。noindex + canonical で宛先に寄せる。
+
+    JSを切っている閲覧者とクローラのために本文にもリンクを置く。
+    """
+    esc = html_escape(label)
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,follow">
+  <meta http-equiv="refresh" content="0;url={dest}">
+  <link rel="canonical" href="{DOMAIN}{dest}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>移転しました | アガベイベントナビ</title>
+  <link rel="stylesheet" href="{root}style.css?v={sitelib.CSS_VERSION}">
+</head>
+<body>
+{HEADER}
+  <main>
+  <section class="landing-hero">
+    <h1>ページは移転しました</h1>
+    <p class="lead">このURLは <a href="{dest}">{esc}</a> に移動しました。
+    自動で転送されない場合はリンクから移動してください。</p>
+  </section>
+  </main>
+{FOOTER}
+</body>
+</html>
+"""
+
 
 def load_more_wrap(wrap_id, fn, show):
     style = '' if show else ' style="display:none"'
@@ -492,6 +524,22 @@ def main():
                    v, f'{v}で過去/今後に開催されるイベント一覧。', upcoming_then_past(evs), '../../',
                    intro_html=intro_html, rel_path=f'venue/{sl}/index.html'))
         counters['venue']+=1
+
+    # 旧URLからの中継頁。GitHub Pages はサーバ側リダイレクトを持てないので
+    # meta refresh + canonical + noindex の頁を置く。宛先は sitelib の
+    # VENUE_SLUG_REDIRECTS が単一情報源で、宛先スラッグが将来変わっても追随する。
+    # 現役のスラッグと同名になる旧slugは飛ばす(自分自身への転送を防ぐ)。
+    live_venue_slugs = {venue_slug(k) for k, evs in by_venue.items() if len(evs) >= 2}
+    for old_slug, dest_key in VENUE_SLUG_REDIRECTS.items():
+        if old_slug in live_venue_slugs:
+            continue
+        dest = f'/venue/{venue_slug(dest_key)}/' if dest_key else '/venue/'
+        label = venue_label.get(dest_key) or (dest_key or '会場別イベント一覧')
+        rel = f'venue/{old_slug}/index.html'
+        write_page(os.path.join(REPO_ROOT, 'venue', old_slug, 'index.html'),
+                   redirect_page(dest, label, root='../../'))
+        NOINDEX_PATHS.append(rel)
+        counters['venue_redirect'] += 1
 
     # カテゴリページ /category/*.html (旧・手作り静的ページを日次生成に置換。URL維持)
     CATEGORY_PAGES = [

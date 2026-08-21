@@ -412,3 +412,22 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 `audit.py` の `css_version_drift` / `js_version_drift` が乖離を検出する。
 検出できるのは「ページの参照が正規値と違う」ことだけで、
 「正規値を上げ忘れた」ことは検出できない。ここは人が守る。
+
+## 会場ページのURL (2026-08-21 決定)
+
+`safe_slug` は日本語を落とすので、`VENUE_ROMAJI` に無い会場は
+ハッシュURL `/venue/v-xxxxxxxx/` になる。
+
+**運用ルール:**
+- 掲載イベントが **3件以上** (`sitelib.VENUE_ROMAJI_MIN_EVENTS`) の会場だけ
+  `_VENUE_ROMAJI_RAW` にローマ字を足して読めるURLにする。
+- **2件の会場はハッシュURLのまま据え置く。** 2件は増減しやすく、
+  そのたびにURLが変わるのを避ける。ハッシュURLは許容する。
+- ローマ字を足すと既存URLが変わる。**必ず `_VENUE_REDIRECTS_RAW` に
+  旧slugを残す。** 値は宛先の会場名で、スラッグが将来また変わっても
+  `venue_slug()` で追随する。GitHub Pages はサーバ側リダイレクトを
+  持てないので、`generate-landing-pages.py` が meta refresh + canonical +
+  noindex の中継頁を出す。
+- 候補は `audit.py` の `venue_slug_romaji_candidates` が毎ビルド出す。
+  `venue_romaji_unused` は表記変更で当たらなくなった項目、
+  `venue_redirect_broken` は宛先が消えた中継頁を拾う。

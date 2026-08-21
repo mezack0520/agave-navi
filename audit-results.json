@@ -489,6 +489,27 @@
       "note": "sitelib.section_heading_html を使う。トップは sync-index-cards.py が同期",
       "severity": "urgent"
     },
+    "venue_slug_romaji_candidates": {
+      "title": "掲載3件以上でURLがハッシュのままの会場",
+      "count": 0,
+      "items": [],
+      "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
+      "severity": "urgent"
+    },
+    "venue_romaji_unused": {
+      "title": "VENUE_ROMAJIにあるが会場ページが立たないキー",
+      "count": 0,
+      "items": [],
+      "note": "会場名の表記が変わって当たらなくなった項目。消すか合わせる",
+      "severity": "info"
+    },
+    "venue_redirect_broken": {
+      "title": "会場ページの旧URL中継が壊れている",
+      "count": 0,
+      "items": [],
+      "note": "sitelib._VENUE_REDIRECTS_RAW の宛先会場名を実データに合わせる",
+      "severity": "urgent"
+    },
     "workflow_secrets": {
       "title": "workflowが参照しているsecret",
       "count": 8,

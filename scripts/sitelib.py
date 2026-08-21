@@ -89,9 +89,42 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
 # キーは venue_key() を通した形(NFKC・末尾の括弧書き除去・空白除去)で持つ。
 # 生の表記で持つと、同じ会場でも空白や住所の有無で引けなくなる。
 # 正規化は _VENUE_ROMAJI_RAW の定義直後にまとめてかける。
-_VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc','サンシャインシティ':'sunshine-city',
+# 'サンシャインシティ' は削除(2026-08-21)。実データの location は
+# 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
+# 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
+_VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
                 '久屋大通庭園フラリエ':'flarie','研究学園駅前公園（つくば市）':'kenkyu-gakuen-park',
-                '千住本氷川神社':'senju-hikawa-jinja'}
+                '千住本氷川神社':'senju-hikawa-jinja',
+                # 掲載3件以上の会場だけローマ字URLにする(2026-08-20)。
+                # ここに足すと既存URLが変わるので、2件の会場は据え置く。
+                # 2件は増減しやすく、増えるたびにURLが変わるのを避ける。
+                'オリナス錦糸町':'olinas-kinshicho',
+                'さくら植物園':'sakura-shokubutsuen',
+                'フィールド妙高':'field-myoko'}
+
+# ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
+VENUE_ROMAJI_MIN_EVENTS = 3
+
+# 会場ページの旧URL → 宛先の会場名。スラッグを変えたら必ずここに残す。
+# 値は会場名。宛先のスラッグが将来また変わっても venue_slug() で追随する。
+# None は宛先なし(曖昧な会場名で頁が立つべきでなかったもの)で /venue/ へ送る。
+# GitHub Pages はサーバ側リダイレクトを持てないので、
+# generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
+_VENUE_REDIRECTS_RAW = {
+    # 2026-08-20 ハッシュ → ローマ字
+    'v-5d0f0de9': 'オリナス錦糸町',
+    'v-98e5c913': 'さくら植物園',
+    'v-d7fa600c': 'フィールド妙高',
+    # 2026-08-20 スラッグ衝突の解消で消えた旧URL
+    'v-0992a535': 'フィールド妙高',
+    '4':          '町田パリオ 4階',
+    '1028-2':     'リサイクルショップ虹風船 館林店 駐車場',
+    # 曖昧な会場名で立っていた頁(宛先なし)
+    'v-4f33267b': None,
+    'v-5abbdd6f': None,
+    'v-707ba17c': None,
+    'v-af503a5c': None,
+}
 
 # --- 基本ユーティリティ ---
 
@@ -174,6 +207,8 @@ def venue_key(v):
 
 
 VENUE_ROMAJI = {venue_key(k): v for k, v in _VENUE_ROMAJI_RAW.items()}
+VENUE_SLUG_REDIRECTS = {k: (venue_key(v) if v else None)
+                        for k, v in _VENUE_REDIRECTS_RAW.items()}
 
 # --- 日付整形 ---
 
