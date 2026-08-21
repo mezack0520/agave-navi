@@ -1,5 +1,5 @@
 {
-  "total": 187,
+  "total": 192,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -453,9 +453,14 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 2,
+      "count": 7,
       "items": [
+        "botanical-garden-plaza-hana-2026-08(2026-08-22〜2026-08-23/2日)",
+        "botanical-night-market-kurashiki-2026-08(2026-08-22〜2026-08-22/1日)",
+        "botanical-yoichi-3rd-ebina-2026-08(2026-08-22〜2026-08-23/2日)",
+        "minori-kaboku-cactus-agave-2026-08(2026-08-22〜2026-08-23/2日)",
         "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
+        "plant-guild-botanicbomb-2026-08(2026-08-22〜2026-08-22/1日)",
         "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える",
