@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-22 06:24 JST",
+ "generated": "2026-08-23 06:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 160,
-  "awaitingNextEdition": 196,
+  "awaitingNextEdition": 198,
   "officialSiteCandidates": 53,
   "unresolvedIgHandles": 0
  },
@@ -229,15 +229,6 @@
    "url": "https://www.instagram.com/botanical_yoichi/",
    "eventCount": 1,
    "lastEventName": "ボタニカル夜市 3rd",
-   "lastEventDate": "2026-08-22",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "ario_kurashiki",
-   "url": "https://www.instagram.com/ario_kurashiki/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL NIGHT MARKET 2026",
    "lastEventDate": "2026-08-22",
    "hasUpcoming": true,
    "priority": 1
@@ -1447,6 +1438,15 @@
    "lastEventDate": "2026-08-16",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "ario_kurashiki",
+   "url": "https://www.instagram.com/ario_kurashiki/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL NIGHT MARKET 2026",
+   "lastEventDate": "2026-08-22",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -1801,6 +1801,26 @@
    "recurring": false
   },
   {
+   "series": "BOTANICAL NIGHT MARKET 2026",
+   "lastSlug": "botanical-night-market-kurashiki-2026-08",
+   "lastDate": "2026-08-22",
+   "lastEnd": "2026-08-22",
+   "monthsSinceLast": 0,
+   "igHandle": "ario_kurashiki",
+   "officialUrl": "https://kurashiki.ario.jp/event/2800008768",
+   "recurring": false
+  },
+  {
+   "series": "PLANT GUILD Powered by BOTANICBOMB",
+   "lastSlug": "plant-guild-botanicbomb-2026-08",
+   "lastDate": "2026-08-22",
+   "lastEnd": "2026-08-22",
+   "monthsSinceLast": 0,
+   "igHandle": "botanicbomb",
+   "officialUrl": "https://www.instagram.com/botanicbomb/",
+   "recurring": false
+  },
+  {
    "series": "番外編の番外編 夏祭り",
    "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
    "lastDate": "2026-07-04",
@@ -1828,26 +1848,6 @@
    "monthsSinceLast": 1,
    "igHandle": null,
    "officialUrl": "https://www.tv-osaka.co.jp/event/reptiles2026/project/",
-   "recurring": false
-  },
-  {
-   "series": "第3回 歴史ど真ん中～直球植物～古都の宴",
-   "lastSlug": "rekishi-domannaka-chokkyu-shokubutsu-2026-07",
-   "lastDate": "2026-07-04",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/dai3kai-rekishidomannaka-chokkyushokubutsu-kotonoutage",
-   "recurring": false
-  },
-  {
-   "series": "オホーツク多肉Festival 2026 vol.2",
-   "lastSlug": "okhotsk-taniku-festival-vol2-2026-07",
-   "lastDate": "2026-07-05",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": "hashisiruku",
-   "officialUrl": "https://www.instagram.com/hashisiruku/",
    "recurring": false
   }
  ],

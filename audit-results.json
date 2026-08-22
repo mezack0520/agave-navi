@@ -1,5 +1,5 @@
 {
-  "total": 192,
+  "total": 195,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -339,8 +339,10 @@
     },
     "blank_optional_fields": {
       "title": "任意フィールドが空(nullと空文字が混在)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "shokuchu-tokubetsu-tenji-flowercenter-2026-07: imageUrl = null"
+      ],
       "note": "値が無いならキーごと消す。残すなら null に統一する",
       "severity": "info"
     },
@@ -453,15 +455,17 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 7,
+      "count": 9,
       "items": [
         "botanical-garden-plaza-hana-2026-08(2026-08-22〜2026-08-23/2日)",
-        "botanical-night-market-kurashiki-2026-08(2026-08-22〜2026-08-22/1日)",
         "botanical-yoichi-3rd-ebina-2026-08(2026-08-22〜2026-08-23/2日)",
+        "green-summit-more-vol21-2026-08(2026-08-23〜2026-08-23/1日)",
+        "grow-jam-presents-01-soka-2026-08(2026-08-23〜2026-08-23/1日)",
         "minori-kaboku-cactus-agave-2026-08(2026-08-22〜2026-08-23/2日)",
         "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
-        "plant-guild-botanicbomb-2026-08(2026-08-22〜2026-08-22/1日)",
-        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
+        "myoko-taniku-market-bangaihen-2026-08(2026-08-23〜2026-08-23/1日)",
+        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)",
+        "taniku-natsu-hanbaikai-hojo-2026-08(2026-08-23〜2026-08-23/1日)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える",
       "severity": "info"
