@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-23 11:28 JST",
+ "generated": "2026-08-24 06:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 160,
-  "awaitingNextEdition": 198,
+  "awaitingNextEdition": 205,
   "officialSiteCandidates": 53,
   "unresolvedIgHandles": 0
  },
@@ -59,15 +59,6 @@
    "eventCount": 3,
    "lastEventName": "ピクニックガーデン vol.24",
    "lastEventDate": "2026-09-06",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "minori_kaboku_interpark",
-   "url": "https://www.instagram.com/minori_kaboku_interpark/",
-   "eventCount": 2,
-   "lastEventName": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
-   "lastEventDate": "2026-08-22",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -225,39 +216,12 @@
    "priority": 1
   },
   {
-   "handle": "botanical_yoichi",
-   "url": "https://www.instagram.com/botanical_yoichi/",
-   "eventCount": 1,
-   "lastEventName": "ボタニカル夜市 3rd",
+   "handle": "minori_kaboku_interpark",
+   "url": "https://www.instagram.com/minori_kaboku_interpark/",
+   "eventCount": 2,
+   "lastEventName": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
    "lastEventDate": "2026-08-22",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "gardenplazahana",
-   "url": "https://www.instagram.com/gardenplazahana/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL（ガーデンプラザ華 福島店）",
-   "lastEventDate": "2026-08-22",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "miyaki0415",
-   "url": "https://www.instagram.com/miyaki0415/",
-   "eventCount": 1,
-   "lastEventName": "GROW JAM PRESENTS 01",
-   "lastEventDate": "2026-08-23",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "nagomitaniku",
-   "url": "https://www.instagram.com/nagomitaniku/",
-   "eventCount": 1,
-   "lastEventName": "多肉植物 夏の販売会 in 道の駅ほうじょう",
-   "lastEventDate": "2026-08-23",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1
   },
   {
@@ -1440,11 +1404,47 @@
    "priority": 2
   },
   {
+   "handle": "botanical_yoichi",
+   "url": "https://www.instagram.com/botanical_yoichi/",
+   "eventCount": 1,
+   "lastEventName": "ボタニカル夜市 3rd",
+   "lastEventDate": "2026-08-22",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "ario_kurashiki",
    "url": "https://www.instagram.com/ario_kurashiki/",
    "eventCount": 1,
    "lastEventName": "BOTANICAL NIGHT MARKET 2026",
    "lastEventDate": "2026-08-22",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "gardenplazahana",
+   "url": "https://www.instagram.com/gardenplazahana/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL（ガーデンプラザ華 福島店）",
+   "lastEventDate": "2026-08-22",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "miyaki0415",
+   "url": "https://www.instagram.com/miyaki0415/",
+   "eventCount": 1,
+   "lastEventName": "GROW JAM PRESENTS 01",
+   "lastEventDate": "2026-08-23",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "nagomitaniku",
+   "url": "https://www.instagram.com/nagomitaniku/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物 夏の販売会 in 道の駅ほうじょう",
+   "lastEventDate": "2026-08-23",
    "hasUpcoming": false,
    "priority": 2
   }
@@ -1821,33 +1821,33 @@
    "recurring": false
   },
   {
-   "series": "番外編の番外編 夏祭り",
-   "lastSlug": "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
-   "lastDate": "2026-07-04",
-   "lastEnd": "2026-07-04",
-   "monthsSinceLast": 1,
-   "igHandle": "midorino_marche",
-   "officialUrl": "https://www.instagram.com/midorino_marche/",
+   "series": "ボタニカル夜市 3rd",
+   "lastSlug": "botanical-yoichi-3rd-ebina-2026-08",
+   "lastDate": "2026-08-22",
+   "lastEnd": "2026-08-23",
+   "monthsSinceLast": 0,
+   "igHandle": "botanical_yoichi",
+   "officialUrl": "https://www.instagram.com/botanical_yoichi/",
    "recurring": false
   },
   {
-   "series": "サボテン多肉植物フェア 夏 (札幌)",
-   "lastSlug": "natsu-cactus-succulent-fair-sapporo-2026",
-   "lastDate": "2026-07-03",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": "sapporo.cactus.club",
-   "officialUrl": "https://www.instagram.com/sapporo.cactus.club/",
+   "series": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
+   "lastSlug": "minori-kaboku-cactus-agave-2026-08",
+   "lastDate": "2026-08-22",
+   "lastEnd": "2026-08-23",
+   "monthsSinceLast": 0,
+   "igHandle": "minori_kaboku_interpark",
+   "officialUrl": "https://www.instagram.com/minori_kaboku_interpark/",
    "recurring": false
   },
   {
-   "series": "変態植物倶楽部FES Vol.0",
-   "lastSlug": "hentai-shokubutsu-fes-vol0-atc-2026-07",
-   "lastDate": "2026-07-04",
-   "lastEnd": "2026-07-05",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://www.tv-osaka.co.jp/event/reptiles2026/project/",
+   "series": "BOTANICAL（ガーデンプラザ華 福島店）",
+   "lastSlug": "botanical-garden-plaza-hana-2026-08",
+   "lastDate": "2026-08-22",
+   "lastEnd": "2026-08-23",
+   "monthsSinceLast": 0,
+   "igHandle": "gardenplazahana",
+   "officialUrl": "https://www.instagram.com/gardenplazahana/",
    "recurring": false
   }
  ],

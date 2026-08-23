@@ -1,5 +1,5 @@
 {
-  "total": 195,
+  "total": 183,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -193,7 +193,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
-      "count": 80,
+      "count": 73,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -204,12 +204,10 @@
         "botanical-botanical-okinawa-2026-11",
         "botanical-botanical-osaka-2026-10",
         "botanical-festa-hawo-kumagaya-2026-09",
-        "botanical-garden-plaza-hana-2026-08",
         "botanical-life-arita-2026-09",
         "botanical-marche-niigata-2026-10",
         "botanical-marche-toyama-2026-10",
         "botanical-x-vol1-2026",
-        "botanical-yoichi-3rd-ebina-2026-08",
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chinki-shokubutsu-ichiba-vol9-2026",
@@ -225,16 +223,18 @@
         "gen-x-bocchi-botanical-market-2026-10",
         "gifu-midori-marche-2nd-2026-09",
         "green-base-market-vol1-nishikata-2026-10",
-        "green-summit-more-vol21-2026-08",
         "green-summit-vol22-yamagata-2026",
-        "grow-jam-presents-01-soka-2026-08",
         "ibatama-vol9-2026-10",
         "isij-big-bazaar-2026-09-27",
         "isij-big-bazaar-2026-11-22",
         "isij-big-bazaar-2027-01-10",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
-        "isij-big-bazaar-2027-07-11"
+        "isij-big-bazaar-2027-07-11",
+        "isij-big-bazaar-2027-09-26",
+        "isij-big-bazaar-2027-11-28",
+        "kisarazu-engei-ichi-2026-08",
+        "kourep-2026-autumn"
       ],
       "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
       "severity": "info"
@@ -455,17 +455,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 9,
+      "count": 3,
       "items": [
-        "botanical-garden-plaza-hana-2026-08(2026-08-22〜2026-08-23/2日)",
-        "botanical-yoichi-3rd-ebina-2026-08(2026-08-22〜2026-08-23/2日)",
-        "green-summit-more-vol21-2026-08(2026-08-23〜2026-08-23/1日)",
-        "grow-jam-presents-01-soka-2026-08(2026-08-23〜2026-08-23/1日)",
-        "minori-kaboku-cactus-agave-2026-08(2026-08-22〜2026-08-23/2日)",
+        "bota-no-natsuyasumi-2026(2026-08-24〜2026-08-24/1日)",
         "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
-        "myoko-taniku-market-bangaihen-2026-08(2026-08-23〜2026-08-23/1日)",
-        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)",
-        "taniku-natsu-hanbaikai-hojo-2026-08(2026-08-23〜2026-08-23/1日)"
+        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える",
       "severity": "info"
@@ -572,8 +566,10 @@
     },
     "inquiry_check_stale": {
       "title": "掲載申請フォームの確認が止まっている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "lastChecked=2026-08-20 / 4日前。掲載申請フォームの確認が止まっている"
+      ],
       "note": "event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない",
       "severity": "urgent"
     },
