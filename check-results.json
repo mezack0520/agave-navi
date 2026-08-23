@@ -1,11 +1,25 @@
 {
-  "check_date": "2026-08-22",
+  "check_date": "2026-08-23",
   "total_events": 315,
   "dead_links": [
     {
-      "slug": "taniku-midori-marche-niitsu-2026-09",
-      "name": "多肉＆みどりのマルシェ 2026秋",
-      "sourceUrl": "https://nf-land.com/event/9050/",
+      "slug": "sakuya-green-jam-5-2026",
+      "name": "Sakuya Green Jam 5",
+      "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "kourep-2026-autumn",
+      "name": "コウレプ2026秋",
+      "sourceUrl": "https://kourep.jp",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "souransai-koshigaya-2026-10",
+      "name": "草乱祭with月刊チューズデイ - World Plant Market -",
+      "sourceUrl": "https://soransai.com/",
       "statusCode": -1,
       "alive": false
     }
@@ -83,6 +97,18 @@
     }
   ],
   "past_events": [
+    {
+      "slug": "botanical-night-market-kurashiki-2026-08",
+      "name": "BOTANICAL NIGHT MARKET 2026",
+      "date": "2026-08-22",
+      "dateEnd": "2026-08-22"
+    },
+    {
+      "slug": "plant-guild-botanicbomb-2026-08",
+      "name": "PLANT GUILD Powered by BOTANICBOMB",
+      "date": "2026-08-22",
+      "dateEnd": "2026-08-22"
+    },
     {
       "slug": "kumagaya-taniku-fes-2026",
       "name": "第2回 熊谷多肉フェス",
@@ -1406,51 +1432,6 @@
   ],
   "upcoming_events": [
     {
-      "slug": "botanical-yoichi-3rd-ebina-2026-08",
-      "name": "ボタニカル夜市 3rd",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-23",
-      "location": "海老名駅前広場周辺",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "botanical-night-market-kurashiki-2026-08",
-      "name": "BOTANICAL NIGHT MARKET 2026",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-22",
-      "location": "アリオ倉敷 屋外イベント広場・倉敷みらい公園",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/ario_kurashiki/"
-    },
-    {
-      "slug": "plant-guild-botanicbomb-2026-08",
-      "name": "PLANT GUILD Powered by BOTANICBOMB",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-22",
-      "location": "17 BOTANICAL BASE（京都府福知山市岩井51）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/botanicbomb/"
-    },
-    {
-      "slug": "minori-kaboku-cactus-agave-2026-08",
-      "name": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-23",
-      "location": "みのり花木センター インターパーク店（栃木県宇都宮市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/minori_kaboku_interpark/"
-    },
-    {
-      "slug": "botanical-garden-plaza-hana-2026-08",
-      "name": "BOTANICAL（ガーデンプラザ華 福島店）",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-23",
-      "location": "ガーデンプラザ華 福島店 B棟（福島県福島市成川字久保前11-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/gardenplazahana/"
-    },
-    {
       "slug": "green-summit-more-vol21-2026-08",
       "name": "Green Summit MORE vol.21",
       "date": "2026-08-23",
@@ -2272,24 +2253,6 @@
       "sourceUrl": ""
     },
     {
-      "slug": "botanical-night-market-kurashiki-2026-08",
-      "name": "BOTANICAL NIGHT MARKET 2026",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-22",
-      "location": "アリオ倉敷 屋外イベント広場・倉敷みらい公園",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/ario_kurashiki/"
-    },
-    {
-      "slug": "plant-guild-botanicbomb-2026-08",
-      "name": "PLANT GUILD Powered by BOTANICBOMB",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-22",
-      "location": "17 BOTANICAL BASE（京都府福知山市岩井51）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/botanicbomb/"
-    },
-    {
       "slug": "minori-kaboku-cactus-agave-2026-08",
       "name": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
       "date": "2026-08-22",
@@ -2306,6 +2269,42 @@
       "location": "ガーデンプラザ華 福島店 B棟（福島県福島市成川字久保前11-1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/gardenplazahana/"
+    },
+    {
+      "slug": "green-summit-more-vol21-2026-08",
+      "name": "Green Summit MORE vol.21",
+      "date": "2026-08-23",
+      "dateEnd": "2026-08-23",
+      "location": "せんだい農業園芸センター みどりの杜",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DaVTB98STz7/"
+    },
+    {
+      "slug": "grow-jam-presents-01-soka-2026-08",
+      "name": "GROW JAM PRESENTS 01",
+      "date": "2026-08-23",
+      "dateEnd": "2026-08-23",
+      "location": "TITANOTA BASE（埼玉県草加市西町1270-3）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/miyaki0415/"
+    },
+    {
+      "slug": "myoko-taniku-market-bangaihen-2026-08",
+      "name": "妙高多肉市場【番外編】",
+      "date": "2026-08-23",
+      "dateEnd": "2026-08-23",
+      "location": "フィールド妙高（道の駅あらい東側）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/_myoko_plants_market_/"
+    },
+    {
+      "slug": "taniku-natsu-hanbaikai-hojo-2026-08",
+      "name": "多肉植物 夏の販売会 in 道の駅ほうじょう",
+      "date": "2026-08-23",
+      "dateEnd": "2026-08-23",
+      "location": "道の駅ほうじょう 中庭テラス（鳥取県東伯郡北栄町国坂）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/nagomitaniku/"
     }
   ],
   "url_results": [
@@ -2320,15 +2319,15 @@
       "slug": "sakuya-green-jam-5-2026",
       "name": "Sakuya Green Jam 5",
       "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "kourep-2026-autumn",
       "name": "コウレプ2026秋",
       "sourceUrl": "https://kourep.jp",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "midori-to-taniku-marche-nihonosato-2026-09",
@@ -2348,15 +2347,15 @@
       "slug": "taniku-midori-marche-niitsu-2026-09",
       "name": "多肉＆みどりのマルシェ 2026秋",
       "sourceUrl": "https://nf-land.com/event/9050/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "souransai-koshigaya-2026-10",
       "name": "草乱祭with月刊チューズデイ - World Plant Market -",
       "sourceUrl": "https://soransai.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "taniku-midori-marche-nabana-2026-10",
