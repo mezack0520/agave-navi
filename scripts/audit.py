@@ -23,7 +23,8 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      event_phase, is_long_run, event_days, LONG_RUN_DAYS,
                      is_vague_venue, venue_key, venue_slug, venue_display,
                      VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
-                     tag_slug, region_slug, pref_slug)
+                     tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
+                     is_recent_past, event_span, PAST_KEEP_MAX)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -204,7 +205,7 @@ def main():
         d = e.get('description') or ''
         has_src = bool((e.get('url') or '').strip()) or bool((e.get('sourceUrl') or '').strip())
         subs = (bool((e.get('time') or '').strip()) or bool((e.get('imageUrl') or '').strip())
-                or len(d) >= 50)
+                or len(d) >= DESC_MIN_CHARS)
         return not (has_src and subs)
 
     # 薄い判定を「直すべきもの」と「アーカイブとして許容するもの」に分ける。
@@ -223,7 +224,7 @@ def main():
     # 終了30日超は noindex で検索に出ないので、説明文を伸ばしても読む人がいない。
     # 混ぜて info にしていたため「34件の負債」に見えていたが、
     # 2026-08-24時点で34件すべてが終了30日超だった。減らす対象は開催予定だけ。
-    add('thin_fixable', '薄い判定で開催予定(出典あり・説明文を50字以上にすれば解消)',
+    add('thin_fixable', f'薄い判定で開催予定(出典あり・説明文を{DESC_MIN_CHARS}字以上にすれば解消)',
         sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
                for e in thin_all if has_src(e) and is_future(e)),
         '一次情報から出店数・扱う植物のジャンル・企画を足す。'
@@ -242,10 +243,12 @@ def main():
         '一次情報を見つけるか、見つからなければ掲載基準により削除')
 
     # 8. 説明文が短い開催予定
-    add('short_descriptions', '開催予定で説明文50字未満(モバイルのSERPスニペットが埋まらない)',
+    add('short_descriptions',
+        f'開催予定で説明文{DESC_MIN_CHARS}字未満(モバイルのSERPスニペットが埋まらない)',
         sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
                for e in events
-               if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 50), severity='info')
+               if e.get('status') == 'upcoming'
+               and len((e.get('description') or '').strip()) < DESC_MIN_CHARS), severity='info')
 
     # 8b. サムネイルの無い開催予定
     # トップと一覧のカードが「NO IMAGE」になる。weekly-enrichment の
@@ -1381,6 +1384,164 @@ def main():
     add('dead_internal_link', 'サイト内リンクの参照先が存在しない',
         sorted(f'{k} ← {len(v)}頁 (例 {sorted(v)[0]})' for k, v in dead_links.items()),
         '生成物の消し忘れか、リンク側がスラッグの変更に追随していない')
+
+    # --- 出典ドメインの禁止規則 -----------------------------------------------
+    # listing-policy.json の blockedUrlDomains は「url / sourceUrl に使ってはならない
+    # ドメイン」を定めているが、2026-08-24 時点でこの規則を読むコードが1本も無かった
+    # (grep で blockedUrlDomains の参照は listing-policy.json 自身だけ)。
+    # つまり守っているのは人の記憶だけで、crawl / enrich が拾ったアグリゲータのURLが
+    # 出典として入っても誰も気づかない。アグリゲータは中止・休会・延期を反映しないため、
+    # 出典にすると「裏取り済み」の見た目で誤情報が残る(2026-08-12 ISIJ東京例会 休会の例)。
+    # 参照(探索の入口として読む)は禁止ではない。url / sourceUrl に入ることだけを見る。
+    _policy = load_json('listing-policy.json', {})
+    _blocked = [d.lower() for d in
+                ((_policy.get('blockedUrlDomains') or {}).get('domains') or [])]
+    blocked_src = []
+    for e in events:
+        for k in ('url', 'sourceUrl'):
+            u = (e.get(k) or '').strip()
+            m = re.match(r'https?://([^/]+)', u, re.I)
+            if not m:
+                continue
+            host = m.group(1).lower().split(':')[0]
+            if host.startswith('www.'):
+                host = host[4:]
+            for b in _blocked:
+                if host == b or host.endswith('.' + b):
+                    blocked_src.append(f"{e.get('slug')}: {k} = {b}")
+    add('blocked_source_domain', '出典が掲載基準で禁止されたドメイン(アグリゲータ)',
+        sorted(set(blocked_src)),
+        '主催者の一次情報に差し替える。見つからないなら出典ごと外して薄頁に落とす。'
+        'ドメインの一覧は listing-policy.json の blockedUrlDomains が単一情報源')
+
+    # --- index.html のカード集合 ----------------------------------------------
+    # sync-index-cards.py が置換に失敗するとカードが増殖する。2026-08-24 に
+    # THUMB_RE が画像なし枠の <span> に一致しなくなり 101→908 枚まで増え、
+    # トップで同じカードが縦に何度も出た。件数の正常値をプレイブックに書いて
+    # 人が数える運用にしていたが、それは毎回は守られない。
+    # 想定集合は events.json から算出できる(未終了の全件 + 直近の終了分)。
+    # 生成側と同じ sitelib の規則で数えるので、規則を変えた日も追随する。
+    try:
+        with open(rp('index.html'), encoding='utf-8') as f:
+            _idx = f.read()
+    except OSError:
+        _idx = ''
+    card_drift = []
+    if _idx:
+        card_slugs = re.findall(
+            r'<div class="event-card[^"]*"[^>]*data-slug="([^"]+)"', _idx)
+        _by_slug = {e.get('slug'): e for e in events if e.get('slug')}
+        _not_past, _past = [], []
+        for e in events:
+            _end = event_span(e)[1] or e.get('date') or ''
+            (_not_past if _end >= today_s else _past).append(
+                (_end, e.get('slug')))
+        _recent = [sl for _, sl in sorted(_past, reverse=True)
+                   if is_recent_past(_by_slug.get(sl) or {}, today_s)][:PAST_KEEP_MAX]
+        want_cards = {sl for _, sl in _not_past} | set(_recent)
+        dup_cards = sorted({sl for sl in card_slugs if card_slugs.count(sl) > 1})
+        card_drift += [f'カードが重複: {sl}({card_slugs.count(sl)}枚)' for sl in dup_cards]
+        card_drift += [f'カードが無い: {sl}' for sl in sorted(want_cards - set(card_slugs))]
+        card_drift += [f'余分なカード: {sl}' for sl in sorted(set(card_slugs) - want_cards)]
+    add('index_card_drift', 'index.htmlのカードがevents.jsonの想定集合と不一致',
+        card_drift,
+        'sync-index-cards.py を再実行する。重複が出ているときは THUMB_RE が'
+        'thumb の中身に一致しなくなっている(置換されず挿入だけが起きる)')
+
+    # --- 説明文の下限字数の写し ------------------------------------------------
+    # 下限は sitelib.DESC_MIN_CHARS が単一情報源。数字を直接書くと、
+    # 揃えた日から少しずつずれる。実際 2026-08-24 まで thin=50 / check_events=70 /
+    # enrich=120 と3つに割れており、「短い回を優先処理しておきながら too short で捨てる」
+    # 取りこぼしを9週間続けていた。listing-policy.json の閾値も同じ値を指すこと。
+    _dm = str(DESC_MIN_CHARS)
+    drift_dm = []
+    _thr = ((_policy.get('shortDescriptions') or {}).get('threshold'))
+    if _thr is not None and str(_thr) != _dm:
+        drift_dm.append(f'listing-policy.json: shortDescriptions.threshold = {_thr}'
+                        f'(sitelib は {_dm})')
+    # 比較の左辺の書き方(len(x) < 50 / _dlen < 50 / x >= 50)は書き手によって変わるので、
+    # 左辺の形ではなく「この数字と比較していること」だけを見る。
+    # 2026-08-24 時点で sitelib 以外にこの数字との比較は1件も無いので、
+    # ここに出るものは全部が写しか、無関係な定数の衝突のどちらか。
+    # 無関係な用途でこの数字を使いたくなったら、その定数に名前を付けて sitelib へ置く。
+    _DESC_LEN = re.compile(r'(?:[<>]=?\s*' + _dm + r'\b|\b' + _dm + r'\s*[<>]=?)')
+    for path in sorted(glob.glob(rp('scripts', '*.py'))) + [rp('build-detail-pages.py')]:
+        fn = os.path.basename(path)
+        if fn == 'sitelib.py':
+            continue
+        try:
+            with open(path, encoding='utf-8') as f:
+                src = f.read()
+        except OSError:
+            continue
+        for line in src.splitlines():
+            code = line.split('#')[0]
+            if not code.strip() or not _DESC_LEN.search(code):
+                continue
+            drift_dm.append(f'{fn}: {_dm} との比較をリテラルで書いている → '
+                            f'{code.strip()[:70]}')
+    add('desc_min_chars_drift', '説明文の下限字数を sitelib 以外が持っている',
+        sorted(set(drift_dm)),
+        'sitelib.DESC_MIN_CHARS を import する。'
+        'listing-policy.json の shortDescriptions.threshold も同じ値にする')
+
+    # --- 生成したのに辿れない頁 ------------------------------------------------
+    # 「生成された」と「読者に届く」は別。タグ別・地域別フィード23本が
+    # サイト内のどこからも参照されずsitemapにも無かった(2026-08-20に解消)。
+    # 同じことは頁でも起きる。index対象なのに内部リンクが1本も無い頁は、
+    # 検索エンジンにも読者にも事実上存在しない。
+    # 404 と Search Console の所有確認ファイルは、リンクされないのが正しい。
+    _EXEMPT_ORPHAN = {'404.html'}
+    _link_re = re.compile(r'<a\b[^>]+href="([^"]+)"', re.I)
+    _pages, _noindex_pages, inbound = [], set(), defaultdict(int)
+
+    def _norm_target(src_rel, href):
+        if href.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:', '//')):
+            return None
+        if href.startswith('http'):
+            if not href.startswith('https://agave-navi.com/'):
+                return None
+            href = href[len('https://agave-navi.com/'):] or 'index.html'
+            href = '/' + href
+        if '${' in href or '{{' in href:
+            return None
+        t = href.split('#')[0].split('?')[0]
+        if not t:
+            return None
+        base = (t.lstrip('/') if t.startswith('/')
+                else os.path.normpath(os.path.join(os.path.dirname(src_rel), t)))
+        base = base.replace(os.sep, '/')
+        if base.endswith('/'):
+            base += 'index.html'
+        elif os.path.isdir(rp(base)):
+            base += '/index.html'
+        return base
+
+    for path in glob.glob(rp('**', '*.html'), recursive=True):
+        rel = os.path.relpath(path, REPO).replace(os.sep, '/')
+        if rel.split('/')[0] in ('templates', 'staging', 'guides_content'):
+            continue
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                body = f.read()
+        except OSError:
+            continue
+        _pages.append(rel)
+        if re.search(r'<meta[^>]+name="robots"[^>]+noindex', body):
+            _noindex_pages.add(rel)
+        for href in set(_link_re.findall(body)):
+            t = _norm_target(rel, href)
+            if t and t.endswith('.html') and t != rel:
+                inbound[t] += 1
+    orphan_pages = sorted(
+        f for f in _pages
+        if f not in _noindex_pages and not inbound[f]
+        and f not in _EXEMPT_ORPHAN
+        and not re.fullmatch(r'google[0-9a-f]+\.html', f))
+    add('orphan_indexable_page', 'index対象なのにサイト内のどこからも辿れない頁',
+        orphan_pages,
+        '一覧・ナビ・関連リンクのどこかから貼る。'
+        '辿らせる先が無い頁なら noindex にして sitemap から外す')
 
     # --- 出力 ---
     total = sum(v['count'] for k, v in findings.items()

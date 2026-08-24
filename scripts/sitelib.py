@@ -248,6 +248,15 @@ def compact_date(e):
 LONG_RUN_DAYS = 4      # 会期がこの日数以上を「長期開催」とみなす
 FAR_FUTURE = '9999-12-31'
 
+# 説明文の下限字数。「短い説明文」の単一情報源。
+# 2026-08-24 に 70字→50字へ揃えたとき、同じ数字が
+#   audit.py の is_thin / short_descriptions、check_events.py、
+#   enrich_events.py の _quality_ok、listing-policy.json の shortDescriptions.threshold
+# の5か所にリテラルで散っていた。以前この不一致(thin=50 / check=70 / enrich=120)が
+# 「短い回を優先処理しているのに 'too short' で捨てる」という取りこぼしを生んでいる。
+# 数字ではなくこの定数を参照する。audit.py の desc_min_chars_drift が写しを検出する。
+DESC_MIN_CHARS = 50
+
 # 終了イベントを一覧に残す期間。「いつまで見せるか」の単一情報源。
 # 従来は status-auto.js の HIDE_AFTER_DAYS=14(display:none)と
 # sync-index-cards.py の KEEP_PAST=12(HTMLから物理削除)に別々の単位で置かれ、

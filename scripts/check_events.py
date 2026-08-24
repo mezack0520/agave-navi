@@ -14,7 +14,7 @@ from datetime import datetime, date
 
 EVENTS_JSON = os.path.join(os.path.dirname(__file__), '..', 'events.json')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sitelib import today_jst
+from sitelib import today_jst, DESC_MIN_CHARS
 
 def check_url(url, timeout=15):
     """URLの死活チェック。ステータスコードを返す。
@@ -181,11 +181,11 @@ def main():
                 _issues.append('URLが植物と無関係の有名イベントドメイン')
             if _issues:
                 results['implausible'].append({'slug': slug, 'name': name, 'issues': _issues})
-            # meta description(=description流用)が全角70字未満だとSERPスニペット枠を使い切れない
+            # meta description(=description流用)が下限字数未満だとSERPスニペット枠を使い切れない
             _dlen = len((_desc or '').strip())
-            # 閾値は audit.py の short_descriptions と同じ50字に統一(2026-08-24)。
+            # 閾値は sitelib.DESC_MIN_CHARS が単一情報源(2026-08-24に統一)。
             # thin_fixable が50字なのに、こちらが70字で別基準を持っていた
-            if _dlen < 50:
+            if _dlen < DESC_MIN_CHARS:
                 results['short_descriptions'].append({'slug': slug, 'name': name, 'length': _dlen})
 
         # 今後のイベント
@@ -231,7 +231,7 @@ def main():
     print(f"過去のイベント: {len(results['past_events'])}")
     print(f"詳細未定(TBD): {len(results['tbd_events'])}")
     print(f"内容妥当性フラグ: {len(results['implausible'])}")
-    print(f"説明文50字未満(開催予定): {len(results['short_descriptions'])}")
+    print(f"説明文{DESC_MIN_CHARS}字未満(開催予定): {len(results['short_descriptions'])}")
     print(f"IGハンドル未解決(ウォッチ対象外): {len(results['unresolved_ig'])}")
     # 件数はURL単位で数える。同じ出典を共有する回が並ぶため
     # イベント単位で数えると実体1件が7件に見える(2026-08-24 isij.net)

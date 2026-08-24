@@ -22,6 +22,7 @@ from sitelib import (
     html_escape, compact_date as make_compact_date, normalize_series_name,
     is_vague_venue as _is_vague, WEEKDAYS_JA, slug_hash as _slug_hash,
     date_to_japanese, is_upcoming, list_sort_key, split_ongoing,
+    DESC_MIN_CHARS,
 )
 
 # ---------------------------------------------------------------------------
@@ -253,10 +254,13 @@ NOINDEX_EVENT_SLUGS = []  # フルビルド時に収集し sitemap 用 manifest 
 
 def _is_thin_event(ev):
     """有用性の低い(薄い)イベント判定: 出典(url/sourceUrl)無し、または出典があっても
-    実質情報(time / imageUrl / 説明50字以上)が無いものは noindex 対象(AdSense低品質対策)。"""
+    実質情報(time / imageUrl / 説明が sitelib.DESC_MIN_CHARS 字以上)が無いものは
+    noindex 対象(AdSense低品質対策)。閾値は audit.py の is_thin と同じ定数を見る。"""
     desc = ev.get('description') or ''
     has_src = bool((ev.get('url') or '').strip()) or bool((ev.get('sourceUrl') or '').strip())
-    has_substance = bool((ev.get('time') or '').strip()) or bool((ev.get('imageUrl') or '').strip()) or len(desc) >= 50
+    has_substance = (bool((ev.get('time') or '').strip())
+                     or bool((ev.get('imageUrl') or '').strip())
+                     or len(desc) >= DESC_MIN_CHARS)
     return not (has_src and has_substance)
 
 

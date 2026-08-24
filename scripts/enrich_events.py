@@ -30,6 +30,7 @@ from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import is_generic_image_url as _sitelib_is_generic
+from sitelib import DESC_MIN_CHARS
 
 REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 EVENTS_PATH = os.path.join(REPO_ROOT, 'events.json')
@@ -835,12 +836,12 @@ def main():
             cur_desc = (ev.get('description') or '').strip()
 
             def _quality_ok(cand, ev_name, ev_venue):
-                # 下限は監査の thin_fixable と同じ50字。ここを120字にしていたため、
+                # 下限は sitelib.DESC_MIN_CHARS。ここを120字にしていたため、
                 # 現状より明確に長い候補まで 'too short' で捨てていた
                 # (2026-08-20: narabikakufes 60→112字、greensnap横浜 43→69字)。
                 # 短すぎる断片を弾くのが目的で、長さの優劣は下の long_enough が見る。
-                if not cand or len(cand) < 50:
-                    return False, 'too short (<50字)'
+                if not cand or len(cand) < DESC_MIN_CHARS:
+                    return False, f'too short (<{DESC_MIN_CHARS}字)'
                 # 改行を含む候補は「段落を切り出せていない」= ページ全文の貼り付け。
                 # long_description は空行(\n{2,})で段落を割るため、単一改行だけで
                 # 組まれた1枚もののサイトではナビ・見出し・フッタごと1段落になる。

@@ -379,6 +379,36 @@
   (`Place.name: "岐阜県内"` が5件出ていた)。sitelib に寄せて解消。
   規則を足す先は常に sitelib。検出側に書いて終わりにしない
 
+- **listing-policy.json に書いた規則は、読むコードを書くまで規則ではない。**
+  `blockedUrlDomains`(url/sourceUrl に使ってはならないアグリゲータ7ドメイン)は
+  2026-08-24 まで参照している行が repo に1本も無かった。守っていたのは人の記憶だけで、
+  crawl / enrich がアグリゲータのURLを出典に入れても誰も気づかない状態だった。
+  アグリゲータは中止・休会・延期を反映しないので、出典にすると
+  「裏取り済み」の見た目で誤情報が残る。検査は `blocked_source_domain`。
+  **policy に項目を足したら、同じコミットでそれを読む側を足す。**
+- **「人が数える運用」にした不変量は、検査に落とすまで守られない。**
+  index.html のカード枚数の正常値(101枚)はこのプレイブックに書いてあったが、
+  2026-08-24 の増殖事故はそれでは止まらなかった。想定集合は events.json から
+  算出できる(未終了の全件 + `is_recent_past` の直近分、上限 `PAST_KEEP_MAX`)ので、
+  件数のハードコードではなく生成側と同じ sitelib の規則で数える。
+  検査は `index_card_drift`(重複・欠落・余分を別々に出す)。
+  **プレイブックに「必ず数える」と書きたくなったら、それは検査にする合図。**
+- **説明文の下限字数は `sitelib.DESC_MIN_CHARS`(50)。数字を直接書かない。**
+  2026-08-24 に閾値を50へ揃えた時点でも、同じ数字は audit.py / check_events.py /
+  enrich_events.py / build-detail-pages.py / listing-policy.json の5か所に
+  リテラルで散っていた。以前この不一致(thin=50 / check=70 / enrich=120)が
+  「短い回を優先度1位に並べておきながら too short で捨てる」取りこぼしを9週間続けた。
+  検査は `desc_min_chars_drift`。**sitelib 以外でこの数字と比較したら鳴る。**
+  無関係な用途でこの数字を使いたくなったら、その定数に名前を付けて sitelib に置く
+- **`build-detail-pages.py` は scripts/ の外にあるので、grep の対象から落ちやすい。**
+  上の5か所目はこれだった。`scripts/*.py` だけを回す検査は、
+  必ず `build-detail-pages.py` を足してから件数を見る
+- **index対象なのに内部リンクが1本も無い頁は、事実上存在しない。**
+  フィード23本で起きたことは頁でも起きる。検査は `orphan_indexable_page`。
+  例外は 404.html と Search Console の所有確認ファイルだけ。
+  ここに出た頁は、一覧・ナビ・関連リンクのどこかから貼るか、
+  noindex にして sitemap から外すかの二択
+
 - 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
 
 ## 4. 自己改善のやり方

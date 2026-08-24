@@ -576,6 +576,34 @@
       "items": [],
       "note": "生成物の消し忘れか、リンク側がスラッグの変更に追随していない",
       "severity": "urgent"
+    },
+    "blocked_source_domain": {
+      "title": "出典が掲載基準で禁止されたドメイン(アグリゲータ)",
+      "count": 0,
+      "items": [],
+      "note": "主催者の一次情報に差し替える。見つからないなら出典ごと外して薄頁に落とす。ドメインの一覧は listing-policy.json の blockedUrlDomains が単一情報源",
+      "severity": "urgent"
+    },
+    "index_card_drift": {
+      "title": "index.htmlのカードがevents.jsonの想定集合と不一致",
+      "count": 0,
+      "items": [],
+      "note": "sync-index-cards.py を再実行する。重複が出ているときは THUMB_RE がthumb の中身に一致しなくなっている(置換されず挿入だけが起きる)",
+      "severity": "urgent"
+    },
+    "desc_min_chars_drift": {
+      "title": "説明文の下限字数を sitelib 以外が持っている",
+      "count": 0,
+      "items": [],
+      "note": "sitelib.DESC_MIN_CHARS を import する。listing-policy.json の shortDescriptions.threshold も同じ値にする",
+      "severity": "urgent"
+    },
+    "orphan_indexable_page": {
+      "title": "index対象なのにサイト内のどこからも辿れない頁",
+      "count": 0,
+      "items": [],
+      "note": "一覧・ナビ・関連リンクのどこかから貼る。辿らせる先が無い頁なら noindex にして sitemap から外す",
+      "severity": "urgent"
     }
   }
 }
