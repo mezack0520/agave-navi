@@ -543,10 +543,10 @@
       "severity": "info"
     },
     "inquiry_check_stale": {
-      "title": "掲載申請フォームの確認が止まっている",
+      "title": "掲載申請フォームの処理が止まっている",
       "count": 0,
       "items": [],
-      "note": "event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない",
+      "note": "reviewedOn は event-listing-review が毎回書く（タスクが動いた証拠）。lastChecked はGASが書く（フォーム送信を受けた日）ので、古くても異常ではない。items が残り続けている場合は届いた問い合わせが未処理",
       "severity": "urgent"
     },
     "sitelib_rule_duplicated": {

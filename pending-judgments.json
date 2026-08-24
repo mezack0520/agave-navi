@@ -1,14 +1,5 @@
 {
- "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
- "items": [
-  {
-   "id": "event-listing-review:gas-not-installed",
-   "source": "event-listing-review",
-   "title": "掲載申請フォームのGAS連携が未設置（ポーリングのままで、無音停止の再発余地が残っている）",
-   "date": "2026-08-24",
-   "detail": "script.google.com/home/triggers を確認したところトリガーは0件で、scripts/google-apps-script.js の onFormSubmit は実フォームに設置されていない。つまり 2026-08-21〜24 の4日間無音停止と同じ経路（Chromeでのポーリング）が現役のまま。設置は目崎本人にしかできない: 手順4でGitHub PATをスクリプトプロパティへ貼る必要があり、認証情報の入力はタスク側では行えない。手順5のGoogle認可画面も本人操作が要る。",
-   "proposal": "scripts/google-apps-script.js 冒頭の設置手順（全6ステップ・5分）を実施する。完了後 testConnection を実行して 'OK' を確認し、このキュー項目を消し込む。設置すれば日次のChrome操作とlastCheckedのポーリングは不要になる。"
-  }
- ],
- "updated": "2026-08-24"
+  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
+  "items": [],
+  "updated": "2026-08-24"
 }

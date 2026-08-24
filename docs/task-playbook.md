@@ -75,38 +75,47 @@
   50字未満の回だけ、主催者の一次情報から**出店数・扱う植物のジャンル・企画**という
   スペック表に無い事実を足す。材料が無ければ短いままにしておくのが正しい
 
-- **掲載申請フォームの読み方（event-listing-review）。UIをクリックして回らない。**
-  回答シートは1回のfetchでCSV全体が取れる。Chromeで
-  `https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit`
-  を開き、同一オリジンで
-  `fetch('/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/gviz/tq?tqx=out:csv',{credentials:'include'})`
-  を叩く。グリッドを読み取ろうとすると操作回数が増え、許可待ちで止まる。
-  Chromeのログインは個人アカウント `yuji.mezaki@gmail.com`（Driveコネクタは仕事用なので見えない）
+- **掲載申請フォームはもうポーリングしない。GAS連携が2026-08-24に稼働した。**
+  フォーム送信の瞬間に GAS が `new-inquiries.json` へ追記し、`notify-inquiry.yml` が
+  発火してメールが飛ぶ。**回答シートを毎日開く必要はない。**
+  タスクがやることは `new-inquiries.json` の `items` を処理して、
+  済んだものを `inquiries-processed.json` に移し、`items` を空にして push するだけ。
+  Chromeを開く手順は残っているが**平常時は使わない**。
+  スクリプト実体は `scripts/google-apps-script.js`、Apps Scriptプロジェクトは
+  「agave-navi フォーム→GitHub連携」（回答スプレッドシートに紐づく）
+- **`reviewedOn` を毎回書く。これがタスクの生存確認になっている。**
+  `new-inquiries.json` の `reviewedOn` を実行日に更新して push する。
+  監査の `inquiry_check_stale` はこれを見ており、4日以上古いと urgent で鳴る。
+  `lastChecked` はGASが書くフィールドなので触らない（送信が無ければ古いまま。それは正常）。
+  処理し終えた `items` は必ず空にする。残り続けると「未処理の問い合わせ」として鳴る
 - **フォームが読めなかったときは黙って終わらない。**
   2026-08-21〜24、タスクは毎日起動していたのに Chrome の操作許可待ちで落ち、
   レポートもコミットも残らず、`lastChecked` が4日据え置かれるまで誰も気づかなかった。
   読めなかった回は必ず (1) レポートに「読めなかった」と書く
   (2) `pending-judgments.json` に積む — この2つだけは何があってもやる。
   **無音で終わるのが最悪。** 止まっていること自体が伝わらない
-- **GAS連携は未設置のまま。設置はタスクではできない（2026-08-24 確認）。**
-  `script.google.com/home/triggers` を開くと**トリガー0件**で、`onFormSubmit` は実フォームに
-  紐づいていない。つまり 08-21〜24 の無音停止を起こしたポーリング経路が現役のまま。
-  **タスク側で設置は完了できない。** 手順4がGitHub PATをスクリプトプロパティへ貼る作業で、
-  認証情報の入力はタスクの禁止事項。手順5のGoogle認可画面も本人操作が要る。
-  よって**次回以降のタスクは設置を試みない**。やることは
-  `pending-judgments.json` の `event-listing-review:gas-not-installed` を維持することだけ
-  （設置済みかの確認は `/home/triggers` に `onFormSubmit` が出るかを見る。
-  出ていればキューを消し込む）。
-- **gviz CSV方式は無人実行で通る（2026-08-24 実証）。**
-  スプレッドシートを開いて同一オリジンで `gviz/tq?tqx=out:csv` を叩く手順は、
-  許可待ちで止まらず1回で全行取れた。グリッドのUIを読む手順に戻さないこと。
+- **GAS連携は稼働中（2026-08-24 設置・疎通確認済み）。**
+  トリガー: スプレッドシートから / フォーム送信時 → `onFormSubmit`。
+  `testConnection` の実行ログで `OK items=0 lastChecked=2026-08-24` を確認した。
+  **止まっていないかの確認方法**: `new-inquiries.json` の `lastChecked` は
+  GASが書くので、フォーム送信が無ければ更新されない。
+  つまり `lastChecked` の古さは異常の証拠にならなくなった。
+  疑うときは Apps Script の「実行数」を見る。エラーが出ていれば
+  `ALERT_TO`（yuji.mezaki@gmail.com）にGASからメールが飛ぶ設計。
+  トリガーが消えていたら `script.google.com` の当該プロジェクト →
+  トリガー画面で `onFormSubmit` の有無を見る
+- **取りこぼしの回収は `backfillFromSheet`。**
+  トリガーが止まっていた期間があっても、Apps Scriptエディタでこの関数を1回実行すれば
+  シート全行から未処理のタイムスタンプだけを拾って `new-inquiries.json` に送る。
+  重複は `timestamp` で弾く
+- **非常用: gviz CSV方式（GASが壊れたときだけ使う）。**
+  スプレッドシートを開いて同一オリジンで
+  `fetch('/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/gviz/tq?tqx=out:csv',{credentials:'include'})`
+  を叩けば1回で全行取れる。グリッドのUIを読む手順には戻さないこと（許可待ちで止まる）。
+  Chromeのログインは個人アカウント `yuji.mezaki@gmail.com`（Driveコネクタは仕事用なので見えない）。
   この日の実測: データ行2 / `inquiries-processed.json` の processed 2 → 検算通過・新着ゼロ。
   フォームの機能確認も実施済み（`viewform` は回答受付中、フォームIDの参照は `contact.html` 1件のみ）。
   直近回答が 2026-07-02 で約8週間空いているが、これはフォーム側の故障ではない
-- **恒久対応は `scripts/google-apps-script.js` の設置。**
-  フォーム送信時に GAS が `new-inquiries.json` へ直接書き、`notify-inquiry.yml` が発火する。
-  日次のポーリングも Chrome も要らなくなる。設置手順はスクリプト冒頭のコメントにある。
-  未設置のあいだは上のCSV方式で読む
 
 - **品質の下限を緩めるときは、blocklistを同時に広げる。**
   説明文の下限を120字→50字に下げたら、会場名+イベント名+定型文だけの

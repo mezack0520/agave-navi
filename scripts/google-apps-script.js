@@ -118,6 +118,9 @@ function appendInquiry(item) {
     }
   }
   data.items.push(item);
+  // lastChecked = GASがフォーム送信を受けた日。
+  // reviewedOn は event-listing-review が書くフィールドなので触らない
+  // (JSON全体を読んで書き戻しているので勝手に保持される)。
   data.lastChecked = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
 
   putFile(data, cur.sha,

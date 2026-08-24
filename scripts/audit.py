@@ -1257,26 +1257,54 @@ def main():
     # 「確認する側が動いていない」。2026-08-14〜17 と 08-19 に実行が抜けたが、
     # repo には痕跡が残らず、次に動いた日まで誰も気づけなかった(2026-08-20に検査を追加)。
     # 4日目から鳴らす。1日の抜けで鳴らすと、実行時刻とCIの時差だけで誤検知する。
+    # 2026-08-24にGAS連携が稼働し、lastChecked はGASが「フォーム送信を受けた日」に
+    # 書き換えるフィールドになった。送信が無ければ更新されないので、
+    # lastChecked の古さは異常の証拠ではなくなった(そのまま監視すると必ず誤検知する)。
+    # 監視対象は event-listing-review が毎回書く reviewedOn に移す。
+    # こちらは「タスクが動いて処理まで到達したか」を表す。
     inq_stale = []
     _ni = load_json('new-inquiries.json', {})
-    _lc = str(_ni.get('lastChecked') or '').strip()
-    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _lc):
-        inq_stale.append(f'lastChecked が日付として読めない: {_lc!r}')
+    _rv = str(_ni.get('reviewedOn') or '').strip()
+    import datetime as _dtm
+    if not _rv:
+        inq_stale.append(
+            'reviewedOn が無い。event-listing-review が一度も書き込めていない')
+    elif not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _rv):
+        inq_stale.append(f'reviewedOn が日付として読めない: {_rv!r}')
     else:
-        import datetime as _dtm
         try:
             _gap = (_dtm.date.fromisoformat(today_jst())
-                    - _dtm.date.fromisoformat(_lc)).days
+                    - _dtm.date.fromisoformat(_rv)).days
         except ValueError:
             _gap = None
-            inq_stale.append(f'lastChecked が日付として読めない: {_lc!r}')
+            inq_stale.append(f'reviewedOn が日付として読めない: {_rv!r}')
         if _gap is not None and _gap > 3:
             inq_stale.append(
-                f'lastChecked={_lc} / {_gap}日前。掲載申請フォームの確認が止まっている')
-    add('inquiry_check_stale', '掲載申請フォームの確認が止まっている',
+                f'reviewedOn={_rv} / {_gap}日前。event-listing-review が動いていない')
+
+    # items が積まれたまま放置されていないか。GASが書き、タスクが処理して空にする。
+    # 4日以上残っているなら、届いた問い合わせが誰にも処理されていない。
+    _items = _ni.get('items') or []
+    if _items:
+        _oldest = None
+        for _it in _items:
+            _ts = str(_it.get('timestamp') or '')[:10].replace('/', '-')
+            if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _ts):
+                _oldest = _ts if _oldest is None else min(_oldest, _ts)
+        if _oldest:
+            try:
+                _ig = (_dtm.date.fromisoformat(today_jst())
+                       - _dtm.date.fromisoformat(_oldest)).days
+                if _ig > 3:
+                    inq_stale.append(
+                        f'未処理の問い合わせが {len(_items)}件、最古 {_oldest}（{_ig}日前）')
+            except ValueError:
+                pass
+    add('inquiry_check_stale', '掲載申請フォームの処理が止まっている',
         inq_stale,
-        'event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。'
-        '止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない')
+        'reviewedOn は event-listing-review が毎回書く（タスクが動いた証拠）。'
+        'lastChecked はGASが書く（フォーム送信を受けた日）ので、古くても異常ではない。'
+        'items が残り続けている場合は届いた問い合わせが未処理')
 
     # --- sitelib の規則を他スクリプトが写し取っていないか -------------------
     # 検出側と書き込み側に同じ規則を二重に書くと、片方だけ更新されて必ず食い違う。
