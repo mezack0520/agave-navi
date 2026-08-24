@@ -875,12 +875,27 @@ main {
 .event-no-image::before {
   display: none;
 }
-.event-no-image::after {
-  content: "NO IMAGE";
-  color: #555;
-  font-size: 0.65rem;
+/* 画像が無い枠。以前は英字のプレースホルダ文字を出していたが、訪問者には壊れて見えるだけで
+   情報が無い。imageUrl 無しの開催予定は常時60〜80件あり新規は必ず画像なしで入るので
+   件数はゼロにならない。枠のほうを情報として成立させる(2026-08-24)。
+   onerror で後から class が付く経路では中身が空になるため、
+   そのときはグラデーションだけを見せる(:empty)。 */
+.event-no-image {
+  flex-direction: column;
+  gap: 2px;
+  color: #6f6f6f;
+}
+.event-no-image .eni-pref {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8a8a8a;
+}
+.event-no-image .eni-date {
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 0.12em;
+  color: #6a6a6a;
 }
 
 .event-card.event-ended .event-thumb {

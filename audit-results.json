@@ -1,5 +1,5 @@
 {
-  "total": 183,
+  "total": 158,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -65,20 +65,24 @@
       "severity": "urgent"
     },
     "thin_fixable": {
-      "title": "薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)",
-      "count": 38,
+      "title": "薄い判定で開催予定(出典あり・説明文を50字以上にすれば解消)",
+      "count": 0,
+      "items": [],
+      "note": "一次情報から出店数・扱う植物のジャンル・企画を足す。日時と会場はスペック表に出ているので説明文に繰り返さない",
+      "severity": "info"
+    },
+    "thin_past_with_source": {
+      "title": "薄い判定で終了済み(出典あり)",
+      "count": 34,
       "items": [
         "agavista-vol2-matsuyama-2026-06(22字)",
-        "awajishima-taniku-smile-marche-3rd-2026(42字・開催予定)",
         "bop-with-needles-nagoya-2026-06(44字)",
         "border-break-6th-2026(47字)",
         "botanical-botanical-osaka(46字)",
         "botanoichi-senju-2026-05(33字)",
         "coco-et-nico-bond-project-2026(41字)",
-        "enjoy-place-outside-2nd-2026-11(40字・開催予定)",
         "eternal-plants-built-to-survive-gunma-2026(49字)",
         "fujisan-festa(34字)",
-        "gifu-midori-marche-2nd-2026-09(30字・開催予定)",
         "green-breeze-fes-vol3(46字)",
         "haru-cactus-succulent-yuriga-hara-2026(48字)",
         "haze-various-genres-marche-2026(38字)",
@@ -89,7 +93,6 @@
         "kominka-saboten-openhouse-2026-06(46字)",
         "kumagaya-taniku-fes-2026(22字)",
         "kyoshokuranbu-tokyo-2026-05(45字)",
-        "kyoto-midorino-marche-bangaihen-vol10-2026(44字・開催予定)",
         "kyoto-midorino-marche-bangaihen-vol9(42字)",
         "mini-soransai-june-2026(37字)",
         "miyashita-park-popup-2026(25字)",
@@ -107,8 +110,8 @@
         "wakayama-green-marche(41字)",
         "yamaguchi-plants-market-2026(38字)"
       ],
-      "note": "開催予定のものから優先する",
-      "severity": "info"
+      "note": "終了30日超は noindex。伸ばしても検索にも訪問者にも届かないので対応不要",
+      "severity": "metric"
     },
     "thin_archived": {
       "title": "薄い判定のうちアーカイブ許容(終了済み・出典なし)",
@@ -155,8 +158,8 @@
         "sora-to-taiyo-marche-2026",
         "sumi-no-engei-2026-05-02"
       ],
-      "note": "検索に出ず広告も出ない履歴データ。対処不要",
-      "severity": "info"
+      "note": "終了済みで出典も無い回。一次情報が後から出ることはほぼ無く、noindex なので検索にも出ない。ゼロにはならない",
+      "severity": "metric"
     },
     "thin_needs_source": {
       "title": "薄い判定で開催予定なのに出典がない(要対処)",
@@ -166,33 +169,14 @@
       "severity": "urgent"
     },
     "short_descriptions": {
-      "title": "開催予定で説明文70字未満(SERPスニペット枠を使い切れない)",
-      "count": 18,
-      "items": [
-        "awajishima-taniku-smile-marche-3rd-2026(42字)",
-        "collect-plants-2026-09(59字)",
-        "enjoy-place-5th-2026-10(51字)",
-        "enjoy-place-outside-2nd-2026-11(40字)",
-        "gifu-midori-marche-2nd-2026-09(30字)",
-        "greensnap-marche-yokohama-2026-autumn(43字)",
-        "hanatomofesta-2026(53字)",
-        "ibatama-vol9-2026-10(54字)",
-        "isij-big-bazaar-2026-09-27(59字)",
-        "isij-big-bazaar-2026-11-22(62字)",
-        "kyoto-midori-marche-ibaraki-2026-09(48字)",
-        "kyoto-midorino-marche-bangaihen-vol10-2026(44字)",
-        "narabikakufes-vol2-2026(60字)",
-        "on-the-plants-vol9-fukuoka-2026-10(67字)",
-        "plant-to-new-home-2026-09(63字)",
-        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(65字)",
-        "taniku-midori-marche-flarie-2026-10(67字)",
-        "tochigi-tanippe-2026-10(56字)"
-      ],
+      "title": "開催予定で説明文50字未満(モバイルのSERPスニペットが埋まらない)",
+      "count": 0,
+      "items": [],
       "note": "",
       "severity": "info"
     },
     "upcoming_no_image": {
-      "title": "開催予定でimageUrlが無い(カードがNO IMAGE表示になる)",
+      "title": "開催予定でimageUrlが無い",
       "count": 73,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
@@ -236,8 +220,8 @@
         "kisarazu-engei-ichi-2026-08",
         "kourep-2026-autumn"
       ],
-      "note": "weekly-enrichment の backfill-images.py が拾えていない回。減っていなければ og:image を出さない出典が続いている",
-      "severity": "info"
+      "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
+      "severity": "metric"
     },
     "status_date_mismatch": {
       "title": "statusと日付の矛盾",
@@ -339,10 +323,8 @@
     },
     "blank_optional_fields": {
       "title": "任意フィールドが空(nullと空文字が混在)",
-      "count": 1,
-      "items": [
-        "taniku-no-matsuri-manyo-2026-11: imageUrl = null"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値が無いならキーごと消す。残すなら null に統一する",
       "severity": "info"
     },
@@ -362,10 +344,8 @@
     },
     "duplicate_image_url": {
       "title": "同じimageUrlを複数イベントが使用",
-      "count": 1,
-      "items": [
-        "https://static.wixstatic.com/media/4c353f_931106b8e6a74 → okibota-december-2026-sunshine, tokai-okibota-2026"
-      ],
+      "count": 0,
+      "items": [],
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
       "severity": "info"
     },
@@ -426,7 +406,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260820a)と違うページ",
+      "title": "CSS版数が正規値(20260824a)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -461,8 +441,8 @@
         "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
         "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
       ],
-      "note": "status は upcoming のままでよい。past にすると一覧から消える",
-      "severity": "info"
+      "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
+      "severity": "metric"
     },
     "ongoing_marked_past": {
       "title": "開催中なのに status が upcoming でないイベント",
@@ -515,19 +495,17 @@
     },
     "workflow_secrets": {
       "title": "workflowが参照しているsecret",
-      "count": 8,
+      "count": 6,
       "items": [
         "BRAVE_API_KEY",
         "GITHUB_TOKEN",
         "GMAIL_APP_PASSWORD",
         "GMAIL_USER",
         "GOOGLE_API_KEY",
-        "GOOGLE_CSE_ID",
-        "RAKUTEN_ACCESS_KEY",
-        "RAKUTEN_APP_ID"
+        "GOOGLE_CSE_ID"
       ],
-      "note": "未設定でも多くのstepは失敗せず黙って空値で動く",
-      "severity": "info"
+      "note": "未設定でも多くのstepは失敗せず黙って空値で動く。これは使用中のsecretの棚卸しで、減らす対象ではない",
+      "severity": "metric"
     },
     "region_mismatch": {
       "title": "regionが地域定義と不一致 / スラッグ未定義",
@@ -566,10 +544,8 @@
     },
     "inquiry_check_stale": {
       "title": "掲載申請フォームの確認が止まっている",
-      "count": 1,
-      "items": [
-        "lastChecked=2026-08-20 / 4日前。掲載申請フォームの確認が止まっている"
-      ],
+      "count": 0,
+      "items": [],
       "note": "event-listing-review が毎日 new-inquiries.json の lastChecked を更新する。止まっていれば、タスクが起動していないか、起動しても書き戻しまで到達していない",
       "severity": "urgent"
     },

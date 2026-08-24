@@ -213,15 +213,30 @@ jobs:
               lines.append("🔧 整合監査：異常なし")
           _info = [(k, v) for k, v in _af.items()
                    if v.get('severity') == 'info' and v.get('count')]
+          # metric は構造上ゼロにならない観測値。減らす対象と同じ枠に置くと
+          # 一覧が常に埋まり、読み手が一覧ごと無視するようになる(2026-08-24に分離)
+          _metric = [(k, v) for k, v in _af.items()
+                     if v.get('severity') == 'metric' and v.get('count')]
           if _info:
               lines.append("")
               lines.append("━━━ 📊 積み残し（急がないが減らしたい） ━━━")
               for _k, _v in _info:
                   lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
-          lines.append(f"リンク切れ: {len(data['dead_links'])}")
+          # 件数はURL単位。同じ出典を共有する回が並ぶため、イベント単位だと実体1件が7件に見える
+          _dead_u = sorted({d['sourceUrl'] for d in data['dead_links']})
+          _unreach_u = sorted({d['sourceUrl'] for d in (data.get('unreachable') or [])})
+          if _dead_u:
+              lines.append(f"・リンク切れ(サーバが4xx/5xxを返した): {len(_dead_u)}URL")
+          if _unreach_u:
+              lines.append(f"・出典に接続できない(相手が生きている可能性が高い。要確認): {len(_unreach_u)}URL")
+          if _metric:
+              lines.append("")
+              lines.append("━━━ 参考値（構造上ゼロにはならない。対応不要） ━━━")
+              for _k, _v in _metric:
+                  lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
           lines.append("")
           lines.append("━━━ ✅ 毎日の自動チェック ━━━")
-          lines.append(f"要判断キュー: {len(judgments)}件 / 内容異常の検知: {len(data.get('implausible') or [])}件 / リンク切れ: {len(data['dead_links'])}件 / 詳細未定: {len(data['tbd_events'])}件")
+          lines.append(f"要判断キュー: {len(judgments)}件 / 内容異常の検知: {len(data.get('implausible') or [])}件 / リンク切れ: {len(_dead_u)}URL / 詳細未定: {len(data['tbd_events'])}件")
           lines.append("※いずれも0件なら対応不要です。1件以上ある項目だけ、下に内訳が出ます。")
           lines.append("")
           if new_added['count'] > 0:
@@ -244,12 +259,25 @@ jobs:
                   lines.append("")
           if data['dead_links']:
               lines.append("━━━ ⚠️ リンク切れ検出 ━━━")
+              _g = {}
               for dl in data['dead_links']:
-                  lines.append(f"・{dl['name']}")
-                  lines.append(f"  URL: {dl['sourceUrl']}")
-                  lines.append(f"  ステータス: HTTP {dl['statusCode']}")
-                  lines.append(f"  詳細: https://agave-navi.com/events/{dl['slug']}.html")
+                  _g.setdefault((dl['sourceUrl'], dl['statusCode']), []).append(dl)
+              for (_u, _c), _evs in sorted(_g.items()):
+                  lines.append(f"・HTTP {_c} {_u}")
+                  lines.append(f"  該当 {len(_evs)}件: " + '、'.join(e['name'] for e in _evs[:4])
+                               + ('…' if len(_evs) > 4 else ''))
+                  lines.append(f"  例: https://agave-navi.com/events/{_evs[0]['slug']}.html")
                   lines.append("")
+          if data.get('unreachable'):
+              lines.append("━━━ 出典に接続できなかった（判定不能） ━━━")
+              lines.append("HTTPの応答自体が取れていないので、リンク切れとは限りません。")
+              lines.append("ブラウザで開いて生きていれば、こちらの取得手段の問題です。")
+              _g2 = {}
+              for dl in data['unreachable']:
+                  _g2.setdefault(dl['sourceUrl'], []).append(dl)
+              for _u, _evs in sorted(_g2.items()):
+                  lines.append(f"・{_u} ← {len(_evs)}件")
+              lines.append("")
           if data.get('implausible'):
               lines.append("━━━ 🧪 内容の異常を自動検知（要確認） ━━━")
               for ip in data['implausible']:

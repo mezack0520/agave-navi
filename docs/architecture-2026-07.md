@@ -276,6 +276,10 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   クライアント公開が前提の設計。affiliate.js から都度取得し localStorage に24時間キャッシュ、
   レート制限に配慮して直列取得する。先にテキストで描画し取得後に差し替えるため表示は遅れない。
   rakuten-products.yml の定期実行は停止(手動/dispatchのみ残置)、product-cache.json は削除
+  → 2026-08-24に rakuten-products.yml と fetch-rakuten-products.py を削除。
+    scheduleもpushトリガーも無く、dispatchは送れないため実行経路が存在せず、
+    出力(product-cache.json)を読むコードも無かった。楽天は affiliate.js が
+    ブラウザから直接APIを叩く方式に移っている
 - 2026-07-30: 楽天アフィリエイトIDをコンソール表示値(0e86e911…)に差し替え。設定値は
   5251fbf3… だった。楽天アフィリエイトIDはアカウント単位で1つ発行され(サイト登録一覧に
   サイト別IDの表示はない)、正値は楽天ウェブサービスのアプリ管理画面が示すもの。

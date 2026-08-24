@@ -1,218 +1,227 @@
 /**
  * ================================================================
- * アガベイベントナビ - Google Form → GitHub 自動連携スクリプト
+ * アガベイベントナビ - Google Form → GitHub 自動連携
  * ================================================================
  *
- * 【設置手順】
+ * これを入れると、フォーム送信の瞬間に new-inquiries.json へ追記され、
+ * notify-inquiry.yml が発火してメールが飛ぶ。
+ * 日次タスクがブラウザで回答シートを開く必要がなくなる。
  *
- * 1. Google Formに以下のフィールドを追加（質問タイトルを正確に合わせてください）:
- *    - お問い合わせ種別（既存 - ラジオボタン）
- *    - イベント名（テキスト - 短文）
- *    - 開催日（日付）
- *    - 終了日（日付 - 複数日開催の場合）
- *    - 会場名（テキスト - 短文）
- *    - 住所（テキスト - 短文）
- *    - 都道府県（プルダウン）
- *    - 入場料（テキスト - 短文）
- *    - カテゴリ（チェックボックス: 即売会, マルシェ, 展示会, 大型イベント, ワークショップ）
- *    - イベント概要（テキスト - 長文）
- *    - 公式サイトURL（テキスト - 短文）
- *    - 主催者名（テキスト - 短文）
- *    - メールアドレス（テキスト - 短文）
+ * 【なぜ必要か】
+ * event-listing-review タスクは毎日 Chrome で回答シートを開いて新着を探していた。
+ * ブラウザ操作の許可待ちで無人実行が止まり、2026-08-21〜24 は
+ * lastChecked が更新されないまま気づかれなかった。
+ * ポーリングをやめてイベント駆動にすれば、この止まり方が構造的に無くなる。
  *
- * 2. Google Formのスプレッドシートを開く:
- *    「回答」タブ → スプレッドシートアイコン → 新しいスプレッドシートを作成
+ * 【設置手順】（一度だけ。5分）
  *
- * 3. スプレッドシートで Apps Script を開く:
- *    「拡張機能」→「Apps Script」
+ * 1. 回答スプレッドシートを開く
+ *    https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit
  *
- * 4. このファイルの内容をすべてコピーして貼り付ける
+ * 2. 「拡張機能」→「Apps Script」
  *
- * 5. GITHUB_TOKEN を設定:
- *    - Apps Script エディタで「プロジェクトの設定」（歯車アイコン）
- *    - 「スクリプトプロパティ」→「スクリプトプロパティを追加」
- *    - プロパティ名: GITHUB_TOKEN
- *    - 値: GitHub Personal Access Token (repo権限付き)
+ * 3. 既定の Code.gs の中身を消して、このファイルの内容を全部貼る
  *
- * 6. トリガーを設定:
- *    - Apps Script エディタで「トリガー」（時計アイコン）
- *    - 「トリガーを追加」
- *    - 関数: onFormSubmit
- *    - イベントソース: スプレッドシートから
- *    - イベントの種類: フォーム送信時
+ * 4. 歯車アイコン「プロジェクトの設定」→「スクリプトプロパティを追加」
+ *      プロパティ: GITHUB_TOKEN
+ *      値:        mzplants\agave-navi\github.pat の中身
+ *                 (contents 権限だけで足りる。Actions権限は不要)
+ *
+ * 5. 時計アイコン「トリガー」→「トリガーを追加」
+ *      関数:            onFormSubmit
+ *      イベントのソース: スプレッドシートから
+ *      イベントの種類:   フォーム送信時
+ *    → 初回だけGoogleの認可画面が出るので許可する
+ *
+ * 6. 動作確認: エディタで関数 `testConnection` を選んで実行。
+ *    実行ログに "OK" と現在の items 件数が出れば疎通している。
  *
  * ================================================================
  */
 
-// === 設定 ===
 var CONFIG = {
-  GITHUB_OWNER: 'mezack0520',
-  GITHUB_REPO: 'agave-navi',
-  // GITHUB_TOKENはスクリプトプロパティから取得
+  OWNER: 'mezack0520',
+  REPO: 'agave-navi',
+  PATH: 'new-inquiries.json',
+  BRANCH: 'main',
+  // 通知先。GitHub Actions 側でもメールは出るが、
+  // GitHubへの書き込みが失敗したときはこちらだけが頼りになる
+  ALERT_TO: 'yuji.mezaki@gmail.com'
 };
 
-/**
- * フォーム送信時に自動実行される関数
- */
+/** フォーム送信時に自動実行される */
 function onFormSubmit(e) {
   try {
-    var response = e.namedValues;
+    var v = e && e.namedValues ? e.namedValues : {};
 
-    // お問い合わせ種別が「イベント掲載リクエスト」の場合のみ処理
-    var type = getFieldValue(response, 'お問い合わせ種別');
-    if (type !== 'イベント掲載リクエスト') {
-      Logger.log('Not an event listing request, skipping. Type: ' + type);
-      return;
-    }
-
-    // イベントデータを構築
-    var eventData = {
-      name: getFieldValue(response, 'イベント名'),
-      date: formatDate(getFieldValue(response, '開催日')),
-      end_date: formatDate(getFieldValue(response, '終了日')) || formatDate(getFieldValue(response, '開催日')),
-      venue: getFieldValue(response, '会場名'),
-      address: getFieldValue(response, '住所'),
-      prefecture: getFieldValue(response, '都道府県'),
-      admission: getFieldValue(response, '入場料') || '詳細は公式サイトをご確認ください',
-      category: getFieldValue(response, 'カテゴリ'),
-      tags: getFieldValue(response, 'カテゴリ'),
-      description: getFieldValue(response, 'イベント概要'),
-      official_url: getFieldValue(response, '公式サイトURL'),
-      organizer: getFieldValue(response, '主催者名')
+    var item = {
+      timestamp: pick(v, 'タイムスタンプ') || formatNow(),
+      type: pick(v, 'お問い合わせ種別') || '(種別なし)',
+      eventName: pick(v, 'イベント名'),
+      name: pick(v, 'お名前'),
+      email: pick(v, 'メールアドレス'),
+      body: buildBody(v)
     };
 
-    // バリデーション
-    if (!eventData.name || !eventData.date || !eventData.venue) {
-      Logger.log('Missing required fields. Data: ' + JSON.stringify(eventData));
-      sendNotification('掲載リクエスト受信（不完全）',
-        'イベント名: ' + eventData.name + '\n必須項目が不足しています。手動で確認してください。');
+    appendInquiry(item);
+    Logger.log('appended: ' + JSON.stringify(item));
+
+  } catch (err) {
+    // ここで落とすと回答が消えるので、必ず自分に知らせる
+    Logger.log('ERROR: ' + err);
+    notify('[アガベイベントナビ] フォーム連携に失敗',
+      'GitHubへの書き込みに失敗しました。回答はスプレッドシートに残っています。\n\n' +
+      'エラー: ' + err + '\n\n' +
+      '回答シート: https://docs.google.com/spreadsheets/d/' +
+      '1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit');
+  }
+}
+
+/**
+ * 既知の項目以外も本文に残す。
+ * フォームに質問を足したときスクリプトを直さなくても取りこぼさないため。
+ */
+function buildBody(v) {
+  var KNOWN = ['タイムスタンプ', 'お問い合わせ種別', 'イベント名', 'お名前', 'メールアドレス'];
+  var lines = [];
+  var main = pick(v, 'イベント概要');
+  if (main) lines.push(main);
+  for (var k in v) {
+    if (KNOWN.indexOf(k) >= 0 || k === 'イベント概要') continue;
+    var val = pick(v, k);
+    if (val) lines.push(k + ': ' + val);
+  }
+  return lines.join('\n');
+}
+
+function pick(v, key) {
+  var a = v[key];
+  if (!a) return '';
+  return String(Array.isArray(a) ? a.join(', ') : a).trim();
+}
+
+function formatNow() {
+  return Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss');
+}
+
+/** new-inquiries.json を読んで item を足して書き戻す */
+function appendInquiry(item) {
+  var cur = getFile();
+  var data = cur.json;
+
+  data.items = data.items || [];
+  // 同じタイムスタンプが既にあれば二重に積まない（トリガー再実行への備え）
+  for (var i = 0; i < data.items.length; i++) {
+    if (data.items[i].timestamp === item.timestamp) {
+      Logger.log('already present, skip');
       return;
     }
-
-    // GitHub Repository Dispatch を送信
-    var success = triggerGitHubAction(eventData);
-
-    if (success) {
-      Logger.log('Successfully triggered GitHub Action for: ' + eventData.name);
-      sendNotification('イベント自動掲載開始',
-        'イベント名: ' + eventData.name + '\n開催日: ' + eventData.date + '\nGitHub Actionsでページ生成中...');
-    } else {
-      Logger.log('Failed to trigger GitHub Action');
-      sendNotification('GitHub連携エラー',
-        'イベント名: ' + eventData.name + '\nGitHub Actionsのトリガーに失敗しました。手動で掲載してください。');
-    }
-
-  } catch (error) {
-    Logger.log('Error in onFormSubmit: ' + error.toString());
-    sendNotification('フォーム処理エラー', error.toString());
   }
+  data.items.push(item);
+  data.lastChecked = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+
+  putFile(data, cur.sha,
+    'feat(inquiry): フォーム受信 ' + item.type + ' [gas]');
 }
 
-/**
- * GitHub Repository Dispatch イベントを送信
- */
-function triggerGitHubAction(eventData) {
+function apiUrl() {
+  return 'https://api.github.com/repos/' + CONFIG.OWNER + '/' + CONFIG.REPO +
+         '/contents/' + CONFIG.PATH;
+}
+
+function authHeaders() {
   var token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
-  if (!token) {
-    Logger.log('GITHUB_TOKEN not set in script properties');
-    return false;
-  }
-
-  var url = 'https://api.github.com/repos/' + CONFIG.GITHUB_OWNER + '/' + CONFIG.GITHUB_REPO + '/dispatches';
-
-  var payload = {
-    event_type: 'new-event',
-    client_payload: eventData
+  if (!token) throw new Error('スクリプトプロパティ GITHUB_TOKEN が未設定');
+  return {
+    'Authorization': 'token ' + token,
+    'Accept': 'application/vnd.github+json'
   };
+}
 
-  var options = {
-    method: 'post',
+function getFile() {
+  var res = UrlFetchApp.fetch(apiUrl() + '?ref=' + CONFIG.BRANCH, {
+    method: 'get', headers: authHeaders(), muteHttpExceptions: true
+  });
+  if (res.getResponseCode() !== 200) {
+    throw new Error('GET ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 200));
+  }
+  var meta = JSON.parse(res.getContentText());
+  var text = Utilities.newBlob(Utilities.base64Decode(meta.content)).getDataAsString('UTF-8');
+  return { sha: meta.sha, json: JSON.parse(text) };
+}
+
+function putFile(data, sha, message) {
+  var text = JSON.stringify(data, null, 2) + '\n';
+  var res = UrlFetchApp.fetch(apiUrl(), {
+    method: 'put',
+    headers: authHeaders(),
     contentType: 'application/json',
-    headers: {
-      'Authorization': 'token ' + token,
-      'Accept': 'application/vnd.github.v3+json'
-    },
-    payload: JSON.stringify(payload),
-    muteHttpExceptions: true
-  };
+    muteHttpExceptions: true,
+    payload: JSON.stringify({
+      message: message,
+      content: Utilities.base64Encode(text, Utilities.Charset.UTF_8),
+      sha: sha,
+      branch: CONFIG.BRANCH
+    })
+  });
+  var code = res.getResponseCode();
+  if (code !== 200 && code !== 201) {
+    throw new Error('PUT ' + code + ': ' + res.getContentText().slice(0, 200));
+  }
+}
 
-  var response = UrlFetchApp.fetch(url, options);
-  var code = response.getResponseCode();
+function notify(subject, body) {
+  try {
+    MailApp.sendEmail(CONFIG.ALERT_TO, subject, body);
+  } catch (e) {
+    Logger.log('notify failed: ' + e);
+  }
+}
 
-  Logger.log('GitHub API response code: ' + code);
-
-  // 204 = 成功（No Content）
-  return code === 204;
+/** 設置後の疎通確認用。何も書き換えない */
+function testConnection() {
+  var cur = getFile();
+  Logger.log('OK  items=' + (cur.json.items || []).length +
+             '  lastChecked=' + cur.json.lastChecked);
 }
 
 /**
- * フォームの回答から値を取得（キー名の揺れに対応）
+ * 取りこぼし回収用。トリガーが止まっていた期間の回答をまとめて送る。
+ * シートの全行を見て、未処理のタイムスタンプだけ items に積む。
  */
-function getFieldValue(namedValues, fieldName) {
-  // 完全一致
-  if (namedValues[fieldName]) {
-    return namedValues[fieldName].join(', ').trim();
-  }
-  // 部分一致
-  for (var key in namedValues) {
-    if (key.indexOf(fieldName) !== -1 || fieldName.indexOf(key) !== -1) {
-      return namedValues[key].join(', ').trim();
+function backfillFromSheet() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var values = sheet.getDataRange().getValues();
+  if (values.length < 2) { Logger.log('回答なし'); return; }
+
+  var header = values[0].map(function (h) { return String(h).trim(); });
+  var cur = getFile();
+  var seen = {};
+  (cur.json.items || []).forEach(function (it) { seen[it.timestamp] = true; });
+
+  var added = 0;
+  for (var r = 1; r < values.length; r++) {
+    var v = {};
+    for (var c = 0; c < header.length; c++) {
+      if (header[c]) v[header[c]] = values[r][c];
     }
-  }
-  return '';
-}
+    var ts = v['タイムスタンプ'];
+    ts = ts instanceof Date
+      ? Utilities.formatDate(ts, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss')
+      : String(ts).trim();
+    if (!ts || seen[ts]) continue;
 
-/**
- * 日付文字列をYYYY-MM-DD形式に変換
- */
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  try {
-    var d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    var year = d.getFullYear();
-    var month = ('0' + (d.getMonth() + 1)).slice(-2);
-    var day = ('0' + d.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
-  } catch (e) {
-    return dateStr;
-  }
-}
-
-/**
- * 管理者にメール通知を送信
- */
-function sendNotification(subject, body) {
-  try {
-    MailApp.sendEmail({
-      to: 'mezaki@sterfield.co.jp',
-      subject: '[アガベイベントナビ] ' + subject,
-      body: body + '\n\n---\nこのメールはアガベイベントナビの自動システムから送信されています。'
+    appendInquiry({
+      timestamp: ts,
+      type: pick(v, 'お問い合わせ種別') || '(種別なし)',
+      eventName: pick(v, 'イベント名'),
+      name: pick(v, 'お名前'),
+      email: pick(v, 'メールアドレス'),
+      body: buildBody(v)
     });
-  } catch (e) {
-    Logger.log('Failed to send notification: ' + e.toString());
+    seen[ts] = true;
+    added++;
+    cur = getFile();  // sha を取り直す
   }
-}
-
-/**
- * テスト用: 手動でイベントを追加（Apps Scriptエディタから実行可能）
- */
-function testAddEvent() {
-  var testData = {
-    name: 'テストイベント2026',
-    date: '2026-07-01',
-    end_date: '2026-07-02',
-    venue: 'テスト会場',
-    address: '東京都渋谷区神南1-1-1',
-    prefecture: '東京都',
-    admission: '入場無料',
-    category: '即売会',
-    tags: '即売会,マルシェ',
-    description: 'これはテスト用のイベントです。自動掲載のテストとして使用しています。',
-    official_url: 'https://example.com',
-    organizer: 'テスト主催者'
-  };
-
-  var success = triggerGitHubAction(testData);
-  Logger.log('Test result: ' + (success ? 'SUCCESS' : 'FAILED'));
+  Logger.log('backfill: ' + added + '件追加');
 }

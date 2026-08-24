@@ -14,7 +14,7 @@ from datetime import datetime, date, timezone, timedelta
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260820a'
+CSS_VERSION = '20260824a'
 JS_VERSION = '20260820b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -534,7 +534,7 @@ def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
                  f'onerror="this.parentElement.classList.add(\'event-no-image\');this.remove();">'
                  f'</div>')
     else:
-        thumb = '<div class="event-thumb event-no-image"></div>'
+        thumb = no_image_thumb(e)
 
     desc = '' if compact else (e.get('description') or '').strip()
     desc_html = f'<p class="event-description">{html_escape(desc)}</p>' if desc else ''
@@ -603,3 +603,27 @@ def past_range_label(evs):
     else:
         span = f'{int(a[:4])}年{int(a[5:7])}月〜{int(b[:4])}年{int(b[5:7])}月'
     return f'{span}・{len(evs)}件'
+
+
+def no_image_thumb(e):
+    """画像が無い回のサムネ枠。
+
+    以前は「NO IMAGE」と出していたが、これは訪問者には壊れて見えるだけで
+    何の情報も無い。imageUrl が無い開催予定は常時60〜80件あり、
+    新規イベントは必ず画像なしで入るので件数はゼロにならない。
+    件数を追うのをやめて、枠のほうを情報として成立させる。
+    県名と日付はカードのデータに既にあるので、それを大きく置く。
+    """
+    pref = (e.get('prefecture') or '').strip()
+    if not pref:
+        pref = (pref_to_region(e.get('prefecture') or '') or e.get('region') or '').strip()
+    d = (e.get('date') or '').strip()
+    label = ''
+    if len(d) >= 10:
+        label = f'{int(d[5:7])}.{int(d[8:10])}'
+    parts = []
+    if pref:
+        parts.append(f'<span class="eni-pref">{html_escape(pref)}</span>')
+    if label:
+        parts.append(f'<span class="eni-date">{label}</span>')
+    return f'<div class="event-thumb event-no-image">{"".join(parts)}</div>'

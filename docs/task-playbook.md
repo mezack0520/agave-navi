@@ -48,6 +48,44 @@
 
 ## 3. 既知のハマりどころ
 
+- **`severity` は3段階。`metric` を `info` に混ぜないこと。**
+  `urgent`=壊れている / `info`=直せる負債 / `metric`=構造上ゼロにならない観測値。
+  混ぜていたため健全性メールの「積み残し」が常に8項目埋まり、一覧ごと読み飛ばされていた。
+  `metric` に移したもの: `upcoming_no_image`（新規は必ず画像なしで入る）、
+  `thin_archived` と `thin_past_with_source`（終了30日超はnoindexで誰も読まない）、
+  `ongoing_events`（開催期間中は必ず出る）、`workflow_secrets`（使用中secretの棚卸し）。
+  **移すときは「ゼロにできないのはなぜか」を note に書く。**書けないなら info のまま
+- **リンク切れの statusCode `-1` は「リンク切れ」ではない。**
+  DNS・タイムアウト・TLSで判定できなかった状態で、相手が生きている可能性が高い。
+  件数は**URL単位で数える**。7イベントが同じ出典を共有していたため、実体1件が
+  「リンク切れ7件」に増幅されていた（2026-08-24 isij.net。現役サイトだった）
+
+- **`short_descriptions` の閾値は50字。70字から下げた（2026-08-24）。**
+  `thin_fixable` が50字なのに `short_descriptions` が70字で、同じ性質に基準が2つあった。
+  `audit.py` / `check_events.py` / `listing-policy.json` の3か所すべて50字。片方だけ直さない。
+  **数字を減らすために日時・会場・入場料を説明文へ書き足さないこと。**
+  それらはスペック表に既に出ており、繰り返しは水増し。300頁分の定型文は薄いページと見なされる。
+  50字未満の回だけ、主催者の一次情報から**出店数・扱う植物のジャンル・企画**という
+  スペック表に無い事実を足す。材料が無ければ短いままにしておくのが正しい
+
+- **掲載申請フォームの読み方（event-listing-review）。UIをクリックして回らない。**
+  回答シートは1回のfetchでCSV全体が取れる。Chromeで
+  `https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit`
+  を開き、同一オリジンで
+  `fetch('/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/gviz/tq?tqx=out:csv',{credentials:'include'})`
+  を叩く。グリッドを読み取ろうとすると操作回数が増え、許可待ちで止まる。
+  Chromeのログインは個人アカウント `yuji.mezaki@gmail.com`（Driveコネクタは仕事用なので見えない）
+- **フォームが読めなかったときは黙って終わらない。**
+  2026-08-21〜24、タスクは毎日起動していたのに Chrome の操作許可待ちで落ち、
+  レポートもコミットも残らず、`lastChecked` が4日据え置かれるまで誰も気づかなかった。
+  読めなかった回は必ず (1) レポートに「読めなかった」と書く
+  (2) `pending-judgments.json` に積む — この2つだけは何があってもやる。
+  **無音で終わるのが最悪。** 止まっていること自体が伝わらない
+- **恒久対応は `scripts/google-apps-script.js` の設置。**
+  フォーム送信時に GAS が `new-inquiries.json` へ直接書き、`notify-inquiry.yml` が発火する。
+  日次のポーリングも Chrome も要らなくなる。設置手順はスクリプト冒頭のコメントにある。
+  未設置のあいだは上のCSV方式で読む
+
 - **品質の下限を緩めるときは、blocklistを同時に広げる。**
   説明文の下限を120字→50字に下げたら、会場名+イベント名+定型文だけの
   アグリゲータ見出しが通り、43字の実のある説明文を69字の定型文で上書きした

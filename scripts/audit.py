@@ -59,6 +59,15 @@ def main():
     # health.yml 側に項目名をハードコードすると、検査を追加するたびに
     # ワークフローの編集が必要になり改善が止まるため移した(2026-08-10)。
     def add(key, title, items, note='', severity='urgent'):
+        """検査結果を1件登録する。
+
+        severity の使い分け:
+          urgent … 壊れている。直すまで毎日報告する
+          info   … 直せる負債。減らすべきで、ゼロにできる
+          metric … 観測値。構造上ゼロにならないので「減らす対象」に混ぜない
+                   (新規イベントは必ず画像なしで入る、終了済みの出典なしは改善しない等)
+        metric を info に混ぜると一覧が常に埋まり、読み手が一覧全体を無視するようになる。
+        """
         findings[key] = {'title': title, 'count': len(items),
                          'items': items[:40], 'note': note,
                          'severity': severity}
@@ -210,33 +219,46 @@ def main():
         return (e.get('dateEnd') or e.get('date') or '') >= today_s
 
     thin_all = [e for e in events if is_thin(e)]
-    add('thin_fixable', '薄い判定のうち直せるもの(出典あり・説明文を50字以上にすれば解消)',
-        sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字"
-               f"{'・開催予定' if is_future(e) else ''})"
-               for e in thin_all if has_src(e)),
-        '開催予定のものから優先する', severity='info')
+    # 出典ありの薄い回を、開催予定と終了済みで分ける。
+    # 終了30日超は noindex で検索に出ないので、説明文を伸ばしても読む人がいない。
+    # 混ぜて info にしていたため「34件の負債」に見えていたが、
+    # 2026-08-24時点で34件すべてが終了30日超だった。減らす対象は開催予定だけ。
+    add('thin_fixable', '薄い判定で開催予定(出典あり・説明文を50字以上にすれば解消)',
+        sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
+               for e in thin_all if has_src(e) and is_future(e)),
+        '一次情報から出店数・扱う植物のジャンル・企画を足す。'
+        '日時と会場はスペック表に出ているので説明文に繰り返さない', severity='info')
+    add('thin_past_with_source', '薄い判定で終了済み(出典あり)',
+        sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
+               for e in thin_all if has_src(e) and not is_future(e)),
+        '終了30日超は noindex。伸ばしても検索にも訪問者にも届かないので対応不要',
+        severity='metric')
     add('thin_archived', '薄い判定のうちアーカイブ許容(終了済み・出典なし)',
         sorted(e['slug'] for e in thin_all if not has_src(e) and not is_future(e)),
-        '検索に出ず広告も出ない履歴データ。対処不要', severity='info')
+        '終了済みで出典も無い回。一次情報が後から出ることはほぼ無く、'
+        'noindex なので検索にも出ない。ゼロにはならない', severity='metric')
     add('thin_needs_source', '薄い判定で開催予定なのに出典がない(要対処)',
         sorted(e['slug'] for e in thin_all if not has_src(e) and is_future(e)),
         '一次情報を見つけるか、見つからなければ掲載基準により削除')
 
     # 8. 説明文が短い開催予定
-    add('short_descriptions', '開催予定で説明文70字未満(SERPスニペット枠を使い切れない)',
+    add('short_descriptions', '開催予定で説明文50字未満(モバイルのSERPスニペットが埋まらない)',
         sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
                for e in events
-               if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 70), severity='info')
+               if e.get('status') == 'upcoming' and len((e.get('description') or '').strip()) < 50), severity='info')
 
     # 8b. サムネイルの無い開催予定
     # トップと一覧のカードが「NO IMAGE」になる。weekly-enrichment の
     # backfill-images.py が効いているかは、この件数が週ごとに減るかでしか分からない。
     # 常時0にはならないので info。(2026-08-18 追加。追加時 61/77件)
-    add('upcoming_no_image', '開催予定でimageUrlが無い(カードがNO IMAGE表示になる)',
+    add('upcoming_no_image', '開催予定でimageUrlが無い',
         sorted(e['slug'] for e in events
                if e.get('status') == 'upcoming' and not (e.get('imageUrl') or '').strip()),
-        'weekly-enrichment の backfill-images.py が拾えていない回。'
-        '減っていなければ og:image を出さない出典が続いている', severity='info')
+        '新規イベントは必ず画像なしで入るので、この件数はゼロにならない。'
+        'カード側は県名と開催日を出す枠になっており(2026-08-24)、'
+        '画像が無いこと自体は表示の不具合ではない。'
+        '出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題',
+        severity='metric')
 
     # 9. status と日付の矛盾
     today = os.environ.get('AUDIT_TODAY') or today_jst()
@@ -656,8 +678,24 @@ def main():
         u = (e.get('imageUrl') or '').strip()
         if u:
             _by_img[u].append(e.get('slug'))
-    dup_img = [f"{u[:55]} → {', '.join(sorted(set(v)))}"
-               for u, v in _by_img.items() if len(set(v)) > 1]
+    def _src_host(slug):
+        e = next((x for x in events if x.get('slug') == slug), {})
+        u = (e.get('sourceUrl') or e.get('url') or '')
+        m = re.match(r'https?://([^/]+)', u)
+        return m.group(1).lower() if m else ''
+
+    # 出典ホストが同じ組は同一主催のシリーズ共用。これは正当なので報告しない。
+    # 実例: おきぼた2回が h27664.wixsite.com のシリーズ用キービジュアルを共有(2026-08-24)。
+    # ホストが違う組だけが「別イベントからの貼り付け」の疑い。
+    dup_img = []
+    for u, v in _by_img.items():
+        slugs = sorted(set(v))
+        if len(slugs) < 2:
+            continue
+        hosts = {_src_host(sl) for sl in slugs}
+        if len(hosts) == 1 and '' not in hosts:
+            continue
+        dup_img.append(f"{u[:55]} → {', '.join(slugs)}")
     add('duplicate_image_url', '同じimageUrlを複数イベントが使用', sorted(dup_img),
         '同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス',
         severity='info')
@@ -951,7 +989,8 @@ def main():
         sorted(f"{e.get('slug')}({e.get('date')}〜{e.get('dateEnd') or e.get('date')}"
                f"/{event_days(e)}日{'/長期' if is_long_run(e) else ''})"
                for e in ongoing_now),
-        'status は upcoming のままでよい。past にすると一覧から消える', severity='info')
+        'status は upcoming のままでよい。past にすると一覧から消える。'
+        '開催期間中は必ず出るので、減らす対象ではない', severity='metric')
 
     add('ongoing_marked_past', '開催中なのに status が upcoming でないイベント',
         sorted(e.get('slug') or '' for e in ongoing_now
@@ -1109,7 +1148,8 @@ def main():
     # 14. workflowが参照するsecretの一覧(未設定だと黙って空になる)
     add('workflow_secrets', 'workflowが参照しているsecret',
         sorted(set(re.findall(r'secrets\.([A-Z_][A-Z0-9_]*)', wf))),
-        '未設定でも多くのstepは失敗せず黙って空値で動く', severity='info')
+        '未設定でも多くのstepは失敗せず黙って空値で動く。'
+        'これは使用中のsecretの棚卸しで、減らす対象ではない', severity='metric')
 
     # 地域分類の整合。events.json の region が sitelib の定義と一致しているか、
     # REGION_ROMAJI に無い地域名(=ハッシュURLの頁を生む)が混ざっていないかを見る。
@@ -1363,6 +1403,8 @@ def main():
                         if v.get('severity', 'urgent') == 'urgent' and v['count']},
              'info': {k: v['count'] for k, v in findings.items()
                       if v.get('severity') == 'info' and v['count']},
+             'metric': {k: v['count'] for k, v in findings.items()
+                        if v.get('severity') == 'metric' and v['count']},
              'events': len(events)}
     runs = [r for r in (hist.get('runs') or []) if r.get('date') != today_key]
     runs.append(entry)

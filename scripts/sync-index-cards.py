@@ -24,7 +24,7 @@ ROOT = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
 sys.path.insert(0, SCRIPT_DIR)
 from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
-                     LONG_RUN_DAYS)
+                     LONG_RUN_DAYS, no_image_thumb)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -42,7 +42,10 @@ def img_html(image_url, alt, eager=False):
             f'></div>')
 
 
-NO_IMG_HTML = '<div class="event-thumb event-no-image"></div>'
+# 画像が無い枠は県名+日付を入れる。生成は sitelib が単一情報源
+# (以前は空divで、CSSが「NO IMAGE」と出していた)
+def no_img_html(ev):
+    return no_image_thumb(ev or {})
 
 # Match the FIRST event-thumb element inside a card (with or without img),
 # the card being identified by data-slug="...".
@@ -182,9 +185,10 @@ def main():
                 unchanged += 1
                 new_chunks.append(existing)
         else:
-            if existing != NO_IMG_HTML:
+            _ni = no_img_html(ev)
+            if existing != _ni:
                 swapped_to_noimg += 1
-                new_chunks.append(NO_IMG_HTML)
+                new_chunks.append(_ni)
             else:
                 unchanged += 1
                 new_chunks.append(existing)
