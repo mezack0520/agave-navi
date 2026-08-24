@@ -1,5 +1,5 @@
 {
-  "total": 158,
+  "total": 156,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,11 +177,10 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 73,
+      "count": 72,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
-        "bota-no-natsuyasumi-2026",
         "botajam-2026",
         "botanical-auction-3rd-hamamatsu-2026-09",
         "botanical-botanical-fukuoka-2026-10",
@@ -218,7 +217,8 @@
         "isij-big-bazaar-2027-09-26",
         "isij-big-bazaar-2027-11-28",
         "kisarazu-engei-ichi-2026-08",
-        "kourep-2026-autumn"
+        "kourep-2026-autumn",
+        "kyoto-midori-marche-ibaraki-2026-09"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -435,9 +435,8 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 3,
+      "count": 2,
       "items": [
-        "bota-no-natsuyasumi-2026(2026-08-24〜2026-08-24/1日)",
         "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
         "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
       ],
