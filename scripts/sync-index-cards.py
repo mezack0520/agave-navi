@@ -42,9 +42,8 @@ def img_html(image_url, alt, eager=False):
             f'></div>')
 
 
-# 画像が無い枠は県名+日付を入れる。生成は sitelib が単一情報源
-# (以前は空divで、CSSが「NO IMAGE」と出していた)
 def no_img_html(ev):
+    """画像なし枠。生成は sitelib が単一情報源"""
     return no_image_thumb(ev or {})
 
 # Match the FIRST event-thumb element inside a card (with or without img),
@@ -55,10 +54,14 @@ CARD_HEADER_RE = re.compile(
     r'<div class="event-card[^"]*"[^>]*data-slug="(?P<slug>[^"]+)"[^>]*>',
     re.IGNORECASE
 )
+# 中身の形に依存させない。以前は <img></div> と空の </div> だけを想定していたため、
+# 画像なし枠に県名+日付の <span> を入れた瞬間に一致しなくなり、
+# 置換されずカードが増殖した(2026-08-24: 202→1816カード)。
+# thumb の中に <div> は入らないので、最初の </div> まで貪欲でなく取れば安全。
 THUMB_RE = re.compile(
-    r'<div class="event-thumb(?:\s+event-no-image)?"(?:\s*>)\s*'
-    r'(?:<img\b[^>]*></div>|</div>)',
-    re.IGNORECASE
+    r'<div class="event-thumb(?:\s+event-no-image)?"\s*>'
+    r'(?:(?!<div\b).)*?</div>',
+    re.IGNORECASE | re.DOTALL
 )
 
 
