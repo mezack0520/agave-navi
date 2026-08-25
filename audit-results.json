@@ -1,5 +1,5 @@
 {
-  "total": 156,
+  "total": 169,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -174,6 +174,27 @@
       "items": [],
       "note": "",
       "severity": "info"
+    },
+    "upcoming_with_image": {
+      "title": "開催予定でimageUrlがある",
+      "count": 13,
+      "items": [
+        "collect-plants-2026-09",
+        "green-holic-kariya-2026",
+        "greensnap-marche-yokohama-2026-autumn",
+        "hanatomofesta-2026",
+        "jusai-ichinomiya-autumn-2026",
+        "midori-to-taniku-marche-nihonosato-2026-09",
+        "mollis-exhibit-kinto-2026",
+        "narabikakufes-vol2-2026",
+        "okibota-december-2026-sunshine",
+        "shokuchu-tokubetsu-tenji-flowercenter-2026-07",
+        "tokai-okibota-2026",
+        "wi-wi-botanical-minokamo-2026-09",
+        "yurutto-taniku-marche-1st-inabe-2026-10"
+      ],
+      "note": "この数が急に減ったら画像が失われている。増減の監視は metric_moved が行う",
+      "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
@@ -602,6 +623,13 @@
       "count": 0,
       "items": [],
       "note": "一覧・ナビ・関連リンクのどこかから貼る。辿らせる先が無い頁なら noindex にして sitemap から外す",
+      "severity": "urgent"
+    },
+    "metric_moved": {
+      "title": "参考値が急に動いた(異常の可能性)",
+      "count": 0,
+      "items": [],
+      "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     }
   }

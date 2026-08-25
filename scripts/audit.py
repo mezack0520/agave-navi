@@ -254,6 +254,15 @@ def main():
     # トップと一覧のカードが「NO IMAGE」になる。weekly-enrichment の
     # backfill-images.py が効いているかは、この件数が週ごとに減るかでしか分からない。
     # 常時0にはならないので info。(2026-08-18 追加。追加時 61/77件)
+    # 「画像がある件数」も残す。無い件数だけを見ていると、
+    # 画像が一斉に消えた(減る)のとイベントが追加された(増える)のが
+    # 同じ向き・同じ大きさに見えて区別できない(2026-08-24に検証して判明)。
+    # ある件数はイベント追加では減らないので、減ったら必ず消失を意味する。
+    add('upcoming_with_image', '開催予定でimageUrlがある',
+        sorted(e['slug'] for e in events
+               if e.get('status') == 'upcoming' and (e.get('imageUrl') or '').strip()),
+        'この数が急に減ったら画像が失われている。増減の監視は metric_moved が行う',
+        severity='metric')
     add('upcoming_no_image', '開催予定でimageUrlが無い',
         sorted(e['slug'] for e in events
                if e.get('status') == 'upcoming' and not (e.get('imageUrl') or '').strip()),
@@ -1572,13 +1581,9 @@ def main():
         '辿らせる先が無い頁なら noindex にして sitemap から外す')
 
     # --- 出力 ---
-    total = sum(v['count'] for k, v in findings.items()
-                if k not in ('workflow_secrets',))
-    with open(rp('audit-results.json'), 'w', encoding='utf-8') as f:
-        json.dump({'total': total, 'findings': findings}, f, ensure_ascii=False, indent=2)
-        f.write('\n')
-
-    # 推移を残す。1回の値だけでは改善か悪化かが判断できない。
+    # 履歴は結果ファイルより先に読む。metric の急変検査が履歴を必要とし、
+    # かつ findings に載せる必要があるため(2026-08-24: add() を書き出しの後に
+    # 置いていて audit-results.json に載らなかった)。
     hist_path = rp('audit-history.json')
     try:
         with open(hist_path, encoding='utf-8') as f:
@@ -1587,15 +1592,56 @@ def main():
         hist = {'_note': '監査結果の推移。scripts/audit.py が追記する。'
                          '直近90件のみ保持。改善/悪化の判断に使う。', 'runs': []}
     today_key = __import__('datetime').date.today().isoformat()
+    _prev_runs = [r for r in (hist.get('runs') or []) if r.get('date') != today_key]
+
+    # 0件のものも必ず入れる。0を除外すると「全部消えた」という
+    # いちばん重い異常だけが比較対象から外れる(2026-08-24に検証して発覚)。
+    _cur_metric = {k: v['count'] for k, v in findings.items()
+                   if v.get('severity') == 'metric'}
+    # metric の急変だけを拾う。
+    # 値そのものは「対応不要」なので毎日メールに並べる意味が無い(2026-08-24に本文から外した)。
+    # ただし急に動いたときは異常の唯一の手がかりになる。
+    #   例: upcoming_no_image が 72→200 なら画像が一斉に消えている。
+    #       thin_archived が急減したらイベントが消えている。
+    # 直近7回の中央値と比べ、相対30%以上かつ絶対10件以上動いたときだけ鳴らす。
+    # 片方だけの条件だと、小さい値の±1や大きい値の自然増で毎日鳴る。
+    _hist = [r for r in _prev_runs if r.get('metric')][-7:]
+    metric_moves = []
+    for _k, _v in _cur_metric.items():
+        # そのキーを実際に持っている履歴だけで基準を作る。
+        # 欠けている履歴を0とみなすと、検査を追加した初日に必ず誤検知する
+        # (2026-08-24: upcoming_with_image を足した日に「0→13」で鳴った)。
+        _vals = [r['metric'][_k] for r in _hist if _k in r.get('metric', {})]
+        if len(_vals) < 3:
+            continue        # 基準を作れるだけの履歴がまだ無い
+        _series = sorted(_vals)
+        _base = _series[len(_series) // 2]
+        _delta = _v - _base
+        if _base > 0 and abs(_delta) >= 10 and abs(_delta) / _base >= 0.30:
+            metric_moves.append(f'{_k}: 直近中央値 {_base} → {_v}（{_delta:+d}）')
+        elif _base == 0 and _v >= 10:
+            metric_moves.append(f'{_k}: ずっと0だったものが {_v} に増えた')
+    add('metric_moved', '参考値が急に動いた(異常の可能性)', sorted(metric_moves),
+        '値そのものは対応不要だが、この動き方は異常の手がかりになる。'
+        '該当項目の items を見て、想定できる増減かを確かめる', severity='urgent')
+
+
+    total = sum(v['count'] for k, v in findings.items()
+                if k not in ('workflow_secrets',))
+    with open(rp('audit-results.json'), 'w', encoding='utf-8') as f:
+        json.dump({'total': total, 'findings': findings}, f, ensure_ascii=False, indent=2)
+        f.write('\n')
+
+    # 推移を残す。1回の値だけでは改善か悪化かが判断できない。
     entry = {'date': today_key,
              'urgent': {k: v['count'] for k, v in findings.items()
                         if v.get('severity', 'urgent') == 'urgent' and v['count']},
              'info': {k: v['count'] for k, v in findings.items()
                       if v.get('severity') == 'info' and v['count']},
              'metric': {k: v['count'] for k, v in findings.items()
-                        if v.get('severity') == 'metric' and v['count']},
+                        if v.get('severity') == 'metric'},
              'events': len(events)}
-    runs = [r for r in (hist.get('runs') or []) if r.get('date') != today_key]
+    runs = list(_prev_runs)
     runs.append(entry)
     hist['runs'] = runs[-90:]
     with open(hist_path, 'w', encoding='utf-8') as f:
