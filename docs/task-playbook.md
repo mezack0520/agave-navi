@@ -121,12 +121,36 @@
   疑うときは Apps Script の「実行数」を見る。エラーが出ていれば
   `ALERT_TO`（yuji.mezaki@gmail.com）にGASからメールが飛ぶ設計。
   トリガーが消えていたら `script.google.com` の当該プロジェクト →
-  トリガー画面で `onFormSubmit` の有無を見る
+  トリガー画面で `onFormSubmit` の有無を見る。
+  **2026-08-25 に `script.google.com/home/triggers` で現物を確認した。**
+  「agave-navi フォーム→GitHub連携 / スプレッドシートから - フォーム送信時 / onFormSubmit」1件、
+  エラー率は空。08-24 の当タスクが「トリガー0件」と報告したのは 10:22 時点の事実で、
+  設置は同日 11:16 のコミット `0337285` で完了している。
+  `pending-judgments.json` の `event-listing-review:gas-not-installed` は解消済み。
+  **次回以降、設置の要否を再検討しないこと。**
+- **GASのトリガーは「登録されている」だけで、実フォーム送信で発火した実績がまだ無い。**
+  08-25 時点で「前回の実行」は `-`。最後の回答が 2026-07-02 なので当然だが、
+  疎通確認は `testConnection`（手動実行）で取ったものであり、
+  **フォーム送信 → GAS → push → メールの端から端までは一度も通っていない。**
+  テスト送信して確かめたくなるが、やらない。回答シートに偽の行が残り、
+  `processed` との検算がその分ずれ続ける。
+  代わりに**下のシート突き合わせを毎回やる**。送信があったのにGASが動かなければ、
+  シートの行数が `processed` を上回るので翌日には必ず表に出る。
+  端から端までを事前に証明する代わりに、壊れたら1日で気づく側に倒す
 - **取りこぼしの回収は `backfillFromSheet`。**
   トリガーが止まっていた期間があっても、Apps Scriptエディタでこの関数を1回実行すれば
   シート全行から未処理のタイムスタンプだけを拾って `new-inquiries.json` に送る。
   重複は `timestamp` で弾く
-- **非常用: gviz CSV方式（GASが壊れたときだけ使う）。**
+- **gviz CSV でのシート突き合わせは毎回やる。非常用ではなく定常の検算（2026-08-25 変更）。**
+  以前ここに「GASが壊れたときだけ使う」と書いていたが、それでは**壊れたことに気づく経路が無い**。
+  `lastChecked` は送信が無ければ更新されないので古さが異常の証拠にならず、
+  `audit.py` は CI から Google にアクセスできないので機械検出もできない。
+  つまりGASの死活を見られるのはブラウザを持つこのタスクだけで、
+  見る手段はシートの実データと `inquiries-processed.json` の `processed` の照合しかない。
+  **毎回の手順は2つ。** (1) `/home/triggers` に `onFormSubmit` があるか（送信ゼロでも取れる生存証明）
+  (2) 下のCSVでデータ行数を数え、`processed` 件数と比べる。
+  行数 > processed なら**GASが取りこぼしている**ので `backfillFromSheet` を回す判断に入る。
+  行数 < processed なら読み取り失敗。等しければ新着ゼロ。
   スプレッドシートを開いて同一オリジンで
   `fetch('/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/gviz/tq?tqx=out:csv',{credentials:'include'})`
   を叩けば1回で全行取れる。グリッドのUIを読む手順には戻さないこと（許可待ちで止まる）。
