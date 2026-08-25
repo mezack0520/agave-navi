@@ -1,5 +1,5 @@
 {
-  "total": 169,
+  "total": 167,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 13,
+      "count": 12,
       "items": [
         "collect-plants-2026-09",
         "green-holic-kariya-2026",
@@ -188,7 +188,6 @@
         "mollis-exhibit-kinto-2026",
         "narabikakufes-vol2-2026",
         "okibota-december-2026-sunshine",
-        "shokuchu-tokubetsu-tenji-flowercenter-2026-07",
         "tokai-okibota-2026",
         "wi-wi-botanical-minokamo-2026-09",
         "yurutto-taniku-marche-1st-inabe-2026-10"
@@ -456,10 +455,9 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 2,
+      "count": 1,
       "items": [
-        "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
-        "shokuchu-tokubetsu-tenji-flowercenter-2026-07(2026-07-18〜2026-08-25/39日/長期)"
+        "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
