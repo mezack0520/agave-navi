@@ -467,9 +467,12 @@
         var others = aspLinks.filter(function (a) { return a.label !== '楽天市場'; });
         if (others.length) {
           html += '<div class="aff-shop-btns">';
-          others.forEach(function (asp) {
+          others.forEach(function (asp, i) {
+            // 先頭(Amazon)を主動線にする。実測でAmazonだけが売れている
+            // (2026-08-24: 過去30日 Amazon 14クリック/5点/¥214、楽天 16クリック/0件/¥0)。
             html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-              + ' class="aff-shop-btn" data-shop="' + shopKey(asp.label) + '">'
+              + ' class="aff-shop-btn' + (i === 0 ? ' is-primary' : '') + '"'
+              + ' data-shop="' + shopKey(asp.label) + '">'
               + asp.label + 'で探す</a>';
           });
           html += '</div>';
@@ -490,9 +493,10 @@
       html += '<span class="affiliate-item-label">' + item.label + '</span>';
       html += '</span></div>';
       html += '<div class="aff-shop-btns">';
-      aspLinks.forEach(function (asp) {
+      aspLinks.forEach(function (asp, i) {
         html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-          + ' class="aff-shop-btn" data-shop="' + shopKey(asp.label) + '">'
+          + ' class="aff-shop-btn' + (i === 0 ? ' is-primary' : '') + '"'
+          + ' data-shop="' + shopKey(asp.label) + '">'
           + asp.label + 'で探す</a>';
       });
       html += '</div>';
@@ -517,5 +521,50 @@
     html += '<p class="affiliate-notice">※ ' + notices.join(' / ') + '</p>';
 
     el.innerHTML = html;
+  }
+
+  // --- アフィリエイトのクリックをGA4に送る（2026-08-24追加） ---------------
+  // これまで一切計測しておらず、「Amazonと楽天のどちらが効いているか」を
+  // 各モールの管理画面を突き合わせないと判断できなかった。
+  // モール側は自分の分しか見えないので、同じ土俵で比べるにはこちら側で数える必要がある。
+  // document 単位で1回だけ張る（カードは後から差し替わるので委譲で拾う）。
+  var _trackBound = false;
+  function bindClickTracking() {
+    if (_trackBound) return;
+    _trackBound = true;
+    document.addEventListener('click', function (ev) {
+      var a = ev.target && ev.target.closest
+        ? ev.target.closest('a.aff-shop-btn, a.rk-card, .aff-bar a')
+        : null;
+      if (!a) return;
+      if (typeof window.gtag !== 'function') return;
+
+      var shop = a.getAttribute('data-shop');
+      if (!shop) {
+        // 楽天カードと固定バーは data-shop を持たない。リンク先から判定する
+        var h = a.getAttribute('href') || '';
+        shop = h.indexOf('rakuten') >= 0 ? 'rakuten'
+             : h.indexOf('amazon') >= 0 ? 'amazon'
+             : h.indexOf('valuecommerce') >= 0 ? 'valuecommerce'
+             : 'other';
+      }
+      var placement = a.classList.contains('rk-card') ? 'product_card'
+                    : a.closest('.aff-bar') ? 'sticky_bar'
+                    : a.classList.contains('is-primary') ? 'primary_button'
+                    : 'shop_button';
+      try {
+        window.gtag('event', 'affiliate_click', {
+          shop: shop,
+          placement: placement,
+          page_path: location.pathname
+        });
+      } catch (e) { /* 計測の失敗で遷移を止めない */ }
+    }, true);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindClickTracking);
+  } else {
+    bindClickTracking();
   }
 })();

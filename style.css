@@ -3614,3 +3614,23 @@ main {
     padding: 0 1rem;
     margin-top: 2rem;
 }
+
+/* Amazonを主動線にする（2026-08-24）。実測でAmazonだけが売れている:
+   過去30日 Amazon クリック14/発送5点/¥214、楽天 クリック16/売上0/¥0。
+   楽天カードのほうが露出は大きいのに成果はゼロなので、序列を実績に合わせる。
+   楽天カードはAPIの規約上そのまま楽天へリンクさせる（データの出所と行き先を一致させる）。 */
+.affiliate-section .aff-shop-btn.is-primary {
+    grid-column: 1 / -1;
+    min-height: 46px;
+    font-size: .86rem;
+    border-width: 2px;
+}
+.affiliate-section .aff-shop-btn.is-primary[data-shop="amazon"] {
+    background: #ff9900;
+    border-color: #ff9900;
+    color: #fff;
+}
+.affiliate-section .aff-shop-btn.is-primary[data-shop="amazon"]:hover {
+    background: #e88a00;
+    border-color: #e88a00;
+}
