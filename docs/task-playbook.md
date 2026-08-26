@@ -48,6 +48,14 @@
 
 ## 3. 既知のハマりどころ
 
+- **版数を上げたら `sync-footers.py` だけでは行き渡らない。全生成を回す。**
+  版数は各ジェネレータが生成時に埋め込むので、`sync-footers.py` は
+  取りこぼし分しか直さない。2026-08-24、CSS版数を上げて sync-footers だけ回し、
+  **467ページが旧版のままの状態で push した**（監査の `css_version_drift` で気づいた）。
+  版数を上げたら `build-detail-pages` / `build-guides` / `build-static-html` /
+  `generate-landing-pages` / `sync-index-cards` / `sync-footers` を通す。
+  **push前に `css_version_drift` と `js_version_drift` が0であることを確認する**
+
 - **参考値(metric)はメール本文に出さない。急に動いたときだけ鳴らす（2026-08-24）。**
   「対応不要」と書いたものを毎日並べても、ラベルを付け替えただけで結局読み飛ばされる。
   値は `audit-results.json` / `audit-history.json` に残っており、
