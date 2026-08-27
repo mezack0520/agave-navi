@@ -114,15 +114,6 @@
       "reason": "主催 KUSABI @kusabi_official が『2026年10月開催』として出店者を募集中だが開催日が未確定。listing-policy の venueUnannounced.doNotList（日付未確定は掲載しない）に該当。日付が確定したら掲載する"
     },
     {
-      "key": "plant-and-pot-vol15-2026-09",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "PLANT & POT Vol.15 (2026-09-12/13 BaBaBa・東京都新宿区下落合)",
-      "decided": "2026-08-12",
-      "reason": "leaf-laboratory のみが日程・会場を報じており、主催者を特定できず一次情報に到達できない。過去回(Vol.14)はザ・グリーンショップトーキョー目黒店開催で主催アカウントが不明。主催者の告知が見つかったら掲載する",
-      "eventDate": "2026-09-12"
-    },
-    {
       "key": "gujo-de-cactus-night-market-2026-08",
       "reasonType": "unverified",
       "revisit": false,
@@ -229,6 +220,65 @@
       "decided": "2026-08-27",
       "reason": "約55〜70ブースの総合ハンドメイド夏祭り。多肉植物・エアプランツの扱いは出店者側の告知にしかなく、主催告知に植物の明記がない。名称も中立で出店の内訳から植物系の比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown に該当",
       "eventDate": "2026-08-30"
+    },
+    {
+      "key": "nishikata-medaka-taniku-2026-09",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "にしかた メダカ即売会×多肉植物販売 in 道の駅にしかた (2026-09-27 栃木県栃木市)",
+      "decided": "2026-08-27",
+      "reason": "多肉・アガベ・コーデックスを扱うとまとめサイトにあるが、主催として挙がる@inumeshik_1の該当投稿に到達できず、道の駅公式のイベントページも更新が止まっており日付を確認できない。主催者の告知が出たら掲載する",
+      "eventDate": "2026-09-27"
+    },
+    {
+      "key": "autumn-marche-kuroda-engei-2026-09",
+      "reasonType": "undisclosed",
+      "revisit": true,
+      "name": "Autumn marche 秋のマルシェ (2026-09-27 フローラ黒田園芸・埼玉県さいたま市中央区)",
+      "decided": "2026-08-27",
+      "reason": "日付と会場は主催Instagramで確認できたが、告知の内容は「植物と雑貨、美味しいもの」までで多肉・アガベ・塊根の品目明記がない。同投稿内の多肉の記載は別件の決算セールの話。品目が明かされたら再評価する",
+      "eventDate": "2026-09-27"
+    },
+    {
+      "key": "sousouka-bangaimen-2026-09",
+      "reasonType": "policy",
+      "name": "艸化 番外麺 (2026-09-13 麺ノ小池・栃木県真岡市)",
+      "decided": "2026-08-27",
+      "reason": "主催@cusasucの投稿で日時・会場は確認できたが、扱うのは「艸」「花」「古物」で、プロフィールも山野草・古物寄り。アガベ・多肉・塊根の系統ではないため掲載しない",
+      "eventDate": "2026-09-13"
+    },
+    {
+      "key": "kankichi-koubou-popup-2026-09",
+      "reasonType": "policy",
+      "name": "カンキチ工房 POP UP SHOP (2026-09-07〜10-01 横浜ロフト／そごう横浜店・神奈川県横浜市)",
+      "decided": "2026-08-27",
+      "reason": "会期は確認できるが扱うのはガジュマルのみ。アガベ・塊根・多肉のイベントとして案内する対象ではない",
+      "eventDate": "2026-09-07"
+    },
+    {
+      "key": "and-plants-and-flower-marche-2026-09",
+      "reasonType": "policy",
+      "name": "アンドプランツ＆アンドフラワーマルシェ'26 (2026-09-19 中目黒GTタワー前広場・東京都目黒区)",
+      "decided": "2026-08-27",
+      "reason": "主催告知の内容が「観葉植物とお花のマルシェ」で、アガベ・多肉・塊根の系統ではない",
+      "eventDate": "2026-09-19"
+    },
+    {
+      "key": "vege-life-26-odaiba-2026-09",
+      "reasonType": "undisclosed",
+      "name": "VEGE LIFE 26 (2026-09-26/27 お台場潮風公園・東京都品川区)",
+      "decided": "2026-08-27",
+      "reason": "約100店舗の総合マルシェで、主催告知に植物の品目明記がない。listing-policy の compositeEvents.undisclosedBreakdown に該当",
+      "eventDate": "2026-09-26"
+    },
+    {
+      "key": "bizarre-park-local-market-2026-09",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "bizarre Park monthly LOCAL MARKET 9月回 (埼玉県鴻巣市)",
+      "decided": "2026-08-27",
+      "reason": "月1回の定例開催なので9月回がある可能性は高いが、2026年9月の日程を示す一次情報が見つからなかった。日程が告知されたら掲載する",
+      "eventDate": "2026-09-01"
     }
   ],
   "_reasonTypes": {

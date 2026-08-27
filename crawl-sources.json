@@ -1,6 +1,6 @@
 {
   "description": "イベント情報の巡回元サイト一覧 - agave-navi.com",
-  "lastUpdated": "2026-05-22",
+  "lastUpdated": "2026-08-27",
   "sources": [
     {
       "name": "ボタ日誌（daybook-botanical）",
@@ -448,6 +448,25 @@
       "focus": "10月の植物関連イベント (秋のまつり・菊花展等)",
       "frequency": "monthly",
       "notes": "10月度カレンダー。"
+    },
+    {
+      "name": "LEAFLA（Leaf Laboratory）日付別インデックス",
+      "url": "https://leaf-laboratory.com/blogs/media/event-list-YYYY-MM-DD",
+      "type": "date-index",
+      "coverage": "全国",
+      "focus": "植物イベント全般",
+      "frequency": "weekly",
+      "notes": "日付を差し替えて開く。1日1ページで全国のその日のイベントが並ぶ。URLは /blogs/media/ 配下が正で、/event-list-… 直下は404。記事の「参考サイト」欄に主催IG投稿URLが載っており裏取りに使えるが、**引用先が別イベントを指している例を確認している**（2026-08-27: HAPPY SMILE の出典が無関係な岡山の花店の投稿）ので個別に検証する。出典としては使えない（blockedUrlDomains）。候補を見つける手がかり専用。"
+    },
+    {
+      "name": "NextMeet 都県別・週末開催一覧",
+      "url": "https://nextmeet.app/",
+      "type": "date-index",
+      "coverage": "全国（都県別ページあり）",
+      "focus": "多肉・塊根・観葉",
+      "frequency": "weekly",
+      "notes": "「週末開催」の一覧と都県別ページを持つ。出典としては使えない（blockedUrlDomains）。候補を見つける手がかり専用。"
     }
-  ]
+  ],
+  "_dateIndexNote": "2026-08-27追記。日付別インデックスを見ていなかったため取りこぼしが出ていた。「今週末の関東は？」に答えられず外部を洗ったところ、掲載2件に対して実際は10件以上開催されていた。9月も同様に確認し、関東で10件の未掲載が見つかった（うちPLANTS SHOW桐生は60店舗超、RAFLUM×阪急メンズ東京は7日間の百貨店催事）。キーワード検索と主催者アカウントのローテーションだけでは「その日に何があるか」を機械的に列挙できない。**LEAFLA と NextMeet は互いに取りこぼしがあるので両方見る**（2026-08-27の実測: LEAFLAにISIJビッグバザール・PLANTS SHOW・多肉ワンダーランド・ボタニカルXが無く、NextMeetにRAFLUM・PLANT & POT・TEAM ABCが無い）。"
 }
