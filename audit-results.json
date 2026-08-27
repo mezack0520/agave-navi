@@ -532,6 +532,13 @@
       "note": "定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION",
       "severity": "urgent"
     },
+    "index_card_attr_drift": {
+      "title": "トップのカード属性がevents.jsonと不一致(一覧から消える)",
+      "count": 0,
+      "items": [],
+      "note": "status-auto.js がこの属性で開催中/終了を振り分けるため、古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す",
+      "severity": "urgent"
+    },
     "jsonld_invalid": {
       "title": "JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)",
       "count": 0,

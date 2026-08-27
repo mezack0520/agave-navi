@@ -102,6 +102,53 @@ def remove_stale_cards(html, valid_slugs):
         removed.append(stale.group(1))
     return html, removed
 
+# カードの data-* を events.json に合わせる。
+# これまでサムネイルしか同期しておらず、日付や status を直しても
+# カードの属性は古いまま残っていた。属性は status-auto.js が
+# 「開催中/これから/終了」の判定に使うので、古いと表示から消える。
+# 2026-08-27に発覚: 木更津園芸市は 8/11→8/29 に直っていたのに
+# カードが data-date="2026-08-11" data-status="past" のままで、
+# 9日間「終了したイベント」に隠れていた。同種の食い違いが22件あった。
+_SYNC_ATTRS = ('date', 'date-end', 'status', 'prefecture', 'region',
+               'tags', 'added-date')
+
+
+def _expected_attrs(ev):
+    return {
+        'date': ev.get('date') or '',
+        'date-end': ev.get('dateEnd') or ev.get('date') or '',
+        'status': ev.get('status') or '',
+        'prefecture': ev.get('prefecture') or '',
+        'region': ev.get('region') or '',
+        'tags': ','.join(ev.get('tags') or []),
+        'added-date': ev.get('addedDate') or '',
+    }
+
+
+def sync_card_attrs(tag, ev):
+    """カードの開始タグの data-* を events.json の値に揃える。
+
+    既にある属性は書き換え、無い属性で値があるものは足す。
+    タグの他の部分(class や onclick)には触らない。
+    """
+    if not ev:
+        return tag, []
+    changed = []
+    want = _expected_attrs(ev)
+    for name in _SYNC_ATTRS:
+        val = want[name]
+        pat = re.compile(r'(data-%s=")([^"]*)(")' % re.escape(name))
+        mm = pat.search(tag)
+        if mm:
+            if mm.group(2) != val:
+                changed.append(f'{name}: {mm.group(2)!r}->{val!r}')
+                tag = tag[:mm.start(2)] + html_attr_escape(val) + tag[mm.end(2):]
+        elif val:
+            changed.append(f'{name}: (無し)->{val!r}')
+            tag = tag[:-1] + ' data-%s="%s">' % (name, html_attr_escape(val))
+    return tag, changed
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dry-run', action='store_true')
@@ -156,10 +203,16 @@ def main():
     swapped_to_noimg = 0
     unchanged = 0
     img_count = 0
+    attr_fixed = 0
     for m in CARD_HEADER_RE.finditer(html):
-        # Append everything up to (and including) the card opening tag
-        new_chunks.append(html[last_end:m.end()])
         slug = m.group('slug')
+        # 開始タグの data-* を events.json に揃えてから積む
+        _tag, _ch = sync_card_attrs(m.group(0), by_slug.get(slug))
+        if _ch:
+            attr_fixed += 1
+            print(f'  attrs {slug}: ' + ' / '.join(_ch))
+        new_chunks.append(html[last_end:m.start()])
+        new_chunks.append(_tag)
         # Find the FIRST <div class="event-thumb..."> after the card open
         thumb_match = THUMB_RE.search(html, m.end())
         if not thumb_match:
@@ -232,6 +285,7 @@ def main():
     print(f'  → swapped to img:  {swapped_to_img}')
     print(f'  → swapped to no-image: {swapped_to_noimg}')
     print(f'  → unchanged:       {unchanged}')
+    print(f'  → 属性を直したカード: {attr_fixed}')
 
     if new_html != original_html:
         if args.dry_run:

@@ -1196,6 +1196,48 @@ def main():
     rk = (links.get('asp') or {}).get('rakuten') or {}
     missing_cfg = [k for k in ('applicationId', 'accessKey', 'apiEndpoint', 'affiliateId')
                    if not rk.get(k)]
+    # 16b. index.html のカード属性が events.json と食い違っていないか。
+    #      カードの data-date / data-status は status-auto.js が
+    #      「開催中 / これから開催 / 終了」の振り分けに使う。古いまま残ると
+    #      データは正しいのに一覧から消える。JSON-LDや詳細ページは再生成されるので
+    #      他の検査は全部通り、誰も気づけない。
+    #      2026-08-27に発覚: 木更津園芸市は 8/11→8/29 に直っていたのに
+    #      カードが data-date="2026-08-11" data-status="past" のままで、
+    #      9日間「終了したイベント」の節に隠れていた。同種が22件あった。
+    #      直し方は `python3 scripts/sync-index-cards.py`。
+    _card_attr_bad = []
+    try:
+        with open(rp('index.html'), encoding='utf-8') as f:
+            _idx = f.read()
+    except OSError:
+        _idx = ''
+    if _idx:
+        _ev_by_slug = {e.get('slug'): e for e in events if e.get('slug')}
+        for _tag in re.findall(r'<div class="event-card[^>]*>', _idx):
+            _sm = re.search(r'data-slug="([^"]+)"', _tag)
+            if not _sm:
+                continue
+            _e = _ev_by_slug.get(_sm.group(1))
+            if not _e:
+                continue
+            _want = {
+                'date': _e.get('date') or '',
+                'date-end': _e.get('dateEnd') or _e.get('date') or '',
+                'status': _e.get('status') or '',
+                'prefecture': _e.get('prefecture') or '',
+                'region': _e.get('region') or '',
+            }
+            for _k, _v in _want.items():
+                _am = re.search(r'data-%s="([^"]*)"' % _k, _tag)
+                _got = _am.group(1) if _am else None
+                if _got != _v:
+                    _card_attr_bad.append(
+                        f"{_sm.group(1)}: data-{_k} 頁={_got!r} data={_v!r}")
+    add('index_card_attr_drift', 'トップのカード属性がevents.jsonと不一致(一覧から消える)',
+        sorted(_card_attr_bad),
+        'status-auto.js がこの属性で開催中/終了を振り分けるため、'
+        '古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す')
+
     # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
     #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
     #     さらに Event の日付・名称が events.json と一致するかを見る。
