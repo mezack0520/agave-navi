@@ -241,7 +241,10 @@ jobs:
               lines.append("一次情報で裏取りして、掲載するか見送りに記録してください。")
               lines.append("見送りを rejected-events.json に入れれば翌日から出なくなります。")
               for _g in _cgaps[:25]:
-                  lines.append(f"・{_g.get('date')} {str(_g.get('title'))[:110]}")
+                  _sp = _g.get('date')
+                  if _g.get('days'):
+                      _sp = f"{_g.get('date')}〜{_g.get('lastSeen')}({_g.get('days')}日)"
+                  lines.append(f"・{_sp} {str(_g.get('title'))[:110]}")
               if len(_cgaps) > 25:
                   lines.append(f"  ほか {len(_cgaps) - 25}件")
           if _cerr:

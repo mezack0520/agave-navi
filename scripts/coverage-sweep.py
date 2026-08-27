@@ -257,7 +257,27 @@ def sweep(days, sleep=0.7):
                 continue
             gaps.append({'date': key, 'title': t[:180]})
         time.sleep(sleep)
-    return gaps, errors, stats
+
+    # 同じイベントを日数ぶん重ねない。会期の長い回（店舗のセールや常設展示）が
+    # 45日ぶん並ぶと件数が膨らんで、一覧として読めなくなる
+    # (実測 2026-08-27: 素の82件のうち、重複を畳むと大幅に減った)。
+    # 1イベント1行にして、いつからいつまで出ていたかを添える。
+    folded = {}
+    for g in gaps:
+        k = norm(g['title'])
+        if k in folded:
+            folded[k]['lastSeen'] = g['date']
+            folded[k]['days'] += 1
+        else:
+            folded[k] = {'date': g['date'], 'lastSeen': g['date'],
+                         'days': 1, 'title': g['title']}
+    out = sorted(folded.values(), key=lambda x: (x['date'], x['title']))
+    for o in out:
+        if o['days'] == 1:
+            o.pop('lastSeen', None)
+            o.pop('days', None)
+    stats['gaps_raw'] = len(gaps)
+    return out, errors, stats
 
 
 # ---- 自己テスト（通信しない。判定ロジックだけ確かめる） -------------------
