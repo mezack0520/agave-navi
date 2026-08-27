@@ -1315,6 +1315,43 @@ def main():
         'lastChecked はGASが書く（フォーム送信を受けた日）ので、古くても異常ではない。'
         'items が残り続けている場合は届いた問い合わせが未処理')
 
+    # --- 抜けた実行日そのものを数える -------------------------------------
+    # inquiry_check_stale は「今どれだけ古いか」しか見ないので、
+    # 1日抜けても翌日の回が成功した瞬間に痕跡が消え、事後に検出できない。
+    # 実際 08-14〜17 / 08-19 / 08-21〜23 / 08-26 の抜けは、どれも
+    # 次の回が reviewedOn を上書きしたことで無かったことになっていた。
+    # reviewedHistory に実行日を残し、窓の中の抜けを数える。
+    # 抜けが増える向きにしか動かない指標なので、放置すれば必ず表に出る。
+    # 閾値を1日に下げて stale 側で鳴らす案は採らない。実行時刻とCIの時差だけで
+    # 誤検知するため(だから stale は4日目から鳴らす)。日付の集合で見れば時差は影響しない。
+    inq_gap = []
+    _hist = [h for h in (_ni.get('reviewedHistory') or [])
+             if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))]
+    # 履歴が浅いうちは判定しない。無い日を抜けとみなすと導入初日に必ず誤検知する。
+    if len(_hist) >= 3:
+        try:
+            _today = _dtm.date.fromisoformat(today_jst())
+            _seen = {_dtm.date.fromisoformat(h) for h in _hist}
+            _start = max(min(_seen), _today - _dtm.timedelta(days=7))
+            # 当日は監査より後に走ることがあるので窓に入れない。
+            _missing = [
+                (_start + _dtm.timedelta(days=i)).isoformat()
+                for i in range((_today - _dtm.timedelta(days=1) - _start).days + 1)
+                if (_start + _dtm.timedelta(days=i)) not in _seen
+            ]
+            if _missing:
+                inq_gap.append(
+                    'event-listing-review が動かなかった日: '
+                    + ' '.join(_missing) + f'（直近7日で{len(_missing)}日）')
+        except ValueError:
+            pass
+    add('inquiry_review_gap', 'event-listing-review の実行が抜けた日', inq_gap,
+        note='reviewedHistory は実行日の記録。抜けた日は、届いていた問い合わせが'
+             'その日は誰にも見られていない。スケジュール自体は enabled のままなので'
+             'タスク側のログを見ないと原因は分からない。'
+             'ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info',
+        severity='info')
+
     # --- sitelib の規則を他スクリプトが写し取っていないか -------------------
     # 検出側と書き込み側に同じ規則を二重に書くと、片方だけ更新されて必ず食い違う。
     # 2026-08-20、generate-rss.py が TAG_ROMAJI と safe_slug を自前で持っており、
