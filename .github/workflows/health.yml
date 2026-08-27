@@ -225,6 +225,31 @@ jobs:
               lines.append(f"・リンク切れ(サーバが4xx/5xxを返した): {len(_dead_u)}URL")
           if _unreach_u:
               lines.append(f"・出典に接続できない(相手が生きている可能性が高い。要確認): {len(_unreach_u)}URL")
+
+          # 取りこぼし候補は本文に中身を出す。件数だけだと動かない。
+          # 一次情報で裏取りして掲載するか、rejected に落とせば翌日から消える
+          try:
+              with open('coverage-gaps.json', encoding='utf-8') as _cf:
+                  _cov = json.load(_cf)
+          except (OSError, ValueError):
+              _cov = {}
+          _cgaps = _cov.get('gaps') or []
+          _cerr = _cov.get('errors') or []
+          if _cgaps:
+              lines.append("")
+              lines.append("━━━ 🔍 他所に出ていて当サイトに無いイベント ━━━")
+              lines.append("一次情報で裏取りして、掲載するか見送りに記録してください。")
+              lines.append("見送りを rejected-events.json に入れれば翌日から出なくなります。")
+              for _g in _cgaps[:25]:
+                  lines.append(f"・{_g.get('date')} {str(_g.get('title'))[:110]}")
+              if len(_cgaps) > 25:
+                  lines.append(f"  ほか {len(_cgaps) - 25}件")
+          if _cerr:
+              lines.append("")
+              lines.append("━━━ ⚠️ 取りこぼし巡回が失敗している ━━━")
+              lines.append("この状態では上の候補が0件でも「取りこぼしなし」の証拠になりません。")
+              for _e in _cerr[:8]:
+                  lines.append(f"・{_e}")
           # 参考値(metric)は本文に出さない。「対応不要」と書いたものを毎日並べても
           # 読み飛ばされるだけで、ラベルを付け替えただけになる(2026-08-24に本文から外した)。
           # 値は audit-results.json / audit-history.json に残っており、

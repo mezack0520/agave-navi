@@ -1,5 +1,5 @@
 {
-  "total": 186,
+  "total": 187,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -553,6 +553,22 @@
       "count": 0,
       "items": [],
       "note": "status-auto.js がこの属性で開催中/終了を振り分けるため、古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す",
+      "severity": "urgent"
+    },
+    "coverage_gaps": {
+      "title": "他所に出ていて当サイトに無いイベント候補",
+      "count": 0,
+      "items": [],
+      "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
+      "severity": "info"
+    },
+    "coverage_sweep_broken": {
+      "title": "取りこぼし巡回が機能していない",
+      "count": 1,
+      "items": [
+        "coverage-gaps.json が無い。coverage-sweep.py が動いていない"
+      ],
+      "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
     },
     "jsonld_invalid": {

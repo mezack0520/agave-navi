@@ -62,6 +62,15 @@ jobs:
       # sync-events / weekly-enrichment 経由のビルドでは誰も更新していなかった。
       # scripts/sync-index-cards.py(build-all.sh 内)に移管した。
 
+      # 他所に載っていて当サイトに無いイベントを毎日拾う。
+      # 2026-08-27、掲載2件に対して関東で10件以上、9月は全国で42件の
+      # 未掲載が見つかった。そのとき audit は urgent 0 / info 0 だった。
+      # 手元の整合性だけ見ていて、外の世界に対する欠けを誰も見ていなかった。
+      # 失敗しても後続を止めない(|| true)が、失敗自体は coverage-gaps.json の
+      # errors に残り、audit の coverage_sweep_broken が鳴る。
+      - name: Sweep coverage gaps (他所にあって当サイトに無いイベント)
+        run: python3 scripts/coverage-sweep.py --days 45 || true
+
       - name: Regenerate all static files
         run: bash scripts/build-all.sh
 

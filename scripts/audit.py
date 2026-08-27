@@ -1267,6 +1267,48 @@ def main():
         'status-auto.js がこの属性で開催中/終了を振り分けるため、'
         '古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す')
 
+    # 16c. 他所に載っていて当サイトに無いイベント（取りこぼし）。
+    #      2026-08-27、「今週末の関東は？」に答えられなかった。掲載2件に対して
+    #      実際は関東で10件以上、9月は全国で42件の未掲載があった。
+    #      **そのとき audit は urgent 0 / info 0 だった。**
+    #      手元のデータの整合性は完璧で、外の世界に対して欠けていることを
+    #      誰も見ていなかった。イベント掲載サイトにとってこれがいちばん重い。
+    #      scripts/coverage-sweep.py が毎日書き出す coverage-gaps.json を読む。
+    _cov = load_json('coverage-gaps.json', {})
+    _cov_gaps = _cov.get('gaps') or []
+    _cov_err = _cov.get('errors') or []
+    _swept = str(_cov.get('sweptOn') or '')
+    _cov_items = [f"{g.get('date')} {str(g.get('title'))[:90]}" for g in _cov_gaps]
+    add('coverage_gaps', '他所に出ていて当サイトに無いイベント候補',
+        sorted(_cov_items),
+        '一次情報で裏取りして、掲載するか rejected-events.json に落とす。'
+        '見送ったものは rejected に入れれば翌日から候補に出なくなる',
+        severity='info')
+
+    # 巡回そのものが失敗していないか。gaps が0件でも
+    # 巡回できていなければ「取りこぼしなし」とは言えない
+    _cov_stale = []
+    if not _cov:
+        _cov_stale.append('coverage-gaps.json が無い。coverage-sweep.py が動いていない')
+    else:
+        if _cov_err:
+            _cov_stale.extend(f'巡回失敗: {e}' for e in _cov_err[:10])
+        if not (_cov.get('stats') or {}).get('fetched'):
+            _cov_stale.append('1日も取得できていない。取得元の構造が変わった可能性')
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _swept):
+            import datetime as _dtc
+            try:
+                _gap_d = (_dtc.date.fromisoformat(today_jst())
+                          - _dtc.date.fromisoformat(_swept)).days
+                if _gap_d > 3:
+                    _cov_stale.append(f'最終巡回 {_swept} / {_gap_d}日前。巡回が止まっている')
+            except ValueError:
+                pass
+    add('coverage_sweep_broken', '取りこぼし巡回が機能していない',
+        sorted(_cov_stale),
+        'coverage-sweep.py の取得が失敗している。'
+        'この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない')
+
     # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
     #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
     #     さらに Event の日付・名称が events.json と一致するかを見る。
