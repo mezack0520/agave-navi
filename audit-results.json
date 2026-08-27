@@ -1,5 +1,5 @@
 {
-  "total": 168,
+  "total": 176,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,17 +177,20 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 12,
+      "count": 15,
       "items": [
         "collect-plants-2026-09",
         "green-holic-kariya-2026",
         "greensnap-marche-yokohama-2026-autumn",
         "hanatomofesta-2026",
+        "itakeru2-27gallery-2026",
         "jusai-ichinomiya-autumn-2026",
         "midori-to-taniku-marche-nihonosato-2026-09",
         "mollis-exhibit-kinto-2026",
         "narabikakufes-vol2-2026",
         "okibota-december-2026-sunshine",
+        "rare-foliage-sale-protoleaf-futako-2026",
+        "rare-plants-dry-garden-festa-2026",
         "tokai-okibota-2026",
         "wi-wi-botanical-minokamo-2026-09",
         "yurutto-taniku-marche-1st-inabe-2026-10"
@@ -197,10 +200,12 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 72,
+      "count": 75,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
+        "bishoku-club-popup-kitamoto-2026",
+        "bizarre-plants-natsunojin-ueno-2026",
         "botajam-2026",
         "botanical-auction-3rd-hamamatsu-2026-09",
         "botanical-botanical-fukuoka-2026-10",
@@ -236,9 +241,7 @@
         "isij-big-bazaar-2027-07-11",
         "isij-big-bazaar-2027-09-26",
         "isij-big-bazaar-2027-11-28",
-        "kisarazu-engei-ichi-2026-08",
-        "kourep-2026-autumn",
-        "kyoto-midori-marche-ibaraki-2026-09"
+        "kisarazu-engei-ichi-2026-08"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -455,9 +458,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 1,
+      "count": 3,
       "items": [
-        "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)"
+        "itakeru2-27gallery-2026(2026-08-14〜2026-08-30/17日/長期)",
+        "mollis-exhibit-kinto-2026(2026-07-10〜2026-08-27/49日/長期)",
+        "rare-plants-dry-garden-festa-2026(2026-08-22〜2026-08-30/9日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
