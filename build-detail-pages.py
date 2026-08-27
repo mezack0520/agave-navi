@@ -112,9 +112,12 @@ def make_instagram_section(ev):
         return ''
 
     if not post_id and ig_url:
-        # Extract post ID from URL
+        # 投稿IDをURLから取る。リール(/reel/)とIGTV(/tv/)も投稿として埋め込める。
+        # 2026-08-27まで /p/ しか見ておらず、リールのURLだけを持つ回は
+        # 埋め込みごと消えていた(plants-garage-market-2026-spring)。
+        # return '' で静かに消えるため、頁を見るまで気づけない経路だった。
         import re
-        m = re.search(r'/p/([A-Za-z0-9_-]+)', ig_url)
+        m = re.search(r'/(?:p|reel|reels|tv)/([A-Za-z0-9_-]+)', ig_url)
         if m:
             post_id = m.group(1)
         else:

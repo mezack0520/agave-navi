@@ -24,7 +24,8 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      is_vague_venue, venue_key, venue_slug, venue_display,
                      VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
                      tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
-                     is_recent_past, event_span, PAST_KEEP_MAX)
+                     is_recent_past, event_span, PAST_KEEP_MAX,
+                     is_upcoming)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -1616,6 +1617,164 @@ def main():
         orphan_pages,
         '一覧・ナビ・関連リンクのどこかから貼る。'
         '辿らせる先が無い頁なら noindex にして sitemap から外す')
+
+    # --- Instagram埋め込みが黙って消えていないか -----------------------------
+    # build-detail-pages.make_instagram_section は、投稿IDが取れないと
+    # return '' で節ごと消す。例外も警告も出ないので、頁を開くまで気づけない。
+    # 2026-08-27、リールのURL(/reel/<id>/)だけを持つ回で実際に消えていた
+    # (extractor が /p/ しか見ていなかった)。IGは主催者の一次情報の主戦場で、
+    # 埋め込みが消えると詳細頁からその回の告知への導線が無くなる。
+    # ここは「値が在るか」ではなく「頁に出ているか」を見る(機能確認)。
+    _IG_ID = re.compile(r'/(?:p|reel|reels|tv)/([A-Za-z0-9_-]+)')
+    ig_lost = []
+    for e in events:
+        _sl = e.get('slug') or ''
+        _pid = (e.get('instagramPostId') or '').strip()
+        _iurl = (e.get('instagramUrl') or '').strip()
+        if not _pid and not _iurl:
+            continue
+        if not _pid and not _IG_ID.search(_iurl):
+            ig_lost.append(f'{_sl}: instagramUrl から投稿IDが取れない形 → {_iurl}')
+            continue
+        _pg = rp('events', f'{_sl}.html')
+        if not os.path.exists(_pg):
+            continue        # missing_detail_pages 側で鳴る
+        try:
+            with open(_pg, encoding='utf-8') as f:
+                _h = f.read()
+        except OSError:
+            continue
+        if 'detail-instagram-embed' not in _h:
+            ig_lost.append(f'{_sl}: IGの値はあるのに埋め込み節が頁に無い')
+        else:
+            _want = _pid or _IG_ID.search(_iurl).group(1)
+            if f'/p/{_want}/embed/' not in _h:
+                ig_lost.append(f'{_sl}: 埋め込みの投稿IDが events.json と違う（期待 {_want}）')
+    add('instagram_embed_missing', 'IGの値があるのに詳細頁に埋め込みが出ていない',
+        sorted(ig_lost),
+        'make_instagram_section が投稿IDを取れずに空を返している。'
+        'URLの形を増やしたら extractor の正規表現も足す。'
+        '値だけ直して再生成しないと頁は変わらない')
+
+    # --- カレンダー・マップの埋め込み集合 -------------------------------------
+    # build-static-html.py は既存HTMLへの挿入で作る。置換に失敗すると
+    # 消さずに足すだけになり、過去に calendar/map が 4.2MB まで肥大した。
+    # index.html には index_card_drift を付けたが、同じ作り方のこの2頁は
+    # 「冪等に書くこと」という注意書きだけで、数える側が無かった。
+    # 3つの表現(インラインJSON / SSRの一覧 / ItemListのJSON-LD)が同じ集合を
+    # 指しているかも見る。1つだけ古いと、見る経路によって件数が違う頁になる。
+    embed_drift = []
+    _want_up = {e.get('slug') for e in events
+                if e.get('status') != 'past' and is_upcoming(e, today_s)}
+    for _f in ('calendar.html', 'map.html'):
+        try:
+            with open(rp(_f), encoding='utf-8') as fh:
+                _h = fh.read()
+        except OSError:
+            embed_drift.append(f'{_f}: 読めない')
+            continue
+        _inline = re.findall(
+            r'<script[^>]*type="application/json"[^>]*>(.*?)</script>', _h, re.S)
+        if len(_inline) != 1:
+            embed_drift.append(
+                f'{_f}: インラインJSONが{len(_inline)}個（1個が正常。挿入が重なっている）')
+        for _b in _inline:
+            try:
+                _d = json.loads(_b)
+            except ValueError:
+                embed_drift.append(f'{_f}: インラインJSONが壊れている')
+                continue
+            _arr = _d if isinstance(_d, list) else (_d.get('events') or [])
+            _got = [x.get('slug') for x in _arr if isinstance(x, dict)]
+            _dupe = sorted({sl for sl in _got if _got.count(sl) > 1})
+            if _dupe:
+                embed_drift.append(f'{_f}: インラインJSONに重複 {_dupe[:3]}')
+            for sl in sorted(_want_up - set(_got)):
+                embed_drift.append(f'{_f}: インラインJSONに無い {sl}')
+            for sl in sorted(set(_got) - _want_up):
+                embed_drift.append(f'{_f}: インラインJSONに余分 {sl}')
+        _href = re.findall(r'href="/?events/([a-z0-9\-]+)\.html"', _h)
+        _hdupe = sorted({sl for sl in _href if _href.count(sl) > 1})
+        if _hdupe:
+            embed_drift.append(f'{_f}: SSR一覧に重複 {_hdupe[:3]}')
+        for sl in sorted(_want_up - set(_href)):
+            embed_drift.append(f'{_f}: SSR一覧に無い {sl}')
+        for sl in sorted(set(_href) - _want_up):
+            embed_drift.append(f'{_f}: SSR一覧に余分 {sl}')
+    add('embedded_event_set_drift',
+        'カレンダー・マップの埋め込み集合がevents.jsonと不一致',
+        embed_drift,
+        'scripts/build-static-html.py を再実行する。'
+        '重複が出ているときは挿入前の除去が効いていない（足すだけになっている）')
+
+    # --- 見送り記録の語彙 -----------------------------------------------------
+    # rejected-events.json は自分の中に _reasonTypes という語彙表を持っているが、
+    # 2026-08-27 まで repo 全体で reasonType を読む行が1本も無かった。
+    # blockedUrlDomains と同じで、書いてあるだけの規則は規則ではない。
+    # 綴り違いや未定義の値を書いても誰も止めないので、
+    # 「policy と unverified の件数」のような集計が黙ってずれる。
+    rej_vocab = []
+    _known = set((rej.get('_reasonTypes') or {}).keys())
+    for _it in (rej.get('items') or []):
+        _k = _it.get('key') or '(keyなし)'
+        _rt = _it.get('reasonType')
+        if not _rt:
+            rej_vocab.append(f'{_k}: reasonType が無い')
+        elif _known and _rt not in _known:
+            rej_vocab.append(f'{_k}: reasonType={_rt} は _reasonTypes に無い値')
+        if not (_it.get('reason') or '').strip():
+            rej_vocab.append(f'{_k}: reason（見送りの理由）が空')
+        _dc = str(_it.get('decided') or '')
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _dc):
+            rej_vocab.append(f'{_k}: decided の書式が不正 → {_dc!r}')
+        elif _dc > today_s:
+            rej_vocab.append(f'{_k}: decided が未来日 → {_dc}')
+    add('rejected_reason_vocab', '見送り記録の reasonType が語彙表にない値',
+        sorted(rej_vocab),
+        'rejected-events.json の _reasonTypes にある値だけを使う。'
+        '新しい類型なら、先に _reasonTypes と listing-policy.json に定義を足す')
+
+    # --- 再評価待ちの見送りの期限 ---------------------------------------------
+    # reasonType=unverified で revisit=true の回は「一次情報が出たら再評価する」
+    # という約束で保留している。植物軸は認めた上で出典が足りないだけなので、
+    # 掲載相当になる可能性が高い。ところが再評価を促す側が repo に無く、
+    # reasonType 自体を読む行も1本も無かった(2026-08-27)。
+    # 開催日を過ぎた保留は、再評価の機会そのものが消えている。
+    # 実際 gujo-de-cactus-night-market-2026-08(2026-08-16開催)は
+    # 08-12 に保留したまま開催日を11日過ぎており、誰も見に行かなかった。
+    # 「後で見る」と書いた時点で、それを期限付きで表に出す側を作らないと二度と見ない。
+    rej_expired, rej_stale = [], []
+    for _it in (rej.get('items') or []):
+        if not _it.get('revisit'):
+            continue
+        _ed = str(_it.get('eventDate') or '')
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _ed) and _ed < today_s:
+            rej_expired.append(
+                f"{_it.get('key')}: 開催日 {_ed} を過ぎた（保留 {_it.get('decided')}）")
+            continue
+        # 日付未確定が保留理由そのものの回は期限を持てない。放置されないよう年齢で見る。
+        _last = max(str(_it.get('revisitedOn') or ''), str(_it.get('decided') or ''))
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _last):
+            continue        # 書式は rejected_reason_vocab 側で鳴る
+        try:
+            _age = (_dtm.date.fromisoformat(today_s)
+                    - _dtm.date.fromisoformat(_last)).days
+        except ValueError:
+            continue
+        if _age >= 30:
+            rej_stale.append(f"{_it.get('key')}: 最終評価 {_last}（{_age}日前）")
+    add('rejected_revisit_expired', '再評価待ちの見送りが開催日を過ぎている',
+        sorted(rej_expired),
+        '開催日を過ぎた回はもう掲載できない。revisit を外して'
+        'reasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。'
+        '同じシリーズの次回が告知されていれば新規エントリとして扱う')
+    add('rejected_revisit_stale', '再評価待ちの見送りが30日以上動いていない',
+        sorted(rej_stale),
+        '一次情報を探し直して、掲載するか revisit を外すかを決める。'
+        '今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す'
+        '（見たことの記録が無いと、見ていないのと区別が付かない）。'
+        '日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）',
+        severity='info')
 
     # --- 出力 ---
     # 履歴は結果ファイルより先に読む。metric の急変検査が履歴を必要とし、

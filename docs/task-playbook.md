@@ -416,6 +416,51 @@
   `lastChecked` が4日以上前になったら日次メールに出るようにした。
   **「新着なし」で終わるときほど、書き戻しまでやってから終わること。**
 
+- **`return ''` で消える生成物は、消えたことが誰にも伝わらない（2026-08-27）。**
+  `build-detail-pages.make_instagram_section` は投稿IDが取れないと節ごと空を返す。
+  IDの抽出は `/p/<id>/` しか見ていなかったため、**リールのURL(`/reel/<id>/`)だけを
+  持つ回は Instagram 埋め込みが頁から丸ごと消えていた**
+  (`plants-garage-market-2026-spring`)。IGは主催者の一次情報の主戦場で、
+  埋め込みが消えるとその回の告知への導線が詳細頁から無くなる。
+  例外も警告も出ないので、頁を開くまで気づけない。
+  抽出は `/(?:p|reel|reels|tv)/` に広げた。検査は `instagram_embed_missing` で、
+  **「値が在るか」ではなく「頁に埋め込みが出ているか」を見る**(機能確認)。
+  埋め込みの投稿IDが events.json の値と違う場合も拾う(値だけ直して再生成しない事故)。
+  **`return ''` / `continue` で静かに抜ける分岐を書いたら、その結果を数える検査を同時に足す。**
+
+- **挿入で作る頁は index.html だけではない。calendar / map も数える（2026-08-27）。**
+  `build-static-html.py` は既存HTMLへの挿入で作るため、置換が効かないと
+  消さずに足すだけになる。過去に calendar/map が4.2MBまで肥大した事故があり、
+  プレイブックには「冪等に書くこと」という注意書きだけがあって数える側が無かった。
+  `index_card_drift` を index.html に付けたときに、同じ作り方のこの2頁を漏らしていた。
+  検査は `embedded_event_set_drift`。1頁に3つの表現(インラインJSON /
+  SSRの一覧 / ItemListのJSON-LD)があるので、**そのすべてが同じ集合を指しているか**を見る。
+  1つだけ古いと、見る経路によって件数が違う頁になる。
+  期待集合は `sitelib.is_upcoming` で算出する(生成側と同じ規則。写しを持たない)。
+  冪等性は2回続けて実行してバイト一致を見れば確かめられる(2026-08-27 実測: 一致)。
+
+- **`rejected-events.json` の `reasonType` を読むコードが1本も無かった（2026-08-27）。**
+  このファイルは自分の中に `_reasonTypes`(policy / unverified / undisclosed / cancelled)
+  という語彙表を持っているのに、repo 全体で `reasonType` を参照する行が無い。
+  `blockedUrlDomains` と同じ型の穴で、綴り違いや未定義の値を書いても誰も止めず、
+  「policy と unverified の件数」のような集計が黙ってずれる。
+  検査は `rejected_reason_vocab`(語彙外・欠落・`reason` が空・`decided` の書式と未来日)。
+  **語彙表をデータに書いたら、その語彙を突き合わせる検査を同じコミットで足す。**
+
+- **「一次情報が出たら再評価する」保留には期限を持たせる（2026-08-27）。**
+  `revisit=true` は植物軸を認めた上で出典が足りないだけの回で、掲載相当になる可能性が高い。
+  ところが再評価を促す側が repo に無く、9件が最古 2026-07-30 のまま動いていなかった。
+  うち `gujo-de-cactus-night-market-2026-08` は**開催日(8/16)を11日過ぎており、
+  再評価の機会そのものが消えていた**。開催が終わればもう掲載できないので、
+  この保留は永久に開いたままになる。
+  そこで各項目に `eventDate`(名称に開催日が書かれている回だけ)を明示し、
+  `rejected_revisit_expired` が開催日を過ぎた保留を urgent で拾う。
+  日付未確定が保留理由そのものの回は期限を持てないので、
+  `rejected_revisit_stale`(最終評価から30日以上、info)が受け皿になる。
+  再評価したら `revisitedOn` に実行日を書く。**見たことの記録が無いと、
+  見ていないのと区別が付かない。** 「後で見る」と書いた時点で、
+  それを期限付きで表に出す側を作らないと二度と見ない。
+
 - **URLスラッグは `sitelib` の `*_slug()` だけを使う。写しを持つと必ず食い違う。**
   `generate-rss.py` が `TAG_ROMAJI` と `safe_slug` を自前で持っており、
   sitelib に後から足した6タグ(アロイド・サボテン・着生植物・塊根植物・ビカクシダ・
@@ -520,7 +565,10 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
   形: `{timestamp, type, eventName, action, detail, verifiedOn}`。
   `action` は `listed` / `rejected` / `queued` / `no-action`。
   このファイルを読むコードは無いのでキーを増やしてよい(2026-08-12に確認)
-- 見送りは `rejected-events.json` に `reasonType` 付きで記録（`policy` / `unverified`）
+- 見送りは `rejected-events.json` に `reasonType` 付きで記録する。
+  使える値は同ファイルの `_reasonTypes`（`policy` / `unverified` / `undisclosed` / `cancelled`）だけ。
+  名称に開催日が書かれている回は `eventDate` も入れる（保留の期限判定に使う）。
+  `revisit=true` を再評価したら、掲載/確定のどちらでもない回は `revisitedOn` に実行日を書く
 - 人間の判断が要るものだけ `pending-judgments.json` に積む。
   そのとき **`listing-policy.json` への追記案を必ず添える**。同じ問いを翌日も投げないため
 - 説明文が短いだけの回はキューに積まない（週次エンリッチに任せる方針で確定済み）
