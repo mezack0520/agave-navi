@@ -1,5 +1,5 @@
 {
-  "total": 188,
+  "total": 186,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -266,10 +266,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
-      "items": [
-        "kisarazu-cs-auction-2026-09: 本文 11月8日 が 2026-09-22〜2026-09-22 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
@@ -338,10 +336,8 @@
     },
     "desc_truncated": {
       "title": "説明文が途中で切れている(括弧未閉じ・文末が句点でない)",
-      "count": 1,
-      "items": [
-        "plants-show-kiryu-2026-autumn: 文末が句点で終わらない …ing with plants -  “調達人”"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す",
       "severity": "urgent"
     },

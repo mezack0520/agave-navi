@@ -849,6 +849,16 @@ def main():
                 # 制御文字で壊れる(2026-08-18 souransai-koshigaya-2026-10 で発生)
                 if '\n' in cand or '\t' in cand:
                     return False, 'multi-line (page dump, not a paragraph)'
+                # 改行を空白に潰してから渡してくる経路があり、\n の検査だけでは抜ける
+                # (2026-08-27: note.com の本文が2連続スペース入りで通り、
+                #  手で書いた説明文を296字のページ全文で上書きした)。
+                # 段落として書かれた文に2連続スペースは出ない。
+                if '  ' in cand:
+                    return False, 'joined lines (2連続スペース)'
+                # 段落を正しく切り出せていれば文の終わりで終わる。
+                # 途中で切れている候補は本文の一部をつかんだだけ
+                if cand[-1] not in '。！？!?':
+                    return False, 'does not end with sentence terminator'
                 # Reject aggregator/boilerplate phrases
                 blocklist = [
                     'イベント情報をまとめ', '次回のイベント', '関連するタグ',
@@ -885,9 +895,30 @@ def main():
             # 短い現状を さらに短い候補で 上書きできる穴があった。
             long_enough = len(candidate_desc) > len(cur_desc) and (
                 len(cur_desc) < 80 or len(candidate_desc) >= int(len(cur_desc) * 1.2))
-            if ok and candidate_desc != cur_desc and long_enough:
+            # 直近に人が書いた説明文はスクレイパで上書きしない。
+            # 2026-08-27、掲載直後の PLANTS SHOW 桐生で、手で書いた145字が
+            # note.com のページ全文296字に置き換わった。長さで勝てば通る設計だと、
+            # 裏取りして書いた文が機械的な貼り付けに負ける。
+            # updatedAt から14日はそのままにして、週次エンリッチの対象から外す。
+            _recent_hand_written = False
+            _upd = (ev.get('updatedAt') or '').strip()
+            if len(_upd) >= 10:
+                try:
+                    # 日付だけで比べる。datetime.now() には時刻が入るので
+                    # ちょうど14日前が境界からこぼれる
+                    from datetime import date as _date2, datetime as _dt2, timedelta as _td2
+                    _recent_hand_written = (
+                        _dt2.strptime(_upd[:10], '%Y-%m-%d').date()
+                        >= _date2.today() - _td2(days=14))
+                except ValueError:
+                    pass
+
+            if ok and candidate_desc != cur_desc and long_enough and not _recent_hand_written:
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')
+            elif _recent_hand_written and ok and long_enough:
+                print(f"    DESC-KEPT for {ev['slug']}: updatedAt={_upd} は14日以内。"
+                      f"手で書いた本文を優先して上書きしない")
             elif len(cur_desc) < 70 and ev.get('status') == 'upcoming':
                 # 短文のまま残る回は理由を残す。ok=True でも差し替わらない経路
                 # (候補が現状と同一・伸び幅不足)があり、理由を分けないと原因を追えない
