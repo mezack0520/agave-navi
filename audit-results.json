@@ -1,5 +1,5 @@
 {
-  "total": 176,
+  "total": 188,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 15,
+      "count": 19,
       "items": [
         "collect-plants-2026-09",
         "green-holic-kariya-2026",
@@ -188,7 +188,11 @@
         "midori-to-taniku-marche-nihonosato-2026-09",
         "mollis-exhibit-kinto-2026",
         "narabikakufes-vol2-2026",
+        "notre-atelier-popup-tamagawa-2026-09",
+        "nova-cultura-tradmans-2026-09",
         "okibota-december-2026-sunshine",
+        "plants-show-kiryu-2026-autumn",
+        "raflum-hankyu-mens-tokyo-2026-09",
         "rare-foliage-sale-protoleaf-futako-2026",
         "rare-plants-dry-garden-festa-2026",
         "tokai-okibota-2026",
@@ -200,10 +204,11 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 75,
+      "count": 81,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
+        "bba-vol5-carpediem-2026-09",
         "bishoku-club-popup-kitamoto-2026",
         "bizarre-plants-natsunojin-ueno-2026",
         "botajam-2026",
@@ -224,6 +229,7 @@
         "engei-raku-2026-09",
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
+        "felicita-hachitoari-yumegaoka-2026-09",
         "fuji-taniku-fujikawa-rakuza-2026-08",
         "fukuoka-green-party-7th-2026",
         "gamagori-taniku-festa-wakayama-4th-2026-08",
@@ -231,6 +237,7 @@
         "gen-x-bocchi-botanical-market-2026-10",
         "gifu-midori-marche-2nd-2026-09",
         "green-base-market-vol1-nishikata-2026-10",
+        "green-nuts-rumble-vol2-2026-09",
         "green-summit-vol22-yamagata-2026",
         "ibatama-vol9-2026-10",
         "isij-big-bazaar-2026-09-27",
@@ -238,10 +245,7 @@
         "isij-big-bazaar-2027-01-10",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
-        "isij-big-bazaar-2027-07-11",
-        "isij-big-bazaar-2027-09-26",
-        "isij-big-bazaar-2027-11-28",
-        "kisarazu-engei-ichi-2026-08"
+        "isij-big-bazaar-2027-07-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -262,8 +266,10 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "kisarazu-cs-auction-2026-09: 本文 11月8日 が 2026-09-22〜2026-09-22 の外"
+      ],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
@@ -332,8 +338,10 @@
     },
     "desc_truncated": {
       "title": "説明文が途中で切れている(括弧未閉じ・文末が句点でない)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plants-show-kiryu-2026-autumn: 文末が句点で終わらない …ing with plants -  “調達人”"
+      ],
       "note": "一次情報から本文を書き直す。裏取りできなければ本文を空にして週次エンリッチに回す",
       "severity": "urgent"
     },
