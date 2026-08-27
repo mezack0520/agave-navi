@@ -532,6 +532,13 @@
       "note": "定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION",
       "severity": "urgent"
     },
+    "index_card_body_drift": {
+      "title": "トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)",
+      "count": 0,
+      "items": [],
+      "note": "来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す",
+      "severity": "urgent"
+    },
     "index_card_attr_drift": {
       "title": "トップのカード属性がevents.jsonと不一致(一覧から消える)",
       "count": 0,

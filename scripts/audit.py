@@ -25,7 +25,7 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
                      tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
                      is_recent_past, event_span, PAST_KEEP_MAX,
-                     is_upcoming)
+                     is_upcoming, compact_date)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -1233,6 +1233,35 @@ def main():
                 if _got != _v:
                     _card_attr_bad.append(
                         f"{_sm.group(1)}: data-{_k} 頁={_got!r} data={_v!r}")
+    # 本文（日付・タイトル・説明文）も同じ理由で古いまま残る。
+    # 属性より実害が直接的で、来場者が読む文字そのものが間違う。
+    # 2026-08-27時点で26件（説明文22・日付5・タイトル1）。
+    # 「第8回 花友フェスタ 2026」のように前回開催の名前が残っている回もあった。
+    _card_body_bad = []
+    if _idx:
+        _chunks = re.split(r'(?=<div class="event-card" )', _idx)
+        for _ch in _chunks:
+            _sm = re.search(r'data-slug="([^"]+)"', _ch)
+            if not _sm:
+                continue
+            _e = _ev_by_slug.get(_sm.group(1))
+            if not _e:
+                continue
+            _dm = re.search(r'<span class="event-date">([^<]*)</span>', _ch)
+            _tm = re.search(r'<h\d class="event-title">([^<]*)</h\d>', _ch)
+            _pm = re.search(r'<p class="event-description">(.*?)</p>', _ch, re.S)
+            if _dm and _dm.group(1) != compact_date(_e):
+                _card_body_bad.append(
+                    f"{_sm.group(1)}: 日付 頁={_dm.group(1)!r} data={compact_date(_e)!r}")
+            if _tm and _tm.group(1) != (_e.get('name') or ''):
+                _card_body_bad.append(
+                    f"{_sm.group(1)}: 名称 頁={_tm.group(1)[:24]!r} data={(_e.get('name') or '')[:24]!r}")
+            if _pm and _pm.group(1).strip() != (_e.get('description') or '').strip():
+                _card_body_bad.append(f"{_sm.group(1)}: 説明文が古い")
+    add('index_card_body_drift', 'トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)',
+        sorted(_card_body_bad),
+        '来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す')
+
     add('index_card_attr_drift', 'トップのカード属性がevents.jsonと不一致(一覧から消える)',
         sorted(_card_attr_bad),
         'status-auto.js がこの属性で開催中/終了を振り分けるため、'

@@ -24,7 +24,7 @@ ROOT = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
 sys.path.insert(0, SCRIPT_DIR)
 from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
-                     LONG_RUN_DAYS, no_image_thumb)
+                     LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -123,6 +123,39 @@ def _expected_attrs(ev):
         'tags': ','.join(ev.get('tags') or []),
         'added-date': ev.get('addedDate') or '',
     }
+
+
+def sync_card_body(chunk, ev):
+    """カード本文（日付・タイトル・説明文・県名）を events.json に揃える。
+
+    属性だけ直しても、来場者が読むのは本文のほう。
+    2026-08-27時点で26件が古いままだった。内訳は説明文22・日付5・タイトル1で、
+    「第8回 花友フェスタ 2026」のように前回開催の名前が残っている回もあった。
+    サムネイルの枠には events.json の日付を出しているので、
+    同じカードの中で日付が食い違う状態になっていた。
+    """
+    if not ev:
+        return chunk, []
+    changed = []
+
+    def _sub(pattern, want, label, escape=True):
+        nonlocal chunk, changed
+        m = re.search(pattern, chunk, re.S)
+        if not m:
+            return
+        got = m.group(1)
+        if got.strip() == (want or '').strip():
+            return
+        changed.append(label)
+        val = html_escape(want or '') if escape else (want or '')
+        chunk = chunk[:m.start(1)] + val + chunk[m.end(1):]
+
+    _sub(r'<span class="event-date">([^<]*)</span>', compact_date(ev), 'date')
+    _sub(r'<h\d class="event-title">([^<]*)</h\d>', ev.get('name') or '', 'title')
+    _sub(r'<p class="event-description">(.*?)</p>', ev.get('description') or '', 'desc')
+    _sub(r'<span class="event-region">([^<]*)</span>',
+         ev.get('prefecture') or ev.get('region') or '', 'region')
+    return chunk, changed
 
 
 def sync_card_attrs(tag, ev):
@@ -253,6 +286,24 @@ def main():
     new_chunks.append(html[last_end:])
     new_html = ''.join(new_chunks)
 
+    # 本文の同期は別パスでやる。上のループはサムネイルの前後しか触っておらず、
+    # 本文（日付・タイトル・説明文・県名）はカードの後半にあるため。
+    _starts = [mm.start() for mm in CARD_HEADER_RE.finditer(new_html)]
+    body_fixed = 0
+    if _starts:
+        _out = [new_html[:_starts[0]]]
+        for _i, _st in enumerate(_starts):
+            _en = _starts[_i + 1] if _i + 1 < len(_starts) else len(new_html)
+            _chunk = new_html[_st:_en]
+            _sm = re.search(r'data-slug="([^"]+)"', _chunk)
+            _slug = _sm.group(1) if _sm else None
+            _chunk, _bch = sync_card_body(_chunk, by_slug.get(_slug))
+            if _bch:
+                body_fixed += 1
+                print(f'  body  {_slug}: ' + ' / '.join(_bch))
+            _out.append(_chunk)
+        new_html = ''.join(_out)
+
     # 終了セクションの見出しに、載っている範囲を明記する。
     # 「終了したイベント」だけでは全件あるように見えるが、実際は
     # sitelib.PAST_KEEP_DAYS で切った直近ぶんしか載っていない。
@@ -286,6 +337,7 @@ def main():
     print(f'  → swapped to no-image: {swapped_to_noimg}')
     print(f'  → unchanged:       {unchanged}')
     print(f'  → 属性を直したカード: {attr_fixed}')
+    print(f'  → 本文を直したカード: {body_fixed}')
 
     if new_html != original_html:
         if args.dry_run:
