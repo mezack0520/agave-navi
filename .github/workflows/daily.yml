@@ -17,6 +17,11 @@ on:
     branches: [main]
     paths:
       - 'events.json'
+      # 巡回スクリプトを直したら回して結果を確かめられるようにする。
+      # CI側(GITHUB_TOKEN)のpushはワークフローを再起動しない仕様なので、
+      # sync-events が events.json を更新しても daily は発火しない。
+      # 手で直したときに確認する経路が無いと、動くかどうかを翌朝まで待つことになる。
+      - 'scripts/coverage-sweep.py'
   repository_dispatch:
     types: [daily]
   workflow_dispatch:

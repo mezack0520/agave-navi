@@ -54,6 +54,8 @@ from datetime import date, datetime, timedelta
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, 'coverage-gaps.json')
 
+# 日付別ページ。1日1ページで全国のその日のイベントが並ぶ。
+# 先の日付は404になる(2026-08-27時点で約2か月先まで)。404は異常として扱わない。
 BASE = 'https://leaf-laboratory.com/blogs/media/event-list-'
 UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
       '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
