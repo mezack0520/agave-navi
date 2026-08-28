@@ -1,33 +1,33 @@
 {
   "_note": "他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-08-27",
+  "sweptOn": "2026-08-28",
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1052,
+    "candidates": 1033,
     "in_scope": 192,
-    "covered": 63,
-    "known_rejected": 47,
-    "gaps_raw": 82
+    "covered": 66,
+    "known_rejected": 46,
+    "gaps_raw": 80
   },
   "errors": [],
   "gaps": [
     {
-      "date": "2026-08-27",
-      "lastSeen": "2026-10-10",
+      "date": "2026-08-28",
+      "lastSeen": "2026-10-11",
       "days": 45,
       "title": "08/22 追加 多肉植物、アガベ販売会＆ボタニーペインティング..."
     },
     {
-      "date": "2026-08-27",
+      "date": "2026-08-28",
       "lastSeen": "2026-09-11",
-      "days": 16,
+      "days": 15,
       "title": "アトリエnanaが夕涼みしながら多肉時間2026を開催、夕方のビニールハウスで多肉植物を販売"
     },
     {
-      "date": "2026-08-27",
+      "date": "2026-08-28",
       "lastSeen": "2026-08-31",
-      "days": 5,
+      "days": 4,
       "title": "ノハラ園芸センターがSummer SALE2026を開催、多肉植物とアガベと観葉植物が20%OFF"
     },
     {
