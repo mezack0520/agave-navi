@@ -1,5 +1,5 @@
 {
-  "total": 234,
+  "total": 235,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -475,10 +475,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 3,
+      "count": 4,
       "items": [
         "itakeru2-27gallery-2026(2026-08-14〜2026-08-30/17日/長期)",
         "okinawa-chinki-plants-futako-2026(2026-08-28〜2026-08-31/4日/長期)",
+        "rare-foliage-sale-protoleaf-futako-2026(2026-08-15〜2026-08-30/16日/長期)",
         "rare-plants-dry-garden-festa-2026(2026-08-22〜2026-08-30/9日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
