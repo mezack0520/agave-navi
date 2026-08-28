@@ -21,6 +21,9 @@ import sys
 from datetime import datetime, timedelta
 from urllib.parse import urljoin
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import today_jst, now_jst   # noqa: E402
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -80,8 +83,7 @@ def extract_events_from_html(html, source_name, source_url):
     if not html:
         return []
 
-    from datetime import date as _date
-    CURRENT_YEAR = _date.today().year
+    CURRENT_YEAR = int(today_jst()[:4])
 
     soup = BeautifulSoup(html, 'lxml')
     events = []
@@ -315,7 +317,7 @@ def is_future_event(event):
 
     try:
         event_date = datetime.strptime(event['date'], '%Y-%m-%d')
-        return event_date >= datetime.now() - timedelta(days=7)
+        return event_date >= datetime.strptime(today_jst(), '%Y-%m-%d') - timedelta(days=7)
     except ValueError:
         return True
 
@@ -356,7 +358,7 @@ def generate_report(results, new_events):
 
 def main():
     print("=== agave-navi.com Event Crawler ===")
-    print(f"Started at: {datetime.now().isoformat()}")
+    print(f"Started at: {now_jst().isoformat()}")
 
     # Load sources
     try:

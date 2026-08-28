@@ -287,8 +287,7 @@ def _venue_placeholder(ev):
     """会場が無いときの表示。終了済みに「会場未定」は誤り(未定=これから決まる)。
     終わった回で会場が分からないものは記録が無いだけなので「記録なし」と出す。"""
     end = (ev.get('dateEnd') or ev.get('date') or '')
-    import datetime as _dt
-    today = _dt.date.today().isoformat()
+    today = sitelib.today_jst()
     if end and end < today:
         return '記録なし'
     return '会場未定'
@@ -314,7 +313,8 @@ def make_robots_meta(ev):
     end = ev.get('dateEnd') or ev.get('date') or ''
     if end:
         try:
-            if datetime.strptime(end, '%Y-%m-%d') < datetime.now() - timedelta(days=30):
+            if datetime.strptime(end, '%Y-%m-%d') < datetime.strptime(
+                    sitelib.today_jst(), '%Y-%m-%d') - timedelta(days=30):
                 noindex = True
         except ValueError:
             pass

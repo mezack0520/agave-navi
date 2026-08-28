@@ -257,6 +257,44 @@ FAR_FUTURE = '9999-12-31'
 # 数字ではなくこの定数を参照する。audit.py の desc_min_chars_drift が写しを検出する。
 DESC_MIN_CHARS = 50
 
+# 人が裏取りして書いた説明文を、週次エンリッチのスクレイプで上書きしない期間。
+# 2026-08-27 に enrich_events.py へ入れたが、目印が updatedAt だけだったため
+# 新規登録で入れ忘れると保護が一切効かなかった(2026-08-28 に30件が無防備で発覚。
+# 週次エンリッチの2日前だった)。
+# 「入れ忘れない」は運用で守れないので、addedDate でも守れるようにする。
+# ただし addedDate 側は実体のある本文に限る。短いスタブを保護すると、
+# いちばん埋めてほしい回を14日間エンリッチの対象外にしてしまう。
+DESC_PROTECT_DAYS = 14
+
+
+def desc_is_protected(e, today=None):
+    """説明文をスクレイプで上書きしてはならない回か。
+
+    enrich_events.py(書き込み側)と audit.py(検出側)の単一情報源。
+    どちらか片方に書くと、翌週の巡回が同じ本文を書き戻す。
+    """
+    ref = today or today_jst()
+    try:
+        ref = date.fromisoformat(str(ref)[:10])
+    except ValueError:
+        return False
+    limit = ref - timedelta(days=DESC_PROTECT_DAYS)
+
+    def _within(v):
+        v = (v or '').strip()[:10]
+        if len(v) < 10:
+            return False
+        try:
+            return date.fromisoformat(v) >= limit
+        except ValueError:
+            return False
+
+    if _within(e.get('updatedAt')):
+        return True
+    return (_within(e.get('addedDate'))
+            and len((e.get('description') or '').strip()) >= DESC_MIN_CHARS)
+
+
 # 終了イベントを一覧に残す期間。「いつまで見せるか」の単一情報源。
 # 従来は status-auto.js の HIDE_AFTER_DAYS=14(display:none)と
 # sync-index-cards.py の KEEP_PAST=12(HTMLから物理削除)に別々の単位で置かれ、

@@ -30,7 +30,7 @@ from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import is_generic_image_url as _sitelib_is_generic
-from sitelib import DESC_MIN_CHARS
+from sitelib import DESC_MIN_CHARS, now_jst
 
 REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 EVENTS_PATH = os.path.join(REPO_ROOT, 'events.json')
@@ -730,7 +730,7 @@ def main():
     args = parser.parse_args()
 
     print("=== agave-navi.com Event Enrichment ===")
-    print(f"Started at: {datetime.now().isoformat()}")
+    print(f"Started at: {now_jst().isoformat()}")
 
     events = load_events()
     print(f"Total events: {len(events)}")
@@ -899,25 +899,18 @@ def main():
             # 2026-08-27、掲載直後の PLANTS SHOW 桐生で、手で書いた145字が
             # note.com のページ全文296字に置き換わった。長さで勝てば通る設計だと、
             # 裏取りして書いた文が機械的な貼り付けに負ける。
-            # updatedAt から14日はそのままにして、週次エンリッチの対象から外す。
-            _recent_hand_written = False
-            _upd = (ev.get('updatedAt') or '').strip()
-            if len(_upd) >= 10:
-                try:
-                    # 日付だけで比べる。datetime.now() には時刻が入るので
-                    # ちょうど14日前が境界からこぼれる
-                    from datetime import date as _date2, datetime as _dt2, timedelta as _td2
-                    _recent_hand_written = (
-                        _dt2.strptime(_upd[:10], '%Y-%m-%d').date()
-                        >= _date2.today() - _td2(days=14))
-                except ValueError:
-                    pass
+            # 判定は sitelib.desc_is_protected が単一情報源。
+            # ここに条件を書くと、検出側(audit.py)と食い違って気づけない。
+            # updatedAt が無い回は addedDate で守る(登録時の入れ忘れが常態のため)。
+            from sitelib import desc_is_protected as _desc_is_protected
+            _recent_hand_written = _desc_is_protected(ev)
+            _upd = (ev.get('updatedAt') or ev.get('addedDate') or '').strip()
 
             if ok and candidate_desc != cur_desc and long_enough and not _recent_hand_written:
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')
             elif _recent_hand_written and ok and long_enough:
-                print(f"    DESC-KEPT for {ev['slug']}: updatedAt={_upd} は14日以内。"
+                print(f"    DESC-KEPT for {ev['slug']}: {_upd} は14日以内。"
                       f"手で書いた本文を優先して上書きしない")
             elif len(cur_desc) < 70 and ev.get('status') == 'upcoming':
                 # 短文のまま残る回は理由を残す。ok=True でも差し替わらない経路

@@ -55,7 +55,10 @@ def event_to_ics(e):
     url = f'https://{DOMAIN}/events/{slug}.html'
     location = ', '.join(x for x in [loc, pref] if x)
     uid = f'{slug}@{DOMAIN}'
-    now = datetime.now(JST).strftime('%Y%m%dT%H%M%SZ')
+    # DTSTAMP は RFC 5545 で UTC 必須。JST の時刻に Z を付けると
+    # 9時間先の時刻を名乗ることになり、購読側が版の新旧を取り違える
+    # (2026-08-28 に発覚。3本すべてが9時間ずれていた)。
+    now = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     lines = [
         'BEGIN:VEVENT',
         fold(f'UID:{uid}'),

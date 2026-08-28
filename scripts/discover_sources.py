@@ -20,6 +20,10 @@ from urllib.parse import urlparse, urljoin
 import requests
 from bs4 import BeautifulSoup
 
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from sitelib import now_jst   # noqa: E402  時刻は sitelib が単一情報源
+
 # Paths
 SOURCES_PATH = os.path.join(os.path.dirname(__file__), '..', 'crawl-sources.json')
 REPORT_PATH = '/tmp/discover-report.md'
@@ -258,7 +262,7 @@ def analyze_page(url):
 
 def main():
     print("=== agave-navi.com Source Discovery ===")
-    print(f"Started at: {datetime.now().isoformat()}")
+    print(f"Started at: {now_jst().isoformat()}")
 
     known_domains = load_known_domains()
     print(f"Known source domains: {len(known_domains)}")

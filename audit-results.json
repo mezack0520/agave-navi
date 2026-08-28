@@ -1,5 +1,5 @@
 {
-  "total": 235,
+  "total": 234,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -731,12 +731,38 @@
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
     },
+    "updated_at_missing_on_new": {
+      "title": "直近に足した回に updatedAt が無い",
+      "count": 0,
+      "items": [],
+      "note": "本文を書いた日を updatedAt に入れる（登録時なら addedDate と同じ値でよい）。週次エンリッチの上書き保護は sitelib.desc_is_protected が addedDate でも効かせるので本文が消える心配は無いが、以後この回を直したとき「最終更新」が動かない",
+      "severity": "info"
+    },
+    "build_timestamp_tz_drift": {
+      "title": "配布物のタイムスタンプが同じビルド内で食い違う",
+      "count": 0,
+      "items": [],
+      "note": "どちらかがタイムゾーンを取り違えている。.ics の DTSTAMP と RSS の lastBuildDate は同じビルドが書くので本来一致する。DTSTAMP は必ず UTC(datetime.now(timezone.utc))で作る",
+      "severity": "urgent"
+    },
+    "naive_local_date": {
+      "title": "「今日」をランナーのタイムゾーンで決めている",
+      "count": 0,
+      "items": [],
+      "note": "date.today() はランナーの日付。GitHub Actions は UTC なのでJST の午前0〜9時は前日になる。sitelib.today_jst() を使う",
+      "severity": "urgent"
+    },
+    "event_set_shrunk": {
+      "title": "イベントがまとめて消えている",
+      "count": 0,
+      "items": [],
+      "note": "意図した削除なら対処不要。心当たりが無ければ events.json の直前の版と差分を取る（git diff HEAD~1 -- events.json）。生成物は events.json から作り直されるので、消えたことは他の検査に出ない",
+      "severity": "urgent"
+    },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 1,
-      "items": [
-        "upcoming_no_image: 直近中央値 72 → 103（+31）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     }

@@ -51,6 +51,9 @@ import urllib.error
 import urllib.request
 from datetime import date, datetime, timedelta
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import today_jst   # noqa: E402  「今日」は sitelib が単一情報源
+
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, 'coverage-gaps.json')
 
@@ -219,7 +222,7 @@ def sweep(days, sleep=0.7):
     gaps, errors, stats = [], [], {'fetched': 0, 'candidates': 0,
                                    'in_scope': 0, 'covered': 0,
                                    'known_rejected': 0}
-    today = date.today()
+    today = date.fromisoformat(today_jst())
     for i in range(days):
         d = today + timedelta(days=i)
         key = d.isoformat()
@@ -365,7 +368,7 @@ def main():
                   '一次情報で裏取りして、掲載するか rejected-events.json に落とす。'
                   'errors が空でないときは巡回そのものが失敗しているので、'
                   'gaps が0件でも「取りこぼしなし」とは言えない。'),
-        'sweptOn': date.today().isoformat(),
+        'sweptOn': today_jst(),
         'daysAhead': args.days,
         'stats': stats,
         'errors': errors,

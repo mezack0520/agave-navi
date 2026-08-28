@@ -10,6 +10,9 @@ issue-to-shops.py — Issue Form (.github/ISSUE_TEMPLATE/add-shop.yml) で submi
 """
 import os, json, re, sys, urllib.request, urllib.parse
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import today_jst   # noqa: E402
+
 REPO = 'mezack0520/agave-navi'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CRAWL_SOURCES = os.path.join(ROOT, 'crawl-sources.json')
@@ -182,7 +185,7 @@ def main():
 
     if added > 0:
         from datetime import date
-        cs['lastUpdated'] = date.today().isoformat()
+        cs['lastUpdated'] = today_jst()
         with open(CRAWL_SOURCES, 'w', encoding='utf-8') as f:
             json.dump(cs, f, ensure_ascii=False, indent=2)
             f.write('\n')

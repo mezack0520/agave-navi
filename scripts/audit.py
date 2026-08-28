@@ -25,7 +25,7 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
                      tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
                      is_recent_past, event_span, PAST_KEEP_MAX,
-                     is_upcoming, compact_date)
+                     is_upcoming, compact_date, DESC_PROTECT_DAYS)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -1889,6 +1889,116 @@ def main():
         '日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）',
         severity='info')
 
+    # 説明文の上書き保護が、新規登録の回で外れていないか。
+    # 保護の目印は updatedAt だが、登録時に入れ忘れるのが常態で、
+    # 2026-08-28 に「直近14日に足した30件すべてが無防備」という状態で見つかった
+    # (週次エンリッチの2日前だった)。書き込み側は sitelib.desc_is_protected が
+    # addedDate でも守るようにしたので実害は無いが、updatedAt が無いままだと
+    # 「最後に本文を書いた日」がどこにも残らず、保護の根拠が addedDate 頼みになる。
+    _unmarked = []
+    for e in events:
+        _ad = str(e.get('addedDate') or '')[:10]
+        if len(_ad) < 10 or (e.get('updatedAt') or '').strip():
+            continue
+        try:
+            _age = (_dtm.date.fromisoformat(today_s)
+                    - _dtm.date.fromisoformat(_ad)).days
+        except ValueError:
+            continue
+        if 0 <= _age <= DESC_PROTECT_DAYS and \
+                len((e.get('description') or '').strip()) >= DESC_MIN_CHARS:
+            _unmarked.append(f"{e['slug']}: addedDate {_ad} / updatedAt なし")
+    add('updated_at_missing_on_new', '直近に足した回に updatedAt が無い',
+        sorted(_unmarked),
+        '本文を書いた日を updatedAt に入れる（登録時なら addedDate と同じ値でよい）。'
+        '週次エンリッチの上書き保護は sitelib.desc_is_protected が addedDate でも効かせるので'
+        '本文が消える心配は無いが、以後この回を直したとき「最終更新」が動かない',
+        severity='info')
+
+    # 配布物のタイムスタンプが、同じビルドの中で食い違っていないか。
+    # 2026-08-28、generate-ical.py が JST の時刻に 'Z'(=UTC)を付けており、
+    # 3本の .ics すべてが DTSTAMP を9時間先に名乗っていた(RFC 5545 は UTC 必須)。
+    # 購読側は DTSTAMP で版の新旧を判断するので、先の時刻を名乗ると
+    # 後から出した訂正が古い版として無視されうる。
+    # 「今と比べて未来か」で見ると、ビルドから9時間経てば通ってしまい検査が効かない。
+    # 同じビルドが書いた2つの時刻を突き合わせれば、時計に依存せず判定できる。
+    _stamps = []
+    def _slurp(path):
+        try:
+            with open(path, encoding='utf-8') as _f:
+                return _f.read()
+        except OSError:
+            return ''
+
+    _m = re.search(r'<lastBuildDate>([^<]+)</lastBuildDate>', _slurp(rp('rss.xml')))
+    if _m:
+        try:
+            from email.utils import parsedate_to_datetime as _p2d
+            _stamps.append(('rss.xml lastBuildDate',
+                            _p2d(_m.group(1)).astimezone(_dtm.timezone.utc)))
+        except (TypeError, ValueError):
+            pass
+    for _f in sorted(glob.glob(rp('*.ics'))):
+        _mm = re.search(r'^DTSTAMP:(\d{8}T\d{6}Z)', _slurp(_f), re.M)
+        if not _mm:
+            continue
+        try:
+            _stamps.append((os.path.basename(_f) + ' DTSTAMP',
+                            _dtm.datetime.strptime(_mm.group(1), '%Y%m%dT%H%M%SZ')
+                            .replace(tzinfo=_dtm.timezone.utc)))
+        except ValueError:
+            pass
+    _tz_drift = []
+    if len(_stamps) >= 2:
+        _base_name, _base_dt = min(_stamps, key=lambda x: x[1])
+        for _n, _d in _stamps:
+            _gap = abs((_d - _base_dt).total_seconds())
+            if _gap >= 1800:        # 30分。ビルド内の生成順の差では開かない
+                _tz_drift.append(
+                    f'{_n} が {_base_name} と {_gap / 3600:.1f}時間ずれている'
+                    f'（{_d.isoformat()} vs {_base_dt.isoformat()}）')
+    add('build_timestamp_tz_drift', '配布物のタイムスタンプが同じビルド内で食い違う',
+        sorted(_tz_drift),
+        'どちらかがタイムゾーンを取り違えている。'
+        '.ics の DTSTAMP と RSS の lastBuildDate は同じビルドが書くので本来一致する。'
+        'DTSTAMP は必ず UTC(datetime.now(timezone.utc))で作る')
+
+    # 「今日」をランナーのタイムゾーンで決めていないか。
+    # GitHub Actions は UTC で走るので、06:00 JST 起動の daily は
+    # ランナー日付が前日になる。auto-status-jst.py はこの理由で作られたのに、
+    # 同じ書き方が他に5か所残っていた(2026-08-28)。実害も出ていた:
+    #   - audit.py が履歴のキーを UTC 日付で書き、前日の実行記録を毎朝上書きしていた
+    #   - coverage-sweep.py の sweptOn が常に1日古く、巡回の鮮度検査が1日ぶん鈍っていた
+    # 日付は sitelib.today_jst() が単一情報源。
+    # 経過時間の計測やログ出力の now() は対象外(日付として比較・保存しないため)。
+    # 文字列や docstring に書かれた説明を拾わないよう、本文の正規表現ではなく
+    # AST で「実際の呼び出し」だけを見る(この検査自身の note を拾って誤検知した)。
+    import ast as _ast
+    _naive_date = []
+    for _f in sorted(glob.glob(rp('scripts', '*.py')) + [rp('build-detail-pages.py')]):
+        _rel = os.path.relpath(_f, REPO)
+        try:
+            _tree = _ast.parse(_slurp(_f))
+        except SyntaxError:
+            continue
+        for _n in _ast.walk(_tree):
+            if not isinstance(_n, _ast.Call) or not isinstance(_n.func, _ast.Attribute):
+                continue
+            # date.today() / datetime.today()
+            if _n.func.attr == 'today' and not _n.args and not _n.keywords:
+                _naive_date.append(f'{_rel}:{_n.lineno}: .today()')
+            # datetime.now() を引数なしで呼び、その場で日付にしている
+            elif (_n.func.attr in ('date', 'isoformat')
+                  and isinstance(_n.func.value, _ast.Call)
+                  and isinstance(_n.func.value.func, _ast.Attribute)
+                  and _n.func.value.func.attr == 'now'
+                  and not _n.func.value.args and not _n.func.value.keywords):
+                _naive_date.append(f'{_rel}:{_n.lineno}: datetime.now().{_n.func.attr}()')
+    add('naive_local_date', '「今日」をランナーのタイムゾーンで決めている',
+        sorted(_naive_date),
+        'date.today() はランナーの日付。GitHub Actions は UTC なので'
+        'JST の午前0〜9時は前日になる。sitelib.today_jst() を使う')
+
     # --- 出力 ---
     # 履歴は結果ファイルより先に読む。metric の急変検査が履歴を必要とし、
     # かつ findings に載せる必要があるため(2026-08-24: add() を書き出しの後に
@@ -1900,7 +2010,11 @@ def main():
     except (OSError, ValueError):
         hist = {'_note': '監査結果の推移。scripts/audit.py が追記する。'
                          '直近90件のみ保持。改善/悪化の判断に使う。', 'runs': []}
-    today_key = __import__('datetime').date.today().isoformat()
+    # 履歴のキーは JST。ここだけ date.today() を使っていたため、
+    # 06:00 JST 起動の daily(=前日 21:00 UTC)が『前日』のキーで書き、
+    # 前日の実行記録を毎朝上書きして消していた
+    # (2026-08-27 の記録が、翌朝の daily の値 367件 に置き換わっていた)。
+    today_key = today_s
     _prev_runs = [r for r in (hist.get('runs') or []) if r.get('date') != today_key]
 
     # 0件のものも必ず入れる。0を除外すると「全部消えた」という
@@ -1915,21 +2029,68 @@ def main():
     # 直近7回の中央値と比べ、相対30%以上かつ絶対10件以上動いたときだけ鳴らす。
     # 片方だけの条件だと、小さい値の±1や大きい値の自然増で毎日鳴る。
     _hist = [r for r in _prev_runs if r.get('metric')][-7:]
+
+    # 掲載件数に比例して動く指標は、母数の変化を割り引いてから比べる。
+    # 2026-08-27 に取りこぼし52件をまとめて掲載したとき、
+    # upcoming_no_image が 72→103 に増えて urgent が鳴った。増えて当然の増え方で、
+    # しかも中央値が追いつくまで4日鳴り続ける。意図した掲載で毎回4日鳴る検査は、
+    # そのうち中身を見ずに閉じられる。
+    _METRIC_SCALES_WITH_EVENTS = {
+        'thin_past_with_source', 'thin_archived',
+        'upcoming_with_image', 'upcoming_no_image', 'ongoing_events',
+    }
+    # その指標が「異常を示す向き」。反対向きの動きは、
+    # その指標を足した理由からして異常の証拠にならない。
+    #   upcoming_with_image は「ある件数」で、追加では減らない。
+    #   減ったときだけ画像の消失を意味する(だから足した指標であって、
+    #   増えたことを異常として鳴らすのは足した目的と逆)。
+    _METRIC_ALARM_DIR = {'upcoming_with_image': -1, 'upcoming_no_image': +1}
+
+    _ev_now = len(events)
     metric_moves = []
     for _k, _v in _cur_metric.items():
         # そのキーを実際に持っている履歴だけで基準を作る。
         # 欠けている履歴を0とみなすと、検査を追加した初日に必ず誤検知する
         # (2026-08-24: upcoming_with_image を足した日に「0→13」で鳴った)。
-        _vals = [r['metric'][_k] for r in _hist if _k in r.get('metric', {})]
-        if len(_vals) < 3:
+        _rows = [r for r in _hist if _k in r.get('metric', {})]
+        if len(_rows) < 3:
             continue        # 基準を作れるだけの履歴がまだ無い
-        _series = sorted(_vals)
+        _series = sorted(r['metric'][_k] for r in _rows)
         _base = _series[len(_series) // 2]
-        _delta = _v - _base
-        if _base > 0 and abs(_delta) >= 10 and abs(_delta) / _base >= 0.30:
-            metric_moves.append(f'{_k}: 直近中央値 {_base} → {_v}（{_delta:+d}）')
-        elif _base == 0 and _v >= 10:
+        _scaled = _base
+        if _k in _METRIC_SCALES_WITH_EVENTS:
+            # 中央値を取った回と同じ並びで母数の中央値も取る。
+            _evs = sorted(r.get('events') or 0 for r in _rows)
+            _ev_base = _evs[len(_evs) // 2]
+            if _ev_base > 0 and _ev_now > 0:
+                _scaled = _base * _ev_now / _ev_base
+        _delta = _v - _scaled
+        _dir = _METRIC_ALARM_DIR.get(_k, 0)
+        if _dir and (_delta > 0) != (_dir > 0):
+            continue        # 異常を示さない向きの動き
+        _note = '' if _scaled == _base else f'（掲載{_ev_now}件で換算 {_scaled:.0f}）'
+        if _scaled > 0 and abs(_delta) >= 10 and abs(_delta) / _scaled >= 0.30:
+            metric_moves.append(
+                f'{_k}: 直近中央値 {_base} → {_v}{_note}（{_delta:+.0f}）')
+        elif _scaled == 0 and _v >= 10:
             metric_moves.append(f'{_k}: ずっと0だったものが {_v} に増えた')
+    # イベントが黙って消えていないか。
+    # events.json が正なので、消えれば詳細ページも sitemap もカードも
+    # 一緒に消え、整合検査は全部通る。「全部揃って無くなる」は
+    # どの検査にも引っかからない唯一の壊れ方で、2026-08-28 まで見る側が無かった。
+    # 削除は方針(contradictoryData)に沿った意図的なもので、履歴19回で最大1件。
+    # 3件以上まとめて減ったら、意図した削除かどうかを人が見る。
+    _shrunk = []
+    _prev_ev = next((r.get('events') for r in reversed(_prev_runs)
+                     if isinstance(r.get('events'), int)), None)
+    if _prev_ev and _prev_ev - len(events) >= 3:
+        _shrunk.append(f'掲載イベントが {_prev_ev} → {len(events)} 件に減った'
+                       f'（{len(events) - _prev_ev:+d}）')
+    add('event_set_shrunk', 'イベントがまとめて消えている', _shrunk,
+        '意図した削除なら対処不要。心当たりが無ければ events.json の直前の版と'
+        '差分を取る（git diff HEAD~1 -- events.json）。'
+        '生成物は events.json から作り直されるので、消えたことは他の検査に出ない')
+
     add('metric_moved', '参考値が急に動いた(異常の可能性)', sorted(metric_moves),
         '値そのものは対応不要だが、この動き方は異常の手がかりになる。'
         '該当項目の items を見て、想定できる増減かを確かめる', severity='urgent')
