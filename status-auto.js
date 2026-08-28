@@ -14,9 +14,18 @@
     var LONG_RUN_DAYS = 4;      // sitelib.LONG_RUN_DAYS と同値
     var PAST_KEEP_DAYS = 14;    // sitelib.PAST_KEEP_DAYS と同値
     var FAR_FUTURE = '9999-12-31';
+    // JSTの「今日」。Date.now() は常にUTCエポックなので、9時間足して
+    // UTCの読み出しを使えばJSTの暦日になる。閲覧者のタイムゾーンには依存しない。
+    //
+    // 直してはいけない形(2026-08-29に発覚):
+    //   new Date(n.getTime() + n.getTimezoneOffset()*60000 + 9*3600000)
+    // getTime() は既にUTCなのに、ローカル壁時計だと思って時差を足している。
+    // JSTの閲覧者では -9h と +9h が打ち消し合ってUTCの日付が返り、
+    // 0:00〜9:00 JST のあいだ丸9時間ずっと前日と判定されていた。
+    // 「本日開催」が「明日開催」に、翌日の回が「あと2日」にずれる。
+    // JST以外の閲覧者では偶然正しく出るので、東京で朝に見たときだけ壊れる。
     function todayJST() {
-      var n = new Date();
-      var j = new Date(n.getTime() + (n.getTimezoneOffset() * 60000) + (9 * 3600000));
+      var j = new Date(Date.now() + 9 * 3600000);
       return j.getUTCFullYear() + '-' + String(j.getUTCMonth() + 1).padStart(2, '0')
              + '-' + String(j.getUTCDate()).padStart(2, '0');
     }
@@ -121,6 +130,9 @@
     s.label = dayLabel(diff);
     return s;
   }
+
+  // 日付境界のテスト(scripts/test-date-boundary.js)から呼ぶ。
+  AEN_TIME.statusFor = getStatus;
 
   function cardSpan(card) {
     var st = card.getAttribute('data-date') || '';
@@ -241,10 +253,8 @@
     var addedDateStr = card.getAttribute('data-added-date');
     if (!addedDateStr) return;
 
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    var addedDate = new Date(addedDateStr + 'T00:00:00');
-    var daysSinceAdded = Math.floor((today - addedDate) / (1000 * 60 * 60 * 24));
+    // 閲覧者のローカル日付ではなくJSTで数える。掲載日はJSTで書かれている。
+    var daysSinceAdded = AEN_TIME.diffDays(addedDateStr, AEN_TIME.todayJST());
 
     // 7日以内なら新着バッジを表示
     if (daysSinceAdded >= 0 && daysSinceAdded <= 7) {

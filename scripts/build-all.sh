@@ -9,6 +9,16 @@ cd "$(dirname "$0")/.."
 # 終了翌日の丸一日、ランディング頁とフィードに終了済みが開催予定として載る。
 python3 scripts/auto-status-jst.py
 
+# 開催バッジの日付境界テスト。0時直後・早朝・深夜を4タイムゾーンで検証する。
+# 2026-08-29 に todayJST() の時差計算が誤っていて、JSTの閲覧者に
+# 0:00〜9:00 のあいだ「本日開催」が「明日開催」と出ていた。
+# 生成物を見ても分からない類の不具合なので、生成前に落とす。
+if command -v node >/dev/null 2>&1; then
+  node scripts/test-date-boundary.js
+else
+  echo "::warning::node が無いため test-date-boundary.js をスキップしました"
+fi
+
 python3 build-detail-pages.py
 python3 scripts/build-guides.py
 python3 scripts/build-static-html.py

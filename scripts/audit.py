@@ -1158,6 +1158,39 @@ def main():
     add('venue_redirect_broken', '会場ページの旧URL中継が壊れている', sorted(rd_bad),
         'sitelib._VENUE_REDIRECTS_RAW の宛先会場名を実データに合わせる')
 
+    # JSでのローカルタイムゾーン依存の日付計算。
+    # 「今日」はJSTで決まるので、閲覧者のタイムゾーンを混ぜてはいけない。
+    # 正しい形は new Date(Date.now() + 9*3600000) + getUTC*() だけで足り、
+    # getTimezoneOffset() も setHours(0,...) も要らない。出てきたら誤り。
+    # 2026-08-29: getTime() に getTimezoneOffset() を足していたため
+    # JSTの閲覧者だけ 0:00〜9:00 に前日と判定され、
+    # 「本日開催」が「明日開催」と出ていた(status-auto.js と affiliate.js)。
+    tz_bad = []
+    _tz_re = re.compile(r'getTimezoneOffset|setHours\(\s*0\s*,')
+    for f in sorted(glob.glob(rp('*.js'))):
+        try:
+            src = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        for i, line in enumerate(src.splitlines(), 1):
+            if line.lstrip().startswith('//'):
+                continue          # 注意書きは対象外
+            if _tz_re.search(line):
+                tz_bad.append(f'{os.path.basename(f)}:{i} {line.strip()[:70]}')
+    add('js_local_timezone_math', 'JSが閲覧者のタイムゾーンで日付を計算している',
+        sorted(tz_bad),
+        'JSTの暦日は new Date(Date.now()+9*3600000) と getUTC*() で出す。'
+        '境界は scripts/test-date-boundary.js が検証する')
+
+    # 日付境界テストがビルドチェーンに載っているか(外されたら気づけない)
+    try:
+        _ba = open(rp('scripts', 'build-all.sh'), encoding='utf-8').read()
+    except OSError:
+        _ba = ''
+    add('date_boundary_test_unwired', '日付境界テストがbuild-all.shから外れている',
+        [] if 'test-date-boundary.js' in _ba else ['scripts/build-all.sh'],
+        '生成物を見ても分からない不具合なので、生成前に落とす')
+
     # 14. workflowが参照するsecretの一覧(未設定だと黙って空になる)
     add('workflow_secrets', 'workflowが参照しているsecret',
         sorted(set(re.findall(r'secrets\.([A-Z_][A-Z0-9_]*)', wf))),

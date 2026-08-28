@@ -303,8 +303,10 @@
   // 8月に「冬の室内管理で徒長させないための育成LED」「取り込み株をまとめて置ける簡易温室」が
   // 最上位に出ていたため導入(2026-08-10)。判定は閲覧者の時計ではなく JST の月で行う。
   var JST_MONTH = (function () {
-    var now = new Date();
-    return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (9 * 3600000)).getMonth() + 1;
+    // status-auto.js の todayJST と同じ理由で getTimezoneOffset は使わない。
+    // Date.now() は既にUTCなので9時間足してUTCの読み出しを使う。
+    // 旧実装はJSTの閲覧者だと 0:00〜9:00 に前日=月初なら前月を返していた。
+    return new Date(Date.now() + 9 * 3600000).getUTCMonth() + 1;
   })();
   function effectiveRank(it) {
     var r = it.rank || 9;

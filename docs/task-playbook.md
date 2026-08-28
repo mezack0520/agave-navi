@@ -773,3 +773,22 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 - 候補は `audit.py` の `venue_slug_romaji_candidates` が毎ビルド出す。
   `venue_romaji_unused` は表記変更で当たらなくなった項目、
   `venue_redirect_broken` は宛先が消えた中継頁を拾う。
+
+## 「今日」の出し方 (2026-08-29)
+
+JSで JST の暦日を出すときは **必ず** `new Date(Date.now() + 9*3600000)` に
+`getUTCFullYear()/getUTCMonth()/getUTCDate()` を使う。
+`getTimezoneOffset()` も `setHours(0,...)` も要らないし、使ってはいけない。
+
+`Date.now()` は既にUTCエポックなので、そこへ `getTimezoneOffset()` を足すと
+JSTの閲覧者では -9h と +9h が打ち消し合ってUTCの暦日が返る。
+0:00〜9:00 JST の9時間ずっと前日と判定され、「本日開催」が「明日開催」、
+翌日の回が「あと2日」にずれる。**JST以外の閲覧者では偶然正しく出るので、
+東京で朝に見たときだけ壊れる。** 2026-08-29 に利用者の指摘で発覚。
+
+- 判定の単一情報源は `status-auto.js` の `AEN_TIME`(JS)と
+  `scripts/sitelib.py` の `today_jst`(Python)。
+- `scripts/test-date-boundary.js` が 0時直後・早朝・深夜を4タイムゾーンで
+  検証する。`build-all.sh` の先頭で走り、失敗すればビルドが止まる。
+- `audit.py` の `js_local_timezone_math` が手書きの時差計算を、
+  `date_boundary_test_unwired` がテストの外し忘れを拾う。
