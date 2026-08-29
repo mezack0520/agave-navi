@@ -1,5 +1,5 @@
 {
-  "total": 243,
+  "total": 242,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -468,10 +468,8 @@
     },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowも参照していないスクリプト",
-      "count": 1,
-      "items": [
-        "build-icons.py"
-      ],
+      "count": 0,
+      "items": [],
       "note": "使われていないか、呼び出しが失われている",
       "severity": "urgent"
     },
