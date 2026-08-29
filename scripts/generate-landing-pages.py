@@ -45,10 +45,10 @@ HEAD = '''<!DOCTYPE html>
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="https://agave-navi.com/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="{root}favicon.svg">
-  <link rel="icon" type="image/x-icon" href="{root}favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="{root}apple-touch-icon.png">
-  <link rel="manifest" href="{root}manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="{root}favicon.svg?v=2">
+  <link rel="icon" type="image/x-icon" href="{root}favicon.ico?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="{root}apple-touch-icon.png?v=2">
+  <link rel="manifest" href="{root}manifest.webmanifest?v=2">
   <meta name="theme-color" content="#111">
   <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="{root}rss.xml">
   <link rel="stylesheet" href="{root}style.css?v=20260611a">
