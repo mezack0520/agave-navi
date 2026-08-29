@@ -1,5 +1,5 @@
 {
-  "total": 254,
+  "total": 252,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -217,7 +217,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 103,
+      "count": 100,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -246,7 +246,6 @@
         "enjoy-place-outside-2nd-2026-11",
         "exploring-unpredictable-plants-2026-09",
         "felicita-hachitoari-yumegaoka-2026-09",
-        "fuji-taniku-fujikawa-rakuza-2026-08",
         "fujisan-garden-marche-2026-10",
         "fukuoka-green-party-7th-2026",
         "gamagori-taniku-festa-wakayama-4th-2026-08",
@@ -258,7 +257,8 @@
         "green-summit-vol22-yamagata-2026",
         "hanauchu-dream-garden-28th-2026-10",
         "honwaka-pappa-3rd-2026-09",
-        "ibatama-vol9-2026-10"
+        "ibatama-vol9-2026-10",
+        "isij-big-bazaar-2026-09-27"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -475,17 +475,18 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 9,
+      "count": 10,
       "items": [
         "bishoku-club-popup-kitamoto-2026(2026-08-29〜2026-08-30/2日)",
+        "bizarre-plants-natsunojin-ueno-2026(2026-08-30〜2026-08-30/1日)",
         "chinki-shokubutsu-ichiba-vol9-2026(2026-08-29〜2026-08-30/2日)",
-        "fuji-taniku-fujikawa-rakuza-2026-08(2026-08-29〜2026-08-29/1日)",
+        "gamagori-taniku-festa-wakayama-4th-2026-08(2026-08-30〜2026-08-30/1日)",
         "itakeru2-27gallery-2026(2026-08-14〜2026-08-30/17日/長期)",
-        "kisarazu-engei-ichi-2026-08(2026-08-29〜2026-08-29/1日)",
-        "nangoku-de-night-vol2-2026(2026-08-29〜2026-08-29/1日)",
         "okinawa-chinki-plants-futako-2026(2026-08-28〜2026-08-31/4日/長期)",
         "rare-foliage-sale-protoleaf-futako-2026(2026-08-15〜2026-08-30/16日/長期)",
-        "rare-plants-dry-garden-festa-2026(2026-08-22〜2026-08-30/9日/長期)"
+        "rare-plants-dry-garden-festa-2026(2026-08-22〜2026-08-30/9日/長期)",
+        "rojiura-botanical-2026-08(2026-08-30〜2026-08-30/1日)",
+        "tanikuya-mameya-pink-2026-08(2026-08-30〜2026-08-30/1日)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -590,21 +591,20 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 25,
+      "count": 24,
       "items": [
-        "2026-08-29 08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球...",
-        "2026-08-29 08/28 追加 妙高多肉市場 vol.15が9月27日に開催、...",
-        "2026-08-29 「植物と植木鉢2026」をSHIKI PLANTSと雅峰窯が開催、希少な塊根植物と植木鉢を展示販売",
-        "2026-08-29 アトリエnanaが夕涼みしながら多肉時間2026を開催、夕方のビニールハウスで多肉植物を販売",
-        "2026-08-29 ノハラ園芸センターがSummer SALE2026を開催、多肉植物とアガベと観葉植物が20%OFF",
-        "2026-08-29 前馬植物店が大阪初のPOPUP STOREを開催、PAPA FRITES靱公園で観葉植物と多肉植物を販売",
-        "2026-08-29 多肉植物、アガベ販売会＆ボタニーペインティング開催、淡路夢舞台で植物販売とワークショップ",
-        "2026-08-29 姫路カクタスがYTN plantsと合同即売会を開催、実生苗と新着苗を販売",
-        "2026-08-29 広島でもしばかせて2026夏を開催、アガベとアロエの出展や抹茶ラテとカキ氷の提供",
+        "2026-08-30 08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球...",
+        "2026-08-30 08/28 追加 妙高多肉市場 vol.15が9月27日に開催、...",
         "2026-08-30 LONGBELLMOUNTAINcoming2026がハナイロで開催、珍奇植物とシルクスクリーン体験を楽しめる1日",
         "2026-08-30 ROSSOPLANTSが2026年ビカクシダ板付ワークショップを開催、ガーデンガーデン仙台愛子本店で第二弾を実施",
+        "2026-08-30 「植物と植木鉢2026」をSHIKI PLANTSと雅峰窯が開催、希少な塊根植物と植木鉢を展示販売",
         "2026-08-30 ゆくはし植物園がPLATYCERIUM MOUNTING WORKSHOPを開催、ビカクシダの板付を実施",
+        "2026-08-30 アトリエnanaが夕涼みしながら多肉時間2026を開催、夕方のビニールハウスで多肉植物を販売",
+        "2026-08-30 ノハラ園芸センターがSummer SALE2026を開催、多肉植物とアガベと観葉植物が20%OFF",
+        "2026-08-30 前馬植物店が大阪初のPOPUP STOREを開催、PAPA FRITES靱公園で観葉植物と多肉植物を販売",
         "2026-08-30 多肉ショップあいらんどが2026年アデニウムタコ足挑戦ワークを開催、苗2本でオクトバス仕立てを体験",
+        "2026-08-30 多肉植物、アガベ販売会＆ボタニーペインティング開催、淡路夢舞台で植物販売とワークショップ",
+        "2026-08-30 広島でもしばかせて2026夏を開催、アガベとアロエの出展や抹茶ラテとカキ氷の提供",
         "2026-09-12 PLANT &amp; POT Vol.15にCOOL CACTUSが9月13日出展、造形のサボテンと鉢を紹介",
         "2026-09-20 D.G.C.TOYAMAが若狭屋パークに出店、アガベやドライガーデンなどを展開",
         "2026-09-20 高の宮市2026が植物イベントを開催、高岡關野神社境内に観葉植物や多肉植物が集まる",
@@ -667,7 +667,7 @@
       "title": "event-listing-review の実行が抜けた日",
       "count": 1,
       "items": [
-        "event-listing-review が動かなかった日: 2026-08-22 2026-08-23 2026-08-26 2026-08-28（直近7日で4日）"
+        "event-listing-review が動かなかった日: 2026-08-23 2026-08-26 2026-08-28 2026-08-29（直近7日で4日）"
       ],
       "note": "reviewedHistory は実行日の記録。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。スケジュール自体は enabled のままなのでタスク側のログを見ないと原因は分からない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
@@ -758,10 +758,11 @@
     },
     "rejected_revisit_stale": {
       "title": "再評価待ちの見送りが30日以上動いていない",
-      "count": 2,
+      "count": 3,
       "items": [
-        "happy-smile-odawara-2026: 最終評価 2026-07-30（30日前）",
-        "kyosenkai-2026: 最終評価 2026-07-30（30日前）"
+        "happy-smile-odawara-2026: 最終評価 2026-07-30（31日前）",
+        "kyosenkai-2026: 最終評価 2026-07-30（31日前）",
+        "no1plantae-2026-autumn: 最終評価 2026-07-31（30日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
