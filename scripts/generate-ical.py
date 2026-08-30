@@ -15,21 +15,29 @@ JST = timezone(timedelta(hours=9))
 
 
 def fold(line):
-    """RFC5545: 75オクテット超えは継続行に折りたたむ。"""
+    """RFC5545 §3.1: 1行75オクテット以下に畳む。
+
+    継続行の先頭のスペースも行の一部なので、75 に数える。
+    2026-08-30 まで継続行の中身を75オクテットぶん詰めてからスペースを足しており、
+    events.ics の816行が76オクテットになっていた。ヘッダ行(X-WR-CALNAME /
+    X-WR-CALDESC)はそもそも fold を通っていなかった。
+    """
     if len(line.encode('utf-8')) <= 75:
         return line
     out = []
     s = line
-    while len(s.encode('utf-8')) > 75:
-        # find safe split
-        for i in range(75, 1, -1):
-            if len(s[:i].encode('utf-8')) <= 75:
+    limit = 75
+    while len(s.encode('utf-8')) > limit:
+        for i in range(limit, 0, -1):
+            if len(s[:i].encode('utf-8')) <= limit:
                 out.append(s[:i])
                 s = s[i:]
                 break
         else:
-            out.append(s); s=''; break
-    if s: out.append(s)
+            break
+        limit = 74  # 継続行は先頭に1オクテットのスペースが付く
+    if s:
+        out.append(s)
     return out[0] + ''.join('\r\n ' + p for p in out[1:])
 
 
@@ -78,12 +86,12 @@ def make_calendar(name, events):
     head = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        f'PRODID:-//agave-navi.com//{name}//JP',
+        fold(f'PRODID:-//agave-navi.com//{name}//JP'),
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        f'X-WR-CALNAME:{esc(name)}',
+        fold(f'X-WR-CALNAME:{esc(name)}'),
         'X-WR-TIMEZONE:Asia/Tokyo',
-        'X-WR-CALDESC:アガベ・多肉・塊根植物のイベント情報を配信',
+        fold('X-WR-CALDESC:アガベ・多肉・塊根植物のイベント情報を配信'),
     ]
     body = []
     for e in events:

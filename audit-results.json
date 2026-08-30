@@ -664,6 +664,13 @@
       "note": "reviewedOn は event-listing-review が毎回書く（タスクが動いた証拠）。lastChecked はGASが書く（フォーム送信を受けた日）ので、古くても異常ではない。items が残り続けている場合は届いた問い合わせが未処理",
       "severity": "urgent"
     },
+    "inquiry_sheet_row_mismatch": {
+      "title": "回答シートと処理済み件数が合わない",
+      "count": 0,
+      "items": [],
+      "note": "event-listing-review が gviz CSV で数えたデータ行を sheetRows に、読めた日を sheetCheckedOn に書く。行数が処理済み+未処理と一致するのが正常。多ければGASの取りこぼし、少なければ読み取り失敗。sheetCheckedOn が reviewedOn より古い回は、シートを見ないまま終わっている",
+      "severity": "urgent"
+    },
     "inquiry_review_gap": {
       "title": "event-listing-review の実行が抜けた日",
       "count": 1,
@@ -788,6 +795,48 @@
       "items": [],
       "note": "date.today() はランナーの日付。GitHub Actions は UTC なのでJST の午前0〜9時は前日になる。sitelib.today_jst() を使う",
       "severity": "urgent"
+    },
+    "sitemap_canonical_mismatch": {
+      "title": "sitemapのURLが頁のcanonicalと違う形",
+      "count": 0,
+      "items": [],
+      "note": "sitemap は正規URLだけを載せる。末尾スラッシュの有無も別URL扱いになる。canonical を他URLへ寄せた頁は landing-meta.json の canonicalized 経由で外す",
+      "severity": "urgent"
+    },
+    "sitemap_lastmod_untracked": {
+      "title": "sitemapのlastmodが内容の変更を追えていない",
+      "count": 0,
+      "items": [],
+      "note": "lastmod は「中身が最後に変わった日」。mtime は CI の clone で毎回変わるので使えない。scripts/sitemap-lastmod.json を生成物と一緒にコミットする",
+      "severity": "urgent"
+    },
+    "meta_description_missing": {
+      "title": "index対象の頁に meta description が無い",
+      "count": 0,
+      "items": [],
+      "note": "<meta name=\"viewport\"> の直後に1文入れる。本文の要約であって、キーワードの羅列にしない",
+      "severity": "info"
+    },
+    "ics_line_too_long": {
+      "title": ".icsがRFC5545の行長・改行の規定から外れている",
+      "count": 0,
+      "items": [],
+      "note": "scripts/generate-ical.py の fold()。継続行は先頭のスペースも75に数える。ヘッダ行も fold を通す",
+      "severity": "info"
+    },
+    "pending_judgment_policy": {
+      "title": "要人間判断キューが掲載基準の規則に反している",
+      "count": 0,
+      "items": [],
+      "note": "id は source:キー 形式。proposal(policyへの追記案)を必ず書く。doNotEscalate=true の類型は積まない。該当する節があるなら item に policy: <節名> を書くと、この検査が効く",
+      "severity": "urgent"
+    },
+    "policy_machine_value_unread": {
+      "title": "listing-policy.json の機械可読な値を読むコードが無い",
+      "count": 0,
+      "items": [],
+      "note": "データに規則を書いただけでは規則にならない。読む側を同じコミットで足すか、機械可読な形をやめて散文にする",
+      "severity": "info"
     },
     "event_set_shrunk": {
       "title": "イベントがまとめて消えている",

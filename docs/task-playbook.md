@@ -688,6 +688,54 @@
   検証: 意図した52件掲載=0件、画像一斉消失(with 110→32)=2件、
   母数そのままで no_image が 20→103 = 1件
 
+- **sitemap の `lastmod` を mtime で出さない（2026-08-30）。**
+  CI は毎回まっさらに clone するので全ファイルの mtime がチェックアウト時刻になり、
+  **313件すべてが毎日「今日更新」を名乗っていた**（08-28 / 08-29 / 08-30 の
+  どの版も lastmod が全件同一日）。3月から変わっていない利用規約まで毎日更新と
+  申告する状態で、当てにならない lastmod は無視されるので信号として死んでいた。
+  内容の sha1 を台帳 `scripts/sitemap-lastmod.json` に持ち、
+  **中身が変わった日だけ繰り上げる**。台帳は生成物と一緒にコミットする。
+  検査は `sitemap_lastmod_untracked`（台帳の欠落・sha のずれ・sitemap との日付不一致・
+  消えたURLの残骸の4つを見る）。
+  **「毎回作り直すから最新」と「いつ変わったか」は別。**
+  生成のたびに変わる値を、変更日として出さないこと
+
+- **同じ列挙を2か所に書くと、片方だけ育つ（2026-08-30）。**
+  `generate_sitemap.py` はランディング頁のディレクトリを2回列挙していた。
+  収集する側には `guides` が入っているのに、末尾スラッシュ形のURLに直す側の
+  タプルからは抜けていて、`guides/index.html` だけが `.../index.html` の形で
+  sitemap に載っていた。頁側の canonical は `/guides/` なので、
+  **sitemap が自分で「正規ではないURL」を申告していた**。
+  `LANDING_DIRS` の1本にまとめて解消。検査は `sitemap_canonical_mismatch`
+  （sitemap の loc とその頁の canonical を突き合わせる）。
+  `sitemap_dead_entries` は「ファイルが在るか」、`sitemap_noindex_listed` は
+  「noindex を載せていないか」しか見ておらず、**URLの形は誰も見ていなかった**
+
+- **`.ics` の行長は継続行の先頭スペースも数える（2026-08-30）。**
+  RFC 5545 §3.1 は1行75オクテット以下。`fold()` は中身を75オクテットぶん詰めてから
+  `\r\n ` を足していたので、継続行が全部76オクテットになっていた（events.ics で816行）。
+  ヘッダの `PRODID` / `X-WR-CALNAME` / `X-WR-CALDESC` はそもそも fold を通っていなかった。
+  **折りたたみは購読側が必ず解くので、「中身が壊れていないこと」は検査にならない。**
+  行の長さそのものを見る。検査は `ics_line_too_long`（CRLF が LF に落ちた場合も拾う）
+
+- **`meta name="description"` の欠落は誰も見ていなかった（2026-08-30）。**
+  `duplicate_indexable_title` は title の重複を見るが、description の有無は対象外だった。
+  terms / contact / privacy / disclaimer / operator の5頁に無く、
+  どれも sitemap 掲載・index 対象だった。生成物はテンプレートが必ず入れるので、
+  ここに出るのは手書きの静的頁だけ。検査は `meta_description_missing`
+
+- **データに書いた機械可読な値は、読む側を同じコミットで足す（2026-08-30）。**
+  `blockedUrlDomains`(〜08-24) と `_reasonTypes`(〜08-27) で2回やった失敗を、
+  類型として検査にした。`policy_machine_value_unread` が
+  `listing-policy.json` の**真偽値・数値・ASCIIの短い語の配列**だけを拾い、
+  その名前がクォート付きでコードに出てこなければ鳴らす（散文は対象外）。
+  これで `doNotEscalate`（7節に真偽値・未参照）が出た。
+  読む側として `pending_judgment_policy` を足し、
+  キューの `id` 書式・重複・`proposal` の有無・`doNotEscalate` の節への投げ込みを見る。
+  **キーの探索を素の部分文字列でやると、検査自身の note を拾って
+  「読んでいる」ことになる**（`naive_local_date` と同じ罠）。
+  辞書アクセスは必ずクォート付きの完全一致なので、そこだけを見る
+
 - 挿入系スクリプトは冪等に（除去→再挿入）。過去に calendar/map が4.2MBまで肥大した事故あり
 
 ## 4. 自己改善のやり方

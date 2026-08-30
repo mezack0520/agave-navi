@@ -9,6 +9,7 @@
 終了コードは常に0(検出は失敗ではない)。件数は日次メールに載せる。
 """
 import html as _html
+import hashlib
 import json
 import os
 import re
@@ -2071,6 +2072,241 @@ def main():
         sorted(_naive_date),
         'date.today() はランナーの日付。GitHub Actions は UTC なので'
         'JST の午前0〜9時は前日になる。sitelib.today_jst() を使う')
+
+    # --- sitemap の loc と頁の canonical ---------------------------------------
+    # sitemap_dead_entries は「ファイルが在るか」、sitemap_noindex_listed は
+    # 「noindex を載せていないか」しか見ておらず、
+    # **載せたURLがその頁の正規URLと同じ形か**は誰も見ていなかった。
+    # 2026-08-30 に発覚: generate_sitemap.py が末尾スラッシュ形に直す
+    # ディレクトリの列挙から 'guides' だけが抜けていて、
+    # `/guides/index.html` を載せていた。頁側の canonical は `/guides/` なので、
+    # sitemap が自分で「正規ではないURL」を申告している状態だった。
+    # 収集する側の列挙(9個)と直す側の列挙(8個)を別々に書いたことが原因。
+    # canonical を他URLへ寄せた頁を sitemap から外す規則(region/hokkaido)も
+    # 同じ向きの規則なので、両方をこの1本で見る。
+    _canon_re = re.compile(r'<link rel="canonical" href="([^"]+)"')
+    sm_canon = []
+    for u in sm_urls:
+        path = re.sub(r'^https?://[^/]+/?', '', u)
+        local = rp(path if path.endswith('.html') else os.path.join(path, 'index.html'))
+        if not os.path.exists(local):
+            continue        # sitemap_dead_entries 側で鳴る
+        try:
+            with open(local, encoding='utf-8', errors='replace') as f:
+                _b = f.read()
+        except OSError:
+            continue
+        _m = _canon_re.search(_b)
+        if not _m:
+            sm_canon.append(f'{u}: 頁に canonical が無い')
+        elif _m.group(1).rstrip('/') != u.rstrip('/'):
+            sm_canon.append(f'{u} ← 頁の canonical は {_m.group(1)}')
+    add('sitemap_canonical_mismatch', 'sitemapのURLが頁のcanonicalと違う形',
+        sorted(sm_canon),
+        'sitemap は正規URLだけを載せる。末尾スラッシュの有無も別URL扱いになる。'
+        'canonical を他URLへ寄せた頁は landing-meta.json の canonicalized 経由で外す')
+
+    # --- sitemap の lastmod が内容を追えているか -------------------------------
+    # 2026-08-30 まで lastmod は os.path.getmtime だった。CI は毎回まっさらに
+    # clone するので全ファイルの mtime がチェックアウト時刻になり、
+    # **313件すべてが毎日「今日更新」を名乗っていた**(08-28/08-29/08-30 の
+    # どの版も lastmod は全件同一日)。3月から変わっていない利用規約まで
+    # 毎日更新と申告していたので、Google から見て信号として死んでいた。
+    # 内容のsha1を台帳(scripts/sitemap-lastmod.json)に持ち、変わった日だけ繰り上げる。
+    # 台帳をコミットし忘れる/生成の順序が崩れると静かに元へ戻るので、
+    # sitemap の lastmod・台帳・実ファイルの3つが揃っていることを毎回見る。
+    _lm_man = (load_json(rp('scripts', 'sitemap-lastmod.json'), {}) or {}).get('pages') or {}
+    _sm_lm = dict(re.findall(
+        r'<loc>\s*([^<\s]+)\s*</loc>\s*<lastmod>\s*([^<\s]+)\s*</lastmod>', sm))
+    lm_bad = []
+    if not _lm_man:
+        lm_bad.append('scripts/sitemap-lastmod.json が無い'
+                      '（mtime 基準に戻ると全URLが毎日「今日更新」になる）')
+    else:
+        for u in sm_urls:
+            _e = _lm_man.get(u)
+            if not _e:
+                lm_bad.append(f'{u}: 台帳に記録が無い')
+                continue
+            if _sm_lm.get(u) != _e.get('date'):
+                lm_bad.append(f'{u}: sitemapのlastmod {_sm_lm.get(u)} が'
+                              f'台帳の {_e.get("date")} と違う')
+                continue
+            _path = re.sub(r'^https?://[^/]+/?', '', u)
+            _local = rp(_path if _path.endswith('.html')
+                        else os.path.join(_path, 'index.html'))
+            if not os.path.exists(_local):
+                continue        # sitemap_dead_entries 側で鳴る
+            try:
+                with open(_local, 'rb') as f:
+                    _sha = hashlib.sha1(f.read()).hexdigest()
+            except OSError:
+                continue
+            if _sha != _e.get('sha'):
+                lm_bad.append(f'{u}: 台帳のsha が実ファイルと違う'
+                              '（sitemap を作り直していない）')
+        for u in sorted(set(_lm_man) - set(sm_urls)):
+            lm_bad.append(f'{u}: sitemap に無いURLが台帳に残っている')
+    add('sitemap_lastmod_untracked', 'sitemapのlastmodが内容の変更を追えていない',
+        sorted(lm_bad)[:40],
+        'lastmod は「中身が最後に変わった日」。mtime は CI の clone で毎回変わるので'
+        '使えない。scripts/sitemap-lastmod.json を生成物と一緒にコミットする')
+
+    # --- meta description の欠落 -----------------------------------------------
+    # duplicate_indexable_title は「同じ title が2つある」ことは見るが、
+    # 「description that が無い」ことは誰も見ていなかった。
+    # 無いと Google が本文から勝手にスニペットを作るので、
+    # 規約・お問い合わせのような定型頁では見出しの羅列が出る。
+    # 2026-08-30 時点で terms / contact / privacy / disclaimer / operator の
+    # 5頁に無かった(どれも sitemap 掲載・index 対象)。
+    # 生成物の頁はテンプレートが必ず入れるので、ここに出るのは手書きの静的頁だけ。
+    _desc_re = re.compile(r'<meta[^>]+name="description"[^>]+content="([^"]*)"')
+    no_desc = []
+    for rel in _pages:
+        if rel in _noindex_pages or rel in _EXEMPT_ORPHAN:
+            continue
+        if re.fullmatch(r'google[0-9a-f]+\.html', rel):
+            continue
+        try:
+            with open(rp(rel), encoding='utf-8', errors='replace') as f:
+                _b = f.read()
+        except OSError:
+            continue
+        _m = _desc_re.search(_b)
+        if not _m:
+            no_desc.append(f'{rel}: description が無い')
+        elif not _m.group(1).strip():
+            no_desc.append(f'{rel}: description が空')
+    add('meta_description_missing', 'index対象の頁に meta description が無い',
+        sorted(no_desc),
+        '<meta name="viewport"> の直後に1文入れる。'
+        '本文の要約であって、キーワードの羅列にしない', severity='info')
+
+    # --- .ics の行長 -----------------------------------------------------------
+    # RFC 5545 §3.1 は1行75オクテット以下を求める。generate-ical.py の fold() は
+    # 継続行の先頭に付くスペースを数えておらず、2026-08-30 時点で
+    # events.ics の816行が76オクテットだった。ヘッダ行(PRODID / X-WR-CALNAME /
+    # X-WR-CALDESC)はそもそも fold を通っていなかった。
+    # 折りたたみは購読側が必ず解くので、**中身が壊れていないことは検査にならない**。
+    # 行の長さそのものを見る。CRLF が LF に落ちている場合もここで出る
+    # (テキストモードで書き戻すと起きる。購読側は行を切れなくなる)。
+    ics_bad = []
+    for _f in ('events.ics', 'this-month.ics', 'upcoming.ics'):
+        _p = rp(_f)
+        if not os.path.exists(_p):
+            continue
+        try:
+            with open(_p, encoding='utf-8', errors='replace', newline='') as f:
+                _raw = f.read()
+        except OSError:
+            continue
+        _lines = _raw.split('\r\n')
+        if len(_lines) < 2:
+            ics_bad.append(f'{_f}: CRLF が無い(LF だけで書かれている)')
+            continue
+        _over = [l for l in _lines if len(l.encode('utf-8')) > 75]
+        if _over:
+            ics_bad.append(f'{_f}: 75オクテット超の行が{len(_over)}行'
+                           f'（例 {len(_over[0].encode("utf-8"))}オクテット: {_over[0][:30]}）')
+        _lone = [l for l in _lines if '\n' in l or '\r' in l]
+        if _lone:
+            ics_bad.append(f'{_f}: 行の途中に生の改行が{len(_lone)}箇所')
+    add('ics_line_too_long', '.icsがRFC5545の行長・改行の規定から外れている',
+        ics_bad,
+        'scripts/generate-ical.py の fold()。継続行は先頭のスペースも75に数える。'
+        'ヘッダ行も fold を通す', severity='info')
+
+    # --- policy に書いた機械可読な値を、誰も読んでいない -------------------------
+    # listing-policy.json の blockedUrlDomains は2026-08-24まで参照する行が
+    # repo に1本も無く、rejected-events.json の _reasonTypes も2026-08-27まで
+    # 同じ状態だった。どちらも「データに規則を書いた」だけで終わっており、
+    # 守っていたのは人の記憶だけだった。同じことが起きていないかを毎回見る。
+    # 散文(日本語の説明・先例)は人が読むためのものなので対象外。
+    # 対象は **機械が使える形の値**、つまり真偽値・数値・ASCIIの短い語の配列だけ。
+    # 2026-08-30 時点では doNotEscalate(7節に真偽値)が未参照だった。
+    def _machine_usable(v):
+        if isinstance(v, bool) or isinstance(v, (int, float)):
+            return True
+        if isinstance(v, list) and v:
+            return all(isinstance(x, str) and x.isascii() and len(x) < 40
+                       and ' ' not in x for x in v)
+        return False
+
+    _policy_keys = {}
+
+    def _walk_policy(o, path=''):
+        if not isinstance(o, dict):
+            return
+        for k, v in o.items():
+            if k.startswith('_'):
+                continue
+            if _machine_usable(v):
+                _policy_keys.setdefault(k, []).append(f'{path}{k}')
+            _walk_policy(v, f'{path}{k}.')
+
+    _walk_policy(_policy)
+    # 素の部分文字列で探すと、この検査自身の note や注釈が引っかかって
+    # 「読んでいる」ことになってしまう(naive_local_date で一度やった失敗)。
+    # 辞書から取り出す書き方は必ずクォート付きの完全一致なので、そこだけを見る。
+    # コメント行は落とす。
+    _srcs = (sorted(glob.glob(rp('scripts', '*.py')))
+             + sorted(glob.glob(rp('*.js'))) + [rp('build-detail-pages.py')])
+    _src_blob = ''
+    for _sp in _srcs:
+        try:
+            with open(_sp, encoding='utf-8', errors='replace') as f:
+                for _ln in f:
+                    _src_blob += _ln.split('#')[0] + '\n'
+        except OSError:
+            pass
+    policy_unread = [
+        f'{k}（{", ".join(v)}）' for k, v in sorted(_policy_keys.items())
+        if not re.search(r'[\'"]' + re.escape(k) + r'[\'"]', _src_blob)]
+    # --- 要人間判断キューが自分の規則を守っているか -----------------------------
+    # pending-judgments.json は自分の description に3つの規則を書いている
+    # (id は source:キー 形式 / 重複積み上げ禁止 / 解消時に自ら削除する)。
+    # listing-policy.json の escalate.requirement は
+    # 「積むときは policy への追記案をあわせて書く」を求め、
+    # 7つの節が doNotEscalate=true で「この類型は積まない」と決めている。
+    # 2026-08-30 時点でこれらを読むコードは1本も無かった。
+    # 規則を守らせる側が無いと、同じ問いが翌日also積まれる。
+    _pj = load_json('pending-judgments.json', {}) or {}
+    _pj_items = _pj.get('items') or []
+    _no_escalate = {k for k, v in (_policy or {}).items()
+                    if isinstance(v, dict) and v.get('doNotEscalate') is True}
+    _seen_ids = set()
+    pj_bad = []
+    for _it in _pj_items:
+        _id = (_it.get('id') or '').strip()
+        if not _id:
+            pj_bad.append(f'id が無い項目: {(_it.get("title") or "")[:40]}')
+            continue
+        if not re.fullmatch(r'[a-z0-9-]+:[a-z0-9-]+', _id):
+            pj_bad.append(f'{_id}: id が source:キー 形式でない')
+        if _id in _seen_ids:
+            pj_bad.append(f'{_id}: 同じ id が重複して積まれている')
+        _seen_ids.add(_id)
+        if not (_it.get('proposal') or '').strip():
+            pj_bad.append(f'{_id}: proposal が無い'
+                          '（listing-policy.escalate.requirement）')
+        _pol = (_it.get('policy') or '').strip()
+        if _pol:
+            if _pol not in (_policy or {}):
+                pj_bad.append(f'{_id}: policy="{_pol}" は listing-policy.json に無い節')
+            elif _pol in _no_escalate:
+                pj_bad.append(f'{_id}: policy="{_pol}" は doNotEscalate=true'
+                              '（積まずに既定の対処に回す類型）')
+    add('pending_judgment_policy', '要人間判断キューが掲載基準の規則に反している',
+        sorted(set(pj_bad)),
+        'id は source:キー 形式。proposal(policyへの追記案)を必ず書く。'
+        'doNotEscalate=true の類型は積まない。'
+        '該当する節があるなら item に policy: <節名> を書くと、この検査が効く')
+
+    add('policy_machine_value_unread',
+        'listing-policy.json の機械可読な値を読むコードが無い',
+        policy_unread,
+        'データに規則を書いただけでは規則にならない。読む側を同じコミットで足すか、'
+        '機械可読な形をやめて散文にする', severity='info')
 
     # --- 出力 ---
     # 履歴は結果ファイルより先に読む。metric の急変検査が履歴を必要とし、
