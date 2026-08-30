@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 32,
+      "count": 33,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "collect-plants-2026-09",
@@ -187,6 +187,7 @@
         "green-holic-kariya-2026",
         "greensnap-marche-yokohama-2026-autumn",
         "hanatomofesta-2026",
+        "isij-big-bazaar-2026-09-27",
         "itakeru2-27gallery-2026",
         "jusai-ichinomiya-autumn-2026",
         "kinshakusai-vol6-2026-10",
@@ -217,7 +218,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 100,
+      "count": 99,
       "items": [
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -258,7 +259,7 @@
         "hanauchu-dream-garden-28th-2026-10",
         "honwaka-pappa-3rd-2026-09",
         "ibatama-vol9-2026-10",
-        "isij-big-bazaar-2026-09-27"
+        "isij-big-bazaar-2026-11-22"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
