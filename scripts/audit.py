@@ -1492,6 +1492,46 @@ def main():
                     + ' '.join(_missing) + f'（直近7日で{len(_missing)}日）')
         except ValueError:
             pass
+    # --- 回答シートの実測行数と処理済み件数の突き合わせ ---------------------
+    # gviz CSV でシートのデータ行を数えて processed と比べる手順は 2026-08-25 から
+    # 毎回やっているが、結果は task-reports の散文にしか残っていなかった。
+    # 読むコードが無いので、読み違えても「検算通過」と書けてしまう。
+    # プレイブックに「必ず数える」と書いた時点で検査にする、という自分の規則に反していた。
+    # そこで event-listing-review が実測値を new-inquiries.json に書き、ここで照合する。
+    # 不変量: シートのデータ行 == 処理済み + 未処理。
+    #   行 > 期待 … GASがフォーム送信を取りこぼしている(backfillFromSheet の出番)
+    #   行 < 期待 … シートの読み取りに失敗している(0行や見出しだけで返る経路がある)
+    # CI から Google は見られないので、値そのものはタスクしか取れない。
+    # だからこの検査は「タスクが持ち帰った数字」の整合だけを見る。
+    inq_sheet = []
+    _rows = _ni.get('sheetRows')
+    _sco = str(_ni.get('sheetCheckedOn') or '').strip()
+    # キーが無い回は判定しない。導入前のデータを0とみなすと初日に必ず誤検知する。
+    if isinstance(_rows, int) and not isinstance(_rows, bool):
+        _pr = load_json('inquiries-processed.json', {}).get('processed') or []
+        _expect = len(_pr) + len(_items)
+        if _rows > _expect:
+            inq_sheet.append(
+                f'回答シートのデータ行 {_rows} > 処理済み {len(_pr)} + 未処理 {len(_items)}。'
+                'GASがフォーム送信を取りこぼしている。backfillFromSheet を実行する')
+        elif _rows < _expect:
+            inq_sheet.append(
+                f'回答シートのデータ行 {_rows} < 処理済み {len(_pr)} + 未処理 {len(_items)}。'
+                'シートの読み取りに失敗した値を持ち帰っている')
+        # 読めなかった回は reviewedOn だけが進み sheetCheckedOn が取り残される。
+        # 「タスクは動いたがシートは見ていない」を、動かなかった日と区別して出す。
+        if (re.fullmatch(r'\d{4}-\d{2}-\d{2}', _rv or '')
+                and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _sco) and _sco < _rv):
+            inq_sheet.append(
+                f'sheetCheckedOn={_sco} が reviewedOn={_rv} より古い。'
+                '直近の回は回答シートを読めていない')
+    add('inquiry_sheet_row_mismatch', '回答シートと処理済み件数が合わない',
+        inq_sheet,
+        note='event-listing-review が gviz CSV で数えたデータ行を sheetRows に、'
+             '読めた日を sheetCheckedOn に書く。行数が処理済み+未処理と一致するのが正常。'
+             '多ければGASの取りこぼし、少なければ読み取り失敗。'
+             'sheetCheckedOn が reviewedOn より古い回は、シートを見ないまま終わっている')
+
     add('inquiry_review_gap', 'event-listing-review の実行が抜けた日', inq_gap,
         note='reviewedHistory は実行日の記録。抜けた日は、届いていた問い合わせが'
              'その日は誰にも見られていない。スケジュール自体は enabled のままなので'
