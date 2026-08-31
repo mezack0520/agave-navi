@@ -2,7 +2,8 @@
   "description": "掲載申請フォームの処理済み回答タイムスタンプ。event-listing-reviewタスクが管理。processed は重複判定用。outcomes は各回答をどう処理したかの記録(後から追跡できるようにするため。timestamp は processed と同じ値を使う)。",
   "processed": [
     "2026/04/27 18:19:12",
-    "2026/07/02 22:50:09"
+    "2026/07/02 22:50:09",
+    "2026/08/31 12:41:01"
   ],
   "outcomes": [
     {
@@ -20,20 +21,13 @@
       "action": "listed",
       "detail": "種別は修正・訂正だが内容は新規掲載依頼。events.json の agave-popup-market-nagoya-2026-07 として掲載済み",
       "verifiedOn": "2026-08-12"
-    }
-  ],
-  "items": [
+    },
     {
       "timestamp": "2026/08/31 12:41:01",
       "type": "イベント掲載リクエスト",
       "eventName": "PLANTS BAZAAR なんせ植物が好きなもんで。",
-      "name": "大澤愛",
-      "email": "info@studio-kujira.com",
-      "body": "金沢・studio null.にて、2日間限定の植物イベント「PLANTS BAZAAR」を開催します。\n\nアガベをはじめ、塊根植物（コーデックス）、サボテンなど、個性豊かなビザールプランツを中心に、観葉植物やテーブルプランツまで幅広く販売予定です。\n\n植物だけでなく、能登の「珠洲焼」で作られた鉢に植物を合わせた限定アイテムや、神戸「FROM THE PAST」がレスキューしたアンティーク食器を鉢へとリメイクし、植物を合わせた一点ものも登場します。\n\nまた、子どもから大人まで参加できる「植物を使ったたたき染めワークショップ」も同時開催。\n\nアガベ・塊根植物・ビザールプランツ好きの方はもちろん、植物と器、アートやカルチャーを一緒に楽しめる2日間です。",
-      "processedOn": "2026-08-31",
-      "result": "掲載",
-      "slug": "plants-bazaar-null-kanazawa-2026-09",
-      "note": "本文に開催日が無かったため、主催の studio null. 公式IG @null_kanazawa の 2026-08-30 リールで 9/5-6・10:00〜18:00・金沢市高岡町23-6 を確認して掲載。申請者ドメイン studio-kujira.com は studio null. の運営元(住所・電話が同一)で、主催者本人の申請と確認できた"
+      "action": "listed",
+      "detail": "events.json に plants-bazaar-null-kanazawa-2026-09 を追加。申請本文に開催日が無かったため、主催 studio null. の公式IG @null_kanazawa の2026-08-30 のリールで 2026-09-05〜06 / 10:00〜18:00 / 金沢市高岡町23-6 を確認した。申請者ドメイン studio-kujira.com は studio null. の運営元で住所・電話が会場と同一のため、出店者ではなく主催者本人の申請と判断した"
     }
   ],
   "updated": "2026-08-31"

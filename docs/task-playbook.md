@@ -272,6 +272,33 @@
   フォームの機能確認も実施済み（`viewform` は回答受付中、フォームIDの参照は `contact.html` 1件のみ）。
   直近回答が 2026-07-02 で約8週間空いているが、これはフォーム側の故障ではない
 
+- **回答シートは組み込みブラウザからは読めない（2026-08-31 確定）。**
+  組み込みブラウザはGoogleにログインしておらず、gviz CSV を叩くと
+  `accounts.google.com` に飛ばされる。Cookieのインポート機能はあるが
+  **Windowsでは Firefox からしか取り込めない**（macOSは Chrome/Edge/Firefox）ので、
+  Windows＋Chrome のこの環境では使えない。
+  目崎の判断で**ブラウザは組み込みのまま**にした（2026-08-31）。
+  つまり**このタスクからシートを読む手段は無い**。
+  Claude in Chrome なら実Chromeなので読めるが、既定を変えない方針。
+
+- **だから `sheetRows` は GAS 側が書く（2026-08-31 変更）。**
+  `onFormSubmit` が `countSheetRows()` の結果を `sheetRows` / `sheetCheckedOn` に書く。
+  ブラウザで数えて手で入れる手順は廃止。読めないのに数えようとすると、
+  測れないまま処理を進めて `sheetCheckedOn < reviewedOn` の urgent が立つだけになる。
+  **この方式の穴**: GASが止まると `sheetRows` も止まる。GASの死活は
+  `lastChecked` の古さと `inquiry_check_stale` で見る（シート行数では見られない）。
+
+- **`inquiries-processed.json` の件数は `processed` を見る。`items` ではない（2026-08-31）。**
+  このファイルは `processed`（重複判定用のタイムスタンプ配列）と
+  `outcomes`（各回答をどう処理したかの記録）で出来ている。
+  2026-08-31 に `items` というキーを勝手に足し、そちらだけを見て
+  「2件が未処理のまま埋もれていた」と誤って判断した。実際は2件とも
+  2026-08-30 までに `processed` / `outcomes` へ入っており、
+  対象イベントも events.json に掲載済みだった。取りこぼしは無かった。
+  監査 `inquiry_sheet_row_mismatch` が読むのも `processed` なので、
+  **書く側と読む側で同じキーを使う。** 新しいキーを足す前に、
+  そのファイルを読んでいるコードを先に探す。
+
 - **数えた行数は `new-inquiries.json` に書く。散文のレポートは誰も読み返さない（2026-08-30）。**
   gviz CSV の検算は 2026-08-25 から毎回やっているが、結果は task-reports の
   散文にしか残っていなかった。**読むコードが1本も無いので、読み違えても
