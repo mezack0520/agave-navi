@@ -1,5 +1,5 @@
 {
-  "total": 217,
+  "total": 219,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -215,7 +215,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 102,
+      "count": 103,
       "items": [
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
@@ -631,8 +631,10 @@
     },
     "inquiry_sheet_row_mismatch": {
       "title": "回答シートと処理済み件数が合わない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "sheetCheckedOn=2026-08-30 が reviewedOn=2026-08-31 より古い。直近の回は回答シートを読めていない"
+      ],
       "note": "event-listing-review が gviz CSV で数えたデータ行を sheetRows に、読めた日を sheetCheckedOn に書く。行数が処理済み+未処理と一致するのが正常。多ければGASの取りこぼし、少なければ読み取り失敗。sheetCheckedOn が reviewedOn より古い回は、シートを見ないまま終わっている",
       "severity": "urgent"
     },

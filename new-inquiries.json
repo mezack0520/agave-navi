@@ -1,17 +1,8 @@
 {
   "_note": "問い合わせ新着の受け渡し箱。GAS(Apps Scriptプロジェクト「agave-navi フォーム→GitHub連携」)がフォーム送信時に items へ追記し lastChecked を書く。そのpushで notify-inquiry.yml が発火しメールが飛ぶ。event-listing-review は items を処理して inquiries-processed.json へ移し、items を空にして reviewedOn を実行日に更新し reviewedHistory に実行日を追記する。1件の形: {timestamp, type, eventName, name, email, body}。lastChecked=GASが最後にフォーム送信を受けた日(送信が無ければ更新されない)。reviewedOn=event-listing-review が最後に動いた日(監査 inquiry_check_stale が見る)。reviewedHistory=実行日の履歴、直近14件だけ保持(監査 inquiry_review_gap が抜けた日を数える)。reviewedOn だけだと、次の回が成功した瞬間に抜けた日が消えて後から検出できない。 sheetRows=回答シートのデータ行数(gviz CSVで実測した値)、sheetCheckedOn=その実測をした日。監査 inquiry_sheet_row_mismatch が sheetRows == processed + items を照合する。シートは Google 側にしか無く CI からは見られないので、この2つがCI側で検算できる唯一の材料。",
-  "items": [
-    {
-      "timestamp": "2026/08/31 12:41:01",
-      "type": "イベント掲載リクエスト",
-      "eventName": "PLANTS BAZAAR なんせ植物が好きなもんで。",
-      "name": "大澤愛",
-      "email": "info@studio-kujira.com",
-      "body": "金沢・studio null.にて、2日間限定の植物イベント「PLANTS BAZAAR」を開催します。\n\nアガベをはじめ、塊根植物（コーデックス）、サボテンなど、個性豊かなビザールプランツを中心に、観葉植物やテーブルプランツまで幅広く販売予定です。\n\n植物だけでなく、能登の「珠洲焼」で作られた鉢に植物を合わせた限定アイテムや、神戸「FROM THE PAST」がレスキューしたアンティーク食器を鉢へとリメイクし、植物を合わせた一点ものも登場します。\n\nまた、子どもから大人まで参加できる「植物を使ったたたき染めワークショップ」も同時開催。\n\nアガベ・塊根植物・ビザールプランツ好きの方はもちろん、植物と器、アートやカルチャーを一緒に楽しめる2日間です。"
-    }
-  ],
+  "items": [],
   "lastChecked": "2026-08-31",
-  "reviewedOn": "2026-08-30",
+  "reviewedOn": "2026-08-31",
   "reviewedHistory": [
     "2026-08-13",
     "2026-08-18",
@@ -19,7 +10,8 @@
     "2026-08-24",
     "2026-08-25",
     "2026-08-27",
-    "2026-08-30"
+    "2026-08-30",
+    "2026-08-31"
   ],
   "sheetRows": 2,
   "sheetCheckedOn": "2026-08-30"

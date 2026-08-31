@@ -316,7 +316,9 @@
   },
   {
    "date": "2026-08-31",
-   "urgent": {},
+   "urgent": {
+    "inquiry_sheet_row_mismatch": 1
+   },
    "info": {
     "coverage_gaps": 1,
     "inquiry_review_gap": 1
@@ -325,11 +327,11 @@
     "thin_past_with_source": 34,
     "thin_archived": 48,
     "upcoming_with_image": 30,
-    "upcoming_no_image": 102,
+    "upcoming_no_image": 103,
     "ongoing_events": 1,
     "workflow_secrets": 6
    },
-   "events": 376
+   "events": 377
   }
  ]
 }

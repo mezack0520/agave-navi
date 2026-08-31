@@ -123,8 +123,36 @@ function appendInquiry(item) {
   // (JSON全体を読んで書き戻しているので勝手に保持される)。
   data.lastChecked = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
 
+  // 回答シートのデータ行数を、シートを見られるこちら側で書く。
+  // 監査 inquiry_sheet_row_mismatch が sheetRows == processed + items を照合する。
+  // 以前は人間がブラウザで gviz CSV を読んで手で入れていたが、
+  // ブラウザがGoogleにログインしていないと測れず、測れないまま処理を進めると
+  // 「シートを読めていない」と urgent が立つ状態になっていた(2026-08-31)。
+  // GASは常にシートを見られるので、ここで書けば人手もログインも要らない。
+  try {
+    data.sheetRows = countSheetRows();
+    data.sheetCheckedOn = data.lastChecked;
+  } catch (err) {
+    Logger.log('sheetRows の取得に失敗: ' + err);
+  }
+
   putFile(data, cur.sha,
     'feat(inquiry): フォーム受信 ' + item.type + ' [gas]');
+}
+
+/** 回答シートのデータ行数(ヘッダを除く)。空行は数えない */
+function countSheetRows() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var values = sheet.getDataRange().getValues();
+  var n = 0;
+  for (var i = 1; i < values.length; i++) {
+    var blank = true;
+    for (var j = 0; j < values[i].length; j++) {
+      if (String(values[i][j]).trim() !== '') { blank = false; break; }
+    }
+    if (!blank) n++;
+  }
+  return n;
 }
 
 function apiUrl() {
@@ -185,7 +213,8 @@ function notify(subject, body) {
 function testConnection() {
   var cur = getFile();
   Logger.log('OK  items=' + (cur.json.items || []).length +
-             '  lastChecked=' + cur.json.lastChecked);
+             '  lastChecked=' + cur.json.lastChecked +
+             '  sheetRows=' + countSheetRows());
 }
 
 /**
