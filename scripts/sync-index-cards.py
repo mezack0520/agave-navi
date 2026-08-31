@@ -24,7 +24,8 @@ ROOT = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
 sys.path.insert(0, SCRIPT_DIR)
 from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
-                     LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape)
+                     LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
+                     list_sort_key)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -182,6 +183,69 @@ def sync_card_attrs(tag, ev):
     return tag, changed
 
 
+def new_card_html(ev):
+    """新規イベントのカードを1枚組む。
+
+    サムネイルと属性は、この直後に走る sync_card_attrs / THUMB_RE の置換が
+    events.json から埋め直すので、ここでは器だけを正しい形で置く。
+    """
+    slug = ev.get('slug', '')
+    tags_csv = ','.join(ev.get('tags') or [])
+    dd = ev.get('dateDisplay') or compact_date(ev)
+    pref = ev.get('prefecture', '')
+    region = ev.get('region', '')
+    heart = ('<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 '
+             '5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 '
+             '1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>')
+    e = html_attr_escape
+    return (
+        f'<div class="event-card" data-tags="{e(tags_csv)}" data-status="upcoming"'
+        f' data-region="{e(region)}" data-prefecture="{e(pref)}" data-slug="{e(slug)}"'
+        f' data-date="{e(ev.get("date") or "")}"'
+        f' data-date-end="{e(ev.get("dateEnd") or "")}"'
+        f' data-added-date="{e(ev.get("addedDate") or "")}">\n'
+        f'          <div class="event-thumb event-no-image"></div>\n'
+        f'          <button class="fav-btn" onclick="toggleFav(event,\'{e(slug)}\')"'
+        f' aria-label="行きたい">{heart}</button>\n'
+        f'          <div class="swipe-hint"><div class="swipe-hint-icon">{heart}</div></div>\n'
+        f'          <div class="event-card-body">\n'
+        f'            <div class="event-header"><span class="event-date">{e(dd)}</span>'
+        f'<span class="event-status"></span></div>\n'
+        f'            <h2 class="event-title">{e(ev.get("name") or "")}</h2>\n'
+        f'            <p class="event-description">{e(ev.get("description") or "")}</p>\n'
+        f'            <div class="event-meta-row">'
+        f'<span class="event-region">{e(pref or region)}</span></div>\n'
+        f'          </div>\n'
+        f'          <div class="card-fav-bar" onclick="event.stopPropagation()">'
+        f'{heart}<span>行きたい</span></div>\n'
+        f'        </div>\n        ')
+
+
+def insert_missing_cards(html, events):
+    """events.json にあって index.html に無い開催予定のカードを足す。
+
+    2026-08-31まで、この処理は sync-events.yml のYAML内にPythonで直書き
+    されていた。ローカルのビルドチェーンでは走らないので、手で足した回は
+    カードが作られず、監査の index_card_drift が「sync-index-cards.py を
+    再実行する」と案内していても直らなかった。スクリプト側に持ってくる。
+    """
+    have = set(re.findall(r'data-slug="([^"]+)"', html))
+    add = [e for e in events
+           if e.get('slug') and e['slug'] not in have
+           and e.get('status') == 'upcoming' and e.get('date')]
+    if not add:
+        return html, []
+    marker = '</div><!-- /eventsGrid -->'
+    if marker not in html:
+        print('::warning::eventsGrid の目印が無く、カードを挿入できません')
+        return html, []
+    # 開始日だけで並べると会期の長い回が先頭に居座る。
+    # 「今」の定義は sitelib.list_sort_key が単一情報源
+    add.sort(key=list_sort_key)
+    html = html.replace(marker, ''.join(new_card_html(e) for e in add) + marker)
+    return html, [e['slug'] for e in add]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dry-run', action='store_true')
@@ -194,6 +258,11 @@ def main():
     with open(INDEX_HTML, encoding='utf-8') as f:
         html = f.read()
     original_html = html
+
+    # events.json にあって index.html に無い回のカードを作る
+    html, inserted = insert_missing_cards(html, events)
+    if inserted:
+        print(f'cards inserted: {len(inserted)} -> ' + ', '.join(inserted))
 
     # 削除されたイベントのカードを除去(events.jsonが正)
     html, stale_removed = remove_stale_cards(html, set(by_slug.keys()))

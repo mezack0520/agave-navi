@@ -41,6 +41,7 @@ Usage:
 """
 
 import argparse
+import html as htmllib
 import json
 import os
 import re
@@ -115,8 +116,11 @@ def tokens(name):
     3文字以上の連続した仮名・漢字・英数のかたまり。
     「第1回」「2026」「vol」のような共通語は照合の役に立たないので落とす。
     """
-    raw = re.findall(r'[぀-ヿ㐀-鿿A-Za-z0-9]{3,}',
-                     unicodedata.normalize('NFKC', name or ''))
+    n = unicodedata.normalize('NFKC', name or '')
+    # 漢字・仮名は2文字で1語になる(樹祭/一宮/叢宴)。3文字以上に限ると
+    # 「樹祭 一宮 2026 Autumn」の照合語が空になり、何とも一致しなくなる。
+    # ラテン文字は2文字だと略語・前置詞を拾いすぎるので3文字のまま。
+    raw = re.findall(r'[㐀-鿿]{2,}|[぀-ヿ]{3,}|[A-Za-z0-9]{3,}', n)
     out = []
     for t in raw:
         low = t.lower()
@@ -156,6 +160,9 @@ def extract_titles(html):
             r'<a\b[^>]*href="[^"]*/blogs/media/topics[^"]*"[^>]*>(.*?)</a>',
             html, re.S | re.I):
         txt = re.sub(r'<[^>]+>', ' ', m.group(1))
+        # &amp; を戻さないと「PLANT &amp; POT」が norm で "plantamppot" になり、
+        # 掲載済みの「PLANT & POT」と一致しない(2026-08-31に取りこぼしを誤検知)
+        txt = htmllib.unescape(txt)
         txt = re.sub(r'\s+', ' ', txt).strip()
         if txt and txt not in seen:
             seen.add(txt)
@@ -200,6 +207,38 @@ def build_index():
     return by_day, rejected
 
 
+DATE_IN_TITLE = re.compile(r'(\d{1,2})\s*[月/]\s*(\d{1,2})\s*日?')
+ADDED_PREFIX = re.compile(r'^\s*\d{1,2}\s*/\s*\d{1,2}\s*追加\s*')
+
+
+def dates_in_title(title, page_day, horizon=400):
+    """本文に書かれた開催日を拾う。
+
+    LEAFLA の「08/28 追加 …が9月27日に開催」のような新着告知は、
+    その日のイベントではないのに45日ぶんの日付ページすべてに出る。
+    ページの日付だけで照合すると毎日「取りこぼし」に出続けるので、
+    文中の日付でも掲載済みかどうかを見る。
+    """
+    out = set()
+    base = date.fromisoformat(page_day)
+    t = unicodedata.normalize('NFKC', title)
+    # 先頭の「08/28 追加」はLEAFLA側の掲載日。開催日と読むと翌年に化ける
+    t = re.sub(r'^\s*\d{1,2}\s*/\s*\d{1,2}\s*追加\s*', '', t)
+    for mm, dd in DATE_IN_TITLE.findall(t):
+        mm, dd = int(mm), int(dd)
+        if not (1 <= mm <= 12 and 1 <= dd <= 31):
+            continue
+        for y in (base.year, base.year + 1):
+            try:
+                d = date(y, mm, dd)
+            except ValueError:
+                continue
+            if 0 <= (d - base).days <= horizon:
+                out.add(d.isoformat())
+                break
+    return out
+
+
 def matches(title, name):
     """候補のリンク文字列が、こちらのイベント名を指しているか。
 
@@ -208,6 +247,11 @@ def matches(title, name):
     2語以上一致、または5文字以上の語が1つ一致したら同じとみなす。
     """
     n = norm(title)
+    # 正規化した名前がそのまま本文に出るなら同じ回とみなす。
+    # 「PLANT & POT Vol.15」は特徴語が pot しか残らず語の数では拾えない。
+    nn = norm(name)
+    if len(nn) >= 6 and nn in n:
+        return True
     ts = tokens(name)
     if not ts:
         return False
@@ -250,9 +294,17 @@ def sweep(days, sleep=0.7):
             if not in_scope(t):
                 continue
             stats['in_scope'] += 1
+            look = [key] + sorted(dates_in_title(t, key, horizon=days))
+            cand = [e for k in look for e in by_day.get(k, [])]
+            # 「08/28 追加」で始まる新着告知は、その日のイベントではなく
+            # 45日ぶんの日付ページすべてに出る。本文に開催日が書かれていない
+            # (あるいは見出しが途中で切れている)ものは日付で絞れないので、
+            # この形の見出しに限り全期間から探す
+            if ADDED_PREFIX.match(unicodedata.normalize('NFKC', t)):
+                cand = [e for v in by_day.values() for e in v]
             if any(matches(t, e.get('name', '')) or
                    matches(t, e.get('venue') or e.get('location') or '')
-                   for e in by_day.get(key, [])):
+                   for e in cand):
                 stats['covered'] += 1
                 continue
             if any(matches(t, r) for r in rejected):
@@ -315,6 +367,19 @@ def self_test():
             ok = False
         print(f'  {mark} 範囲内={got!s:5} 期待={want!s:5} {t[:52]}')
 
+    print('\n--- 本文中の開催日の抽出 ---')
+    dcases = [
+        ('08/28 追加 妙高多肉市場 vol.15が9月27日に開催、', '2026-08-31', ['2026-09-27']),
+        ('狂植祭 Vol.7が2026年10月10日に開催', '2026-08-31', ['2026-10-10']),
+        ('会期の書いていない告知', '2026-08-31', []),
+    ]
+    for t, day, want in dcases:
+        got = sorted(dates_in_title(t, day, horizon=60))
+        mark = 'OK ' if got == want else '★NG'
+        if got != want:
+            ok = False
+        print(f'  {mark} {got} 期待={want} {t[:34]}')
+
     print('\n--- 掲載済みとの照合 ---')
     cases = [
         ('GREENHOLICinKARIYA2026が刈谷市で開催、アガベや塊根植物と園芸用品を販売',
@@ -327,6 +392,19 @@ def self_test():
          'GREEN HOLIC in KARIYA 2026', False),
         ('コーナンgardensumekitaが2周年イベント2026を開催',
          '第1回 ボタニカルX', False),
+        # 2026-08-31 の取りこぼし誤検知3件。原因はそれぞれ別
+        # (1) &amp; を戻していなかった + 特徴語が pot しか残らなかった
+        ('PLANT & POT Vol.15にCOOL CACTUSが9月13日出展、造形のサボテンと鉢を紹介',
+         'PLANT & POT Vol.15', True),
+        # (2) 漢字2文字を照合語から落としていたので照合語が空だった
+        ('樹祭一宮2026Autumnが尾張一宮駅前で開催、珍奇植物と音楽が秋の2日間を彩る',
+         '樹祭 一宮 2026 Autumn', True),
+        # (3) 新着告知はページの日付と開催日が違う
+        ('08/28 追加 妙高多肉市場 vol.15が9月27日に開催、',
+         '妙高多肉市場 vol.15', True),
+        # 名前が似ていない回を巻き込まないこと
+        ('GREEN HOLIC in KARIYA 2026が刈谷市で開催', 'Sakuya Green Jam 5', False),
+        ('狂植祭 Vol.7が2026年10月10日に開催、奈良で実施', '狂仙会 2026', False),
     ]
     for title, name, want in cases:
         got = matches(title, name)

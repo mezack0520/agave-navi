@@ -34,28 +34,13 @@
       "eventDate": "2026-09-12"
     },
     {
-      "key": "happy-smile-odawara-2026",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "HAPPY SMILE (小田原アリーナ)",
-      "decided": "2026-07-30",
-      "reason": "pukubookが2026年9月28日(月)として掲載しているが、出典の投稿(instagram.com/p/DMpqs-ghH5F/ @yu_taniku_)は2025年7月28日付で開催日は2025年9月28日(日)。2026年回の告知は主催者アカウントに存在しない。主催 @yu_taniku_ が2026年回を告知したら掲載する"
-    },
-    {
-      "key": "kyosenkai-2026",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "狂仙会 2026 (マイドームおおさか)",
-      "decided": "2026-07-30",
-      "reason": "pukubookの掲載は「仮予定／非公式」で日付も「2026年9月6日（日）？」。主催の日本サボテン狂人会側に2026年回の告知が確認できない。一次情報が出たら掲載する"
-    },
-    {
       "key": "no1plantae-2026-autumn",
       "reasonType": "unverified",
-      "revisit": true,
+      "revisit": false,
       "name": "天下一植物界 2026秋回（HDC神戸）",
       "decided": "2026-07-31",
-      "reason": "pukubookが「毎年5月、10月頃／HDC神戸」として仮予定・非公式で掲載しているが、公式 no1plantae.com/next は第六回（2026年5月23-24日 京セラドーム、終了）のままで秋回の告知がない。主催の一次情報が出たら掲載する"
+      "reason": "公式 no1plantae.com/next は第六回(2026年5月23-24日 京セラドーム、終了)のままで、公式IG @borderbreakbeyond の最新も5月24日の終了報告。第四回以降は毎年5月の年1回開催で秋回の実績が無く、第六回の告知は開催3か月前に出ていた。8月末で秋回の告知が無いことから2026年秋回は存在しないと判断する。次は第七回(2027年春)を新規エントリとして扱う。pukubookの『毎年5月、10月頃／HDC神戸』は会場も旧い",
+      "reviewedOn": "2026-08-31"
     },
     {
       "key": "sagami-vibes-park-vol3-2026",
@@ -279,6 +264,48 @@
       "decided": "2026-08-27",
       "reason": "月1回の定例開催なので9月回がある可能性は高いが、2026年9月の日程を示す一次情報が見つからなかった。日程が告知されたら掲載する",
       "eventDate": "2026-09-01"
+    },
+    {
+      "key": "atelier-nana-yuusuzumi-2026-09",
+      "reasonType": "policy",
+      "name": "アトリエnana 夕涼みしながら多肉時間 2026 (愛知県)",
+      "decided": "2026-08-31",
+      "reason": "主催者の告知は夏季休業中に設けた店舗の夕方営業日案内(15:00-19:00・計6日)で、即売会・展示会として告知されていない",
+      "eventDate": "2026-09-11"
+    },
+    {
+      "key": "nohara-engei-summer-sale-2026",
+      "reasonType": "policy",
+      "name": "ノハラ園芸センター Summer SALE 2026 (千葉県)",
+      "decided": "2026-08-31",
+      "reason": "レジにて20%OFFの期間限定割引販売(8/15-8/31)であり、イベントではない。同店の NOHARA green marche は別途対象",
+      "eventDate": "2026-08-31"
+    },
+    {
+      "key": "wakasaya-park-2026-09-20",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "若狭屋パーク 出店回 (2026-09-20 富山県富山市) D.G.C.TOYAMA 出店",
+      "decided": "2026-08-31",
+      "reason": "主催 @wakasaya_park に9/20回の告知がなく、確認できたのは出店者側の告知のみ。会場の定例名は WAKASAYA MARCHE で名称に植物語がなく、出店内訳も未公表のため比率を数えられない。主催告知が出たら再評価する",
+      "eventDate": "2026-09-20"
+    },
+    {
+      "key": "sumori-open-garden-2026-09",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "sumori open garden 2026秋 (2026-09-26/27 宮城県名取市)",
+      "decided": "2026-08-31",
+      "reason": "主催 @sumori_634 / スモリの家公式サイトに当該回の告知がなく、出店者 @simijimi0711 の投稿のみ。前年回は9月上旬に主催告知が出ているので、出たら掲載する",
+      "eventDate": "2026-09-26"
+    },
+    {
+      "key": "super-art-craft-market-2026-10",
+      "reasonType": "policy",
+      "name": "SUPER ART & CRAFT MARKET 2026 (MEET YOUR ART FESTIVAL 2026 内 / 2026-10-09〜12 東京都品川区)",
+      "decided": "2026-08-31",
+      "reason": "公式出店者リストで植物系は solxsol と PERK SHOP の2者のみ(80超中)。名称にも植物語がなく、本体は現代アートフェス。1出店者の出展告知をイベントとして立てない",
+      "eventDate": "2026-10-09"
     }
   ],
   "_reasonTypes": {
@@ -287,6 +314,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-08-27",
+  "updated": "2026-08-31",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

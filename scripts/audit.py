@@ -10,6 +10,7 @@
 """
 import html as _html
 import hashlib
+import html as _htmllib
 import json
 import os
 import re
@@ -982,15 +983,23 @@ def main():
     wf = ''
     for f in glob.glob(rp('.github', 'workflows', '*.yml')):
         wf += open(f, encoding='utf-8').read()
+    # 手で走らせる前提のスクリプトは自動実行の対象ではない。
+    # ここに足すときは、そのスクリプトの docstring に「なぜ自動化しないか」を書くこと。
+    MANUAL_ONLY = {
+        # アイコンはビルドのたびに変わらない。cairosvg を CI の依存に足すと
+        # ビルド全体が壊れる面が増えるだけなので、形を変えたいときだけ回す
+        'build-icons.py',
+    }
     unused = []
     for f in sorted(glob.glob(rp('scripts', '*.py'))) + [rp('build-detail-pages.py')]:
         bn = os.path.basename(f)
-        if bn in ('sitelib.py', 'audit.py'):
+        if bn in ('sitelib.py', 'audit.py') or bn in MANUAL_ONLY:
             continue
         if bn not in ba and bn not in wf:
             unused.append(bn)
     add('unreferenced_scripts', 'build-all.shもworkflowも参照していないスクリプト',
-        unused, '使われていないか、呼び出しが失われている')
+        unused, '使われていないか、呼び出しが失われている。'
+        '手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す')
 
     # 時間軸の規則の一貫性。開始日(date)を単一の時間キーにすると、同じ原因から
     # 逆向きの事故が2つ出る(2026-08-20に是正)。
@@ -1284,13 +1293,17 @@ def main():
             _dm = re.search(r'<span class="event-date">([^<]*)</span>', _ch)
             _tm = re.search(r'<h\d class="event-title">([^<]*)</h\d>', _ch)
             _pm = re.search(r'<p class="event-description">(.*?)</p>', _ch, re.S)
-            if _dm and _dm.group(1) != compact_date(_e):
+            # 頁の側は & や < がエスケープされている。戻さずに比べると
+            # 名前に & を含む回が永久に不一致として出続ける
+            # (2026-08-31「ビカクシダ板付け相談会 & 即売会」で検出)
+            _ue = _htmllib.unescape
+            if _dm and _ue(_dm.group(1)) != compact_date(_e):
                 _card_body_bad.append(
                     f"{_sm.group(1)}: 日付 頁={_dm.group(1)!r} data={compact_date(_e)!r}")
-            if _tm and _tm.group(1) != (_e.get('name') or ''):
+            if _tm and _ue(_tm.group(1)) != (_e.get('name') or ''):
                 _card_body_bad.append(
                     f"{_sm.group(1)}: 名称 頁={_tm.group(1)[:24]!r} data={(_e.get('name') or '')[:24]!r}")
-            if _pm and _pm.group(1).strip() != (_e.get('description') or '').strip():
+            if _pm and _ue(_pm.group(1)).strip() != (_e.get('description') or '').strip():
                 _card_body_bad.append(f"{_sm.group(1)}: 説明文が古い")
     add('index_card_body_drift', 'トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)',
         sorted(_card_body_bad),

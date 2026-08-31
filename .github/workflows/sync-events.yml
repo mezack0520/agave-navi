@@ -120,63 +120,10 @@ jobs:
             echo "::endgroup::"
           done
 
-      - name: Add cards to index.html for new slugs
-        run: |
-          python3 << 'PYEOF'
-          import json, re
-
-          with open("events.json") as f:
-              events = json.load(f)
-
-          with open("index.html") as f:
-              html = f.read()
-
-          existing_slugs = set(re.findall(r'data-slug="([^"]+)"', html))
-          event_map = {e["slug"]: e for e in events}
-          new_slugs = [e["slug"] for e in events
-                       if e["slug"] not in existing_slugs
-                       and e.get("status") == "upcoming"
-                       and e.get("date")]
-
-          if not new_slugs:
-              print("No new cards to add to index.html")
-          else:
-              marker = '</div><!-- /eventsGrid -->'
-              cards = ""
-              for slug in new_slugs:
-                  e = event_map[slug]
-                  tags_csv = ",".join(e.get("tags",[]))
-                  dd = e.get("dateDisplay", e.get("date","").replace("-","."))
-                  pref = e.get("prefecture","")
-                  region = e.get("region","")
-                  ad = e.get("addedDate","")
-                  card = f'''<div class="event-card" data-tags="{tags_csv}" data-status="upcoming" data-region="{region}" data-prefecture="{pref}" data-slug="{slug}" data-date="{e.get('date','')}" data-date-end="{e.get('dateEnd','')}" data-added-date="{ad}">
-              <div class="event-thumb event-no-image"></div>
-              <button class="fav-btn" onclick="toggleFav(event,'{slug}')" aria-label="行きたい">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
-              <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div></div>
-              <div class="event-card-body">
-                <div class="event-header"><span class="event-date">{dd}</span><span class="event-status"></span></div>
-                <h2 class="event-title">{e['name']}</h2>
-                <p class="event-description">{e.get('description','')}</p>
-                <div class="event-meta-row"><span class="event-region">{pref or region}</span></div>
-              </div>
-              <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>行きたい</span></div>
-            </div>
-              '''
-                  cards += card
-                  print(f"Card added: {slug}")
-
-              html = html.replace(marker, cards + marker)
-              up_count = sum(1 for e in events if e.get("status")=="upcoming")
-              html = re.sub(r'<span class="event-count" id="eventCount">\d+件</span>',
-                            f'<span class="event-count" id="eventCount">{up_count}件</span>', html)
-
-              with open("index.html", "w") as f:
-                  f.write(html)
-              print(f"Added {len(new_slugs)} cards. Count: {up_count}")
-          PYEOF
+      # カードの挿入は scripts/sync-index-cards.py が持つ(build-all.sh から走る)。
+      # 2026-08-31まではここにPythonを直書きしていたが、ローカルのビルドでは
+      # 走らないので手で足した回のカードが作られず、監査が
+      # 「sync-index-cards.py を再実行する」と案内しても直らなかった。
 
       - name: Regenerate all static files
         run: bash scripts/build-all.sh

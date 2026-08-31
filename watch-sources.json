@@ -1,8 +1,8 @@
 {
- "generated": "2026-08-31 09:18 JST",
+ "generated": "2026-08-31 12:32 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 198,
+  "igAccounts": 205,
   "awaitingNextEdition": 218,
   "officialSiteCandidates": 59,
   "unresolvedIgHandles": 0
@@ -32,6 +32,15 @@
    "eventCount": 4,
    "lastEventName": "PICNIC GARDEN vol.25 in 鶴岡公園",
    "lastEventDate": "2026-09-19",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "sapporo.cactus.club",
+   "url": "https://www.instagram.com/sapporo.cactus.club/",
+   "eventCount": 4,
+   "lastEventName": "秋のサボテン多肉植物展（札幌カクタスクラブ）",
+   "lastEventDate": "2026-09-25",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -76,6 +85,15 @@
    "url": "https://www.instagram.com/nagomitaniku/",
    "eventCount": 2,
    "lastEventName": "多肉渡来記 近江・竜王の章",
+   "lastEventDate": "2026-09-06",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "aobouzu_caudex",
+   "url": "https://www.instagram.com/aobouzu_caudex/",
+   "eventCount": 2,
+   "lastEventName": "青坊主 鹿児島ポップアップ",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": true,
    "priority": 0
@@ -189,15 +207,6 @@
    "priority": 0
   },
   {
-   "handle": "sapporo.cactus.club",
-   "url": "https://www.instagram.com/sapporo.cactus.club/",
-   "eventCount": 3,
-   "lastEventName": "サボテン多肉植物フェア 夏 (札幌)",
-   "lastEventDate": "2026-07-03",
-   "hasUpcoming": false,
-   "priority": 1
-  },
-  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -243,19 +252,19 @@
    "priority": 1
   },
   {
-   "handle": "fuji_taniku",
-   "url": "https://www.instagram.com/fuji_taniku/",
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
    "eventCount": 2,
-   "lastEventName": "富士多肉 多肉植物・サボテンの販売（富士川楽座）",
+   "lastEventName": "木更津園芸市（2026年8月）",
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
    "priority": 1
   },
   {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "handle": "fuji_taniku",
+   "url": "https://www.instagram.com/fuji_taniku/",
    "eventCount": 2,
-   "lastEventName": "木更津園芸市（2026年8月）",
+   "lastEventName": "富士多肉 多肉植物・サボテンの販売（富士川楽座）",
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
    "priority": 1
@@ -324,8 +333,8 @@
    "priority": 1
   },
   {
-   "handle": "nittimosattimo",
-   "url": "https://www.instagram.com/nittimosattimo/",
+   "handle": "danjo_kyohsenkai",
+   "url": "https://www.instagram.com/danjo_kyohsenkai/",
    "eventCount": 1,
    "lastEventName": "狂仙会 2026",
    "lastEventDate": "2026-09-06",
@@ -445,6 +454,15 @@
    "url": "https://www.instagram.com/kinoco__inc/",
    "eventCount": 1,
    "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "ichigoichie_antique",
+   "url": "https://www.instagram.com/ichigoichie_antique/",
+   "eventCount": 1,
+   "lastEventName": "高の宮市 〜植物のある暮らし〜",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
    "priority": 1
@@ -576,10 +594,46 @@
    "priority": 1
   },
   {
+   "handle": "underground_agave_",
+   "url": "https://www.instagram.com/underground_agave_/",
+   "eventCount": 1,
+   "lastEventName": "UndergrounD",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "tompots_501",
+   "url": "https://www.instagram.com/tompots_501/",
+   "eventCount": 1,
+   "lastEventName": "麋角植物作業室",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "acu.s_forest",
    "url": "https://www.instagram.com/acu.s_forest/",
    "eventCount": 1,
    "lastEventName": "Exploring Unpredictable Plants 2026",
+   "lastEventDate": "2026-09-27",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "engei_edamame",
+   "url": "https://www.instagram.com/engei_edamame/",
+   "eventCount": 1,
+   "lastEventName": "ビカクシダ板付け相談会 & 即売会",
+   "lastEventDate": "2026-09-27",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "yu_taniku_",
+   "url": "https://www.instagram.com/yu_taniku_/",
+   "eventCount": 1,
+   "lastEventName": "第2回 HAPPY SMILE",
    "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
    "priority": 1
@@ -666,10 +720,28 @@
    "priority": 1
   },
   {
+   "handle": "kyoshoku_sai",
+   "url": "https://www.instagram.com/kyoshoku_sai/",
+   "eventCount": 1,
+   "lastEventName": "狂植祭 Vol.7",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "ibatama.ta29",
    "url": "https://www.instagram.com/ibatama.ta29/",
    "eventCount": 1,
    "lastEventName": "いばたま vol.9",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "tanippe2026",
+   "url": "https://www.instagram.com/tanippe2026/",
+   "eventCount": 1,
+   "lastEventName": "栃木★多肉フェス in 深谷グリーンパーク（タニッペ Final）",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
    "priority": 1
@@ -1458,15 +1530,6 @@
    "priority": 2
   },
   {
-   "handle": "aobouzu_caudex",
-   "url": "https://www.instagram.com/aobouzu_caudex/",
-   "eventCount": 1,
-   "lastEventName": "ART FAIR NAGANO 2026",
-   "lastEventDate": "2026-07-25",
-   "hasUpcoming": false,
-   "priority": 2
-  },
-  {
    "handle": "cool.cactus_",
    "url": "https://www.instagram.com/cool.cactus_/",
    "eventCount": 1,
@@ -2195,34 +2258,10 @@
  ],
  "officialSiteCandidates": [
   {
-   "domain": "kinto.co.jp",
-   "url": "https://kinto.co.jp/blogs/news/mollis-exhibit-2026",
-   "eventName": "MOLLIS EXHIBIT 2026",
-   "eventDate": "2026-07-10"
-  },
-  {
    "domain": "store.tsite.jp",
    "url": "https://store.tsite.jp/futakotamagawa/event/POPUPSHOP/",
    "eventName": "沖縄育ちの珍奇な植物店 vol.2",
    "eventDate": "2026-08-28"
-  },
-  {
-   "domain": "fujikawarakuza.co.jp",
-   "url": "https://fujikawarakuza.co.jp/event",
-   "eventName": "富士多肉 多肉植物・サボテンの販売（富士川楽座）",
-   "eventDate": "2026-08-29"
-  },
-  {
-   "domain": "bishoku-club.habitatoides.com",
-   "url": "https://bishoku-club.habitatoides.com/",
-   "eventName": "美植倶楽部 POPUP EVENT",
-   "eventDate": "2026-08-29"
-  },
-  {
-   "domain": "protoleaf.com",
-   "url": "https://www.protoleaf.com/?p=24060",
-   "eventName": "レア観葉植物販売会（Jolie Nursery）",
-   "eventDate": "2026-08-15"
   },
   {
    "domain": "sakuyakonohana.jp",
@@ -2373,6 +2412,30 @@
    "url": "https://www.city.aizuwakamatsu.fukushima.jp/index_php/event_callen/show_callen.php",
    "eventName": "ピクニックガーデン vol.21 in I'S NEW BASE",
    "eventDate": "2026-05-10"
+  },
+  {
+   "domain": "no1plantae.com",
+   "url": "https://no1plantae.com/",
+   "eventName": "BORDER BREAK!! 6th",
+   "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "fmfm.jp",
+   "url": "https://fmfm.jp/event/marche/saitama",
+   "eventName": "HAZE -various genres marche",
+   "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "botafes.jp",
+   "url": "https://botafes.jp/",
+   "eventName": "HOSOKAWA BOTAFES '26 spring",
+   "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "ilinobeclub.jp",
+   "url": "https://ilinobeclub.jp/archives/475",
+   "eventName": "Plants garage market 2026 -SPRING & SUMMER-",
+   "eventDate": "2026-05-30"
   }
  ],
  "unresolvedIgHandles": []
