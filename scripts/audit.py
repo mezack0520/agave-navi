@@ -1540,6 +1540,114 @@ def main():
              'ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info',
         severity='info')
 
+    # --- スケジュールタスクそのものが動いたか -------------------------------
+    # reviewedHistory で event-listing-review の抜けは拾えるようになったが、
+    # 同じ穴が他の3タスクに残っていた。実行の記録が repo に一切無いため、
+    # 週次の site-health-check が 2026-08-25 に成果物ゼロで終わったことは
+    # 今日(08-31)に task-reports のファイル名を人が並べるまで誰も知らなかった。
+    # スケジュール側の lastRunAt は最新1回しか持たないので、
+    # 次の回が走った時点で抜けた週は事後に判定できなくなる。
+    # 対処は reviewedHistory と同じ形。タスクが実行日を台帳に書き、
+    # ここで cadence から期待日を作って差を出す。
+    # event-listing-review は載せない。同じ記録を2か所に持つと必ず食い違う
+    # (generate-rss.py が TAG_ROMAJI の写しを持って壊れたのと同じ型)。
+    # severity は info。daily のタスクは Chrome の許可待ちなどで実際に落ちる回があり、
+    # 0が正常とは言えない。urgent にすると鳴りっぱなしになって読まれなくなる。
+    task_gap = []
+    _tr = load_json('task-runs.json', {}).get('tasks') or {}
+    try:
+        _tday = _dtm.date.fromisoformat(today_jst())
+    except ValueError:
+        _tday = None
+    for _tid in sorted(_tr):
+        _cfg = _tr[_tid] or {}
+        _cad = str(_cfg.get('cadence') or '').strip()
+        if _tday is None or _cad not in ('daily', 'weekly'):
+            task_gap.append(f'{_tid}: cadence が daily/weekly でない({_cad!r})')
+            continue
+        _since_s = str(_cfg.get('since') or '').strip()
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _since_s):
+            task_gap.append(f'{_tid}: since が YYYY-MM-DD でない({_since_s!r})')
+            continue
+        _seen = {h for h in (_cfg.get('history') or [])
+                 if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))}
+        _since = _dtm.date.fromisoformat(_since_s)
+        # 窓は daily=7日 / weekly=28日(4回ぶん)。当日は監査より後に走ることが
+        # あるので窓に入れない。since より前は台帳が無いので判定しない。
+        _win = 7 if _cad == 'daily' else 28
+        _start = max(_since, _tday - _dtm.timedelta(days=_win))
+        _end = _tday - _dtm.timedelta(days=1)
+        if _cad == 'daily':
+            _miss = []
+            _d = _start
+            while _d <= _end:
+                if _d.isoformat() not in _seen:
+                    _miss.append(_d.isoformat())
+                _d += _dtm.timedelta(days=1)
+            if _miss:
+                task_gap.append(
+                    f'{_tid}(daily) が動かなかった日: ' + ' '.join(_miss)
+                    + f'（直近{_win}日で{len(_miss)}日）')
+        else:
+            # 週次は曜日で照合しない。GitHub と同じでタスクの起動も遅れるし、
+            # 実際 08-17 起動の回のレポートは 08-18 付で残っている。
+            # 曜日一致にすると1日ずれただけで鳴り、鳴りっぱなしになる。
+            # 見たいのは「1週まるごと抜けたか」なので、
+            # 昨日から7日ずつ遡った窓のそれぞれに実行が1回あるかで見る。
+            _miss = []
+            for _k in range(_win // 7):
+                _wend = _end - _dtm.timedelta(days=7 * _k)
+                _wstart = _wend - _dtm.timedelta(days=6)
+                if _wstart < _since:
+                    break
+                if not any(_wstart <= _dtm.date.fromisoformat(h) <= _wend
+                           for h in _seen):
+                    _miss.append(f'{_wstart.isoformat()}〜{_wend.isoformat()}')
+            if _miss:
+                task_gap.append(
+                    f'{_tid}(weekly) の実行が無かった週: ' + ' '.join(_miss)
+                    + f'（直近{_win // 7}週で{len(_miss)}週）')
+    add('task_run_gap', 'スケジュールタスクの実行が抜けた日', task_gap,
+        note='task-runs.json はタスクが毎回自分の実行日を書く台帳。'
+             'スケジュール側の lastRunAt は最新1回しか持たないので、'
+             '抜けた日は次の回が走った時点で検出できなくなる。'
+             '成果物が無いまま終わった回もここに出ないので、'
+             'この台帳が repo 側に残る唯一の生存記録になる。'
+             '週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。'
+             'event-listing-review は new-inquiries.json の reviewedHistory 側で見る',
+        severity='info')
+
+    # --- フィードの pubDate がビルドのたびに動いていないか ------------------
+    # 2026-08-30 に sitemap の lastmod で塞いだのと同じ型。
+    # generate-rss.py は addedDate が無い回に datetime.now() を入れており、
+    # 毎日の再生成でその回の pubDate が「今」に更新されていた。
+    # 購読側は pubDate で並べ替えと新着判定をするので、
+    # 中身が変わっていない回が毎日いちばん上に新着として出ることになる。
+    # 判定は時計に依存させない。同じフィードの lastBuildDate と一致する
+    # pubDate は、ビルドの瞬間を発行日として名乗っているということ。
+    # 実データの日付は 00:00:00 で入るので、正常な回は秒まで一致しない。
+    feed_pub = []
+    for _fp in sorted(glob.glob(rp('feeds', '*.xml')) + [rp('rss.xml')]):
+        try:
+            with open(_fp, encoding='utf-8') as f:
+                _fs = f.read()
+        except OSError:
+            continue
+        _lb = re.search(r'<lastBuildDate>(.*?)</lastBuildDate>', _fs)
+        if not _lb:
+            continue
+        _n = sum(1 for _p in re.findall(r'<pubDate>(.*?)</pubDate>', _fs)
+                 if _p == _lb.group(1))
+        if _n:
+            feed_pub.append(
+                f'{os.path.relpath(_fp, REPO)}: {_n}件の pubDate が '
+                'lastBuildDate と同時刻(ビルド時刻を発行日にしている)')
+    add('feed_pubdate_unstable', 'フィードのpubDateがビルド時刻になっている',
+        feed_pub,
+        note='pubDate は addedDate / updatedAt / enrichedAt から作る。'
+             'どれも無い回は pubDate ごと出さない(RSS 2.0 で任意)。'
+             'now() を入れると再生成のたびに新着として再浮上する')
+
     # --- sitelib の規則を他スクリプトが写し取っていないか -------------------
     # 検出側と書き込み側に同じ規則を二重に書くと、片方だけ更新されて必ず食い違う。
     # 2026-08-20、generate-rss.py が TAG_ROMAJI と safe_slug を自前で持っており、

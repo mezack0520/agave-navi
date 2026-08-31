@@ -35,19 +35,32 @@ def render_rss(title, link, description, events, max_items=20):
         venue = e.get('location') or ''
         pref = e.get('prefecture') or ''
         desc = e.get('description','')
-        added = e.get('addedDate','')
-        try:
-            pub = datetime.strptime(added, '%Y-%m-%d').replace(tzinfo=JST)
-        except Exception:
-            pub = datetime.now(JST)
-        pub_str = pub.strftime('%a, %d %b %Y %H:%M:%S +0900')
+        # pubDate はビルド時刻にフォールバックしない(2026-08-31)。
+        # addedDate の無い回が129件あり、そこへ datetime.now() を入れていたため、
+        # 毎日の再生成でその回の pubDate が「今」に更新されていた
+        # (実測: フィード全324itemのうち68itemがlastBuildDateと同時刻)。
+        # 購読側は pubDate で並べ替えと新着判定をするので、
+        # 中身が何も変わっていない回が毎日いちばん上に新着として出る。
+        # sitemap の lastmod を mtime で出していたのと同じ型の誤り
+        # (2026-08-30)。生成のたびに変わる値を、発行日として出さない。
+        # 安定した日付が1つも無い回は pubDate を出さない。
+        # RSS 2.0 で pubDate は任意。分からない日付を主張するより出さないほうがよい。
+        pub_str = ''
+        for _k in ('addedDate', 'updatedAt', 'enrichedAt'):
+            try:
+                pub_str = (datetime.strptime(str(e.get(_k) or '')[:10], '%Y-%m-%d')
+                           .replace(tzinfo=JST)
+                           .strftime('%a, %d %b %Y %H:%M:%S +0900'))
+                break
+            except Exception:
+                continue
+        pub_line = f'\n    <pubDate>{pub_str}</pubDate>' if pub_str else ''
         meta = ' / '.join(x for x in [dd, pref, venue] if x)
         body = f'{meta}<br>{desc}'
         items.append(f'''  <item>
     <title>{escape(nm)}</title>
     <link>{url}</link>
-    <guid>{url}</guid>
-    <pubDate>{pub_str}</pubDate>
+    <guid>{url}</guid>{pub_line}
     <description><![CDATA[{body}]]></description>
   </item>''')
     now = datetime.now(JST).strftime('%a, %d %b %Y %H:%M:%S +0900')
