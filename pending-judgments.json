@@ -1,11 +1,11 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
   "items": [],
-  "updated": "2026-08-31",
+  "updated": "2026-09-01",
   "resolved": [
     {
       "id": "event-monitor:inquiry-pii-in-public-repo",
-      "resolvedOn": "2026-08-31",
+      "resolvedOn": "2026-09-01",
       "decision": "listing-policy.json に inquiryPii 節を新設。GASは連絡先をリポジトリに書かず ALERT_TO へ直接メールし、notify-inquiry.yml は氏名・メール行を出さない。audit.py の published_pii を自由記述の走査まで拡張した",
       "note": "Apps Script 側の再デプロイ(scripts/google-apps-script.js の貼り直し)が済むまで、GAS からの書き込みは旧仕様のまま"
     }

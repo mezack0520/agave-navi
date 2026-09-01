@@ -1,6 +1,6 @@
 {
  "_note": "掲載基準の機械可読版。agave-event-update が判断に使う。about.html の掲載基準と整合させること。ここに書いていない類型に出会ったときだけ pending-judgments に積む(同じ問いを繰り返し人間に投げないため)。",
- "updated": "2026-08-31",
+ "updated": "2026-09-01",
  "primarySource": {
   "rule": "主催者の公式サイト・公式SNSに当該回の告知があることを必須とする",
   "insufficient": [
@@ -131,7 +131,7 @@
   "alsoApplies": "inquiries-processed.json も同じリポジトリにあるので同じ規則。処理の記録に連絡先を残さない。誰から来たかを追う必要が出たら回答シートを見る",
   "bodyCaveat": "body は申請者が自由記述する欄なので、本人が署名や連絡先を書き込むことがある。掲載処理のときに読んで、連絡先が入っていたらその行を落としてから記録する",
   "detectedBy": "audit.py の published_pii(urgent)。値そのものは監査結果に書かない(audit-results.json も公開ファイル)",
-  "decided": "2026-08-31",
+  "decided": "2026-09-01",
   "incident": "2026-08-31 の 9bf760e8 で申請1件の氏名とメールアドレスが 12:41〜17:04 のあいだ公開URLに出た。コミットは公開履歴に残っている"
  }
 }
