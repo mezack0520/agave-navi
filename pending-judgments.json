@@ -1,14 +1,13 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
+  "items": [],
+  "updated": "2026-08-31",
+  "resolved": [
     {
       "id": "event-monitor:inquiry-pii-in-public-repo",
-      "title": "掲載申請の氏名・メールが public リポジトリと公開URLを通っている",
-      "found": "2026-09-01",
-      "detail": "リポジトリは private=false。GitHub Pages がリポジトリの中身をそのまま配信するので、new-inquiries.json は https://agave-navi.com/new-inquiries.json として誰でも読める。GAS の onFormSubmit がフォーム送信者の name / email をこのファイルに書いて push し、notify-inquiry.yml がそれを読んでメール本文を組む設計なので、申請1件ごとに氏名とメールアドレスが必ず公開URLと公開コミット履歴を通る。2026-08-31 の 9bf760e8 で実際に1件が 12:41〜17:04 のあいだ公開され、コミット自体は現在も公開履歴に残っている（値はここに書かない）。監査 published_pii を足したので、以後は通った日に urgent で鳴る。ただし鳴っても「通ったこと」は変えられない。",
-      "proposal": "listing-policy.json に inquiryPii 節を新設する。案: {\"rule\": \"申請者の氏名・メールアドレス・電話番号をリポジトリに書かない。受け渡しの箱に入れてよいのは timestamp / type / eventName / body だけ\", \"reason\": \"リポジトリは public で、同じ内容が GitHub Pages でも配信される\", \"handling\": \"連絡先は GAS が ALERT_TO へ直接メールする（google-apps-script.js は既にメール送信の口を持っている）。notify-inquiry.yml 側は氏名・メールの行を落とす\"}。実装は Apps Script エディタでの再デプロイが要るのでタスクからは打てない。",
-      "needsHuman": "(1) GAS を書き換えて再デプロイするか。連絡先をメールだけで受ける運用に変えてよいか。(2) 公開履歴に残った 9bf760e8 を消すか（履歴の書き換え + force push、または GitHub サポートへの依頼）。消さずに許容する判断もありうる。"
+      "resolvedOn": "2026-08-31",
+      "decision": "listing-policy.json に inquiryPii 節を新設。GASは連絡先をリポジトリに書かず ALERT_TO へ直接メールし、notify-inquiry.yml は氏名・メール行を出さない。audit.py の published_pii を自由記述の走査まで拡張した",
+      "note": "Apps Script 側の再デプロイ(scripts/google-apps-script.js の貼り直し)が済むまで、GAS からの書き込みは旧仕様のまま"
     }
-  ],
-  "updated": "2026-09-01"
+  ]
 }

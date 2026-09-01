@@ -2504,6 +2504,30 @@ def main():
     # 消し込みが遅れているあいだ鳴り続ける。
     # 恒久対処(PIIをrepoに通さない)は pending-judgments.json に積んである。
     _PII_KEYS = ('name', 'email', 'tel', 'phone', 'address')
+    # 自由記述の欄には本人が署名や連絡先を書き込むことがある。
+    # キーの有無だけを見ていると、body に書かれた連絡先はそのまま公開される
+    # (listing-policy.json inquiryPii.bodyCaveat)。
+    # 規則は読むコードを書くまで規則にならないので、本文も走査する。
+    _FREE_KEYS = ('body', 'detail', 'note', 'reason')
+    _OWN_MAIL = ('yuji.mezaki@gmail.com', 'mezaki@sterfield.co.jp')
+    _RE_MAIL = re.compile(r'[\w.+-]+@[\w-]+\.[A-Za-z]{2,}')
+    _RE_TEL = re.compile(r'(?<!\d)0\d{1,4}[-(]\d{1,4}[-)]?\d{3,4}(?!\d)')
+
+    def _free_text_pii(text):
+        # 自由記述の中の連絡先。URLの中の @ は拾わない
+        # (images/...@2x-....png のような偽陽性を避ける)
+        found = []
+        for tok in str(text or '').split():
+            if '/' in tok:
+                continue
+            _m = _RE_MAIL.search(tok)
+            if _m and _m.group(0).lower() not in _OWN_MAIL:
+                found.append('メールアドレス')
+                break
+        if _RE_TEL.search(str(text or '')):
+            found.append('電話番号らしき数字')
+        return found
+
     pii_pub = []
     for _fn, _paths in (('new-inquiries.json', (('items',),)),
                         ('inquiries-processed.json', (('items',), ('outcomes',)))):
@@ -2517,9 +2541,21 @@ def main():
                     pii_pub.append(
                         f'{_fn} の {_key}[{_i}] に {"/".join(_has)} が入っている'
                         f'（timestamp={_it.get("timestamp") or "?"}）')
+                _inbody = []
+                for _fk in _FREE_KEYS:
+                    for _w in _free_text_pii(_it.get(_fk)):
+                        _inbody.append(f'{_fk} に{_w}')
+                if _inbody:
+                    pii_pub.append(
+                        f'{_fn} の {_key}[{_i}] の自由記述に連絡先が入っている'
+                        f'（{" / ".join(sorted(set(_inbody)))} / '
+                        f'timestamp={_it.get("timestamp") or "?"}）')
     add('published_pii', '公開されるファイルに個人情報が入っている',
         sorted(pii_pub),
         'リポジトリは public で、同じ内容が https://agave-navi.com/ にも出る。'
+        '規則は listing-policy.json の inquiryPii。'
+        'GASは連絡先を書かなくなったので、キーで出るのは古いデータか手作業の混入。'
+        '自由記述で出たら、その行を落としてから記録し直す。'
         '処理したら items を空にして push する。'
         '値そのものはここに書かない（監査結果も公開ファイル）')
 

@@ -54,17 +54,39 @@ function onFormSubmit(e) {
   try {
     var v = e && e.namedValues ? e.namedValues : {};
 
+    var ts = pick(v, 'タイムスタンプ') || formatNow();
+    var type = pick(v, 'お問い合わせ種別') || '(種別なし)';
+    var eventName = pick(v, 'イベント名');
+    var senderName = pick(v, 'お名前');
+    var senderMail = pick(v, 'メールアドレス');
+
+    // リポジトリに書くのは連絡先を除いたぶんだけ。
+    // agave-navi は public リポジトリで、GitHub Pages が中身をそのまま配信する。
+    // new-inquiries.json は https://agave-navi.com/new-inquiries.json として
+    // 誰でも読めるうえ、コミットは公開履歴に永久に残る。
+    // 2026-08-31 に実際に1件の氏名とメールアドレスが公開URLを通った。
+    // 規則は listing-policy.json の inquiryPii 節。
     var item = {
-      timestamp: pick(v, 'タイムスタンプ') || formatNow(),
-      type: pick(v, 'お問い合わせ種別') || '(種別なし)',
-      eventName: pick(v, 'イベント名'),
-      name: pick(v, 'お名前'),
-      email: pick(v, 'メールアドレス'),
+      timestamp: ts,
+      type: type,
+      eventName: eventName,
       body: buildBody(v)
     };
 
     appendInquiry(item);
-    Logger.log('appended: ' + JSON.stringify(item));
+    Logger.log('appended (連絡先は除外): ' + JSON.stringify(item));
+
+    // 連絡先はここから直接メールする。GitHub を経由させない
+    notify('[アガベイベントナビ] 申請者の連絡先 ' + ts,
+      '公開リポジトリに書けない情報なのでメールで送ります。\n' +
+      '内容そのものは通知メール（Notify Inquiry）に届きます。\n\n' +
+      '受信日時: ' + ts + '\n' +
+      '種別: ' + type + '\n' +
+      'イベント名: ' + eventName + '\n' +
+      'お名前: ' + senderName + '\n' +
+      'メール: ' + senderMail + '\n\n' +
+      '回答シート: https://docs.google.com/spreadsheets/d/' +
+      '1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit');
 
   } catch (err) {
     // ここで落とすと回答が消えるので、必ず自分に知らせる
@@ -232,6 +254,7 @@ function backfillFromSheet() {
   (cur.json.items || []).forEach(function (it) { seen[it.timestamp] = true; });
 
   var added = 0;
+  var contacts = [];
   for (var r = 1; r < values.length; r++) {
     var v = {};
     for (var c = 0; c < header.length; c++) {
@@ -243,17 +266,23 @@ function backfillFromSheet() {
       : String(ts).trim();
     if (!ts || seen[ts]) continue;
 
+    // onFormSubmit と同じく連絡先は書かない(listing-policy.json の inquiryPii)
     appendInquiry({
       timestamp: ts,
       type: pick(v, 'お問い合わせ種別') || '(種別なし)',
       eventName: pick(v, 'イベント名'),
-      name: pick(v, 'お名前'),
-      email: pick(v, 'メールアドレス'),
       body: buildBody(v)
     });
+    contacts.push(ts + ' / ' + (pick(v, 'お名前') || '(名前なし)') +
+                  ' <' + (pick(v, 'メールアドレス') || '(メールなし)') + '>');
     seen[ts] = true;
     added++;
     cur = getFile();  // sha を取り直す
+  }
+  if (contacts.length) {
+    notify('[アガベイベントナビ] backfill した申請者の連絡先 ' + contacts.length + '件',
+      '公開リポジトリに書けない情報なのでメールで送ります。\n\n' +
+      contacts.join('\n'));
   }
   Logger.log('backfill: ' + added + '件追加');
 }

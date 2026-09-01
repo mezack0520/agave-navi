@@ -857,7 +857,7 @@
       "title": "公開されるファイルに個人情報が入っている",
       "count": 0,
       "items": [],
-      "note": "リポジトリは public で、同じ内容が https://agave-navi.com/ にも出る。処理したら items を空にして push する。値そのものはここに書かない（監査結果も公開ファイル）",
+      "note": "リポジトリは public で、同じ内容が https://agave-navi.com/ にも出る。規則は listing-policy.json の inquiryPii。GASは連絡先を書かなくなったので、キーで出るのは古いデータか手作業の混入。自由記述で出たら、その行を落としてから記録し直す。処理したら items を空にして push する。値そのものはここに書かない（監査結果も公開ファイル）",
       "severity": "urgent"
     },
     "pending_judgment_policy": {

@@ -6,7 +6,10 @@
 #       トリガ自体は互換のため残すが、通常経路は push。
 # 認証は health.yml と同じ GMAIL_USER / GMAIL_APP_PASSWORD secrets を流用。
 #
-# new-inquiries.json の形: {"items": [{timestamp, type, eventName, name, email, body}, ...]}
+# new-inquiries.json の形: {"items": [{timestamp, type, eventName, body}, ...]}
+#   氏名・メールアドレスは入れない。リポジトリが public で、同じ内容が
+#   https://agave-navi.com/new-inquiries.json としても配信されるため。
+#   連絡先は GAS が ALERT_TO へ直接メールする(listing-policy.json の inquiryPii)。
 # items が空の push ではメールを送らない(消し込み後の push で空メールを出さないため)。
 name: Notify Inquiry
 
@@ -53,10 +56,13 @@ jobs:
                       subject = f'新着{len(items)}件'
                       blocks = []
                       for i in items:
+                          # 氏名・メールアドレスはここに出さない。
+                          # このファイルの入力(new-inquiries.json)は public リポジトリに
+                          # あり、GitHub Pages でも配信される。連絡先は GAS が
+                          # ALERT_TO へ直接メールする(listing-policy.json の inquiryPii)。
                           blocks.append('\n'.join([
                               f"■ {i.get('timestamp', '')} / {i.get('type', '')}",
                               f"  イベント名: {i.get('eventName', '')}",
-                              f"  お名前: {i.get('name', '')} <{i.get('email', '')}>",
                               f"  内容: {i.get('body', '')}",
                           ]))
                       body = '\n\n'.join(blocks)
@@ -84,6 +90,9 @@ jobs:
             サイトのお問い合わせフォームに新しい回答があります。
 
             ${{ steps.mail.outputs.body }}
+
+            ※ 申請者の氏名・メールアドレスはこのメールには含みません。
+              別便「申請者の連絡先」か、下の回答シートで確認してください。
 
             回答シート:
             https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit
