@@ -215,7 +215,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 103,
+      "count": 102,
       "items": [
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
@@ -473,10 +473,8 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 1,
-      "items": [
-        "okinawa-chinki-plants-futako-2026(2026-08-28〜2026-08-31/4日/長期)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
     },
@@ -582,7 +580,7 @@
       "title": "他所に出ていて当サイトに無いイベント候補",
       "count": 1,
       "items": [
-        "2026-08-31 08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球..."
+        "2026-09-01 08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球..."
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -647,8 +645,11 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "agave-event-update(daily) が動かなかった日: 2026-08-31（直近7日で1日）",
+        "event-monitor(daily) が動かなかった日: 2026-08-31（直近7日で1日）"
+      ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る",
       "severity": "info"
     },

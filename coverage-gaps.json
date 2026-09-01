@@ -1,20 +1,20 @@
 {
   "_note": "他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-08-31",
+  "sweptOn": "2026-09-01",
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1068,
-    "in_scope": 182,
-    "covered": 113,
-    "known_rejected": 24,
+    "candidates": 1072,
+    "in_scope": 179,
+    "covered": 112,
+    "known_rejected": 22,
     "gaps_raw": 45
   },
   "errors": [],
   "gaps": [
     {
-      "date": "2026-08-31",
-      "lastSeen": "2026-10-14",
+      "date": "2026-09-01",
+      "lastSeen": "2026-10-15",
       "days": 45,
       "title": "08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球..."
     }
