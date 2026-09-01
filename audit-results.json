@@ -1,5 +1,5 @@
 {
-  "total": 280,
+  "total": 282,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -521,8 +521,10 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)"
+      ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
     },
@@ -693,7 +695,7 @@
       "title": "スケジュールタスクの実行が抜けた日",
       "count": 2,
       "items": [
-        "agave-event-update(daily) が動かなかった日: 2026-08-31（直近7日で1日）",
+        "agave-event-update(daily) が動かなかった日: 2026-08-31 2026-09-01（直近7日で2日）",
         "event-monitor(daily) が動かなかった日: 2026-08-31（直近7日で1日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る",
@@ -792,8 +794,10 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "bizarre-park-local-market-2026-09: 開催日 2026-09-01 を過ぎた（保留 2026-08-27）"
+      ],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
