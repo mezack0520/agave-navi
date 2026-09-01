@@ -1,5 +1,5 @@
 {
-  "total": 218,
+  "total": 217,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -578,10 +578,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-09-01 08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球..."
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -631,7 +629,7 @@
       "title": "回答シートと処理済み件数が合わない",
       "count": 0,
       "items": [],
-      "note": "event-listing-review が gviz CSV で数えたデータ行を sheetRows に、読めた日を sheetCheckedOn に書く。行数が処理済み+未処理と一致するのが正常。多ければGASの取りこぼし、少なければ読み取り失敗。sheetCheckedOn が reviewedOn より古い回は、シートを見ないまま終わっている",
+      "note": "回答シートのデータ行数は GAS の onFormSubmit が sheetRows / sheetCheckedOn に書く(タスクからシートは読めない)。行数が処理済み+未処理と一致するのが正常。多ければGASの取りこぼし(backfillFromSheet)、少なければ書き込みの失敗。sheetCheckedOn が lastChecked より古い回は、送信は受けているのに行数を書いていない",
       "severity": "urgent"
     },
     "inquiry_review_gap": {

@@ -261,12 +261,55 @@ def matches(title, name):
     return any(len(t) >= 5 for t in hit)
 
 
+TRUNCATED_RE = re.compile(r'(?:\.{2,}|…)\s*$')
+
+
+def is_truncated(title):
+    """見出しが途中で切れているか。
+
+    LEAFLA の各ページ下部にある「最近追加されたイベント」は、記事の見出しを
+    途中で切って `…` を付けたリンクを並べる。この枠はページの日付とは無関係に
+    全ページへ同じ内容で出る。
+    """
+    return bool(TRUNCATED_RE.search(unicodedata.normalize('NFKC', title or '')))
+
+
+def truncated_stem(title):
+    """切り詰め見出しから、完全版と突き合わせるための前半部分を取る。"""
+    t = unicodedata.normalize('NFKC', title or '')
+    t = ADDED_PREFIX.sub('', t)
+    t = TRUNCATED_RE.sub('', t)
+    return norm(t)
+
+
+def resolve_truncated(title, full_titles, min_stem=8):
+    """切り詰め見出しを、同じ巡回で見えた完全版の見出しに戻す。
+
+    戻せなければ None。**戻せない見出しは判定に使わない。**
+    途中で切れた文字列は in_scope も matches も狂わせる(下の理由)ので、
+    そのまま候補に出すと毎日消えない誤検知になる。
+    """
+    stem = truncated_stem(title)
+    if len(stem) < min_stem:
+        return None
+    hits = [f for f in full_titles if norm(f).startswith(stem)]
+    if not hits:
+        hits = [f for f in full_titles if stem in norm(f)]
+    # 前半が同じ完全版が複数あることがある(会場違いの同名ワークショップなど)。
+    # どれを指しているかは決まらないが、**どれも自分の開催日のページで
+    # 判定済み**なので、枠の複製を捨ててよい判断には足りる
+    return hits[0] if hits else None
+
+
 def sweep(days, sleep=0.7):
     by_day, rejected = build_index()
     gaps, errors, stats = [], [], {'fetched': 0, 'candidates': 0,
                                    'in_scope': 0, 'covered': 0,
-                                   'known_rejected': 0}
+                                   'known_rejected': 0,
+                                   'truncated_resolved': 0,
+                                   'truncated_unresolved': 0}
     today = date.fromisoformat(today_jst())
+    pages = []
     for i in range(days):
         d = today + timedelta(days=i)
         key = d.isoformat()
@@ -289,8 +332,29 @@ def sweep(days, sleep=0.7):
                           f'(ページ構造が変わった可能性 / {len(html)}バイト)')
             continue
         stats['candidates'] += len(titles)
+        pages.append((key, titles))
+        time.sleep(sleep)
 
+    # 切り詰め見出しは、全ページを取り終えてから完全版と突き合わせる。
+    # 完全版は自分の開催日のページに出ているので、1パス目を終えないと揃わない。
+    full_titles = list(dict.fromkeys(
+        t for _, ts in pages for t in ts if not is_truncated(t)))
+    unresolved = []
+
+    for key, titles in pages:
         for t in titles:
+            if is_truncated(t):
+                # 完全版が同じ巡回で見えているなら、そちらが自分の開催日の
+                # ページで判定されている。枠の複製をもう一度判定しない
+                # (ページの日付は枠の中身と無関係なので、判定すると
+                #  開催日の1日ずれで誤検知する)
+                if resolve_truncated(t, full_titles) is not None:
+                    stats['truncated_resolved'] += 1
+                    continue
+                stats['truncated_unresolved'] += 1
+                if t not in unresolved:
+                    unresolved.append(t[:180])
+                continue
             if not in_scope(t):
                 continue
             stats['in_scope'] += 1
@@ -311,7 +375,6 @@ def sweep(days, sleep=0.7):
                 stats['known_rejected'] += 1
                 continue
             gaps.append({'date': key, 'title': t[:180]})
-        time.sleep(sleep)
 
     # 同じイベントを日数ぶん重ねない。会期の長い回（店舗のセールや常設展示）が
     # 45日ぶん並ぶと件数が膨らんで、一覧として読めなくなる
@@ -332,7 +395,7 @@ def sweep(days, sleep=0.7):
             o.pop('lastSeen', None)
             o.pop('days', None)
     stats['gaps_raw'] = len(gaps)
-    return out, errors, stats
+    return out, errors, stats, unresolved
 
 
 # ---- 自己テスト（通信しない。判定ロジックだけ確かめる） -------------------
@@ -357,17 +420,26 @@ SELFTEST_EXPECT_SCOPE = [
 ]
 
 
-def self_test():
+def self_test(verbose=True):
+    """判定ロジックだけ検証する(通信しない)。
+
+    main() から毎回呼ぶ。壊れたまま巡回すると coverage-gaps.json に
+    もっともらしい0件が入り、読む側からは区別が付かない。
+    """
+    def _p(*a):
+        if verbose:
+            print(*a)
+
     ok = True
-    print('--- 対象判定（範囲内/範囲外） ---')
+    _p('--- 対象判定（範囲内/範囲外） ---')
     for t, want in zip(SELFTEST_TITLES, SELFTEST_EXPECT_SCOPE):
         got = in_scope(t)
         mark = 'OK ' if got == want else '★NG'
         if got != want:
             ok = False
-        print(f'  {mark} 範囲内={got!s:5} 期待={want!s:5} {t[:52]}')
+        _p(f'  {mark} 範囲内={got!s:5} 期待={want!s:5} {t[:52]}')
 
-    print('\n--- 本文中の開催日の抽出 ---')
+    _p('\n--- 本文中の開催日の抽出 ---')
     dcases = [
         ('08/28 追加 妙高多肉市場 vol.15が9月27日に開催、', '2026-08-31', ['2026-09-27']),
         ('狂植祭 Vol.7が2026年10月10日に開催', '2026-08-31', ['2026-10-10']),
@@ -378,9 +450,9 @@ def self_test():
         mark = 'OK ' if got == want else '★NG'
         if got != want:
             ok = False
-        print(f'  {mark} {got} 期待={want} {t[:34]}')
+        _p(f'  {mark} {got} 期待={want} {t[:34]}')
 
-    print('\n--- 掲載済みとの照合 ---')
+    _p('\n--- 掲載済みとの照合 ---')
     cases = [
         ('GREENHOLICinKARIYA2026が刈谷市で開催、アガベや塊根植物と園芸用品を販売',
          'GREEN HOLIC in KARIYA 2026', True),
@@ -411,9 +483,54 @@ def self_test():
         mark = 'OK ' if got == want else '★NG'
         if got != want:
             ok = False
-        print(f'  {mark} 一致={got!s:5} 期待={want!s:5} {name[:28]}')
+        _p(f'  {mark} 一致={got!s:5} 期待={want!s:5} {name[:28]}')
 
-    print('\n--- リンク抽出 ---')
+    _p('\n--- 切り詰め見出しの復元 ---')
+    # 2026-09-01 の誤検知。ページ下部の「最近追加されたイベント」は
+    # 見出しを途中で切って全ページに出す。この切り詰めが判定を2重に狂わせた。
+    #  (1) 完全版は「…琉球盆栽などを展開」で、盆栽=OUT_OF_SCOPE なので範囲外。
+    #      切ると盆栽が消えて範囲内になる
+    #  (2) 完全版のリンク文字列には会場名(📍LIMACOFFEE…)が付くので
+    #      掲載済みの location と照合できるが、切ると会場が落ちて照合できない
+    # 結果、掲載済み(青坊主 鹿児島ポップアップ 9/6-7)を45日ぶん
+    # 「取りこぼし」として出し続けていた。
+    _full = 'Lima2026が鹿児島で開催、塊根植物や琉球盆栽などを展開'
+    _cut = '08/28 追加 Lima2026が鹿児島で開催、塊根植物や琉球...'
+    tcases = [
+        (_cut, True), (_full, False),
+        ('妙高多肉市場 vol.15が9月27日に開催、多肉植物やアガベなど…', True),
+    ]
+    for t, want in tcases:
+        got = is_truncated(t)
+        mark = 'OK ' if got == want else '★NG'
+        if got != want:
+            ok = False
+        _p(f'  {mark} 切り詰め={got!s:5} 期待={want!s:5} {t[:40]}')
+
+    if in_scope(_cut) is not True or in_scope(_full) is not False:
+        ok = False
+        _p('  ★NG 切り詰めで範囲判定が変わる前提が崩れた')
+    else:
+        _p('  OK  切り詰めると範囲外の語(盆栽)が落ちて範囲内に化ける')
+
+    rcases = [
+        (_cut, [_full, '別のイベント2026が開催'], _full),
+        ('08/28 追加 どこにも完全版が無い見出し...', [_full], None),
+        ('...', [_full], None),
+        # 前半が同じ完全版が複数あっても「見えている」ことは決まる
+        ('08/28 追加 都市型標本生活ワークショップvol.1がペット...',
+         ['都市型標本生活ワークショップvol.1がペットエコ本店で9月21日に開催',
+          '都市型標本生活ワークショップvol.1がペットエコ多摩本店で9月20日に開催'],
+         '都市型標本生活ワークショップvol.1がペットエコ本店で9月21日に開催'),
+    ]
+    for t, pool, want in rcases:
+        got = resolve_truncated(t, pool)
+        mark = 'OK ' if got == want else '★NG'
+        if got != want:
+            ok = False
+        _p(f'  {mark} 復元={str(got)[:34]!s:36} 期待={str(want)[:20]}')
+
+    _p('\n--- リンク抽出 ---')
     html = ('<a href="/blogs/media/topics1">アガベ即売会2026を開催</a>'
             '<a href="/blogs/media/topics2"><span>多肉</span>マルシェ</a>'
             '<a href="/other">対象外リンク</a>'
@@ -423,9 +540,9 @@ def self_test():
     mark = 'OK ' if got == want else '★NG'
     if got != want:
         ok = False
-    print(f'  {mark} {got}')
+    _p(f'  {mark} {got}')
 
-    print('\n結果:', 'すべて通過' if ok else '★失敗あり')
+    _p('\n結果:', 'すべて通過' if ok else '★失敗あり')
     return 0 if ok else 1
 
 
@@ -439,7 +556,18 @@ def main():
     if args.self_test:
         return self_test()
 
-    gaps, errors, stats = sweep(args.days, args.sleep)
+    # 判定ロジックが壊れたまま巡回すると、もっともらしい0件が書き込まれ、
+    # 読む側からは「取りこぼしなし」と区別が付かない。daily の push を
+    # 巻き込みたくないのでジョブは止めず、errors に積んで
+    # audit の coverage_sweep_broken(urgent) に出す。
+    logic_errors = []
+    if self_test(verbose=False) != 0:
+        logic_errors.append('自己テストが失敗した。判定ロジックが壊れている。'
+                            'gaps は当てにならない'
+                            '(python3 scripts/coverage-sweep.py --self-test)')
+
+    gaps, errors, stats, unresolved = sweep(args.days, args.sleep)
+    errors = logic_errors + errors
     payload = {
         '_note': ('他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。'
                   'scripts/coverage-sweep.py が毎日書き出す。'
@@ -450,6 +578,7 @@ def main():
         'daysAhead': args.days,
         'stats': stats,
         'errors': errors,
+        'truncatedUnresolved': unresolved,
         'gaps': gaps,
     }
     with open(OUT, 'w', encoding='utf-8') as f:
@@ -462,6 +591,11 @@ def main():
     print(f"★ 取りこぼし候補: {len(gaps)}件")
     for g in gaps[:20]:
         print(f"    {g['date']} {g['title'][:70]}")
+    if unresolved:
+        print(f"⚠ 完全版に戻せなかった切り詰め見出し: {len(unresolved)}件"
+              f"(判定に使っていない)")
+        for u in unresolved[:10]:
+            print(f"    {u[:70]}")
     if errors:
         print(f"⚠ 巡回できなかった日: {len(errors)}")
         for e in errors[:10]:

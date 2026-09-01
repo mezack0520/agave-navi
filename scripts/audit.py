@@ -1532,19 +1532,36 @@ def main():
             inq_sheet.append(
                 f'回答シートのデータ行 {_rows} < 処理済み {len(_pr)} + 未処理 {len(_items)}。'
                 'シートの読み取りに失敗した値を持ち帰っている')
-        # 読めなかった回は reviewedOn だけが進み sheetCheckedOn が取り残される。
-        # 「タスクは動いたがシートは見ていない」を、動かなかった日と区別して出す。
-        if (re.fullmatch(r'\d{4}-\d{2}-\d{2}', _rv or '')
-                and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _sco) and _sco < _rv):
+        # 2026-08-31 に書く側が変わった。sheetRows / sheetCheckedOn は
+        # GAS の onFormSubmit が countSheetRows() の結果を書く値であり、
+        # タスクは書かない(組み込みブラウザは Google にログインしておらず、
+        # 回答シートを読む手段がそもそも無い)。
+        # ここに元々あった「sheetCheckedOn < reviewedOn なら
+        # シートを見ないまま終わっている」は、タスクが自分で数えていた頃の
+        # 不変量で、今は**フォーム送信が無い日は必ず成立する**。
+        # つまりタスクが正常に動くほど毎日 urgent が鳴る検査になっていた
+        # (2026-09-01 に検出。検出側だけ旧設計のまま残っていた)。
+        #
+        # 新しい設計で意味を持つのは GAS の2つの書き込みの前後関係。
+        # lastChecked(送信を受けた日)より sheetCheckedOn が古いなら、
+        # 送信は受けているのに行数を書いていない = countSheetRows を持たない
+        # 版の GAS が動いている。これは実際に起こりうる壊れ方で、
+        # 起きると sheetRows が古い値のまま照合を素通りする。
+        _lc = str(_ni.get('lastChecked') or '').strip()
+        if (re.fullmatch(r'\d{4}-\d{2}-\d{2}', _lc)
+                and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _sco) and _sco < _lc):
             inq_sheet.append(
-                f'sheetCheckedOn={_sco} が reviewedOn={_rv} より古い。'
-                '直近の回は回答シートを読めていない')
+                f'sheetCheckedOn={_sco} が lastChecked={_lc} より古い。'
+                'GASはフォーム送信を受けているのに行数を書いていない'
+                '(countSheetRows を持たない版が動いている可能性)')
     add('inquiry_sheet_row_mismatch', '回答シートと処理済み件数が合わない',
         inq_sheet,
-        note='event-listing-review が gviz CSV で数えたデータ行を sheetRows に、'
-             '読めた日を sheetCheckedOn に書く。行数が処理済み+未処理と一致するのが正常。'
-             '多ければGASの取りこぼし、少なければ読み取り失敗。'
-             'sheetCheckedOn が reviewedOn より古い回は、シートを見ないまま終わっている')
+        note='回答シートのデータ行数は GAS の onFormSubmit が sheetRows / '
+             'sheetCheckedOn に書く(タスクからシートは読めない)。'
+             '行数が処理済み+未処理と一致するのが正常。'
+             '多ければGASの取りこぼし(backfillFromSheet)、少なければ書き込みの失敗。'
+             'sheetCheckedOn が lastChecked より古い回は、送信は受けているのに'
+             '行数を書いていない')
 
     add('inquiry_review_gap', 'event-listing-review の実行が抜けた日', inq_gap,
         note='reviewedHistory は実行日の記録。抜けた日は、届いていた問い合わせが'
