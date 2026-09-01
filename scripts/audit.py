@@ -260,11 +260,26 @@ def main():
     # 「画像がある件数」も残す。無い件数だけを見ていると、
     # 画像が一斉に消えた(減る)のとイベントが追加された(増える)のが
     # 同じ向き・同じ大きさに見えて区別できない(2026-08-24に検証して判明)。
-    # ある件数はイベント追加では減らないので、減ったら必ず消失を意味する。
+    # ただし **開催予定に限った「ある件数」は、減ったからといって消失ではない。**
+    # 暦が進めば画像を持つ回が past に落ちるだけで減る(2026-09-01に判明)。
+    # 実測: 08-30 の 33 → 08-31 の 30 は imageUrl の削除ゼロで、
+    # 8/31 に終わった3件が upcoming から外れただけだった。
+    # 今日の events.json をそのまま先送りすると 9/28 に 13、10/26 に 4 まで
+    # 落ちる。画像は1枚も失われていない。
+    # 「追加では減らない」は正しいが、「減ったら消失」は成り立たない。
     add('upcoming_with_image', '開催予定でimageUrlがある',
         sorted(e['slug'] for e in events
                if e.get('status') == 'upcoming' and (e.get('imageUrl') or '').strip()),
-        'この数が急に減ったら画像が失われている。増減の監視は metric_moved が行う',
+        '開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う',
+        severity='metric')
+
+    # 消失を見たいなら、暦で動かない母集団で数える。
+    # 全件の「imageUrl がある件数」は、追加でも暦でも減らない。
+    # 減るのは (1) imageUrl を消した (2) イベントごと消した の2つだけで、
+    # (2) は event_set_shrunk が別に見ている。
+    add('events_with_image', 'imageUrlがある全イベント',
+        sorted(e['slug'] for e in events if (e.get('imageUrl') or '').strip()),
+        '暦では減らない。減ったぶんは imageUrl の削除かイベントの削除',
         severity='metric')
     add('upcoming_no_image', '開催予定でimageUrlが無い',
         sorted(e['slug'] for e in events
@@ -1943,6 +1958,48 @@ def main():
         '一覧・ナビ・関連リンクのどこかから貼る。'
         '辿らせる先が無い頁なら noindex にして sitemap から外す')
 
+    # --- リポジトリにある .html は全部が公開URL -------------------------------
+    # GitHub Pages はリポジトリの中身をそのまま配信するので、
+    # 「サイトの頁ではない」つもりで置いた .html も公開URLになる。
+    # ところが上の orphan / link / title / description の各検査は
+    # templates・staging・guides_content を頁の母集団から外しており、
+    # **除外した先だけは誰も見ていない**状態だった。
+    # 2026-09-01 実測: templates/detail.html が
+    # https://agave-navi.com/templates/detail.html として配信されており、
+    #   - <title> が `{{name}} | アガベイベントナビ`
+    #   - canonical が存在しない `/events/{{slug}}.html`
+    #   - robots が置換前の `{{robotsMeta}}` なので noindex にならない
+    # という壊れた頁が index 対象のまま生きていた(.nojekyll があり
+    # robots.txt も全許可)。どこからもリンクされていないので
+    # orphan_indexable_page が拾うはずだったが、母集団から外れていて出ない。
+    # 対処はテンプレートを .html 以外の拡張子にすること(配信されても頁にならない)。
+    # 検査は2方向を見る。
+    #   1. 未展開の {{placeholder}} を含む .html があるか
+    #      (テンプレートの直置き、および置換漏れの生成物を同時に拾う)
+    #   2. 頁の検査から外した階層に .html が残っていないか
+    _PLACEHOLDER = re.compile(r'\{\{\s*[A-Za-z_]\w*\s*\}\}')
+    _NON_PAGE_DIRS = ('templates', 'staging', 'guides_content')
+    published_templates = []
+    for path in glob.glob(rp('**', '*.html'), recursive=True):
+        rel = os.path.relpath(path, REPO).replace(os.sep, '/')
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                body = f.read()
+        except OSError:
+            continue
+        found = sorted(set(_PLACEHOLDER.findall(body)))
+        if found:
+            published_templates.append(
+                f'{rel}: 未展開の置換子 {len(found)}種({", ".join(found[:3])}…)')
+        elif rel.split('/')[0] in _NON_PAGE_DIRS:
+            published_templates.append(
+                f'{rel}: 頁の検査から外した階層に .html がある')
+    add('unrendered_template_published', '未展開のテンプレートが公開URLになっている',
+        sorted(published_templates),
+        'テンプレートは .tmpl など .html 以外の拡張子にする'
+        '(GitHub Pages はリポジトリを丸ごと配信するので、置き場を変えても隠れない)。'
+        '生成物側に出たなら build の置換漏れ')
+
     # --- Instagram埋め込みが黙って消えていないか -----------------------------
     # build-detail-pages.make_instagram_section は、投稿IDが取れないと
     # return '' で節ごと消す。例外も警告も出ないので、頁を開くまで気づけない。
@@ -2434,6 +2491,38 @@ def main():
             elif _pol in _no_escalate:
                 pj_bad.append(f'{_id}: policy="{_pol}" は doNotEscalate=true'
                               '（積まずに既定の対処に回す類型）')
+    # --- 公開されるファイルに個人情報が入っていないか ---------------------------
+    # リポジトリは public で、GitHub Pages がその中身をそのまま配信する。
+    # つまり new-inquiries.json は https://agave-navi.com/new-inquiries.json
+    # として誰でも読めるうえ、コミットは公開履歴に永久に残る。
+    # ところがこのファイルは設計上、フォーム送信者の氏名とメールアドレスを
+    # 受け渡しの箱として通す(GASが書き、notify-inquiry.yml がそれを読んで
+    # メール本文を組む)。2026-08-31 の 9bf760e8 で実際に1件が
+    # 12:41〜17:04 のあいだ公開URLに出ており、履歴にはいまも残っている。
+    # 受け渡しが通る瞬間を無音にしないための検査。
+    # 平常時は items が空なので0。送信があった日だけ鳴り、
+    # 消し込みが遅れているあいだ鳴り続ける。
+    # 恒久対処(PIIをrepoに通さない)は pending-judgments.json に積んである。
+    _PII_KEYS = ('name', 'email', 'tel', 'phone', 'address')
+    pii_pub = []
+    for _fn, _paths in (('new-inquiries.json', (('items',),)),
+                        ('inquiries-processed.json', (('items',), ('outcomes',)))):
+        _doc = load_json(_fn, {}) or {}
+        for _key, in _paths:
+            for _i, _it in enumerate(_doc.get(_key) or []):
+                if not isinstance(_it, dict):
+                    continue
+                _has = [k for k in _PII_KEYS if str(_it.get(k) or '').strip()]
+                if _has:
+                    pii_pub.append(
+                        f'{_fn} の {_key}[{_i}] に {"/".join(_has)} が入っている'
+                        f'（timestamp={_it.get("timestamp") or "?"}）')
+    add('published_pii', '公開されるファイルに個人情報が入っている',
+        sorted(pii_pub),
+        'リポジトリは public で、同じ内容が https://agave-navi.com/ にも出る。'
+        '処理したら items を空にして push する。'
+        '値そのものはここに書かない（監査結果も公開ファイル）')
+
     add('pending_judgment_policy', '要人間判断キューが掲載基準の規則に反している',
         sorted(set(pj_bad)),
         'id は source:キー 形式。proposal(policyへの追記案)を必ず書く。'
@@ -2484,33 +2573,59 @@ def main():
     # そのうち中身を見ずに閉じられる。
     _METRIC_SCALES_WITH_EVENTS = {
         'thin_past_with_source', 'thin_archived',
+    }
+    # 開催予定だけを数える指標の母数は「開催予定の件数」であって全件ではない。
+    # 全件は past を貯め込むので単調に増えるが、開催予定は暦で毎日減る。
+    # 全件で割り引くと、掲載が増えた回の換算が実際より小さく出て、
+    # 2026-08-27 に潰したはずの誤検知が残る(50件をまとめて載せると
+    # 全件は+13%なのに開催予定は+38%で、換算が追いつかず鳴る)。
+    # 母数は 2026-09-01 から履歴に upcoming として残す。
+    # 持っていない古い回が混ざる間は全件で換算する(移行前の挙動)。
+    # 欠けた回だけを全件で埋めると2つの母数が中央値の中で混ざるので、
+    # 全部が upcoming を持つときだけ upcoming を使う。
+    _METRIC_SCALES_WITH_UPCOMING = {
         'upcoming_with_image', 'upcoming_no_image', 'ongoing_events',
     }
     # その指標が「異常を示す向き」。反対向きの動きは、
     # その指標を足した理由からして異常の証拠にならない。
-    #   upcoming_with_image は「ある件数」で、追加では減らない。
-    #   減ったときだけ画像の消失を意味する(だから足した指標であって、
-    #   増えたことを異常として鳴らすのは足した目的と逆)。
-    _METRIC_ALARM_DIR = {'upcoming_with_image': -1, 'upcoming_no_image': +1}
+    _METRIC_ALARM_DIR = {'upcoming_no_image': +1, 'events_with_image': -1}
+
+    # 暦だけで動く指標は、ここでは判定できない。
+    # upcoming_with_image は「増えたら正常・減ったら消失」という前提で
+    # 2026-08-24 に -1 を与えていたが、開催予定という母集団そのものが
+    # 毎日縮むので、画像が1枚も失われなくても減り続ける(2026-09-01に判明)。
+    # 統計で当てるのをやめ、消失は event_image_lost が全件の実数で見る。
+    _METRIC_NO_ALARM = {'upcoming_with_image'}
 
     _ev_now = len(events)
+    _up_now = sum(1 for e in events if is_upcoming(e))
     metric_moves = []
     for _k, _v in _cur_metric.items():
         # そのキーを実際に持っている履歴だけで基準を作る。
         # 欠けている履歴を0とみなすと、検査を追加した初日に必ず誤検知する
         # (2026-08-24: upcoming_with_image を足した日に「0→13」で鳴った)。
+        if _k in _METRIC_NO_ALARM:
+            continue        # 暦で動くので急変を異常と読めない
         _rows = [r for r in _hist if _k in r.get('metric', {})]
         if len(_rows) < 3:
             continue        # 基準を作れるだけの履歴がまだ無い
         _series = sorted(r['metric'][_k] for r in _rows)
         _base = _series[len(_series) // 2]
         _scaled = _base
+        _denom = None
         if _k in _METRIC_SCALES_WITH_EVENTS:
+            _denom = ('events', _ev_now)
+        elif _k in _METRIC_SCALES_WITH_UPCOMING:
+            _denom = (('upcoming', _up_now)
+                      if all(isinstance(r.get('upcoming'), int) for r in _rows)
+                      else ('events', _ev_now))
+        if _denom:
             # 中央値を取った回と同じ並びで母数の中央値も取る。
-            _evs = sorted(r.get('events') or 0 for r in _rows)
-            _ev_base = _evs[len(_evs) // 2]
-            if _ev_base > 0 and _ev_now > 0:
-                _scaled = _base * _ev_now / _ev_base
+            _field, _now_denom = _denom
+            _ds = sorted(r.get(_field) or 0 for r in _rows)
+            _d_base = _ds[len(_ds) // 2]
+            if _d_base > 0 and _now_denom > 0:
+                _scaled = _base * _now_denom / _d_base
         _delta = _v - _scaled
         _dir = _METRIC_ALARM_DIR.get(_k, 0)
         if _dir and (_delta > 0) != (_dir > 0):
@@ -2533,6 +2648,31 @@ def main():
     if _prev_ev and _prev_ev - len(events) >= 3:
         _shrunk.append(f'掲載イベントが {_prev_ev} → {len(events)} 件に減った'
                        f'（{len(events) - _prev_ev:+d}）')
+    # imageUrl の消失を実数で見る。
+    # metric_moved は「相対30%以上かつ絶対10件以上」でしか鳴らないので、
+    # 母数が小さいと全滅しても届かない(2026-09-01 の upcoming_with_image は30。
+    # 10月には4まで落ちるので、その頃には全部消えても絶対10件に届かない)。
+    # events_with_image は暦では動かないから、前回との差をそのまま読める。
+    # イベントごと消えたぶんだけは差し引く(それは event_set_shrunk の担当)。
+    _img_lost = []
+    _prev_img_row = next((r for r in reversed(_prev_runs)
+                          if isinstance((r.get('metric') or {}).get(
+                              'events_with_image'), int)), None)
+    if _prev_img_row:
+        _prev_img = _prev_img_row['metric']['events_with_image']
+        _now_img = _cur_metric.get('events_with_image', 0)
+        _removed = max(0, (_prev_img_row.get('events') or 0) - len(events))
+        _drop = _prev_img - _now_img - _removed
+        if _drop > 0:
+            _img_lost.append(
+                f"imageUrl のある回が {_prev_img} → {_now_img} 件"
+                f"（{_prev_img_row.get('date')} 比、イベント削除ぶん{_removed}件を"
+                f"差し引いて {_drop}件が消失）")
+    add('event_image_lost', 'imageUrlが消えている', _img_lost,
+        'サイトロゴ等を意図して消した回はこれで正しい(1日だけ鳴る)。'
+        '心当たりが無ければ git diff HEAD~1 -- events.json で imageUrl を見る。'
+        'カード・og:image・twitter:image・JSON-LD・sitemap の5箇所が同時に落ちる')
+
     add('event_set_shrunk', 'イベントがまとめて消えている', _shrunk,
         '意図した削除なら対処不要。心当たりが無ければ events.json の直前の版と'
         '差分を取る（git diff HEAD~1 -- events.json）。'
@@ -2557,7 +2697,8 @@ def main():
                       if v.get('severity') == 'info' and v['count']},
              'metric': {k: v['count'] for k, v in findings.items()
                         if v.get('severity') == 'metric'},
-             'events': len(events)}
+             'events': len(events),
+             'upcoming': _up_now}
     runs = list(_prev_runs)
     runs.append(entry)
     hist['runs'] = runs[-90:]

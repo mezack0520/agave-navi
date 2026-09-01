@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 build-detail-pages.py
-events.json + templates/detail.html → events/*.html
+events.json + templates/detail.html.tmpl → events/*.html
 
 Usage:
   python3 build-detail-pages.py                 # Generate all pages
@@ -30,7 +30,10 @@ from sitelib import (
 # ---------------------------------------------------------------------------
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.join(SCRIPT_DIR, 'events.json')
-TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html')
+# 拡張子は .tmpl。.html のままだと GitHub Pages がリポジトリごと配信するので、
+# 未展開のテンプレートが公開URL(/templates/detail.html)として
+# index 対象で生き続ける(2026-09-01に是正)。
+TEMPLATE_FILE = os.path.join(SCRIPT_DIR, 'templates', 'detail.html.tmpl')
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, 'events')
 CSS_VERSION = sitelib.CSS_VERSION
 JS_VERSION = sitelib.JS_VERSION

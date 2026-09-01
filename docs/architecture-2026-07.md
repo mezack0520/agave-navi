@@ -312,6 +312,23 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   二重登録されているのを検査する。`sanity-check-new-events.py` の重複検出は
   `new-events.json` 経由の流入しか見ないため、それ以前に入った重複と
   `events.json` 直接編集で入った重複を誰も見ていなかった。2組を検出・統合(317→315件)
+- 2026-09-01: `templates/detail.html` を `templates/detail.html.tmpl` に改名。
+  GitHub Pages はリポジトリの中身をそのまま配信するので、未展開のテンプレートが
+  `https://agave-navi.com/templates/detail.html` として index 対象で生きていた
+  (title が `{{name}} | アガベイベントナビ`、canonical が存在しない
+  `/events/{{slug}}.html`、robots が置換前の `{{robotsMeta}}`)。
+  頁の各検査は templates/staging/guides_content を母集団から外していたので、
+  除外した先だけ誰も見ていなかった。検査は `unrendered_template_published`
+- 2026-09-01: 画像消失の検出を `upcoming_with_image` の急変から
+  `events_with_image` の実数差(`event_image_lost`)に移した。
+  開催予定に限った件数は暦で毎日減るので「減ったら消失」が成り立たない
+  (08-30→08-31 の 33→30 は削除ゼロ、そのまま先送りすると 10/26 に 4 まで落ちる)。
+  あわせて開催予定を数える参考値の母数を全件から開催予定件数に変え、
+  履歴に `upcoming` を残すようにした
+- 2026-09-01: 監査に `published_pii` を追加。リポジトリは public で
+  GitHub Pages がそのまま配信するため、`new-inquiries.json` を通る
+  申請者の氏名・メールが公開URLと公開履歴に出る。恒久対処は
+  `pending-judgments.json`(event-monitor:inquiry-pii-in-public-repo)
 - 2026-08-18: 週次エンリッチメントが短文イベントに手を付けられていなかったのを解消。
   `enrich_events.py` の `_priority` は説明文70字未満の開催予定を処理順の先頭に並べるが、
   `process_event` の `needs_update` にはテンプレ概要文・OGP画像なし・プレースホルダーしか

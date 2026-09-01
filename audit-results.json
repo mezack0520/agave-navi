@@ -1,5 +1,5 @@
 {
-  "total": 217,
+  "total": 280,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -210,7 +210,55 @@
         "wi-wi-botanical-minokamo-2026-09",
         "yurutto-taniku-marche-1st-inabe-2026-10"
       ],
-      "note": "この数が急に減ったら画像が失われている。増減の監視は metric_moved が行う",
+      "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
+      "severity": "metric"
+    },
+    "events_with_image": {
+      "title": "imageUrlがある全イベント",
+      "count": 63,
+      "items": [
+        "aobouzu-6raccoon-popup-2026-09",
+        "botanic-bomb-10th-kyoto-2026",
+        "botanical-ajito-fukuoka-2026-07",
+        "botanical-circus-7-2026",
+        "botanical-night-market-kurashiki-2026-08",
+        "code-tokyo-popup-2026-08",
+        "collect-plants-2026-09",
+        "collection-plants-miuraengei-yukuhashi-2026-06",
+        "deep-green-ono-2026-09",
+        "fukuoka-green-party-6th-2026",
+        "gardens-umekita-2nd-anniv-2026-09",
+        "green-champuroo-vol2-2026-10",
+        "green-dayz-higashikawa-2026-07",
+        "green-holic-kariya-2026",
+        "greensnap-marche-toyosu-2026",
+        "greensnap-marche-yokohama-2026-autumn",
+        "hachimon-plants-festa-5th-ueda-2026-06",
+        "hanatomofesta-2026",
+        "isij-big-bazaar-2026-07-12",
+        "isij-big-bazaar-2026-09-27",
+        "itakeru2-27gallery-2026",
+        "jusai-ichinomiya-autumn-2026",
+        "kinshakusai-vol6-2026-10",
+        "koumori-ran-no-ichi-vol4-2026-06",
+        "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07",
+        "midori-to-taniku-marche-nihonosato-2026-09",
+        "mollis-exhibit-kinto-2026",
+        "nagasaki-bizarre-meetup-6th-2026-07",
+        "nara-bikaku-fes-vol2-2026-10",
+        "narabikakufes-vol2-2026",
+        "nightwalker-horie-2026-10",
+        "notre-atelier-popup-tamagawa-2026-09",
+        "nova-cultura-tradmans-2026-09",
+        "okibota-december-2026-sunshine",
+        "okibota-spring-2026-sunshine",
+        "ozaki-chinshokubutsu-collection-3",
+        "paradise-garage-tomoya-farm-2026-08",
+        "picnic-garden-vol25-2026-09",
+        "plants-2306-3rd-anniversary-2026",
+        "plants-dive-vol5-nara-2026-10"
+      ],
+      "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
@@ -714,6 +762,13 @@
       "note": "一覧・ナビ・関連リンクのどこかから貼る。辿らせる先が無い頁なら noindex にして sitemap から外す",
       "severity": "urgent"
     },
+    "unrendered_template_published": {
+      "title": "未展開のテンプレートが公開URLになっている",
+      "count": 0,
+      "items": [],
+      "note": "テンプレートは .tmpl など .html 以外の拡張子にする(GitHub Pages はリポジトリを丸ごと配信するので、置き場を変えても隠れない)。生成物側に出たなら build の置換漏れ",
+      "severity": "urgent"
+    },
     "instagram_embed_missing": {
       "title": "IGの値があるのに詳細頁に埋め込みが出ていない",
       "count": 0,
@@ -798,6 +853,13 @@
       "note": "scripts/generate-ical.py の fold()。継続行は先頭のスペースも75に数える。ヘッダ行も fold を通す",
       "severity": "info"
     },
+    "published_pii": {
+      "title": "公開されるファイルに個人情報が入っている",
+      "count": 0,
+      "items": [],
+      "note": "リポジトリは public で、同じ内容が https://agave-navi.com/ にも出る。処理したら items を空にして push する。値そのものはここに書かない（監査結果も公開ファイル）",
+      "severity": "urgent"
+    },
     "pending_judgment_policy": {
       "title": "要人間判断キューが掲載基準の規則に反している",
       "count": 0,
@@ -811,6 +873,13 @@
       "items": [],
       "note": "データに規則を書いただけでは規則にならない。読む側を同じコミットで足すか、機械可読な形をやめて散文にする",
       "severity": "info"
+    },
+    "event_image_lost": {
+      "title": "imageUrlが消えている",
+      "count": 0,
+      "items": [],
+      "note": "サイトロゴ等を意図して消した回はこれで正しい(1日だけ鳴る)。心当たりが無ければ git diff HEAD~1 -- events.json で imageUrl を見る。カード・og:image・twitter:image・JSON-LD・sitemap の5箇所が同時に落ちる",
+      "severity": "urgent"
     },
     "event_set_shrunk": {
       "title": "イベントがまとめて消えている",
