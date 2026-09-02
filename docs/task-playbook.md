@@ -20,13 +20,26 @@
 2. リポジトリを clone
 3. このファイル、`docs/architecture-2026-07.md`、`listing-policy.json` を読む
 4. プロンプトとここに差異があれば**こちらが正**
-5. **終わったら `task-runs.json` の自分の taskId の `history` に実行日(JST)を追記して push する。**
-   直近14件で切る。これが repo 側に残る唯一の生存記録で、
-   監査の `task_run_gap` が cadence から期待日を作って抜けた回を出す。
-   成果物が何も出せずに終わった回でも、**ここだけは書いてから終わる**。
-   書けずに終わると、その回は「動かなかった」と区別が付かない。
-   `event-listing-review` はここに書かない(`new-inquiries.json` の
-   `reviewedHistory` が同じ役目を持っており、二重に持つと必ず食い違う)
+5. **起動直後に `python3 scripts/record-run.py <taskId>` を実行し、その変更を含めて push する。**
+   台帳(`task-runs.json` / `event-listing-review` は `new-inquiries.json`)に
+   起動日(JST)が入る。冪等なので同じ日に何度呼んでもよい。
+   `<taskId>` は `agave-event-update` / `event-monitor` / `site-health-check` /
+   `event-listing-review`。
+
+   **これは最後ではなく最初にやる。**(2026-09-02 に是正)
+   以前は「終わったら書く」設計だったが、成果物が無い回はそもそも push されず、
+   記録だけが落ちていた。2026-09-02 に台帳を見たら
+   `agave-event-update` は3日連続で走っていたのに `history` が空、
+   `event-monitor` は3回中1回しか書けていなかった。
+   結果、監査 `task_run_gap` が**実際には走っていた日を「抜け」として出していた**。
+   スケジューラ側の `lastRunAt` は全タスク当日実行済みを示しており、
+   環境も enabled も正常だった。抜けていたのは実行ではなく記録。
+
+   記録するのは**起動した日**であって完走した日ではない。
+   監査が知りたいのは「そもそも動いたのか」なので、それで足りる。
+   完走したかは成果物とレポートで分かる。
+   起点(`since`)より前は判定しない。台帳の書き込みが働いていなかった期間を
+   遡って「抜け」と呼ばないため、機構を直した日に `since` を張り直してある。
 
 置き場（すべて `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` 配下）:
 - PAT: `agave-navi\github.pat`

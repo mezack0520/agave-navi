@@ -1005,14 +1005,22 @@ def main():
         # ビルド全体が壊れる面が増えるだけなので、形を変えたいときだけ回す
         'build-icons.py',
     }
+    # スケジュールタスクが直接呼ぶスクリプトは build-all.sh にも workflow にも
+    # 出てこない。呼び出し元はプレイブックなので、そこも参照元として数える
+    # (2026-09-02 に record-run.py を足して判明)。
+    try:
+        pb = open(rp('docs', 'task-playbook.md'), encoding='utf-8').read()
+    except OSError:
+        pb = ''
     unused = []
     for f in sorted(glob.glob(rp('scripts', '*.py'))) + [rp('build-detail-pages.py')]:
         bn = os.path.basename(f)
         if bn in ('sitelib.py', 'audit.py') or bn in MANUAL_ONLY:
             continue
-        if bn not in ba and bn not in wf:
+        if bn not in ba and bn not in wf and bn not in pb:
             unused.append(bn)
-    add('unreferenced_scripts', 'build-all.shもworkflowも参照していないスクリプト',
+    add('unreferenced_scripts',
+        'build-all.shもworkflowもプレイブックも参照していないスクリプト',
         unused, '使われていないか、呼び出しが失われている。'
         '手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す')
 
@@ -1504,11 +1512,17 @@ def main():
     _hist = [h for h in (_ni.get('reviewedHistory') or [])
              if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))]
     # 履歴が浅いうちは判定しない。無い日を抜けとみなすと導入初日に必ず誤検知する。
+    # reviewedSince より前も判定しない。task-runs.json と同じ扱い。
+    # 記録の仕組みが働いていなかった期間を遡って「抜け」と呼ぶと、
+    # 実際には毎日走っていた日が抜けとして出続ける(2026-09-02 に是正)。
+    _since = str(_ni.get('reviewedSince') or '').strip()
     if len(_hist) >= 3:
         try:
             _today = _dtm.date.fromisoformat(today_jst())
             _seen = {_dtm.date.fromisoformat(h) for h in _hist}
             _start = max(min(_seen), _today - _dtm.timedelta(days=7))
+            if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _since):
+                _start = max(_start, _dtm.date.fromisoformat(_since))
             # 当日は監査より後に走ることがあるので窓に入れない。
             _missing = [
                 (_start + _dtm.timedelta(days=i)).isoformat()
@@ -1579,9 +1593,11 @@ def main():
              '行数を書いていない')
 
     add('inquiry_review_gap', 'event-listing-review の実行が抜けた日', inq_gap,
-        note='reviewedHistory は実行日の記録。抜けた日は、届いていた問い合わせが'
-             'その日は誰にも見られていない。スケジュール自体は enabled のままなので'
-             'タスク側のログを見ないと原因は分からない。'
+        note='reviewedHistory は起動日の記録で、scripts/record-run.py が'
+             '起動直後に書く。抜けた日は、届いていた問い合わせがその日は'
+             '誰にも見られていない。ただし 2026-09-02 までの空白は'
+             '「走らなかった」ではなく「走ったが記録できていなかった」で、'
+             'reviewedSince より前は判定しない。'
              'ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info',
         severity='info')
 

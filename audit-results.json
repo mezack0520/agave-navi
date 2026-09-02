@@ -1,5 +1,5 @@
 {
-  "total": 282,
+  "total": 278,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -513,7 +513,7 @@
       "severity": "urgent"
     },
     "unreferenced_scripts": {
-      "title": "build-all.shもworkflowも参照していないスクリプト",
+      "title": "build-all.shもworkflowもプレイブックも参照していないスクリプト",
       "count": 0,
       "items": [],
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
@@ -684,20 +684,15 @@
     },
     "inquiry_review_gap": {
       "title": "event-listing-review の実行が抜けた日",
-      "count": 1,
-      "items": [
-        "event-listing-review が動かなかった日: 2026-08-26 2026-08-28 2026-08-29 2026-08-31（直近7日で4日）"
-      ],
-      "note": "reviewedHistory は実行日の記録。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。スケジュール自体は enabled のままなのでタスク側のログを見ないと原因は分からない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
+      "count": 0,
+      "items": [],
+      "note": "reviewedHistory は起動日の記録で、scripts/record-run.py が起動直後に書く。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。ただし 2026-09-02 までの空白は「走らなかった」ではなく「走ったが記録できていなかった」で、reviewedSince より前は判定しない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 2,
-      "items": [
-        "agave-event-update(daily) が動かなかった日: 2026-08-31 2026-09-01（直近7日で2日）",
-        "event-monitor(daily) が動かなかった日: 2026-08-31（直近7日で1日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る",
       "severity": "info"
     },
@@ -794,10 +789,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 1,
-      "items": [
-        "bizarre-park-local-market-2026-09: 開催日 2026-09-01 を過ぎた（保留 2026-08-27）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },

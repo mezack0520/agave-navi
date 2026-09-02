@@ -1,18 +1,20 @@
 {
-  "_note": "問い合わせ新着の受け渡し箱。GAS(Apps Scriptプロジェクト「agave-navi フォーム→GitHub連携」)がフォーム送信時に items へ追記し lastChecked と sheetRows を書く。そのpushで notify-inquiry.yml が発火しメールが飛ぶ。event-listing-review は items を処理して inquiries-processed.json の processed / outcomes へ移し、items を空にして reviewedOn を実行日に更新し reviewedHistory に実行日を追記する。1件の形: {timestamp, type, eventName, body}。**氏名・メールアドレス・電話番号は入れない。**リポジトリは public で、同じ内容が https://agave-navi.com/new-inquiries.json としても配信されるため。連絡先は GAS が ALERT_TO へ直接メールする(規則は listing-policy.json の inquiryPii、検査は audit.py の published_pii)。 lastChecked=GASが最後にフォーム送信を受けた日(送信が無ければ更新されない)。reviewedOn=event-listing-review が最後に動いた日(監査 inquiry_check_stale が見る)。reviewedHistory=実行日の履歴、直近14件だけ保持(監査 inquiry_review_gap が抜けた日を数える)。reviewedOn だけだと、次の回が成功した瞬間に抜けた日が消えて後から検出できない。 sheetRows=回答シートのデータ行数。**2026-09-01 から GAS の onFormSubmit が countSheetRows() で書く。**組み込みブラウザはGoogleにログインしておらずシートを読めないため、人が数えて入れる方式はやめた。sheetCheckedOn=その値を書いた日。監査 inquiry_sheet_row_mismatch が sheetRows == processed + items を照合する。",
-  "items": [],
-  "lastChecked": "2026-08-31",
-  "reviewedOn": "2026-09-01",
-  "reviewedHistory": [
-    "2026-08-13",
-    "2026-08-18",
-    "2026-08-20",
-    "2026-08-24",
-    "2026-08-25",
-    "2026-08-27",
-    "2026-08-30",
-    "2026-09-01"
-  ],
-  "sheetRows": 3,
-  "sheetCheckedOn": "2026-09-01"
+ "_note": "問い合わせ新着の受け渡し箱。GAS(Apps Scriptプロジェクト「agave-navi フォーム→GitHub連携」)がフォーム送信時に items へ追記し lastChecked と sheetRows を書く。そのpushで notify-inquiry.yml が発火しメールが飛ぶ。event-listing-review は items を処理して inquiries-processed.json の processed / outcomes へ移し、items を空にして reviewedOn を実行日に更新し reviewedHistory に実行日を追記する。1件の形: {timestamp, type, eventName, body}。**氏名・メールアドレス・電話番号は入れない。**リポジトリは public で、同じ内容が https://agave-navi.com/new-inquiries.json としても配信されるため。連絡先は GAS が ALERT_TO へ直接メールする(規則は listing-policy.json の inquiryPii、検査は audit.py の published_pii)。 lastChecked=GASが最後にフォーム送信を受けた日(送信が無ければ更新されない)。reviewedOn=event-listing-review が最後に動いた日(監査 inquiry_check_stale が見る)。reviewedHistory=起動日の履歴、直近14件だけ保持(監査 inquiry_review_gap が抜けた日を数える)。**起動直後に scripts/record-run.py event-listing-review を実行して書く。**終わりに書く設計では、成果物が無い回は push されず記録だけ落ちた(2026-09-02 是正)。reviewedSince=この日より前は抜けを判定しない。記録の仕組みが働いていなかった期間を遡って抜けと呼ばないため。reviewedOn だけだと、次の回が成功した瞬間に抜けた日が消えて後から検出できない。 sheetRows=回答シートのデータ行数。**2026-09-01 から GAS の onFormSubmit が countSheetRows() で書く。**組み込みブラウザはGoogleにログインしておらずシートを読めないため、人が数えて入れる方式はやめた。sheetCheckedOn=その値を書いた日。監査 inquiry_sheet_row_mismatch が sheetRows == processed + items を照合する。",
+ "items": [],
+ "lastChecked": "2026-08-31",
+ "reviewedOn": "2026-09-02",
+ "reviewedHistory": [
+  "2026-08-13",
+  "2026-08-18",
+  "2026-08-20",
+  "2026-08-24",
+  "2026-08-25",
+  "2026-08-27",
+  "2026-08-30",
+  "2026-09-01",
+  "2026-09-02"
+ ],
+ "sheetRows": 3,
+ "sheetCheckedOn": "2026-09-01",
+ "reviewedSince": "2026-09-02"
 }

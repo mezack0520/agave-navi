@@ -1,24 +1,29 @@
 {
-  "_note": "スケジュールタスクの実行日台帳。タスクは毎回、自分の taskId の history に実行日(JST)を追記して push する。これが repo 側に残る唯一の生存記録で、監査 task_run_gap が cadence から期待日を作って抜けた日を出す。タスクのスケジュール側 lastRunAt は最新1回しか持たないので、抜けた週は次の回が走った瞬間に検出できなくなる(2026-08-25 の site-health-check がそれで消えた)。history は直近14件で切る。since はその taskId を台帳に載せた日で、それ以前は判定しない(履歴の無い日を抜けとみなすと導入初日に必ず誤検知する)。cadence は daily か weekly。daily は1日でも抜ければ出る。weekly は曜日では照合せず「7日の窓に1回でも実行があるか」で見る(起動が遅れて曜日が1日ずれる回が実在するため)。event-listing-review はここに載せない。new-inquiries.json の reviewedHistory が既に同じことをしており、二重に持つと必ず片方だけ更新されて食い違う。",
-  "tasks": {
-    "site-health-check": {
-      "cadence": "weekly",
-      "since": "2026-08-31",
-      "history": [
-        "2026-08-31"
-      ]
-    },
-    "event-monitor": {
-      "cadence": "daily",
-      "since": "2026-08-31",
-      "history": [
-        "2026-09-01"
-      ]
-    },
-    "agave-event-update": {
-      "cadence": "daily",
-      "since": "2026-08-31",
-      "history": []
-    }
+ "_note": "スケジュールタスクの実行日台帳。タスクは**起動直後に** `python3 scripts/record-run.py <taskId>` を実行し、その変更を含めて push する。終わりに書く設計にしていたが、成果物が無い回は そもそも push されず記録だけが落ちた(2026-09-02 に是正)。記録するのは起動した日であって完走した日ではない。これが repo 側に残る唯一の生存記録で、監査 task_run_gap が cadence から期待日を作って抜けた日を出す。タスクのスケジュール側 lastRunAt は最新1回しか持たないので、抜けた週は次の回が走った瞬間に検出できなくなる(2026-08-25 の site-health-check がそれで消えた)。history は直近14件で切る。since はその taskId を台帳に載せた日で、それ以前は判定しない(履歴の無い日を抜けとみなすと導入初日に必ず誤検知する)。cadence は daily か weekly。daily は1日でも抜ければ出る。weekly は曜日では照合せず「7日の窓に1回でも実行があるか」で見る(起動が遅れて曜日が1日ずれる回が実在するため)。event-listing-review はここに載せない。new-inquiries.json の reviewedHistory が既に同じことをしており、二重に持つと必ず片方だけ更新されて食い違う。",
+ "tasks": {
+  "site-health-check": {
+   "cadence": "weekly",
+   "since": "2026-08-31",
+   "history": [
+    "2026-08-31"
+   ]
+  },
+  "event-monitor": {
+   "cadence": "daily",
+   "since": "2026-09-02",
+   "history": [
+    "2026-09-01",
+    "2026-09-02"
+   ],
+   "sinceNote": "台帳の書き込みが機能していなかったため 2026-09-02 に起点を張り直した。それ以前の空白は「走らなかった」を意味しない"
+  },
+  "agave-event-update": {
+   "cadence": "daily",
+   "since": "2026-09-02",
+   "history": [
+    "2026-09-02"
+   ],
+   "sinceNote": "台帳の書き込みが機能していなかったため 2026-09-02 に起点を張り直した。それ以前の空白は「走らなかった」を意味しない"
   }
+ }
 }
