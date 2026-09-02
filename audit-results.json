@@ -1,5 +1,5 @@
 {
-  "total": 278,
+  "total": 279,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -521,9 +521,10 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 1,
+      "count": 2,
       "items": [
-        "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)"
+        "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)",
+        "toge-to-hachi-2026-09(2026-09-03〜2026-09-06/4日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
