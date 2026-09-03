@@ -1,5 +1,5 @@
 {
-  "total": 279,
+  "total": 283,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -521,8 +521,9 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 2,
+      "count": 3,
       "items": [
+        "aobouzu-6raccoon-popup-2026-09(2026-09-04〜2026-09-05/2日)",
         "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)",
         "toge-to-hachi-2026-09(2026-09-03〜2026-09-06/4日/長期)"
       ],
@@ -685,15 +686,20 @@
     },
     "inquiry_review_gap": {
       "title": "event-listing-review の実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "event-listing-review が動かなかった日: 2026-09-03（直近7日で1日）"
+      ],
       "note": "reviewedHistory は起動日の記録で、scripts/record-run.py が起動直後に書く。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。ただし 2026-09-02 までの空白は「走らなかった」ではなく「走ったが記録できていなかった」で、reviewedSince より前は判定しない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "agave-event-update(daily) が動かなかった日: 2026-09-03（直近7日で1日）",
+        "event-monitor(daily) が動かなかった日: 2026-09-03（直近7日で1日）"
+      ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る",
       "severity": "info"
     },
