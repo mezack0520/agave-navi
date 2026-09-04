@@ -1047,7 +1047,8 @@ def _faq_pairs(ev, ctx):
     admission = (ev.get('admission') or '').strip()
     if admission:
         if '無料' in admission:
-            a = '入場は無料です。' if admission == '入場無料' else f'入場料は「{admission}」です。'
+            a = ('入場は無料です。' if sitelib.admission_is_free(admission)
+                 else f'入場料は「{admission}」です。')
         else:
             a = f'入場料は「{admission}」です。前売り・当日の価格差がある場合は主催者の公式案内をご確認ください。'
         pairs.append(('入場料はかかりますか？', a))
@@ -1127,7 +1128,10 @@ def make_data_summary(ev, ctx):
             pass
 
     admission = (ev.get('admission') or '')
-    if '無料' in admission:
+    # 素の '無料' in で判定すると「大人250円・未就学児無料」のような
+    # 但し書きに引っかかり、有料の回が本文で無料を名乗る(2026-09-05)。
+    # 判定は sitelib.admission_is_free() が単一情報源。
+    if sitelib.admission_is_free(admission):
         sentences.append('入場は無料です。')
 
     if not sentences:

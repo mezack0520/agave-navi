@@ -787,6 +787,34 @@ def main():
     for (d, u), slugs in _by_src.items():
         if d and len(slugs) > 1:
             dup_src.append(f"{d}: {', '.join(sorted(slugs))} が同じ出典 {u[:60]} を持つ")
+    # 9k-3. 詳細頁の本文が「入場は無料です。」と言っているのに admission が有料。
+    #     build-detail-pages は同じ規則を2か所に持っていて、FAQ側だけが
+    #     admission == '入場無料' の完全一致に直され、本文側は素の
+    #     `'無料' in admission` のまま残っていた。そのため
+    #     「入園料 大人250円・小中高130円・未就学児無料」のような但し書きに
+    #     引っかかり、有料の回が本文で無料を名乗っていた(2026-09-05 に8件)。
+    #     スペック表には正しい金額が出るので、同じ頁の中で食い違う。
+    #     値ではなく生成物を見る(機能確認)。判定は sitelib が単一情報源。
+    from sitelib import admission_is_free as _adm_free
+    free_bad = []
+    for e in events:
+        _adm = (e.get('admission') or '').strip()
+        if not _adm or _adm_free(_adm):
+            continue
+        _p = rp('events', f"{e.get('slug')}.html")
+        try:
+            with open(_p, encoding='utf-8') as f:
+                _pg = f.read()
+        except OSError:
+            continue
+        if '入場は無料です。' in _pg:
+            free_bad.append(f"{e.get('slug')}: admission=「{_adm[:40]}」なのに本文が無料と書いている")
+    add('admission_free_mismatch', '詳細頁の本文と入場料の記載が食い違っている',
+        sorted(free_bad),
+        '判定は sitelib.admission_is_free() が単一情報源。'
+        '素の「無料 in admission」で書くと有料の回の但し書きに引っかかる。'
+        '検出したら build-detail-pages.py を直して再生成する')
+
     add('duplicate_event_same_source', '同日の別slugが同じ出典URLを指している',
         sorted(set(dup_src)),
         '表記違い(ローマ字/カタカナ)や会場名の1字違いで duplicate_event_entry を'

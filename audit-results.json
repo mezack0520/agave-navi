@@ -435,6 +435,13 @@
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
       "severity": "info"
     },
+    "admission_free_mismatch": {
+      "title": "詳細頁の本文と入場料の記載が食い違っている",
+      "count": 0,
+      "items": [],
+      "note": "判定は sitelib.admission_is_free() が単一情報源。素の「無料 in admission」で書くと有料の回の但し書きに引っかかる。検出したら build-detail-pages.py を直して再生成する",
+      "severity": "urgent"
+    },
     "duplicate_event_same_source": {
       "title": "同日の別slugが同じ出典URLを指している",
       "count": 1,

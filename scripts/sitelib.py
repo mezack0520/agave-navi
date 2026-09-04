@@ -526,6 +526,25 @@ GENERIC_IMAGE_RE = re.compile(
     r'|/(facebook|twitter|instagram)\.(png|jpe?g|gif|webp))', re.I)
 
 
+
+# 入場料の文字列が「無条件に無料」を意味するかの単一情報源。
+# 素の `'無料' in admission` で判定すると、有料イベントの但し書きに引っかかる。
+# 2026-09-05 の実測で「入園料 大人250円・小中高130円・未就学児無料」
+# 「500円（高校生以下は無料）」「前売600円／当日800円（中学生以下無料）」など
+# 8件の有料イベントの詳細頁が本文で「入場は無料です。」と名乗っていた。
+# スペック表には正しい金額が出ているので、同じ頁の中で矛盾していた。
+# 判定: 「無料」を含み、かつ金額・チケット制・有料を示す語を一切含まないこと。
+# 但し書きに金額が1つでも出るなら、要約で言い切らずに原文をそのまま出す。
+_ADMISSION_PAID_HINT = re.compile(r'[0-9０-９]|円|チケット|有料|別途|要予約|前売')
+
+
+def admission_is_free(admission):
+    """admission が無条件に無料を意味するなら True。"""
+    a = (admission or '').strip()
+    if '無料' not in a:
+        return False
+    return not _ADMISSION_PAID_HINT.search(a)
+
 def is_generic_image_url(u):
     """サイト共通アセット(ロゴ・OGP既定・ファビコン・テーマ内画像)なら True。
 
