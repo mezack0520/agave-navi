@@ -316,6 +316,38 @@
    "decided": "2026-09-02",
    "reason": "公式IG @bizarreparkmonthly_localmarket のプロフィール「次回2026.11/28.29」と 投稿 /p/DchcgnmKCwn/ のフライヤー(11/28sat-29sun OPEN10:00 CLOSE16:00 / 埼玉県鴻巣市安養寺214-2 bizarre Park)で日程・時間・会場は一次情報で確定。ただし名称が中立(LOCAL MARKET)で、出店者募集は「ジャンルは問いません」、出店内訳も非公開のため植物比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown.exclude に該当。会場と主催が多肉・サボテンの専門店(bizarre Park / @bizarre_farm)である点は掲載側に振れる材料だが、イベント自身の位置づけは植物主題ではない。出店内訳が公開されるか、主催が植物主題と明示したら再評価する",
    "eventDate": "2026-11-28"
+  },
+  {
+   "key": "aqua-festa-vol2-2026-09",
+   "reasonType": "policy",
+   "name": "AQUA FESTA vol.2 〜はじめようアクアリウム生活〜 (2026-09-05 神奈川県横浜市)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-05",
+   "reason": "公式IG @aquafesta.reeffesta と公式X @AquaFreaks で 2026-09-05・横浜産貿ホール マリネリア 1階展示場・先行入場11:00/一般12:30/閉場17:00・有料入場(先行大人2,000円)を確認。主題は名称どおりアクアリウムで、公式の副題も『はじめようアクアリウム生活』、扱いは熱帯魚・水草・メダカ・海水魚・サンゴ。出展者紹介がパート39まで続く規模に対し植物系はライセンスプランツ等の数店にとどまり、compositeEvents の『植物系出店が全出店の3割以上』に届かない。SAGAMI VIBES PARK vol.3 と同型"
+  },
+  {
+   "key": "machikado-geijutsusai-2026-09",
+   "reasonType": "policy",
+   "name": "まちかど芸術祭 2026 (2026-09-06 長野県飯田市 りんご並木)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-06",
+   "reason": "拾えた一次情報は出店者側(@daiki_wild_agave)の出店予定告知のみで、内容は『9月6日 11:00〜17:00 長野県飯田市 〜まちかど芸術祭〜 飯田市りんご並木』という1店の出店案内。イベント本体は市街地の芸術祭で植物が主題ではなく、確認できた植物系出店者も1者。SUPER ART & CRAFT MARKET 2026 と同じく『1出店者の出展告知をイベントとして立てない』に該当"
+  },
+  {
+   "key": "medaka-fes-kanto-vol5-2026-09",
+   "reasonType": "policy",
+   "name": "メダカフェス関東 2026 Vol.5 (2026-09-13 埼玉県加須市 ホームプラザナフコ北加須店)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-13",
+   "reason": "主催 @inumeshik_1 の告知で 2026-09-13(日) 9:00〜14:00・ホームプラザナフコ北加須店(埼玉県加須市柳生302)・雨天決行を確認。名称のとおり主題は改良メダカで、出店者一覧の先頭も幸來めだか・akaめだか・熊庭めだか等のメダカ店。植物エリアは併設区画として案内されているが全体に対する比率は小さく、compositeEvents の閾値に届かない。植物エリアの出店内訳が公開され、比率が3割以上または著名専門店3者以上を確認できたら再評価する"
+  },
+  {
+   "key": "ozaki-bikaku-itazuke-ws-2026-09",
+   "reasonType": "policy",
+   "name": "ビカクシダ板付けワークショップ（オザキフラワーパーク）(2026-09-12/13 東京都練馬区)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-12",
+   "reason": "主催の公式サイト ozaki-flowerpark.co.jp と公式IG/X で 9/12(土)・13(日) 11:00〜/14:00〜(所要90分)・料金5,500円(税込)・定員制・講師 groote plantage 水山氏を確認。物販イベントではなく定員制の有料ワークショップ単独開催で、告知時点で既に満席・予約受付終了。listing-policy の workshopOnly に該当"
   }
  ],
  "_reasonTypes": {
@@ -324,6 +356,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-02",
+ "updated": "2026-09-05",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

@@ -760,6 +760,41 @@ def main():
                 dup_ev.append(f"{a.get('date')} {a.get('prefecture')}: "
                               f"{a.get('slug')} ({a.get('name')}) / "
                               f"{b.get('slug')} ({b.get('name')})")
+    # 9k-2. 同日 + 同じ出典URL の別slug。
+    #     上の名前照合は、同じ回を別の表記体系で登録すると必ず素通りする。
+    #     2026-09-05 に narabikakufes-vol2-2026(NARABIKAKUFES vol.2 / 奈良市役所 芝生広場)
+    #     と nara-bikaku-fes-vol2-2026-10(ナラビカクフェス Vol.2 / 奈良市役所前 芝生広場)
+    #     が同日・同県で並んでいた。ローマ字とカタカナは正規化しても一致せず、
+    #     会場も「前」の1字違いで、名前照合も会場照合も同時に外れる。
+    #     しかも入場料が 3,300円 と 入場無料 で食い違い、
+    #     二重登録のまま両方が検索結果に出ていた。
+    #     出典URLは表記体系に依存しないので、この抜け方を塞げる。
+    #     同じ主催が同じ告知URL(IGプロフィール等)を複数の回に使うのは普通なので、
+    #     日付まで一致した組だけを見る。
+    def _norm_src(x):
+        x = (x or '').strip().lower()
+        x = re.sub(r'^https?://', '', x)
+        x = re.sub(r'^www\.', '', x)
+        return x.rstrip('/')
+
+    dup_src = []
+    _by_src = {}
+    for e in events:
+        for k in ('sourceUrl', 'url'):
+            u = _norm_src(e.get(k))
+            if u:
+                _by_src.setdefault((e.get('date') or '', u), set()).add(e.get('slug') or '')
+    for (d, u), slugs in _by_src.items():
+        if d and len(slugs) > 1:
+            dup_src.append(f"{d}: {', '.join(sorted(slugs))} が同じ出典 {u[:60]} を持つ")
+    add('duplicate_event_same_source', '同日の別slugが同じ出典URLを指している',
+        sorted(set(dup_src)),
+        '表記違い(ローマ字/カタカナ)や会場名の1字違いで duplicate_event_entry を'
+        'すり抜けた二重登録の候補。同じ回なら情報量の多い側に寄せて片方を消す。'
+        '同じ主催が同じ会場で併催する別イベントは正常に出る'
+        '(第6回 天下一植物界 と BORDER BREAK!! 6th が no1plantae.com を共有する組が実例)。'
+        'つまりゼロにはならないので info。urgent にすると併催のたびに鳴る', severity='info')
+
     add('duplicate_event_entry', '同じ回が別slugで二重登録されている', sorted(dup_ev),
         '内容の濃いほうに寄せて片方を削除し、events/<slug>.html も消す。'
         '残す側は命名規約(イベント名-地名-年月)に合うほうを選ぶ')

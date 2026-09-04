@@ -1,5 +1,5 @@
 {
-  "total": 294,
+  "total": 293,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 30,
+      "count": 29,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "collect-plants-2026-09",
@@ -192,7 +192,6 @@
         "kinshakusai-vol6-2026-10",
         "midori-to-taniku-marche-nihonosato-2026-09",
         "nara-bikaku-fes-vol2-2026-10",
-        "narabikakufes-vol2-2026",
         "nightwalker-horie-2026-10",
         "notre-atelier-popup-tamagawa-2026-09",
         "nova-cultura-tradmans-2026-09",
@@ -215,7 +214,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 63,
+      "count": 62,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
@@ -246,7 +245,6 @@
         "mollis-exhibit-kinto-2026",
         "nagasaki-bizarre-meetup-6th-2026-07",
         "nara-bikaku-fes-vol2-2026-10",
-        "narabikakufes-vol2-2026",
         "nightwalker-horie-2026-10",
         "notre-atelier-popup-tamagawa-2026-09",
         "nova-cultura-tradmans-2026-09",
@@ -256,7 +254,8 @@
         "paradise-garage-tomoya-farm-2026-08",
         "picnic-garden-vol25-2026-09",
         "plants-2306-3rd-anniversary-2026",
-        "plants-dive-vol5-nara-2026-10"
+        "plants-dive-vol5-nara-2026-10",
+        "plants-plants-plants-bhms-2026-10"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
@@ -433,6 +432,15 @@
       "count": 0,
       "items": [],
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
+      "severity": "info"
+    },
+    "duplicate_event_same_source": {
+      "title": "同日の別slugが同じ出典URLを指している",
+      "count": 1,
+      "items": [
+        "2026-05-23: border-break-6th-2026, tenkaichi-2026 が同じ出典 no1plantae.com を持つ"
+      ],
+      "note": "表記違い(ローマ字/カタカナ)や会場名の1字違いで duplicate_event_entry をすり抜けた二重登録の候補。同じ回なら情報量の多い側に寄せて片方を消す。同じ主催が同じ会場で併催する別イベントは正常に出る(第6回 天下一植物界 と BORDER BREAK!! 6th が no1plantae.com を共有する組が実例)。つまりゼロにはならないので info。urgent にすると併催のたびに鳴る",
       "severity": "info"
     },
     "duplicate_event_entry": {
