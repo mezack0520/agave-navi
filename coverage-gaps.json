@@ -1,18 +1,51 @@
 {
   "_note": "他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-04",
+  "sweptOn": "2026-09-05",
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1053,
-    "in_scope": 87,
-    "covered": 67,
+    "candidates": 1241,
+    "in_scope": 97,
+    "covered": 68,
     "known_rejected": 20,
     "truncated_resolved": 225,
-    "truncated_unresolved": 0,
-    "gaps_raw": 0
+    "truncated_unresolved": 45,
+    "gaps_raw": 9
   },
   "errors": [],
-  "truncatedUnresolved": [],
-  "gaps": []
+  "truncatedUnresolved": [
+    "09/04 追加 国際多肉植物協会が9月のサボテン・多肉植物ビッ..."
+  ],
+  "gaps": [
+    {
+      "date": "2026-09-05",
+      "title": "AQUA FESTA vol.2 2026が横浜で開催、熱帯魚や水草から珍奇植物まで幅広く展開"
+    },
+    {
+      "date": "2026-09-06",
+      "title": "まちかど芸術祭2026でだいきのワイルドアガベが出店、高級アガベから実生苗や普及種まで用意"
+    },
+    {
+      "date": "2026-09-12",
+      "title": "オザキフラワーパークがビカクシダ板付けワークショップ2026を開催、初心者向けに育成管理も解説"
+    },
+    {
+      "date": "2026-09-13",
+      "title": "メダカフェス関東2026 Vol.5を北加須で開催、メダカとアガベや多肉植物の各ブースを展開"
+    },
+    {
+      "date": "2026-09-20",
+      "title": "TANIKU collectionタニコレ2026を札幌で開催、個性豊かな多肉植物やハンドメイド品が集合"
+    },
+    {
+      "date": "2026-09-20",
+      "title": "大辻屋さん出張販売会2026を園芸屋たなかで開催、塊根植物やアガベなど当日限定の多肉植物を販売予定"
+    },
+    {
+      "date": "2026-10-10",
+      "lastSeen": "2026-10-12",
+      "days": 3,
+      "title": "島根サボテン・多肉の会が2026秋の展示会を開催、しまね花の郷でサボテンと多肉植物を展示販売予定"
+    }
+  ]
 }
