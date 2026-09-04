@@ -1,5 +1,5 @@
 {
-  "total": 293,
+  "total": 298,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 29,
+      "count": 30,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "collect-plants-2026-09",
@@ -196,6 +196,7 @@
         "notre-atelier-popup-tamagawa-2026-09",
         "nova-cultura-tradmans-2026-09",
         "okibota-december-2026-sunshine",
+        "otsujiya-popup-engeiya-tanaka-2026-09",
         "picnic-garden-vol25-2026-09",
         "plants-dive-vol5-nara-2026-10",
         "plants-plants-plants-bhms-2026-10",
@@ -214,7 +215,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 62,
+      "count": 63,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
@@ -250,19 +251,19 @@
         "nova-cultura-tradmans-2026-09",
         "okibota-december-2026-sunshine",
         "okibota-spring-2026-sunshine",
+        "otsujiya-popup-engeiya-tanaka-2026-09",
         "ozaki-chinshokubutsu-collection-3",
         "paradise-garage-tomoya-farm-2026-08",
         "picnic-garden-vol25-2026-09",
         "plants-2306-3rd-anniversary-2026",
-        "plants-dive-vol5-nara-2026-10",
-        "plants-plants-plants-bhms-2026-10"
+        "plants-dive-vol5-nara-2026-10"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 102,
+      "count": 105,
       "items": [
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
