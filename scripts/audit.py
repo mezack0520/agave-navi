@@ -191,11 +191,91 @@ def main():
         sorted(set(sm_ni)),
         '詳細頁を作り直したら scripts/generate_sitemap.py も回す')
 
-    # 5. rejected-eventsとevents.jsonの矛盾
+    # 5. rejected-eventsとevents.jsonの矛盾。
+    #     旧実装は「見送りの key が掲載 slug の部分文字列か」だけを見ていた。
+    #     key は見送りを決めた日に手で付け、slug は掲載する日に別途手で付けるので、
+    #     同じ回でも綴りが揃うことはまず無い。実際 2026-09-05 に見つかった3組は
+    #     taniku-torai-ki-ryuo-2026-09 / taniku-toraiki-ryuoh-2026-09、
+    #     gardens-umekita-2nd-anniversary-2026 / gardens-umekita-2nd-anniv-2026-09 のように
+    #     どれも部分文字列にならず、**壊れていても常に0を返す検査**だった。
+    #     照合は key ではなく eventDate + 名前/会場で行う。見送りの name は
+    #     「イベント名 (日付 会場)」の形なので、掲載側の名前と会場のどちらかが
+    #     この文字列に現れれば同じ回の疑いがある。
+    #     同じ会期・同じ会場で併催される別イベント(愿 と 叢宴 のような組)は正常に出るので、
+    #     見送り側に coexistsWith=<掲載slug> を書いて明示的に除外する。
+    #     逃げ道があるので0にできる。よって urgent。
     rej = load_json('rejected-events.json', {})
-    rej_keys = [i.get('key', '') for i in (rej.get('items') or [])]
-    conflict = [k for k in rej_keys if k and any(k in s for s in slug_set)]
-    add('rejected_but_listed', '見送り記録があるのに掲載されているイベント', conflict)
+    rej_items = rej.get('items') or []
+
+    def _rnorm(x):
+        x = unicodedata.normalize('NFKC', x or '').lower()
+        # 数字は落とす。見送り側の name は「(2026-09-06 会場)」の形で日付を含むので、
+        # 残すと年や日付が共通部分として拾われ、無関係な回が一致してしまう
+        x = re.sub(r'[0-9]+', '', x)
+        return re.sub(r'[\s\u3000!！?？「」『』()（）\"\'\-–—〜~・･./、,]+', '', x)
+
+    def _lcs_len(a, b):
+        """最長共通部分列ではなく最長共通「部分文字列」の長さ。"""
+        if not a or not b:
+            return 0
+        prev = [0] * (len(b) + 1)
+        best = 0
+        for ca in a:
+            cur = [0] * (len(b) + 1)
+            for j, cb in enumerate(b, 1):
+                if ca == cb:
+                    cur[j] = prev[j - 1] + 1
+                    if cur[j] > best:
+                        best = cur[j]
+            prev = cur
+        return best
+
+    _ev_by_date = defaultdict(list)
+    for _e in events:
+        if _e.get('date'):
+            _ev_by_date[_e['date']].append(_e)
+
+    conflict = []
+    for r in rej_items:
+        d = r.get('eventDate')
+        if not d:
+            continue
+        rn = _rnorm(r.get('name'))
+        if not rn:
+            continue
+        ok = r.get('coexistsWith')
+        ok = {ok} if isinstance(ok, str) else set(ok or [])
+        for e in _ev_by_date.get(d, []):
+            slug = e.get('slug') or ''
+            if slug in ok:
+                continue
+            # 包含では照合できない。掲載側の正式名称のほうが長いことも、
+            # 会場名に「道の駅」のような接頭辞が付くこともあるため、
+            # どちら向きにも効く最長共通部分文字列で見る。
+            # ただし閾値4の一致だけを根拠にすると、この分野の一般語
+            # (植物 / 多肉植物 / プランツ / マルシェ / popup / plants / ーパーク)が
+            # 必ず引っかかって誤検知だらけになる(実測で7件)。
+            # そこで名称と会場の2つが同時に当たった場合か、
+            # 名称だけで8字以上の共通部分がある場合に限る。
+            ven = (e.get('venue') or '').strip()
+            if not ven:
+                ven = re.split(r'[（(]', e.get('location') or '')[0]
+            n_lcs = _lcs_len(rn, _rnorm(e.get('name')))
+            v_lcs = _lcs_len(rn, _rnorm(ven)) if ven else 0
+            hit = None
+            if n_lcs >= 8:
+                hit = f'名称「{e.get("name")}」'
+            elif n_lcs >= 4 and v_lcs >= 4:
+                hit = f'名称「{e.get("name")}」と会場「{ven}」'
+            if hit:
+                conflict.append(
+                    f"{d}: 見送り {r.get('key')} と掲載 {slug} が{hit}で一致")
+    add('rejected_but_listed', '見送り記録があるのに掲載されているイベント',
+        sorted(set(conflict)),
+        '同じ回なら見送り記録のほうを消す(掲載が正しいと判断し直した結果なので、'
+        '見送りを残すと revisit の期限切れが誤って鳴り、判断の履歴も二重になる)。'
+        '同じ会期・会場で併催される別イベントなら、見送り側に '
+        'coexistsWith=<掲載slug> を書いて除外する')
 
     # 6. ウォッチ対象に載らない回
     watch = load_json('watch-sources.json', {})
