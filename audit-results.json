@@ -439,7 +439,14 @@
       "title": "詳細頁の本文と入場料の記載が食い違っている",
       "count": 0,
       "items": [],
-      "note": "判定は sitelib.admission_is_free() が単一情報源。素の「無料 in admission」で書くと有料の回の但し書きに引っかかる。検出したら build-detail-pages.py を直して再生成する",
+      "note": "判定は sitelib.admission_is_free() が単一情報源。素の「無料 in admission」で書くと有料の回の但し書きに引っかかる。本文・JSON-LDの両方を見る。検出したら build-detail-pages.py を直して再生成する",
+      "severity": "urgent"
+    },
+    "inline_rule_reimplementation": {
+      "title": "sitelib の判定を素の式で書き直している",
+      "count": 0,
+      "items": [],
+      "note": "sitelib の関数を呼ぶ。素の in 判定は但し書き(「未就学児無料」等)に引っかかり、同じ規則が複数箇所に散ると片方だけ直して残りが生き残る",
       "severity": "urgent"
     },
     "duplicate_event_same_source": {
@@ -772,6 +779,13 @@
       "count": 0,
       "items": [],
       "note": "sync-index-cards.py を再実行する。重複が出ているときは THUMB_RE がthumb の中身に一致しなくなっている(置換されず挿入だけが起きる)",
+      "severity": "urgent"
+    },
+    "landing_event_set_drift": {
+      "title": "ランディング頁のイベント集合がevents.jsonと不一致",
+      "count": 0,
+      "items": [],
+      "note": "generate-landing-pages.py を再実行する。events.json を直して再生成しないと、県頁・タグ頁からその回が消えたまま残る",
       "severity": "urgent"
     },
     "desc_min_chars_drift": {

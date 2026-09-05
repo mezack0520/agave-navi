@@ -47,6 +47,15 @@ def rp(*a):
     return os.path.join(REPO, *a)
 
 
+def _slurp(path):
+    """読めなければ空文字。生成物の有無で検査が落ちないようにする。"""
+    try:
+        with open(path, encoding='utf-8') as _f:
+            return _f.read()
+    except OSError:
+        return ''
+
+
 def load_json(path, default=None):
     try:
         with open(rp(path), encoding='utf-8') as f:
@@ -875,6 +884,15 @@ def main():
     #     引っかかり、有料の回が本文で無料を名乗っていた(2026-09-05 に8件)。
     #     スペック表には正しい金額が出るので、同じ頁の中で食い違う。
     #     値ではなく生成物を見る(機能確認)。判定は sitelib が単一情報源。
+    #     2026-09-05(同日の後続実行): この検査は文言を1つ('入場は無料です。')しか
+    #     見ておらず、直した2か所だけを見張っていた。build-detail-pages.py には
+    #     同じ判断があと4か所あり、そのうち tips の「入場無料のイベントです」は
+    #     修正後も同じ9件で出続けていた。JSON-LD の offers も素の判定で
+    #     price="0" を出しており、リッチリザルトが有料の回を無料と申告していた
+    #     (botanicbomb-vol11-fukuchiyama-2026-10)。
+    #     **文言を1つだけ見張る検査は、その文言を直した瞬間に盲目になる。**
+    #     無料を主張しうる表現を集合で持ち、価格の申告も同じ検査で見る。
+    _FREE_CLAIMS = ('入場は無料です。', '入場無料のイベントです')
     from sitelib import admission_is_free as _adm_free
     free_bad = []
     for e in events:
@@ -887,13 +905,55 @@ def main():
                 _pg = f.read()
         except OSError:
             continue
-        if '入場は無料です。' in _pg:
-            free_bad.append(f"{e.get('slug')}: admission=「{_adm[:40]}」なのに本文が無料と書いている")
+        _hit = [t for t in _FREE_CLAIMS if t in _pg]
+        if _hit:
+            free_bad.append(f"{e.get('slug')}: admission=「{_adm[:40]}」なのに本文が"
+                            f"「{_hit[0]}」と書いている")
+        _off = re.search(r'"offers":\s*\{.*?"price":\s*"([^"]*)"', _pg, re.S)
+        if _off and _off.group(1) in ('0', ''):
+            free_bad.append(f"{e.get('slug')}: admission=「{_adm[:40]}」なのに "
+                            f'JSON-LD の offers.price が "{_off.group(1)}"')
     add('admission_free_mismatch', '詳細頁の本文と入場料の記載が食い違っている',
         sorted(free_bad),
         '判定は sitelib.admission_is_free() が単一情報源。'
         '素の「無料 in admission」で書くと有料の回の但し書きに引っかかる。'
-        '検出したら build-detail-pages.py を直して再生成する')
+        '本文・JSON-LDの両方を見る。検出したら build-detail-pages.py を直して再生成する')
+
+    # 9k-4. 上の食い違いを生む書き方そのものを止める。
+    #     sitelib に単一情報源の関数があるのに、同じ判断を素の式で書いた行を拾う。
+    #     `sitelib_rule_duplicated` は「同名の def / 定数を自前で持つ」ことしか見ない。
+    #     再実装が式のまま埋まっている場合(`'無料' in admission`)は名前を持たないので
+    #     素通りする。実際その形で4か所に散り、2回に分けて直すことになった。
+    #     文字列や註釈を拾わないよう AST の比較ノードだけを見る(naive_local_date と同じ)。
+    _INLINE_RULES = {
+        '無料': 'sitelib.admission_is_free()',
+    }
+    import ast as _ast2
+    _inline_dup = []
+    for _f in sorted(glob.glob(rp('scripts', '*.py')) + [rp('build-detail-pages.py')]):
+        _rel = os.path.relpath(_f, REPO)
+        if os.path.basename(_f) in ('sitelib.py', 'audit.py'):
+            continue
+        try:
+            _tree = _ast2.parse(_slurp(_f))
+        except SyntaxError:
+            continue
+        for _n in _ast2.walk(_tree):
+            if not isinstance(_n, _ast2.Compare):
+                continue
+            if not any(isinstance(o, _ast2.In) for o in _n.ops):
+                continue
+            _lit = _n.left
+            if not (isinstance(_lit, _ast2.Constant) and isinstance(_lit.value, str)):
+                continue
+            _own = _INLINE_RULES.get(_lit.value)
+            if _own:
+                _inline_dup.append(f"{_rel}:{_n.lineno}: '{_lit.value}' in ... "
+                                   f'— 判定は {_own} が単一情報源')
+    add('inline_rule_reimplementation', 'sitelib の判定を素の式で書き直している',
+        sorted(_inline_dup),
+        'sitelib の関数を呼ぶ。素の in 判定は但し書き(「未就学児無料」等)に引っかかり、'
+        '同じ規則が複数箇所に散ると片方だけ直して残りが生き残る')
 
     add('duplicate_event_same_source', '同日の別slugが同じ出典URLを指している',
         sorted(set(dup_src)),
@@ -2022,6 +2082,52 @@ def main():
         'sync-index-cards.py を再実行する。重複が出ているときは THUMB_RE が'
         'thumb の中身に一致しなくなっている(置換されず挿入だけが起きる)')
 
+    # --- ランディング頁のイベント集合 ------------------------------------------
+    # 同じ穴を塞ぐのはこれで3度目。index.html に index_card_drift を付け(2026-08-24)、
+    # 同じ作り方の calendar/map を漏らして embedded_event_set_drift を足し(2026-08-27)、
+    # **/tag /pref /region /archive の88頁はどちらの母集団にも入っていなかった**。
+    # この88頁は掲載イベントの主要な入口(sitemap掲載・index対象)で、
+    # 1頁でも集合がずれると、その県・そのタグから見た人にはイベントが存在しない。
+    # 選定規則は写しではない: tag=そのタグを持つ全件 / pref=その県の全件 /
+    # region=その地方の全件 / archive/YYYY-MM=開始月 / archive/YYYY=開始年、と
+    # generate-landing-pages.py の分類そのものが events.json から一意に決まる。
+    # 節への振り分け(開催中/これから/終了)は is_upcoming が見るのでここでは数えない。
+    # 集合が一致するかだけを見る。
+    _want_landing = defaultdict(set)
+    for e in events:
+        _sl = e.get('slug')
+        if not _sl:
+            continue
+        for t in e.get('tags') or []:
+            _want_landing[('tag', tag_slug(t))].add(_sl)
+        if e.get('prefecture'):
+            _want_landing[('pref', pref_slug(e['prefecture']))].add(_sl)
+        if e.get('region'):
+            _want_landing[('region', region_slug(e['region']))].add(_sl)
+        _d = e.get('date') or ''
+        if len(_d) >= 7:
+            _want_landing[('archive', _d[:7])].add(_sl)
+        if len(_d) >= 4:
+            _want_landing[('archive', _d[:4])].add(_sl)
+    landing_drift = []
+    for (_kind, _sl2), _want in sorted(_want_landing.items()):
+        _rel2 = f'{_kind}/{_sl2}/index.html'
+        _pg2 = _slurp(rp(_kind, _sl2, 'index.html'))
+        if not _pg2:
+            landing_drift.append(f'{_rel2}: 頁が無い(掲載{len(_want)}件)')
+            continue
+        _got = set(re.findall(r'data-slug="([^"]+)"', _pg2))
+        _miss = sorted(_want - _got)
+        _extra = sorted(_got - _want)
+        if _miss:
+            landing_drift.append(f'{_rel2}: 載っていない {len(_miss)}件 (例 {_miss[0]})')
+        if _extra:
+            landing_drift.append(f'{_rel2}: 余分 {len(_extra)}件 (例 {_extra[0]})')
+    add('landing_event_set_drift', 'ランディング頁のイベント集合がevents.jsonと不一致',
+        landing_drift,
+        'generate-landing-pages.py を再実行する。events.json を直して再生成しないと、'
+        '県頁・タグ頁からその回が消えたまま残る')
+
     # --- 説明文の下限字数の写し ------------------------------------------------
     # 下限は sitelib.DESC_MIN_CHARS が単一情報源。数字を直接書くと、
     # 揃えた日から少しずつずれる。実際 2026-08-24 まで thin=50 / check_events=70 /
@@ -2351,13 +2457,6 @@ def main():
     # 「今と比べて未来か」で見ると、ビルドから9時間経てば通ってしまい検査が効かない。
     # 同じビルドが書いた2つの時刻を突き合わせれば、時計に依存せず判定できる。
     _stamps = []
-    def _slurp(path):
-        try:
-            with open(path, encoding='utf-8') as _f:
-                return _f.read()
-        except OSError:
-            return ''
-
     _m = re.search(r'<lastBuildDate>([^<]+)</lastBuildDate>', _slurp(rp('rss.xml')))
     if _m:
         try:

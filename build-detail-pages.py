@@ -398,7 +398,10 @@ def make_event_jsonld(ev):
     admission = (ev.get('admission') or '').strip()
     offers_field = ''
     if admission:
-        is_free = ('無料' in admission)
+        # 但し書きの「無料」に引っかからせない。判定は sitelib が単一情報源。
+        # 素の `'無料' in admission` だと「一般入場無料(先行入場はチケット制)」が
+        # price="0" の Offer になり、リッチリザルトが「無料」と申告する(2026-09-05)。
+        is_free = sitelib.admission_is_free(admission)
         # 価格抽出 (例: '500円', '1,000円', '前売¥1,600')
         import re as _re
         price_match = _re.search(r'(\d{1,3}(?:,\d{3})*|\d+)\s*円', admission)
@@ -845,7 +848,9 @@ def make_visit_tips(ev):
     venue = ev.get('venue') or ev.get('location') or ''
     admission = (ev.get('admission') or '').strip()
     time_str = (ev.get('time') or '').strip()
-    is_free = '無料' in admission
+    # 本文の「入場無料のイベントです」も admission_is_free で判定する。
+    # 2026-09-05 の修正はFAQと要約の2か所だけで、ここが残っていた(有料9件)。
+    is_free = sitelib.admission_is_free(admission)
 
     variants = _TIPS_VARIANTS.get(cat) or [[
         '開場時間・整理券の有無は主催者の公式情報を直前に再確認することをおすすめします。天候による会期変更にも備えて、当日朝の最新告知をチェックしてください。',
@@ -1046,9 +1051,8 @@ def _faq_pairs(ev, ctx):
 
     admission = (ev.get('admission') or '').strip()
     if admission:
-        if '無料' in admission:
-            a = ('入場は無料です。' if sitelib.admission_is_free(admission)
-                 else f'入場料は「{admission}」です。')
+        if sitelib.admission_is_free(admission):
+            a = '入場は無料です。'
         else:
             a = f'入場料は「{admission}」です。前売り・当日の価格差がある場合は主催者の公式案内をご確認ください。'
         pairs.append(('入場料はかかりますか？', a))
@@ -1233,7 +1237,7 @@ def build_context(events):
         adm = (e.get('admission') or '')
         if adm:
             admission_known += 1
-            if '無料' in adm:
+            if sitelib.admission_is_free(adm):
                 free_n += 1
 
     total = len(events) or 1
