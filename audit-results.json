@@ -1,5 +1,5 @@
 {
-  "total": 318,
+  "total": 315,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -333,11 +333,8 @@
     },
     "desc_stale_year": {
       "title": "説明文が別年の日付を名指ししている(前年の告知文の使い回し)",
-      "count": 2,
-      "items": [
-        "tokimeki-marche-gunma-kenchomae-2026-11: 本文に2027年3月21日 (開催は2026年)",
-        "tokimeki-marche-kodaihasu-2026-11: 本文に2027年3月14日 (開催は2026年)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "",
       "severity": "urgent"
     },
@@ -385,10 +382,8 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 1,
-      "items": [
-        "botanical-link-popup-kasugai-2026-10: venue=\"BOTANICAL LINK POP UP 会場\" と location=\"愛知県春日井市坂下町4-224-7\" が別の施設名"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },
@@ -743,6 +738,13 @@
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る",
       "severity": "info"
+    },
+    "manual_sweep_stale": {
+      "title": "手でやる巡回が止まっている",
+      "count": 0,
+      "items": [],
+      "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。NextMeet と まとめブログは CI から読めないので coverage-sweep.py に入れられず、回ったかどうかを残せるのはこのファイルだけ。coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない(あれは LEAFLA しか見ていない)。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
+      "severity": "urgent"
     },
     "feed_pubdate_unstable": {
       "title": "フィードのpubDateがビルド時刻になっている",

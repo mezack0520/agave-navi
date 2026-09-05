@@ -1,0 +1,22 @@
+{
+  "_note": "タスクが手でやる巡回の台帳。CI から見られない情報源(NextMeet・Instagram)は coverage-sweep.py で自動化できないので、やった日を repo に残さないと『やらなかった日』と区別が付かない。agave-event-update が毎回 lastSweptOn / history を書き、audit.py の manual_sweep_stale が古くなったら鳴らす。",
+  "_why": "2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、NextMeet の月別ページを手で開いたら未掲載が15件出た。『3社は互いに取りこぼす』はプレイブック §3 に前から書いてあるが、機械化されていたのは LEAFLA だけで、残りを回ったかどうかは repo のどこにも残っていなかった。",
+  "sweeps": {
+    "nextmeet-monthly": {
+      "label": "NextMeet の月別一覧 /plants/monthly/YYYY-MM を先2か月ぶん",
+      "url": "https://nextmeet.app/plants/monthly/",
+      "staleDays": 7,
+      "lastSweptOn": "2026-09-06",
+      "lastScope": "2026-10 / 2026-11",
+      "history": ["2026-09-06"]
+    },
+    "matome-blog": {
+      "label": "まとめブログの期間まとめ記事(もすレコ。の半期まとめなど)",
+      "url": "https://mostgreenrecords.com/category/go_place/",
+      "staleDays": 14,
+      "lastSweptOn": "2026-09-06",
+      "lastScope": "2026秋冬(9〜12月)まとめ",
+      "history": ["2026-09-06"]
+    }
+  }
+}

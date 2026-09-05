@@ -1881,6 +1881,50 @@ def main():
              'event-listing-review は new-inquiries.json の reviewedHistory 側で見る',
         severity='info')
 
+    # --- 手でやる巡回が止まっていないか -------------------------------------
+    # CI から読めない情報源(NextMeet・Instagram)は coverage-sweep.py で
+    # 自動化できないので、回ったかどうかが repo のどこにも残らない。
+    # 2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、
+    # NextMeet の月別ページを手で開いたら未掲載が15件出た。
+    # 「アグリゲータ3社は互いに取りこぼす」はプレイブック §3 に前から
+    # 書いてあるが、機械化されていたのは LEAFLA だけで、残り2社を回ったかは
+    # 誰も見ていなかった。reviewedHistory / task-runs.json と同じ型の穴で、
+    # **記録が無い手順は、やらなくても誰も気づかない。**
+    # 判定は「最後に回った日からの経過日数」だけ。0が正常な検査なので urgent。
+    sweep_stale = []
+    _ms = load_json('manual-sweeps.json', {}).get('sweeps') or {}
+    try:
+        _mday = _dtm.date.fromisoformat(today_jst())
+    except ValueError:
+        _mday = None
+    for _sid in sorted(_ms):
+        _sc = _ms[_sid] or {}
+        _last = str(_sc.get('lastSweptOn') or '').strip()
+        _stale = _sc.get('staleDays')
+        if not isinstance(_stale, int) or _stale <= 0:
+            sweep_stale.append(f'{_sid}: staleDays が正の整数でない({_stale!r})')
+            continue
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _last):
+            sweep_stale.append(f'{_sid}: lastSweptOn が YYYY-MM-DD でない({_last!r})')
+            continue
+        if _mday is None:
+            continue
+        _age = (_mday - _dtm.date.fromisoformat(_last)).days
+        if _age < 0:
+            sweep_stale.append(f'{_sid}: lastSweptOn={_last} が未来日')
+        elif _age > _stale:
+            sweep_stale.append(
+                f'{_sid}({_sc.get("label") or ""}): 最後に回ったのは {_last}'
+                f'（{_age}日前 / 上限{_stale}日）')
+    add('manual_sweep_stale', '手でやる巡回が止まっている', sweep_stale,
+        note='manual-sweeps.json は agave-event-update が毎回書く台帳。'
+             'NextMeet と まとめブログは CI から読めないので coverage-sweep.py に'
+             '入れられず、回ったかどうかを残せるのはこのファイルだけ。'
+             'coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない'
+             '(あれは LEAFLA しか見ていない)。'
+             '回った日に lastSweptOn / lastScope / history を更新する。'
+             '回れなかった回は進めない。進めると回った回と区別が付かなくなる')
+
     # --- フィードの pubDate がビルドのたびに動いていないか ------------------
     # 2026-08-30 に sitemap の lastmod で塞いだのと同じ型。
     # generate-rss.py は addedDate が無い回に datetime.now() を入れており、
