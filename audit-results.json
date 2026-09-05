@@ -1,5 +1,5 @@
 {
-  "total": 292,
+  "total": 298,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,9 +177,8 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 30,
+      "count": 29,
       "items": [
-        "aobouzu-6raccoon-popup-2026-09",
         "collect-plants-2026-09",
         "deep-green-ono-2026-09",
         "gardens-umekita-2nd-anniv-2026-09",
@@ -263,7 +262,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 105,
+      "count": 104,
       "items": [
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
@@ -544,15 +543,23 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 7,
+      "count": 15,
       "items": [
-        "aobouzu-6raccoon-popup-2026-09(2026-09-04〜2026-09-05/2日)",
+        "aobouzu-kagoshima-popup-2026-09(2026-09-06〜2026-09-07/2日)",
+        "botanical-festa-hawo-kumagaya-2026-09(2026-09-06〜2026-09-06/1日)",
+        "botanical-x-vol1-2026(2026-09-06〜2026-09-06/1日)",
         "gardens-umekita-2nd-anniv-2026-09(2026-09-05〜2026-09-06/2日)",
+        "green-holic-kariya-2026(2026-09-06〜2026-09-06/1日)",
+        "green-summit-vol22-yamagata-2026(2026-09-06〜2026-09-06/1日)",
+        "kyousenkai-2026-09(2026-09-06〜2026-09-06/1日)",
         "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)",
+        "picnic-garden-vol24-sendai-2026-09(2026-09-06〜2026-09-06/1日)",
         "plants-bazaar-null-kanazawa-2026-09(2026-09-05〜2026-09-06/2日)",
+        "riverlabo-2nd-open-2026-09(2026-09-06〜2026-09-06/1日)",
         "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)",
-        "toge-to-hachi-2026-09(2026-09-03〜2026-09-06/4日/長期)",
-        "tottori-botanica-2026-09(2026-09-05〜2026-09-05/1日)"
+        "succulent-wonderland-1st-tatebayashi-2026-09(2026-09-06〜2026-09-06/1日)",
+        "taniku-toraiki-ryuoh-2026-09(2026-09-06〜2026-09-06/1日)",
+        "toge-to-hachi-2026-09(2026-09-03〜2026-09-06/4日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -657,10 +664,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-09-05 AQUA FESTA vol.2 2026が横浜で開催、熱帯魚や水草から珍奇植物まで幅広く展開"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -930,8 +935,10 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "ongoing_events: 直近中央値 2 → 15（掲載380件で換算 2）（+13）"
+      ],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     }

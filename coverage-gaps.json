@@ -1,25 +1,20 @@
 {
   "_note": "他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-05",
+  "sweptOn": "2026-09-06",
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1241,
-    "in_scope": 97,
-    "covered": 73,
-    "known_rejected": 23,
+    "candidates": 1202,
+    "in_scope": 92,
+    "covered": 71,
+    "known_rejected": 21,
     "truncated_resolved": 225,
     "truncated_unresolved": 45,
-    "gaps_raw": 1
+    "gaps_raw": 0
   },
   "errors": [],
   "truncatedUnresolved": [
     "09/04 追加 国際多肉植物協会が9月のサボテン・多肉植物ビッ..."
   ],
-  "gaps": [
-    {
-      "date": "2026-09-05",
-      "title": "AQUA FESTA vol.2 2026が横浜で開催、熱帯魚や水草から珍奇植物まで幅広く展開"
-    }
-  ]
+  "gaps": []
 }

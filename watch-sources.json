@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-05 11:11 JST",
+ "generated": "2026-09-06 07:42 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 209,
-  "awaitingNextEdition": 219,
+  "awaitingNextEdition": 221,
   "officialSiteCandidates": 60,
   "unresolvedIgHandles": 0
  },
@@ -284,24 +284,6 @@
    "eventCount": 1,
    "lastEventName": "棘と鉢 -2026-",
    "lastEventDate": "2026-09-03",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "6_raccoon_",
-   "url": "https://www.instagram.com/6_raccoon_/",
-   "eventCount": 1,
-   "lastEventName": "aobouzu × 6 RACCOON コラボPOP UP",
-   "lastEventDate": "2026-09-04",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "seven.seedlings2",
-   "url": "https://www.instagram.com/seven.seedlings2/",
-   "eventCount": 1,
-   "lastEventName": "TOTTORI BOTANICA 〜Plants to remember〜",
-   "lastEventDate": "2026-09-05",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -1888,6 +1870,24 @@
    "lastEventDate": "2026-08-30",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "6_raccoon_",
+   "url": "https://www.instagram.com/6_raccoon_/",
+   "eventCount": 1,
+   "lastEventName": "aobouzu × 6 RACCOON コラボPOP UP",
+   "lastEventDate": "2026-09-04",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "seven.seedlings2",
+   "url": "https://www.instagram.com/seven.seedlings2/",
+   "eventCount": 1,
+   "lastEventName": "TOTTORI BOTANICA 〜Plants to remember〜",
+   "lastEventDate": "2026-09-05",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -1950,6 +1950,26 @@
    "igHandle": "plants.garage.market",
    "officialUrl": "https://ilinobeclub.jp/archives/475",
    "recurring": true
+  },
+  {
+   "series": "aobouzu × 6 RACCOON コラボPOP UP",
+   "lastSlug": "aobouzu-6raccoon-popup-2026-09",
+   "lastDate": "2026-09-04",
+   "lastEnd": "2026-09-05",
+   "monthsSinceLast": 0,
+   "igHandle": "6_raccoon_",
+   "officialUrl": "https://www.instagram.com/6_raccoon_/",
+   "recurring": false
+  },
+  {
+   "series": "TOTTORI BOTANICA 〜Plants to remember〜",
+   "lastSlug": "tottori-botanica-2026-09",
+   "lastDate": "2026-09-05",
+   "lastEnd": "2026-09-05",
+   "monthsSinceLast": 0,
+   "igHandle": "seven.seedlings2",
+   "officialUrl": "https://www.instagram.com/seven.seedlings2/",
+   "recurring": false
   },
   {
    "series": "PLANTS UNITED 2026",
@@ -2269,26 +2289,6 @@
    "monthsSinceLast": 1,
    "igHandle": "minori_kaboku_interpark",
    "officialUrl": "https://www.instagram.com/minori_kaboku_interpark/",
-   "recurring": false
-  },
-  {
-   "series": "BOTANICAL（ガーデンプラザ華 福島店）",
-   "lastSlug": "botanical-garden-plaza-hana-2026-08",
-   "lastDate": "2026-08-22",
-   "lastEnd": "2026-08-23",
-   "monthsSinceLast": 1,
-   "igHandle": "gardenplazahana",
-   "officialUrl": "https://www.instagram.com/gardenplazahana/",
-   "recurring": false
-  },
-  {
-   "series": "Green Summit MORE vol.21",
-   "lastSlug": "green-summit-more-vol21-2026-08",
-   "lastDate": "2026-08-23",
-   "lastEnd": "2026-08-23",
-   "monthsSinceLast": 1,
-   "igHandle": "green_summit_touhoku",
-   "officialUrl": "https://www.instagram.com/green_summit_touhoku/",
    "recurring": false
   }
  ],
