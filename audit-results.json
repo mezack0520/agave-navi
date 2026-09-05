@@ -1,5 +1,5 @@
 {
-  "total": 298,
+  "total": 318,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,8 +177,9 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 29,
+      "count": 31,
       "items": [
+        "botanical-link-popup-kasugai-2026-10",
         "collect-plants-2026-09",
         "deep-green-ono-2026-09",
         "gardens-umekita-2nd-anniv-2026-09",
@@ -203,6 +204,7 @@
         "raflum-hankyu-mens-tokyo-2026-09",
         "robin-bizarre-garden-6th-2026-09",
         "sapporo-bikaku-expo-lv3-2026-10",
+        "shumatsu-botanical-gotemba-2026-11",
         "tiger-plants-hunters-2026-10",
         "toge-to-hachi-2026-09",
         "tokai-okibota-2026",
@@ -214,12 +216,13 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 63,
+      "count": 65,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
         "botanical-ajito-fukuoka-2026-07",
         "botanical-circus-7-2026",
+        "botanical-link-popup-kasugai-2026-10",
         "botanical-night-market-kurashiki-2026-08",
         "code-tokyo-popup-2026-08",
         "collect-plants-2026-09",
@@ -254,21 +257,21 @@
         "ozaki-chinshokubutsu-collection-3",
         "paradise-garage-tomoya-farm-2026-08",
         "picnic-garden-vol25-2026-09",
-        "plants-2306-3rd-anniversary-2026",
-        "plants-dive-vol5-nara-2026-10"
+        "plants-2306-3rd-anniversary-2026"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 104,
+      "count": 117,
       "items": [
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
         "bba-vol5-carpediem-2026-09",
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
+        "bota-para-vol4-sapporo-2026-11",
         "botajam-2026",
         "botanic-collection2-ube-2026-10",
         "botanical-auction-3rd-hamamatsu-2026-09",
@@ -301,9 +304,8 @@
         "green-summit-vol22-yamagata-2026",
         "hanauchu-dream-garden-28th-2026-10",
         "happy-smile-2nd-odawara-2026-09",
-        "honwaka-pappa-3rd-2026-09",
-        "ibatama-vol9-2026-10",
-        "isij-big-bazaar-2026-11-22"
+        "hiroshima-cactus-succulent-ten-2026-10",
+        "honwaka-pappa-3rd-2026-09"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -331,8 +333,11 @@
     },
     "desc_stale_year": {
       "title": "説明文が別年の日付を名指ししている(前年の告知文の使い回し)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "tokimeki-marche-gunma-kenchomae-2026-11: 本文に2027年3月21日 (開催は2026年)",
+        "tokimeki-marche-kodaihasu-2026-11: 本文に2027年3月14日 (開催は2026年)"
+      ],
       "note": "",
       "severity": "urgent"
     },
@@ -380,8 +385,10 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "botanical-link-popup-kasugai-2026-10: venue=\"BOTANICAL LINK POP UP 会場\" と location=\"愛知県春日井市坂下町4-224-7\" が別の施設名"
+      ],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },
@@ -937,7 +944,7 @@
       "title": "参考値が急に動いた(異常の可能性)",
       "count": 1,
       "items": [
-        "ongoing_events: 直近中央値 2 → 15（掲載380件で換算 2）（+13）"
+        "ongoing_events: 直近中央値 2 → 15（掲載395件で換算 2）（+13）"
       ],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"

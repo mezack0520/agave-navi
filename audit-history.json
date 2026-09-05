@@ -425,9 +425,11 @@
   {
    "date": "2026-09-06",
    "urgent": {
+    "desc_stale_year": 2,
     "metric_moved": 1
    },
    "info": {
+    "venue_location_disagree": 1,
     "duplicate_event_same_source": 1,
     "inquiry_review_gap": 1,
     "task_run_gap": 2
@@ -435,14 +437,14 @@
    "metric": {
     "thin_past_with_source": 34,
     "thin_archived": 48,
-    "upcoming_with_image": 29,
-    "events_with_image": 63,
-    "upcoming_no_image": 104,
+    "upcoming_with_image": 31,
+    "events_with_image": 65,
+    "upcoming_no_image": 117,
     "ongoing_events": 15,
     "workflow_secrets": 6
    },
-   "events": 380,
-   "upcoming": 133
+   "events": 395,
+   "upcoming": 148
   }
  ]
 }
