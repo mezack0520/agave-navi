@@ -1,23 +1,23 @@
 {
- "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
- "items": [
-  {
-   "id": "event-listing-review:gas-script-not-redeployed",
-   "source": "event-listing-review",
-   "policy": "inquiryPii",
-   "title": "Apps Script に貼られている GAS が 2026-08-24 版のまま。08-31 と 09-01 の修正が実機に入っていない",
-   "found": "2026-09-06",
-   "detail": "script.google.com のプロジェクト一覧で「agave-navi フォーム→GitHub連携」の最終更新が 2026/08/24 だった。リポジトリの scripts/google-apps-script.js は 08-31(dcb424c9: countSheetRows で sheetRows を書く) と 09-01(05a06026: 氏名・メールを公開経路に通さない) に直っているが、エディタへの貼り直しが済んでいないため実機は旧版のまま。裏付けは2つ。(1) 08-31 の GAS 書き込み 9bf760e8 は氏名とメールアドレスを含み、sheetRows を書いていない。(2) プロジェクトの最終更新日が repo の修正日より前。影響も2つ。(a) **次にフォーム送信があった瞬間、申請者の氏名とメールアドレスがまた公開URLと公開コミット履歴を通る**(published_pii は通った後にしか鳴らない)。(b) sheetRows / sheetCheckedOn を GAS が書かないので、inquiry_sheet_row_mismatch は誰も更新しない固定値を照合し続ける。貼り直しは目崎本人の操作が要る(タスクは認証情報の入力とスクリプトの保存を行わない)。トリガー自体は生きている: 前回の実行 2026/08/31 12:41:02・エラー率0%・onFormSubmit。",
-   "proposal": "listing-policy.json の inquiryPii に deployment 節を足す案: 「repo の scripts/google-apps-script.js を直しただけでは規則は効かない。Apps Script エディタへ貼り直し、プロジェクトの最終更新日が repo の修正日以降になったことを確認した日をもって解決とする。外部システムに依存する対処は、repo を直した日ではなく外部側を確認した日で閉じる」。実作業: script.google.com(個人アカウント yuji.mezaki@gmail.com。2026-09-06 時点で /u/0/) → 「agave-navi フォーム→GitHub連携」→ コード.gs を scripts/google-apps-script.js の中身で置き換えて保存 → testConnection を実行して OK を確認 → この項目を消し込む。"
-  }
- ],
- "updated": "2026-09-06",
- "resolved": [
-  {
-   "id": "event-monitor:inquiry-pii-in-public-repo",
-   "resolvedOn": "2026-09-01",
-   "decision": "listing-policy.json に inquiryPii 節を新設。GASは連絡先をリポジトリに書かず ALERT_TO へ直接メールし、notify-inquiry.yml は氏名・メール行を出さない。audit.py の published_pii を自由記述の走査まで拡張した",
-   "note": "Apps Script 側の再デプロイ(scripts/google-apps-script.js の貼り直し)が済むまで、GAS からの書き込みは旧仕様のまま"
-  }
- ]
+  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
+  "items": [
+    {
+      "id": "event-listing-review:gas-script-not-redeployed",
+      "source": "event-listing-review",
+      "policy": "inquiryPii",
+      "title": "Apps Script に貼られている GAS が 2026-08-24 版のまま。08-31 と 09-01 の修正が実機に入っていない",
+      "found": "2026-09-06",
+      "detail": "script.google.com のプロジェクト一覧で「agave-navi フォーム→GitHub連携」の最終更新が 2026/08/24 だった。リポジトリの scripts/google-apps-script.js は 08-31(dcb424c9: countSheetRows で sheetRows を書く) と 09-01(05a06026: 氏名・メールを公開経路に通さない) に直っているが、エディタへの貼り直しが済んでいないため実機は旧版のまま。裏付けは2つ。(1) 08-31 の GAS 書き込み 9bf760e8 は氏名とメールアドレスを含み、sheetRows を書いていない。(2) プロジェクトの最終更新日が repo の修正日より前。影響も2つ。(a) **次にフォーム送信があった瞬間、申請者の氏名とメールアドレスがまた公開URLと公開コミット履歴を通る**(published_pii は通った後にしか鳴らない)。(b) sheetRows / sheetCheckedOn を GAS が書かないので、inquiry_sheet_row_mismatch は誰も更新しない固定値を照合し続ける。貼り直しは目崎本人の操作が要る(タスクは認証情報の入力とスクリプトの保存を行わない)。トリガー自体は生きている: 前回の実行 2026/08/31 12:41:02・エラー率0%・onFormSubmit。",
+      "proposal": "listing-policy.json の inquiryPii に deployment 節を足す案: 「repo の scripts/google-apps-script.js を直しただけでは規則は効かない。Apps Script エディタへ貼り直し、プロジェクトの最終更新日が repo の修正日以降になったことを確認した日をもって解決とする。外部システムに依存する対処は、repo を直した日ではなく外部側を確認した日で閉じる」。実作業: script.google.com(個人アカウント yuji.mezaki@gmail.com。2026-09-06 時点で /u/0/) → 「agave-navi フォーム→GitHub連携」→ コード.gs を scripts/google-apps-script.js の中身で置き換えて保存 → testConnection を実行して OK を確認 → この項目を消し込む。"
+    }
+  ],
+  "updated": "2026-09-06",
+  "resolved": [
+    {
+      "id": "event-monitor:inquiry-pii-in-public-repo",
+      "resolvedOn": "2026-09-01",
+      "decision": "listing-policy.json に inquiryPii 節を新設。GASは連絡先をリポジトリに書かず ALERT_TO へ直接メールし、notify-inquiry.yml は氏名・メール行を出さない。audit.py の published_pii を自由記述の走査まで拡張した",
+      "note": "Apps Script 側の再デプロイ(scripts/google-apps-script.js の貼り直し)が済むまで、GAS からの書き込みは旧仕様のまま"
+    }
+  ]
 }
