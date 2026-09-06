@@ -447,6 +447,9 @@
   {
    "date": "2026-09-07",
    "urgent": {
+    "datedisplay_format": 3,
+    "venue_postal_address": 1,
+    "insecure_image_url": 1,
     "gas_script_undeployed": 1
    },
    "info": {
@@ -457,14 +460,14 @@
    "metric": {
     "thin_past_with_source": 34,
     "thin_archived": 48,
-    "upcoming_with_image": 29,
-    "events_with_image": 66,
-    "upcoming_no_image": 107,
+    "upcoming_with_image": 30,
+    "events_with_image": 67,
+    "upcoming_no_image": 114,
     "ongoing_events": 3,
     "workflow_secrets": 6
    },
-   "events": 395,
-   "upcoming": 136
+   "events": 403,
+   "upcoming": 144
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
-  "total": 292,
+  "total": 306,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,9 +177,10 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 29,
+      "count": 30,
       "items": [
         "botanical-link-popup-kasugai-2026-10",
+        "botanical-monsters-2027-okazaki",
         "collect-plants-2026-09",
         "deep-green-ono-2026-09",
         "green-champuroo-vol2-2026-10",
@@ -214,13 +215,14 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 66,
+      "count": 67,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
         "botanical-ajito-fukuoka-2026-07",
         "botanical-circus-7-2026",
         "botanical-link-popup-kasugai-2026-10",
+        "botanical-monsters-2027-okazaki",
         "botanical-night-market-kurashiki-2026-08",
         "code-tokyo-popup-2026-08",
         "collect-plants-2026-09",
@@ -254,21 +256,22 @@
         "otsujiya-popup-engeiya-tanaka-2026-09",
         "ozaki-chinshokubutsu-collection-3",
         "paradise-garage-tomoya-farm-2026-08",
-        "picnic-garden-vol25-2026-09",
-        "plants-2306-3rd-anniversary-2026"
+        "picnic-garden-vol25-2026-09"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 107,
+      "count": 114,
       "items": [
+        "aichin-shokusai-new-year-party-2027",
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
         "bba-vol5-carpediem-2026-09",
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
+        "bizarre-plants-night-day-2026-12",
         "bota-para-vol4-sapporo-2026-11",
         "botajam-2026",
         "botanic-collection2-ube-2026-10",
@@ -301,9 +304,7 @@
         "happy-smile-2nd-odawara-2026-09",
         "hiroshima-cactus-succulent-ten-2026-10",
         "honwaka-pappa-3rd-2026-09",
-        "ibatama-vol9-2026-10",
-        "isij-big-bazaar-2026-11-22",
-        "isij-big-bazaar-2027-01-10"
+        "ibatama-vol9-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -317,8 +318,12 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "bizarre-plants-night-day-2026-12: 2026.12.05〜12.06 → 2026.12.05-06",
+        "plants-baka-4th-anniversary-2026-10: 2026.10.10〜10.12 → 2026.10.10-12",
+        "taniku-revolution-vol3-2026-12: 2026.12.12〜12.13 → 2026.12.12-13"
+      ],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -366,8 +371,10 @@
     },
     "venue_postal_address": {
       "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "taniku-handmade-marche-kushikino-vol2-2026-11: venue=\"〒896-8601 鹿児島県いちき串木野市昭和通133番地1\""
+      ],
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
     },
@@ -415,8 +422,10 @@
     },
     "insecure_image_url": {
       "title": "imageUrl が https でない(混在コンテンツで画像が出ない)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "botanical-monsters-2027-okazaki: imageUrl = http://botanical-monsters.chibigo-tokai.com/wp-content/uploa"
+      ],
       "note": "https:// で取得できるなら書き換える。取得できないなら imageUrl を消す",
       "severity": "urgent"
     },
