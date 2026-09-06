@@ -1,5 +1,5 @@
 {
-  "total": 316,
+  "total": 292,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,14 +177,12 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 32,
+      "count": 29,
       "items": [
         "botanical-link-popup-kasugai-2026-10",
         "collect-plants-2026-09",
         "deep-green-ono-2026-09",
-        "gardens-umekita-2nd-anniv-2026-09",
         "green-champuroo-vol2-2026-10",
-        "green-holic-kariya-2026",
         "greensnap-marche-yokohama-2026-autumn",
         "hanatomofesta-2026",
         "isij-big-bazaar-2026-09-27",
@@ -207,7 +205,6 @@
         "shumatsu-botanical-gotemba-2026-11",
         "tiger-plants-hunters-2026-10",
         "tochigi-tanippe-fukaya-final-2026-10",
-        "toge-to-hachi-2026-09",
         "tokai-okibota-2026",
         "wi-wi-botanical-minokamo-2026-09",
         "yurutto-taniku-marche-1st-inabe-2026-10"
@@ -265,7 +262,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 116,
+      "count": 107,
       "items": [
         "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
@@ -279,12 +276,10 @@
         "botanical-botanical-fukuoka-2026-10",
         "botanical-botanical-okinawa-2026-11",
         "botanical-botanical-osaka-2026-10",
-        "botanical-festa-hawo-kumagaya-2026-09",
         "botanical-hara-shogakko-2026-09",
         "botanical-life-arita-2026-09",
         "botanical-marche-niigata-2026-10",
         "botanical-marche-toyama-2026-10",
-        "botanical-x-vol1-2026",
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chuushokushobutsusai-2026",
@@ -302,11 +297,13 @@
         "gifu-midori-marche-2nd-2026-09",
         "green-base-market-vol1-nishikata-2026-10",
         "green-nuts-rumble-vol2-2026-09",
-        "green-summit-vol22-yamagata-2026",
         "hanauchu-dream-garden-28th-2026-10",
         "happy-smile-2nd-odawara-2026-09",
         "hiroshima-cactus-succulent-ten-2026-10",
-        "honwaka-pappa-3rd-2026-09"
+        "honwaka-pappa-3rd-2026-09",
+        "ibatama-vol9-2026-10",
+        "isij-big-bazaar-2026-11-22",
+        "isij-big-bazaar-2027-01-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -546,23 +543,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 15,
+      "count": 3,
       "items": [
         "aobouzu-kagoshima-popup-2026-09(2026-09-06〜2026-09-07/2日)",
-        "botanical-festa-hawo-kumagaya-2026-09(2026-09-06〜2026-09-06/1日)",
-        "botanical-x-vol1-2026(2026-09-06〜2026-09-06/1日)",
-        "gardens-umekita-2nd-anniv-2026-09(2026-09-05〜2026-09-06/2日)",
-        "green-holic-kariya-2026(2026-09-06〜2026-09-06/1日)",
-        "green-summit-vol22-yamagata-2026(2026-09-06〜2026-09-06/1日)",
-        "kyousenkai-2026-09(2026-09-06〜2026-09-06/1日)",
         "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)",
-        "picnic-garden-vol24-sendai-2026-09(2026-09-06〜2026-09-06/1日)",
-        "plants-bazaar-null-kanazawa-2026-09(2026-09-05〜2026-09-06/2日)",
-        "riverlabo-2nd-open-2026-09(2026-09-06〜2026-09-06/1日)",
-        "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)",
-        "succulent-wonderland-1st-tatebayashi-2026-09(2026-09-06〜2026-09-06/1日)",
-        "taniku-toraiki-ryuoh-2026-09(2026-09-06〜2026-09-06/1日)",
-        "toge-to-hachi-2026-09(2026-09-03〜2026-09-06/4日/長期)"
+        "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"

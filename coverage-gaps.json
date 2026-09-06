@@ -1,13 +1,13 @@
 {
   "_note": "他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-06",
+  "sweptOn": "2026-09-07",
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1202,
-    "in_scope": 92,
-    "covered": 71,
-    "known_rejected": 21,
+    "candidates": 1155,
+    "in_scope": 80,
+    "covered": 62,
+    "known_rejected": 18,
     "truncated_resolved": 225,
     "truncated_unresolved": 45,
     "gaps_raw": 0
