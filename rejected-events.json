@@ -85,14 +85,6 @@
       "eventDate": "2026-08-22"
     },
     {
-      "key": "roots-and-sun-esaka-2026",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "ROOTS & SUN (アメニティ江坂・大阪府吹田市)",
-      "decided": "2026-08-12",
-      "reason": "主催 KUSABI @kusabi_official が『2026年10月開催』として出店者を募集中だが開催日が未確定。listing-policy の venueUnannounced.doNotList（日付未確定は掲載しない）に該当。日付が確定したら掲載する"
-    },
-    {
       "key": "gujo-de-cactus-night-market-2026-08",
       "reasonType": "unverified",
       "revisit": false,
@@ -373,6 +365,57 @@
       "decided": "2026-09-06",
       "eventDate": "2026-10-17",
       "reason": "主体はガーデニング(造園)の展示コンテストで、植物販売やキッチンカーは併設。多肉植物・サボテン・アガベ・塊根植物が主役の回ではないため plantCentric に当たらない"
+    },
+    {
+      "key": "toha-mercado-aka-renga-15th-2026-09",
+      "reasonType": "policy",
+      "name": "トハメルカド境赤レンガ倉庫 第15回 ボタニカル × オータムフェス (2026-09-20〜21 境赤レンガ倉庫・群馬県伊勢崎市)",
+      "decided": "2026-09-07",
+      "eventDate": "2026-09-20",
+      "reason": "主催公式(tanikutoha.com)の出店者紹介ページで内訳が公開されており、63店舗中で植物を売るのは主催の多肉永遠を含めて5店ほど(約8%)。残りはハンドメイド雑貨・飲食・整体・占い・ヒーリングで、主催自身が『体験・ワークショップを主役として募集』と書いている。compositeEvents の『植物系3割以上または著名ナーセリー3者以上』に届かない。テーマ名に『ボタニカル』が入るが、undisclosedBreakdown は内訳が非公開のときの規則なので当たらない"
+    },
+    {
+      "key": "lala-botaniq-vol2-2026-11",
+      "reasonType": "undisclosed",
+      "revisit": true,
+      "name": "LaLa Botaniq 第二回 (2026-11-29 群馬県・株式会社多肉永遠主催)",
+      "decided": "2026-09-07",
+      "eventDate": "2026-11-29",
+      "reason": "主催公式に日程はあるが出店者募集中で内訳が未公開。同主催・同形式の第1回(2025-07-27・32店舗)と、同主催のトハメルカド第15回(植物系約8%)から総合マルシェの可能性が高い。名称の Botaniq だけを根拠に掲載しない。出店者一覧が出たら数えて再評価する"
+    },
+    {
+      "key": "shiba-no-kaori-echeveria-agave-greenmarche-2026-12",
+      "reasonType": "unverified",
+      "revisit": true,
+      "name": "芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13 道の駅たかねざわ 元気あっぷむら・栃木県高根沢町)",
+      "decided": "2026-09-07",
+      "eventDate": "2026-12-13",
+      "reason": "日時・会場を書いているのは出店者側(キッチンカー・コミュニティスペース等)の投稿だけで、主催とみられる @tyutyu_ivt 自身の当該回の告知が確認できない。同アカウントはハンドメイド系マルシェの企画運営で、芝の香りマルシェは総合マルシェのシリーズ。主催の告知が出たら日程と植物比率をあわせて再評価する"
+    },
+    {
+      "key": "kirishima-car-boots-vol1-2026-09",
+      "reasonType": "policy",
+      "name": "第1回 霧島カーブーツ (2026-09-12 天降川ふるさとの川河川公園・鹿児島県霧島市)",
+      "decided": "2026-09-07",
+      "eventDate": "2026-09-12",
+      "reason": "主催 @amarcord0148 の説明が『車のトランクを使ってお宝や手作り品を販売するカーブーツ(車フリマ)』で、名称も中立。多肉植物・アガベ・サボテンを扱う M&T succulents の1店が出店するだけで、植物が主題の回ではない"
+    },
+    {
+      "key": "core-marche-2026-autumn",
+      "reasonType": "undisclosed",
+      "name": "コアマルシェ2026Autumn (2026-11-08 キヤッセ羽生・埼玉県羽生市)",
+      "decided": "2026-09-07",
+      "eventDate": "2026-11-08",
+      "reason": "主催は靴・鞄店 @shoes_and_bag_core のママ向けマルシェで名称が中立、出店内訳も非公開。多肉の出店者が自分の告知で日時を出しているだけで、植物が主題という主催側の位置づけが無い。undisclosedBreakdown の exclude に該当",
+      "coexistsWith": "wonder-market-2026-11"
+    },
+    {
+      "key": "asian-plant-festival-otaki-2026-09",
+      "reasonType": "policy",
+      "name": "アジア有用植物祭 (2026-09-19〜20 大多喜有用植物苑・千葉県大多喜町)",
+      "decided": "2026-09-07",
+      "eventDate": "2026-09-19",
+      "reason": "主催 @otaki_herbgarden の告知どおり主題はアジアの有用植物とその食文化で、出店もビリヤニなど飲食が中心。ハーブ・有用植物は当サイトの対象ジャンル(アガベ・塊根・多肉・サボテン・ビザールプランツ)ではない。outOfScopeGenres に追記した"
     }
   ],
   "_reasonTypes": {
@@ -381,6 +424,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-06",
+  "updated": "2026-09-07",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
