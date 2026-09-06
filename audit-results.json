@@ -1,5 +1,5 @@
 {
-  "total": 306,
+  "total": 301,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -318,12 +318,8 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 3,
-      "items": [
-        "bizarre-plants-night-day-2026-12: 2026.12.05〜12.06 → 2026.12.05-06",
-        "plants-baka-4th-anniversary-2026-10: 2026.10.10〜10.12 → 2026.10.10-12",
-        "taniku-revolution-vol3-2026-12: 2026.12.12〜12.13 → 2026.12.12-13"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -371,10 +367,8 @@
     },
     "venue_postal_address": {
       "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
-      "count": 1,
-      "items": [
-        "taniku-handmade-marche-kushikino-vol2-2026-11: venue=\"〒896-8601 鹿児島県いちき串木野市昭和通133番地1\""
-      ],
+      "count": 0,
+      "items": [],
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
     },
@@ -422,10 +416,8 @@
     },
     "insecure_image_url": {
       "title": "imageUrl が https でない(混在コンテンツで画像が出ない)",
-      "count": 1,
-      "items": [
-        "botanical-monsters-2027-okazaki: imageUrl = http://botanical-monsters.chibigo-tokai.com/wp-content/uploa"
-      ],
+      "count": 0,
+      "items": [],
       "note": "https:// で取得できるなら書き換える。取得できないなら imageUrl を消す",
       "severity": "urgent"
     },
