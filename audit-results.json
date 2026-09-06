@@ -1,5 +1,5 @@
 {
-  "total": 315,
+  "total": 316,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -718,6 +718,22 @@
       "count": 0,
       "items": [],
       "note": "回答シートのデータ行数は GAS の onFormSubmit が sheetRows / sheetCheckedOn に書く(タスクからシートは読めない)。行数が処理済み+未処理と一致するのが正常。多ければGASの取りこぼし(backfillFromSheet)、少なければ書き込みの失敗。sheetCheckedOn が lastChecked より古い回は、送信は受けているのに行数を書いていない",
+      "severity": "urgent"
+    },
+    "sheet_measurement_stale": {
+      "title": "回答シートを誰も実測していない",
+      "count": 0,
+      "items": [],
+      "note": "sheetRows / sheetCheckedOn は event-listing-review が Claude in Chrome から回答シートの gviz CSV を読んで書く(GASの onFormSubmit も書くが、送信が無ければ動かない)。読めなかった回は日付を進めない。14日以上動いていないなら、シートの実態をCIに持ち込む経路が切れている",
+      "severity": "urgent"
+    },
+    "gas_script_undeployed": {
+      "title": "Apps Script の実機が repo の版より古い",
+      "count": 1,
+      "items": [
+        "repo の SCRIPT_VERSION=2026-09-06 に対し実機は gasVersion=2026-08-24。Apps Script エディタへの貼り直しが済んでいない"
+      ],
+      "note": "repo を直しただけでは実機は変わらない。script.google.com(個人アカウント yuji.mezaki@gmail.com)の「agave-navi フォーム→GitHub連携」にコードを貼り直して保存し、gasVersion が SCRIPT_VERSION に追いつくまで鳴り続ける。貼るまでは、次のフォーム送信で氏名とメールアドレスが公開URLと公開コミット履歴を通る",
       "severity": "urgent"
     },
     "inquiry_review_gap": {

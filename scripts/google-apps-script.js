@@ -40,6 +40,11 @@
  */
 
 var CONFIG = {
+  // このファイルを直したら日付を上げる。貼り直しの有無を機械で見るための版数。
+  // GASが書き込みのたびに new-inquiries.json の gasVersion に入れるので、
+  // 監査 gas_script_undeployed が「repoは直ったが実機は旧版」を検出できる。
+  // 2026-09-06: 実機が 2026-08-24 版のまま5日以上放置されていたため導入。
+  SCRIPT_VERSION: '2026-09-06',
   OWNER: 'mezack0520',
   REPO: 'agave-navi',
   PATH: 'new-inquiries.json',
@@ -204,6 +209,11 @@ function getFile() {
 }
 
 function putFile(data, sha, message) {
+  // 実機に貼られている版数を毎回の書き込みに載せる。repo 側の SCRIPT_VERSION と
+  // 食い違ったら「直したが貼っていない」ので、監査 gas_script_undeployed が鳴る。
+  // onFormSubmit だけでなく backfillFromSheet 経由でも落ちないよう、
+  // 書き込みの一本道であるここに置く。
+  data.gasVersion = CONFIG.SCRIPT_VERSION;
   var text = JSON.stringify(data, null, 2) + '\n';
   var res = UrlFetchApp.fetch(apiUrl(), {
     method: 'put',

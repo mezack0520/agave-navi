@@ -1795,6 +1795,68 @@ def main():
              'sheetCheckedOn が lastChecked より古い回は、送信は受けているのに'
              '行数を書いていない')
 
+    # --- 回答シートの実測が止まっていないか ---------------------------------
+    # sheetRows は「シートの実態をCI側に持ち込める唯一の材料」なのに、
+    # 2026-09-01 に書く側を GAS だけに寄せた結果、**GASが旧版で countSheetRows を
+    # 持たなかったため誰も書かなくなり、5日間だれも気づかなかった**(2026-09-06)。
+    # inquiry_sheet_row_mismatch は数字の整合しか見ないので、
+    # 更新が止まった固定値でも素通りする。値が古びること自体を見る検査が要る。
+    # 実測はタスクが Claude in Chrome から gviz CSV を読んで行う。
+    # 読めなかった回は日付を進めない規則なので、進んでいない=測れていない、で正しい。
+    inq_meas = []
+    if _sco:
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _sco):
+            try:
+                _mage = (_dtm.date.fromisoformat(today_jst())
+                         - _dtm.date.fromisoformat(_sco)).days
+                if _mage > 14:
+                    inq_meas.append(
+                        f'回答シートを最後に実測したのが {_sco}（{_mage}日前）。'
+                        'sheetRows は誰も更新していない')
+            except ValueError:
+                inq_meas.append(f'sheetCheckedOn={_sco} が日付として読めない')
+        else:
+            inq_meas.append(f'sheetCheckedOn={_sco} が日付として読めない')
+    add('sheet_measurement_stale', '回答シートを誰も実測していない', inq_meas,
+        note='sheetRows / sheetCheckedOn は event-listing-review が '
+             'Claude in Chrome から回答シートの gviz CSV を読んで書く'
+             '(GASの onFormSubmit も書くが、送信が無ければ動かない)。'
+             '読めなかった回は日付を進めない。'
+             '14日以上動いていないなら、シートの実態をCIに持ち込む経路が切れている')
+
+    # --- 実機の Apps Script が repo の版に追いついているか ---------------------
+    # repo の scripts/google-apps-script.js を直しても、Apps Script エディタへ
+    # 貼り直すまで実機の挙動は変わらない。2026-08-31 と 09-01 の2件の修正
+    # (sheetRows を書く / 氏名・メールを公開経路に通さない) がどちらも
+    # 貼られておらず、pending-judgments では resolved 扱いになっていた。
+    # 貼っていないと、次の送信でまた氏名とメールが公開URLを通る。
+    # published_pii は通った後にしか鳴らないので、その前に鳴る検査が要る。
+    gas_undeployed = []
+    try:
+        _gsrc = open(rp('scripts/google-apps-script.js'),
+                     encoding='utf-8').read()
+    except OSError:
+        _gsrc = ''
+    _m = re.search(r"SCRIPT_VERSION\s*:\s*'([0-9-]{8,10})'", _gsrc)
+    _repo_ver = _m.group(1) if _m else ''
+    _live_ver = str(_ni.get('gasVersion') or '').strip()
+    if _repo_ver and _live_ver and _repo_ver != _live_ver:
+        gas_undeployed.append(
+            f'repo の SCRIPT_VERSION={_repo_ver} に対し実機は gasVersion={_live_ver}。'
+            'Apps Script エディタへの貼り直しが済んでいない')
+    elif _gsrc and not _repo_ver:
+        gas_undeployed.append(
+            'scripts/google-apps-script.js に SCRIPT_VERSION が無い。'
+            '版数が無いと貼り直しの有無を機械で見られない')
+    add('gas_script_undeployed', 'Apps Script の実機が repo の版より古い',
+        gas_undeployed,
+        note='repo を直しただけでは実機は変わらない。'
+             'script.google.com(個人アカウント yuji.mezaki@gmail.com)の'
+             '「agave-navi フォーム→GitHub連携」にコードを貼り直して保存し、'
+             'gasVersion が SCRIPT_VERSION に追いつくまで鳴り続ける。'
+             '貼るまでは、次のフォーム送信で氏名とメールアドレスが'
+             '公開URLと公開コミット履歴を通る')
+
     add('inquiry_review_gap', 'event-listing-review の実行が抜けた日', inq_gap,
         note='reviewedHistory は起動日の記録で、scripts/record-run.py が'
              '起動直後に書く。抜けた日は、届いていた問い合わせがその日は'
