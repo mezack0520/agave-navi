@@ -1940,7 +1940,13 @@ def main():
              '成果物が無いまま終わった回もここに出ないので、'
              'この台帳が repo 側に残る唯一の生存記録になる。'
              '週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。'
-             'event-listing-review は new-inquiries.json の reviewedHistory 側で見る',
+             'event-listing-review は new-inquiries.json の reviewedHistory 側で見る。'
+             '**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく'
+             '環境側(スケジューラが起動しなかった)を疑う。**'
+             '2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が'
+             '揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。'
+             'その場合ここには同じ日付が3行に分かれて出るので、'
+             '3つの別々の問題に見える',
         severity='info')
 
     # --- 手でやる巡回が止まっていないか -------------------------------------
@@ -2997,6 +3003,30 @@ def main():
     # 統計で当てるのをやめ、消失は event_image_lost が全件の実数で見る。
     _METRIC_NO_ALARM = {'upcoming_with_image'}
 
+    # 週の曜日で必ず上下する指標は、直近7回の中央値と比べてはいけない。
+    # 直近7回は平日5・土日2で必ず平日に寄るので、土日の値は平日の基準と比べられ、
+    # **正常な週末のたびに鳴る**(2026-09-06 に発覚)。
+    # 実測(08-24〜09-06): ongoing_events は平日の中央値 1.5 に対し土日は 9.5 で6倍。
+    # 一日だけのイベントは土日に集中するので、これは暦がそうさせているだけで異常ではない。
+    # 母数の割り引き(_METRIC_SCALES_WITH_UPCOMING)では吸収できない。
+    # 開催予定は 132→148 とほぼ動いていないのに開催中だけが 1→15 になる量だから。
+    # 対処: 同じ曜日区分(平日/土日)の履歴だけで基準を作る。窓は28回に広げる
+    # (直近7回では土日が2回しか入らず、基準を作れるだけの標本が集まらない)。
+    # 標本が3回に満たないうちは判定しない。混ぜた基準に戻すと元の誤検知に戻る。
+    _METRIC_WEEKLY_CYCLE = {'ongoing_events'}
+
+    import datetime as _dtw   # 上の _dt に依存させない(この節だけで完結させる)
+
+    def _is_weekend(_ds):
+        try:
+            return _dtw.date.fromisoformat(str(_ds)).weekday() >= 5
+        except ValueError:
+            return None
+
+    _today_weekend = _is_weekend(today_s)
+    # 曜日区分ごとの基準を作るための広い窓。7回では土日が2回しか入らない
+    _hist_wide = [r for r in _prev_runs if r.get('metric')][-28:]
+
     _ev_now = len(events)
     _up_now = sum(1 for e in events if is_upcoming(e))
     metric_moves = []
@@ -3006,7 +3036,13 @@ def main():
         # (2026-08-24: upcoming_with_image を足した日に「0→13」で鳴った)。
         if _k in _METRIC_NO_ALARM:
             continue        # 暦で動くので急変を異常と読めない
-        _rows = [r for r in _hist if _k in r.get('metric', {})]
+        if _k in _METRIC_WEEKLY_CYCLE:
+            if _today_weekend is None:
+                continue    # 今日の曜日が読めない。当てずっぽうで比べない
+            _rows = [r for r in _hist_wide if _k in r.get('metric', {})
+                     and _is_weekend(r.get('date')) is _today_weekend]
+        else:
+            _rows = [r for r in _hist if _k in r.get('metric', {})]
         if len(_rows) < 3:
             continue        # 基準を作れるだけの履歴がまだ無い
         _series = sorted(r['metric'][_k] for r in _rows)
@@ -3081,6 +3117,47 @@ def main():
     add('metric_moved', '参考値が急に動いた(異常の可能性)', sorted(metric_moves),
         '値そのものは対応不要だが、この動き方は異常の手がかりになる。'
         '該当項目の items を見て、想定できる増減かを確かめる', severity='urgent')
+
+    # 週の曜日で上下する指標が、曜日を無視した基準で比べられていないか。
+    # 直近7回の中央値は平日5・土日2で必ず平日に寄るので、週の周期を持つ指標を
+    # そのまま当てると**正常な週末のたびに metric_moved が鳴る**。
+    # 2026-09-06 に ongoing_events で実際に起きた(平日中央値1.5 / 土日中央値9.5)。
+    # 気づいたのは人がカレンダーを見たからで、repo 側に見る者は居なかった。
+    # 「同じ問題が二度と黙って通らないようにする」ため、
+    # 指標が週の周期を持ったこと自体を検出する。
+    # ここに出たら _METRIC_WEEKLY_CYCLE に足す(曜日区分ごとの基準に切り替わる)か、
+    # 暦だけで動いて異常を読めないなら _METRIC_NO_ALARM に足す。
+    # 平日・土日それぞれ3回以上の標本があるときだけ判定する。
+    # 判定に使うのは自分の値の履歴だけなので、母数の割り引きとは独立。
+    _cycle_unmodeled = []
+    for _k in sorted(set(_cur_metric) | {k for r in _hist_wide
+                                         for k in (r.get('metric') or {})}):
+        if _k in _METRIC_WEEKLY_CYCLE or _k in _METRIC_NO_ALARM:
+            continue
+        _wd = [r['metric'][_k] for r in _hist_wide
+               if _k in (r.get('metric') or {})
+               and _is_weekend(r.get('date')) is False]
+        _we = [r['metric'][_k] for r in _hist_wide
+               if _k in (r.get('metric') or {})
+               and _is_weekend(r.get('date')) is True]
+        if len(_wd) < 3 or len(_we) < 3:
+            continue        # 片側の標本が足りない。周期の有無を言えない
+        _mwd = sorted(_wd)[len(_wd) // 2]
+        _mwe = sorted(_we)[len(_we) // 2]
+        _gap = abs(_mwe - _mwd)
+        _ref = max(_mwd, _mwe)
+        # 絶対5件以上かつ相対30%以上の差。片方だけだと小さい値の±1で鳴る
+        if _ref > 0 and _gap >= 5 and _gap / _ref >= 0.30:
+            _cycle_unmodeled.append(
+                f'{_k}: 平日の中央値 {_mwd}(n={len(_wd)}) / '
+                f'土日の中央値 {_mwe}(n={len(_we)}) — 週の周期がある')
+    add('metric_weekly_cycle_unmodeled',
+        '参考値が曜日で上下するのに曜日を無視した基準で比べている',
+        _cycle_unmodeled,
+        'このままだと正常な週末のたびに metric_moved が鳴り、'
+        'そのうち中身を見ずに閉じられる。audit.py の _METRIC_WEEKLY_CYCLE に足して'
+        '曜日区分ごとの基準にするか、暦だけで動いて異常を読めないなら '
+        '_METRIC_NO_ALARM に足す', severity='urgent')
 
 
     total = sum(v['count'] for k, v in findings.items()
