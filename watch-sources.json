@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-07 11:00 JST",
+ "generated": "2026-09-08 08:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 225,
-  "awaitingNextEdition": 228,
+  "awaitingNextEdition": 229,
   "officialSiteCandidates": 66,
   "unresolvedIgHandles": 0
  },
@@ -59,15 +59,6 @@
    "eventCount": 4,
    "lastEventName": "Plant Freaks in オリナス錦糸町 2026（11月）",
    "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "aobouzu_caudex",
-   "url": "https://www.instagram.com/aobouzu_caudex/",
-   "eventCount": 2,
-   "lastEventName": "青坊主 鹿児島ポップアップ",
-   "lastEventDate": "2026-09-06",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -257,6 +248,15 @@
    "eventCount": 2,
    "lastEventName": "ビザールプランツ 夏ノ陣【上野】",
    "lastEventDate": "2026-08-30",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
+   "handle": "aobouzu_caudex",
+   "url": "https://www.instagram.com/aobouzu_caudex/",
+   "eventCount": 2,
+   "lastEventName": "青坊主 鹿児島ポップアップ",
+   "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
    "priority": 1
   },
@@ -2206,6 +2206,16 @@
    "recurring": false
   },
   {
+   "series": "青坊主 鹿児島ポップアップ",
+   "lastSlug": "aobouzu-kagoshima-popup-2026-09",
+   "lastDate": "2026-09-06",
+   "lastEnd": "2026-09-07",
+   "monthsSinceLast": 0,
+   "igHandle": "aobouzu_caudex",
+   "officialUrl": "https://www.instagram.com/p/DciYWphTGhe/",
+   "recurring": false
+  },
+  {
    "series": "PLANTS UNITED 2026",
    "lastSlug": "plants-united-kumamoto-2026-08",
    "lastDate": "2026-08-01",
@@ -2423,16 +2433,6 @@
    "monthsSinceLast": 1,
    "igHandle": "kumagaya_fes",
    "officialUrl": "https://www.nittohmall.com/event.html",
-   "recurring": false
-  },
-  {
-   "series": "PLANTS UP SATSUMA",
-   "lastSlug": "plants-up-satsuma-2026-08",
-   "lastDate": "2026-08-11",
-   "lastEnd": "2026-08-11",
-   "monthsSinceLast": 1,
-   "igHandle": "kobe_agave_shop",
-   "officialUrl": "https://www.instagram.com/p/DakTMN5hBhi/",
    "recurring": false
   }
  ],

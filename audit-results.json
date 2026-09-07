@@ -1,5 +1,5 @@
 {
-  "total": 301,
+  "total": 299,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -263,10 +263,9 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 114,
+      "count": 113,
       "items": [
         "aichin-shokusai-new-year-party-2027",
-        "aobouzu-kagoshima-popup-2026-09",
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
         "bba-vol5-carpediem-2026-09",
@@ -304,7 +303,8 @@
         "happy-smile-2nd-odawara-2026-09",
         "hiroshima-cactus-succulent-ten-2026-10",
         "honwaka-pappa-3rd-2026-09",
-        "ibatama-vol9-2026-10"
+        "ibatama-vol9-2026-10",
+        "isij-big-bazaar-2026-11-22"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -558,9 +558,8 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 3,
+      "count": 2,
       "items": [
-        "aobouzu-kagoshima-popup-2026-09(2026-09-06〜2026-09-07/2日)",
         "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)",
         "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)"
       ],
