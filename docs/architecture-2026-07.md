@@ -12,7 +12,7 @@
 | `watch-sources.json` | ウォッチ対象(IG主催者/次回待ちシリーズ/公式サイト候補)。events.jsonから毎日自動導出 | generate-watchlist.py |
 | `pending-judgments.json` | 要人間判断キュー。健全性メールに集約表示 | 各Claudeタスク(id重複禁止・解消時自削除) |
 | `inquiries-processed.json` | フォーム回答の処理済み管理 | event-listing-review |
-| `new-inquiries.json` | 問い合わせ新着の受け渡し箱。pushで notify-inquiry.yml が発火しメール送信 | event-listing-review |
+| `new-inquiries.json` | 問い合わせ新着の受け渡し箱。連絡先は入れない。通知メールはGASが送る(2026-09-07に1通へ統合) | event-listing-review |
 | `rejected-events.json` | 掲載見送り決定の記録。event-updateは掲載中のイベントを再提案しない | ユーザー決定をClaudeが記録 |
 | `docs/task-playbook.md` | タスク共通の運用手順。**タスク自身が更新してよい**唯一の恒久化先 | 各Claudeタスク |
 | `audit-history.json` | 監査結果の推移(直近90件)。改善/悪化の判断に使う | scripts/audit.py |
@@ -40,7 +40,7 @@
        (件名に【要判断n件】/ 新着・本日開催・今後一覧・異常検知)
 10:09  [Claude] event-listing-review
        回答シート(Google Form)をChromeで読取 → 新着は種別問わず new-inquiries.json に書いてpush
-       (=notify-inquiry.ymlが発火し即メール)
+       (通知メールはフォーム送信時にGASが送っている。Actions側は送らない)
        → 掲載リクエスト:裏取り→new-events.json+sync-events / 修正・訂正:キュー積み(自動書換なし)
        → inquiries-processed.json更新
 11:00  [Claude] agave-navi-event-monitor
@@ -49,8 +49,9 @@
 随時    [GitHub] sync-events.yml (dispatch: sync-events)
        new-events.json → sanity-check(チケット/aggregator/無関係イベントドメイン拒否)
        → events.jsonへマージ → enrich → indexカード追加 → build-all.sh → push
-随時    [GitHub] notify-inquiry.yml (push: new-inquiries.json) → Gmail即時送信
-       items空のpushでは送らない。送信後の消し込みは次回タスクが行う
+随時    [GitHub] notify-inquiry.yml (push: new-inquiries.json) → 受け渡し箱の見張りのみ
+       JSONとして読めなくなったときだけ警報を送る。通知メールは送らない
+       (2026-09-07: 同じ1件でGASと2通届いていたためGAS側に一本化)
 push毎  [GitHub] pages build and deployment → 本番反映(CDNキャッシュ~10分)
 ```
 

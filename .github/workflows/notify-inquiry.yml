@@ -1,16 +1,23 @@
-# 問い合わせ通知メール
+# 問い合わせ受け渡し箱の見張り
 #
-# 経路: event-listing-review タスクが new-inquiries.json を書いて push → このワークフローが発火。
-#       repository_dispatch は 2026-07-31 に廃止した(Chrome側で認証ヘッダ付きfetchが遮断され、
-#       サンドボックスから api.github.com も不通、PATはcontents権限のみでActions APIは403)。
-#       トリガ自体は互換のため残すが、通常経路は push。
-# 認証は health.yml と同じ GMAIL_USER / GMAIL_APP_PASSWORD secrets を流用。
+# **このワークフローは問い合わせ通知メールを送らない。**(2026-09-07)
+# 以前は new-inquiries.json の push で「新着N件」を送っていたが、
+# 同じ1件について GAS も「申請者の連絡先」を送るため、毎回2通届いていた
+# (18:41 連絡先 / 18:42 新着1件)。
 #
-# new-inquiries.json の形: {"items": [{timestamp, type, eventName, body}, ...]}
-#   氏名・メールアドレスは入れない。リポジトリが public で、同じ内容が
-#   https://agave-navi.com/new-inquiries.json としても配信されるため。
-#   連絡先は GAS が ALERT_TO へ直接メールする(listing-policy.json の inquiryPii)。
-# items が空の push ではメールを送らない(消し込み後の push で空メールを出さないため)。
+# 1通に寄せる先は GAS 側。理由は連絡先の置き場所で決まる:
+#   - 申請者の氏名・メールアドレスはリポジトリに書けない。agave-navi は
+#     public で、new-inquiries.json は https://agave-navi.com/new-inquiries.json
+#     として誰でも読める(listing-policy.json の inquiryPii)。
+#   - このワークフローの入力はその public なファイルなので、
+#     連絡先を本文に入れる手段が無い。Actions のログも public に見える。
+#   - GAS はフォーム送信時に連絡先を手元に持っている。だから
+#     「本文も連絡先も入った1通」を出せるのは GAS だけ。
+# したがって通知の送信元は scripts/google-apps-script.js の notify() 一箇所。
+#
+# ここに残しているのは、GAS では気づけない repo 側の壊れ方だけ。
+# new-inquiries.json が JSON として読めなくなると、event-listing-review が
+# 受け渡し箱を読めず、問い合わせが黙って滞留する。それだけを知らせる。
 name: Notify Inquiry
 
 on:
@@ -18,64 +25,41 @@ on:
     branches: [main]
     paths:
       - 'new-inquiries.json'
-  repository_dispatch:
-    types: [notify-inquiry]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  mail:
+  guard:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build mail content
-        id: mail
-        env:
-          PAYLOAD_SUBJECT: ${{ github.event.client_payload.subject }}
-          PAYLOAD_BODY: ${{ github.event.client_payload.body }}
+      - name: Check handoff file is readable
+        id: check
         run: |
           python3 - >> "$GITHUB_OUTPUT" <<'PY'
-          import json, os, pathlib
+          import json, pathlib
 
-          subject = (os.environ.get('PAYLOAD_SUBJECT') or '').strip()
-          body = (os.environ.get('PAYLOAD_BODY') or '').strip()
-          send = bool(subject or body)
+          broken = ''
+          p = pathlib.Path('new-inquiries.json')
+          if not p.exists():
+              broken = 'new-inquiries.json が存在しません'
+          else:
+              try:
+                  d = json.loads(p.read_text(encoding='utf-8'))
+                  if not isinstance(d.get('items', []), list):
+                      broken = 'items が配列ではありません'
+              except Exception as e:
+                  broken = f'JSONとして読めません: {e}'
 
-          if not send:
-              p = pathlib.Path('new-inquiries.json')
-              if p.exists():
-                  try:
-                      items = json.loads(p.read_text(encoding='utf-8')).get('items', [])
-                  except Exception as e:
-                      items, subject, body, send = [], '読み取り失敗', f'new-inquiries.json のJSONが壊れています: {e}', True
-                  if items:
-                      send = True
-                      subject = f'新着{len(items)}件'
-                      blocks = []
-                      for i in items:
-                          # 氏名・メールアドレスはここに出さない。
-                          # このファイルの入力(new-inquiries.json)は public リポジトリに
-                          # あり、GitHub Pages でも配信される。連絡先は GAS が
-                          # ALERT_TO へ直接メールする(listing-policy.json の inquiryPii)。
-                          blocks.append('\n'.join([
-                              f"■ {i.get('timestamp', '')} / {i.get('type', '')}",
-                              f"  イベント名: {i.get('eventName', '')}",
-                              f"  内容: {i.get('body', '')}",
-                          ]))
-                      body = '\n\n'.join(blocks)
-
-          print('send=' + ('true' if send else 'false'))
-          print('subject=' + (subject or '新着あり').replace('\n', ' '))
-          print('body<<AGAVE_BODY_EOF')
-          print(body or '(本文なし)')
-          print('AGAVE_BODY_EOF')
+          print('broken=' + ('true' if broken else 'false'))
+          print('reason=' + broken.replace('\n', ' '))
           PY
 
-      - name: Send inquiry notification
-        if: steps.mail.outputs.send == 'true'
+      - name: Alert on broken handoff file
+        if: steps.check.outputs.broken == 'true'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -83,16 +67,14 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "【アガベイベントナビ】問い合わせ: ${{ steps.mail.outputs.subject }}"
+          subject: "【アガベイベントナビ】受け渡し箱が壊れています"
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: |
-            サイトのお問い合わせフォームに新しい回答があります。
+            new-inquiries.json が読めない状態です。
+            このままだと event-listing-review が問い合わせを読めず、黙って滞留します。
 
-            ${{ steps.mail.outputs.body }}
-
-            ※ 申請者の氏名・メールアドレスはこのメールには含みません。
-              別便「申請者の連絡先」か、下の回答シートで確認してください。
+            理由: ${{ steps.check.outputs.reason }}
 
             回答シート:
             https://docs.google.com/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit

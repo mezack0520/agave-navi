@@ -252,8 +252,9 @@
   `countSheetRows` を持たない現状では `sheetRows` を誰も測らず
   `sheet_measurement_stale` が鳴る。ポーリングをやめたのは
   **新着の検知**であって、**行数の実測**ではない。
-  フォーム送信の瞬間に GAS が `new-inquiries.json` へ追記し、`notify-inquiry.yml` が
-  発火してメールが飛ぶ。**回答シートを毎日開く必要はない。**
+  フォーム送信の瞬間に GAS が通知メールを送り(連絡先も本文も1通にまとまっている)、
+  続けて `new-inquiries.json` へ追記する。**回答シートを毎日開く必要はない。**
+  `notify-inquiry.yml` は通知を送らない(2026-09-07 に1通へ統合。送信元は GAS だけ)。
   タスクがやることは `new-inquiries.json` の `items` を処理して、
   済んだものを `inquiries-processed.json` に移し、`items` を空にして push するだけ。
   Chromeを開く手順は残っているが**平常時は使わない**。
@@ -930,8 +931,9 @@
   `private=false` で、しかも GitHub Pages が同じ内容を配信するので、
   公開経路は2つある（github.com の履歴と agave-navi.com のURL）。
   `new-inquiries.json` は設計上、フォーム送信者の**氏名とメールアドレス**を通す。
-  GASが書いて push → `notify-inquiry.yml` がそれを読んでメール本文を組む、という
-  受け渡しなので、申請1件ごとに必ず両方の公開経路を通る。
+  GASが書いて push する受け渡しなので、申請1件ごとに必ず両方の公開経路を通る。
+  (2026-09-07: `notify-inquiry.yml` がこのファイルを読んでメール本文を組む経路は廃止した。
+  public なファイルを入力にしている以上、そこに連絡先を入れる手段は無い。)
   2026-08-31 の `9bf760e8` で実際に1件が 12:41〜17:04 のあいだ公開URLに出ており、
   コミットは今も公開履歴に残っている。
   検査 `published_pii`(urgent) を足したので、以後は通った日に鳴る。

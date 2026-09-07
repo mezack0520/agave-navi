@@ -44,13 +44,16 @@ var CONFIG = {
   // GASが書き込みのたびに new-inquiries.json の gasVersion に入れるので、
   // 監査 gas_script_undeployed が「repoは直ったが実機は旧版」を検出できる。
   // 2026-09-06: 実機が 2026-08-24 版のまま5日以上放置されていたため導入。
-  SCRIPT_VERSION: '2026-09-06',
+  SCRIPT_VERSION: '2026-09-08',
   OWNER: 'mezack0520',
   REPO: 'agave-navi',
   PATH: 'new-inquiries.json',
   BRANCH: 'main',
-  // 通知先。GitHub Actions 側でもメールは出るが、
-  // GitHubへの書き込みが失敗したときはこちらだけが頼りになる
+  // 通知先。**問い合わせ通知はここが唯一の送信元。**
+  // 以前は notify-inquiry.yml も送っていて、同じ1件で2通届いていた
+  // (2026-09-07: 18:41「申請者の連絡先」と 18:42「新着1件」)。
+  // 連絡先を持てるのは public repo を経由しないこちら側だけなので、
+  // 本文もこちらに寄せて1通にし、Actions側の送信をやめた。
   ALERT_TO: 'yuji.mezaki@gmail.com'
 };
 
@@ -78,20 +81,25 @@ function onFormSubmit(e) {
       body: buildBody(v)
     };
 
-    appendInquiry(item);
-    Logger.log('appended (連絡先は除外): ' + JSON.stringify(item));
-
-    // 連絡先はここから直接メールする。GitHub を経由させない
-    notify('[アガベイベントナビ] 申請者の連絡先 ' + ts,
-      '公開リポジトリに書けない情報なのでメールで送ります。\n' +
-      '内容そのものは通知メール（Notify Inquiry）に届きます。\n\n' +
+    // 通知は1通。連絡先も本文もここにまとめる。
+    // repo への書き込みより**先に**送る。人間が要るのは通知なので、
+    // GitHub側が落ちても通知だけは出す。
+    notify('【アガベイベントナビ】問い合わせ: ' + type,
+      'サイトのお問い合わせフォームに新しい回答があります。\n\n' +
       '受信日時: ' + ts + '\n' +
       '種別: ' + type + '\n' +
       'イベント名: ' + eventName + '\n' +
       'お名前: ' + senderName + '\n' +
       'メール: ' + senderMail + '\n\n' +
+      '--- 内容 ---\n' +
+      (item.body || '(記載なし)') + '\n\n' +
       '回答シート: https://docs.google.com/spreadsheets/d/' +
-      '1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit');
+      '1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/edit\n\n' +
+      '※ 氏名・メールアドレスはこのメールにだけ入ります。' +
+      'リポジトリ側(new-inquiries.json)には入りません。');
+
+    appendInquiry(item);
+    Logger.log('appended (連絡先は除外): ' + JSON.stringify(item));
 
   } catch (err) {
     // ここで落とすと回答が消えるので、必ず自分に知らせる

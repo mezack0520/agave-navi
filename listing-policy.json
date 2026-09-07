@@ -157,7 +157,7 @@
  "inquiryPii": {
   "rule": "申請者の氏名・メールアドレス・電話番号をリポジトリに書かない。受け渡しの箱(new-inquiries.json)に入れてよいのは timestamp / type / eventName / body だけ",
   "reason": "リポジトリは public で、GitHub Pages が中身をそのまま配信する。new-inquiries.json は https://agave-navi.com/new-inquiries.json として誰でも読め、コミットは公開履歴に永久に残る",
-  "handling": "連絡先は GAS が ALERT_TO へ直接メールする(scripts/google-apps-script.js の onFormSubmit / backfillFromSheet)。notify-inquiry.yml は氏名・メールの行を出さない",
+  "handling": "問い合わせ通知は GAS が送る1通だけ。連絡先も本文もそこに入れる(scripts/google-apps-script.js の notify() が唯一の送信元)。notify-inquiry.yml は通知を送らない。入力が public な new-inquiries.json なので連絡先を本文に入れる手段が無く、以前は GAS の「連絡先」便と Actions の「新着N件」便で同じ1件が2通届いていた(2026-09-07 に1通へ統合)。Actions 側に残しているのは、受け渡し箱がJSONとして読めなくなったときの警報だけ。",
   "alsoApplies": "inquiries-processed.json も同じリポジトリにあるので同じ規則。処理の記録に連絡先を残さない。誰から来たかを追う必要が出たら回答シートを見る",
   "bodyCaveat": "body は申請者が自由記述する欄なので、本人が署名や連絡先を書き込むことがある。掲載処理のときに読んで、連絡先が入っていたらその行を落としてから記録する",
   "detectedBy": "audit.py の published_pii(urgent)。値そのものは監査結果に書かない(audit-results.json も公開ファイル)",
@@ -171,7 +171,8 @@
    "appliesTo": "GAS に限らない。GitHub Actions の secrets、フォームの設問、外部サービスの設定など、repo の外に実体があるものすべて",
    "decided": "2026-09-07",
    "deployedOn": "2026-09-07"
-  }
+  },
+  "oneMailDecided": "2026-09-07"
  },
  "outOfScopeGenres": {
   "rule": "植物のイベントでも、主題のジャンルが当サイトの対象(アガベ・塊根植物・多肉植物・サボテン・ビザールプランツ)でない回は掲載しない",
