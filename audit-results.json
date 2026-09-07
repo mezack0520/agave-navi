@@ -1,5 +1,5 @@
 {
-  "total": 299,
+  "total": 301,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -263,7 +263,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 113,
+      "count": 114,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -325,8 +325,10 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "taniku-xmas-flarie-2026-12: 本文 9月7日 が 2026-12-05〜2026-12-06 の外"
+      ],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
