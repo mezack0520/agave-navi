@@ -1,5 +1,5 @@
 {
-  "total": 301,
+  "total": 300,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -325,10 +325,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
-      "items": [
-        "taniku-xmas-flarie-2026-12: 本文 9月7日 が 2026-12-05〜2026-12-06 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
