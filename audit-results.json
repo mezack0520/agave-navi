@@ -838,6 +838,20 @@
       "note": "テンプレートは .tmpl など .html 以外の拡張子にする(GitHub Pages はリポジトリを丸ごと配信するので、置き場を変えても隠れない)。生成物側に出たなら build の置換漏れ",
       "severity": "urgent"
     },
+    "template_placeholder_unused": {
+      "title": "テンプレートの置換子とbuilderの受け渡しが食い違っている",
+      "count": 0,
+      "items": [],
+      "note": "置換子を消すときは builder 側の replacements も同じコミットで消す。str.replace は当たらなくても黙って成功するので、「組み立てたのに出ていない」は頁を開くまで分からない",
+      "severity": "urgent"
+    },
+    "event_field_unread": {
+      "title": "events.jsonのキーを読むコードが無い",
+      "count": 0,
+      "items": [],
+      "note": "KNOWN_EVENT_FIELDS は白名簿でしかなく、足せば unknown_event_fields は黙る。キーを増やすときは読む側を同じコミットで書く。要らなくなったキーは events.json から消す",
+      "severity": "urgent"
+    },
     "instagram_embed_missing": {
       "title": "IGの値があるのに詳細頁に埋め込みが出ていない",
       "count": 0,

@@ -71,12 +71,6 @@ def make_date_display_full(ev):
 
     return display
 
-def make_date_display_short(ev):
-    """header meta用の短い日付表示"""
-    date_str = ev.get('date', '')
-    if not date_str:
-        return ev.get('dateDisplay', '未定')
-    return date_to_japanese(date_str)
 
 def make_gcal_url(ev):
     """Google Calendar追加URL"""
@@ -562,12 +556,9 @@ def build_page(template, ev, ctx):
         '{{name}}': html_escape(name),
         '{{date}}': date,
         '{{dateEnd}}': date_end,
-        '{{dateEndOrDate}}': date_end or date,
-        '{{dateDisplayShort}}': make_date_display_short(ev),
         '{{dateDisplayFull}}': make_date_display_full(ev),
         '{{region}}': region,
         '{{regionEncoded}}': quote(region),
-        '{{prefecture}}': prefecture,
         '{{prefectureOrRegion}}': prefecture or region,
         '{{venue}}': (html_escape(venue)
                       if venue and not _is_vague(venue)
@@ -588,13 +579,10 @@ def build_page(template, ev, ctx):
         '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{ogImage}}': make_og_image(ev),
         '{{shareSection}}': make_share_section(ev),
-        '{{tagsCsv}}': make_tags_csv(ev),
         '{{instagramSection}}': make_instagram_section(ev),
         '{{mapSection}}': make_map_section(ev),
         '{{admissionRow}}': make_admission_row(ev),
         '{{timeRow}}': make_time_row(ev),
-        '{{lastUpdatedRow}}': make_last_updated_row(ev),
-        '{{dataSourceRow}}': make_data_source_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{affiliateBlock}}': make_affiliate_block(ev),
         '{{heroMetaNote}}': make_hero_meta_note(ev),
@@ -611,23 +599,6 @@ def build_page(template, ev, ctx):
     return html
 
 
-
-def make_last_updated_row(ev):
-    """イベント情報の最終更新日表示。updatedAt > enrichedAt > addedDate を優先。"""
-    last = ev.get('updatedAt') or ev.get('enrichedAt') or ev.get('addedDate')
-    if not last:
-        return ''
-    try:
-        d = last[:10]
-        from datetime import datetime as _dt
-        dt = _dt.strptime(d, '%Y-%m-%d')
-        disp = f'{dt.year}年{dt.month}月{dt.day}日'
-    except Exception:
-        disp = last
-    return ('\n          <div class="info-row">'
-            '\n            <span class="info-label">' + icon('update') + '最終更新</span>'
-            f'\n            <span class="info-value">{disp}</span>'
-            '\n          </div>')
 
 
 def make_hero_meta_note(ev):
@@ -656,7 +627,12 @@ def make_hero_meta_note(ev):
         parts.append(f'出典 <a href="{html_escape(url)}" target="_blank" '
                      f'rel="noopener">{label}</a>')
     else:
-        parts.append('出典 スタッフ収集情報')
+        # dataSource は出所を人間語で持つ(例: 主催者からの掲載申請)。
+        # url が無い回をすべて「スタッフ収集情報」と名乗ると、
+        # 主催者本人から受け取った回まで自社収集だと偽ることになる。
+        # 2026-09-07 まで実際にそうなっていた(agave-popup-market-nagoya-2026-07)。
+        src = (ev.get('dataSource') or '').strip()
+        parts.append('出典 ' + html_escape(src) if src else '出典 スタッフ収集情報')
 
     if not parts:
         return ''
@@ -1284,27 +1260,6 @@ def make_weather_row(ev, ctx):
     Google検索に送り出すだけで、収益も回遊も生まないうえ検索結果で競合サイトに
     出会わせる離脱動線になっていた。天気は読者が自分で見る。"""
     return ''
-
-def make_data_source_row(ev):
-    """データソース表示。url があれば公式参照を、なければ自社収集を明記。"""
-    url = (ev.get('url') or '').strip()
-    if not url:
-        return ('\n          <div class="info-row">'
-                '\n            <span class="info-label">' + icon('source') + 'データソース</span>'
-                '\n            <span class="info-value" style="font-size:.85em;color:#666">スタッフ収集情報</span>'
-                '\n          </div>')
-    src_label = '参考サイト'
-    if 'instagram.com' in url:
-        src_label = 'Instagram'
-    elif 'facebook.com' in url:
-        src_label = 'Facebook'
-    elif 'twitter.com' in url or 'x.com' in url:
-        src_label = 'X (Twitter)'
-    return ('\n          <div class="info-row">'
-            '\n            <span class="info-label">' + icon('source') + 'データソース</span>'
-            f'\n            <span class="info-value" style="font-size:.85em;color:#666">{src_label}を参照</span>'
-            '\n          </div>')
-
 
 
 def main():

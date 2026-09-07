@@ -2420,6 +2420,82 @@ def main():
         '(GitHub Pages はリポジトリを丸ごと配信するので、置き場を変えても隠れない)。'
         '生成物側に出たなら build の置換漏れ')
 
+    # --- テンプレートの置換子と builder の受け渡しが一対一か ---------------
+    # build-detail-pages.py は replacements の辞書を作って template に
+    # str.replace を掛ける。**テンプレート側にその置換子が無くても、
+    # replace は黙って何もしない。** そのため builder が組み立てた行が
+    # まるごと捨てられていても、例外もログも出ず、生成は成功で終わる。
+    # 2026-09-07、6種が捨てられていた(dataSourceRow / lastUpdatedRow /
+    # dateDisplayShort / dateEndOrDate / prefecture / tagsCsv)。
+    # うち dataSourceRow と lastUpdatedRow は「データソース」「最終更新」の
+    # 情報行を出す実装で、403頁すべてに1行も出ていなかった
+    # (heroMetaNote が同じ内容を脚注で出すよう作り替えた際の取り残し)。
+    # 逆向き(テンプレートにあるのに builder が渡さない)は
+    # unrendered_template_published が生成物側で拾うが、そちらは
+    # 「公開されてから」気づく。ここは生成物を待たずに両方向を見る。
+    _TMPL_PAIRS = (('templates/detail.html.tmpl', 'build-detail-pages.py'),)
+    _KEY_IN_TMPL = re.compile(r'\{\{\s*(\w+)\s*\}\}')
+    _KEY_IN_CODE = re.compile(r'["\']\{\{\s*(\w+)\s*\}\}["\']')
+    tmpl_drift = []
+    for _tf, _cf in _TMPL_PAIRS:
+        _t, _c = _slurp(rp(*_tf.split('/'))), _slurp(rp(*_cf.split('/')))
+        if not _t or not _c:
+            tmpl_drift.append(_tf + ' / ' + _cf + ': どちらかが読めない(改名・移動の疑い)')
+            continue
+        _in_t = set(_KEY_IN_TMPL.findall(_t))
+        _in_c = set(_KEY_IN_CODE.findall(_c))
+        for _k in sorted(_in_c - _in_t):
+            tmpl_drift.append(
+                _cf + ' が {{' + _k + '}} を組み立てているが ' + _tf +
+                ' に置換子が無い(出力は捨てられる)')
+        for _k in sorted(_in_t - _in_c):
+            tmpl_drift.append(
+                _tf + ' の {{' + _k + '}} を ' + _cf +
+                ' が渡していない(未展開のまま公開される)')
+    add('template_placeholder_unused', 'テンプレートの置換子とbuilderの受け渡しが食い違っている',
+        tmpl_drift,
+        '置換子を消すときは builder 側の replacements も同じコミットで消す。'
+        'str.replace は当たらなくても黙って成功するので、'
+        '「組み立てたのに出ていない」は頁を開くまで分からない',
+        severity='urgent')
+
+    # --- events.json のキーを読むコードが在るか -----------------------------
+    # KNOWN_EVENT_FIELDS は「使ってよいキー」の白名簿でしかない。
+    # 白名簿に足しさえすれば unknown_event_fields は黙るので、
+    # **読む側が無いキーは検出できない**。2026-09-07、dataSource がこれで、
+    # build-detail-pages.py に make_data_source_row があるのに中身は url しか
+    # 見ておらず、値(「主催者からの掲載申請」)はどこにも出ないまま、
+    # 頁は逆に「出典 スタッフ収集情報」と名乗っていた。
+    # 名前が似た別物(dataSourceRow)が grep に当たるので、素の語ではなく
+    # **引用符で括られた完全一致**だけを読み手と見なす。
+    _CODE_GLOBS = (('scripts', '*.py'), ('scripts', '*.js'), ('*.py',),
+                   ('*.js',), ('templates', '*'), ('.github', 'workflows', '*.yml'))
+    _corpus = []
+    for _g in _CODE_GLOBS:
+        for _p in sorted(glob.glob(rp(*_g))):
+            if os.path.basename(_p) == 'audit.py':
+                continue          # 自分の白名簿を読み手と数えない
+            _corpus.append(_slurp(_p))
+    _corpus = '\n'.join(_corpus)
+    _used_keys = set()
+    for _e in events:
+        _used_keys |= set(_e.keys())
+    unread_fields = []
+    for _k in sorted(_used_keys):
+        if re.search(r'["\']' + re.escape(_k) + r'["\']', _corpus):
+            continue
+        if re.search(r'\.' + re.escape(_k) + r'\b', _corpus):
+            continue              # JS の属性アクセス ev.foo
+        _n = sum(1 for _e in events if _k in _e)
+        unread_fields.append(
+            _k + ': ' + str(_n) + '件に値があるが、どのスクリプトも読んでいない')
+    add('event_field_unread', 'events.jsonのキーを読むコードが無い',
+        unread_fields,
+        'KNOWN_EVENT_FIELDS は白名簿でしかなく、足せば unknown_event_fields は黙る。'
+        'キーを増やすときは読む側を同じコミットで書く。'
+        '要らなくなったキーは events.json から消す',
+        severity='urgent')
+
     # --- Instagram埋め込みが黙って消えていないか -----------------------------
     # build-detail-pages.make_instagram_section は、投稿IDが取れないと
     # return '' で節ごと消す。例外も警告も出ないので、頁を開くまで気づけない。
