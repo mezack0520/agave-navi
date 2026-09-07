@@ -1,5 +1,5 @@
 {
-  "total": 301,
+  "total": 300,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -730,10 +730,8 @@
     },
     "gas_script_undeployed": {
       "title": "Apps Script の実機が repo の版より古い",
-      "count": 1,
-      "items": [
-        "repo の SCRIPT_VERSION=2026-09-06 に対し実機は gasVersion=2026-08-24。Apps Script エディタへの貼り直しが済んでいない"
-      ],
+      "count": 0,
+      "items": [],
       "note": "repo を直しただけでは実機は変わらない。script.google.com(個人アカウント yuji.mezaki@gmail.com)の「agave-navi フォーム→GitHub連携」にコードを貼り直して保存し、gasVersion が SCRIPT_VERSION に追いつくまで鳴り続ける。貼るまでは、次のフォーム送信で氏名とメールアドレスが公開URLと公開コミット履歴を通る",
       "severity": "urgent"
     },
