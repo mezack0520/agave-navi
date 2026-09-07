@@ -50,8 +50,23 @@
 
 - コミットは `git push`（`https://github.com`、名義 `mezack0520 <88774621+mezack0520@users.noreply.github.com>`）
 - **PATは `.github/workflows/` も含めてpushできる**（2026-08-10に実証。以前「権限不足」と
-  記録していたのは誤り）。Actions API と workflow_dispatch は403で使えない
-- サンドボックスから `api.github.com` は不通。`github.com`(git) のみ
+  記録していたのは誤り）。`workflow_dispatch` はPATでも403で使えない
+- **サンドボックスから `api.github.com` は通る（2026-09-07 訂正・実測）。**
+  以前ここに「不通。`github.com`(git) のみ」と書いていたが、今日の実測では
+  無認証 GET が200で返る。`Actions API は403で使えない` も読みに関しては誤りで、
+  PAT を付ければ**ジョブの実行ログまで取れる**（`actions/jobs/<id>/logs` が200）。
+  無認証だとログだけ403なので、一覧・ジョブ一覧は素で、ログは PAT で取る。
+  つまり **Actions の失敗検出にブラウザは要らない。**
+  ```
+  curl -s "https://api.github.com/repos/mezack0520/agave-navi/actions/runs?per_page=60"
+  curl -s "https://api.github.com/repos/.../actions/runs/<id>/jobs"
+  curl -s -L -H "Authorization: Bearer $PAT" ".../actions/jobs/<id>/logs"
+  ```
+  `agave-navi.com` への curl も通るので、本番HTMLの構造照合・
+  repo との sha1 比較もシェルでできる。ブラウザが要るのは
+  **JSが動いた後の姿**（`.rk-card` / `.aff-bar` / コンソール）だけ。
+  書き込み（`workflow_dispatch` の POST）は従来どおり403。
+  **到達性は変わる。「不通」と書いてあっても、まず1回叩いて確かめること。**
 - **`repository_dispatch` は使わない**。`events.json` / `new-events.json` /
   `new-inquiries.json` の push でワークフローが発火する
 - `GITHUB_TOKEN` によるCI側のpushはワークフローを再起動しない仕様。だからループしない。
@@ -409,6 +424,35 @@
   `check_date_updates.py` と `check-links.sh` のようなネットワークを叩く側だけ)
 - **push が non-fast-forward で拒否されたら、生成物のrebaseは必ず衝突する。**
   `origin/main` に `reset --hard` → データ変更を再適用 → 再ビルド → push の順でやり直す
+- **その規則を、CI側6本は2026-09-07まで守っていなかった（2026-09-07）。**
+  上の1行は 2026-08 から書いてある。にもかかわらず
+  `daily` / `health` / `ops` / `sync-events` / `weekly-discovery` / `weekly-enrichment` の
+  push は全部 `git pull --rebase || true` のままだった。
+  2026-09-04 23:25 UTC、`sync-events` と同時刻の push で `Daily Maintenance #160` が落ちた。
+  ログの形はこうなる。
+  1回目: `! [rejected] main -> main (fetch first)`
+  → `git pull --rebase` が `feeds/*.xml` 22本と `events.ics` と `audit-results.json` で衝突
+  → `|| true` が衝突を握り潰す
+  → 2〜5回目: `fatal: You are not currently on a branch.` /
+    `fatal: Exiting because of an unresolved conflict.`
+  **1回目が拒否された時点で、残り4回は成功しえない。**
+  リトライ回数を増やしても直らない類の失敗で、しかも
+  「5回試して駄目でした」に見えるので競合が原因だと読み取りにくい。
+  対処: 復旧を `scripts/ci-push.sh` に集約した。使い方は
+  `bash scripts/ci-push.sh "<commit message>" ["<再生成コマンド>"]`。
+  拒否されたら rebase せず、**生成物でないファイルの差分だけを持ち越して
+  `origin/main` に作り直し、再生成してから commit し直す**。
+  生成物の一覧は `scripts/ci-generated-paths.txt` が単一情報源。
+  検査は `ci_push_bypassed`(urgent、自前 push と rebase の両方を拾う)と
+  `ci_generated_paths_missing`(urgent、除外リストの綴り間違いを拾う)。
+  **散文の規則は、それを破れる側のコードが残っているかぎり守られない。**
+  §3 に「必ずこうする」と書いた手順は、同じコミットで
+  (a) それを実装した1本に寄せる (b) 迂回を検出する検査を足す、まで行って終わり。
+  検証は sandbox に bare repo を立てて実測した(2026-09-07): 通常 / 差分なし /
+  前段ステップの既存コミット / 単発の割り込み / 2連続の割り込み /
+  旧ロジックが残した rebase 途中 の6通りで、両者の変更が残ることを確認済み。
+  **起点は毎周 `git merge-base` で取り直すこと。** 固定すると、相手のコミットを
+  取り込み済みの周で「相手の変更を取り消す差分」を作り、貼り直した瞬間に相手の仕事を消す
 - **CSS/JSを変えたら `scripts/sitelib.py` の `CSS_VERSION` / `JS_VERSION` を上げる。**
   上げないと閲覧者のキャッシュが更新されず変更が届かない
 - **Googleフォームの回答は htmlview の iframe 内にある。**
@@ -507,6 +551,25 @@
   `.event-card` の総数・表示数とは一致しないのが正常で、
   `load-more-hidden` が付いた回は「もっと見る」まで隠れている
   (2026-08-31 実測: カード147枚・表示17枚・バッジ123件・is_upcoming 123件)
+- **楽天APIの送信間隔は「応答からの待ち時間」で数えない（2026-09-07）。**
+  `affiliate.js` は `setTimeout(next, 350)` を**応答が返ってから**掛けていた。
+  実測の間隔は 905ms / 1002ms で、楽天の 1秒1件の境界に張り付いている。
+  回線が速い回では 1秒に2〜3件飛んで 429 が返る（今日トップで1件観測）。
+  429 は `r.ok` で弾かれて `null` になるだけなので**例外もログも出ず、
+  キャッシュにも入らない**。表に出るのは「その枠だけ商品カードにならず
+  テキストリンクのまま残る」という形だけで、見に行かないと分からない。
+  送信時刻を覚えて `MIN_INTERVAL=1100` を保証する数え方に変えた。
+  **待ち時間は「前の送信から」で測る。「前の応答から」だと応答時間のぶん詰まる。**
+  キャッシュ `agn_rk_v1` は TTL 24時間で、期限切れの回だけ取りに行く。
+  確認は `performance.getEntriesByType('resource')` で
+  `openapi.rakuten.co.jp` の件数を見るか、`window.fetch` を差し替えて
+  status を記録する（コンソールには `429` としか出ず、どのURLか分からない）
+- **組み込みブラウザは `innerWidth` が 0 を返す（2026-09-07）。**
+  そのため `matchMedia('(max-width: 720px)')` が真になり、
+  **`.aff-bar` は何もしなくてもDOMに出る**。下の「デスクトップ幅では出ないのが正常」は
+  実Chrome(Claude in Chrome)の話で、組み込みブラウザには当てはまらない。
+  matchMedia を差し替えて `affiliate.js` を再注入する手順は要らず、
+  50%までスクロールして `.aff-bar.is-shown` と実商品リンクを見れば足りる
 - **`.aff-bar`(スマホ固定バー)はデスクトップ幅ではDOMに存在しないのが正常。**
   `affiliate.js` が `matchMedia('(max-width: 720px)')` で生成自体を止めている。
   かつ `resize_window` は効かない(420px を指定しても `innerWidth` は 1478 のまま)。
@@ -1271,6 +1334,20 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
    task-reports と突き合わせて原因を書く。**台帳に書かれていないタスクを足す。**
    スケジュールを増やしたのに台帳に無いと、そのタスクだけ生存確認が無い状態に戻る
 5. 上記でプレイブックを更新したら、何を変えたかレポートに1行で書く
+
+**2026-09-07 の週次点検の記録。**
+`task_run_gap` は 09-03 / 09-04 の2日を出しているが、**3タスク全部が同じ2日を落としている**
+（`agave-event-update` / `event-monitor` / `event-listing-review`）。
+1タスクだけが抜けたなら、そのタスクの不具合か許可待ちを疑う。
+**全タスクが同じ日に揃って抜けたときは、repo 側にも各タスク側にも原因は無い。**
+09-02 と 09-05 は3タスクとも記録があり、CI(daily / health)は 09-03 も 09-04 も
+`schedule` で成功しているので、落ちているのは手元の実行環境だけ。
+（`audit-history.json` の 09-03 / 09-04 の行も CI が正常に書いている）
+**この形の抜けを毎週「原因不明」と書き直さないこと。**
+台帳を見て「全タスク同日」ならその1行で閉じてよい。1タスクだけなら追う。
+`task_run_gap` を「全滅した日」と「1タスクだけ抜けた日」に割るのは、
+標本がもう1回出たら検討する（今は09-03/09-04の1例だけで、
+分けた検査が誤検知しない閾値を決められない）。
 
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、

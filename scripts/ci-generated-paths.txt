@@ -1,0 +1,33 @@
+# 生成物のパス。scripts/ci-push.sh が push 衝突からの復旧で「持ち越さない」対象。
+# ここに挙げたものは data から build-all.sh が一意に作り直せるので、
+# remote 側の版を捨てて再生成する。data ファイル(events.json など)は挙げない。
+#
+# 出どころは build-all.sh のチェーンが書き出す先。生成器を足したら
+# ここにも足す。audit.py の ci_generated_paths_drift が
+# 直近の chore(daily) コミットと突き合わせて漏れを検出する。
+events/
+feeds/
+guides/
+tag/
+pref/
+region/
+archive/
+venue/
+this-month/
+this-weekend/
+new/
+index.html
+calendar.html
+map.html
+sitemap.xml
+rss.xml
+events.csv
+events.ics
+this-month.ics
+upcoming.ics
+scripts/landing-meta.json
+watch-sources.json
+audit-results.json
+audit-history.json
+scripts/sitemap-lastmod.json
+scripts/events-meta.json

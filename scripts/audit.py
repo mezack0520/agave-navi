@@ -1227,6 +1227,49 @@ def main():
         unused, '使われていないか、呼び出しが失われている。'
         '手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す')
 
+    # CI の push 経路。2026-09-04 の Daily Maintenance #160 は、生成物を含むコミットで
+    # `git pull --rebase || true` を回して失敗した。生成物は remote 側も毎回書き換えるので
+    # rebase は必ず衝突し、`|| true` が衝突を握り潰してリポジトリを rebase 途中の
+    # detached HEAD に残す。その状態では2〜5回目の再試行が一度も成功しえない。
+    # プレイブック §3 には「生成物の rebase は必ず衝突する」と 2026-08 から書いてあったが、
+    # 規則は散文にしかなく、CI 側6本は全部その禁じ手を実装したままだった。
+    # 復旧は scripts/ci-push.sh に集約したので、workflow が自前で push しないことを見る。
+    ci_bad = []
+    for f in sorted(glob.glob(rp('.github', 'workflows', '*.yml'))):
+        bn = os.path.basename(f)
+        body = open(f, encoding='utf-8').read()
+        # コメント行は判定に使わない(この検査の説明文で自分が鳴るのを防ぐ)
+        code = '\n'.join(l for l in body.splitlines()
+                         if not l.lstrip().startswith('#'))
+        if re.search(r'git\s+pull\s+--rebase|git\s+rebase\b', code):
+            ci_bad.append(f'{bn}: 生成物を含む repo で rebase を使っている')
+        if re.search(r'^\s*(if\s+)?git\s+push\b', code, re.M) \
+                and 'scripts/ci-push.sh' not in code:
+            ci_bad.append(f'{bn}: ci-push.sh を通さず自前で git push している')
+    add('ci_push_bypassed', 'CIのpushが衝突復旧を持たない経路になっている',
+        sorted(set(ci_bad)),
+        'push は bash scripts/ci-push.sh "<msg>" ["<再生成コマンド>"] に寄せる。'
+        'rebase は生成物で必ず衝突し、|| true で握り潰すと以後の再試行が全部死ぬ',
+        severity='urgent')
+
+    # 除外リストの実在確認。パス名を書き間違えても git の pathspec は黙って
+    # 何も除外しないので、復旧が「生成物まで貼り直す」側に静かに倒れる。
+    gen_list = rp('scripts', 'ci-generated-paths.txt')
+    gen_missing = []
+    try:
+        for line in open(gen_list, encoding='utf-8'):
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            if not os.path.exists(rp(line.rstrip('/'))):
+                gen_missing.append(line)
+    except OSError:
+        gen_missing.append('scripts/ci-generated-paths.txt が無い')
+    add('ci_generated_paths_missing', '生成物リストに実在しないパスがある',
+        sorted(gen_missing),
+        'ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない',
+        severity='urgent')
+
     # 時間軸の規則の一貫性。開始日(date)を単一の時間キーにすると、同じ原因から
     # 逆向きの事故が2つ出る(2026-08-20に是正)。
     #   1. 会期の長い回が開始日の古さで一覧の先頭に居座る

@@ -59,17 +59,7 @@ jobs:
 
       - name: Commit candidate updates
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          git commit -m "chore(weekly-discovery): refresh staging/candidates + sources"
-          for attempt in 1 2 3 4 5; do
-            if git push; then break; fi
-            git pull --rebase || true
-            sleep $((RANDOM % 5 + 2))
-            if [ $attempt -eq 5 ]; then exit 1; fi
-          done
+          # push は scripts/ci-push.sh に集約(2026-09-07)。生成物を含むコミットで
+          # rebase を使うと必ず衝突し、`|| true` が握り潰して detached HEAD に残り、
+          # 以後の再試行が全て失敗していた(daily #160)。詳細はスクリプト冒頭。
+          bash scripts/ci-push.sh "chore(weekly-discovery): refresh staging/candidates + sources"

@@ -138,15 +138,26 @@
       draw();
 
       if (!need.length) return;
-      // レート制限(1秒1件程度)に配慮して直列に取得する
+      // 楽天APIは applicationId あたり1秒1件。350ms 待ちだと応答が速い回線で
+      // 1秒に2〜3件飛び、429 が返って商品カードがテキストのまま残っていた
+      // (2026-09-07 実測: 実間隔 905ms / 1002ms で、境界に張り付いていた)。
+      // 429 は catch されて null になるだけなので例外もログも出ず、
+      // 「その枠だけカードにならない」という形でしか表に出ない。
+      // 送信時刻の間隔で 1100ms を保証する(応答時間に左右されない数え方にする)。
+      var MIN_INTERVAL = 1100;
+      var lastSentAt = 0;
       var i = 0;
       (function next() {
         if (i >= need.length) { cacheWrite(store); draw(); return; }
-        var kw = need[i++];
-        fetchProduct(kw, rk, opts[kw]).then(function (prod) {
-          if (prod) { data._products[kw] = prod; store[kw] = prod; }
-          setTimeout(next, 350);
-        });
+        var wait = Math.max(0, MIN_INTERVAL - (Date.now() - lastSentAt));
+        setTimeout(function () {
+          var kw = need[i++];
+          lastSentAt = Date.now();
+          fetchProduct(kw, rk, opts[kw]).then(function (prod) {
+            if (prod) { data._products[kw] = prod; store[kw] = prod; }
+            next();
+          });
+        }, wait);
       })();
     })
     .catch(function (e) { console.warn('affiliate.js:', e); });

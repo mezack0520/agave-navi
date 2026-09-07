@@ -522,7 +522,7 @@
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260829a)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260907a)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -540,6 +540,20 @@
       "count": 0,
       "items": [],
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
+      "severity": "urgent"
+    },
+    "ci_push_bypassed": {
+      "title": "CIのpushが衝突復旧を持たない経路になっている",
+      "count": 0,
+      "items": [],
+      "note": "push は bash scripts/ci-push.sh \"<msg>\" [\"<再生成コマンド>\"] に寄せる。rebase は生成物で必ず衝突し、|| true で握り潰すと以後の再試行が全部死ぬ",
+      "severity": "urgent"
+    },
+    "ci_generated_paths_missing": {
+      "title": "生成物リストに実在しないパスがある",
+      "count": 0,
+      "items": [],
+      "note": "ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない",
       "severity": "urgent"
     },
     "ongoing_events": {
