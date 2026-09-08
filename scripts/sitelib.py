@@ -724,7 +724,9 @@ def crumb_bar_html(items, search=True):
         if url and not last:
             parts.append(f'<a href="{_attr(url)}">{html_escape(name)}</a>')
         else:
-            parts.append(f'<span>{html_escape(name)}</span>')
+            # 現在地はクラスで示す。素の span を現在地の印にすると
+            # 区切りの span まで黒く塗られる(2026-09-08 本番で発生)
+            parts.append(f'<span class="crumb-current">{html_escape(name)}</span>')
         if not last:
             parts.append('<span class="pref-sep" aria-hidden="true">&gt;</span>')
     return ('  <div class="crumb-bar">\n'
