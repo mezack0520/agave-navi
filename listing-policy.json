@@ -125,7 +125,17 @@
   "detail": "pukubook / nextmeet / leaf-laboratory は開催予定を先に登録し、中止・休会を反映しないことがある。定例会や毎月開催のシリーズでとくに起きる",
   "action": "rejected-events に reasonType=cancelled で記録する。次回回が別日で告知されたらそちらを新規エントリとして扱う",
   "precedent": "I.S.I.J. 東京例会 2026-08-23 は pukubook が近日開催として掲載していたが、isij.net のスケジュールに『休会とさせていただきます』と明記されていた(2026-08-12)",
-  "doNotEscalate": true
+  "doNotEscalate": true,
+  "afterListing": {
+   "rule": "掲載後に中止・延期が分かった回は、削除せず eventStatus を cancelled / postponed にして残す",
+   "why": "消すとURLが404になる。共有リンクやブックマークを踏んだ人に何も伝わらないまま当日を迎える。「◯◯ 中止」で検索して来た人に答えるのも一覧サイトの仕事。主催者から削除を依頼されても、まず中止表示を提案する",
+   "how": "eventStatus=cancelled、cancelledOn=主催者の告知日、cancelReason=理由、cancelNoticeUrl=告知のURL。sitelib.is_cancelled が一覧・カレンダー・iCal・RSS・件数バッジから外し、詳細ページには中止の告知を出す。中止の回にアフィリエイトは出さない",
+   "doNotDelete": "主催者が強く削除を望む場合のみ従う。その場合も rejected-events に reasonType=cancelled で記録し、再提案されないようにする",
+   "detection": "scripts/check-cancelled.py が日次で開催60日以内の回の出典を取り、中止・延期の語とページの署名の変化を見る。監査は cancel_suspects(info) と cancel_watch_broken(urgent)",
+   "imageOnlyNotice": "**日本の主催者は告知を画像で出す。**collect-plants.com はトップのメインビジュアルに「開催中止のお知らせ」と大書していたが、HTMLの文字列には一言も無かった。文言の走査だけでは絶対に見つからないので、本文と画像URLの集合の署名が変わったことを別の信号として使う。OCRは持っていないので、ここは人が見る",
+   "decided": "2026-09-08",
+   "precedent": "Collect Plants Vol.3 (2026-09-22/23 グランメッセ熊本) は令和8年熊本地震により 2026-08-12 に中止が告知されたが、当サイトは 09-08 まで27日間「開催予定」として載せ続けた。気づいたのは主催者からフォームで削除依頼が来たためで、こちらからは何も見ていなかった"
+  }
  },
  "aggregatorSweep": {
   "rule": "アグリゲータの一覧は掲載可否の根拠ではなく、探索の入口として使う",

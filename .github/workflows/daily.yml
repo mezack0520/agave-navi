@@ -22,6 +22,7 @@ on:
       # sync-events が events.json を更新しても daily は発火しない。
       # 手で直したときに確認する経路が無いと、動くかどうかを翌朝まで待つことになる。
       - 'scripts/coverage-sweep.py'
+      - 'scripts/check-cancelled.py'
   repository_dispatch:
     types: [daily]
   workflow_dispatch:
@@ -75,6 +76,14 @@ jobs:
       # errors に残り、audit の coverage_sweep_broken が鳴る。
       - name: Sweep coverage gaps (他所にあって当サイトに無いイベント)
         run: python3 scripts/coverage-sweep.py --days 45 || true
+
+      # 逆向きの巡回。載せた回がもう開催されないことに気づくための経路。
+      # 2026-09-08まで掲載は追加の一方通行で、Collect Plants Vol.3 は
+      # 中止告知(2026-08-12)の27日後まで開催予定として載り続けていた。
+      # 失敗しても後続を止めないが、失敗は cancel-watch.json の errors に残り
+      # audit の cancel_watch_broken が鳴る。
+      - name: Watch for cancellations (載せた回が中止・延期になっていないか)
+        run: python3 scripts/check-cancelled.py || true
 
       - name: Regenerate all static files
         run: bash scripts/build-all.sh

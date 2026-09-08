@@ -290,13 +290,48 @@ def _venue_placeholder(ev):
     return '会場未定'
 
 
+def make_cancel_notice(ev):
+    """中止・延期の告知。概要より前に置く。
+
+    削除ではなく中止として残す方針(listing-policy.json の cancelledOrPostponed)。
+    消すとURLが404になり、共有リンクやブックマークを踏んだ人には何も伝わらない。
+    「◯◯ 中止」で検索して来た人に答えるのが一覧サイトの役目。
+    """
+    if not sitelib.is_cancelled(ev):
+        return ''
+    label = sitelib.cancel_label(ev)
+    reason = (ev.get('cancelReason') or '').strip()
+    on = (ev.get('cancelledOn') or '').strip()
+    notice = (ev.get('cancelNoticeUrl') or ev.get('sourceUrl')
+              or ev.get('url') or '').strip()
+    lines = [f'<span class="notice-head">この回は{html_escape(label)}になりました</span>']
+    body = []
+    if reason:
+        body.append(f'理由: {html_escape(reason)}')
+    if on:
+        body.append(f'主催者の告知: {html_escape(sitelib.date_to_japanese(on))}')
+    if body:
+        lines.append('<p>' + ' / '.join(body) + '</p>')
+    if notice:
+        lines.append(f'<p><a href="{html_escape(notice)}" target="_blank" '
+                     f'rel="noopener nofollow">主催者の告知を見る</a></p>')
+    lines.append('<p>最新の情報は主催者の発表をご確認ください。</p>')
+    return ('        <div class="event-notice-cancelled">\n          '
+            + '\n          '.join(lines) + '\n        </div>')
+
+
 def make_affiliate_block(ev):
     """アフィリエイト枠。出典(url/sourceUrl)がある回には出す。
+
+    中止の回には出さない。中止の告知のすぐ下に買い物の導線があるのは
+    体裁が悪いし、来場を前提にした「当日の持ち物」の枠なので文脈も合わない。
 
     2026-07-30まではAdSense審査を意識して「薄い」判定の回を除外していたが、
     審査を断念したため条件を緩めた。出典があれば実在が確認できたイベントであり、
     説明文の長さで収益動線を落とす理由はない。
     出典がまったく無い回(アーカイブの49件)だけ除外する。"""
+    if sitelib.is_cancelled(ev):
+        return ''
     if not ((ev.get('url') or '').strip() or (ev.get('sourceUrl') or '').strip()):
         return ''
     tags = make_tags_csv(ev)
@@ -585,6 +620,7 @@ def build_page(template, ev, ctx):
         '{{timeRow}}': make_time_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{affiliateBlock}}': make_affiliate_block(ev),
+        '{{cancelNotice}}': make_cancel_notice(ev),
         '{{heroMetaNote}}': make_hero_meta_note(ev),
         '{{dataSummary}}': make_data_summary(ev, ctx),
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),

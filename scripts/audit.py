@@ -27,7 +27,8 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
                      tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
                      is_recent_past, event_span, PAST_KEEP_MAX,
-                     is_upcoming, compact_date, DESC_PROTECT_DAYS)
+                     is_upcoming, compact_date, DESC_PROTECT_DAYS,
+                     is_cancelled)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -40,6 +41,9 @@ KNOWN_EVENT_FIELDS = {
     'url', 'sourceUrl', 'imageUrl', 'instagramUrl', 'instagramPostId',
     'organizer', 'organizerIg', 'recurring', 'autoDateUpdate',
     'addedDate', 'updatedAt', 'enrichedAt', 'dataSource',
+    # 中止・延期の回。読むのは sitelib.is_cancelled と
+    # build-detail-pages.make_cancel_notice(2026-09-08)
+    'cancelledOn', 'cancelReason', 'cancelNoticeUrl',
 }
 
 
@@ -451,6 +455,10 @@ def main():
             _found |= {(int(a), int(b))
                        for a, b in re.findall(r'(?<![\d:/])(\d{1,2})/(\d{1,2})(?![\d/])', desc)
                        if 1 <= int(a) <= 12 and 1 <= int(b) <= 31}
+            # 中止の回は「8月12日に告知」のように会期外の日付を書く。
+            # それを日付の誤りとして数えると、中止の説明が書けなくなる
+            if is_cancelled(e):
+                continue
             out = sorted(_found - span)
             if out:
                 desc_bad.append(f"{e['slug']}: 本文 {'/'.join(f'{m}月{d}日' for m, d in out)} "
@@ -1054,9 +1062,15 @@ def main():
             feed['ics'] = f.read().count('BEGIN:VEVENT')
     except OSError:
         pass
+    # 期待件数はフィードごとに違う。CSVは中止を落とし(転載先で開催予定として
+    # 出回るため)、icsは落とさず STATUS:CANCELLED を付ける(黙って消すと
+    # 購読者の予定表に開催のまま残るクライアントがある)。
+    _n_cancelled = sum(1 for e in events if is_cancelled(e))
+    _feed_expect = {'csv': len(events) - _n_cancelled, 'ics': len(events)}
     add('feed_count_mismatch', '配布フィードの件数がevents.jsonと不一致',
-        [f'{k}: {v}件 (events.json {len(events)}件)'
-         for k, v in feed.items() if v != len(events)])
+        [f'{k}: {v}件 (期待 {_feed_expect.get(k, len(events))}件'
+         f' / events.json {len(events)}件・うち中止 {_n_cancelled}件)'
+         for k, v in feed.items() if v != _feed_expect.get(k, len(events))])
 
     # 10b. 開催中(開始済み・未終了)のイベントが「今」の枠から落ちていないか。
     #      リポジトリ内には「今」の定義が4通りあり、うち this-month と
@@ -1624,6 +1638,41 @@ def main():
         sorted(_cov_stale),
         'coverage-sweep.py の取得が失敗している。'
         'この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない')
+
+    # 16b. 中止・延期の見張り。掲載は長らく追加の一方通行で、
+    #      Collect Plants Vol.3 は中止告知(2026-08-12)の27日後まで
+    #      「開催予定」として載り続けていた。気づいたのは主催者からの
+    #      削除依頼で、こちらからは何も見ていなかった(2026-09-08に検査化)。
+    _cw = load_json('cancel-watch.json', {}) or {}
+    _cw_suspects = []
+    for _s in (_cw.get('suspects') or []):
+        _cw_suspects.append(
+            f"{_s.get('date','')} {_s.get('slug','')}: {_s.get('why','')}")
+    add('cancel_suspects', '載せた回に中止・延期の兆候がある',
+        sorted(_cw_suspects),
+        '一次情報を確認する。中止なら events.json の eventStatus を cancelled に'
+        'して cancelledOn / cancelReason を入れる。**削除しない。**'
+        'URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。'
+        '兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)',
+        severity='info')
+
+    _cw_broken = []
+    _cw_err = _cw.get('errors') or []
+    _cw_on = str(_cw.get('sweptOn') or '')
+    if _cw_err:
+        _cw_broken.append(f'巡回で取得できなかった回が {len(_cw_err)} 件')
+    if _cw_on and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _cw_on):
+        import datetime as _dtcw
+        _cw_age = (_dtcw.date.fromisoformat(today_s)
+                   - _dtcw.date.fromisoformat(_cw_on)).days
+        if _cw_age >= 3:
+            _cw_broken.append(f'最後の巡回が {_cw_on}（{_cw_age}日前）')
+    elif _cw:
+        _cw_broken.append('sweptOn が読めない')
+    add('cancel_watch_broken', '中止の見張りが機能していない',
+        sorted(_cw_broken),
+        'check-cancelled.py の取得が失敗しているか、日次で走っていない。'
+        'この状態では cancel_suspects が0件でも「中止は無い」証拠にならない')
 
     # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
     #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
@@ -3217,7 +3266,10 @@ def main():
         _prev_img = _prev_img_row['metric']['events_with_image']
         _now_img = _cur_metric.get('events_with_image', 0)
         _removed = max(0, (_prev_img_row.get('events') or 0) - len(events))
-        _drop = _prev_img - _now_img - _removed
+        # 中止にした回は告知画像に差し替わるので imageUrl を外す。
+        # これを消失として数えると、中止を記録するたびに鳴る
+        _cancelled_now = sum(1 for e in events if is_cancelled(e))
+        _drop = _prev_img - _now_img - _removed - _cancelled_now
         if _drop > 0:
             _img_lost.append(
                 f"imageUrl のある回が {_prev_img} → {_now_img} 件"

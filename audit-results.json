@@ -1,5 +1,5 @@
 {
-  "total": 300,
+  "total": 299,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,11 +177,10 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 30,
+      "count": 29,
       "items": [
         "botanical-link-popup-kasugai-2026-10",
         "botanical-monsters-2027-okazaki",
-        "collect-plants-2026-09",
         "deep-green-ono-2026-09",
         "green-champuroo-vol2-2026-10",
         "greensnap-marche-yokohama-2026-autumn",
@@ -215,7 +214,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 67,
+      "count": 66,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
@@ -225,7 +224,6 @@
         "botanical-monsters-2027-okazaki",
         "botanical-night-market-kurashiki-2026-08",
         "code-tokyo-popup-2026-08",
-        "collect-plants-2026-09",
         "collection-plants-miuraengei-yukuhashi-2026-06",
         "deep-green-ono-2026-09",
         "fukuoka-green-party-6th-2026",
@@ -256,14 +254,15 @@
         "otsujiya-popup-engeiya-tanaka-2026-09",
         "ozaki-chinshokubutsu-collection-3",
         "paradise-garage-tomoya-farm-2026-08",
-        "picnic-garden-vol25-2026-09"
+        "picnic-garden-vol25-2026-09",
+        "plants-2306-3rd-anniversary-2026"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 114,
+      "count": 116,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -285,6 +284,7 @@
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chuushokushobutsusai-2026",
+        "collect-plants-2026-09",
         "dio-plants-fes-vol1-kusatsu-2026-09",
         "edamame-bikaku-itazuke-2026-09",
         "engei-raku-2026-09",
@@ -303,8 +303,7 @@
         "happy-smile-2nd-odawara-2026-09",
         "hiroshima-cactus-succulent-ten-2026-10",
         "honwaka-pappa-3rd-2026-09",
-        "ibatama-vol9-2026-10",
-        "isij-big-bazaar-2026-11-22"
+        "ibatama-vol9-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -515,7 +514,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260824c)と違うページ",
+      "title": "CSS版数が正規値(20260908a)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -678,6 +677,20 @@
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
     },
+    "cancel_suspects": {
+      "title": "載せた回に中止・延期の兆候がある",
+      "count": 0,
+      "items": [],
+      "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
+      "severity": "info"
+    },
+    "cancel_watch_broken": {
+      "title": "中止の見張りが機能していない",
+      "count": 0,
+      "items": [],
+      "note": "check-cancelled.py の取得が失敗しているか、日次で走っていない。この状態では cancel_suspects が0件でも「中止は無い」証拠にならない",
+      "severity": "urgent"
+    },
     "jsonld_invalid": {
       "title": "JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)",
       "count": 0,
@@ -729,10 +742,8 @@
     },
     "gas_script_undeployed": {
       "title": "Apps Script の実機が repo の版より古い",
-      "count": 1,
-      "items": [
-        "repo の SCRIPT_VERSION=2026-09-08 に対し実機は gasVersion=2026-09-06。Apps Script エディタへの貼り直しが済んでいない"
-      ],
+      "count": 0,
+      "items": [],
       "note": "repo を直しただけでは実機は変わらない。script.google.com(個人アカウント yuji.mezaki@gmail.com)の「agave-navi フォーム→GitHub連携」にコードを貼り直して保存し、gasVersion が SCRIPT_VERSION に追いつくまで鳴り続ける。貼るまでは、次のフォーム送信で氏名とメールアドレスが公開URLと公開コミット履歴を通る",
       "severity": "urgent"
     },

@@ -850,14 +850,14 @@
   },
   {
     "slug": "collect-plants-2026-09",
-    "name": "Collect Plants（コレクトプランツ）",
+    "name": "Collect Plants Vol.3（コレクトプランツ）",
     "date": "2026-09-22",
     "dateEnd": "2026-09-23",
     "dateDisplay": "2026.09.22-23",
     "location": "グランメッセ熊本",
     "prefecture": "熊本",
     "region": "九州",
-    "description": "グランメッセ熊本で開催される九州最大級の珍奇植物・希少植物の展示即売会。全国から約150店が集結する完全屋内イベント。",
+    "description": "令和8年熊本地震の影響により中止。主催者は2026年8月12日に公式Instagramで「開催そのものが不可能であるとの結論に達しました」と告知し、公式サイトのトップにも中止のお知らせを掲出している。",
     "tags": [
       "大型",
       "即売会",
@@ -865,11 +865,16 @@
     ],
     "status": "upcoming",
     "url": "https://collect-plants.com/",
-    "imageUrl": "https://collect-plants.com/cms/wp-content/uploads/2025/06/collectplants_mv2_pc.png",
     "time": "10:00〜16:00",
-    "admission": "500円（高校生以下は無料）",
     "venue": "グランメッセ熊本（全天候型完全屋内）",
-    "mapQuery": "グランメッセ熊本（全天候型完全屋内）"
+    "mapQuery": "グランメッセ熊本（全天候型完全屋内）",
+    "eventStatus": "cancelled",
+    "cancelledOn": "2026-08-12",
+    "cancelReason": "令和8年熊本地震の影響",
+    "sourceUrl": "https://collect-plants.com/",
+    "organizerIg": "collect_plants_official",
+    "updatedAt": "2026-09-08",
+    "cancelNoticeUrl": "https://www.instagram.com/p/Db7qIW0R3hy/"
   },
   {
     "slug": "kisarazu-cs-auction-2026-09",
@@ -895,6 +900,36 @@
     "eventStatus": "confirmed",
     "addedDate": "2026-08-27",
     "updatedAt": "2026-08-27"
+  },
+  {
+    "slug": "shokunoutage-4-kumamoto-2026-09",
+    "name": "植ノ宴 -4- in 熊本",
+    "date": "2026-09-22",
+    "dateEnd": "2026-09-23",
+    "dateDisplay": "2026.09.22-23",
+    "time": "9/22 12:00〜18:00 / 9/23 11:00〜17:00",
+    "venue": "カリーノMSビル",
+    "location": "カリーノMSビル（熊本県熊本市中央区魚屋町2丁目1）",
+    "mapQuery": "カリーノMSビル 熊本県熊本市中央区魚屋町2丁目1",
+    "prefecture": "熊本",
+    "region": "九州",
+    "description": "普段は佐賀で開く植物イベントが熊本へ出張する回。35店と飲食1店が出店し、アガベ・塊根植物・ビカクシダ・ブロメリア・多肉植物・サボテン・希少洋ランのほか、陶芸鉢や3Dプリンター鉢も並ぶ。じゃんけん大会を企画している。",
+    "tags": [
+      "アガベ",
+      "塊根植物",
+      "ビカクシダ",
+      "多肉植物",
+      "即売会"
+    ],
+    "status": "upcoming",
+    "eventStatus": "confirmed",
+    "admission": "500円（現金のみ・高校生以下無料）",
+    "url": "https://www.instagram.com/p/DcYbxwJhQnG/",
+    "sourceUrl": "https://www.instagram.com/p/DcYbxwJhQnG/",
+    "organizerIg": "syokunoutage",
+    "addedDate": "2026-09-08",
+    "updatedAt": "2026-09-08",
+    "autoDateUpdate": false
   },
   {
     "slug": "sapporo-cactus-club-aki-2026",

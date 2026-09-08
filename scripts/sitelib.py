@@ -14,7 +14,7 @@ from datetime import datetime, date, timezone, timedelta
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260824c'
+CSS_VERSION = '20260908a'
 JS_VERSION = '20260907a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -334,6 +334,24 @@ def is_long_run(e, threshold=LONG_RUN_DAYS):
     return n is not None and n >= threshold
 
 
+CANCELLED_STATUSES = ('cancelled', 'postponed')
+
+
+def is_cancelled(e):
+    """開催されないことが確定した回。
+
+    削除ではなく中止として残す。消すと URL が 404 になり、共有された
+    リンクやブックマークを踏んだ人に何も伝わらないまま当日を迎える。
+    「◯◯ 中止」で検索して来た人に答えるのも一覧サイトの仕事。
+    """
+    return str(e.get('eventStatus') or '').lower() in CANCELLED_STATUSES
+
+
+def cancel_label(e):
+    st = str(e.get('eventStatus') or '').lower()
+    return {'cancelled': '中止', 'postponed': '延期'}.get(st, '')
+
+
 def event_phase(e, today=None):
     """'past' | 'ongoing' | 'upcoming' | 'undated'
 
@@ -351,7 +369,14 @@ def event_phase(e, today=None):
 
 
 def is_upcoming(e, today=None):
-    """一覧・フィード・ランディングの「開催予定」側に出すか。開催中を含む。"""
+    """一覧・フィード・ランディングの「開催予定」側に出すか。開催中を含む。
+
+    中止・延期の回は外す。詳細ページは残すが、予定として数えない。
+    件数バッジ・カレンダー・iCal・RSS がすべてここを見ているので、
+    1か所で外せば全部に効く。
+    """
+    if is_cancelled(e):
+        return False
     return event_phase(e, today) in ('ongoing', 'upcoming', 'undated')
 
 
@@ -614,8 +639,12 @@ def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
     meta += extra_meta
 
     status = 'past' if event_phase(e, today) == 'past' else 'upcoming'
+    cancel = cancel_label(e)
+    cancel_cls = ' event-cancelled' if cancel else ''
+    cancel_badge = (f'<span class="event-cancel-badge">{html_escape(cancel)}</span>'
+                    if cancel else '')
     return (
-        f'<div class="event-card" data-tags="{_attr(tags)}" data-status="{status}"'
+        f'<div class="event-card{cancel_cls}" data-tags="{_attr(tags)}" data-status="{status}"'
         f' data-region="{_attr(region)}" data-pref="{_attr(pref)}" data-slug="{_attr(slug)}"'
         f' data-date="{_attr(d)}" data-date-end="{_attr(de if de != d else "")}"'
         f' data-added-date="{_attr(e.get("addedDate") or "")}">'
@@ -624,7 +653,7 @@ def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
         f'{HEART_SVG}</button>'
         f'<div class="event-card-body">'
         f'<div class="event-header"><span class="event-date">{html_escape(compact_date(e))}</span>'
-        f'<span class="event-status"></span></div>'
+        f'{cancel_badge}<span class="event-status"></span></div>'
         f'<{heading} class="event-title"><a class="event-title-link" href="/events/{_attr(slug)}.html">'
         f'{html_escape(name)}</a></{heading}>'
         f'{desc_html}'

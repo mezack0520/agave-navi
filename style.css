@@ -3634,3 +3634,58 @@ main {
     background: #e88a00;
     border-color: #e88a00;
 }
+
+/* ========================================
+   中止・延期の回（2026-09-08）
+   削除ではなく中止として残す。消すとURLが404になり、
+   共有リンクを踏んだ人に何も伝わらないまま当日を迎える。
+   ======================================== */
+
+.event-cancel-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 3px;
+    background: var(--accent-pop);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+}
+
+.event-card.event-cancelled .event-title,
+.event-card.event-cancelled .event-description {
+    opacity: 0.6;
+}
+
+.event-card.event-cancelled .event-thumb img {
+    filter: grayscale(1);
+    opacity: 0.55;
+}
+
+.event-notice-cancelled {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.1rem;
+    border: 2px solid var(--accent-pop);
+    border-radius: 6px;
+    background: #fff5f5;
+}
+
+.event-notice-cancelled .notice-head {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--accent-pop);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.event-notice-cancelled p {
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.event-notice-cancelled a {
+    color: var(--accent-pop);
+}

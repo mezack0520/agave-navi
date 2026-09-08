@@ -7,6 +7,10 @@
 """
 import os, json
 from datetime import datetime, timedelta, timezone
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import is_cancelled
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
@@ -67,18 +71,25 @@ def event_to_ics(e):
     # 9時間先の時刻を名乗ることになり、購読側が版の新旧を取り違える
     # (2026-08-28 に発覚。3本すべてが9時間ずれていた)。
     now = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    # 中止の回は落とさず STATUS:CANCELLED を付ける。黙って消すと、
+    # 既に取り込んだ購読者の予定表に「開催」のまま残るクライアントがある。
+    # 件名にも出さないと、一覧では中止と分からない
+    cancelled = is_cancelled(e)
+    summary = f'【中止】{name}' if cancelled else name
     lines = [
         'BEGIN:VEVENT',
         fold(f'UID:{uid}'),
         fold(f'DTSTAMP:{now}'),
         fold(f'DTSTART;VALUE=DATE:{dt_start.strftime("%Y%m%d")}'),
         fold(f'DTEND;VALUE=DATE:{dt_end.strftime("%Y%m%d")}'),
-        fold(f'SUMMARY:{esc(name)}'),
+        fold(f'SUMMARY:{esc(summary)}'),
         fold(f'DESCRIPTION:{esc(desc)}\\n\\n詳細: {url}'),
         fold(f'LOCATION:{esc(location)}'),
         fold(f'URL:{url}'),
-        'END:VEVENT',
     ]
+    if cancelled:
+        lines.append('STATUS:CANCELLED')
+    lines.append('END:VEVENT')
     return '\r\n'.join(lines)
 
 

@@ -3,7 +3,9 @@
   "processed": [
     "2026/04/27 18:19:12",
     "2026/07/02 22:50:09",
-    "2026/08/31 12:41:01"
+    "2026/08/31 12:41:01",
+    "2026/09/07 18:41:52",
+    "2026/09/08 9:18:02"
   ],
   "outcomes": [
     {
@@ -28,7 +30,21 @@
       "eventName": "PLANTS BAZAAR なんせ植物が好きなもんで。",
       "action": "listed",
       "detail": "events.json に plants-bazaar-null-kanazawa-2026-09 を追加。申請本文に開催日が無かったため、主催 studio null. の公式IG @null_kanazawa の2026-08-30 のリールで 2026-09-05〜06 / 10:00〜18:00 / 金沢市高岡町23-6 を確認した。申請者ドメイン studio-kujira.com は studio null. の運営元で住所・電話が会場と同一のため、出店者ではなく主催者本人の申請と判断した"
+    },
+    {
+      "timestamp": "2026/09/07 18:41:52",
+      "type": "イベント掲載リクエスト",
+      "eventName": "植ノ宴 -4-",
+      "action": "cancelled",
+      "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing"
+    },
+    {
+      "timestamp": "2026/09/08 9:18:02",
+      "type": "このイベントは開催中止です。削除してください。",
+      "eventName": "コレクトプランツ熊本",
+      "action": "cancelled",
+      "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing"
     }
   ],
-  "updated": "2026-09-01"
+  "updated": "2026-09-08"
 }

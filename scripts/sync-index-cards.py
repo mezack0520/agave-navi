@@ -25,7 +25,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
                      LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
-                     list_sort_key)
+                     list_sort_key, is_cancelled, cancel_label)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -152,6 +152,25 @@ def sync_card_body(chunk, ev):
         chunk = chunk[:m.start(1)] + val + chunk[m.end(1):]
 
     _sub(r'<span class="event-date">([^<]*)</span>', compact_date(ev), 'date')
+
+    # 中止バッジ。events.json 側で eventStatus を変えたら、
+    # トップのカードにも出す/消すの両方が起きる
+    want_badge = (f'<span class="event-cancel-badge">{html_escape(cancel_label(ev))}</span>'
+                  if is_cancelled(ev) else '')
+    has_badge = re.search(r'<span class="event-cancel-badge">[^<]*</span>', chunk)
+    if want_badge and not has_badge:
+        chunk = chunk.replace('<span class="event-status">',
+                              want_badge + '<span class="event-status">', 1)
+        changed.append('中止バッジを付けた')
+    elif has_badge and not want_badge:
+        chunk = re.sub(r'<span class="event-cancel-badge">[^<]*</span>', '', chunk, count=1)
+        changed.append('中止バッジを外した')
+    if is_cancelled(ev) and 'event-cancelled' not in chunk:
+        chunk = chunk.replace('class="event-card', 'class="event-card event-cancelled', 1)
+        changed.append('中止クラスを付けた')
+    elif not is_cancelled(ev) and 'event-cancelled' in chunk:
+        chunk = chunk.replace(' event-cancelled', '', 1)
+        changed.append('中止クラスを外した')
     _sub(r'<h\d class="event-title">([^<]*)</h\d>', ev.get('name') or '', 'title')
     _sub(r'<p class="event-description">(.*?)</p>', ev.get('description') or '', 'desc')
     _sub(r'<span class="event-region">([^<]*)</span>',
@@ -194,12 +213,15 @@ def new_card_html(ev):
     dd = ev.get('dateDisplay') or compact_date(ev)
     pref = ev.get('prefecture', '')
     region = ev.get('region', '')
+    badge = ('<span class="event-cancel-badge">'
+             + e(cancel_label(ev)) + '</span>') if is_cancelled(ev) else ''
     heart = ('<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 '
              '5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 '
              '1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>')
     e = html_attr_escape
     return (
-        f'<div class="event-card" data-tags="{e(tags_csv)}" data-status="upcoming"'
+        f'<div class="event-card{" event-cancelled" if is_cancelled(ev) else ""}"'
+        f' data-tags="{e(tags_csv)}" data-status="upcoming"'
         f' data-region="{e(region)}" data-prefecture="{e(pref)}" data-slug="{e(slug)}"'
         f' data-date="{e(ev.get("date") or "")}"'
         f' data-date-end="{e(ev.get("dateEnd") or "")}"'
@@ -210,6 +232,7 @@ def new_card_html(ev):
         f'          <div class="swipe-hint"><div class="swipe-hint-icon">{heart}</div></div>\n'
         f'          <div class="event-card-body">\n'
         f'            <div class="event-header"><span class="event-date">{e(dd)}</span>'
+        f'{badge}'
         f'<span class="event-status"></span></div>\n'
         f'            <h2 class="event-title">{e(ev.get("name") or "")}</h2>\n'
         f'            <p class="event-description">{e(ev.get("description") or "")}</p>\n'
