@@ -35,15 +35,19 @@
       "timestamp": "2026/09/07 18:41:52",
       "type": "イベント掲載リクエスト",
       "eventName": "植ノ宴 -4-",
-      "action": "cancelled",
-      "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing"
+      "action": "listed",
+      "detail": "掲載依頼どおり events.json に shokunoutage-4-kumamoto-2026-09 （植ノ宴 -4- in 熊本 / 2026-09-22〜23 / カリーノMSビル）を追加した。出典は主催 @syokunoutage の告知投稿 https://www.instagram.com/p/DcYbxwJhQnG/ で、日付・名称・会場の3点が一致することを確認済み（sourceUrlMatch）。本文は Collect Plants 熊本の中止を代替開催の理由として述べているだけで、この回そのものは掲載依頼。中止側の処理は 2026/09/08 9:18:02 の回の記録を見る。",
+      "verifiedOn": "2026-09-08",
+      "correctedOn": "2026-09-08",
+      "correctionNote": "2026-09-08 に修正。元の記録は action=cancelled で、detail が collect-plants-2026-09 の中止処理を述べる 9/08 9:18:02 の回と一字一句同じだった。掲載自体は同じコミット 65c589a6 で済んでいたが、記録の上では掲載依頼が処理されていないように見えていた。"
     },
     {
       "timestamp": "2026/09/08 9:18:02",
       "type": "このイベントは開催中止です。削除してください。",
       "eventName": "コレクトプランツ熊本",
       "action": "cancelled",
-      "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing"
+      "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing",
+      "verifiedOn": "2026-09-08"
     }
   ],
   "updated": "2026-09-08"

@@ -1971,6 +1971,72 @@ def main():
              '貼るまでは、次のフォーム送信で氏名とメールアドレスが'
              '公開URLと公開コミット履歴を通る')
 
+    # --- 問い合わせの処理記録が、その回の依頼と対応しているか -----------------
+    # inquiries-processed.json の outcomes は「処理済みにしたが実際には何も
+    # 反映していない取りこぼし」を後から見つけるために置いた記録なのに、
+    # 読むコードが1本も無かった(プレイブック §4 に「読むコードは無い」と
+    # 明記してあった)。読まれない記録は、誤って書かれても誰にも分からない。
+    #
+    # 2026-09-08 に実際に起きた。09-07 18:41:52 の回は「植ノ宴 -4- を掲載して
+    # ほしい」という掲載依頼で、掲載自体は 65c589a6 で済んでいたのに、
+    # outcomes には action=cancelled / detail は collect-plants-2026-09 の
+    # 中止処理と書かれていた。翌日 09-08 9:18:02 の別の回と一字一句同じ文で、
+    # 記録の上では「掲載依頼が処理されていない」ように見える状態が残っていた。
+    # 1件の送信が複数の作業を誘発したとき、誘発された側の作業を書くと起きる。
+    # outcomes には**その回が何を頼んできたか**に対する処理を書く。
+    #
+    # 見るのは eventName と detail の指す先が同じ回かどうか。detail に出てくる
+    # slug を events.json / rejected-events.json で引き、その名称と eventName に
+    # 共通の2文字が1つも無ければ食い違いとみなす。
+    # 引けない slug は判定しない(過去回はアーカイブで消えることがあり、
+    # 消えたことを記録の誤りとして鳴らすと直しようがない)。
+    # 正しく書けば必ず0にできるので urgent。
+    def _onorm(x):
+        x = unicodedata.normalize('NFKC', x or '').lower()
+        return re.sub(r'[^0-9a-z\u3040-\u30ff\u4e00-\u9fff]', '', x)
+
+    def _shares_bigram(a, b):
+        a, b = _onorm(a), _onorm(b)
+        if not a or not b:
+            return True          # 比べる材料が無い回は判定しない
+        if len(a) < 2 or len(b) < 2:
+            return a in b or b in a
+        return any(a[i:i + 2] in b for i in range(len(a) - 1))
+
+    _name_by_slug = {}
+    for _e in events:
+        if _e.get('slug'):
+            _name_by_slug[_e['slug']] = _e.get('name') or ''
+    for _r in rej_items:
+        if _r.get('key') and _r['key'] not in _name_by_slug:
+            _name_by_slug[_r['key']] = _r.get('name') or ''
+
+    inq_mismatch = []
+    for _o in (load_json('inquiries-processed.json', {}).get('outcomes') or []):
+        _ev = str(_o.get('eventName') or '').strip()
+        _dt = str(_o.get('detail') or '')
+        if not _ev or not _dt:
+            continue
+        _refs = [s for s in re.findall(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)+', _dt)
+                 if s in _name_by_slug]
+        if not _refs:
+            continue
+        if any(_shares_bigram(_ev, _name_by_slug[s]) for s in _refs):
+            continue
+        inq_mismatch.append(
+            f"{_o.get('timestamp')} の記録は eventName「{_ev}」なのに、"
+            f"detail が指すのは {' / '.join(_refs)}"
+            f"（{' / '.join(_name_by_slug[s] for s in _refs)}）。"
+            'その回が頼んできたこととは別の作業を書いている可能性')
+    add('inquiry_outcome_event_mismatch', '問い合わせの処理記録が別の回を指している',
+        inq_mismatch,
+        note='inquiries-processed.json の outcomes には、その回が頼んできたことに'
+             '対する処理を書く。1件の送信が複数の作業を誘発したとき、誘発された側の'
+             '作業を書くと、頼まれたこと自体が未処理に見える'
+             '(2026-09-08 に 09-07 18:41:52 の掲載依頼で発生)。'
+             'eventName と detail の指す slug の名称に共通の2文字が無いと鳴る。'
+             '正しい処理内容に書き直せば消える')
+
     add('inquiry_review_gap', 'event-listing-review の実行が抜けた日', inq_gap,
         note='reviewedHistory は起動日の記録で、scripts/record-run.py が'
              '起動直後に書く。抜けた日は、届いていた問い合わせがその日は'
