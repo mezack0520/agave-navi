@@ -104,12 +104,12 @@ jobs:
       - name: Backfill missing images (og:image)
         run: python3 scripts/backfill-images.py --upcoming-only || true
 
-      # Instagram が唯一の出典の回は backfill-images では埋まらない。
-      # cdninstagram の署名付きURLは期限があり、ホットリンクは遠からず壊れる。
-      # URLを指すのではなく画像を取得して images/events/ に置く(2026-09-08)。
-      # 1回あたり30件に抑える。全件を一度に取るとIG側に不自然な量になる。
-      - name: Fetch Instagram eyecatch images (self-hosted)
-        run: python3 scripts/fetch-event-images.py --limit 30 || true
+      # Instagram の画像取得はここでは走らせない。
+      # 2026-09-08 に試したところ、GitHub Actions のIPからは instagram.com が
+      # 応答せず、30件すべてがタイムアウトして実行時間が5分→11分になり
+      # 取得は0件だった(同じ回で backfill-images は非IGの4件を取れている)。
+      # サンドボックスからも 403 で届かない。届くのは組み込みブラウザだけ。
+      # scripts/fetch-event-images.py はブラウザを持つセッションから実行する。
 
       - name: Regenerate all static files
         run: |

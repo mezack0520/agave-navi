@@ -117,7 +117,8 @@ jobs:
           for slug in "${SLUGS[@]}"; do
             echo "::group::Enrich $slug"
             python3 scripts/enrich_events.py --slug "$slug" --write-back --no-remove || true
-            python3 scripts/fetch-event-images.py --slug "$slug" || true
+            # fetch-event-images.py はここでは走らせない(IPからIGに届かない)。
+            # ブラウザを持つセッションから実行する
             echo "::endgroup::"
           done
 

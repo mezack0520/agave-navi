@@ -91,6 +91,12 @@ def is_quality_image_url(img_url):
     """Image URL acceptance: reject aggregator-sourced AND generic-named images."""
     if not img_url:
         return False
+    # 混在コンテンツ防止。サイトは https なので http の画像はブラウザに
+    # 落とされるか警告になる。backfill-images.py は 2026-08 から弾いていたが
+    # こちらに同じ判定が無く、2026-09-08 に http の画像が1件入った。
+    # 同じ規則が2か所に割れていた(監査 insecure_image_url が拾って発覚)。
+    if img_url.startswith('http://'):
+        return False
     if _url_contains_aggregator(img_url):
         return False
     if _GENERIC_IMG_RE.search(img_url):

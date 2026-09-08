@@ -468,9 +468,7 @@
   },
   {
    "date": "2026-09-08",
-   "urgent": {
-    "insecure_image_url": 1
-   },
+   "urgent": {},
    "info": {
     "duplicate_event_same_source": 1,
     "cancel_watch_unreachable": 1,
@@ -480,9 +478,9 @@
    "metric": {
     "thin_past_with_source": 34,
     "thin_archived": 48,
-    "upcoming_with_image": 33,
-    "events_with_image": 70,
-    "upcoming_no_image": 112,
+    "upcoming_with_image": 54,
+    "events_with_image": 93,
+    "upcoming_no_image": 91,
     "ongoing_events": 2,
     "workflow_secrets": 6
    },
