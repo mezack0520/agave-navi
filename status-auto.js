@@ -246,8 +246,16 @@
       } else { return; }
     }
 
-    var status = card.classList.contains('event-cancelled')
-      ? STATUS.cancelled : getStatus(dateStr, dateEndStr);
+    // 中止の回は sitelib / sync-index-cards がサーバ側で
+    // .event-cancel-badge を出している。ここでも入れると「中止」が2つ並ぶ
+    // (2026-09-08 に本番で発覚)。JSが動かなくても出したいので
+    // サーバ側を残し、こちらは空にする
+    if (card.classList.contains('event-cancelled')) {
+      statusEl.textContent = '';
+      statusEl.className = 'event-status';
+      return;
+    }
+    var status = getStatus(dateStr, dateEndStr);
     statusEl.textContent = status.label;
     statusEl.className = 'event-status ' + status.cls;
   });

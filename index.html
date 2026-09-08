@@ -42,7 +42,7 @@
 
     <link rel="stylesheet" href="style.css?v=20260908a">
     <!-- 一覧の共通UI(行きたい・もっと見る)。body内のインラインから呼ぶため head で同期読み込み -->
-    <script src="list-ui.js?v=20260908a"></script>
+    <script src="list-ui.js?v=20260908b"></script>
 
 
     <script type="application/ld+json">
@@ -439,7 +439,7 @@
                 <h1 class="section-heading">開催予定のアガベ・多肉植物・塊根植物イベント<span class="event-count" id="eventCount">145件</span></h1>
                 <p class="section-sub" style="color:var(--gray-500);font-size:0.82rem;margin:-0.5rem 0 1.5rem;line-height:1.6">アガベ・塊根植物（コーデックス）・多肉植物・珍奇植物・ビザールプランツの即売会やマルシェ、大型展示会の情報をまとめています。</p>
 
-                <!-- 開催中(会期4日以上)。status-auto.js?v=20260908a が該当カードをここへ移す。
+                <!-- 開催中(会期4日以上)。status-auto.js?v=20260908b が該当カードをここへ移す。
                      一覧本体に混ぜると会期の長さぶん先頭に居座るため枠を分けている。
                      該当0件のときは見出しごと非表示。 -->
                 <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none">開催中<span class="section-heading-note">会期4日以上</span></h2>
@@ -2934,7 +2934,7 @@
             applyFilters(query);
         }
 
-        // 並び替え・開催中/終了の振り分けは status-auto.js?v=20260908a (window.AEN_LIST) が単一実装。
+        // 並び替え・開催中/終了の振り分けは status-auto.js?v=20260908b (window.AEN_LIST) が単一実装。
         // ここに日付の解釈を再実装すると、会期の長い回の扱いが2通りに割れる。
         // 以前は getCardDate / autoExpireEvents / sortAndFilter を独自に持ち、
         // 開始日だけで並べていたため会期49日の展示が一覧の先頭に居座った(2026-08-20)。
@@ -3074,7 +3074,11 @@
                     card.style.display = '';
                     card.style.animationDelay = delay + 'ms';
                     delay += 40;
-                    if (card.closest('#pastEventsGrid')) { visiblePast++; } else { visibleUpcoming++; }
+                    // 中止の回はカードを出すが「開催予定 N件」には数えない。
+                    // 行ける場所の数を数えるところなので、中止を混ぜると
+                    // トップの145件と絞り込み時の件数で意味が食い違う
+                    if (card.closest('#pastEventsGrid')) { visiblePast++; }
+                    else if (!card.classList.contains('event-cancelled')) { visibleUpcoming++; }
                 } else {
                     card.classList.remove('filter-show');
                     card.classList.add('filter-hide');
@@ -3118,14 +3122,14 @@
             }
         }
 
-        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908a が単一実装。
+        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908b が単一実装。
         // ここでは「行きたい」絞り込み中の再描画だけをフックで受ける。
         window.AEN_ON_FAV_CHANGE = function() {
             if (activeTag === 'fav') applyFilters();
         };
 
         // もっと見る(initLoadMore / loadMoreEvents / initPastLoadMore)は
-        // list-ui.js?v=20260908a が単一実装。件数も list-ui.js?v=20260908a が持つ。
+        // list-ui.js?v=20260908b が単一実装。件数も list-ui.js?v=20260908b が持つ。
 
         // フィルター適用時はload-more制限を解除して全件対象にする
         const _origApplyFilters = applyFilters;
@@ -3142,7 +3146,7 @@
         };
 
         // 初期表示(並び替え・もっと見る・行きたいの同期)は
-        // list-ui.js?v=20260908a と status-auto.js?v=20260908a が行う。ここで先に呼ぶと
+        // list-ui.js?v=20260908b と status-auto.js?v=20260908b が行う。ここで先に呼ぶと
         // 規則を二重に持つことになる。
 
         // ========== モバイル: カード下部行きたいバー + スワイプ ==========
@@ -3160,7 +3164,7 @@
                     toggleFav(e, slug);
                 });
 
-                // 初期状態は list-ui.js?v=20260908a の syncFavUI が反映する
+                // 初期状態は list-ui.js?v=20260908b の syncFavUI が反映する
 
                 // Swipe gesture
                 let startX = 0, startY = 0, swiping = false;
@@ -3198,9 +3202,9 @@
             });
         }
 
-        // バーの表示同期は list-ui.js?v=20260908a の syncFavUI が行う。
-        // initMobileFav の呼び出しも list-ui.js?v=20260908a の初期化から。
-    // 初期の振り分け・並び替えは status-auto.js?v=20260908a が行う(規則の二重定義を避ける)。
+        // バーの表示同期は list-ui.js?v=20260908b の syncFavUI が行う。
+        // initMobileFav の呼び出しも list-ui.js?v=20260908b の初期化から。
+    // 初期の振り分け・並び替えは status-auto.js?v=20260908b が行う(規則の二重定義を避ける)。
     </script>
 <script>
 /* === URLパラメータ対応 (SEO & シェア用) === */
@@ -3282,7 +3286,7 @@
         } catch(e) {}
     })();
     </script>
-<script src="status-auto.js?v=20260908a"></script>
-<script src="affiliate.js?v=20260908a"></script>
+<script src="status-auto.js?v=20260908b"></script>
+<script src="affiliate.js?v=20260908b"></script>
 </body>
 </html>
