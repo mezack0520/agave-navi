@@ -64,6 +64,54 @@ def main():
             html = new_html
             reasons.append('logo')
 
+        # パンくず。sitelib.crumb_bar_html が唯一の組み立て。
+        # 手書きのページは古い `<nav class="breadcrumb">` を直書きしていて、
+        # 帯の見た目を .crumb-bar に移した瞬間に枠と余白が消えた
+        # (2026-09-08。「取り残されてる」と言われた状態)。
+        # 根っこの呼び名も「ホーム」のままで、トップの現在地「全国」と
+        # 割れていた。ここで毎回作り直す。
+        m_bc = re.search(r'([ \t]*)(?:<div class="crumb-bar">\s*)?'
+                         r'<(nav|div) class="breadcrumb"[^>]*>(.*?)</\2>'
+                         r'(?:\s*<form class="search-field".*?</form>)?'
+                         r'(?:\s*</div>)?', html, re.S)
+        if m_bc:
+            inner = m_bc.group(3)
+            items, saw_current = [], False
+            for mm in re.finditer(
+                    r'<a\s[^>]*href="([^"]+)"[^>]*>(.*?)</a>'
+                    r'|<span([^>]*)>(.*?)</span>', inner, re.S):
+                if mm.group(1) is not None:
+                    label = re.sub(r'<[^>]+>', '', mm.group(2)).strip()
+                    href = mm.group(1)
+                    if label in ('ホーム', '全国') or href in ('/', '/index.html'):
+                        items.append(sitelib.CRUMB_ROOT)
+                    elif label:
+                        items.append((label, href))
+                    continue
+                # 区切りの span は項目ではない。ここを弾かないと、
+                # 一度作り直したあとの再実行で「>」を項目として拾い、
+                # 走らせるほど増える(2026-09-08 に about.html で発生)
+                attrs = mm.group(3) or ''
+                if 'pref-sep' in attrs or 'aria-hidden' in attrs:
+                    continue
+                label = re.sub(r'<[^>]+>', '', mm.group(4) or '').strip()
+                if label:
+                    items.append((label, None))
+                    saw_current = True
+            # 現在地を素のテキストで書いていたページがある
+            # (ikitai / calendar / map)。最後のタグの後ろの文字を拾う。
+            if items and not saw_current:
+                tail = re.split(r'</(?:a|span)>', inner)[-1]
+                tail = re.sub(r'<[^>]+>', '', tail)
+                tail = tail.replace('&gt;', '').replace('>', '').strip()
+                if tail:
+                    items.append((tail, None))
+            if items:
+                want_bc = sitelib.crumb_bar_html(items)
+                if m_bc.group(0).strip() != want_bc.strip():
+                    html = html[:m_bc.start()] + want_bc + html[m_bc.end():]
+                    reasons.append('breadcrumb')
+
         # ハンバーガーの開閉スクリプト。ヘッダーがあるページには必ず読ませる。
         # 手で足すと必ず抜ける。実際、注釈だけ入れてscriptタグを入れ忘れた
         # 状態で本番に出た(2026-09-08。注釈に nav.js の文字が入っていたので
