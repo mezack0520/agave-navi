@@ -1,17 +1,58 @@
 {
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
-  "sweptOn": "2026-09-08",
+  "sweptOn": "2026-09-09",
   "stats": {
     "targets": 21,
     "fetched": 21
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "okibota-max-2026-sunshine",
+      "name": "オキボタ MAX 2026 in サンシャインシティ",
+      "date": "2026-09-19",
+      "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotamax2026",
+      "why": "公式ページが変わった(本文)",
+      "changed": [
+        "本文"
+      ]
+    },
+    {
+      "slug": "ore-no-plants-collection-2026-09",
+      "name": "俺の！プランツ・コレクション！！",
+      "date": "2026-09-19",
+      "url": "https://shimane-hananosato.com/event/event-903/",
+      "why": "公式ページが変わった(本文)",
+      "changed": [
+        "本文"
+      ]
+    },
+    {
+      "slug": "greensnap-marche-yokohama-2026-autumn",
+      "name": "GreenSnap Marche YOKOHAMA 2026 Autumn",
+      "date": "2026-09-26",
+      "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
+      "why": "弱い語(中止)＋ページが変わった",
+      "changed": [
+        "本文"
+      ]
+    },
+    {
+      "slug": "shimane-cactus-succulent-ten-2026-10",
+      "name": "サボテン・多肉植物展",
+      "date": "2026-10-10",
+      "url": "https://shimane-hananosato.com/event/event-906/",
+      "why": "公式ページが変わった(本文)",
+      "changed": [
+        "本文"
+      ]
+    }
+  ],
   "pages": {
     "sakuya-green-jam-5-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22331/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "50fc501b89312dee",
         "images": "a12af253dbc269ea",
@@ -29,7 +70,7 @@
     },
     "yamashiro-aisenen-autumn-2026-09": {
       "url": "https://www.aisenen.com/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "c7683ed4375506f7",
         "images": "e3b0c44298fc1c14",
@@ -45,11 +86,11 @@
     },
     "okibota-max-2026-sunshine": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotamax2026",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
-        "text": "5a9d1cc2af21eff3",
+        "text": "15a806d0ce99b999",
         "images": "15c1ebd28b00deb0",
-        "textLen": 867,
+        "textLen": 892,
         "imageCount": 4
       },
       "strong": [],
@@ -57,11 +98,11 @@
       "datesNamed": 3,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 1
+      "textOnlyChanges": 2
     },
     "kourep-2026-autumn": {
       "url": "https://kourep.jp",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "e2cba93b1722fe9c",
         "images": "b602ef27f7097e78",
@@ -77,7 +118,7 @@
     },
     "midori-to-taniku-marche-nihonosato-2026-09": {
       "url": "https://www.nihonosato.com/post/succulentmarket",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "9d2147c2f58543f2",
         "images": "21183e7db25110ca",
@@ -95,9 +136,9 @@
     },
     "ore-no-plants-collection-2026-09": {
       "url": "https://shimane-hananosato.com/event/event-903/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
-        "text": "cdb80128f0271bb5",
+        "text": "0c32e273476636d9",
         "images": "44f611f497ede503",
         "textLen": 666,
         "imageCount": 6
@@ -107,11 +148,11 @@
       "datesNamed": 0,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "jusai-ichinomiya-autumn-2026": {
       "url": "https://jusai.link/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "39e6dd9968dffd2d",
         "images": "1c0accf2b66051be",
@@ -127,11 +168,11 @@
     },
     "greensnap-marche-yokohama-2026-autumn": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
-        "text": "139fe2e893267892",
+        "text": "66d4005b72698496",
         "images": "0aeda67372d6edc3",
-        "textLen": 13477,
+        "textLen": 13479,
         "imageCount": 195
       },
       "strong": [],
@@ -141,11 +182,11 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "taniku-midori-marche-niitsu-2026-09": {
       "url": "https://nf-land.com/event/9050/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "41895895003643a7",
         "images": "18c35d2b626644c3",
@@ -161,7 +202,7 @@
     },
     "isij-big-bazaar-2026-09-27": {
       "url": "http://isij.net/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "9169c3d50a25c3e6",
         "images": "a43a8b04c4332199",
@@ -177,7 +218,7 @@
     },
     "plants-show-kiryu-2026-autumn": {
       "url": "https://note.com/purveyors/n/nccecb7bfd245",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "66eb2d72d30ec041",
         "images": "59aa9465df171f0a",
@@ -193,7 +234,7 @@
     },
     "on-the-plants-vol9-fukuoka-2026-10": {
       "url": "https://ontheplants.com/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "d1810f1e7075cccd",
         "images": "1ac04d43b10efda9",
@@ -209,7 +250,7 @@
     },
     "souransai-koshigaya-2026-10": {
       "url": "https://soransai.com/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "c852153ebefd50ba",
         "images": "389802360dd40ef6",
@@ -225,9 +266,9 @@
     },
     "shimane-cactus-succulent-ten-2026-10": {
       "url": "https://shimane-hananosato.com/event/event-906/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
-        "text": "acb43afa5f635c4f",
+        "text": "2942e9bb32120e0f",
         "images": "830d2eed43198e6d",
         "textLen": 709,
         "imageCount": 6
@@ -237,11 +278,11 @@
       "datesNamed": 0,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "hiroshima-cactus-succulent-ten-2026-10": {
       "url": "http://www.hiroshima-bot.jp/info/%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3%E3%83%BB%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9%E5%B1%95/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "83c953f2890ee72d",
         "images": "8c555587ed268d73",
@@ -257,7 +298,7 @@
     },
     "kadan-fes-2026-autumn": {
       "url": "https://fumakilla.jp/kadanlife/kadanfes/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "c9a57513fbc3d092",
         "images": "651b11e75489e1fb",
@@ -273,7 +314,7 @@
     },
     "kagoen-aki-geijutsu-shokubutsu-matsuri-13th-2026": {
       "url": "https://www.kagoen.co/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "cd2ccb528eb59cd4",
         "images": "838612508b03314a",
@@ -289,7 +330,7 @@
     },
     "nihon-shaboten-taikai-51st-2026-10": {
       "url": "https://kyotocactus.syuriken.jp/project.html",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "9449d820af6e89bc",
         "images": "e3b0c44298fc1c14",
@@ -305,7 +346,7 @@
     },
     "jurian-aki-taniku-cactus-2026-10": {
       "url": "https://www.jurian.or.jp/event/article/?id=1475",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "bf7de8e13bbf97cd",
         "images": "8859875c86a5399f",
@@ -321,7 +362,7 @@
     },
     "toyama-saboten-taniku-9th-2026-10": {
       "url": "https://www.bgtym.org/event/13014/",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "045195f11ec6f8f5",
         "images": "dfa03fc549e5c2e3",
@@ -337,7 +378,7 @@
     },
     "chuushokushobutsusai-2026": {
       "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
-      "checkedOn": "2026-09-08",
+      "checkedOn": "2026-09-09",
       "signature": {
         "text": "e285efb1398ce5b8",
         "images": "121e2972574a1126",
