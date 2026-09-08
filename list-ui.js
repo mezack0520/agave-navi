@@ -112,9 +112,18 @@
     var g = document.getElementById('eventsGrid');
     return g ? Array.prototype.slice.call(g.querySelectorAll('.event-card')) : [];
   }
+  // 段数で切る対象は「絞り込みを通ったカード」だけ。
+  // 全件を対象にすると、関東で絞ったときに最初の12枚が他地域で埋まり、
+  // 画面には数枚しか出ないのに「もっと見る」が消える。
+  // filter-hide はトップの絞り込みが同期的に付けるので、この時点で読める。
+  function pageableCards() {
+    return mainCards().filter(function (c) {
+      return !c.classList.contains('filter-hide');
+    });
+  }
   function updateLoadMoreBtn() {
     var wrap = document.getElementById('loadMoreWrap');
-    if (wrap) wrap.style.display = shown >= mainCards().length ? 'none' : '';
+    if (wrap) wrap.style.display = shown >= pageableCards().length ? 'none' : '';
   }
   // load-more-hidden はこの関数が完全に所有する。
   // 対象を #eventsGrid のカードだけに絞ると、status-auto.js が
@@ -126,30 +135,33 @@
       c.classList.remove(name);
     });
   }
-  function initLoadMore() {
-    shown = cardsPerPage();
+  function paintLoadMore() {
     clearClass('load-more-hidden');
-    mainCards().forEach(function (card, i) {
+    pageableCards().forEach(function (card, i) {
       if (i >= shown) card.classList.add('load-more-hidden');
     });
     updateLoadMoreBtn();
   }
-  function loadMoreEvents() {
-    var limit = shown + cardsPerPage(), delay = 0;
-    mainCards().forEach(function (card, i) {
-      if (i >= shown && i < limit) {
-        card.classList.remove('load-more-hidden');
-        card.style.display = '';
-        card.classList.add('filter-show');
-        card.style.animationDelay = delay + 'ms';
-        delay += 60;
-        reloadCardImages(card);
-      }
-    });
-    shown = limit;
-    updateLoadMoreBtn();
+  function initLoadMore() {
+    shown = cardsPerPage();
+    paintLoadMore();
   }
-  // 絞り込み中は制限を外して全件を対象にする
+  function loadMoreEvents() {
+    var prev = shown;
+    shown = prev + cardsPerPage();
+    var list = pageableCards();
+    paintLoadMore();
+    var delay = 0;
+    list.slice(prev, shown).forEach(function (card) {
+      card.style.display = '';
+      card.classList.add('filter-show');
+      card.style.animationDelay = delay + 'ms';
+      delay += 60;
+      reloadCardImages(card);
+    });
+  }
+  // 全件出す。絞り込みでは使わない(段数の制限をかけたままにする)。
+  // 「行きたい」一覧のように必ず全件出す画面のために残してある
   function showAllMain() {
     clearClass('load-more-hidden');
     mainCards().forEach(function (c) { reloadCardImages(c); });

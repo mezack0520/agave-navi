@@ -16,8 +16,8 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908j'
-JS_VERSION = '20260908e'
+CSS_VERSION = '20260908k'
+JS_VERSION = '20260908f'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -641,20 +641,12 @@ def filter_updates(items, region=None, prefecture=None):
     return out
 
 
-def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
-                         show_feed=True, root=''):
-    """更新のお知らせ。追加と中止をここで受け取らせる。
+def update_rows(picked, root=''):
+    """更新のお知らせの行。1行1件。
 
-    一覧サイトの値打ちは「いまの状態が正しいこと」だが、変わったことは
-    どこにも出ていなかった。カードの新着バッジは7日で消えるだけで、
-    中止に至っては受け取り手がいない。詳細ページに中止と出しても、
-    2週間前に見た人はそのページに戻ってこない(2026-09-08)。
-
-    region / prefecture を渡すとその範囲に絞る。トップ(全国)は絞らないが、
-    各行に data-pref / data-region を持たせて、トップの地域チップでの
-    絞り込みにJS側から追随できるようにしてある。
+    節の組み立てと範囲別の差し替え用の両方がここを通る。
+    同じ行を2箇所で組むと、片方だけ列が増えて必ずずれる。
     """
-    picked = pick_updates(filter_updates(items, region, prefecture), limit)
     rows = []
     for it in picked:
         kind = str(it.get('kind') or '')
@@ -664,7 +656,6 @@ def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
         on = (it.get('on') or '')[:10]
         on_disp = on[5:].replace('-', '.') if len(on) == 10 else on
         pref = (it.get('prefecture') or '').strip()
-        reg = pref_to_region(pref) or ''
         detail = (it.get('detail') or '').strip()
         # 取り消した回は詳細ページが無いのでリンクしない
         if kind == 'removed' or not slug:
@@ -674,43 +665,79 @@ def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
                      f'{html_escape(name)}</a>')
         side = ' / '.join(x for x in [pref, detail] if x)
         rows.append(
-            f'<li class="upd-item" data-pref="{_attr(pref)}"'
-            f' data-region="{_attr(reg)}">'
+            f'<li class="upd-item">'
             f'<span class="upd-date">{html_escape(on_disp)}</span>'
             f'<span class="upd-kind {cls}">{html_escape(label)}</span>'
             f'<span class="upd-title">{title}</span>'
             + (f'<span class="upd-meta">{html_escape(side)}</span>' if side else '')
             + '</li>')
+    return rows
+
+
+def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
+                         show_feed=True, root=''):
+    """更新のお知らせ。追加と中止をここで受け取らせる。
+
+    一覧サイトの値打ちは「いまの状態が正しいこと」だが、変わったことは
+    どこにも出ていなかった。カードの新着バッジは7日で消えるだけで、
+    中止に至っては受け取り手がいない。詳細ページに中止と出しても、
+    2週間前に見た人はそのページに戻ってこない(2026-09-08)。
+
+    region / prefecture を渡すとその範囲に絞る。トップは全国で出し、
+    地域チップで絞られたときは updates_scopes が作った範囲別の行に
+    JS側が差し替える。
+    """
+    rows = update_rows(pick_updates(filter_updates(items, region, prefecture),
+                                    limit), root)
     if not rows:
         return ''
     scope = prefecture or region or ''
     note = f'{scope}の掲載・中止・日程変更' if scope else '掲載・中止・日程変更'
     feed = (f'<a class="updates-feed" href="{root}feeds/updates.xml">'
             f'RSSで受け取る</a>' if show_feed else '')
-    # 全国TOPだけ、地域チップで絞ったときの行き先を持たせる。
-    # ここに並ぶのは全国の最新10件なので、関東で絞ると0件になることがある
-    # (関東の更新自体はあるのに出ない)。そこで地域ページへ渡す。
-    # ローマ字の対応表はここが唯一の持ち主なので、JS側に定義を写さない。
-    scope_attr = ''
-    scope_link = ''
-    if not region and not prefecture:
-        _m = {'region': dict(REGION_ROMAJI),
-              'pref': {_p: pref_slug(_p) for _p in PREF_ROMAJI}}
-        scope_attr = (' data-scope-map="'
-                      + html_escape(json.dumps(_m, ensure_ascii=False)) + '"')
-        scope_link = ('<a class="updates-scope-link" id="updatesScopeLink"'
-                      ' href="#" hidden></a>')
     return (
-        '<section class="updates-section" id="updates" aria-labelledby="updatesHeading"'
-        + scope_attr + '>'
+        '<section class="updates-section" id="updates" aria-labelledby="updatesHeading">'
         '<div class="updates-head">'
         '<h2 class="updates-title" id="updatesHeading">更新のお知らせ'
         f'<span class="updates-note">{html_escape(note)}</span></h2>'
         + feed +
         '</div>'
         '<ul class="updates-list">' + ''.join(rows) + '</ul>'
-        + scope_link +
         '</section>')
+
+
+def updates_scopes(items, limit=UPDATES_MAX, root=''):
+    """範囲別の行をまとめて返す。キーは all / region:関東 / pref:愛知。
+
+    トップに埋まっているのは全国の最新10件なので、関東で絞ると
+    0件になることがあった。関東の更新自体はあるのに「無い」と出る
+    (2026-09-08 本番で確認)。範囲ごとの行を作っておいてJS側で
+    差し替える。取り出しと組み立てはここを通るので、地域ページと
+    同じ並び・同じ行になる。
+    """
+    out = {}
+    rows = update_rows(pick_updates(items, limit), root)
+    if rows:
+        out['all'] = ''.join(rows)
+    regions, prefs = set(), set()
+    for it in (items or []):
+        pf = (it.get('prefecture') or '').strip()
+        if not pf:
+            continue
+        prefs.add(pf)
+        rg = pref_to_region(pf)
+        if rg:
+            regions.add(rg)
+    for rg in sorted(regions):
+        r = update_rows(pick_updates(filter_updates(items, region=rg), limit), root)
+        if r:
+            out['region:' + rg] = ''.join(r)
+    for pf in sorted(prefs):
+        r = update_rows(pick_updates(filter_updates(items, prefecture=pf), limit),
+                        root)
+        if r:
+            out['pref:' + pf] = ''.join(r)
+    return out
 
 
 def site_footer():

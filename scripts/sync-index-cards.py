@@ -26,7 +26,8 @@ from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
                      LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
                      list_sort_key, is_cancelled, cancel_label,
-                     updates_section_html, load_updates)
+                     updates_section_html, load_updates,
+                     updates_scopes)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -299,6 +300,25 @@ def main():
             print(f'updates section: {_body.count("upd-item")} 件に更新')
     else:
         print('::warning::UPDATES-SECTION の受け口が index.html に無い')
+
+    # 範囲別の行。トップで地域チップを押したときにJSが差し替える。
+    # トップに埋めるのは全国の最新10件なので、関東で絞ると0件になる
+    # ことがあった(関東の更新自体はあるのに)。
+    # 行の組み立ては sitelib.update_rows だけが持つので、地域ページと
+    # 同じ並び・同じ行になる。
+    _scopes = updates_scopes(load_updates())
+    _sp = os.path.join(ROOT, 'site-updates-scopes.json')
+    _new = json.dumps({'_note': 'scripts/sync-index-cards.py が生成する。手で書かない',
+                       'updated': str(today_jst()),
+                       'scopes': _scopes}, ensure_ascii=False, indent=1)
+    _old = ''
+    if os.path.exists(_sp):
+        with open(_sp, encoding='utf-8') as f:
+            _old = f.read()
+    if _old != _new:
+        with open(_sp, 'w', encoding='utf-8') as f:
+            f.write(_new + '\n')
+        print(f'site-updates-scopes.json: {len(_scopes)} 範囲')
 
     # events.json にあって index.html に無い回のカードを作る
     html, inserted = insert_missing_cards(html, events)

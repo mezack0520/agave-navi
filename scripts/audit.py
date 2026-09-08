@@ -1716,6 +1716,32 @@ def main():
             if _sl and _sl not in _ix:
                 _upd_bad.append(
                     f"{i.get('kind')} の {_sl} がTOPの更新欄に無い")
+    # 範囲別の行。トップで地域チップを押したときにJSが読む。
+    # 生成し忘れると、関東で絞ったときに黙って「更新なし」になる
+    # (画面上は節が消えるだけなので、見ていて気づけない)。
+    _scp = rp('site-updates-scopes.json')
+    if _upd:
+        if not os.path.exists(_scp):
+            _upd_bad.append('site-updates-scopes.json が無い'
+                            '（地域で絞ると更新欄が空になる）')
+        else:
+            try:
+                with open(_scp, encoding='utf-8') as f:
+                    _sc = (json.load(f) or {}).get('scopes') or {}
+            except (OSError, ValueError):
+                _sc = {}
+                _upd_bad.append('site-updates-scopes.json が読めない')
+            _n_all = str(_sc.get('all') or '').count('class="upd-item"')
+            if _sc and _n_all != _shown:
+                _upd_bad.append(
+                    f'site-updates-scopes.json の all が {_n_all} 件、'
+                    f'TOPの更新欄は {_shown} 件')
+            # 更新のある地域は必ず範囲が立っていること
+            for _rg in sorted({sitelib.pref_to_region((i.get('prefecture') or '').strip())
+                               for i in _upd} - {None, ''}):
+                if _sc and not _sc.get('region:' + _rg):
+                    _upd_bad.append(f'{_rg} の更新があるのに範囲別の行が無い')
+
     add('updates_section_drift', '更新のお知らせがsite-updates.jsonと不一致',
         sorted(_upd_bad),
         'index.html の更新欄は生成物。scripts/sync-index-cards.py が'

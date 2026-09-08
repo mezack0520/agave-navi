@@ -256,6 +256,11 @@ body.no-scroll {
 .menu-toggle {
     display: none;
     flex-direction: column;
+    /* 24pxの箱に線2px×3 + 隙間5px×2 = 16px しか入っていないので、
+       上詰め(既定)だと下に8px余り、線の中心が箱の中心より4px上に来る。
+       ヘッダーの他の要素は中心が揃っているため、これだけ浮いて見えた
+       (2026-09-08 指摘)。 */
+    justify-content: center;
     gap: 5px;
     background: none;
     border: none;
@@ -273,8 +278,10 @@ body.no-scroll {
     transition: all 0.3s ease;
 }
 
+/* 中央寄せにしたので線は y=5 / 12 / 19。Xの交点を箱の中心(12)に
+   合わせるため、上下の線を7pxずつ寄せてから回す */
 .menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: translateY(7px) rotate(45deg);
 }
 
 .menu-toggle.active span:nth-child(2) {
@@ -282,7 +289,7 @@ body.no-scroll {
 }
 
 .menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(8px, -8px);
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Navigation Overlay */
@@ -509,35 +516,41 @@ body.no-scroll {
 }
 .pref-row::-webkit-scrollbar { display: none; }
 
-.pref-back-btn {
+/* 全国 > 関東 > 県 のパンくず型。
+   以前は「←」の丸ボタン + 太字の地域名 + 「すべて」チップだった。
+   「すべて」に色が付くので、いま何で絞っているのかが
+   「関東の中のすべて」と二段で読まないと分からなかった。
+   地域名自体を選択状態にすれば「すべて」は要らない(2026-09-08 指摘)。
+   区切りと語順は詳細ページのパンくず(ホーム > 関東 > 埼玉)に合わせた。 */
+.pref-crumb {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
+    padding: 0.28rem 0.75rem;
+    font-size: 0.74rem;
+    font-weight: 600;
     border: 1.5px solid var(--gray-300);
-    border-radius: 50%;
+    border-radius: 20px;
     background: var(--white);
     color: var(--gray-600);
-    font-size: 0.85rem;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
-.pref-back-btn:hover {
-    background: var(--gray-100);
+.pref-crumb:hover {
     border-color: var(--gray-400);
+    background: var(--gray-100);
+    color: var(--black);
+}
+.pref-crumb.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
 }
 
-.pref-region-label {
+.pref-sep {
     flex-shrink: 0;
-    font-size: 0.76rem;
-    font-weight: 700;
-    color: var(--black);
-    padding-right: 0.3rem;
-    border-right: 1.5px solid var(--gray-300);
-    margin-right: 0.1rem;
-    white-space: nowrap;
+    color: var(--gray-400);
+    font-size: 0.7rem;
+    user-select: none;
 }
 
 .pref-chips {
@@ -561,14 +574,15 @@ body.no-scroll {
     white-space: nowrap;
 }
 .pref-chip:hover {
-    border-color: var(--accent-pop);
-    color: var(--accent-pop);
-    background: #fff0f0;
+    border-color: var(--gray-400);
+    color: var(--black);
+    background: var(--gray-100);
 }
+/* 選択中は地域タブと同じ黒。赤は中止バッジなど「注意」に取っておく */
 .pref-chip.active {
-    background: var(--accent-pop);
+    background: var(--black);
     color: var(--white);
-    border-color: var(--accent-pop);
+    border-color: var(--black);
 }
 
 /* Empty state for 行きたい list */
@@ -1912,12 +1926,8 @@ main {
         padding: 0.25rem 0.65rem;
         font-size: 0.7rem;
     }
-    .pref-back-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 0.75rem;
-    }
-    .pref-region-label {
+    .pref-crumb {
+        padding: 0.22rem 0.6rem;
         font-size: 0.7rem;
     }
     .pref-chip {
@@ -3860,18 +3870,6 @@ main {
     color: var(--gray-500);
     font-size: 0.76rem;
     white-space: nowrap;
-}
-
-.updates-scope-link {
-    display: block;
-    padding: 0.7rem 0.15rem 0.2rem;
-    color: var(--gray-600);
-    font-size: 0.8rem;
-    text-decoration: none;
-}
-
-.updates-scope-link:hover {
-    color: var(--accent-pop);
 }
 
 @media (max-width: 700px) {
