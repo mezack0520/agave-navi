@@ -16,7 +16,7 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260909b'
+CSS_VERSION = '20260909c'
 JS_VERSION = '20260908g'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -1014,7 +1014,12 @@ def site_footer():
         <span class="logo-en">AGAVE EVENT NAVI</span>
       </div>
       <nav class="footer-nav">
-        <a href="/">イベント一覧</a>
+        <!-- 「イベント一覧」と呼んでいたが、行き先はメニューの「ホーム」・
+             ロゴ・パンくずの「全国」と同じ / だった。同じ場所を4つの名前で
+             呼んでいて、どれを押しても同じところに着く(2026-09-09 指摘)。
+             ナビでの呼び名は「ホーム」に統一する。
+             「全国」はイベントの範囲を指す言葉なので、パンくずだけで使う -->
+        <a href="/">ホーム</a>
         <a href="/new/">新着</a>
         <a href="/calendar.html">カレンダー</a>
         <a href="/map.html">マップ</a>

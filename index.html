@@ -41,7 +41,7 @@
     <link rel="dns-prefetch" href="https://www.amazon.co.jp">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
-    <link rel="stylesheet" href="style.css?v=20260909b">
+    <link rel="stylesheet" href="style.css?v=20260909c">
     <!-- 一覧の共通UI(行きたい・もっと見る)。body内のインラインから呼ぶため head で同期読み込み -->
     <script src="list-ui.js?v=20260908g"></script>
 
@@ -2875,7 +2875,12 @@
         <span class="logo-en">AGAVE EVENT NAVI</span>
       </div>
       <nav class="footer-nav">
-        <a href="/">イベント一覧</a>
+        <!-- 「イベント一覧」と呼んでいたが、行き先はメニューの「ホーム」・
+             ロゴ・パンくずの「全国」と同じ / だった。同じ場所を4つの名前で
+             呼んでいて、どれを押しても同じところに着く(2026-09-09 指摘)。
+             ナビでの呼び名は「ホーム」に統一する。
+             「全国」はイベントの範囲を指す言葉なので、パンくずだけで使う -->
+        <a href="/">ホーム</a>
         <a href="/new/">新着</a>
         <a href="/calendar.html">カレンダー</a>
         <a href="/map.html">マップ</a>

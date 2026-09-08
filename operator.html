@@ -20,7 +20,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2">
     <link rel="manifest" href="/manifest.webmanifest?v=2">
     <meta name="theme-color" content="#111">
-    <link rel="stylesheet" href="style.css?v=20260909b">
+    <link rel="stylesheet" href="style.css?v=20260909c">
     <meta property="og:image" content="https://agave-navi.com/images/ogp-default.jpg">
     <script src="/nav.js?v=20260908g" defer></script>
 </head>
@@ -106,7 +106,12 @@
         <span class="logo-en">AGAVE EVENT NAVI</span>
       </div>
       <nav class="footer-nav">
-        <a href="/">イベント一覧</a>
+        <!-- 「イベント一覧」と呼んでいたが、行き先はメニューの「ホーム」・
+             ロゴ・パンくずの「全国」と同じ / だった。同じ場所を4つの名前で
+             呼んでいて、どれを押しても同じところに着く(2026-09-09 指摘)。
+             ナビでの呼び名は「ホーム」に統一する。
+             「全国」はイベントの範囲を指す言葉なので、パンくずだけで使う -->
+        <a href="/">ホーム</a>
         <a href="/new/">新着</a>
         <a href="/calendar.html">カレンダー</a>
         <a href="/map.html">マップ</a>

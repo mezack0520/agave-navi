@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://ck.jp.ap.valuecommerce.com" crossorigin>
   <link rel="dns-prefetch" href="https://m.media-amazon.com">
 
-  <link rel="stylesheet" href="../style.css?v=20260909b">
+  <link rel="stylesheet" href="../style.css?v=20260909c">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -220,7 +220,9 @@
         </div>
 
         <div class="detail-back">
-          <a href="/?region=%E9%96%A2%E8%A5%BF" class="detail-back-link">関西のイベントに戻る</a>
+          <!-- パンくずの「関東」と行き先は同じだが、こちらは読み終わった人に
+               次を出す役目。「戻る」ではなく「他を見る」にしてある -->
+          <a href="/?region=%E9%96%A2%E8%A5%BF" class="detail-back-link">関西の他のイベントを見る</a>
         </div>
     </div>
 
@@ -234,7 +236,12 @@
         <span class="logo-en">AGAVE EVENT NAVI</span>
       </div>
       <nav class="footer-nav">
-        <a href="/">イベント一覧</a>
+        <!-- 「イベント一覧」と呼んでいたが、行き先はメニューの「ホーム」・
+             ロゴ・パンくずの「全国」と同じ / だった。同じ場所を4つの名前で
+             呼んでいて、どれを押しても同じところに着く(2026-09-09 指摘)。
+             ナビでの呼び名は「ホーム」に統一する。
+             「全国」はイベントの範囲を指す言葉なので、パンくずだけで使う -->
+        <a href="/">ホーム</a>
         <a href="/new/">新着</a>
         <a href="/calendar.html">カレンダー</a>
         <a href="/map.html">マップ</a>
