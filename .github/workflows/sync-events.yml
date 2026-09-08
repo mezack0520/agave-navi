@@ -112,11 +112,12 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
         run: |
-          pip install requests beautifulsoup4 lxml
+          pip install requests beautifulsoup4 lxml pillow
           IFS=',' read -ra SLUGS <<< "${{ steps.newslugs.outputs.slugs }}"
           for slug in "${SLUGS[@]}"; do
             echo "::group::Enrich $slug"
             python3 scripts/enrich_events.py --slug "$slug" --write-back --no-remove || true
+            python3 scripts/fetch-event-images.py --slug "$slug" || true
             echo "::endgroup::"
           done
 

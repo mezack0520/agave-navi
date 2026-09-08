@@ -44,6 +44,9 @@ KNOWN_EVENT_FIELDS = {
     # 中止・延期の回。読むのは sitelib.is_cancelled と
     # build-detail-pages.make_cancel_notice(2026-09-08)
     'cancelledOn', 'cancelReason', 'cancelNoticeUrl',
+    # 自サイトに置いたアイキャッチの取得元(2026-09-08)。
+    # 読むのは scripts/fetch-event-images.py と詳細ページの出所表示
+    'imageSource',
 }
 
 

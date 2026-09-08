@@ -676,6 +676,14 @@ def make_hero_meta_note(ev):
         src = (ev.get('dataSource') or '').strip()
         parts.append('出典 ' + html_escape(src) if src else '出典 スタッフ収集情報')
 
+    # 自サイトに置いたアイキャッチは、取得元を明示する。
+    # 他人の告知画像を複製して自分のドメインから配っているので、
+    # どこから来たかを黙っておくのは筋が通らない(2026-09-08)。
+    isrc = (ev.get('imageSource') or '').strip()
+    if isrc and (ev.get('imageUrl') or '').startswith('https://agave-navi.com/images/events/'):
+        parts.append(f'画像 <a href="{html_escape(isrc)}" target="_blank" '
+                     f'rel="noopener nofollow">主催者の告知より</a>')
+
     if not parts:
         return ''
     return ('<p class="eh-meta-note">' + '<span class="ehm-sep">/</span>'.join(parts)
