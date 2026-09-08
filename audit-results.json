@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 102,
+      "count": 103,
       "items": [
         "bba-vol5-carpediem-2026-09",
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
@@ -225,7 +225,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 141,
+      "count": 142,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "aobouzu-kagoshima-popup-2026-09",
@@ -273,7 +273,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 43,
+      "count": 42,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -690,7 +690,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 42,
+      "count": 41,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-12 plants-festa-2-kawashima-2026-09",
@@ -699,7 +699,6 @@
         "2026-09-19 kourep-2026-autumn",
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
-        "2026-09-20 wi-wi-botanical-minokamo-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
         "2026-09-27 exploring-unpredictable-plants-2026-09",
@@ -731,7 +730,8 @@
         "2027-01-24 aichin-shokusai-new-year-party-2027",
         "2027-03-14 isij-big-bazaar-2027-03-14",
         "2027-05-23 isij-big-bazaar-2027-05-23",
-        "2027-07-11 isij-big-bazaar-2027-07-11"
+        "2027-07-11 isij-big-bazaar-2027-07-11",
+        "2027-09-26 isij-big-bazaar-2027-09-26"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
