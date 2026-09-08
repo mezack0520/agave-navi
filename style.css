@@ -583,22 +583,6 @@ body.no-scroll {
     display: none;
 }
 
-.filter-bar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.filter-tabs {
-    display: flex;
-    gap: 0.4rem;
-    flex-shrink: 0;
-    padding: 0.5rem 0;
-}
 
 /* 検索。スマホでは虫眼鏡だけに畳んで、触ったら開く。
    常に開いた入力欄を置くと、狭い画面で1段を丸ごと使ってしまう
@@ -740,9 +724,7 @@ body.no-scroll {
 }
 
 /* 全国 > 地域 > 県 の1行。地域選択と県選択で同じ組み方にする */
-.crumb-row,
-.region-tabs,
-.pref-row {
+.crumb-row {
     display: flex;
     align-items: center;
     gap: 0.3rem;
@@ -751,9 +733,7 @@ body.no-scroll {
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
 }
-.crumb-row::-webkit-scrollbar,
-.region-tabs::-webkit-scrollbar,
-.pref-row::-webkit-scrollbar { display: none; }
+.crumb-row::-webkit-scrollbar { display: none; }
 
 .pref-chips {
     display: flex;
@@ -826,96 +806,6 @@ body.no-scroll {
 }
 
 /* Instagram card in detail sidebar */
-.detail-instagram-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 1.2rem 1.5rem;
-    margin-top: 1rem;
-    box-shadow: var(--shadow-light);
-}
-.detail-instagram-card h3 {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-.detail-instagram-card h3 svg {
-    width: 16px;
-    height: 16px;
-    stroke: var(--gray-400);
-}
-.instagram-account-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 0.8rem;
-    background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    color: var(--text-color);
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all var(--transition);
-}
-.instagram-account-link:hover {
-    background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
-    transform: translateY(-1px);
-}
-.instagram-account-link svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-}
-.instagram-account-link .ig-gradient {
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.filter-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 1;
-    min-width: 0;
-}
-
-.filter-select {
-    padding: 0.45rem 2rem 0.45rem 0.75rem;
-    border: 1px solid var(--gray-300);
-    border-radius: 24px;
-    font-size: 0.78rem;
-    font-family: inherit;
-    font-weight: 500;
-    color: var(--text-color);
-    background-color: var(--gray-100);
-    cursor: pointer;
-    outline: none;
-    transition: all var(--transition);
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23717171'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    white-space: nowrap;
-}
-
-.filter-select:hover {
-    border-color: var(--black);
-}
-
-.filter-select:focus {
-    border-color: var(--black);
-    background-color: var(--white);
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
-}
 
 
 /* ========================================
@@ -942,11 +832,6 @@ main {
     padding: 1.25rem 1.5rem 2rem;
 }
 
-.main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
-}
 
 /* ========================================
    EVENTS GRID & CARDS
@@ -1251,12 +1136,6 @@ main {
     overflow: hidden;
 }
 
-.event-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin-bottom: 0.6rem;
-}
 
 .tag {
     display: inline-block;
@@ -1305,9 +1184,6 @@ main {
    SCHEDULE TABLE (HIDDEN)
    ======================================== */
 
-.schedule-section {
-    display: none;
-}
 
 /* ========================================
    SIDEBAR (HIDDEN)
@@ -1323,20 +1199,113 @@ main {
 
 .legal-content,
 .about-content,
-.contact-form-container {
-    max-width: 900px;
+.legal-content h1,
+/* 文章ページの器と文字。**ここが唯一の宣言。**
+   about / 規約 / プライバシー / 免責 / お問い合わせ / 掲載申請 /
+   運営者情報 で、器のクラス名も見出しの大きさも余白も別々だった。
+   同じ「読ませるページ」なのにページごとに違って見えた
+   (2026-09-08 指摘)。器のクラスは既存のまま、宣言をここに集める。 */
+.about-content,
+.legal-content,
+.contact-form-container,
+.listing-content {
+    max-width: 760px;
     margin: 0 auto;
-    padding: 2rem;
-    background-color: var(--white);
+    padding: 1.6rem 1rem 3rem;
 }
 
+.about-content h1,
 .legal-content h1,
-.about-content h1 {
-    font-size: 2.2rem;
+.contact-form-container h1,
+.listing-content h1 {
+    margin: 0 0 1.2rem;
+    font-size: 1.7rem;
     font-weight: 900;
-    color: var(--black);
-    margin-bottom: 1rem;
     letter-spacing: -0.02em;
+    color: var(--black);
+}
+
+.about-content h2,
+.legal-content h2,
+.contact-form-container h2,
+.listing-content h2 {
+    margin: 2.2rem 0 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.about-content h3,
+.legal-content h3,
+.contact-form-container h3,
+.listing-content h3 {
+    margin: 1.5rem 0 0.6rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.about-content p,
+.legal-content p,
+.contact-form-container p,
+.listing-content p {
+    margin: 0 0 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text-color);
+}
+
+.about-content ul,
+.about-content ol,
+.legal-content ul,
+.legal-content ol,
+.contact-form-container ul,
+.listing-content ul {
+    margin: 0 0 1rem;
+    padding-left: 1.4rem;
+}
+
+.about-content li,
+.legal-content li,
+.contact-form-container li,
+.listing-content li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text-color);
+}
+
+.about-content a,
+.legal-content a,
+.contact-form-container a,
+.listing-content a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.about-content a:hover,
+.legal-content a:hover,
+.contact-form-container a:hover,
+.listing-content a:hover {
+    color: var(--accent-pop);
+}
+
+@media (min-width: 721px) {
+    .about-content,
+.legal-content,
+.contact-form-container,
+.listing-content {
+        padding: 2rem 2rem 4rem;
+    }
+    .about-content h1,
+.legal-content h1,
+.contact-form-container h1,
+.listing-content h1 {
+        font-size: 2rem;
+    }
 }
 
 .legal-date {
@@ -1346,57 +1315,20 @@ main {
 }
 
 .legal-content h2,
-.about-content h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--black);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--gray-200);
-}
 
 .legal-content h3,
-.about-content h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--gray-600);
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-}
 
 .legal-content p,
-.about-content p {
-    color: var(--text-color);
-    line-height: 1.8;
-    margin-bottom: 1rem;
-}
 
 .legal-content ul,
 .legal-content ol,
 .about-content ul,
-.about-content ol {
-    margin-left: 2rem;
-    margin-bottom: 1rem;
-}
 
 .legal-content li,
-.about-content li {
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-}
 
 .legal-content a,
-.about-content a {
-    color: var(--black);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
 
 .legal-content a:hover,
-.about-content a:hover {
-    color: var(--gray-600);
-}
 
 .legal-footer-info {
     margin-top: 3rem;
@@ -1418,52 +1350,11 @@ main {
     margin: 0;
 }
 
-.feature-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
-}
-
-.feature-card {
-    background-color: var(--gray-100);
-    padding: 2rem;
-    border-radius: var(--radius);
-    border-bottom: 3px solid var(--black);
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-medium);
-}
-
-.feature-card h3 {
-    margin-top: 0;
-    color: var(--black);
-}
 
 /* ========================================
    OPERATOR PAGE
    ======================================== */
 
-.operator-card {
-    background-color: var(--gray-100);
-    padding: 2rem;
-    border-radius: var(--radius);
-    border-left: 3px solid var(--black);
-    margin: 1.5rem 0;
-}
-
-.operator-info {
-    margin-bottom: 2rem;
-}
-
-.operator-info h2 {
-    color: var(--black);
-    font-size: 1.3rem;
-}
 
 .operator-table {
     width: 100%;
@@ -1489,26 +1380,7 @@ main {
 
 
 /* detail hero no-image is removed entirely via HTML — this class kept as fallback */
-.detail-no-image {
-    display: none;
-}
 
-.detail-header {
-    padding: 1.1rem 0 0.9rem;
-    border-bottom: 1px solid var(--gray-200);
-    animation: fadeIn 0.5s ease;
-    position: relative;
-}
-
-.detail-header h1 {
-    font-size: 1.7rem;
-    font-weight: 900;
-    color: var(--black);
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.4rem;
-    padding-right: 200px;
-}
 
 .detail-meta {
     display: flex;
@@ -1538,12 +1410,6 @@ main {
     font-weight: 700;
 }
 
-.detail-meta-dot {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: var(--gray-400);
-}
 
 .detail-status-badge {
     display: inline-block;
@@ -1560,13 +1426,6 @@ main {
 }
 
 /* Info Grid — 2-column layout */
-.detail-body {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 3rem;
-    padding-top: 2rem;
-    animation: fadeInUp 0.5s ease 0.1s both;
-}
 
 
 .detail-sidebar {
@@ -1579,22 +1438,6 @@ main {
     grid-column: 2;
 }
 
-.detail-info-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-light);
-}
-
-.detail-info-card h3 {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 1.2rem;
-}
 
 .info-row {
     display: flex;
@@ -1643,16 +1486,7 @@ main {
 }
 
 /* Map in detail */
-.detail-map {
-    margin-bottom: 2rem;
-}
 
-.detail-map iframe {
-    width: 100%;
-    height: 280px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--gray-200);
-}
 
 /* Back button */
 .detail-back {
@@ -1685,69 +1519,7 @@ main {
 }
 
 /* Legacy detail page support */
-.event-detail-hero {
-    background-color: var(--black);
-    color: var(--white);
-    padding: 3rem 2rem;
-    margin-bottom: 2rem;
-}
 
-.event-detail-hero h1 {
-    color: var(--white);
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.info-table {
-    width: 100%;
-    margin: 2rem 0;
-    border-collapse: collapse;
-    background-color: var(--white);
-}
-
-.info-table th {
-    background-color: var(--black);
-    color: var(--white);
-    padding: 1rem;
-    text-align: left;
-    font-weight: 700;
-    width: 25%;
-}
-
-.info-table td {
-    padding: 1rem;
-    border-bottom: 1px solid var(--gray-200);
-    color: var(--text-color);
-}
-
-.info-table tr:last-child td {
-    border-bottom: none;
-}
-
-.info-table a {
-    color: var(--black);
-    text-decoration: underline;
-}
-
-.info-table a:hover {
-    color: var(--gray-500);
-}
-
-.event-map {
-    margin: 2rem 0;
-}
-
-.event-map h2 {
-    color: var(--black);
-    margin-bottom: 1rem;
-}
-
-.event-map iframe {
-    width: 100%;
-    height: 400px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--gray-200);
-}
 
 .event-description h2 {
     color: var(--black);
@@ -1759,10 +1531,6 @@ main {
     margin-bottom: 1rem;
 }
 
-.event-back {
-    margin: 3rem 0;
-    text-align: center;
-}
 
 .back-link {
     display: inline-block;
@@ -1783,10 +1551,6 @@ main {
    ERROR PAGE (404)
    ======================================== */
 
-.error-container {
-    text-align: center;
-    padding: 4rem 2rem;
-}
 
 .error-code {
     font-size: 5rem;
@@ -1795,74 +1559,11 @@ main {
     margin-bottom: 1rem;
 }
 
-.btn-primary {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    background-color: var(--black);
-    color: var(--white);
-    text-decoration: none;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 2rem;
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-hover);
-}
 
 /* ========================================
    CONTACT FORM
    ======================================== */
 
-.contact-form-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.contact-form-container h1 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--black);
-    margin-bottom: 2rem;
-}
-
-.contact-section {
-    margin-bottom: 2rem;
-}
-
-.contact-section h2 {
-    color: var(--black);
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-}
-
-.contact-section p {
-    color: var(--text-color);
-    line-height: 1.8;
-    margin-bottom: 1rem;
-}
-
-.contact-section ul {
-    margin-left: 2rem;
-}
-
-.contact-section li {
-    margin-bottom: 0.75rem;
-    color: var(--text-color);
-}
-
-.contact-instagram-link {
-    color: var(--black);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-weight: 600;
-}
-
-.contact-instagram-link:hover {
-    color: var(--gray-500);
-}
 
 .contact-form-section iframe {
     width: 100%;
@@ -1936,10 +1637,7 @@ main {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .detail-body {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
+    
 
     .detail-sidebar {
         order: -1;
@@ -2014,24 +1712,11 @@ main {
         border-bottom: none;
     }
 
-    .filter-bar-inner {
-        padding: 0 0.75rem;
-        flex-wrap: wrap;
-        gap: 0.2rem;
-    }
+    
 
-    .filter-controls {
-        width: 100%;
-        order: -1;
-        flex-wrap: nowrap;
-        padding: 0.25rem 0;
-        gap: 0.25rem;
-    }
+    
 
-    .filter-select {
-        font-size: 0.7rem;
-        padding: 0.3rem 1.4rem 0.3rem 0.5rem;
-    }
+    
 
     .area-filter-inner {
         padding: 0.3rem 0.75rem;
@@ -2043,10 +1728,7 @@ main {
         --crumb-sep-size: 0.66rem;
     }
 
-    .filter-tabs {
-        padding: 0.25rem 0;
-        gap: 0.3rem;
-    }
+    
 
     .filter-tab {
         padding: 0.3rem 0.65rem;
@@ -2070,22 +1752,15 @@ main {
         overflow: hidden;
     }
 
-    .main-content {
-        padding: 1.5rem;
-    }
+    
 
     .detail-page {
         padding: 0 1rem 2rem;
     }
 
-    .detail-header h1 {
-        font-size: 1.4rem;
-    }
+    
 
-    .detail-body {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
+    
 
     .detail-sidebar {
         order: -1;
@@ -2100,14 +1775,7 @@ main {
 
     .legal-content,
     .about-content,
-    .contact-form-container {
-        padding: 1.5rem;
-    }
 
-    .feature-cards {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
 
     .contact-form-section iframe {
         min-height: 500px;
@@ -2142,14 +1810,9 @@ main {
         font-size: 0.7rem;
     }
 
-    .filter-controls {
-        gap: 0.35rem;
-    }
+    
 
-    .filter-select {
-        font-size: 0.68rem;
-        padding: 0.35rem 1.4rem 0.35rem 0.5rem;
-    }
+    
 
     .content-inner {
         padding: 0.75rem;
@@ -2207,17 +1870,13 @@ main {
         font-size: 0.7rem;
     }
 
-    .main-content {
-        padding: 1rem;
-    }
+    
 
     .detail-page {
         padding: 0 0.75rem 2rem;
     }
 
-    .detail-header h1 {
-        font-size: 1.2rem;
-    }
+    
 
     .detail-meta {
         gap: 0.5rem;
@@ -2227,40 +1886,22 @@ main {
         font-size: 0.78rem;
     }
 
-    .detail-map iframe {
-        height: 200px;
-    }
+    
 
     .legal-content,
     .about-content,
-    .contact-form-container {
-        padding: 1rem;
-    }
 
     .legal-content h1,
-    .about-content h1 {
-        font-size: 1.8rem;
-    }
 
     .legal-content h2,
-    .about-content h2 {
-        font-size: 1.2rem;
-    }
 
     .contact-form-section iframe {
         min-height: 400px;
     }
 
-    .info-table th {
-        font-size: 0.9rem;
-        padding: 0.75rem;
-        width: 35%;
-    }
+    
 
-    .info-table td {
-        font-size: 0.9rem;
-        padding: 0.75rem;
-    }
+    
 
     .footer {
         padding: 2rem 1rem 1rem;
@@ -2276,39 +1917,14 @@ main {
         font-size: 2.5rem;
     }
 
-    .btn-primary {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
-    }
+    
 }
 
 /* Share Buttons */
-.share-buttons {
-    display: flex;
-    gap: 0.5rem;
-    margin: 1rem 0 0;
-}
 
-
-.share-x {
-    background: #000;
-    color: #fff;
-}
-
-.share-line {
-    background: #06C755;
-    color: #fff;
-}
 
 /* Detail page: 行きたいボタン — header内右上配置 */
-.detail-header-actions {
-    position: absolute;
-    top: 1.1rem;
-    right: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+
 .detail-fav-btn {
     display: inline-flex;
     align-items: center;
@@ -2367,85 +1983,19 @@ main {
 }
 
 /* Algolia search */
-.search-container {
-    max-width: 900px;
-    margin: 0 auto 1.5rem;
-    padding: 0;
-}
 
-.search-results {
-    margin-top: 0.5rem;
-    background: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-medium);
-    max-height: 400px;
-    overflow-y: auto;
-    display: none;
-}
+
 .search-results.visible {
     display: block;
 }
-.search-result-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.7rem 1rem;
-    border-bottom: 1px solid var(--gray-200);
-    text-decoration: none;
-    color: var(--text-color);
-    transition: background 0.15s;
-}
-.search-result-item:hover {
-    background: var(--gray-100);
-}
-.search-result-item:last-child {
-    border-bottom: none;
-}
-.search-result-name {
-    font-weight: 700;
-    font-size: 0.85rem;
-}
-.search-result-meta {
-    font-size: 0.72rem;
-    color: var(--gray-500);
-}
+
 
 /* Detail page: ikitai link */
-.ikitai-page-link {
-    display: inline-block;
-    font-size: 0.72rem;
-    color: var(--gray-500);
-    text-decoration: none;
-    font-weight: 500;
-    white-space: nowrap;
-    transition: color 0.2s;
-}
-.ikitai-page-link:hover {
-    color: var(--accent-pop);
-}
+
 
 /* Category navigation */
-.category-nav {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-}
-.category-nav-link {
-    padding: 0.45rem 0.9rem;
-    background: var(--gray-100);
-    border: 1px solid var(--gray-300);
-    border-radius: 20px;
-    color: var(--gray-500);
-    font-size: 0.82rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all var(--transition);
-}
-.category-nav-link:hover {
-    border-color: var(--black);
-    color: var(--black);
-}
+
+
 .category-nav-link.active {
     color: var(--white);
     background: var(--black);
@@ -2468,41 +2018,14 @@ main {
 .empty-state-btn:hover { opacity: 0.8; }
 
 /* Category links under filter tabs */
-.category-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    padding: 0.4rem 0 0;
-}
-.category-links a {
-    font-size: 0.72rem;
-    color: var(--gray-500);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-.category-links a:hover {
-    color: var(--black);
-}
+
 
 /* Fav tab as link */
-.filter-tab-fav {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    text-decoration: none;
-}
+
 
 @media (max-width: 768px) {
-    .detail-header-actions {
-        position: static;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-top: 1rem;
-    }
-    .detail-header h1 {
-        padding-right: 0;
-    }
+    
+    
     .correction-notice { margin: 0 1rem 2rem; }
     .detail-hero { margin: 0 -1rem; }
 }
@@ -2511,21 +2034,9 @@ main {
 }
 
 
-.ad-slot:empty,
-.ad-slot-article-bottom:not(:has(ins[data-ad-status="filled"])),
 .ad-affiliate-area .ad-slot:not(:has(ins[data-ad-status="filled"])) {
     display: none;
     margin: 0;
-}
-.ad-slot-sidebar {
-    margin: 1.5rem 0 0;
-}
-.ad-slot-infeed {
-    grid-column: 1 / -1;
-    margin: 0.5rem 0;
-}
-.ad-slot-article-bottom {
-    margin: 1rem 0 0;
 }
 
 
@@ -2556,44 +2067,8 @@ main {
     border-bottom: none;
 }
 /* 主動線: 理由を書いた一文をそのままリンクにする */
-.affiliate-item-cta {
-    display: block;
-    color: #111;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.92rem;
-    line-height: 1.5;
-}
-.affiliate-item-cta:hover {
-    text-decoration: underline;
-}
-.aff-cta-go {
-    display: inline-block;
-    margin-left: .5em;
-    padding: .12em .5em;
-    background: #111;
-    color: #fff;
-    border-radius: 4px;
-    font-size: .72rem;
-    font-weight: 700;
-    white-space: nowrap;
-    vertical-align: 2px;
-}
-.affiliate-item-cta:hover .aff-cta-go {
-    background: #333;
-}
-.aff-alt-lead {
-    font-size: .72rem;
-    color: #999;
-    margin-right: .1em;
-}
-.aff-alt-link {
-    font-size: .72rem;
-    color: #777;
-    text-decoration: underline;
-}
-.aff-alt-link:hover { color: #111; }
-.aff-alt-sep { color: #ccc; font-size: .72rem; }
+
+
 .affiliate-icon {
     flex-shrink: 0;
     width: 36px;
@@ -2607,37 +2082,15 @@ main {
 .affiliate-icon svg {
     color: #666;
 }
-.affiliate-item-body {
-    flex: 1;
-    min-width: 0;
-}
+
 .affiliate-item-label {
     display: block;
     font-weight: 500;
     color: #333;
     margin-bottom: 0.3rem;
 }
-.affiliate-asp-links {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    margin-top: 0.3rem;
-}
-.asp-badge {
-    display: inline-block;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: opacity 0.2s;
-}
-.asp-badge:hover {
-    opacity: 0.8;
-}
+
+
 /* 文中アフィリエイトリンク: 意図がピークする段落に埋める主動線 */
 .aff-inline {
     color: #111;
@@ -2810,27 +2263,8 @@ main {
    ============================ */
 
 /* AdSense共通 */
-.ad-slot {
-    /* margin, max-width, overflow, text-align は 2590 行目の
-       同じセレクタでも指定されていて、こちらが勝っていた。
-       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
-    /* ========================================
-       ADSENSE SLOTS
-       ======================================== */
-    min-height: 0;
-    text-align: center;
-    margin: 1.5rem auto;
-    max-width: 100%;
-    overflow: hidden;
-}
-.ad-slot-label {
-    display: block;
-    font-size: 0.65rem;
-    color: var(--gray-400);
-    text-align: center;
-    margin-bottom: 4px;
-    letter-spacing: 0.05em;
-}
+
+
 .aff-pr {
     display: inline-block;
     font-size: 0.6rem;
@@ -2850,9 +2284,7 @@ main {
 }
 
 /* マップで開くリンク非表示（地図埋め込みで代替） */
-.map-open-link {
-  display: none !important;
-}
+
 
 /* Instagram投稿の埋め込み（投稿/リールURLが instagramUrl にある場合） */
 .detail-instagram-embed {
@@ -2902,7 +2334,7 @@ main {
     background: var(--gray-100, #f7f7f7);
     border-radius: var(--radius, 12px);
 }
-.detail-share-label { font-size: 0.85rem; color: var(--gray-600, #666); font-weight: 600; margin-right: 0.2rem; }
+
 .share-btn {
     /* align-items, border-radius, display, font-size, font-weight, gap, padding, text-decoration は 2349 行目の
        同じセレクタでも指定されていて、こちらが勝っていた。
@@ -2931,23 +2363,18 @@ main {
 .share-btn.share-x { background: #000; color: #fff; }
 .share-btn.share-line { background: #06c755; color: #fff; }
 .share-btn.share-copy { background: #fff; color: #333; border-color: #ddd; }
-.ad-affiliate-area-inline { max-width: 100%; }
+
 
 /* === Footer extended nav (SEO internal linking, added 2026-05-04) === */
-.footer-nav-secondary, .footer-nav-tertiary {
-    margin-top: 0.6rem !important;
-    font-size: 0.78rem;
-    opacity: 0.9;
-    flex-wrap: wrap;
-}
-.footer-nav-secondary a {
-    color: #cfeac0 !important;
-}
+/* .footer-nav-secondary と組で書いてあった宣言と、単体の宣言が
+   別々にあった。secondary は使われなくなっていたので間引いた結果、
+   同じセレクタが2つ並んだ(2026-09-08 のCSS掃除)。下が勝っていた */
 .footer-nav-tertiary {
     margin-top: 1rem !important;
     opacity: 0.7;
     font-size: 0.7rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 0.7rem;
 }
 
@@ -2998,14 +2425,8 @@ main {
 
 /* === detail enriched sections (2026-06) — モノクロ基調 === */
 .data-summary{color:#555;font-size:.92em;line-height:1.8;margin-top:.7em;padding-top:.7em;border-top:1px dashed #e3e3e3}
-.series-list,.nearby-list{list-style:none;padding:0;margin:.4em 0 0}
-.series-list li,.nearby-list li{padding:.55em 0;border-bottom:1px solid #efefef;line-height:1.55}
-.series-list li:last-child,.nearby-list li:last-child{border-bottom:none}
-.series-list a,.nearby-list a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}
-.series-list a:hover,.nearby-list a:hover{text-decoration-color:#111}
-.series-meta,.nearby-meta{display:block;font-size:.82em;color:#6e6e6e;margin-top:.15em}
-.series-state{display:inline-block;font-size:.72em;color:#6e6e6e;border:1px solid #ddd;border-radius:3px;padding:0 .4em;margin-left:.5em;vertical-align:middle}
-.nearby-date{font-weight:700;font-size:.88em;color:#333;margin-right:.4em;font-variant-numeric:tabular-nums}
+
+
 .detail-faq .faq-item{margin:.9em 0;padding-bottom:.9em;border-bottom:1px solid #efefef}
 .detail-faq .faq-item:last-of-type{border-bottom:none;padding-bottom:0}
 
@@ -3136,7 +2557,7 @@ main {
 .event-hero{padding-top:1rem}
 .eh-kicker{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .eh-chip{font-size:.72rem;font-weight:700;letter-spacing:.08em;background:#111;color:#fff;border-radius:4px;padding:.28em .7em}
-.eh-chip-ghost{background:none;color:#555;border:1px solid #ccc}
+
 .eh-title{font-size:clamp(1.75rem,5.2vw,2.7rem);font-weight:900;letter-spacing:-.022em;line-height:1.16;margin:.45em 0 .55em;color:#111}
 .eh-spec{border-top:2px solid #111;margin-top:.2rem}
 .detail-hero+.eh-spec{margin-top:0}
@@ -4121,12 +3542,6 @@ main {
    分からないのに、地図への手がかりが無かった(2026-09-08 指摘) */
 
 
-.venue-place {
-    margin: 0 0 0.8rem;
-    font-size: 0.85rem;
-    color: var(--gray-600);
-}
-
 /* 会場の地図。会場欄のすぐ下。
    以前はページの下のほうに節として置いていたが、会場名を読んだ人が
    いちばん知りたいのは「どこ」なので、その場で見せる(2026-09-08 指摘) */
@@ -4147,8 +3562,6 @@ main {
     border-radius: 6px;
     border: 1px solid var(--gray-200);
 }
-
-
 
 
 /* 外部リンク。**印と見た目はここだけ。**
