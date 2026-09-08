@@ -3862,6 +3862,18 @@ main {
     white-space: nowrap;
 }
 
+.updates-scope-link {
+    display: block;
+    padding: 0.7rem 0.15rem 0.2rem;
+    color: var(--gray-600);
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.updates-scope-link:hover {
+    color: var(--accent-pop);
+}
+
 @media (max-width: 700px) {
     .updates-section {
         margin: 1.8rem 1rem 0;

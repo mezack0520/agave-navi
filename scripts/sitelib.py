@@ -16,8 +16,8 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908i'
-JS_VERSION = '20260908d'
+CSS_VERSION = '20260908j'
+JS_VERSION = '20260908e'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -687,14 +687,29 @@ def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
     note = f'{scope}の掲載・中止・日程変更' if scope else '掲載・中止・日程変更'
     feed = (f'<a class="updates-feed" href="{root}feeds/updates.xml">'
             f'RSSで受け取る</a>' if show_feed else '')
+    # 全国TOPだけ、地域チップで絞ったときの行き先を持たせる。
+    # ここに並ぶのは全国の最新10件なので、関東で絞ると0件になることがある
+    # (関東の更新自体はあるのに出ない)。そこで地域ページへ渡す。
+    # ローマ字の対応表はここが唯一の持ち主なので、JS側に定義を写さない。
+    scope_attr = ''
+    scope_link = ''
+    if not region and not prefecture:
+        _m = {'region': dict(REGION_ROMAJI),
+              'pref': {_p: pref_slug(_p) for _p in PREF_ROMAJI}}
+        scope_attr = (' data-scope-map="'
+                      + html_escape(json.dumps(_m, ensure_ascii=False)) + '"')
+        scope_link = ('<a class="updates-scope-link" id="updatesScopeLink"'
+                      ' href="#" hidden></a>')
     return (
-        '<section class="updates-section" id="updates" aria-labelledby="updatesHeading">'
+        '<section class="updates-section" id="updates" aria-labelledby="updatesHeading"'
+        + scope_attr + '>'
         '<div class="updates-head">'
         '<h2 class="updates-title" id="updatesHeading">更新のお知らせ'
         f'<span class="updates-note">{html_escape(note)}</span></h2>'
         + feed +
         '</div>'
         '<ul class="updates-list">' + ''.join(rows) + '</ul>'
+        + scope_link +
         '</section>')
 
 
