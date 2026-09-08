@@ -24,8 +24,8 @@
     <link rel="manifest" href="/manifest.webmanifest?v=2">
     <meta name="theme-color" content="#111">
     <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ 新着イベント" href="/rss.xml">
-    <link rel="stylesheet" href="style.css?v=20260908k">
-    <script src="list-ui.js?v=20260908f"></script>
+    <link rel="stylesheet" href="style.css?v=20260908m">
+    <script src="list-ui.js?v=20260908g"></script>
 </head>
 <body>
     <header class="header">
@@ -124,20 +124,9 @@
   </footer>
 
     <script>
-        const toggle = document.getElementById('menuToggle');
-        const overlay = document.getElementById('navOverlay');
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        });
-        overlay.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
+        // ハンバーガーの開閉は nav.js が単一実装。
+        // 同じ15行が14ページにあり、生成ページには無かった
+        // (2026-09-08)。
 
         document.querySelectorAll('.event-card').forEach(card => {
             card.addEventListener('click', function(e) {
@@ -147,7 +136,7 @@
             });
         });
 
-        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908f が単一実装。
+        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908g が単一実装。
         // 以前は index.html とここに別実装があり、片方を直しても
         // もう片方に効かなかった(2026-08-20に統合)。
         syncFavUI();
@@ -247,7 +236,7 @@
         } catch(e) {}
     })();
     </script>
-<script src="affiliate.js?v=20260908f"></script>
-<script src="status-auto.js?v=20260908f"></script>
+<script src="affiliate.js?v=20260908g"></script>
+<script src="status-auto.js?v=20260908g"></script>
 </body>
 </html>

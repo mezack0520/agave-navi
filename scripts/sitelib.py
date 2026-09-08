@@ -16,8 +16,8 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908k'
-JS_VERSION = '20260908f'
+CSS_VERSION = '20260908m'
+JS_VERSION = '20260908g'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -541,18 +541,69 @@ GTAG_HEAD = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={G
              f"  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}"
              f"gtag('js',new Date());gtag('config','{GA_ID}');</script>")
 
+# ナビの行き先。ヘッダーのメニューはこれを唯一の元にする。
+NAV_LINKS = (
+    ('/', 'ホーム'),
+    ('/calendar.html', 'カレンダー'),
+    ('/map.html', 'マップ'),
+    ('/about.html', 'サイトについて'),
+    ('/contact.html', 'お問い合わせ'),
+    ('/listing.html', '掲載申請'),
+    ('/category/sokubai.html', '即売会一覧'),
+    ('/category/marche.html', 'マルシェ一覧'),
+    ('/category/large.html', '大型イベント一覧'),
+    ('/category/exhibition.html', '展示会一覧'),
+)
+
+IKITAI_HEART_SVG = ('<svg class="ikitai-heart" viewBox="0 0 24 24">'
+                    '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06'
+                    'a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06'
+                    'a5.5 5.5 0 0 0 0-7.78z"/></svg>')
+
+
+def site_nav():
+    """SPのメニュー。ヘッダーのハンバーガーで開く。
+
+    以前は site_header() にこれが入っておらず、生成ページ全部
+    (詳細145・地域/県/タグ/カテゴリ106・ガイド)にナビが無かった。
+    SPで詳細を開くと、トップに戻る導線がロゴだけだった(2026-09-08 指摘)。
+    開閉の実装は nav.js が唯一の持ち主。
+    """
+    links = ''.join('\n      <a href="%s">%s</a>' % (u, html_escape(n))
+                    for u, n in NAV_LINKS)
+    return (
+        '  <nav class="nav-overlay" id="navOverlay">\n'
+        '    <div class="nav-overlay-inner">' + links + '\n'
+        '      <a href="https://www.instagram.com/m.z.plants/" target="_blank"'
+        ' rel="noopener">INSTAGRAM</a>\n'
+        '      <a href="/ikitai.html" class="nav-ikitai-link">'
+        + IKITAI_HEART_SVG + ' 行きたいリスト</a>\n'
+        '    </div>\n'
+        '  </nav>\n'
+        '  <script src="/nav.js?v=' + JS_VERSION + '" defer></script>')
+
+
 def site_header(root=''):
-    """共通ヘッダー。root: ルートへの相対プレフィックス('', '../' 等)。絶対パス推奨のため通常は''"""
-    return f'''  <header class="header">
-    <div class="header-inner">
-      <a href="/" class="logo"><span class="logo-en">AGA NAVI</span><span class="logo-jp">アガベイベントナビ</span></a>
-      <div class="header-actions">
-        <a href="/ikitai.html" class="ikitai-blob-btn"><span class="blob-bg"></span>
-          <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="ikitai-label">行きたい</span></a>
-      </div>
-    </div>
-  </header>'''
+    """共通ヘッダー。リンクは絶対パスなので root は使わない(互換で残す)。"""
+    return (
+        '  <header class="header">\n'
+        '    <div class="header-inner">\n'
+        '      <a href="/" class="logo"><span class="logo-en">AGA NAVI</span>'
+        '<span class="logo-jp">アガベイベントナビ</span></a>\n'
+        '      <div class="header-actions">\n'
+        '        <a href="/ikitai.html" class="ikitai-blob-btn">'
+        '<span class="blob-bg"></span>\n'
+        '          ' + IKITAI_HEART_SVG + '\n'
+        '          <span class="ikitai-label">行きたい</span>\n'
+        '          <span class="ikitai-badge" id="ikitaiBadge"></span></a>\n'
+        '        <button class="menu-toggle" id="menuToggle" aria-label="メニュー"'
+        ' aria-expanded="false">\n'
+        '          <span></span><span></span><span></span>\n'
+        '        </button>\n'
+        '      </div>\n'
+        '    </div>\n'
+        '  </header>\n' + site_nav())
+
 
 UPDATE_KIND = {
     'listed':    ('掲載', 'upd-listed'),
@@ -639,6 +690,73 @@ def filter_updates(items, region=None, prefecture=None):
             continue
         out.append(it)
     return out
+
+
+def region_prefs():
+    """地域 -> 都道府県。PREF_TO_REGION の並び(北→南)を保つ。"""
+    out = {}
+    for p, r in PREF_TO_REGION.items():
+        out.setdefault(r, []).append(p)
+    return out
+
+
+def region_map_js():
+    """トップの絞り込みが使う地域表。PREF_TO_REGION から作る。
+
+    以前は index.html に手書きの表があり、北海道・東北・四国が
+    丸ごと抜けていた。その3地域はチップも無いので、載っている
+    イベントに一生たどり着けなかった。山梨・長野も北陸から
+    漏れていた(2026-09-08 に発見)。表を2箇所に置くと必ずこうなる。
+    """
+    return ('const regionMap = '
+            + json.dumps(region_prefs(), ensure_ascii=False)
+            + ';')
+
+
+def area_filter_html(events=None):
+    """エリア絞り込み。全国 > 地域 > 県 のパンくず型。
+
+    現在地を黒、選択肢を白のチップで出す。区切りと語順は
+    詳細ページのパンくず(ホーム > 関東 > 埼玉)に合わせている。
+    「すべて」チップは置かない。地域名自体が現在地になる。
+
+    events を渡すと、載っている回がある地域だけを出す。
+    空振りするチップを並べても押す意味が無い。
+    """
+    have = None
+    if events is not None:
+        have = set()
+        for e in events:
+            if not (is_upcoming(e) or is_cancelled(e)):
+                continue
+            r = pref_to_region((e.get('prefecture') or '').strip())
+            if r:
+                have.add(r)
+    chips = []
+    for r in region_prefs():
+        if have is not None and r not in have:
+            continue
+        chips.append(f'<button class="region-tab" data-region="{_attr(r)}"'
+                     f' onclick="selectRegion(\'{_attr(r)}\')">'
+                     f'{html_escape(r)}</button>')
+    sep = '<span class="pref-sep" aria-hidden="true">&gt;</span>'
+    return (
+        '                <div class="crumb-row" id="regionTabs">\n'
+        '                    <button class="pref-crumb active"'
+        ' onclick="selectRegion(\'all\')">全国</button>\n'
+        '                    ' + sep + '\n'
+        '                    <div class="pref-chips" id="regionChips">'
+        + ''.join(chips) + '</div>\n'
+        '                </div>\n'
+        '                <div class="crumb-row" id="prefRow" style="display:none">\n'
+        '                    <button class="pref-crumb"'
+        ' onclick="selectRegion(\'all\')">全国</button>\n'
+        '                    ' + sep + '\n'
+        '                    <button class="pref-crumb" id="prefRegionCrumb"'
+        ' onclick="selectPref(\'all\')"></button>\n'
+        '                    ' + sep + '\n'
+        '                    <div class="pref-chips" id="prefChips"></div>\n'
+        '                </div>')
 
 
 def update_rows(picked, root=''):

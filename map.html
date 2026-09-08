@@ -26,7 +26,7 @@
     <link rel="manifest" href="/manifest.webmanifest?v=2">
     <meta name="theme-color" content="#111">
     <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ 新着イベント" href="/rss.xml">
-    <link rel="stylesheet" href="style.css?v=20260908k">
+    <link rel="stylesheet" href="style.css?v=20260908m">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
@@ -796,22 +796,11 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/nav.js" defer></script>
     <script>
-        // Menu toggle
-        const toggle = document.getElementById('menuToggle');
-        const overlay = document.getElementById('navOverlay');
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        });
-        overlay.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
+        // ハンバーガーの開閉は nav.js が単一実装。
+        // ここに写しを持っていたため、手書き側を直しても
+        // ビルドで元に戻っていた(2026-09-08)。
 
         // Event data with coordinates
         const PREF_COORDS = {

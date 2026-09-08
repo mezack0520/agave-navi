@@ -129,22 +129,11 @@ def render_inline_events_json(events_list):
 
 # ---- map.html ----
 
-MAP_JS_FIXED = '''<script>
-        // Menu toggle
-        const toggle = document.getElementById('menuToggle');
-        const overlay = document.getElementById('navOverlay');
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        });
-        overlay.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
+MAP_JS_FIXED = '''<script src="/nav.js" defer></script>
+    <script>
+        // ハンバーガーの開閉は nav.js が単一実装。
+        // ここに写しを持っていたため、手書き側を直しても
+        // ビルドで元に戻っていた(2026-09-08)。
 
         // Event data with coordinates
         const PREF_COORDS = {
@@ -252,22 +241,11 @@ MAP_JS_FIXED = '''<script>
     </script>'''
 
 
-CAL_JS_FIXED = '''<script>
-        // Menu toggle
-        const toggle = document.getElementById('menuToggle');
-        const overlay = document.getElementById('navOverlay');
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        });
-        overlay.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
+CAL_JS_FIXED = '''<script src="/nav.js" defer></script>
+    <script>
+        // ハンバーガーの開閉は nav.js が単一実装。
+        // ここに写しを持っていたため、手書き側を直しても
+        // ビルドで元に戻っていた(2026-09-08)。
 
         let events = [];
 

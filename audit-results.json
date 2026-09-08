@@ -525,14 +525,14 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260908k)と違うページ",
+      "title": "CSS版数が正規値(20260908m)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260908f)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260908g)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -735,6 +735,13 @@
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
+    },
+    "nav_missing": {
+      "title": "ヘッダーがあるのにメニューが無い",
+      "count": 0,
+      "items": [],
+      "note": "共通ヘッダーは sitelib.site_header() が唯一の元。開閉は nav.js。手書きページで消えていたら貼り直す",
+      "severity": "urgent"
     },
     "updates_section_drift": {
       "title": "更新のお知らせがsite-updates.jsonと不一致",

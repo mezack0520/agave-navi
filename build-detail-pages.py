@@ -625,6 +625,7 @@ def build_page(template, ev, ctx):
         '{{admissionRow}}': make_admission_row(ev),
         '{{timeRow}}': make_time_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
+        '{{siteHeader}}': sitelib.site_header(),
         '{{affiliateBlock}}': make_affiliate_block(ev),
         '{{cancelNotice}}': make_cancel_notice(ev),
         '{{heroMetaNote}}': make_hero_meta_note(ev),

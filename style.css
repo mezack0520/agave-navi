@@ -336,24 +336,73 @@ body.no-scroll {
    BREADCRUMB
    ======================================== */
 
+/* パンくず。トップのエリア絞り込み(全国 > 関東 > 埼玉)と同じ型にする。
+   以前はここだけ小さな文字リンクで、同じ階層を表す部品なのに
+   トップと詳細で見た目が違っていた(2026-09-08 指摘)。
+   現在地は黒、上位は白のチップ。区切りの「>」は nav 自身の色を継ぐ。 */
 .breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
     max-width: 100%;
-    padding: 0.6rem 2rem;
-    font-size: 0.8rem;
-    color: var(--gray-500);
+    padding: 0.55rem 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.7rem;
+    color: var(--gray-400);
     background-color: var(--white);
     border-bottom: 1px solid var(--gray-200);
 }
 
-.breadcrumb a {
-    color: var(--gray-600);
+.breadcrumb::-webkit-scrollbar {
+    display: none;
+}
+
+.breadcrumb a,
+.breadcrumb > span {
+    flex-shrink: 0;
+    padding: 0.24rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
     text-decoration: none;
-    font-weight: 500;
+}
+
+.breadcrumb a {
+    border: 1.5px solid var(--gray-300);
+    background: var(--white);
+    color: var(--gray-600);
+    transition: all 0.2s ease;
 }
 
 .breadcrumb a:hover {
-    text-decoration: underline;
+    border-color: var(--gray-400);
+    background: var(--gray-100);
     color: var(--black);
+    text-decoration: none;
+}
+
+/* 現在地。イベント名は長いので詰める。全文は直下のh1にある */
+.breadcrumb > span {
+    border: 1.5px solid var(--black);
+    background: var(--black);
+    color: var(--white);
+    max-width: 15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 721px) {
+    .breadcrumb {
+        padding: 0.55rem 2rem;
+    }
+    .breadcrumb > span {
+        max-width: 26em;
+    }
 }
 
 /* ========================================
@@ -392,33 +441,52 @@ body.no-scroll {
     padding: 0.5rem 0;
 }
 
-.search-box {
-    flex-shrink: 1;
-    min-width: 0;
-    max-width: 280px;
+/* 検索。スマホでは虫眼鏡だけに畳んで、触ったら開く。
+   並び順の選択を外したので、この行に居るのはこれだけになった。
+   常に開いた入力欄を置くと、狭い画面で1行を丸ごと使ってしまう
+   (2026-09-08 指摘)。文字が入っている間は開いたままにする。
+   スマホを既定にして、広い画面で開く。 */
+.search-field {
+    flex-shrink: 0;
+    width: 2.4rem;
+    max-width: 100%;
+    transition: width 0.22s ease;
 }
 
-.search-box input {
+.search-field input {
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem 0.4rem 2rem;
     border: 1px solid var(--gray-300);
     border-radius: 24px;
     font-size: 0.8rem;
     font-family: inherit;
     outline: none;
-    transition: all var(--transition);
-    background-color: var(--gray-100);
     color: var(--text-color);
+    background: var(--gray-100) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 0.62rem center;
+    background-size: 15px 15px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background-color 0.2s;
 }
 
-.search-box input:focus {
+.search-field:focus-within,
+.search-field:has(input:not(:placeholder-shown)) {
+    width: 100%;
+}
+
+.search-field input:focus {
     border-color: var(--black);
     background-color: var(--white);
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
 }
 
-.search-box input::placeholder {
+.search-field input::placeholder {
     color: var(--gray-400);
+}
+
+@media (min-width: 721px) {
+    /* 広い画面は最初から開けておく。畳む理由が無い */
+    .search-field {
+        width: 260px;
+    }
 }
 
 .filter-tab {
@@ -472,21 +540,32 @@ body.no-scroll {
     position: relative;
 }
 
-.region-tabs {
+/* 全国 > 地域 > 県 の1行。地域選択と県選択で同じ組み方にする */
+.crumb-row,
+.region-tabs,
+.pref-row {
     display: flex;
-    gap: 0.35rem;
+    align-items: center;
+    gap: 0.3rem;
     flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
 }
-.region-tabs::-webkit-scrollbar { display: none; }
+.crumb-row::-webkit-scrollbar,
+.region-tabs::-webkit-scrollbar,
+.pref-row::-webkit-scrollbar { display: none; }
 
-.region-tab {
+/* 地域チップと県チップは同じ「選択肢」なので同じ見た目にする。
+   別々に書いていたため字の大きさと角丸が違い、
+   全国 > 関東 の行と 関東 > 千葉 の行で高さが変わっていた */
+.region-tab,
+.pref-chip {
     flex-shrink: 0;
-    padding: 0.32rem 0.85rem;
-    font-size: 0.76rem;
+    padding: 0.24rem 0.7rem;
+    font-size: 0.72rem;
     font-weight: 500;
+    line-height: 1.5;
     border: 1.5px solid var(--gray-300);
     border-radius: 20px;
     background: var(--white);
@@ -495,26 +574,19 @@ body.no-scroll {
     transition: all 0.2s ease;
     white-space: nowrap;
 }
-.region-tab:hover {
+.region-tab:hover,
+.pref-chip:hover {
     border-color: var(--gray-400);
     background: var(--gray-100);
+    color: var(--black);
 }
-.region-tab.active {
+/* 選択中は現在地と同じ黒。赤は中止バッジなど「注意」に取っておく */
+.region-tab.active,
+.pref-chip.active {
     background: var(--black);
     color: var(--white);
     border-color: var(--black);
 }
-
-/* Prefecture drill-down row (replaces region tabs when active) */
-.pref-row {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-.pref-row::-webkit-scrollbar { display: none; }
 
 /* 全国 > 関東 > 県 のパンくず型。
    以前は「←」の丸ボタン + 太字の地域名 + 「すべて」チップだった。
@@ -558,31 +630,6 @@ body.no-scroll {
     gap: 0.3rem;
     flex-wrap: nowrap;
     flex-shrink: 0;
-}
-
-.pref-chip {
-    flex-shrink: 0;
-    padding: 0.22rem 0.65rem;
-    font-size: 0.72rem;
-    font-weight: 500;
-    border: 1px solid var(--gray-300);
-    border-radius: 14px;
-    background: var(--white);
-    color: var(--gray-500);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-.pref-chip:hover {
-    border-color: var(--gray-400);
-    color: var(--black);
-    background: var(--gray-100);
-}
-/* 選択中は地域タブと同じ黒。赤は中止バッジなど「注意」に取っておく */
-.pref-chip.active {
-    background: var(--black);
-    color: var(--white);
-    border-color: var(--black);
 }
 
 /* Empty state for 行きたい list */
@@ -818,6 +865,10 @@ main {
 }
 
 .event-count {
+    /* 見出しが display:flex なので、縮められて「50」「件」に
+       折れていた(2026-09-08 SPで発生)。縮めない・折らない */
+    flex-shrink: 0;
+    white-space: nowrap;
     font-size: 0.75rem;
     font-weight: 500;
     color: var(--gray-400);
@@ -1904,14 +1955,9 @@ main {
     .filter-controls {
         width: 100%;
         order: -1;
-        flex-wrap: wrap;
-        padding: 0.1rem 0 0;
+        flex-wrap: nowrap;
+        padding: 0.25rem 0;
         gap: 0.25rem;
-    }
-
-    .filter-controls .search-box {
-        flex: 1;
-        min-width: 100px;
     }
 
     .filter-select {
@@ -2286,24 +2332,7 @@ main {
     margin: 0 auto 1.5rem;
     padding: 0;
 }
-.search-box {
-    width: 100%;
-    padding: 0.7rem 1rem 0.7rem 2.8rem;
-    border: none;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    font-family: inherit;
-    background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 0.9rem center;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
-}
-.search-box:focus {
-    outline: none;
-    border-color: var(--black);
-}
-.search-box::placeholder {
-    color: var(--gray-400);
-}
+
 .search-results {
     margin-top: 0.5rem;
     background: var(--white);
@@ -2892,7 +2921,6 @@ main {
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 0.7rem;
 }
-
 
 /* Enriched content sections (AdSense / E-E-A-T 強化用 / モノクロ統一) */
 .detail-enriched {
@@ -3515,7 +3543,6 @@ main {
 @media (min-width: 721px) {
     .aff-bar { display: none; }
 }
-
 
 /* ============================================================
    一覧UI(もっと見る)。index.html のインライン <style> にあったため

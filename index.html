@@ -41,9 +41,9 @@
     <link rel="dns-prefetch" href="https://www.amazon.co.jp">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
-    <link rel="stylesheet" href="style.css?v=20260908k">
+    <link rel="stylesheet" href="style.css?v=20260908m">
     <!-- 一覧の共通UI(行きたい・もっと見る)。body内のインラインから呼ぶため head で同期読み込み -->
-    <script src="list-ui.js?v=20260908f"></script>
+    <script src="list-ui.js?v=20260908g"></script>
 
 
     <script type="application/ld+json">
@@ -408,12 +408,11 @@
     <div class="filter-bar">
         <div class="filter-bar-inner">
             <div class="filter-controls">
-                <select id="sortOrder" class="filter-select" aria-label="イベントの並び順" onchange="sortAndFilter()">
-                    <option value="date-asc">開催日が近い順</option>
-                    <option value="date-desc">開催日が遠い順</option>
-                </select>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="検索" oninput="searchEvents(this.value)">
+                <!-- 並び順の選択は外した。開催日が近い順の一択で、
+                     「遠い順」で探す人がいない(2026-09-08 指摘)。
+                     並べ替えそのものは status-auto.js?v=20260908g が常に近い順で行う -->
+                <div class="search-field">
+                    <input type="text" id="searchInput" placeholder="イベント名・会場で検索" oninput="searchEvents(this.value)">
                 </div>
             </div>
         </div>
@@ -421,24 +420,20 @@
         <div class="area-filter-bar" id="areaFilterBar">
             <div class="area-filter-inner">
                 <div class="area-drilldown" id="areaDrilldown">
-                    <!-- 地域選択モード -->
-                    <div class="region-tabs" id="regionTabs">
-                        <button class="region-tab active" data-region="all" onclick="selectRegion('all')">全国</button>
-                        <button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button>
-                        <button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button>
-                        <button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button>
-                        <button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button>
-                        <button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button>
-                        <button class="region-tab" data-region="北陸" onclick="selectRegion('北陸')">北陸</button>
-                    </div>
-                    <!-- 都道府県選択モード（地域選択後に表示） -->
-                    <div class="pref-row" id="prefRow" style="display:none">
-                        <button class="pref-crumb" onclick="selectRegion('all')">全国</button>
-                        <span class="pref-sep" aria-hidden="true">&gt;</span>
-                        <button class="pref-crumb" id="prefRegionCrumb" onclick="selectPref('all')"></button>
-                        <span class="pref-sep" aria-hidden="true">&gt;</span>
-                        <div class="pref-chips" id="prefChips"></div>
-                    </div>
+<!-- AREA-FILTER:START 生成物。scripts/sync-index-cards.py が sitelib から貼り替える。手で書かない -->
+                <div class="crumb-row" id="regionTabs">
+                    <button class="pref-crumb active" onclick="selectRegion('all')">全国</button>
+                    <span class="pref-sep" aria-hidden="true">&gt;</span>
+                    <div class="pref-chips" id="regionChips"><button class="region-tab" data-region="北海道" onclick="selectRegion('北海道')">北海道</button><button class="region-tab" data-region="東北" onclick="selectRegion('東北')">東北</button><button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button><button class="region-tab" data-region="北陸" onclick="selectRegion('北陸')">北陸</button><button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button><button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button><button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button><button class="region-tab" data-region="四国" onclick="selectRegion('四国')">四国</button><button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button></div>
+                </div>
+                <div class="crumb-row" id="prefRow" style="display:none">
+                    <button class="pref-crumb" onclick="selectRegion('all')">全国</button>
+                    <span class="pref-sep" aria-hidden="true">&gt;</span>
+                    <button class="pref-crumb" id="prefRegionCrumb" onclick="selectPref('all')"></button>
+                    <span class="pref-sep" aria-hidden="true">&gt;</span>
+                    <div class="pref-chips" id="prefChips"></div>
+                </div>
+<!-- AREA-FILTER:END -->
                 </div>
             </div>
         </div>
@@ -451,7 +446,7 @@
                 <h1 class="section-heading">開催予定のアガベ・多肉植物・塊根植物イベント<span class="event-count" id="eventCount">145件</span></h1>
                 <p class="section-sub" style="color:var(--gray-500);font-size:0.82rem;margin:-0.5rem 0 1.5rem;line-height:1.6">アガベ・塊根植物（コーデックス）・多肉植物・珍奇植物・ビザールプランツの即売会やマルシェ、大型展示会の情報をまとめています。</p>
 
-                <!-- 開催中(会期4日以上)。status-auto.js?v=20260908f が該当カードをここへ移す。
+                <!-- 開催中(会期4日以上)。status-auto.js?v=20260908g が該当カードをここへ移す。
                      一覧本体に混ぜると会期の長さぶん先頭に居座るため枠を分けている。
                      該当0件のときは見出しごと非表示。 -->
                 <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none">開催中<span class="section-heading-note">会期4日以上</span></h2>
@@ -2915,20 +2910,9 @@
   </footer>
 
     <script>
-        const toggle = document.getElementById('menuToggle');
-        const overlay = document.getElementById('navOverlay');
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        });
-        overlay.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
+        // ハンバーガーの開閉は nav.js が単一実装。
+        // 同じ15行が14ページにあり、生成ページには無かった
+        // (2026-09-08)。
 
         // 地域の初期値は selectRegion 定義後に実行（後述）
 
@@ -2948,7 +2932,7 @@
             applyFilters(query);
         }
 
-        // 並び替え・開催中/終了の振り分けは status-auto.js?v=20260908f (window.AEN_LIST) が単一実装。
+        // 並び替え・開催中/終了の振り分けは status-auto.js?v=20260908g (window.AEN_LIST) が単一実装。
         // ここに日付の解釈を再実装すると、会期の長い回の扱いが2通りに割れる。
         // 以前は getCardDate / autoExpireEvents / sortAndFilter を独自に持ち、
         // 開始日だけで並べていたため会期49日の展示が一覧の先頭に居座った(2026-08-20)。
@@ -2957,14 +2941,9 @@
           applyFilters();
         }
 
-        const regionMap = {
-            '関東': ['東京','神奈川','埼玉','千葉','茨城','栃木','群馬'],
-            '関西': ['大阪','京都','兵庫','奈良','和歌山','滋賀'],
-            '東海': ['愛知','静岡','岐阜','三重'],
-            '九州': ['福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄'],
-            '中国': ['広島','岡山','山口','島根','鳥取'],
-            '北陸': ['石川','富山','福井','新潟']
-        };
+        /* REGION-MAP:START 生成物。sitelib.PREF_TO_REGION から貼り替える */
+        const regionMap = {"北海道": ["北海道"], "東北": ["青森", "岩手", "宮城", "秋田", "山形", "福島"], "関東": ["茨城", "栃木", "群馬", "埼玉", "千葉", "東京", "神奈川"], "北陸": ["新潟", "富山", "石川", "福井", "山梨", "長野"], "東海": ["岐阜", "静岡", "愛知", "三重"], "関西": ["滋賀", "京都", "大阪", "兵庫", "奈良", "和歌山"], "中国": ["鳥取", "島根", "岡山", "広島", "山口"], "四国": ["徳島", "香川", "愛媛", "高知"], "九州": ["福岡", "佐賀", "長崎", "熊本", "大分", "宮崎", "鹿児島", "沖縄"]};
+        /* REGION-MAP:END */
 
         // エリアフィルター状態
         var activeRegion = 'all';
@@ -3205,14 +3184,14 @@
             }
         }
 
-        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908f が単一実装。
+        // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908g が単一実装。
         // ここでは「行きたい」絞り込み中の再描画だけをフックで受ける。
         window.AEN_ON_FAV_CHANGE = function() {
             if (activeTag === 'fav') applyFilters();
         };
 
         // もっと見る(initLoadMore / loadMoreEvents / initPastLoadMore)は
-        // list-ui.js?v=20260908f が単一実装。件数も list-ui.js?v=20260908f が持つ。
+        // list-ui.js?v=20260908g が単一実装。件数も list-ui.js?v=20260908g が持つ。
 
         // 絞り込んだ結果にも段数の制限をかける。
         // 以前は絞ったら showAll() で全件出していた。関東を選ぶと50件が
@@ -3225,7 +3204,7 @@
         };
 
         // 初期表示(並び替え・もっと見る・行きたいの同期)は
-        // list-ui.js?v=20260908f と status-auto.js?v=20260908f が行う。ここで先に呼ぶと
+        // list-ui.js?v=20260908g と status-auto.js?v=20260908g が行う。ここで先に呼ぶと
         // 規則を二重に持つことになる。
 
         // ========== モバイル: カード下部行きたいバー + スワイプ ==========
@@ -3243,7 +3222,7 @@
                     toggleFav(e, slug);
                 });
 
-                // 初期状態は list-ui.js?v=20260908f の syncFavUI が反映する
+                // 初期状態は list-ui.js?v=20260908g の syncFavUI が反映する
 
                 // Swipe gesture
                 let startX = 0, startY = 0, swiping = false;
@@ -3281,9 +3260,9 @@
             });
         }
 
-        // バーの表示同期は list-ui.js?v=20260908f の syncFavUI が行う。
-        // initMobileFav の呼び出しも list-ui.js?v=20260908f の初期化から。
-    // 初期の振り分け・並び替えは status-auto.js?v=20260908f が行う(規則の二重定義を避ける)。
+        // バーの表示同期は list-ui.js?v=20260908g の syncFavUI が行う。
+        // initMobileFav の呼び出しも list-ui.js?v=20260908g の初期化から。
+    // 初期の振り分け・並び替えは status-auto.js?v=20260908g が行う(規則の二重定義を避ける)。
     </script>
 <script>
 /* === URLパラメータ対応 (SEO & シェア用) === */
@@ -3365,7 +3344,7 @@
         } catch(e) {}
     })();
     </script>
-<script src="status-auto.js?v=20260908f"></script>
-<script src="affiliate.js?v=20260908f"></script>
+<script src="status-auto.js?v=20260908g"></script>
+<script src="affiliate.js?v=20260908g"></script>
 </body>
 </html>

@@ -1742,6 +1742,33 @@ def main():
                 if _sc and not _sc.get('region:' + _rg):
                     _upd_bad.append(f'{_rg} の更新があるのに範囲別の行が無い')
 
+    # ヘッダーがあるのにメニューが無いページ。
+    # sitelib.site_header() にハンバーガーが入っておらず、生成ページ
+    # 全部(詳細145・地域/県/タグ/カテゴリ106・ガイド)にナビが無かった。
+    # SPで詳細を開くとトップに戻る導線がロゴだけで、
+    # 「なんでハンバーガー消えるん」と言われるまで誰も気づけなかった
+    # (2026-09-08)。見た目が欠けるだけなので数字には出ない。
+    _nav_bad = []
+    for _f in sorted(glob.glob(rp('**', '*.html'), recursive=True)):
+        _rel = os.path.relpath(_f, REPO)
+        if _rel.startswith(('.git', 'templates', 'staging')):
+            continue
+        try:
+            _h = open(_f, encoding='utf-8').read()
+        except OSError:
+            continue
+        if 'class="header"' not in _h:
+            continue
+        _lack = [n for n, _t in (('menuToggle', 'id="menuToggle"'),
+                                 ('navOverlay', 'id="navOverlay"'),
+                                 ('nav.js', 'nav.js'))
+                 if _t not in _h]
+        if _lack:
+            _nav_bad.append(f'{_rel}: {", ".join(_lack)} が無い')
+    add('nav_missing', 'ヘッダーがあるのにメニューが無い', _nav_bad,
+        '共通ヘッダーは sitelib.site_header() が唯一の元。'
+        '開閉は nav.js。手書きページで消えていたら貼り直す')
+
     add('updates_section_drift', '更新のお知らせがsite-updates.jsonと不一致',
         sorted(_upd_bad),
         'index.html の更新欄は生成物。scripts/sync-index-cards.py が'

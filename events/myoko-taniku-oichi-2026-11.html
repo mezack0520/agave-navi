@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://ck.jp.ap.valuecommerce.com" crossorigin>
   <link rel="dns-prefetch" href="https://m.media-amazon.com">
 
-  <link rel="stylesheet" href="../style.css?v=20260908k">
+  <link rel="stylesheet" href="../style.css?v=20260908m">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -99,20 +99,35 @@
 
   <header class="header">
     <div class="header-inner">
-      <a href="/" class="logo">
-        <span class="logo-en">AGA NAVI</span>
-        <span class="logo-jp">アガベイベントナビ</span>
-      </a>
+      <a href="/" class="logo"><span class="logo-en">AGA NAVI</span><span class="logo-jp">アガベイベントナビ</span></a>
       <div class="header-actions">
-        <a href="../ikitai.html" class="ikitai-blob-btn" id="ikitaiBlobBtn">
-          <span class="blob-bg"></span>
+        <a href="/ikitai.html" class="ikitai-blob-btn"><span class="blob-bg"></span>
           <svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span class="ikitai-label">行きたい</span>
-          <span class="ikitai-badge" id="ikitaiBadge"></span>
-        </a>
+          <span class="ikitai-badge" id="ikitaiBadge"></span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="メニュー" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
+  <nav class="nav-overlay" id="navOverlay">
+    <div class="nav-overlay-inner">
+      <a href="/">ホーム</a>
+      <a href="/calendar.html">カレンダー</a>
+      <a href="/map.html">マップ</a>
+      <a href="/about.html">サイトについて</a>
+      <a href="/contact.html">お問い合わせ</a>
+      <a href="/listing.html">掲載申請</a>
+      <a href="/category/sokubai.html">即売会一覧</a>
+      <a href="/category/marche.html">マルシェ一覧</a>
+      <a href="/category/large.html">大型イベント一覧</a>
+      <a href="/category/exhibition.html">展示会一覧</a>
+      <a href="https://www.instagram.com/m.z.plants/" target="_blank" rel="noopener">INSTAGRAM</a>
+      <a href="/ikitai.html" class="nav-ikitai-link"><svg class="ikitai-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 行きたいリスト</a>
+    </div>
+  </nav>
+  <script src="/nav.js?v=20260908g" defer></script>
 
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">ホーム</a> &gt;
@@ -281,8 +296,8 @@
     </div>
   </footer>
 
-  <script src="../affiliate.js?v=20260908f"></script>
-  <script src="../status-auto.js?v=20260908f"></script>
+  <script src="../affiliate.js?v=20260908g"></script>
+  <script src="../status-auto.js?v=20260908g"></script>
   <script>
     const SLUG = 'myoko-taniku-oichi-2026-11';
     function toggleFav() {
