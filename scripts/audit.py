@@ -1841,6 +1841,29 @@ def main():
         '1箇所にまとめる。負けている方を直しても画面は変わらない。'
         'メディアクエリ内の上書きは対象外')
 
+    # div の開きと閉じが釣り合っているか。
+    # 手書きの9ページで <div class="ad-affiliate-area"> が閉じられておらず、
+    # **フッターがその中に入っていた**(2026-09-08 に発見)。
+    # 幅と余白が広告枠のものになるので見た目に出るが、
+    # ブラウザが黙って補完するため気づけない。
+    # 過去のフッター差し替えで閉じタグが落ちたと思われる。
+    _div_bad = []
+    for _f in sorted(glob.glob(rp('*.html'))):
+        _rel = os.path.basename(_f)
+        if _rel.startswith('google'):
+            continue
+        try:
+            _h = open(_f, encoding='utf-8').read()
+        except OSError:
+            continue
+        _o = len(re.findall(r'<div\b', _h))
+        _c = len(re.findall(r'</div>', _h))
+        if _o != _c:
+            _div_bad.append(f'{_rel}: <div> {_o} 個に対して </div> {_c} 個')
+    add('html_div_unbalanced', 'divの開きと閉じが合っていない', _div_bad,
+        '閉じ忘れると後ろの要素がその中に入る。'
+        'フッターが広告枠の中に入って幅が変わっていた(2026-09-08)')
+
     add('nav_missing', 'ヘッダーがあるのにメニューが無い', _nav_bad,
         '共通ヘッダーは sitelib.site_header() が唯一の元。'
         '開閉は nav.js。手書きページで消えていたら貼り直す')
