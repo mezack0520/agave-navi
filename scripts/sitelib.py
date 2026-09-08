@@ -14,7 +14,7 @@ from datetime import datetime, date, timezone, timedelta
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908a'
+CSS_VERSION = '20260908b'
 JS_VERSION = '20260908b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -689,7 +689,7 @@ def event_card_html(e, heading='h3', eager=False, today=None, compact=False,
         perf = ('decoding="async" fetchpriority="high"' if eager
                 else 'loading="lazy" decoding="async"')
         thumb = (f'<div class="event-thumb"><img src="{_attr(img)}" alt="{_attr(name)}" '
-                 f'width="640" height="360" {perf} referrerpolicy="no-referrer" '
+                 f'width="640" height="640" {perf} referrerpolicy="no-referrer" '
                  f'onerror="this.parentElement.classList.add(\'event-no-image\');this.remove();">'
                  f'</div>')
     else:

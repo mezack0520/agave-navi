@@ -849,7 +849,11 @@ main {
 /* Card thumbnail image */
 .event-thumb {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    /* 1:1。アイキャッチの出所はほぼInstagramで、告知フライヤーは正方形。
+       16:9で cover すると縦が56%しか残らず(実測、最小31%)、
+       上のタイトルと下の日付・会場が両方消えていた(2026-09-08)。
+       外部サイトの横長画像は左右が切れるが、写真が多いので許容する。 */
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     object-position: center top;
     display: block;
@@ -1319,11 +1323,14 @@ main {
 
 .detail-hero-img {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    /* 詳細ページはフライヤーを読ませる場所なので切らない。
+       1:1 かつ contain にすると、正方形は枠にぴったり収まって余白が出ず、
+       横長・縦長は帯が出るかわりに全体が見える。 */
+    aspect-ratio: 1 / 1;
     display: block;
-    max-height: 480px;
-    object-fit: cover;
-    object-position: center top;
+    max-height: 560px;
+    object-fit: contain;
+    object-position: center;
     background-color: var(--gray-200);
 }
 

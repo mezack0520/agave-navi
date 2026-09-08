@@ -83,8 +83,23 @@
     let w = bmp.width, h = bmp.height;
     const s = Math.min(1, o.maxEdge / Math.max(w, h));
     w = Math.round(w * s); h = Math.round(h * s);
-    const cv = new OffscreenCanvas(w, h);
-    cv.getContext('2d').drawImage(bmp, 0, 0, w, h);
+    // カードのサムネは 1:1。切るのではなく余白を足して正方形にする。
+    // 切ると情報が減る(9:16の告知は左右44%が落ちてタイトルが消える)。
+    // 余白の色はふちから拾う。白で埋めると濃い地のフライヤーで枠が浮く。
+    const n = Math.max(w, h);
+    const cv = new OffscreenCanvas(n, n);
+    const ctx = cv.getContext('2d');
+    const probe = new OffscreenCanvas(w, h);
+    const pc = probe.getContext('2d');
+    pc.drawImage(bmp, 0, 0, w, h);
+    const band = Math.max(1, Math.round((h > w ? w : h) / 12));
+    const px = h > w ? pc.getImageData(0, 0, band, h).data
+                     : pc.getImageData(0, 0, w, band).data;
+    let r = 0, g = 0, b = 0, cnt = 0;
+    for (let i = 0; i < px.length; i += 4) { r += px[i]; g += px[i + 1]; b += px[i + 2]; cnt++; }
+    ctx.fillStyle = `rgb(${Math.round(r / cnt)},${Math.round(g / cnt)},${Math.round(b / cnt)})`;
+    ctx.fillRect(0, 0, n, n);
+    ctx.drawImage(bmp, Math.round((n - w) / 2), Math.round((n - h) / 2), w, h);
     const blob = await cv.convertToBlob({ type: 'image/jpeg', quality: o.quality });
     const bf = new Uint8Array(await blob.arrayBuffer());
     let bin = '';
