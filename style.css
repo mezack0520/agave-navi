@@ -490,7 +490,7 @@ body.no-scroll {
 
 /* 上位・選択肢 */
 .breadcrumb a,
-.breadcrumb > span,
+.breadcrumb .crumb-current,
 .pref-crumb,
 .region-tab,
 .pref-chip {
@@ -532,8 +532,11 @@ body.no-scroll {
     color: var(--black);
 }
 
-/* 現在地。トップの「関東」と詳細のイベント名は同じ扱い */
-.breadcrumb > span,
+/* 現在地。トップの「関東」と詳細のイベント名は同じ扱い。
+   `.breadcrumb > span` で書いていたら区切りの span まで黒く塗られ、
+   「>」が黒い丸として並んだ(2026-09-08 本番で発生)。
+   要素の種類で意味を決めると、同じ種類の別物を巻き込む。 */
+.breadcrumb .crumb-current,
 .pref-crumb.active,
 .region-tab.active,
 .pref-chip.active {
@@ -545,7 +548,7 @@ body.no-scroll {
 }
 
 /* イベント名は長いので詰める。全文は直下のh1にある */
-.breadcrumb > span {
+.breadcrumb .crumb-current {
     max-width: 15em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -562,7 +565,7 @@ body.no-scroll {
     .crumb-bar {
         padding: 0.45rem 2rem;
     }
-    .breadcrumb > span {
+    .breadcrumb .crumb-current {
         max-width: 26em;
     }
 }
