@@ -188,6 +188,16 @@
       var t = c.querySelector('.event-title');
       return t ? t.textContent : '';
     }
+    // 開催中が1〜2件のときは専用の節を立てない。
+    // 見出し「開催中 会期4日以上」＋「これから開催」＋カード1枚で
+    // 3行ぶんを食うのに、中身は1件しかない(2026-09-08 指摘)。
+    // 本体の一覧に混ぜれば、カード側の「開催中 〜9/8」バッジで分かる。
+    var ONGOING_MIN = 3;
+    if (ongoing.length && ongoing.length < ONGOING_MIN) {
+      main = main.concat(ongoing);
+      ongoing = [];
+    }
+
     ongoing.sort(function (a, b) {
       return AEN_TIME.cmpKey(AEN_TIME.ongoingSortKey(a.__aenSpan.start, a.__aenSpan.end, nameOf(a)),
                              AEN_TIME.ongoingSortKey(b.__aenSpan.start, b.__aenSpan.end, nameOf(b)));

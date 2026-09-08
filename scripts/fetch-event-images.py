@@ -87,6 +87,13 @@ def ig_post_url(ev):
     return ''
 
 
+# **このスクリプトの og:image 経路は使わない(2026-09-08)。**
+# og:image のURLには stp=c180.0.540.540a_... のような切り出し指定が入っており、
+# 元が 1080x1350 の縦長フライヤーでも 540x540 に切られてタイトルが落ちる。
+# 実際に74件をこれで保存して半分近くを見切れさせた。
+# 切り出しの無い画像は投稿ページのDOMにしか出ないので、
+# scripts/browser/ig-eyecatch.js（組み込みブラウザから実行）を使う。
+# ここは og:image しか見られないため、実質的に使えない。
 def extract_og_image(html):
     m = OG_IMAGE.search(html or '') or OG_IMAGE_ALT.search(html or '')
     if not m:

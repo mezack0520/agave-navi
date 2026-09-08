@@ -3761,6 +3761,8 @@ main {
     list-style: none;
     margin: 0.7rem 0 0;
     padding: 0;
+    /* 行が長くなりすぎないよう読みやすい幅で止める */
+    max-width: 46rem;
 }
 
 .upd-item {
@@ -3803,8 +3805,12 @@ main {
 .upd-changed { background: #d98a2b; }
 
 .upd-title {
-    flex: 1 1 14rem;
+    /* PCで横に伸ばしすぎない。1行が画面幅いっぱいに広がると、
+       日付・種別・イベント名・県名がバラバラに離れて読みにくい
+       (2026-09-08 指摘)。日付から県名までを一塊にする */
+    flex: 0 1 auto;
     min-width: 0;
+    margin-right: auto;
 }
 
 .upd-title a {
@@ -3821,6 +3827,7 @@ main {
     flex: none;
     color: var(--gray-500);
     font-size: 0.78rem;
+    padding-left: 0.2rem;
 }
 
 @media (max-width: 560px) {
