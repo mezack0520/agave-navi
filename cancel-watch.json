@@ -3,12 +3,22 @@
   "sweptOn": "2026-09-08",
   "stats": {
     "targets": 23,
-    "fetched": 22
+    "fetched": 23
   },
-  "errors": [
-    "kadan-fes-2026-autumn: URLError https://fumakilla.jp/kadanlife/kadanfes/"
+  "errors": [],
+  "suspects": [
+    {
+      "slug": "wi-wi-botanical-minokamo-2026-09",
+      "name": "Wi-Wi BOTANICAL Vol.2",
+      "date": "2026-09-20",
+      "url": "https://kani.goguynet.jp/2026/06/03/wi-wi-botanical/",
+      "why": "公式ページが変わった(本文・画像)",
+      "changed": [
+        "本文",
+        "画像"
+      ]
+    }
   ],
-  "suspects": [],
   "pages": {
     "sakuya-green-jam-5-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22331/",
@@ -109,9 +119,9 @@
       "url": "https://kani.goguynet.jp/2026/06/03/wi-wi-botanical/",
       "checkedOn": "2026-09-08",
       "signature": {
-        "text": "d949cafc6a7bd9df",
-        "images": "552fd03e97ec303d",
-        "textLen": 10431,
+        "text": "69d88ab612878d9f",
+        "images": "309661596908dd61",
+        "textLen": 10422,
         "imageCount": 57
       },
       "strong": [],
@@ -232,6 +242,19 @@
         "images": "8c555587ed268d73",
         "textLen": 690,
         "imageCount": 19
+      },
+      "strong": [],
+      "weak": [],
+      "firstSeenOn": "2026-09-08"
+    },
+    "kadan-fes-2026-autumn": {
+      "url": "https://fumakilla.jp/kadanlife/kadanfes/",
+      "checkedOn": "2026-09-08",
+      "signature": {
+        "text": "c9a57513fbc3d092",
+        "images": "651b11e75489e1fb",
+        "textLen": 549,
+        "imageCount": 26
       },
       "strong": [],
       "weak": [],
