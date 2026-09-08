@@ -84,7 +84,11 @@ def main():
                     label = re.sub(r'<[^>]+>', '', mm.group(2)).strip()
                     href = mm.group(1)
                     if label in ('ホーム', '全国') or href in ('/', '/index.html'):
-                        items.append(sitelib.CRUMB_ROOT)
+                        # ここが扱うのはサイトの案内頁だけ。
+                        # イベント一覧の範囲(地域・県・タグ)ではないので、
+                        # 根っこは「ホーム」。「全国」を置くと
+                        # 全国一覧を絞った頁のように読める(2026-09-09 指摘)
+                        items.append(sitelib.CRUMB_HOME)
                     elif label:
                         items.append((label, href))
                     continue

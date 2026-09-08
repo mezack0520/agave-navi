@@ -43,7 +43,7 @@ HEAD = '''<!DOCTYPE html>
   {{"@context":"https://schema.org","@type":"Article","headline":"{title}","description":"{description}","datePublished":"{date_iso}","dateModified":"{date_iso}","author":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/"}},"publisher":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/","logo":{{"@type":"ImageObject","url":"https://agave-navi.com/android-chrome-512x512.png"}}}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{canonical}"}},"image":"https://agave-navi.com/og-image.png"}}
   </script>
   <script type="application/ld+json">
-  {{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{{"@type":"ListItem","position":1,"name":"全国","item":"https://agave-navi.com/"}},{{"@type":"ListItem","position":2,"name":"植物ガイド","item":"https://agave-navi.com/guides/"}},{{"@type":"ListItem","position":3,"name":"{title}"}}]}}
+  {{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{{"@type":"ListItem","position":1,"name":"ホーム","item":"https://agave-navi.com/"}},{{"@type":"ListItem","position":2,"name":"植物ガイド","item":"https://agave-navi.com/guides/"}},{{"@type":"ListItem","position":3,"name":"{title}"}}]}}
   </script>
   <style>
     .guide-wrap{{max-width:760px;margin:0 auto;padding:0 1rem}}
@@ -210,7 +210,7 @@ def render_guide(meta, md, related):
         keywords=meta['keywords'], canonical=f"{DOMAIN}/guides/{meta['slug']}.html",
         date_iso=date_iso,
     )
-    bc = sitelib.crumb_bar_html([sitelib.CRUMB_ROOT,
+    bc = sitelib.crumb_bar_html([sitelib.CRUMB_HOME,
                                  ('植物ガイド', '/guides/'),
                                  (meta['title'], None)])
     body_html = (f'<body>\n{HEADER}\n{bc}\n  <main>\n  <div class="guide-wrap">\n'
@@ -262,7 +262,7 @@ def main():
     head = HEAD.format(title='植物ガイド一覧', description='アガベ・塊根植物・ビザールプランツの育て方や購入時のチェックポイントを解説したガイド記事一覧。',
                        keywords='植物ガイド,アガベ,塊根植物,育て方,即売会', canonical=f'{DOMAIN}/guides/', date_iso=datetime.now(JST).strftime('%Y-%m-%d'))
     index_bc = sitelib.crumb_bar_html(
-        [sitelib.CRUMB_ROOT, ('植物ガイド', None)])
+        [sitelib.CRUMB_HOME, ('植物ガイド', None)])
     body_html = f'''<body>
 {HEADER}
 {index_bc}
