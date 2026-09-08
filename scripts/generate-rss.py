@@ -86,9 +86,11 @@ def render_updates_rss(items, max_items=50):
     掲載順に並ぶので、既に配ったイベントが中止になっても再配信されない。
     guid を (種別+slug+発生日) にして、同じ回の中止が別itemとして届く。
     """
-    from sitelib import UPDATE_KIND
+    # 絞り方は sitelib.pick_updates が単一情報源。TOPの更新欄と同じ規則で
+    # 中止系の枠を確保する。ここに独自の切り方を書くと必ず食い違う。
+    from sitelib import UPDATE_KIND, pick_updates
     out = []
-    for it in (items or [])[:max_items]:
+    for it in pick_updates(items, max_items):
         kind = str(it.get('kind') or '')
         label = UPDATE_KIND.get(kind, (kind, ''))[0]
         slug = (it.get('slug') or '').strip()

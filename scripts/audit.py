@@ -29,7 +29,8 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      is_recent_past, event_span, PAST_KEEP_MAX,
                      is_upcoming, compact_date, DESC_PROTECT_DAYS,
                      is_cancelled, find_month_days, find_year_month_days,
-                     event_month_days)
+                     event_month_days, UPDATE_IMPORTANT,
+                     UPDATE_IMPORTANT_DAYS)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -1686,6 +1687,32 @@ def main():
     _feed = rp('feeds', 'updates.xml')
     if _upd and not os.path.exists(_feed):
         _upd_bad.append('feeds/updates.xml が無い（generate-rss.py の失敗）')
+    # 中止系が埋もれていないか。掲載が大量に出た日にいちばん届けたい
+    # 知らせが落ちるのを防ぐ(2026-09-08、実際にフィードから消えた)。
+    # 絞り方は sitelib.pick_updates が持つので、結果だけを見る。
+    elif _upd and _ix:
+        import datetime as _dtu
+        try:
+            _cut = (_dtu.date.fromisoformat(today_s)
+                    - _dtu.timedelta(days=UPDATE_IMPORTANT_DAYS)).isoformat()
+        except ValueError:
+            _cut = ''
+        _want_imp = [i for i in _upd
+                     if str(i.get('kind') or '') in UPDATE_IMPORTANT
+                     and (i.get('on') or '')[:10] >= _cut]
+        try:
+            _fx = open(_feed, encoding='utf-8').read()
+        except OSError:
+            _fx = ''
+        for i in _want_imp[:10]:
+            _sl = i.get('slug') or ''
+            if _sl and _sl not in _fx:
+                _upd_bad.append(
+                    f"{i.get('kind')} の {_sl} が feeds/updates.xml に無い"
+                    '（掲載に埋もれている）')
+            if _sl and _sl not in _ix:
+                _upd_bad.append(
+                    f"{i.get('kind')} の {_sl} がTOPの更新欄に無い")
     add('updates_section_drift', '更新のお知らせがsite-updates.jsonと不一致',
         sorted(_upd_bad),
         'index.html の更新欄は生成物。scripts/sync-index-cards.py が'

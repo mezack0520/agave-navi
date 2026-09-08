@@ -16,7 +16,7 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908e'
+CSS_VERSION = '20260908f'
 JS_VERSION = '20260908b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -573,6 +573,48 @@ def load_updates(root_path=None):
         return []
 
 
+# 掲載以外は「開催されなくなった/条件が変わった」の知らせで、
+# 掲載より届ける価値が高い。掲載が大量に出た日に埋もれさせない。
+UPDATE_IMPORTANT = ('cancelled', 'postponed', 'removed', 'date', 'venue')
+UPDATE_IMPORTANT_DAYS = 60
+
+
+def pick_updates(items, limit, today=None):
+    """新しい順に切り出すが、中止系は枠を確保して落とさない。
+
+    2026-09-08、掲載が50件並んだ日にコレクトプランツの中止が
+    フィードから消えた。**いちばん届けたいものが埋もれるのは設計ミス。**
+    掲載はサイトを見れば分かるが、中止は知らせが届かないと分からない。
+    """
+    # 呼び出し側の並びに依存しない。新しい順に揃えてから絞る。
+    # 入力が新しい順である前提を置くと、古い中止が先頭にあるだけで
+    # 埋め合わせに拾われる（2026-09-08 の自己テストで踏んだ）。
+    items = sorted(list(items or []),
+                   key=lambda x: ((x.get('on') or ''), (x.get('slug') or '')),
+                   reverse=True)
+    if len(items) <= limit:
+        return items
+    t = today or today_jst()
+    try:
+        cut = (date.fromisoformat(t)
+               - timedelta(days=UPDATE_IMPORTANT_DAYS)).isoformat()
+    except ValueError:
+        cut = ''
+    keep, rest = [], []
+    for it in items:
+        kind = str(it.get('kind') or '')
+        on = (it.get('on') or '')[:10]
+        if kind in UPDATE_IMPORTANT and on >= cut:
+            keep.append(it)
+        else:
+            rest.append(it)
+    keep = keep[:limit]
+    out = keep + rest[:max(0, limit - len(keep))]
+    # 元の並び（新しい順）に戻す
+    order = {id(x): i for i, x in enumerate(items)}
+    return sorted(out, key=lambda x: order[id(x)])
+
+
 def updates_section_html(items, limit=UPDATES_MAX):
     """TOPの更新欄。追加と中止をここで受け取らせる。
 
@@ -585,7 +627,7 @@ def updates_section_html(items, limit=UPDATES_MAX):
     関係ない更新が混ざって読みにくくなる。
     """
     rows = []
-    for it in (items or [])[:limit]:
+    for it in pick_updates(items, limit):
         kind = str(it.get('kind') or '')
         label, cls = UPDATE_KIND.get(kind, (kind, 'upd-changed'))
         slug = (it.get('slug') or '').strip()
