@@ -4098,13 +4098,6 @@ main {
    分からないのに、地図への手がかりが無かった(2026-09-08 指摘) */
 
 
-
-
-
-
-
-
-
 .venue-place {
     margin: 0 0 0.8rem;
     font-size: 0.85rem;
@@ -4132,19 +4125,6 @@ main {
     border: 1px solid var(--gray-200);
 }
 
-.venue-map .map-open-link {
-    display: inline-block;
-    margin-top: 0.4rem;
-    font-size: 0.78rem;
-    color: var(--gray-600);
-    text-decoration: none;
-    border-bottom: 1px solid var(--gray-300);
-}
-
-.venue-map .map-open-link:hover {
-    color: var(--black);
-    border-bottom-color: var(--black);
-}
 
 @media (max-width: 720px) {
     /* 狭い画面はラベル列が無いので字下げしない */
