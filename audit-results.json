@@ -525,14 +525,14 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260908g)と違うページ",
+      "title": "CSS版数が正規値(20260908h)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260908c)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260908d)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",

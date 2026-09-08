@@ -188,7 +188,8 @@ CANONICALIZED_PATHS = []  # canonicalを他URLに向けた頁。noindexではな
 
 def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
            noindex=False, intro_html='', fallback_evs=None, rel_path=None,
-           canonical_of=None, feed_href=None):
+           canonical_of=None, feed_href=None,
+           upd_region=None, upd_prefecture=None):
     # canonical_of: 別URLと内容が完全に重複する頁で、正規URLをそちらに寄せる。
     # noindexにはしない(利用者には見える・リンクも辿らせる)が、
     # 自分自身を指さないcanonicalとsitemap掲載は矛盾するのでsitemapからは外す。
@@ -225,9 +226,20 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
         grid = ('  <div class="landing-empty">現在このページに該当するイベント情報はありません。'
                 '<a href="/">ホーム</a>から最新の一覧を確認できます。</div>' + fb)
     intro = f'\n  <section class="landing-intro">{intro_html}</section>' if intro_html else ''
+    # 更新のお知らせ。**そのページの範囲に絞ったものだけ**を出す。
+    # 東海のページには愛知と三重の更新が出て、熊本の更新は出ない。
+    # 関係ない更新が並ぶと読む理由が無くなる(2026-09-08 指摘)。
+    # RSSは全国のフィードしか無いので、絞ったページには導線を出さない。
+    upd = ''
+    if not noindex and (upd_region or upd_prefecture):
+        upd = sitelib.updates_section_html(
+            sitelib.load_updates(), region=upd_region,
+            prefecture=upd_prefecture, show_feed=False, root=root)
+        if upd:
+            upd = '\n  ' + upd
     aff, aff_js = aff_block(root, noindex=noindex)
     body = (f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1>'
-            f'<p class="lead">{lead}</p></section>{intro}\n{grid}{aff}\n  </main>\n{FOOTER}\n'
+            f'<p class="lead">{lead}</p></section>{intro}\n{grid}{aff}\n  </main>\n{upd}\n{FOOTER}\n'
             f'{aff_js}  <script src="{root}status-auto.js?v={sitelib.JS_VERSION}"></script>\n'
             f'</body>\n</html>\n')
     return head + '\n' + body
@@ -381,7 +393,8 @@ def main():
                    f'{p}で開催されるアガベ・塊根植物・多肉植物・ビザールプランツのイベントをまとめています。掲載{len(evs)}件。',
                    upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
-                   fallback_evs=fallback5, rel_path=f'pref/{sl}/index.html'))
+                   fallback_evs=fallback5, rel_path=f'pref/{sl}/index.html',
+                   upd_prefecture=p))
         counters['pref']+=1
 
     # Region pages
@@ -412,7 +425,8 @@ def main():
                    f'{r}地方のイベント', f'{r}地方で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'region/{sl}/index.html',
-                   canonical_of=canonical_of, feed_href=f'/feeds/region-{sl}.xml'))
+                   canonical_of=canonical_of, feed_href=f'/feeds/region-{sl}.xml',
+                   upd_region=r))
         counters['region']+=1
 
     # Archive YM

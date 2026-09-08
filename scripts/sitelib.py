@@ -16,8 +16,8 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908g'
-JS_VERSION = '20260908c'
+CSS_VERSION = '20260908h'
+JS_VERSION = '20260908d'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -372,7 +372,11 @@ def desc_is_protected(e, today=None):
 # display:none はDOMもHTMLの重さも減らさないので、肥大化を止めるのは物理削除の側。
 # 日数を主にし、件数は異常時の安全弁として上限だけ持つ。
 # 実測: ある日から見て直近14日に終わった回は中央値1件・最大34件(2026-08-03)。
-CARDS_PER_PAGE = 12    # 一覧の初期表示件数。list-ui.js と同値
+# 一覧の初期表示は list-ui.js が「段数×列数」で決める(PC 3段 / SP 5段)。
+# 列数は画面幅で変わるので、いちばん少なくなる組み合わせ(SP 2列×5段=10)を
+# ここでの下限とする。「もっと見る」ボタンを出すかどうかの判定にだけ使う。
+# 12固定にすると、11件のときSPでは10件しか出ないのにボタンが無くなる。
+CARDS_PER_PAGE = 10
 PAST_CARDS_INIT = 4    # 終了セクションの初期表示件数。list-ui.js と同値
 PAST_KEEP_DAYS = 14
 PAST_KEEP_MAX = 40     # 上限。実測最大34件を通し、暴走だけ止める
@@ -615,19 +619,44 @@ def pick_updates(items, limit, today=None):
     return sorted(out, key=lambda x: order[id(x)])
 
 
-def updates_section_html(items, limit=UPDATES_MAX):
-    """TOPの更新欄。追加と中止をここで受け取らせる。
+def filter_updates(items, region=None, prefecture=None):
+    """地域・県で絞る。
+
+    地域ページには**その地域の県の更新だけ**を出す。東海のページに
+    愛知と三重の更新が出て、熊本の更新は出ない。県ページはその県だけ。
+    そのページと関係ない更新が並ぶと読む理由が無くなる(2026-09-08 指摘)。
+    """
+    out = []
+    for it in (items or []):
+        pref = (it.get('prefecture') or '').strip()
+        if prefecture:
+            if pref == prefecture:
+                out.append(it)
+            continue
+        if region:
+            if pref and pref_to_region(pref) == region:
+                out.append(it)
+            continue
+        out.append(it)
+    return out
+
+
+def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
+                         show_feed=True, root=''):
+    """更新のお知らせ。追加と中止をここで受け取らせる。
 
     一覧サイトの値打ちは「いまの状態が正しいこと」だが、変わったことは
     どこにも出ていなかった。カードの新着バッジは7日で消えるだけで、
     中止に至っては受け取り手がいない。詳細ページに中止と出しても、
     2週間前に見た人はそのページに戻ってこない(2026-09-08)。
 
-    **TOPだけに出す。**地域・タグの各ページにも出すと、そのページと
-    関係ない更新が混ざって読みにくくなる。
+    region / prefecture を渡すとその範囲に絞る。トップ(全国)は絞らないが、
+    各行に data-pref / data-region を持たせて、トップの地域チップでの
+    絞り込みにJS側から追随できるようにしてある。
     """
+    picked = pick_updates(filter_updates(items, region, prefecture), limit)
     rows = []
-    for it in pick_updates(items, limit):
+    for it in picked:
         kind = str(it.get('kind') or '')
         label, cls = UPDATE_KIND.get(kind, (kind, 'upd-changed'))
         slug = (it.get('slug') or '').strip()
@@ -635,31 +664,39 @@ def updates_section_html(items, limit=UPDATES_MAX):
         on = (it.get('on') or '')[:10]
         on_disp = on[5:].replace('-', '.') if len(on) == 10 else on
         pref = (it.get('prefecture') or '').strip()
+        reg = pref_to_region(pref) or ''
         detail = (it.get('detail') or '').strip()
         # 取り消した回は詳細ページが無いのでリンクしない
         if kind == 'removed' or not slug:
             title = html_escape(name)
         else:
-            title = (f'<a href="/events/{_attr(slug)}.html">'
+            title = (f'<a href="{root}events/{_attr(slug)}.html">'
                      f'{html_escape(name)}</a>')
-        meta = ' / '.join(x for x in [pref, detail] if x)
+        side = ' / '.join(x for x in [pref, detail] if x)
         rows.append(
-            f'<li class="upd-item">'
+            f'<li class="upd-item" data-pref="{_attr(pref)}"'
+            f' data-region="{_attr(reg)}">'
             f'<span class="upd-date">{html_escape(on_disp)}</span>'
             f'<span class="upd-kind {cls}">{html_escape(label)}</span>'
             f'<span class="upd-title">{title}</span>'
-            + (f'<span class="upd-meta">{html_escape(meta)}</span>' if meta else '')
+            + (f'<span class="upd-meta">{html_escape(side)}</span>' if side else '')
             + '</li>')
     if not rows:
         return ''
+    scope = prefecture or region or ''
+    note = f'{scope}の掲載・中止・日程変更' if scope else '掲載・中止・日程変更'
+    feed = (f'<a class="updates-feed" href="{root}feeds/updates.xml">'
+            f'RSSで受け取る</a>' if show_feed else '')
     return (
         '<section class="updates-section" id="updates" aria-labelledby="updatesHeading">'
         '<div class="updates-head">'
-        '<h2 class="section-heading" id="updatesHeading">更新のお知らせ'
-        '<span class="section-heading-note">掲載・中止・日程変更</span></h2>'
-        '<a class="updates-feed" href="/feeds/updates.xml">RSSで受け取る</a>'
+        '<h2 class="updates-title" id="updatesHeading">更新のお知らせ'
+        f'<span class="updates-note">{html_escape(note)}</span></h2>'
+        + feed +
         '</div>'
         '<ul class="updates-list">' + ''.join(rows) + '</ul>'
+        '<p class="updates-empty" id="updatesEmpty" hidden>'
+        'この絞り込みに該当する更新はありません。</p>'
         '</section>')
 
 

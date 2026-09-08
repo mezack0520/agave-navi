@@ -19,7 +19,26 @@
   'use strict';
 
   var FAV_KEY = 'aen_favs';
-  var CARDS_PER_PAGE = 12;
+  // 初期表示は「段数」で決める。列数が画面幅で変わるので、
+  // 件数を固定すると段数がばらつく(PC4列で12件=3段、SP2列で12件=6段)。
+  // 段数を揃えると、どの幅でも同じだけスクロールして「もっと見る」に着く。
+  // PC 3段 / SP 5段（2026-09-08 指定）。
+  var ROWS_PC = 3;
+  var ROWS_SP = 5;
+  function gridCols(grid) {
+    if (!grid) return 4;
+    var t = getComputedStyle(grid).gridTemplateColumns;
+    var n = (t || '').trim().split(/\s+/).filter(Boolean).length;
+    return n > 0 ? n : 4;
+  }
+  function cardsPerPage() {
+    var g = document.getElementById('eventsGrid');
+    var cols = gridCols(g);
+    // 2列以下は狭い画面と見なす（SP: 1〜2列 / タブレット以上: 3〜4列）
+    var rows = cols <= 2 ? ROWS_SP : ROWS_PC;
+    return cols * rows;
+  }
+  var CARDS_PER_PAGE = 12;   // 後方互換。実際は cardsPerPage() を使う
   var PAST_CARDS_INIT = 4;
 
   // --- 行きたい(localStorage) ---
@@ -79,7 +98,7 @@
   }
 
   // --- もっと見る ---
-  var shown = CARDS_PER_PAGE;
+  var shown = 0;
 
   function reloadCardImages(card) {
     var img = card.querySelector('.event-thumb img');
@@ -108,15 +127,15 @@
     });
   }
   function initLoadMore() {
-    shown = CARDS_PER_PAGE;
+    shown = cardsPerPage();
     clearClass('load-more-hidden');
     mainCards().forEach(function (card, i) {
-      if (i >= CARDS_PER_PAGE) card.classList.add('load-more-hidden');
+      if (i >= shown) card.classList.add('load-more-hidden');
     });
     updateLoadMoreBtn();
   }
   function loadMoreEvents() {
-    var limit = shown + CARDS_PER_PAGE, delay = 0;
+    var limit = shown + cardsPerPage(), delay = 0;
     mainCards().forEach(function (card, i) {
       if (i >= shown && i < limit) {
         card.classList.remove('load-more-hidden');

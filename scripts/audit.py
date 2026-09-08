@@ -1673,7 +1673,10 @@ def main():
         if '<!-- UPDATES-SECTION:START' not in _ix:
             _upd_bad.append('index.html に UPDATES-SECTION の受け口が無い')
         else:
-            _shown = _ix.count('upd-item')
+            # 要素だけを数える。素の 'upd-item' で数えると
+            # JS内の querySelectorAll('.upd-item') まで拾って1件ずれる
+            # (2026-09-08 に実際にずれた)
+            _shown = _ix.count('class="upd-item"')
             _want = min(len(_upd), 10)
             if _shown != _want:
                 _upd_bad.append(
