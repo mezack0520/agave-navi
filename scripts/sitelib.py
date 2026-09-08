@@ -760,9 +760,16 @@ CORRECTION_ASK = ('万一誤りがありましたら、{link}からお知らせ�
                   '確認のうえ修正します。')
 
 
-def correction_note(root='', lead=True):
-    """訂正のお願い1文。lead=False で前置きを省く。"""
-    link = f'<a href="{root}contact.html">お問い合わせ</a>'
+def correction_note(root='', lead=True, here=False):
+    """訂正のお願い1文。
+
+    lead=False で前置きを省く。
+    here=True はお問い合わせ頁自身で使う。同じ頁へのリンクを出さない。
+    """
+    if here:
+        link = '上のフォーム'
+    else:
+        link = f'<a href="{root}contact.html">お問い合わせ</a>'
     body = CORRECTION_ASK.replace('{link}', link)
     return (CORRECTION_LEAD + body) if lead else body
 
