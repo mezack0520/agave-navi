@@ -370,6 +370,7 @@ body.no-scroll {
     justify-content: center;
     gap: 0.4rem;
     height: var(--pill-h);
+    align-self: center;
     margin: 0;
     padding: 0 1rem;
     border: 1.5px solid var(--gray-300);
@@ -4033,6 +4034,7 @@ main {
     .eh-actions .detail-fav-btn,
     .eh-actions .gcal-btn,
     .eh-actions .share-btn {
+        margin: 0;
         padding: 0 0.8rem;
         font-size: 0.78rem;
     }
@@ -4041,5 +4043,53 @@ main {
     }
     .crumb-bar {
         padding: 0.35rem 0.75rem;
+    }
+}
+
+/* サイトの説明。トップの末尾に置く奥付。
+   以前は index.html に直書きの style で、灰色の箱に黒い縦線という
+   作りだった。周りの部品と共通点が無く浮いていた(2026-09-08 指摘)。
+   更新のお知らせと同じ幅に揃え、色と線は落として脇役にする。 */
+.site-about {
+    max-width: 960px;
+    margin: 2.5rem auto 1.5rem;
+    padding: 1.4rem 1.3rem 0;
+    border-top: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    font-size: 0.85rem;
+    line-height: 1.9;
+}
+
+.site-about h2 {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--gray-500);
+}
+
+.site-about p {
+    margin: 0 0 0.7rem;
+}
+
+.site-about a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.site-about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.1rem;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 720px) {
+    .site-about {
+        margin: 1.8rem 1rem 1.2rem;
+        padding: 1.2rem 0 0;
+        font-size: 0.82rem;
+        line-height: 1.85;
     }
 }
