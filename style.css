@@ -2417,21 +2417,23 @@ main {
 }
 
 /* Detail page: 注意文言 */
+/* 訂正の受け口。以前は灰色の箱に中央揃えで、
+   「万が一誤りがある場合は申し訳ございません」という言い回しだった。
+   謝る場所ではなく直す先を示す場所なので、一行の脇書きにした
+   (2026-09-08 指摘) */
 .correction-notice {
     max-width: 900px;
     margin: 0 auto 2rem;
-    padding: 0.8rem 1.5rem;
-    background: var(--gray-100);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-sm);
+    padding: 0.9rem 0 0;
+    border-top: 1px solid var(--gray-200);
     font-size: 0.78rem;
+    line-height: 1.8;
     color: var(--gray-500);
-    text-align: center;
 }
 .correction-notice a {
-    color: var(--accent-pop);
-    font-weight: 600;
-    text-decoration: none;
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 .correction-notice a:hover {
     text-decoration: underline;
