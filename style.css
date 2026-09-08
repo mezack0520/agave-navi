@@ -3192,10 +3192,10 @@ main {
     margin-top: 0.9rem;
 }
 .eh-lead .detail-hero {
-    /* 1カラムなので幅を決めておく。920pxの正方形は画面を占めすぎる。
-       地図と同じ幅・同じ左端にする。画像が左寄せ・地図が右寄せで
-       縦のラインが揃っていなかった(2026-09-08 指摘) */
-    max-width: 480px;
+    /* コンテンツ幅いっぱい(2026-09-08 指摘)。
+       1枚しか出さないので、カードのように高さを揃える必要がない。
+       枠の比率をやめて画像そのままの形で置く。帯も見切れも出ない */
+    max-width: 100%;
     margin: 0 0 1.1rem;
     border-radius: 10px;
     border: 1px solid #ececec;
@@ -3209,11 +3209,15 @@ main {
    4:3 だと正方形に左右25%の帯が出る(実測。開催予定で画像がある103件のうち
    74件が正方形)。 */
 .eh-lead .detail-hero-img {
+    /* 1:1の枠に contain で入れていたので、縦長のフライヤーは左右に、
+       横長の写真は上下に灰色の帯が出ていた。詳細は1枚だけなので
+       枠を決めず、画像の形のまま出す(2026-09-08 指摘) */
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: auto;
+    aspect-ratio: auto;
     max-height: none;
-    object-fit: contain;
-    background: #f7f7f7;
+    object-fit: fill;
+    background: none;
 }
 .eh-lead .eh-spec { margin-top: 0; }
 
@@ -3223,15 +3227,14 @@ main {
         margin-top: 0.7rem;
     }
     .eh-lead .detail-hero {
-        max-width: 100%;
         margin-bottom: 0.9rem;
     }
     /* モバイルも切らない。16:10 にすると正方形のフライヤーが
        左右44%も帯になって、肝心の文字が小さくなる。
        1:1 のまま max-height で高さを抑え、日時が画面内に残るようにする。 */
     .eh-lead .detail-hero-img {
-        aspect-ratio: 1 / 1;
-        max-height: 320px;
+        aspect-ratio: auto;
+        max-height: none;
     }
 }
 
@@ -4128,8 +4131,7 @@ main {
    以前はページの下のほうに節として置いていたが、会場名を読んだ人が
    いちばん知りたいのは「どこ」なので、その場で見せる(2026-09-08 指摘) */
 .venue-map {
-    /* 画像と同じ幅・同じ左端。ラベル列ぶんの字下げはやめた */
-    max-width: 480px;
+    /* コンテンツ幅いっぱい。ラベル列ぶんの字下げはしない */
     margin: 0.4rem 0 0.9rem;
 }
 
@@ -4147,11 +4149,7 @@ main {
 }
 
 
-@media (max-width: 720px) {
-    .venue-map {
-        max-width: 100%;
-    }
-}
+
 
 /* 外部リンク。**印と見た目はここだけ。**
    以前は「↗」を素で足すだけで、下線も無く本文の色と同じだった。

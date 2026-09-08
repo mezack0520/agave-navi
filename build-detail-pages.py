@@ -192,7 +192,7 @@ def make_venue_map(ev):
     # 「マップで開く」は埋め込み自身が左上に出すので足さない。
     # 二重に出しても行き先は同じ(2026-08 の判断を踏襲)。
     return f'''          <div class="venue-map">
-            {where}<iframe src="https://www.google.com/maps?q={q}&output=embed" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="会場の地図"></iframe>
+            {where}<iframe src="https://www.google.com/maps?q={q}&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="会場の地図"></iframe>
           </div>
 '''
 
