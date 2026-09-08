@@ -1213,6 +1213,11 @@ def main():
         # アイコンはビルドのたびに変わらない。cairosvg を CI の依存に足すと
         # ビルド全体が壊れる面が増えるだけなので、形を変えたいときだけ回す
         'build-icons.py',
+        # Instagram には CI のIPから届かない(2026-09-08 実測で取得0件)。
+        # 組み込みブラウザを持つ定期タスク agave-navi-eyecatch から走らせる
+        'fetch-event-images.py',
+        # 上の取得先を決めるための一覧。同じくタスク側から呼ぶ
+        'list-missing-eyecatch.py',
     }
     # スケジュールタスクが直接呼ぶスクリプトは build-all.sh にも workflow にも
     # 出てこない。呼び出し元はプレイブックなので、そこも参照元として数える

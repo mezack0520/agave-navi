@@ -277,13 +277,27 @@ def main():
             'firstSeenOn': before.get('firstSeenOn') or today,
         }
 
+        # 「本文だけ毎回変わる」ページがある。Wix や WordPress の一部は
+        # 日付・カウンタ・ランダムなIDを埋め込むので、中止と無関係に
+        # 署名が動く。同じ回で本文だけの変化が続いたら数えない。
+        # 毎日鳴る指摘は読まれなくなり、本物の変化を埋める(2026-09-08)。
+        noisy = int(before.get('textOnlyChanges') or 0)
+        text_only = (changed == ['本文'])
+        if text_only:
+            noisy += 1
+        elif changed:
+            noisy = 0
+        pages[slug]['textOnlyChanges'] = noisy
+
         why = []
         if res['strong']:
             why.append('中止・延期の語: ' + ' / '.join(res['strong']))
         elif res['weak'] and changed:
             why.append('弱い語(' + ' / '.join(res['weak']) + ')＋ページが変わった')
-        elif changed and before:
+        elif '画像' in changed:
             why.append('公式ページが変わった(' + '・'.join(changed) + ')')
+        elif text_only and before and noisy <= 2:
+            why.append('公式ページが変わった(本文)')
         if why:
             suspects.append({
                 'slug': slug, 'name': e.get('name') or '',

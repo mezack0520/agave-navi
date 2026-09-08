@@ -1,5 +1,5 @@
 {
-  "total": 418,
+  "total": 417,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -547,10 +547,8 @@
     },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowもプレイブックも参照していないスクリプト",
-      "count": 1,
-      "items": [
-        "list-missing-eyecatch.py"
-      ],
+      "count": 0,
+      "items": [],
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
       "severity": "urgent"
     },
