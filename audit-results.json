@@ -1,5 +1,5 @@
 {
-  "total": 416,
+  "total": 414,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 103,
+      "count": 102,
       "items": [
         "bba-vol5-carpediem-2026-09",
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
@@ -568,9 +568,8 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 2,
+      "count": 1,
       "items": [
-        "notre-atelier-popup-tamagawa-2026-09(2026-09-02〜2026-09-08/7日/長期)",
         "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",

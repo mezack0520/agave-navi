@@ -486,6 +486,27 @@
    },
    "events": 405,
    "upcoming": 144
+  },
+  {
+   "date": "2026-09-09",
+   "urgent": {},
+   "info": {
+    "duplicate_event_same_source": 1,
+    "inquiry_review_gap": 1,
+    "task_run_gap": 2
+   },
+   "metric": {
+    "thin_past_with_source": 34,
+    "thin_archived": 48,
+    "upcoming_with_image": 102,
+    "events_with_image": 142,
+    "upcoming_no_image": 42,
+    "ongoing_events": 1,
+    "workflow_secrets": 6,
+    "eyecatch_backlog": 41
+   },
+   "events": 405,
+   "upcoming": 143
   }
  ]
 }

@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-08 23:57 JST",
+ "generated": "2026-09-09 00:00 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 227,
-  "awaitingNextEdition": 229,
+  "awaitingNextEdition": 230,
   "officialSiteCandidates": 64,
   "unresolvedIgHandles": 0
  },
@@ -285,15 +285,6 @@
    "lastEventName": "第1回 ボタニカルX",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 1
-  },
-  {
-   "handle": "notreatelier.29",
-   "url": "https://www.instagram.com/notreatelier.29/",
-   "eventCount": 1,
-   "lastEventName": "notre atelier POP UP STORE AT TOKYO",
-   "lastEventDate": "2026-09-02",
-   "hasUpcoming": true,
    "priority": 1
   },
   {
@@ -1980,6 +1971,15 @@
    "priority": 2
   },
   {
+   "handle": "notreatelier.29",
+   "url": "https://www.instagram.com/notreatelier.29/",
+   "eventCount": 1,
+   "lastEventName": "notre atelier POP UP STORE AT TOKYO",
+   "lastEventDate": "2026-09-02",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "earthwalk_plants",
    "url": "https://www.instagram.com/earthwalk_plants/",
    "eventCount": 1,
@@ -2234,6 +2234,16 @@
    "recurring": false
   },
   {
+   "series": "notre atelier POP UP STORE AT TOKYO",
+   "lastSlug": "notre-atelier-popup-tamagawa-2026-09",
+   "lastDate": "2026-09-02",
+   "lastEnd": "2026-09-08",
+   "monthsSinceLast": 0,
+   "igHandle": "notreatelier.29",
+   "officialUrl": "https://www.instagram.com/notreatelier.29/",
+   "recurring": false
+  },
+  {
    "series": "PLANTS UNITED 2026",
    "lastSlug": "plants-united-kumamoto-2026-08",
    "lastDate": "2026-08-01",
@@ -2441,16 +2451,6 @@
    "monthsSinceLast": 1,
    "igHandle": "kagoshima_volcano_market",
    "officialUrl": "https://www.instagram.com/kagoshima_volcano_market/",
-   "recurring": false
-  },
-  {
-   "series": "熊谷多肉フェス（2026年8月）",
-   "lastSlug": "kumagaya-taniku-fes-2026-08",
-   "lastDate": "2026-08-09",
-   "lastEnd": "2026-08-09",
-   "monthsSinceLast": 1,
-   "igHandle": "kumagaya_fes",
-   "officialUrl": "https://www.nittohmall.com/event.html",
    "recurring": false
   }
  ],
