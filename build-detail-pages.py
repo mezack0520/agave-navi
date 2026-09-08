@@ -133,11 +133,38 @@ def make_instagram_section(ev):
         </div>
 '''
 
-def make_venue_value(ev):
-    """スペック表の会場欄。文字だけ。地図はこの行の直下に置く。"""
+def split_venue(ev):
+    """会場名と住所に分ける。
+
+    events.json の location は「有楽町阪急メンズ東京 1階 メインベース
+    （東京都千代田区有楽町2-5-1）」のように住所を括弧に入れて1つの
+    文字列で持っている。括弧書きは読みにくいので、表示のときに分ける
+    (2026-09-08 指摘)。データ側は触らない。
+
+    括弧の中が都道府県名で始まるものだけ住所とみなす。
+    「（雨天中止）」のような但し書きを住所の行に落とさないため。
+    """
     venue = (ev.get('location') or ev.get('venue') or '').strip()
-    return (html_escape(venue) if venue and not _is_vague(venue)
-            else _venue_placeholder(ev))
+    if not venue:
+        return ('', '')
+    m = re.search(r'[（(]([^（()）]+)[)）]\s*$', venue)
+    if not m:
+        return (venue, '')
+    inner = m.group(1).strip()
+    if not any(inner.startswith(p) for p in sitelib.PREF_TO_REGION):
+        return (venue, '')
+    return (venue[:m.start()].strip(), inner)
+
+
+def make_venue_value(ev):
+    """スペック表の会場欄。会場名と住所を2行に分ける。"""
+    name, addr = split_venue(ev)
+    if not name or _is_vague(name):
+        return _venue_placeholder(ev)
+    out = html_escape(name)
+    if addr:
+        out += f'<span class="venue-addr">{html_escape(addr)}</span>'
+    return out
 
 
 def make_venue_map(ev):
@@ -158,19 +185,10 @@ def make_venue_map(ev):
     if not map_query:
         return ''
 
-    # 会場名に市区町村まで入っている回が多く、mapQuery を並べると
-    # 「TITANOTA BASE（埼玉県草加市）」「TITANOTA BASE 埼玉県草加市」と
-    # 同じことを二度書く。括弧と空白を落として比べ、
-    # 増える情報が無ければ出さない。
-    flat = lambda t: re.sub(r'[\s（）()・,、]', '', t or '')
-    place = map_query
-    if flat(place) and flat(place) in flat(venue_name):
-        place = ''
-    elif venue_name and place.startswith(venue_name):
-        place = place[len(venue_name):].strip()
-
+    # 所在を地図の上に文字でも出していたが、会場欄に住所が入っている回では
+    # 同じ住所が2行に並んだ(2026-09-08 指摘)。会場欄と地図で足りている。
     q = quote(map_query)
-    where = (f'<p class="venue-place">{html_escape(place)}</p>' if place else '')
+    where = ''
     # 「マップで開く」は埋め込み自身が左上に出すので足さない。
     # 二重に出しても行き先は同じ(2026-08 の判断を踏襲)。
     return f'''          <div class="venue-map">

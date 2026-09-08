@@ -3192,8 +3192,10 @@ main {
     margin-top: 0.9rem;
 }
 .eh-lead .detail-hero {
-    /* 1カラムなので幅を決めておく。920pxの正方形は画面を占めすぎる */
-    max-width: 420px;
+    /* 1カラムなので幅を決めておく。920pxの正方形は画面を占めすぎる。
+       地図と同じ幅・同じ左端にする。画像が左寄せ・地図が右寄せで
+       縦のラインが揃っていなかった(2026-09-08 指摘) */
+    max-width: 480px;
     margin: 0 0 1.1rem;
     border-radius: 10px;
     border: 1px solid #ececec;
@@ -4126,8 +4128,9 @@ main {
    以前はページの下のほうに節として置いていたが、会場名を読んだ人が
    いちばん知りたいのは「どこ」なので、その場で見せる(2026-09-08 指摘) */
 .venue-map {
-    margin: 0.2rem 0 0.9rem;
-    padding-left: 8.2em;
+    /* 画像と同じ幅・同じ左端。ラベル列ぶんの字下げはやめた */
+    max-width: 480px;
+    margin: 0.4rem 0 0.9rem;
 }
 
 .venue-map .venue-place {
@@ -4145,9 +4148,8 @@ main {
 
 
 @media (max-width: 720px) {
-    /* 狭い画面はラベル列が無いので字下げしない */
     .venue-map {
-        padding-left: 0;
+        max-width: 100%;
     }
 }
 
@@ -4198,4 +4200,15 @@ main {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+/* 会場の住所。会場名の下にぶら下げる。
+   データは「会場名（住所）」の1文字列だが、括弧書きは読みにくい
+   (2026-09-08 指摘)。表示で分ける */
+.venue-addr {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--gray-600);
 }
