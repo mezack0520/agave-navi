@@ -3167,15 +3167,19 @@ main {
    EVENT HERO 情報の並び (2026-07-29 調整)
    画像は補助。日時・会場が最初に目に入るよう横並びにする。
    ======================================== */
+/* 詳細の先頭。**画像の有無にかかわらず1カラムの縦積み。**
+   以前はPCで「画像300px + 情報」の2カラムに組み、画像が無い回だけ
+   1カラムに落としていた。同じ種類のページで組みが変わるので、
+   見比べたときに別のサイトのように見えた(2026-09-08 指摘)。
+   縦に積めば画像の有無で変わるのは高さだけになる。 */
 .eh-lead {
-    display: grid;
-    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-    gap: 1.4rem;
-    align-items: start;
-    margin-top: .9rem;
+    display: block;
+    margin-top: 0.9rem;
 }
 .eh-lead .detail-hero {
-    margin: 0;
+    /* 1カラムなので幅を決めておく。920pxの正方形は画面を占めすぎる */
+    max-width: 420px;
+    margin: 0 0 1.1rem;
     border-radius: 10px;
     border: 1px solid #ececec;
     overflow: hidden;
@@ -3196,15 +3200,14 @@ main {
 }
 .eh-lead .eh-spec { margin-top: 0; }
 
-/* 画像がない回は表を全幅で使う(空きスペースを作らない) */
-.event-hero .eh-lead:not(:has(.detail-hero)) {
-    grid-template-columns: 1fr;
-}
 
 @media (max-width: 720px) {
     .eh-lead {
-        grid-template-columns: 1fr;
-        gap: .9rem;
+        margin-top: 0.7rem;
+    }
+    .eh-lead .detail-hero {
+        max-width: 100%;
+        margin-bottom: 0.9rem;
     }
     /* モバイルも切らない。16:10 にすると正方形のフライヤーが
        左右44%も帯になって、肝心の文字が小さくなる。
