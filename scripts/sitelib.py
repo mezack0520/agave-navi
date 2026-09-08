@@ -16,7 +16,7 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908zi'
+CSS_VERSION = '20260909a'
 JS_VERSION = '20260908g'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -748,6 +748,23 @@ def ext_link(url, text, cls=''):
     c = ('ext ' + cls).strip()
     return (f'<a class="{c}" href="{_attr(url)}" target="_blank"'
             f' rel="noopener">{html_escape(text)}{EXT_MARK}</a>')
+
+
+# 訂正の受け口。**言い方をここに固定する。**
+# 「万が一誤りがある場合は申し訳ございません」と謝る文だった時期があり、
+# それを直したときは「誤りがあれば教えてください」と口語に振れた。
+# 立ち位置は「主催者の発表を確認して作っている。それでも誤りがあれば
+# 知らせてほしい」(2026-09-09 指摘)。謝る場所でも、砕ける場所でもない。
+CORRECTION_LEAD = '掲載内容は主催者の発表を確認して作成しています。'
+CORRECTION_ASK = ('万一誤りがありましたら、{link}からお知らせください。'
+                  '確認のうえ修正します。')
+
+
+def correction_note(root='', lead=True):
+    """訂正のお願い1文。lead=False で前置きを省く。"""
+    link = f'<a href="{root}contact.html">お問い合わせ</a>'
+    body = CORRECTION_ASK.replace('{link}', link)
+    return (CORRECTION_LEAD + body) if lead else body
 
 
 def crumb_search_html():

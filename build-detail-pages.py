@@ -625,6 +625,7 @@ def build_page(template, ev, ctx):
         '{{timeRow}}': make_time_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{siteHeader}}': sitelib.site_header(),
+        '{{correctionNote}}': sitelib.correction_note('/'),
         '{{breadcrumb}}': sitelib.crumb_bar_html(breadcrumb_items(ev)),
         '{{breadcrumbJsonLd}}': sitelib.crumb_jsonld(breadcrumb_items(ev)),
         '{{affiliateBlock}}': make_affiliate_block(ev),
