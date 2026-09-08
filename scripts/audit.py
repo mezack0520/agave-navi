@@ -1836,6 +1836,63 @@ def main():
                 _css_dups.append(f'{_key[:70]}: {_seen[_key]} 行目と {_ln} 行目')
             else:
                 _seen[_key] = _ln
+    # セレクタの形が壊れていないか。
+    # 2026-09-08 のCSS掃除で、宣言ブロックだけ消してセレクタの行を
+    # 残してしまい `.legal-content,\n.about-content,\n.legal-content h1,`
+    # が宙に浮いた。次のコメントと規則を巻き込んで1つの規則になり、
+    # 運営者情報ページの見出しが 400px 高さの灰色になった。
+    # 括弧の数は合うので気づけない。
+    _css_broken = []
+    if _css:
+        _i, _n = 0, len(_css)
+        while _i < _n:
+            _c = _css[_i]
+            if _c in ' \n\t\r':
+                _i += 1
+                continue
+            if _css.startswith('/*', _i):
+                _e = _css.find('*/', _i)
+                _i = (_e + 2) if _e >= 0 else _n
+                continue
+            if _c == '@':
+                _b = _css.find('{', _i)
+                _sc = _css.find(';', _i)
+                if _b < 0 or (0 <= _sc < _b):
+                    _i = (_sc + 1) if _sc >= 0 else _n
+                    continue
+                _d, _j = 1, _b + 1
+                while _d and _j < _n:
+                    if _css[_j] == '{':
+                        _d += 1
+                    elif _css[_j] == '}':
+                        _d -= 1
+                    _j += 1
+                _i = _j
+                continue
+            _b = _css.find('{', _i)
+            if _b < 0:
+                break
+            _sel = _css[_i:_b]
+            _ln = _css[:_i].count('\n') + 1
+            if '/*' in _sel or '*/' in _sel:
+                _css_broken.append(f'{_ln} 行目: セレクタにコメントが挟まっている')
+            elif not _sel.strip():
+                _css_broken.append(f'{_ln} 行目: セレクタが空')
+            elif _sel.strip().endswith(','):
+                _css_broken.append(f'{_ln} 行目: セレクタがカンマで終わっている')
+            _d, _j = 1, _b + 1
+            while _d and _j < _n:
+                if _css[_j] == '{':
+                    _d += 1
+                elif _css[_j] == '}':
+                    _d -= 1
+                _j += 1
+            _i = _j
+    add('css_broken_selector', 'style.css のセレクタの形が壊れている',
+        _css_broken,
+        '宣言だけ消してセレクタの行を残すと、次の規則を巻き込む。'
+        '括弧の数は合うので気づけない(2026-09-08 に実際に起きた)')
+
     add('css_duplicate_rule', 'style.css で同じセレクタを二度宣言している',
         sorted(_css_dups),
         '1箇所にまとめる。負けている方を直しても画面は変わらない。'

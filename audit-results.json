@@ -1,5 +1,5 @@
 {
-  "total": 416,
+  "total": 417,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -525,7 +525,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260908zf)と違うページ",
+      "title": "CSS版数が正規値(20260908zg)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -735,6 +735,15 @@
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
+    },
+    "css_broken_selector": {
+      "title": "style.css のセレクタの形が壊れている",
+      "count": 1,
+      "items": [
+        "1200 行目: セレクタにコメントが挟まっている"
+      ],
+      "note": "宣言だけ消してセレクタの行を残すと、次の規則を巻き込む。括弧の数は合うので気づけない(2026-09-08 に実際に起きた)",
+      "severity": "urgent"
     },
     "css_duplicate_rule": {
       "title": "style.css で同じセレクタを二度宣言している",
