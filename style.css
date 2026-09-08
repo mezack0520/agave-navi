@@ -852,10 +852,8 @@ main {
     /* 1:1。アイキャッチの出所はほぼInstagramで、告知フライヤーは正方形。
        16:9で cover すると縦が56%しか残らず(実測、最小31%)、
        上のタイトルと下の日付・会場が両方消えていた(2026-09-08)。
-       外部サイトの横長画像は左右が切れるが、写真が多いので許容する。 */
+       枠は1:1のまま、中身は contain で切らない(下の .event-thumb img)。 */
     aspect-ratio: 1 / 1;
-    object-fit: cover;
-    object-position: center top;
     display: block;
     background-color: var(--gray-200);
     overflow: hidden;
@@ -863,9 +861,16 @@ main {
 .event-thumb img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* 切らずに全体を出し、余りはグレーで埋める(2026-09-08)。
+       枠は1:1。自サイトに置いた告知フライヤーは正方形に揃えてあるので
+       余白は出ない。外部サイトの横長画像だけ上下に帯が出る。
+       余白が出るほうが、タイトルや日付が切れるよりよい。
+       枠を4:5にすると正方形の側にも帯が出て、両方が悪くなる
+       (実測: 4:5では正方形74件に上下20%、外部29件に55%の帯)。 */
+    object-fit: contain;
     object-position: center;
     display: block;
+    background-color: var(--gray-200);
 }
 
 .event-no-image {
@@ -3701,4 +3706,115 @@ main {
 .detail-status-badge.status-cancelled {
     background: var(--accent-pop);
     color: var(--white);
+}
+
+/* ========================================
+   更新のお知らせ（TOPのみ・2026-09-08）
+   一覧サイトの値打ちは「いまの状態が正しいこと」だが、変わったことは
+   どこにも出ていなかった。中止に至っては受け取り手がいなかった。
+   ======================================== */
+
+.updates-section {
+    margin: 0 0 2rem;
+    padding: 1rem 1.1rem 0.6rem;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    background: var(--white);
+}
+
+.updates-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.updates-head .section-heading {
+    margin: 0;
+}
+
+.updates-feed {
+    flex: none;
+    font-size: 0.78rem;
+    color: var(--gray-600);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.updates-feed:hover {
+    color: var(--accent-pop);
+    border-bottom-color: var(--accent-pop);
+}
+
+.updates-list {
+    list-style: none;
+    margin: 0.7rem 0 0;
+    padding: 0;
+}
+
+.upd-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    padding: 0.42rem 0;
+    border-top: 1px solid var(--gray-100);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    flex-wrap: wrap;
+}
+
+.upd-item:first-child {
+    border-top: 0;
+}
+
+.upd-date {
+    flex: none;
+    width: 3.1rem;
+    color: var(--gray-500);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.8rem;
+}
+
+.upd-kind {
+    flex: none;
+    min-width: 4.2rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--white);
+}
+
+.upd-listed { background: #4a8a7b; }
+.upd-cancelled { background: var(--accent-pop); }
+.upd-removed { background: var(--gray-500); }
+.upd-changed { background: #d98a2b; }
+
+.upd-title {
+    flex: 1 1 14rem;
+    min-width: 0;
+}
+
+.upd-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.upd-title a:hover {
+    border-bottom-color: var(--accent-pop);
+}
+
+.upd-meta {
+    flex: none;
+    color: var(--gray-500);
+    font-size: 0.78rem;
+}
+
+@media (max-width: 560px) {
+    .upd-item { gap: 0.4rem; }
+    .upd-title { flex-basis: 100%; }
+    .upd-meta { flex-basis: 100%; padding-left: 3.65rem; }
 }

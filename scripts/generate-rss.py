@@ -79,6 +79,69 @@ def render_rss(title, link, description, events, max_items=20):
 '''
 
 
+def render_updates_rss(items, max_items=50):
+    """更新のお知らせ。イベント単位ではなく「変わったこと」単位で出す。
+
+    購読者がいちばん受け取りたいのは中止。イベントのフィードは
+    掲載順に並ぶので、既に配ったイベントが中止になっても再配信されない。
+    guid を (種別+slug+発生日) にして、同じ回の中止が別itemとして届く。
+    """
+    from sitelib import UPDATE_KIND
+    out = []
+    for it in (items or [])[:max_items]:
+        kind = str(it.get('kind') or '')
+        label = UPDATE_KIND.get(kind, (kind, ''))[0]
+        slug = (it.get('slug') or '').strip()
+        name = it.get('name') or slug
+        on = (it.get('on') or '')[:10]
+        pref = (it.get('prefecture') or '').strip()
+        detail = (it.get('detail') or '').strip()
+        dd = it.get('date') or ''
+        de = it.get('dateEnd') or ''
+        span = dd if (not de or de == dd) else f'{dd}〜{de}'
+        url = f'{DOMAIN}/events/{slug}.html' if slug and kind != 'removed' else f'{DOMAIN}/#updates'
+        guid = f'{DOMAIN}/updates/{on}-{kind}-{slug or "-"}'
+        body = [f'{label}: {name}']
+        if span:
+            body.append(f'会期: {span}')
+        if pref:
+            body.append(f'開催地: {pref}')
+        if detail:
+            body.append(detail)
+        if kind in ('cancelled', 'postponed'):
+            body.append('最新の情報は主催者の発表をご確認ください。')
+        pub = ''
+        if len(on) == 10:
+            try:
+                dt = datetime.strptime(on, '%Y-%m-%d').replace(
+                    hour=9, tzinfo=JST)
+                pub = ('\n    <pubDate>'
+                       + dt.strftime('%a, %d %b %Y %H:%M:%S +0900')
+                       + '</pubDate>')
+            except ValueError:
+                pub = ''
+        out.append(f"""  <item>
+    <title>[{escape(label)}] {escape(name)}</title>
+    <link>{url}</link>
+    <guid isPermaLink="false">{guid}</guid>{pub}
+    <description><![CDATA[{'<br>'.join(body)}]]></description>
+  </item>""")
+    now = datetime.now(JST).strftime('%a, %d %b %Y %H:%M:%S +0900')
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>アガベイベントナビ - 更新のお知らせ</title>
+  <link>{DOMAIN}/#updates</link>
+  <atom:link href="{DOMAIN}/feeds/updates.xml" rel="self" type="application/rss+xml"/>
+  <description>掲載・中止・延期・日程変更・会場変更のお知らせ。開催されなくなった回もここで届きます。</description>
+  <language>ja</language>
+  <lastBuildDate>{now}</lastBuildDate>
+{chr(10).join(out)}
+</channel>
+</rss>
+"""
+
+
 def main():
     with open(EVENTS, encoding='utf-8') as f:
         events = json.load(f)
@@ -92,6 +155,19 @@ def main():
     os.makedirs(feeds_dir, exist_ok=True)
 
     written = set()
+
+    # 1b. 更新のお知らせ。イベントのフィードとは別に要る。
+    #     あちらは掲載順に並ぶので、既に配った回が中止になっても再配信されない。
+    #     購読者がいちばん受け取りたいのは中止(2026-09-08)。
+    written.add('updates.xml')
+    try:
+        with open(os.path.join(ROOT, 'site-updates.json'), encoding='utf-8') as f:
+            upd = (json.load(f) or {}).get('items') or []
+    except (OSError, ValueError):
+        upd = []
+    with open(os.path.join(feeds_dir, 'updates.xml'), 'w', encoding='utf-8') as f:
+        f.write(render_updates_rss(upd))
+    print(f'feeds/updates.xml: {min(len(upd), 50)} items')
 
     # 2. 地域別
     by_region = defaultdict(list)

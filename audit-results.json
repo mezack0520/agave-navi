@@ -525,7 +525,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260908b)と違うページ",
+      "title": "CSS版数が正規値(20260908d)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -735,6 +735,13 @@
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
+    },
+    "updates_section_drift": {
+      "title": "更新のお知らせがsite-updates.jsonと不一致",
+      "count": 0,
+      "items": [],
+      "note": "index.html の更新欄は生成物。scripts/sync-index-cards.py がsite-updates.json から貼り替える。手で書かない。差分の記録は scripts/track-updates.py が build-all.sh の先頭で積む",
+      "severity": "urgent"
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",

@@ -1659,6 +1659,39 @@ def main():
         '出典そのものを見直さないと埋まらない',
         severity='metric')
 
+    # 更新のお知らせ。TOPに出ている内容が site-updates.json と食い違うと、
+    # 「中止を記録したのにお知らせに出ていない」状態になる。
+    # index.html は生成物として扱っているので、貼り替え漏れを検出する。
+    _upd = (load_json('site-updates.json', {}) or {}).get('items') or []
+    _upd_bad = []
+    try:
+        _ix = open(rp('index.html'), encoding='utf-8').read()
+    except OSError:
+        _ix = ''
+    if _ix:
+        if '<!-- UPDATES-SECTION:START' not in _ix:
+            _upd_bad.append('index.html に UPDATES-SECTION の受け口が無い')
+        else:
+            _shown = _ix.count('upd-item')
+            _want = min(len(_upd), 10)
+            if _shown != _want:
+                _upd_bad.append(
+                    f'TOPの更新欄が {_shown} 件、site-updates.json は {_want} 件'
+                    '（sync-index-cards.py の貼り替え漏れ）')
+            # 最新の1件が出ているか。順序が壊れていないかを見る
+            if _upd and _upd[0].get('slug') and _upd[0].get('kind') != 'removed':
+                if _upd[0]['slug'] not in _ix:
+                    _upd_bad.append(
+                        f"最新の更新 {_upd[0].get('slug')} がTOPに出ていない")
+    _feed = rp('feeds', 'updates.xml')
+    if _upd and not os.path.exists(_feed):
+        _upd_bad.append('feeds/updates.xml が無い（generate-rss.py の失敗）')
+    add('updates_section_drift', '更新のお知らせがsite-updates.jsonと不一致',
+        sorted(_upd_bad),
+        'index.html の更新欄は生成物。scripts/sync-index-cards.py が'
+        'site-updates.json から貼り替える。手で書かない。'
+        '差分の記録は scripts/track-updates.py が build-all.sh の先頭で積む')
+
     add('cancel_suspects', '載せた回に中止・延期の兆候がある',
         sorted(_cw_suspects),
         '一次情報を確認する。中止なら events.json の eventStatus を cancelled に'

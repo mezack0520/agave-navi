@@ -25,7 +25,8 @@ sys.path.insert(0, SCRIPT_DIR)
 from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
                      LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
-                     list_sort_key, is_cancelled, cancel_label)
+                     list_sort_key, is_cancelled, cancel_label,
+                     updates_section_html, load_updates)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -281,6 +282,23 @@ def main():
     with open(INDEX_HTML, encoding='utf-8') as f:
         html = f.read()
     original_html = html
+
+    # 更新のお知らせ。site-updates.json から毎ビルド貼り替える。
+    # index.html を手で書き換える運用にすると、中止を記録したのに
+    # お知らせに出ていない状態が起きる。生成物として扱う。
+    _u_start = '<!-- UPDATES-SECTION:START'
+    _u_end = '<!-- UPDATES-SECTION:END -->'
+    _i = html.find(_u_start)
+    _j = html.find(_u_end)
+    if _i >= 0 and _j > _i:
+        _head_end = html.find('-->', _i) + 3
+        _body = updates_section_html(load_updates())
+        _before = html[_head_end:_j]
+        if _before != _body:
+            html = html[:_head_end] + _body + html[_j:]
+            print(f'updates section: {_body.count("upd-item")} 件に更新')
+    else:
+        print('::warning::UPDATES-SECTION の受け口が index.html に無い')
 
     # events.json にあって index.html に無い回のカードを作る
     html, inserted = insert_missing_cards(html, events)

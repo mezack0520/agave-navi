@@ -10,11 +10,13 @@ import re
 import unicodedata
 import hashlib
 from datetime import datetime, date, timezone, timedelta
+import os
+import json
 
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908b'
+CSS_VERSION = '20260908d'
 JS_VERSION = '20260908b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -547,6 +549,77 @@ def site_header(root=''):
       </div>
     </div>
   </header>'''
+
+UPDATE_KIND = {
+    'listed':    ('掲載', 'upd-listed'),
+    'cancelled': ('中止', 'upd-cancelled'),
+    'postponed': ('延期', 'upd-cancelled'),
+    'removed':   ('取り消し', 'upd-removed'),
+    'date':      ('日程変更', 'upd-changed'),
+    'venue':     ('会場変更', 'upd-changed'),
+}
+UPDATES_MAX = 10
+
+
+def load_updates(root_path=None):
+    """site-updates.json の items。新しい順。"""
+    p = root_path or os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), 'site-updates.json')
+    try:
+        with open(p, encoding='utf-8') as f:
+            d = json.load(f)
+        return d.get('items') or []
+    except (OSError, ValueError):
+        return []
+
+
+def updates_section_html(items, limit=UPDATES_MAX):
+    """TOPの更新欄。追加と中止をここで受け取らせる。
+
+    一覧サイトの値打ちは「いまの状態が正しいこと」だが、変わったことは
+    どこにも出ていなかった。カードの新着バッジは7日で消えるだけで、
+    中止に至っては受け取り手がいない。詳細ページに中止と出しても、
+    2週間前に見た人はそのページに戻ってこない(2026-09-08)。
+
+    **TOPだけに出す。**地域・タグの各ページにも出すと、そのページと
+    関係ない更新が混ざって読みにくくなる。
+    """
+    rows = []
+    for it in (items or [])[:limit]:
+        kind = str(it.get('kind') or '')
+        label, cls = UPDATE_KIND.get(kind, (kind, 'upd-changed'))
+        slug = (it.get('slug') or '').strip()
+        name = it.get('name') or slug
+        on = (it.get('on') or '')[:10]
+        on_disp = on[5:].replace('-', '.') if len(on) == 10 else on
+        pref = (it.get('prefecture') or '').strip()
+        detail = (it.get('detail') or '').strip()
+        # 取り消した回は詳細ページが無いのでリンクしない
+        if kind == 'removed' or not slug:
+            title = html_escape(name)
+        else:
+            title = (f'<a href="/events/{_attr(slug)}.html">'
+                     f'{html_escape(name)}</a>')
+        meta = ' / '.join(x for x in [pref, detail] if x)
+        rows.append(
+            f'<li class="upd-item">'
+            f'<span class="upd-date">{html_escape(on_disp)}</span>'
+            f'<span class="upd-kind {cls}">{html_escape(label)}</span>'
+            f'<span class="upd-title">{title}</span>'
+            + (f'<span class="upd-meta">{html_escape(meta)}</span>' if meta else '')
+            + '</li>')
+    if not rows:
+        return ''
+    return (
+        '<section class="updates-section" id="updates" aria-labelledby="updatesHeading">'
+        '<div class="updates-head">'
+        '<h2 class="section-heading" id="updatesHeading">更新のお知らせ'
+        '<span class="section-heading-note">掲載・中止・日程変更</span></h2>'
+        '<a class="updates-feed" href="/feeds/updates.xml">RSSで受け取る</a>'
+        '</div>'
+        '<ul class="updates-list">' + ''.join(rows) + '</ul>'
+        '</section>')
+
 
 def site_footer():
     """正規フッター(全ページ共通・単一情報源)。404含む全静的ページは sync-footers.py で同期。"""

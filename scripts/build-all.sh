@@ -7,6 +7,12 @@ cd "$(dirname "$0")/.."
 
 # status を JST 基準で確定させてから生成する。UTCのまま生成すると
 # 終了翌日の丸一日、ランディング頁とフィードに終了済みが開催予定として載る。
+# events.json の差分を更新履歴に積む。**生成より前に置く。**
+# 直前のコミットとの差を見るので、auto-status-jst が status を書き換える前に
+# 走らせないと、upcoming→past の書き換えが差分に混ざる余地ができる。
+# (混ざらないよう track-updates 側でも status は無視しているが、順序でも守る)
+python3 scripts/track-updates.py || echo "::warning::track-updates.py が失敗しました"
+
 python3 scripts/auto-status-jst.py
 
 # 開催バッジの日付境界テスト。0時直後・早朝・深夜を4タイムゾーンで検証する。
