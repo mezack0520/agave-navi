@@ -470,7 +470,7 @@ body.no-scroll {
 
 .search-field:focus-within,
 .search-field:has(input:not(:placeholder-shown)) {
-    width: 100%;
+    width: 62%;
 }
 
 .search-field input:focus {
@@ -528,12 +528,25 @@ body.no-scroll {
     border-bottom: 1px solid var(--gray-200);
     overflow: hidden;
 }
+
+
 .area-filter-bar::-webkit-scrollbar { display: none; }
 
+/* エリアのパンくずと検索を同じ段に置く。
+   並び順の選択を外したら検索だけが1段を占め、
+   狭い画面で固定ヘッダーが2段になっていた(2026-09-08 指摘) */
 .area-filter-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0.35rem 1.5rem;
+}
+
+.area-drilldown {
+    flex: 1;
+    min-width: 0;
 }
 
 .area-drilldown {

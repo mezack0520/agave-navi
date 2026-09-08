@@ -20,7 +20,7 @@ TARGETS = [f for f in glob.glob(os.path.join(REPO_ROOT, '*.html'))
 FOOTER_RE = re.compile(r'[ \t]*<footer class="footer">.*?</footer>', re.S)
 CSSVER_RE = re.compile(r'(style\.css)(\?v=[0-9a-zA-Z]*)?')
 # ローカルJSも版数を付ける。付いていないと変更が閲覧者のキャッシュに届かない。
-JSVER_RE = re.compile(r'((?:affiliate|status-auto|list-ui)\.js)(\?v=[0-9a-zA-Z]*)?')
+JSVER_RE = re.compile(r'((?:affiliate|status-auto|list-ui|nav)\.js)(\?v=[0-9a-zA-Z]*)?')
 # ヘッダーのロゴも正規化する。408ファイルに直書きされており手で直すと必ず乖離する。
 LOGO_RE = re.compile(r'<a href="/" class="logo">.*?</a>', re.S)
 
@@ -63,6 +63,16 @@ def main():
         if n and new_html != html:
             html = new_html
             reasons.append('logo')
+
+        # ハンバーガーの開閉スクリプト。ヘッダーがあるページには必ず読ませる。
+        # 手で足すと必ず抜ける。実際、注釈だけ入れてscriptタグを入れ忘れた
+        # 状態で本番に出た(2026-09-08。注釈に nav.js の文字が入っていたので
+        # 「もう入っている」と判定していた)。
+        if 'class="header"' in html and 'src="/nav.js' not in html:
+            tag = f'    <script src="/nav.js?v={sitelib.JS_VERSION}" defer></script>\n'
+            if '</head>' in html:
+                html = html.replace('</head>', tag + '</head>', 1)
+                reasons.append('navjs')
 
         # JS版数を正規化
         want_js = f'?v={sitelib.JS_VERSION}'

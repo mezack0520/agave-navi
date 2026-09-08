@@ -21,7 +21,7 @@
     <link rel="manifest" href="/manifest.webmanifest?v=2">
     <meta name="theme-color" content="#111">
     <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ 新着イベント" href="/rss.xml">
-    <link rel="stylesheet" href="style.css?v=20260908m">
+    <link rel="stylesheet" href="style.css?v=20260908n">
     <style>
         .cal-container {
             max-width: 1000px;
@@ -158,6 +158,7 @@
         }
     </style>
     <meta property="og:image" content="https://agave-navi.com/images/ogp-default.jpg">
+    <script src="/nav.js?v=20260908g" defer></script>
 </head>
 <body>
     <header class="header">
@@ -844,11 +845,11 @@
 </ol>
 </section>
 
-    <script src="/nav.js" defer></script>
+    <!-- PAGE-JS:START この下は build-static-html.py の生成物。手で書かない -->
     <script>
-        // ハンバーガーの開閉は nav.js が単一実装。
-        // ここに写しを持っていたため、手書き側を直しても
-        // ビルドで元に戻っていた(2026-09-08)。
+        // ハンバーガーの開閉は nav.js?v=20260908g が単一実装。読み込みは </head> 側
+        // (sync-footers.py が入れる)。ここに写しを持っていたため、
+        // 手書き側を直してもビルドで元に戻っていた(2026-09-08)。
 
         let events = [];
 

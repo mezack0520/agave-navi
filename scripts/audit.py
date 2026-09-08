@@ -1759,9 +1759,11 @@ def main():
             continue
         if 'class="header"' not in _h:
             continue
+        # 'nav.js' を素で探すと注釈に当たる。実際それで見逃した
+        # (2026-09-08、注釈だけ入って scriptタグが無い状態が本番に出た)
         _lack = [n for n, _t in (('menuToggle', 'id="menuToggle"'),
                                  ('navOverlay', 'id="navOverlay"'),
-                                 ('nav.js', 'nav.js'))
+                                 ('nav.js の読み込み', 'src="/nav.js'))
                  if _t not in _h]
         if _lack:
             _nav_bad.append(f'{_rel}: {", ".join(_lack)} が無い')

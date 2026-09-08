@@ -129,11 +129,11 @@ def render_inline_events_json(events_list):
 
 # ---- map.html ----
 
-MAP_JS_FIXED = '''<script src="/nav.js" defer></script>
+MAP_JS_FIXED = '''<!-- PAGE-JS:START この下は build-static-html.py の生成物。手で書かない -->
     <script>
-        // ハンバーガーの開閉は nav.js が単一実装。
-        // ここに写しを持っていたため、手書き側を直しても
-        // ビルドで元に戻っていた(2026-09-08)。
+        // ハンバーガーの開閉は nav.js が単一実装。読み込みは </head> 側
+        // (sync-footers.py が入れる)。ここに写しを持っていたため、
+        // 手書き側を直してもビルドで元に戻っていた(2026-09-08)。
 
         // Event data with coordinates
         const PREF_COORDS = {
@@ -241,11 +241,11 @@ MAP_JS_FIXED = '''<script src="/nav.js" defer></script>
     </script>'''
 
 
-CAL_JS_FIXED = '''<script src="/nav.js" defer></script>
+CAL_JS_FIXED = '''<!-- PAGE-JS:START この下は build-static-html.py の生成物。手で書かない -->
     <script>
-        // ハンバーガーの開閉は nav.js が単一実装。
-        // ここに写しを持っていたため、手書き側を直しても
-        // ビルドで元に戻っていた(2026-09-08)。
+        // ハンバーガーの開閉は nav.js が単一実装。読み込みは </head> 側
+        // (sync-footers.py が入れる)。ここに写しを持っていたため、
+        // 手書き側を直してもビルドで元に戻っていた(2026-09-08)。
 
         let events = [];
 
@@ -425,9 +425,17 @@ def rewrite_cal_html(html_src, events_list, inline_data_block):
     # JS全体を置き換え: 元のスクリプトを新しいCAL_JS_FIXEDに差し替え
     # マッチさせるパターン: <script>\n        // Menu toggle ... </script>
     # 単純に "<script>\n        // Menu toggle" から最後の "</body>" 直前までを置換
-    menu_marker = '<script>\n        // Menu toggle'
+    # 印は生成物にも必ず出るものにする。以前は '// Menu toggle' の行を
+    # 印にしていたため、その行を書き換えた次のビルドが
+    # 「印が無い」で落ちた(2026-09-08)。移行のため旧印も見る。
     body_close = '</body>'
-    idx_start = html_src.find(menu_marker)
+    idx_start = -1
+    for menu_marker in ('<!-- PAGE-JS:START',
+                        '<script src="/nav.js" defer></script>\n    <script>',
+                        '<script>\n        // Menu toggle'):
+        idx_start = html_src.find(menu_marker)
+        if idx_start >= 0:
+            break
     idx_end = html_src.rfind(body_close)
     if idx_start < 0 or idx_end < 0:
         raise RuntimeError("calendar.html script markers not found")
