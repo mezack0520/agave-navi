@@ -93,20 +93,16 @@ REGION_DESCS = {
     '四国': '愛媛・香川・高知・徳島の地域密着型マルシェが中心のエリアです。',
 }
 
+# パンくずは sitelib が唯一の組み立て。詳細・地域・県・タグ・ガイドで
+# 別々に組んでいたため、文字の大きさが 0.66〜0.75rem に散り、
+# 根っこの呼び名も「ホーム」と「全国」で割れていた(2026-09-08 指摘)。
 def bc_jsonld(items):
-    elems=[]
-    for i,(n,u) in enumerate(items,1):
-        e={"@type":"ListItem","position":i,"name":n}
-        if u: e["item"]=u
-        elems.append(e)
-    return '  <script type="application/ld+json">\n  ' + json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":elems}, ensure_ascii=False) + '\n  </script>'
+    return sitelib.crumb_jsonld(items)
+
 
 def bc_html(items):
-    parts=[]
-    for i,(n,u) in enumerate(items):
-        last = (i==len(items)-1)
-        parts.append(f'<a href="{u}">{n}</a>' if (u and not last) else f'<span>{n}</span>')
-    return '  <nav class="breadcrumb" aria-label="パンくずリスト">\n    ' + ' &gt; '.join(parts) + '\n  </nav>'
+    return sitelib.crumb_bar_html(items)
+
 
 # イベントカードは sitelib.event_card_html が単一情報源。
 # ここに独自実装(landing-card)を持っていたため、106ページで画像・ステータス
@@ -314,7 +310,7 @@ def index_page(out_path, title, desc, kw, canon, h1, lead, items, root='../'):
     """items: list of (name, url, count)"""
     cards = ''.join(f'<article class="landing-card"><a href="{u}"><h2 class="lc-name">{n}</h2><div class="lc-meta">{c}件</div></a></article>' for n,u,c in items)  # 索引のリンクタイル(イベントカードではない)
     grid = f'  <div class="landing-grid">\n{cards}\n  </div>'
-    bc = [('ホーム', DOMAIN+'/'), (title.replace('一覧','').replace('別',''), None)]
+    bc = [sitelib.CRUMB_ROOT, (title.replace('一覧','').replace('別',''), None)]
     head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon, root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta='<meta name="robots" content="index,follow">')
     bch = bc_html(bc)
     aff, aff_js = aff_block(root)
@@ -365,7 +361,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'tag', sl, 'index.html'),
             render(f'{t}のイベント一覧', f'{t}に該当するアガベ・多肉植物・塊根植物のイベント情報。{len(evs)}件掲載。',
                    f'{t},アガベ,多肉植物,イベント,即売会', f'{DOMAIN}/tag/{sl}/',
-                   [('ホーム',DOMAIN+'/'),('タグ別','/tag/'),(t,None)],
+                   [sitelib.CRUMB_ROOT,('タグ別','/tag/'),(t,None)],
                    f'タグ: {t}', f'「{t}」のイベント一覧。直近の開催から過去の実績まで。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'tag/{sl}/index.html',
@@ -388,7 +384,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'pref', sl, 'index.html'),
             render(f'{p}のアガベ・植物イベント', f'{p}で開催されるアガベ・多肉植物・塊根植物のイベント情報。{len(evs)}件掲載。',
                    f'{p},アガベ,多肉植物,イベント,即売会', f'{DOMAIN}/pref/{sl}/',
-                   [('ホーム',DOMAIN+'/'),('都道府県別','/pref/'),(p,None)],
+                   [sitelib.CRUMB_ROOT,('都道府県別','/pref/'),(p,None)],
                    f'{p}のイベント',
                    f'{p}で開催されるアガベ・塊根植物・多肉植物・ビザールプランツのイベントをまとめています。掲載{len(evs)}件。',
                    upcoming_then_past(evs), '../../',
@@ -421,7 +417,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'region', sl, 'index.html'),
             render(f'{r}のアガベ・植物イベント', f'{r}地方で開催されるアガベ・多肉植物のイベント情報。{len(evs)}件掲載。',
                    f'{r},アガベ,イベント', f'{DOMAIN}/region/{sl}/',
-                   [('ホーム',DOMAIN+'/'),('地域別','/region/'),(r,None)],
+                   [sitelib.CRUMB_ROOT,('地域別','/region/'),(r,None)],
                    f'{r}地方のイベント', f'{r}地方で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'region/{sl}/index.html',
@@ -442,7 +438,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'archive', ym, 'index.html'),
             render(f'{y}年{m_int}月のアガベ・植物イベント', f'{y}年{m_int}月の植物イベント{len(evs)}件。',
                    f'{y}年{m_int}月,アガベ,イベント', f'{DOMAIN}/archive/{ym}/',
-                   [('ホーム',DOMAIN+'/'),('アーカイブ','/archive/'),(f'{y}年{m_int}月',None)],
+                   [sitelib.CRUMB_ROOT,('アーカイブ','/archive/'),(f'{y}年{m_int}月',None)],
                    f'{y}年{m_int}月のイベント', f'{y}年{m_int}月に{label}の一覧です。',
                    sorted(evs, key=lambda e:e.get('date','')), '../../',  # start-date-ok: 月別アーカイブは開始日の時系列
                    noindex=(len(evs) < 2), rel_path=f'archive/{ym}/index.html'))
@@ -457,7 +453,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'archive', y, 'index.html'),
             render(f'{y}年のアガベ・植物イベントまとめ', f'{y}年開催の全{len(evs)}件のイベント情報。',
                    f'{y}年,アガベ,イベント,まとめ', f'{DOMAIN}/archive/{y}/',
-                   [('ホーム',DOMAIN+'/'),('アーカイブ','/archive/'),(f'{y}年',None)],
+                   [sitelib.CRUMB_ROOT,('アーカイブ','/archive/'),(f'{y}年',None)],
                    f'{y}年のイベントまとめ', f'{y}年に開催された全イベント。',
                    sorted(evs, key=lambda e:e.get('date','')), '../../'))  # start-date-ok: 年別アーカイブは開始日の時系列
         counters['archive_y']+=1
@@ -477,7 +473,7 @@ def main():
     write_page(os.path.join(REPO_ROOT, 'this-weekend', 'index.html'),
         render('今週末のアガベ・植物イベント', f'今週末({label})開催のイベント情報。',
                '今週末,アガベ,イベント', f'{DOMAIN}/this-weekend/',
-               [('ホーム',DOMAIN+'/'),('今週末',None)],
+               [sitelib.CRUMB_ROOT,('今週末',None)],
                '今週末のイベント', f'今週末({label})に開催されるイベント一覧。',
                listed(we, today_str), '../',
                noindex=(len(we) == 0), fallback_evs=fallback5, rel_path='this-weekend/index.html'))
@@ -500,7 +496,7 @@ def main():
     write_page(os.path.join(REPO_ROOT, 'this-month', 'index.html'),
         render('今月のアガベ・植物イベント', f'今月({today.year}年{today.month}月)開催の全{len(me)}件。',
                f'今月,{today.year}年{today.month}月,アガベ,イベント', f'{DOMAIN}/this-month/',
-               [('ホーム',DOMAIN+'/'),(f'{today.year}年{today.month}月',None)],
+               [sitelib.CRUMB_ROOT,(f'{today.year}年{today.month}月',None)],
                f'今月のイベント({today.year}年{today.month}月)', '今月開催されるイベント一覧。',
                listed(me, today_str), '../',
                noindex=(len(me) == 0), fallback_evs=fallback5, rel_path='this-month/index.html'))
@@ -534,7 +530,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'venue', sl, 'index.html'),
             render(f'{v}でのアガベ・植物イベント', f'{v}で開催されるイベント情報。{len(evs)}件。',
                    f'{v},アガベ,イベント', f'{DOMAIN}/venue/{sl}/',
-                   [('ホーム',DOMAIN+'/'),('会場別','/venue/'),(v,None)],
+                   [sitelib.CRUMB_ROOT,('会場別','/venue/'),(v,None)],
                    v, f'{v}で過去/今後に開催されるイベント一覧。', upcoming_then_past(evs), '../../',
                    intro_html=intro_html, rel_path=f'venue/{sl}/index.html'))
         counters['venue']+=1
@@ -570,7 +566,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'category', fname),
             render(page_title, f'{tag_name}形式のアガベ・多肉植物・塊根植物イベント一覧。{len(evs)}件掲載。',
                    f'{tag_name},アガベ,多肉植物,イベント', f'{DOMAIN}/category/{fname}',
-                   [('ホーム',DOMAIN+'/'),('カテゴリ',None),(tag_name,None)],
+                   [sitelib.CRUMB_ROOT,('カテゴリ',None),(tag_name,None)],
                    page_title, f'{tag_name}形式のイベント一覧。開催予定から過去実績まで。', upcoming_then_past(evs), '../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'category/{fname}'))
@@ -590,7 +586,7 @@ def main():
         for e in recent]
     n_grid = ('  <div class="events-grid" id="eventsGrid">' + ''.join(n_cards) + '</div>\n  '
               + load_more_wrap('loadMoreWrap', 'loadMoreEvents', len(recent) > CARDS_PER_PAGE))
-    n_bc = [('ホーム', DOMAIN+'/'), ('新着', None)]
+    n_bc = [sitelib.CRUMB_ROOT, ('新着', None)]
     n_head = HEAD.format(
         title='新着掲載イベント', description='アガベ・塊根植物・多肉植物イベントの新着掲載情報。当サイトに最近追加されたイベントを掲載日順に一覧できます。',
         keywords='新着,植物イベント,アガベ,即売会', canonical=f'{DOMAIN}/new/', root='../',

@@ -218,28 +218,21 @@ def make_og_image(ev):
 
 
 def make_share_section(ev):
-    """X(Twitter) / LINE / コピー 用シェアボタン"""
-    name = ev.get('name', '') or ''
+    """リンクのコピー。
+
+    X と LINE のボタンは外した(2026-09-08)。**押された回数は
+    測っていないので「使われていない」とは言えない。**
+    分かっているのは、5つ並べるとスマホで1行に収まらないこと。
+    リンクをコピーできれば貼り先は本人が選べるので、
+    行きたい・カレンダー・コピーの3つに絞った。
+    必要になったらここに戻す。
+    """
     slug = ev.get('slug', '') or ''
     page_url = f'https://agave-navi.com/events/{slug}.html'
-    text = f'{name} | アガベイベントナビ'
-    text_enc = quote(text)
-    url_enc = quote(page_url)
-    twitter_url = f'https://twitter.com/intent/tweet?text={text_enc}&url={url_enc}'
-    line_url = f'https://social-plugins.line.me/lineit/share?url={url_enc}'
     return f'''        <div class="detail-share">
-          <span class="detail-share-label">シェア:</span>
-          <a class="share-btn share-x" href="{twitter_url}" target="_blank" rel="noopener" aria-label="Xでシェア">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            <span>X</span>
-          </a>
-          <a class="share-btn share-line" href="{line_url}" target="_blank" rel="noopener" aria-label="LINEでシェア">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v3.756h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
-            <span>LINE</span>
-          </a>
           <button class="share-btn share-copy" type="button" onclick="(function(b){{const u='{page_url}';navigator.clipboard.writeText(u).then(()=>{{const o=b.querySelector('span').textContent;b.querySelector('span').textContent='コピー済';setTimeout(()=>b.querySelector('span').textContent=o,1500);}});}})(this);" aria-label="リンクをコピー">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span>リンクコピー</span>
+            <span>リンクをコピー</span>
           </button>
         </div>
 '''
@@ -360,38 +353,22 @@ def make_robots_meta(ev):
     return 'index,follow'
 
 
-def make_breadcrumb_prefecture(ev):
-    """visible breadcrumb の prefecture セグメント。
-    都道府県あり: '<a href="/?region=R&pref=P">P</a> > '
-    なし: 空文字列(直接イベント名にスキップ)"""
-    pref = ev.get('prefecture', '') or ''
-    if not pref:
-        return ''
-    region = ev.get('region', '') or ''
-    return f'    <a href="/?region={quote(region)}&pref={quote(pref)}">{html_escape(pref)}</a> &gt;\n'
+def breadcrumb_items(ev):
+    """パンくずの項目。表示とJSON-LDの両方がここから作られる。
 
-
-def make_breadcrumb_ld_prefecture(ev):
-    """JSON-LD BreadcrumbList の prefecture ListItem(あれば)。
-    あり: ',\n      {ListItem position3 ...}'
-    なし: ''"""
-    pref = ev.get('prefecture', '') or ''
-    if not pref:
-        return ''
-    region = ev.get('region', '') or ''
-    return (
-        f',\n      {{\n'
-        f'        "@type": "ListItem",\n'
-        f'        "position": 3,\n'
-        f'        "name": "{html_escape(pref)}",\n'
-        f'        "item": "https://agave-navi.com/?region={quote(region)}&pref={quote(pref)}"\n'
-        f'      }}'
-    )
-
-
-def make_breadcrumb_ld_last_pos(ev):
-    """イベント名の position は prefecture の有無で 3 or 4"""
-    return '4' if ev.get('prefecture') else '3'
+    以前は表示用・LD用・位置番号用の3関数に分かれていて、
+    片方だけ直すと食い違った。根っこの呼び名も「ホーム」のままで、
+    トップの絞り込みの現在地「全国」と割れていた(2026-09-08 指摘)。
+    """
+    items = [sitelib.CRUMB_ROOT]
+    region = (ev.get('region') or '').strip()
+    pref = (ev.get('prefecture') or '').strip()
+    if region:
+        items.append((region, f'/?region={quote(region)}'))
+    if pref:
+        items.append((pref, f'/?region={quote(region)}&pref={quote(pref)}'))
+    items.append((ev.get('name') or '', None))
+    return items
 
 
 def make_event_jsonld(ev):
@@ -607,16 +584,20 @@ def build_page(template, ev, ctx):
         '{{cancelledAttr}}': (' data-cancelled="1"' if sitelib.is_cancelled(ev) else ''),
         '{{gcalButton}}': ('' if sitelib.is_cancelled(ev) else
                            f'        <a href="{make_gcal_url(ev)}" target="_blank"'
-                           f' rel="noopener" class="gcal-btn">&#128197; カレンダーに登録</a>'),
+                           f' rel="noopener" class="gcal-btn">'
+                           f'<svg viewBox="0 0 24 24" fill="none"'
+                           f' stroke="currentColor" stroke-width="2">'
+                           f'<rect x="3" y="4" width="18" height="18" rx="2"/>'
+                           f'<line x1="3" y1="10" x2="21" y2="10"/>'
+                           f'<line x1="8" y1="2" x2="8" y2="6"/>'
+                           f'<line x1="16" y1="2" x2="16" y2="6"/></svg>'
+                           f'カレンダー</a>'),
         '{{cssVersion}}': CSS_VERSION,
         '{{jsVersion}}': JS_VERSION,
         '{{heroSection}}': make_hero_section(ev),
         '{{eventJsonLd}}': make_event_jsonld(ev),
         '{{accessRow}}': make_access_row(ev),
         '{{robotsMeta}}': make_robots_meta(ev),
-        '{{breadcrumbPrefecture}}': make_breadcrumb_prefecture(ev),
-        '{{breadcrumbLdPrefecture}}': make_breadcrumb_ld_prefecture(ev),
-        '{{breadcrumbLdLastPos}}': make_breadcrumb_ld_last_pos(ev),
         '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{ogImage}}': make_og_image(ev),
         '{{shareSection}}': make_share_section(ev),
@@ -626,6 +607,8 @@ def build_page(template, ev, ctx):
         '{{timeRow}}': make_time_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
         '{{siteHeader}}': sitelib.site_header(),
+        '{{breadcrumb}}': sitelib.crumb_bar_html(breadcrumb_items(ev)),
+        '{{breadcrumbJsonLd}}': sitelib.crumb_jsonld(breadcrumb_items(ev)),
         '{{affiliateBlock}}': make_affiliate_block(ev),
         '{{cancelNotice}}': make_cancel_notice(ev),
         '{{heroMetaNote}}': make_hero_meta_note(ev),

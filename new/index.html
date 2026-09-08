@@ -22,12 +22,12 @@
   <link rel="manifest" href="../manifest.webmanifest?v=2">
   <meta name="theme-color" content="#111">
   <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="../rss.xml">
-  <link rel="stylesheet" href="../style.css?v=20260908n">
+  <link rel="stylesheet" href="../style.css?v=20260908p">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage","name":"新着掲載イベント","description":"アガベ・塊根植物・多肉植物イベントの新着掲載情報。当サイトに最近追加されたイベントを掲載日順に一覧できます。","url":"https://agave-navi.com/new/","isPartOf":{"@type":"WebSite","name":"アガベイベントナビ","url":"https://agave-navi.com/"}}
   </script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agave-navi.com/"}, {"@type": "ListItem", "position": 2, "name": "新着"}]}
+  {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "全国", "item": "https://agave-navi.com/"}, {"@type": "ListItem", "position": 2, "name": "新着"}]}
   </script>
   <script src="../list-ui.js?v=20260908g"></script>
 </head>
@@ -63,9 +63,10 @@
     </div>
   </nav>
   <script src="/nav.js?v=20260908g" defer></script>
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="https://agave-navi.com/">ホーム</a> &gt; <span>新着</span>
-  </nav>
+  <div class="crumb-bar">
+    <nav class="breadcrumb" aria-label="パンくずリスト"><a href="/">全国</a><span class="pref-sep" aria-hidden="true">&gt;</span><span>新着</span></nav>
+    <form class="search-field" action="/" method="get" role="search"><input type="search" name="q" placeholder="イベント名・会場で検索" aria-label="イベントを検索"></form>
+  </div>
   <main>
   <section class="landing-hero"><h1>新着掲載イベント</h1><p class="lead">最近サイトに追加されたイベント30件を掲載日の新しい順に並べています。</p></section>
   <section class="landing-intro"><p>当サイトのデータベースに最近追加されたイベント30件を、掲載日の新しい順に並べています。毎日の自動収集と手動確認で随時追加しているため、定期的にチェックすると新しいイベントをいち早く見つけられます。開催日順に探す場合は<a href="/">イベント一覧</a>、購読型で受け取りたい場合は<a href="/calendar.html">カレンダー(iCal対応)</a>や<a href="/rss.xml">RSS</a>もご利用ください。</p></section>

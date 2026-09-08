@@ -22,12 +22,12 @@
   <link rel="manifest" href="../../manifest.webmanifest?v=2">
   <meta name="theme-color" content="#111">
   <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="../../rss.xml">
-  <link rel="stylesheet" href="../../style.css?v=20260908n">
+  <link rel="stylesheet" href="../../style.css?v=20260908p">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage","name":"2026年3月のアガベ・植物イベント","description":"2026年3月の植物イベント5件。","url":"https://agave-navi.com/archive/2026-03/","isPartOf":{"@type":"WebSite","name":"アガベイベントナビ","url":"https://agave-navi.com/"}}
   </script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agave-navi.com/"}, {"@type": "ListItem", "position": 2, "name": "アーカイブ", "item": "/archive/"}, {"@type": "ListItem", "position": 3, "name": "2026年3月"}]}
+  {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "全国", "item": "https://agave-navi.com/"}, {"@type": "ListItem", "position": 2, "name": "アーカイブ", "item": "https://agave-navi.com/archive/"}, {"@type": "ListItem", "position": 3, "name": "2026年3月"}]}
   </script>
   <script src="../../list-ui.js?v=20260908g"></script>
 </head>
@@ -63,9 +63,10 @@
     </div>
   </nav>
   <script src="/nav.js?v=20260908g" defer></script>
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="https://agave-navi.com/">ホーム</a> &gt; <a href="/archive/">アーカイブ</a> &gt; <span>2026年3月</span>
-  </nav>
+  <div class="crumb-bar">
+    <nav class="breadcrumb" aria-label="パンくずリスト"><a href="/">全国</a><span class="pref-sep" aria-hidden="true">&gt;</span><a href="/archive/">アーカイブ</a><span class="pref-sep" aria-hidden="true">&gt;</span><span>2026年3月</span></nav>
+    <form class="search-field" action="/" method="get" role="search"><input type="search" name="q" placeholder="イベント名・会場で検索" aria-label="イベントを検索"></form>
+  </div>
   <main>
   <section class="landing-hero"><h1>2026年3月のイベント</h1><p class="lead">2026年3月に開催されたイベントの一覧です。</p></section>
   <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none"></h2>

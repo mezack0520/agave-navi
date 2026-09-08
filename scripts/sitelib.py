@@ -16,7 +16,7 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908n'
+CSS_VERSION = '20260908p'
 JS_VERSION = '20260908g'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -690,6 +690,67 @@ def filter_updates(items, region=None, prefecture=None):
             continue
         out.append(it)
     return out
+
+
+# パンくずの根っこ。トップは全国一覧なので「全国」。
+# 「ホーム」と呼んでいたが、トップの絞り込みの現在地が「全国」なので
+# 同じ場所を2つの名前で呼んでいた(2026-09-08 指摘)。
+CRUMB_ROOT = ('全国', '/')
+
+
+def crumb_search_html():
+    """パンくずの右端に置く検索。トップと同じ見た目にする。
+
+    トップは入力しながら絞るが、他の頁は絞る対象が無いので
+    `/?q=` に飛ばす。トップ側が q を読んで絞る。
+    JSを足さずに form の GET で済ませる。
+    """
+    return ('<form class="search-field" action="/" method="get" role="search">'
+            '<input type="search" name="q" placeholder="イベント名・会場で検索"'
+            ' aria-label="イベントを検索"></form>')
+
+
+def crumb_bar_html(items, search=True):
+    """パンくず一段。items は [(表示名, リンク先 or None)]。最後が現在地。
+
+    詳細・地域・県・タグ・ガイドで別々に組んでいたため、文字の大きさが
+    0.66〜0.75rem に散り、根っこの呼び名も揃っていなかった。
+    ここが唯一の組み立て。
+    """
+    parts = []
+    n = len(items)
+    for i, (name, url) in enumerate(items):
+        last = (i == n - 1)
+        if url and not last:
+            parts.append(f'<a href="{_attr(url)}">{html_escape(name)}</a>')
+        else:
+            parts.append(f'<span>{html_escape(name)}</span>')
+        if not last:
+            parts.append('<span class="pref-sep" aria-hidden="true">&gt;</span>')
+    return ('  <div class="crumb-bar">\n'
+            '    <nav class="breadcrumb" aria-label="パンくずリスト">'
+            + ''.join(parts) + '</nav>\n'
+            + ('    ' + crumb_search_html() + '\n' if search else '')
+            + '  </div>')
+
+
+def crumb_jsonld(items, domain=None):
+    """パンくずの構造化データ。表示と同じ items から作る。
+
+    表示とJSON-LDを別々に書いていたので、片方だけ「ホーム」が残る。
+    """
+    d = domain or DOMAIN
+    els = []
+    for i, (name, url) in enumerate(items):
+        e = {'@type': 'ListItem', 'position': i + 1, 'name': name}
+        if url:
+            e['item'] = url if url.startswith('http') else d + url
+        els.append(e)
+    return ('  <script type="application/ld+json">\n  '
+            + json.dumps({'@context': 'https://schema.org',
+                          '@type': 'BreadcrumbList',
+                          'itemListElement': els}, ensure_ascii=False)
+            + '\n  </script>')
 
 
 def region_prefs():

@@ -2694,7 +2694,12 @@ def main():
         base = (t.lstrip('/') if t.startswith('/')
                 else os.path.normpath(os.path.join(os.path.dirname(src_rel), t)))
         base = base.replace(os.sep, '/')
-        if base.endswith('/'):
+        if not base:
+            # href="/" はトップへのリンク。空のままだと後段で '/index.html'
+            # になり index.html と一致せず、トップが孤児に見えた
+            # (2026-09-08、パンくずの根っこを絶対URLから / に変えて発覚)
+            base = 'index.html'
+        elif base.endswith('/'):
             base += 'index.html'
         elif os.path.isdir(rp(base)):
             base += '/index.html'

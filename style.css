@@ -336,69 +336,231 @@ body.no-scroll {
    BREADCRUMB
    ======================================== */
 
-/* パンくず。トップのエリア絞り込み(全国 > 関東 > 埼玉)と同じ型にする。
-   以前はここだけ小さな文字リンクで、同じ階層を表す部品なのに
-   トップと詳細で見た目が違っていた(2026-09-08 指摘)。
-   現在地は黒、上位は白のチップ。区切りの「>」は nav 自身の色を継ぐ。 */
-.breadcrumb {
+/* 詳細ページの操作ボタン。**5つ全部を同じ形にする。**
+   以前は 行きたい/カレンダー/シェア3種が別々の宣言で、高さも角丸も
+   文字の大きさも違い、さらにシェアだけ transform:scale(.92) で
+   見た目だけ縮めていた。transform は場所を取ったままなので
+   間隔もずれ、行がガタガタになっていた(2026-09-08 指摘)。
+   ブランドのボタンは文字を持たせない。Xのロゴの隣に「X」と書くと
+   「X x」と読める(同日 指摘)。 */
+.eh-actions {
+    --pill-h: 2.3rem;
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 0.3rem;
-    max-width: 100%;
-    padding: 0.55rem 1rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    font-size: 0.7rem;
-    color: var(--gray-400);
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 0;
+}
+
+/* シェアの入れ物は箱として振る舞わせない。
+   入れ物があると間隔が「3つの塊」と「他」で変わる */
+.eh-actions .detail-share {
+    display: contents;
+}
+
+.eh-actions .detail-share-label {
+    display: none;
+}
+
+.eh-actions .detail-fav-btn,
+.eh-actions .gcal-btn,
+.eh-actions .share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: var(--pill-h);
+    margin: 0;
+    padding: 0 1rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    opacity: 1;
+    transform: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+                color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.eh-actions .detail-fav-btn svg,
+.eh-actions .gcal-btn svg,
+.eh-actions .share-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* 行きたいが主行動。ここだけ塗る */
+.eh-actions .detail-fav-btn {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+}
+
+.eh-actions .detail-fav-btn.is-fav {
+    background: var(--accent-pop);
+    border-color: var(--accent-pop);
+}
+
+.eh-actions .detail-fav-btn.is-fav svg {
+    fill: var(--white);
+}
+
+/* ロゴだけのボタンは正方形=丸にする */
+.eh-actions .share-x,
+.eh-actions .share-line {
+    width: var(--pill-h);
+    padding: 0;
+    border-radius: 50%;
+}
+
+.eh-actions .share-x {
+    background: #000;
+    border-color: #000;
+    color: #fff;
+}
+
+.eh-actions .share-line {
+    background: #06c755;
+    border-color: #06c755;
+    color: #fff;
+}
+
+.eh-actions .gcal-btn:hover,
+.eh-actions .share-copy:hover {
+    border-color: var(--black);
+    background: var(--gray-100);
+}
+
+.eh-actions .detail-fav-btn:active,
+.eh-actions .gcal-btn:active,
+.eh-actions .share-btn:active {
+    filter: brightness(0.92);
+}
+
+/* パンくずと絞り込みの部品。**ここが唯一の宣言。**
+   詳細・地域・県・タグ・ガイド・トップで別々に書いていたため、
+   文字が 0.66〜0.75rem に散って「詳細だけ大きさが違う」状態だった
+   (2026-09-08 指摘)。役割は3つだけ。
+     現在地 … 黒で塗る
+     上位・選択肢 … 白のチップ。押せる
+     区切り … 「>」
+   大きさと余白は下の変数で1箇所から変える。 */
+:root {
+    --crumb-size: 0.74rem;
+    --crumb-pad: 0.34rem 0.78rem;
+    --crumb-sep-size: 0.68rem;
+}
+
+.crumb-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
     background-color: var(--white);
     border-bottom: 1px solid var(--gray-200);
 }
 
-.breadcrumb::-webkit-scrollbar {
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.breadcrumb::-webkit-scrollbar,
+.crumb-bar::-webkit-scrollbar {
     display: none;
 }
 
+/* 上位・選択肢 */
 .breadcrumb a,
-.breadcrumb > span {
+.breadcrumb > span,
+.pref-crumb,
+.region-tab,
+.pref-chip {
     flex-shrink: 0;
-    padding: 0.24rem 0.7rem;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    line-height: 1.5;
-    white-space: nowrap;
-    text-decoration: none;
-}
-
-.breadcrumb a {
+    padding: var(--crumb-pad);
     border: 1.5px solid var(--gray-300);
+    border-radius: 20px;
     background: var(--white);
     color: var(--gray-600);
-    transition: all 0.2s ease;
+    font-size: var(--crumb-size);
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    /* 押した手応えが無いと反応していないように見える(2026-09-08 指摘)。
+       スマホには hover が無いので :active を必ず付ける */
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+                color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.breadcrumb a:hover {
+.breadcrumb a:hover,
+.pref-crumb:hover,
+.region-tab:hover,
+.pref-chip:hover {
     border-color: var(--gray-400);
     background: var(--gray-100);
     color: var(--black);
     text-decoration: none;
 }
 
-/* 現在地。イベント名は長いので詰める。全文は直下のh1にある */
-.breadcrumb > span {
-    border: 1.5px solid var(--black);
+.breadcrumb a:active,
+.pref-crumb:active,
+.region-tab:active,
+.pref-chip:active {
+    background: var(--gray-200);
+    border-color: var(--gray-500);
+    color: var(--black);
+}
+
+/* 現在地。トップの「関東」と詳細のイベント名は同じ扱い */
+.breadcrumb > span,
+.pref-crumb.active,
+.region-tab.active,
+.pref-chip.active {
     background: var(--black);
     color: var(--white);
+    border-color: var(--black);
+    font-weight: 600;
+    cursor: default;
+}
+
+/* イベント名は長いので詰める。全文は直下のh1にある */
+.breadcrumb > span {
     max-width: 15em;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.pref-sep {
+    flex-shrink: 0;
+    color: var(--gray-400);
+    font-size: var(--crumb-sep-size);
+    user-select: none;
+}
+
 @media (min-width: 721px) {
-    .breadcrumb {
-        padding: 0.55rem 2rem;
+    .crumb-bar {
+        padding: 0.45rem 2rem;
     }
     .breadcrumb > span {
         max-width: 26em;
@@ -442,30 +604,35 @@ body.no-scroll {
 }
 
 /* 検索。スマホでは虫眼鏡だけに畳んで、触ったら開く。
-   並び順の選択を外したので、この行に居るのはこれだけになった。
-   常に開いた入力欄を置くと、狭い画面で1行を丸ごと使ってしまう
-   (2026-09-08 指摘)。文字が入っている間は開いたままにする。
+   常に開いた入力欄を置くと、狭い画面で1段を丸ごと使ってしまう
+   (2026-09-08 指摘)。文字が入っている間は開いたまま。
+   畳んだ状態は**正方形=丸**にする。横長のカプセルのままだと
+   中身が虫眼鏡1つなのに入力欄の形をしていて浮く(同日 指摘)。
    スマホを既定にして、広い画面で開く。 */
 .search-field {
-    flex-shrink: 0;
-    width: 2.4rem;
+    flex: none;
+    width: 2rem;
     max-width: 100%;
+    margin: 0;
     transition: width 0.22s ease;
 }
 
 .search-field input {
     width: 100%;
-    padding: 0.4rem 0.8rem 0.4rem 2rem;
-    border: 1px solid var(--gray-300);
-    border-radius: 24px;
-    font-size: 0.8rem;
+    height: 2rem;
+    padding: 0 0.6rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 50%;
+    font-size: 0.78rem;
     font-family: inherit;
     outline: none;
     color: var(--text-color);
-    background: var(--gray-100) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 0.62rem center;
+    background: var(--gray-100) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center;
     background-size: 15px 15px;
     box-sizing: border-box;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: border-radius 0.22s ease, background-color 0.2s,
+                border-color 0.2s;
+    -webkit-appearance: none;
 }
 
 .search-field:focus-within,
@@ -473,13 +640,22 @@ body.no-scroll {
     width: 62%;
 }
 
-.search-field input:focus {
-    border-color: var(--black);
+/* 開いたら普通の入力欄の形に戻し、虫眼鏡を左に寄せる */
+.search-field:focus-within input,
+.search-field:has(input:not(:placeholder-shown)) input {
+    border-radius: 20px;
+    padding: 0 0.8rem 0 1.9rem;
+    background-position: 0.6rem center;
     background-color: var(--white);
+    border-color: var(--black);
 }
 
 .search-field input::placeholder {
     color: var(--gray-400);
+}
+
+.search-field input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
 }
 
 @media (min-width: 721px) {
@@ -568,75 +744,6 @@ body.no-scroll {
 .crumb-row::-webkit-scrollbar,
 .region-tabs::-webkit-scrollbar,
 .pref-row::-webkit-scrollbar { display: none; }
-
-/* 地域チップと県チップは同じ「選択肢」なので同じ見た目にする。
-   別々に書いていたため字の大きさと角丸が違い、
-   全国 > 関東 の行と 関東 > 千葉 の行で高さが変わっていた */
-.region-tab,
-.pref-chip {
-    flex-shrink: 0;
-    padding: 0.24rem 0.7rem;
-    font-size: 0.72rem;
-    font-weight: 500;
-    line-height: 1.5;
-    border: 1.5px solid var(--gray-300);
-    border-radius: 20px;
-    background: var(--white);
-    color: var(--gray-600);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-.region-tab:hover,
-.pref-chip:hover {
-    border-color: var(--gray-400);
-    background: var(--gray-100);
-    color: var(--black);
-}
-/* 選択中は現在地と同じ黒。赤は中止バッジなど「注意」に取っておく */
-.region-tab.active,
-.pref-chip.active {
-    background: var(--black);
-    color: var(--white);
-    border-color: var(--black);
-}
-
-/* 全国 > 関東 > 県 のパンくず型。
-   以前は「←」の丸ボタン + 太字の地域名 + 「すべて」チップだった。
-   「すべて」に色が付くので、いま何で絞っているのかが
-   「関東の中のすべて」と二段で読まないと分からなかった。
-   地域名自体を選択状態にすれば「すべて」は要らない(2026-09-08 指摘)。
-   区切りと語順は詳細ページのパンくず(ホーム > 関東 > 埼玉)に合わせた。 */
-.pref-crumb {
-    flex-shrink: 0;
-    padding: 0.28rem 0.75rem;
-    font-size: 0.74rem;
-    font-weight: 600;
-    border: 1.5px solid var(--gray-300);
-    border-radius: 20px;
-    background: var(--white);
-    color: var(--gray-600);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-.pref-crumb:hover {
-    border-color: var(--gray-400);
-    background: var(--gray-100);
-    color: var(--black);
-}
-.pref-crumb.active {
-    background: var(--black);
-    color: var(--white);
-    border-color: var(--black);
-}
-
-.pref-sep {
-    flex-shrink: 0;
-    color: var(--gray-400);
-    font-size: 0.7rem;
-    user-select: none;
-}
 
 .pref-chips {
     display: flex;
@@ -1981,17 +2088,11 @@ main {
     .area-filter-inner {
         padding: 0.3rem 0.75rem;
     }
-    .region-tab {
-        padding: 0.25rem 0.65rem;
-        font-size: 0.7rem;
-    }
-    .pref-crumb {
-        padding: 0.22rem 0.6rem;
-        font-size: 0.7rem;
-    }
-    .pref-chip {
-        padding: 0.18rem 0.5rem;
-        font-size: 0.66rem;
+    /* パンくずの大きさはここで一括。個別に書くと必ず食い違う */
+    :root {
+        --crumb-size: 0.72rem;
+        --crumb-pad: 0.3rem 0.68rem;
+        --crumb-sep-size: 0.66rem;
     }
 
     .filter-tabs {
@@ -2087,14 +2188,7 @@ main {
         font-size: 0.5rem;
     }
 
-    .breadcrumb {
-        padding: 0.5rem 1rem;
-        font-size: 0.75rem;
-    }
 
-    .filter-bar-inner {
-        padding: 0 0.5rem;
-    }
 
     .filter-tab {
         padding: 0.25rem 0.5rem;
@@ -3050,7 +3144,7 @@ main {
 .detail-section-title{position:relative;font-size:1.15rem;font-weight:900;letter-spacing:-.01em;color:#111;margin:0 0 .8em;padding-bottom:.55em;border-bottom:2px solid #111}
 .detail-section-title::before{content:attr(data-kicker);display:block;font-size:.62rem;font-weight:700;letter-spacing:.22em;color:#767676;margin-bottom:.35em}
 .detail-section-title:not([data-kicker])::before{content:none}
-.detail-section{margin:2.4rem 0}
+.detail-section{margin:1.6rem 0 2rem}
 .section-note{font-size:.85rem;color:#6e6e6e;line-height:1.75;margin:.2em 0 1em}
 
 .mini-grid{display:grid;grid-template-columns:1fr;gap:.5rem;margin-top:.9em}
@@ -3068,7 +3162,7 @@ main {
 
 /* === event-hero 編集誌型レイアウト 2026-07 === */
 .detail-page{max-width:820px}
-.event-hero{padding-top:1.6rem}
+.event-hero{padding-top:1rem}
 .eh-kicker{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .eh-chip{font-size:.72rem;font-weight:700;letter-spacing:.08em;background:#111;color:#fff;border-radius:4px;padding:.28em .7em}
 .eh-chip-ghost{background:none;color:#555;border:1px solid #ccc}
@@ -3080,15 +3174,7 @@ main {
 .eh-spec .info-label .i{vertical-align:-2px;margin-right:.4em;color:#c2c2c2}
 .eh-spec .info-value{font-size:.95rem;color:#111;line-height:1.65;text-align:left}
 .eh-spec .info-value a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}
-.eh-actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:1.15rem 0 .4rem}
-.eh-actions .detail-fav-btn{display:inline-flex;align-items:center;gap:.45em;background:#111;color:#fff;border:none;border-radius:999px;padding:.62em 1.3em;font-size:.9rem;font-weight:700;cursor:pointer;transition:opacity .15s}
-.eh-actions .detail-fav-btn:hover{opacity:.82}
-.eh-actions .detail-fav-btn.is-fav{background:var(--accent-pop,#e63946)}
-.eh-actions .gcal-btn{display:inline-flex;align-items:center;gap:.4em;border:1px solid #ccc;border-radius:999px;padding:.6em 1.15em;font-size:.88rem;font-weight:700;color:#333;text-decoration:none;background:#fff}
-.eh-actions .gcal-btn:hover{border-color:#111}
-.eh-actions .detail-share{display:inline-flex;align-items:center;gap:.45rem;background:none;padding:0;margin:0;border:none}
-.eh-actions .detail-share-label{display:none}
-.detail-main{padding-top:.6rem}
+.detail-main{padding-top:0}
 .detail-hero{margin:.2rem 0 1rem}
 /* 見た目の枠だけ。比率と object-fit は上の .detail-hero-img と
    下の .eh-lead .detail-hero-img が持つ。ここに比率を書かないこと
@@ -3096,8 +3182,6 @@ main {
 .detail-hero-img{width:100%;border-radius:12px;border:1px solid #eee}
 @media (max-width:480px){
   .eh-spec .info-row{grid-template-columns:5.6em 1fr}
-  .eh-actions{gap:.5rem}
-  .eh-actions .detail-fav-btn,.eh-actions .gcal-btn{padding:.55em 1em;font-size:.85rem}
 }
 
 /* ========================================
@@ -3154,12 +3238,6 @@ main {
 
 /* 共有系は主動線ではないので視覚的な重みを落とす */
 .eh-actions .share-btn,
-.eh-actions .detail-share .share-btn {
-    transform: scale(.92);
-    transform-origin: left center;
-    opacity: .88;
-}
-.eh-actions .share-btn:hover { opacity: 1; }
 .eh-meta-note {
     font-size: .72rem;
     color: #9a9a9a;
@@ -3931,5 +4009,34 @@ main {
     .upd-meta {
         grid-column: 3;
         white-space: normal;
+    }
+}
+
+@media (max-width: 720px) {
+    /* SPの余白をここでまとめる。個別に足すと画面ごとにばらつく
+       (2026-09-08 指摘) */
+    .event-hero {
+        padding-top: 0.7rem;
+    }
+    /* 3つを1行に収める。5つ並べたときは折り返して2行になり、
+       行ごとに高さの違うボタンが混ざってガタガタに見えていた
+       (2026-09-08 指摘) */
+    .eh-actions {
+        --pill-h: 2.15rem;
+        gap: 0.35rem;
+        margin: 0.85rem 0 0;
+        flex-wrap: nowrap;
+    }
+    .eh-actions .detail-fav-btn,
+    .eh-actions .gcal-btn,
+    .eh-actions .share-btn {
+        padding: 0 0.8rem;
+        font-size: 0.78rem;
+    }
+    .detail-section {
+        margin: 1.3rem 0 1.6rem;
+    }
+    .crumb-bar {
+        padding: 0.35rem 0.75rem;
     }
 }
