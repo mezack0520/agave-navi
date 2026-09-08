@@ -1,5 +1,5 @@
 {
-  "total": 417,
+  "total": 418,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -740,8 +740,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-09-19 okibota-max-2026-sunshine: 公式ページが変わった(本文)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
