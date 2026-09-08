@@ -1,5 +1,5 @@
 {
-  "total": 417,
+  "total": 416,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -525,7 +525,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260908zg)と違うページ",
+      "title": "CSS版数が正規値(20260908zh)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -738,10 +738,8 @@
     },
     "css_broken_selector": {
       "title": "style.css のセレクタの形が壊れている",
-      "count": 1,
-      "items": [
-        "1200 行目: セレクタにコメントが挟まっている"
-      ],
+      "count": 0,
+      "items": [],
       "note": "宣言だけ消してセレクタの行を残すと、次の規則を巻き込む。括弧の数は合うので気づけない(2026-09-08 に実際に起きた)",
       "severity": "urgent"
     },
