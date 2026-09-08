@@ -1,5 +1,5 @@
 {
-  "total": 299,
+  "total": 300,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -686,8 +686,10 @@
     },
     "cancel_watch_broken": {
       "title": "中止の見張りが機能していない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "巡回で取得できなかった回が 1 件"
+      ],
       "note": "check-cancelled.py の取得が失敗しているか、日次で走っていない。この状態では cancel_suspects が0件でも「中止は無い」証拠にならない",
       "severity": "urgent"
     },
