@@ -1,6 +1,6 @@
 {
-  "check_date": "2026-09-07",
-  "total_events": 403,
+  "check_date": "2026-09-08",
+  "total_events": 405,
   "dead_links": [],
   "unreachable": [],
   "tbd_events": [
@@ -1577,6 +1577,12 @@
       "dateEnd": "2026-09-05"
     },
     {
+      "slug": "aobouzu-kagoshima-popup-2026-09",
+      "name": "青坊主 鹿児島ポップアップ",
+      "date": "2026-09-06",
+      "dateEnd": "2026-09-07"
+    },
+    {
       "slug": "botanical-festa-hawo-kumagaya-2026-09",
       "name": "ボタニカルフェスタ（ハオルチア界隈）",
       "date": "2026-09-06",
@@ -1922,12 +1928,12 @@
     },
     {
       "slug": "collect-plants-2026-09",
-      "name": "Collect Plants（コレクトプランツ）",
+      "name": "Collect Plants Vol.3（コレクトプランツ）",
       "date": "2026-09-22",
       "dateEnd": "2026-09-23",
       "location": "グランメッセ熊本",
-      "eventStatus": "confirmed",
-      "sourceUrl": ""
+      "eventStatus": "cancelled",
+      "sourceUrl": "https://collect-plants.com/"
     },
     {
       "slug": "kisarazu-cs-auction-2026-09",
@@ -1937,6 +1943,15 @@
       "location": "金田交流センター 多目的ホール（千葉県木更津市金田東6-11-1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/kisarazu_c_and_s/"
+    },
+    {
+      "slug": "shokunoutage-4-kumamoto-2026-09",
+      "name": "植ノ宴 -4- in 熊本",
+      "date": "2026-09-22",
+      "dateEnd": "2026-09-23",
+      "location": "カリーノMSビル（熊本県熊本市中央区魚屋町2丁目1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DcYbxwJhQnG/"
     },
     {
       "slug": "sapporo-cactus-club-aki-2026",
@@ -2794,6 +2809,15 @@
       "sourceUrl": "https://www.instagram.com/p/DZkJ0UCRA_u/"
     },
     {
+      "slug": "taniku-xmas-flarie-2026-12",
+      "name": "多肉X'mas",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-06",
+      "location": "久屋大通庭園フラリエ",
+      "eventStatus": "confirmed",
+      "sourceUrl": ""
+    },
+    {
       "slug": "succulent-wonderland-2nd-tatebayashi-2026-12",
       "name": "多肉ワンダーランド 第2回",
       "date": "2026-12-06",
@@ -2920,15 +2944,6 @@
       "location": "咲くやこの花館（大阪市鶴見区）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/"
-    },
-    {
-      "slug": "aobouzu-kagoshima-popup-2026-09",
-      "name": "青坊主 鹿児島ポップアップ",
-      "date": "2026-09-06",
-      "dateEnd": "2026-09-07",
-      "location": "LIMACOFFEE KAGOSHIMA ROASTERY（鹿児島県鹿児島市高麗町27-23）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DciYWphTGhe/"
     }
   ],
   "url_results": [
@@ -2971,6 +2986,13 @@
       "slug": "jusai-ichinomiya-autumn-2026",
       "name": "樹祭 一宮 2026 Autumn",
       "sourceUrl": "https://jusai.link/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "collect-plants-2026-09",
+      "name": "Collect Plants Vol.3（コレクトプランツ）",
+      "sourceUrl": "https://collect-plants.com/",
       "statusCode": 200,
       "alive": true
     },
