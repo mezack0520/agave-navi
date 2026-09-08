@@ -4093,3 +4093,62 @@ main {
         line-height: 1.85;
     }
 }
+
+/* 会場欄から下の地図へ飛ばす。会場名だけでは行ったことがない場所は
+   分からないのに、地図への手がかりが無かった(2026-09-08 指摘) */
+
+
+
+
+
+
+
+
+
+.venue-place {
+    margin: 0 0 0.8rem;
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+/* 会場の地図。会場欄のすぐ下。
+   以前はページの下のほうに節として置いていたが、会場名を読んだ人が
+   いちばん知りたいのは「どこ」なので、その場で見せる(2026-09-08 指摘) */
+.venue-map {
+    margin: 0.2rem 0 0.9rem;
+    padding-left: 8.2em;
+}
+
+.venue-map .venue-place {
+    margin: 0 0 0.4rem;
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.venue-map iframe {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+}
+
+.venue-map .map-open-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--gray-600);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.venue-map .map-open-link:hover {
+    color: var(--black);
+    border-bottom-color: var(--black);
+}
+
+@media (max-width: 720px) {
+    /* 狭い画面はラベル列が無いので字下げしない */
+    .venue-map {
+        padding-left: 0;
+    }
+}

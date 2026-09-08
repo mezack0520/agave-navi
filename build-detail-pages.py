@@ -11,6 +11,7 @@ Usage:
 
 import json
 import os
+import re
 import sys
 import argparse
 from datetime import datetime, timedelta
@@ -132,29 +133,49 @@ def make_instagram_section(ev):
         </div>
 '''
 
-def make_map_section(ev):
-    """Map section。mapQuery が無ければ 会場名+都道府県 でフォールバック
-    (収集パイプライン産のイベントはmapQueryを持たないことが多く、地図が消えていた)"""
-    map_query = ev.get('mapQuery', '')
-    if not map_query:
-        venue = (ev.get('location') or ev.get('venue') or '').strip()
-        pref = (ev.get('prefecture') or '').strip()
-        if venue and not _is_vague(venue):
-            map_query = f'{venue} {pref}'.strip()
+def make_venue_value(ev):
+    """スペック表の会場欄。文字だけ。地図はこの行の直下に置く。"""
+    venue = (ev.get('location') or ev.get('venue') or '').strip()
+    return (html_escape(venue) if venue and not _is_vague(venue)
+            else _venue_placeholder(ev))
+
+
+def make_venue_map(ev):
+    """会場の地図。**会場欄のすぐ下に置く。**
+
+    以前はページの下のほうに ACCESS の節として置いていた。
+    会場名を読んだ人がいちばん知りたいのは「どこ」なので、
+    その場で見せる(2026-09-08 指摘)。
+
+    mapQuery が無ければ 会場名+都道府県 で引く。収集で入った回は
+    mapQuery を持たないことが多く、それで地図が消えていた。
+    """
+    map_query = (ev.get('mapQuery') or '').strip()
+    venue_name = (ev.get('location') or ev.get('venue') or '').strip()
+    pref = (ev.get('prefecture') or '').strip()
+    if not map_query and venue_name and not _is_vague(venue_name):
+        map_query = f'{venue_name} {pref}'.strip()
     if not map_query:
         return ''
 
-    map_query_enc = quote(map_query)
-    return f'''        <div class="detail-map">
-          <h2 class="detail-section-title" data-kicker="ACCESS">会場</h2>
-          <div class="map-container">
-            <a href="https://www.google.com/maps/search/?api=1&query={map_query_enc}" target="_blank" rel="noopener" class="map-open-link">マップで開く &#8599;</a>
-            <iframe src="https://www.google.com/maps?q={map_query_enc}&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    # 会場名に市区町村まで入っている回が多く、mapQuery を並べると
+    # 「TITANOTA BASE（埼玉県草加市）」「TITANOTA BASE 埼玉県草加市」と
+    # 同じことを二度書く。括弧と空白を落として比べ、
+    # 増える情報が無ければ出さない。
+    flat = lambda t: re.sub(r'[\s（）()・,、]', '', t or '')
+    place = map_query
+    if flat(place) and flat(place) in flat(venue_name):
+        place = ''
+    elif venue_name and place.startswith(venue_name):
+        place = place[len(venue_name):].strip()
+
+    q = quote(map_query)
+    where = (f'<p class="venue-place">{html_escape(place)}</p>' if place else '')
+    return f'''          <div class="venue-map">
+            {where}<iframe src="https://www.google.com/maps?q={q}&output=embed" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="会場の地図"></iframe>
+            <a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query={q}" target="_blank" rel="noopener">Googleマップで開く &#8599;</a>
           </div>
-        </div>
 '''
-
-
 
 
 def make_date_hero(ev):
@@ -571,9 +592,7 @@ def build_page(template, ev, ctx):
         '{{dateDisplayFull}}': make_date_display_full(ev),
         '{{region}}': region,
         '{{regionEncoded}}': quote(region),
-        '{{venue}}': (html_escape(venue)
-                      if venue and not _is_vague(venue)
-                      else _venue_placeholder(ev)),
+        '{{venue}}': make_venue_value(ev),
         '{{prefectureRow}}': make_prefecture_row(ev),
         '{{description}}': html_escape(ev.get('description', '')),
         '{{metaDescription}}': html_escape(make_meta_description(ev)),
@@ -601,7 +620,7 @@ def build_page(template, ev, ctx):
         '{{ogImage}}': make_og_image(ev),
         '{{shareSection}}': make_share_section(ev),
         '{{instagramSection}}': make_instagram_section(ev),
-        '{{mapSection}}': make_map_section(ev),
+        '{{venueMap}}': make_venue_map(ev),
         '{{admissionRow}}': make_admission_row(ev),
         '{{timeRow}}': make_time_row(ev),
         '{{enrichedContent}}': make_enriched_content(ev, ctx),
