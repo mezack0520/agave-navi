@@ -471,13 +471,11 @@ def make_event_jsonld(ev):
   }}
   </script>'''
 
-def make_official_links_rows(ev):
-    """公式情報の行。ラベルに種別、値に行き先を出す。
+def official_link_items(ev):
+    """公式情報の行に出す (URL, 種別, 表示文字)。
 
-    以前は全部の行のラベルが「リンク」で、値のほうに
-    「Instagram投稿」「関連サイト」と書いていた。読む順が逆だった。
-    「関連サイト」は関係が曖昧で何も伝わらないのでやめた
-    (2026-09-08 指摘)。種別と文字は sitelib.link_kind が唯一の持ち主。
+    脚注の「出典」もこれを見て、行に出したURLは繰り返さない。
+    同じリンクが同じページに2回出ていた(2026-09-08 指摘)。
     """
     items, seen_kinds, seen_urls = [], set(), set()
     has_ig_embed = bool(ev.get('instagramPostId') or ev.get('instagramUrl'))
@@ -487,9 +485,7 @@ def make_official_links_rows(ev):
         if not u or u in seen_urls:
             return
         kind, text = sitelib.link_kind(u, field)
-        if not kind:
-            return
-        if kind in seen_kinds:
+        if not kind or kind in seen_kinds:
             return
         # 本文にInstagramの埋め込みが出る回は、同じ投稿への行を重ねない
         if kind == 'Instagram' and has_ig_embed and text == 'この回の告知':
@@ -502,19 +498,26 @@ def make_official_links_rows(ev):
     add(ev.get('sourceUrl'), 'sourceUrl')
     add(ev.get('instagramUrl'), 'instagramUrl')
 
-    if not items:
-        if has_ig_embed:
-            return ''
+    if not items and not has_ig_embed:
         name = ev.get('name', '')
-        if not name:
-            return ''
-        venue = ev.get('venue') or ev.get('location') or ''
-        q = quote(f'{name} {venue} 2026'.strip())
-        items.append((f'https://www.google.com/search?q={q}', '検索',
-                      'Googleで探す'))
+        if name:
+            venue = ev.get('venue') or ev.get('location') or ''
+            q = quote(f'{name} {venue} 2026'.strip())
+            items.append((f'https://www.google.com/search?q={q}', '検索',
+                          'Googleで探す'))
+    return items
 
+
+def make_official_links_rows(ev):
+    """公式情報の行。ラベルに種別、値に行き先を出す。
+
+    以前は全部の行のラベルが「リンク」で、値のほうに
+    「Instagram投稿」「関連サイト」と書いていた。読む順が逆だった。
+    「関連サイト」は関係が曖昧で何も伝わらないのでやめた
+    (2026-09-08 指摘)。種別と文字は sitelib.link_kind が唯一の持ち主。
+    """
     rows = []
-    for u, kind, text in items:
+    for u, kind, text in official_link_items(ev):
         rows.append(
             f'          <div class="info-row">\n'
             f'            <span class="info-label">{html_escape(kind)}</span>\n'
@@ -654,10 +657,16 @@ def make_hero_meta_note(ev):
         url = ((ev.get('instagramUrl') or '').strip()
                or (ev.get('sourceUrl') or '').strip())
     if url:
-        # 表記は sitelib.link_kind が唯一の持ち主。ここで
-        # 「公式Instagram」と別名を作ると、表の行と脚注で呼び名が割れる
-        kind, _t = sitelib.link_kind(url, 'url' if ev.get('url') else None)
-        parts.append('出典 ' + sitelib.ext_link(url, kind))
+        # 表の行に同じURLが出ているなら繰り返さない。
+        # 「Instagram この回の告知」の下に「出典 Instagram」が続いていた
+        # (2026-09-08 指摘)。脚注に残す値打ちがあるのは最終更新と、
+        # 画像を自分のドメインから配っているときの画像の出どころ。
+        _shown = {u for u, _k, _t in official_link_items(ev)}
+        if url not in _shown:
+            # 表記は sitelib.link_kind が唯一の持ち主。ここで
+            # 「公式Instagram」と別名を作ると、表の行と脚注で呼び名が割れる
+            kind, _t = sitelib.link_kind(url, 'url' if ev.get('url') else None)
+            parts.append('出典 ' + sitelib.ext_link(url, kind))
     else:
         # dataSource は出所を人間語で持つ(例: 主催者からの掲載申請)。
         # url が無い回をすべて「スタッフ収集情報」と名乗ると、

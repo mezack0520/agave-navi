@@ -637,9 +637,13 @@ body.no-scroll {
     width: 62%;
 }
 
-/* 開いたら普通の入力欄の形に戻し、虫眼鏡を左に寄せる */
+/* 開いた形。**畳んだ状態から変わるのは幅だけではない。**
+   虫眼鏡の位置と余白と角丸も戻す。ここを幅だけで済ませていたため、
+   PCの初期状態(幅260px・未フォーカス)でアイコンが中央に居座り、
+   プレースホルダが重なって枠から溢れていた(2026-09-08 指摘)。 */
 .search-field:focus-within input,
-.search-field:has(input:not(:placeholder-shown)) input {
+.search-field:has(input:not(:placeholder-shown)) input,
+.search-field.is-open input {
     border-radius: 20px;
     padding: 0 0.8rem 0 1.9rem;
     background-position: 0.6rem center;
@@ -656,9 +660,20 @@ body.no-scroll {
 }
 
 @media (min-width: 721px) {
-    /* 広い画面は最初から開けておく。畳む理由が無い */
+    /* 広い画面は最初から開けておく。畳む理由が無い。
+       幅と一緒に中身も開いた形にする */
     .search-field {
         width: 260px;
+    }
+    .search-field input {
+        border-radius: 20px;
+        padding: 0 0.8rem 0 1.9rem;
+        background-position: 0.6rem center;
+        background-color: var(--white);
+        border-color: var(--gray-300);
+    }
+    .search-field input:focus {
+        border-color: var(--black);
     }
 }
 
