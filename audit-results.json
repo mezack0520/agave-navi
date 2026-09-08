@@ -1,5 +1,5 @@
 {
-  "total": 300,
+  "total": 305,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 29,
+      "count": 33,
       "items": [
         "botanical-link-popup-kasugai-2026-10",
         "botanical-monsters-2027-okazaki",
@@ -194,8 +194,10 @@
         "notre-atelier-popup-tamagawa-2026-09",
         "nova-cultura-tradmans-2026-09",
         "okibota-december-2026-sunshine",
+        "okibota-max-2026-sunshine",
         "otsujiya-popup-engeiya-tanaka-2026-09",
         "picnic-garden-vol25-2026-09",
+        "plants-box-kofu-2026-10",
         "plants-dive-vol5-nara-2026-10",
         "plants-plants-plants-bhms-2026-10",
         "plants-show-kiryu-2026-autumn",
@@ -203,6 +205,8 @@
         "robin-bizarre-garden-6th-2026-09",
         "sapporo-bikaku-expo-lv3-2026-10",
         "shumatsu-botanical-gotemba-2026-11",
+        "takanomiya-ichi-shokubutsu-2026-09",
+        "taniku-xmas-flarie-2026-12",
         "tiger-plants-hunters-2026-10",
         "tochigi-tanippe-fukaya-final-2026-10",
         "tokai-okibota-2026",
@@ -214,7 +218,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 66,
+      "count": 70,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
@@ -250,19 +254,19 @@
         "notre-atelier-popup-tamagawa-2026-09",
         "nova-cultura-tradmans-2026-09",
         "okibota-december-2026-sunshine",
+        "okibota-max-2026-sunshine",
         "okibota-spring-2026-sunshine",
         "otsujiya-popup-engeiya-tanaka-2026-09",
         "ozaki-chinshokubutsu-collection-3",
         "paradise-garage-tomoya-farm-2026-08",
-        "picnic-garden-vol25-2026-09",
-        "plants-2306-3rd-anniversary-2026"
+        "picnic-garden-vol25-2026-09"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 116,
+      "count": 112,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -415,8 +419,10 @@
     },
     "insecure_image_url": {
       "title": "imageUrl が https でない(混在コンテンツで画像が出ない)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plants-box-kofu-2026-10: imageUrl = http://miture.jewelry/cdn/shop/articles/e79b8499b27b5bfd1e09"
+      ],
       "note": "https:// で取得できるなら書き換える。取得できないなら imageUrl を消す",
       "severity": "urgent"
     },
