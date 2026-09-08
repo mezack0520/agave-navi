@@ -164,19 +164,5 @@
         // 同じ15行が14ページにあり、生成ページには無かった
         // (2026-09-08)。
     </script>
-    <script>
-    // Ikitai badge count
-    (function(){
-        var b = document.getElementById('ikitaiBadge');
-        if (!b) return;
-        try {
-            var favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
-            if (favs.length > 0) {
-                b.textContent = favs.length;
-                b.classList.add('has-count');
-            }
-        } catch(e) {}
-    })();
-    </script>
 </body>
 </html>

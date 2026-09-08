@@ -1338,8 +1338,14 @@ def main():
                      ('function autoExpireEvents', 'index.html に終了判定の再実装がある')):
         if bad in idx:
             start_only.append(f'index.html {why}')
-    if 'AEN_LIST' not in idx and idx:
-        start_only.append('index.html が status-auto.js の並び替え(AEN_LIST)を使っていない')
+    # トップの絞り込みは top-filter.js に外出しした(2026-09-08)。
+    # index.html だけを見ていると「使っていない」と誤検知する。
+    try:
+        _tf_src = open(rp('top-filter.js'), encoding='utf-8').read()
+    except OSError:
+        _tf_src = ''
+    if idx and 'AEN_LIST' not in idx and 'AEN_LIST' not in _tf_src:
+        start_only.append('トップが status-auto.js の並び替え(AEN_LIST)を使っていない')
     add('start_date_only_ordering', '開始日を単独の時間キーにしているコード',
         sorted(set(start_only)),
         'sitelib の event_phase / is_upcoming / list_sort_key / split_ongoing を使う')

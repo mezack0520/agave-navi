@@ -288,9 +288,26 @@ def main():
     # index.html に手書きの地域表があり、北海道・東北・四国が丸ごと
     # 抜けていた(その3地域のイベントには一生たどり着けない)。
     # 山梨・長野も北陸から漏れていた(2026-09-08 に発見)。
+    # REGION-MAP は top-filter.js に移した(2026-09-08 の外出し)。
+    # 貼り替え先が index.html でないので別に扱う。
+    _tf = os.path.join(ROOT, 'top-filter.js')
+    if os.path.exists(_tf):
+        with open(_tf, encoding='utf-8') as f:
+            _tfs = f.read()
+        _i = _tfs.find('/* REGION-MAP:START')
+        _j = _tfs.find('/* REGION-MAP:END */')
+        if _i < 0 or _j <= _i:
+            print('::warning::REGION-MAP の受け口が top-filter.js に無い')
+        else:
+            _he = _tfs.find('*/', _i) + 2
+            _w = '\n' + region_map_js() + '\n'
+            if _tfs[_he:_j] != _w:
+                with open(_tf, 'w', encoding='utf-8') as f:
+                    f.write(_tfs[:_he] + _w + _tfs[_j:])
+                print('REGION-MAP: top-filter.js を更新')
+
     for _tag, _body in (
             ('AREA-FILTER', area_filter_html(events)),
-            ('REGION-MAP', region_map_js()),
     ):
         _s = f'<!-- {_tag}:START' if _tag == 'AREA-FILTER' else f'/* {_tag}:START'
         _e = f'<!-- {_tag}:END -->' if _tag == 'AREA-FILTER' else f'/* {_tag}:END */'

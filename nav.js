@@ -41,3 +41,25 @@
     init();
   }
 })();
+
+// 行きたいの件数バッジ。ヘッダーの一部なのでここで面倒を見る。
+// 同じ14行が14ページにインラインで写されていた(2026-09-08 に集約)。
+(function () {
+  'use strict';
+  function paint() {
+    var b = document.getElementById('ikitaiBadge');
+    if (!b) return;
+    var n = 0;
+    try { n = (JSON.parse(localStorage.getItem('aen_favs') || '[]') || []).length; }
+    catch (e) { n = 0; }
+    b.textContent = n > 0 ? String(n) : '';
+    b.classList.toggle('has-count', n > 0);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', paint);
+  } else {
+    paint();
+  }
+  // 「行きたい」を押した直後にも合わせる。list-ui.js が呼ぶ
+  window.AEN_ON_FAV_CHANGE = paint;
+})();
