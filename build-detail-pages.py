@@ -601,7 +601,13 @@ def build_page(template, ev, ctx):
         '{{prefectureRow}}': make_prefecture_row(ev),
         '{{description}}': html_escape(ev.get('description', '')),
         '{{metaDescription}}': html_escape(make_meta_description(ev)),
-        '{{gcalUrl}}': make_gcal_url(ev),
+        # gcalUrl は {{gcalButton}} に取り込んだ(2026-09-08)。
+        # 中止の回はカウントダウンを出さない。「あと14日」は開催を約束する表示。
+        # カレンダー登録も出さない。中止の予定を人の予定表に入れさせない
+        '{{cancelledAttr}}': (' data-cancelled="1"' if sitelib.is_cancelled(ev) else ''),
+        '{{gcalButton}}': ('' if sitelib.is_cancelled(ev) else
+                           f'        <a href="{make_gcal_url(ev)}" target="_blank"'
+                           f' rel="noopener" class="gcal-btn">&#128197; カレンダーに登録</a>'),
         '{{cssVersion}}': CSS_VERSION,
         '{{jsVersion}}': JS_VERSION,
         '{{heroSection}}': make_hero_section(ev),

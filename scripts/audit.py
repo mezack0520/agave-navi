@@ -1656,11 +1656,23 @@ def main():
         '兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)',
         severity='info')
 
-    _cw_broken = []
+    # 1件2件の取得失敗は「巡回が壊れた」ではない。個別のサイトが
+    # ボットを弾いたり落ちていたりするだけで、他の21件は取れている。
+    # check_events.py が statusCode -1 をリンク切れに数えないのと同じ理屈。
+    # 全滅と部分失敗を混ぜると、毎日 urgent が鳴って読まれなくなる。
+    _cw_broken, _cw_partial = [], []
     _cw_err = _cw.get('errors') or []
     _cw_on = str(_cw.get('sweptOn') or '')
-    if _cw_err:
-        _cw_broken.append(f'巡回で取得できなかった回が {len(_cw_err)} 件')
+    _cw_targets = int((_cw.get('stats') or {}).get('targets') or 0)
+    _cw_fetched = int((_cw.get('stats') or {}).get('fetched') or 0)
+    if _cw_targets and _cw_fetched == 0:
+        _cw_broken.append(f'巡回対象 {_cw_targets} 件のうち1件も取得できていない')
+    elif _cw_targets and len(_cw_err) > max(2, _cw_targets * 0.3):
+        _cw_broken.append(
+            f'巡回対象 {_cw_targets} 件のうち {len(_cw_err)} 件が取得できていない'
+            '（3割超）')
+    elif _cw_err:
+        _cw_partial = [f'取得できなかった: {e}' for e in _cw_err]
     if _cw_on and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _cw_on):
         import datetime as _dtcw
         _cw_age = (_dtcw.date.fromisoformat(today_s)
@@ -1669,6 +1681,13 @@ def main():
             _cw_broken.append(f'最後の巡回が {_cw_on}（{_cw_age}日前）')
     elif _cw:
         _cw_broken.append('sweptOn が読めない')
+    add('cancel_watch_unreachable', '中止の見張りで取得できなかった出典',
+        sorted(_cw_partial),
+        'そのサイトがボットを弾いているか一時的に落ちている。'
+        'その回だけ文言の走査が効かないので、開催が近いなら手で見る。'
+        '全体が止まっているわけではないので info',
+        severity='info')
+
     add('cancel_watch_broken', '中止の見張りが機能していない',
         sorted(_cw_broken),
         'check-cancelled.py の取得が失敗しているか、日次で走っていない。'

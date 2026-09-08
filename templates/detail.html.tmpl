@@ -94,7 +94,7 @@
 
     <header class="event-hero">
       <div class="eh-kicker">
-        <span class="detail-status-badge" data-date="{{date}}" data-date-end="{{dateEnd}}"></span>
+        <span class="detail-status-badge" data-date="{{date}}" data-date-end="{{dateEnd}}"{{cancelledAttr}}></span>
         <span class="eh-chip">{{primaryCategory}}</span>
         <span class="eh-chip eh-chip-ghost">{{prefectureOrRegion}}</span>
       </div>
@@ -130,7 +130,7 @@
           </svg>
           <span id="favLabel">行きたい</span>
         </button>
-        <a href="{{gcalUrl}}" target="_blank" rel="noopener" class="gcal-btn">&#128197; カレンダーに登録</a>
+{{gcalButton}}
 {{shareSection}}
       </div>
     </header>

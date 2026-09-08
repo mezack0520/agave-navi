@@ -3689,3 +3689,9 @@ main {
 .event-notice-cancelled a {
     color: var(--accent-pop);
 }
+
+.event-status.status-cancelled,
+.detail-status-badge.status-cancelled {
+    background: var(--accent-pop);
+    color: var(--white);
+}

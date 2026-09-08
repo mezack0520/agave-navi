@@ -468,11 +468,10 @@
   },
   {
    "date": "2026-09-08",
-   "urgent": {
-    "cancel_watch_broken": 1
-   },
+   "urgent": {},
    "info": {
     "duplicate_event_same_source": 1,
+    "cancel_watch_unreachable": 1,
     "inquiry_review_gap": 1,
     "task_run_gap": 2
    },

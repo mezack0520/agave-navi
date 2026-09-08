@@ -521,7 +521,7 @@
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260907a)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260908a)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -684,12 +684,19 @@
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
-    "cancel_watch_broken": {
-      "title": "中止の見張りが機能していない",
+    "cancel_watch_unreachable": {
+      "title": "中止の見張りで取得できなかった出典",
       "count": 1,
       "items": [
-        "巡回で取得できなかった回が 1 件"
+        "取得できなかった: kadan-fes-2026-autumn: URLError https://fumakilla.jp/kadanlife/kadanfes/"
       ],
+      "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
+      "severity": "info"
+    },
+    "cancel_watch_broken": {
+      "title": "中止の見張りが機能していない",
+      "count": 0,
+      "items": [],
       "note": "check-cancelled.py の取得が失敗しているか、日次で走っていない。この状態では cancel_suspects が0件でも「中止は無い」証拠にならない",
       "severity": "urgent"
     },

@@ -88,7 +88,10 @@
     weekD:    { cls: 'status-soon' },        // あとN日 (4-13日)
     monthD:   { cls: 'status-month' },       // あとN日 (14-31日)
     upcomingD:{ cls: 'status-upcoming' },    // あとN日 (32+)
-    ended:    { label: '終了', cls: 'status-ended' }
+    ended:    { label: '終了', cls: 'status-ended' },
+    // 中止の回にカウントダウンを出すと開催を約束することになる。
+    // 会期を過ぎるまでは「中止」を出し続ける(2026-09-08)
+    cancelled:{ label: '中止', cls: 'status-cancelled' }
   };
 
   function dayLabel(d) { return 'あと' + d + '日'; }
@@ -243,7 +246,8 @@
       } else { return; }
     }
 
-    var status = getStatus(dateStr, dateEndStr);
+    var status = card.classList.contains('event-cancelled')
+      ? STATUS.cancelled : getStatus(dateStr, dateEndStr);
     statusEl.textContent = status.label;
     statusEl.className = 'event-status ' + status.cls;
   });
@@ -339,7 +343,8 @@
       } catch(e) {}
     }
     if (dateAttr) {
-      var status = getStatus(dateAttr, dateEndAttr);
+      var status = badge.getAttribute('data-cancelled')
+        ? STATUS.cancelled : getStatus(dateAttr, dateEndAttr);
       badge.textContent = status.label;
       var colors = {
         'status-today': '#e84393',
@@ -348,6 +353,7 @@
         'status-soon': '#e17055',
         'status-month': '#f39c12',
         'status-upcoming': '#636e72',
+        'status-cancelled': '#e63946',
         'status-ended': '#b2bec3'
       };
       badge.style.backgroundColor = colors[status.cls] || '#636e72';
