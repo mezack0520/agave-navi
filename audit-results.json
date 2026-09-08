@@ -1,5 +1,5 @@
 {
-  "total": 327,
+  "total": 325,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -177,7 +177,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 54,
+      "count": 53,
       "items": [
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
         "bizarre-plants-night-day-2026-12",
@@ -225,7 +225,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 93,
+      "count": 92,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "aobouzu-kagoshima-popup-2026-09",
@@ -273,7 +273,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 91,
+      "count": 92,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -690,12 +690,24 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-09-20 wi-wi-botanical-minokamo-2026-09: 公式ページが変わった(本文・画像)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
+    },
+    "source_label_understated": {
+      "title": "出典を持っているのに頁が「スタッフ収集情報」と名乗る",
+      "count": 0,
+      "items": [],
+      "note": "build-detail-pages.make_hero_meta_note の優先順は url → dataSource → instagramUrl / sourceUrl → スタッフ収集情報。主催者の投稿を埋め込みながら自社収集だと名乗るのは、about.html の「参照元を明記」と食い違う。出典を本当に持たない回(48件)はここに出ない",
+      "severity": "urgent"
+    },
+    "source_page_wrong_edition": {
+      "title": "出典の頁がその回の開催日を書いていない",
+      "count": 0,
+      "items": [],
+      "note": "URLを開いて、日付・イベント名・会場がその回と一致するかを見る。同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。一致しないなら **url ごと外す**(残すと裏取り済みに見える)。その記事から採った imageUrl も別の回の写真なので一緒に外す。日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない",
+      "severity": "urgent"
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",

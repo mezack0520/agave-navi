@@ -659,7 +659,19 @@ def make_hero_meta_note(ev):
             disp = str(last)
         parts.append(f'最終更新 {html_escape(disp)}')
 
+    # 出典の優先順は url → dataSource → 主催者のSNS → スタッフ収集情報。
+    # 2026-09-07 に dataSource を読むようにしたが、見ていたのはそこまでで、
+    # **sourceUrl / instagramUrl しか持たない回は素通しだった**(2026-09-08)。
+    # 主催者本人の投稿を同じ頁に埋め込んでおきながら、脚注は
+    # 「出典 スタッフ収集情報」と名乗っていた回が24件あった。
+    # 09-07 に直したのと同じ嘘で、経路が違うだけ。
+    # 検査は audit.source_label_understated。
     url = (ev.get('url') or '').strip()
+    src_text = (ev.get('dataSource') or '').strip()
+    if not url and not src_text:
+        # 投稿URL(その回の告知)をアカウントURLより先に採る
+        url = ((ev.get('instagramUrl') or '').strip()
+               or (ev.get('sourceUrl') or '').strip())
     if url:
         label = '公式サイト'
         if 'instagram.com' in url:
@@ -673,8 +685,8 @@ def make_hero_meta_note(ev):
         # url が無い回をすべて「スタッフ収集情報」と名乗ると、
         # 主催者本人から受け取った回まで自社収集だと偽ることになる。
         # 2026-09-07 まで実際にそうなっていた(agave-popup-market-nagoya-2026-07)。
-        src = (ev.get('dataSource') or '').strip()
-        parts.append('出典 ' + html_escape(src) if src else '出典 スタッフ収集情報')
+        parts.append('出典 ' + html_escape(src_text) if src_text
+                     else '出典 スタッフ収集情報')
 
     # 自サイトに置いたアイキャッチは、取得元を明示する。
     # 他人の告知画像を複製して自分のドメインから配っているので、

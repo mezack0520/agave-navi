@@ -234,6 +234,74 @@ def compact_date(e):
         s += f"-{de[8:10]}" if de[5:7] == d[5:7] else f"-{de[5:7]}.{de[8:10]}"
     return s
 
+# --- 本文に書かれた日付 (単一情報源) ---
+# 「その文章はこの回の日付を名指ししているか」は、少なくとも2か所で要る。
+#   1. 説明文が別の回の日付を書いていないか (audit.desc_date_mismatch)
+#   2. 出典の頁がこの回の日付を書いているか (check-cancelled → audit)
+# 2 を足すときに 1 の正規表現を写すところだった。写すと片方だけ賢くなるので
+# ここに置く(sitelib_rule_duplicated が写しを止める)。
+#
+# 年は持たない。告知は「9月20日(日)」と書くほうが多く、年まで書く頁のほうが
+# 少ない。年の食い違いは find_year_month_days() が別に見る。
+_MD_KANJI = re.compile(r'(\d{1,2})月\s*(\d{1,2})日')
+# 「6/1(土)」形式。前年告知の貼り付けを実際に取り逃がしたので拾う
+# (fujiyama-days-little-green-park-2026)。時刻 9:30 と比を巻き込まないよう
+# 前後に数字・コロン・スラッシュが来る形は外す。
+_MD_SLASH = re.compile(r'(?<![\d:/])(\d{1,2})/(\d{1,2})(?![\d/])')
+# 「2026.10.10」「2026-10-10」「2026/10/10」形式
+_YMD_SEP = re.compile(r'(\d{4})[./-](\d{1,2})[./-](\d{1,2})')
+_YMD_KANJI = re.compile(r'(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日')
+
+
+def _md_ok(m, d):
+    return 1 <= m <= 12 and 1 <= d <= 31
+
+
+def find_month_days(text, kanji_only=False):
+    """本文から (月, 日) の集合を拾う。
+
+    kanji_only=True は「◯月◯日」だけを見る。散文で日付を名乗っている頁か
+    どうかの判定に使う。スラッシュ形は画像パス(/2026/09/)やページ送りにも
+    現れるので、「日付が書いてある」ことの根拠には弱い。
+    """
+    t = text or ''
+    out = {(int(a), int(b)) for a, b in _MD_KANJI.findall(t) if _md_ok(int(a), int(b))}
+    if kanji_only:
+        return out
+    out |= {(int(a), int(b)) for a, b in _MD_SLASH.findall(t) if _md_ok(int(a), int(b))}
+    out |= {(int(a), int(b)) for _y, a, b in _YMD_SEP.findall(t) if _md_ok(int(a), int(b))}
+    return out
+
+
+def find_year_month_days(text):
+    """本文から (年, 月, 日) を拾う。年を名乗っている形だけ。"""
+    out = set()
+    for y, m, d in _YMD_KANJI.findall(text or ''):
+        if _md_ok(int(m), int(d)):
+            out.add((int(y), int(m), int(d)))
+    for y, m, d in _YMD_SEP.findall(text or ''):
+        if _md_ok(int(m), int(d)):
+            out.add((int(y), int(m), int(d)))
+    return out
+
+
+def event_month_days(e, max_days=400):
+    """会期の全日を (月, 日) の集合で返す。単日なら1要素。"""
+    d, de = event_span(e)
+    if not d:
+        return set()
+    try:
+        cur = date.fromisoformat(d)
+        end = date.fromisoformat(de or d)
+    except ValueError:
+        return set()
+    out = set()
+    while cur <= end and (end - cur).days < max_days:
+        out.add((cur.month, cur.day))
+        cur += timedelta(days=1)
+    return out
+
+
 # --- 時間軸 (単一情報源) ---
 # 一覧の並び順と「開催予定」の判定に開始日だけを使うと、同じ原因から
 # 逆向きの事故が2つ出る。

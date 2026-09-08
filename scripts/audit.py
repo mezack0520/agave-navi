@@ -28,7 +28,8 @@ from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
                      is_recent_past, event_span, PAST_KEEP_MAX,
                      is_upcoming, compact_date, DESC_PROTECT_DAYS,
-                     is_cancelled)
+                     is_cancelled, find_month_days, find_year_month_days,
+                     event_month_days)
 
 # events.json で使ってよいキー。どのスクリプトも読まないキーが混ざると、
 # 値が入っているのにどこにも出ない(2026-08-11に organizerUrl / urlCheckOk /
@@ -426,18 +427,9 @@ def main():
         d = e.get('date') or ''
         if not re.match(r'^\d{4}-\d{2}-\d{2}$', d):
             return None, set()
-        y = int(d[:4])
-        de = e.get('dateEnd') or d
-        try:
-            cur = _dt.date(*map(int, d.split('-')))
-            end = _dt.date(*map(int, de.split('-')))
-        except ValueError:
-            return y, set()
-        out = set()
-        while cur <= end and (end - cur).days < 400:
-            out.add((cur.month, cur.day))
-            cur += _dt.timedelta(days=1)
-        return y, out
+        # 会期の (月, 日) は sitelib.event_month_days が単一情報源。
+        # 同じ展開を出典の頁の照合(check-cancelled)でも使う
+        return int(d[:4]), event_month_days(e)
 
     # 前回開催・雨天予備日・別年の告知など、範囲外にあって当然の言及を落とす
     _EXCUSE = re.compile(r'(予備日|延期|順延|前回|初回|第\s*1\s*回|昨年|去年|翌年|来年|同時開催|次回)')
@@ -448,16 +440,13 @@ def main():
         if not span:
             continue
         # 別年の日付を名指ししている(前年の告知文の使い回し)
-        for yy, mm, dd in re.findall(r'(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日', desc):
-            if int(yy) != year:
+        for yy, mm, dd in sorted(find_year_month_days(desc)):
+            if yy != year:
                 stale_year.append(f"{e['slug']}: 本文に{yy}年{mm}月{dd}日 (開催は{year}年)")
         if desc and not _EXCUSE.search(desc):
-            # 「6月1日」形式に加えて「6/1(土)」形式も拾う。スラッシュ表記は前年告知の
-            # 貼り付けを実際に取り逃がした(fujiyama-days-little-green-park-2026)
-            _found = {(int(a), int(b)) for a, b in re.findall(r'(\d{1,2})月(\d{1,2})日', desc)}
-            _found |= {(int(a), int(b))
-                       for a, b in re.findall(r'(?<![\d:/])(\d{1,2})/(\d{1,2})(?![\d/])', desc)
-                       if 1 <= int(a) <= 12 and 1 <= int(b) <= 31}
+            # 「6月1日」「6/1(土)」「2026.6.1」を拾う。書式の一覧は
+            # sitelib.find_month_days が持つ(出典頁の照合と同じ規則)
+            _found = find_month_days(desc)
             # 中止の回は「8月12日に告知」のように会期外の日付を書く。
             # それを日付の誤りとして数えると、中止の説明が書けなくなる
             if is_cancelled(e):
@@ -1659,6 +1648,86 @@ def main():
         '兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)',
         severity='info')
 
+    # 16b. 出典がその回を裏付けているか。
+    #      `url` はこれまで「在るか」しか見られておらず、中身が別の回でも
+    #      薄頁判定を外れて index 対象になり、詳細頁は「出典」の見出しで
+    #      その URL を出す。**裏取り済みの顔をした未裏取り**が残る。
+    #      2026-09-08 に2件見つかった。
+    #        - wi-wi-botanical-minokamo-2026-09(9/20) の url は
+    #          同じシリーズの **6月7日開催回** を報じたニュース記事。
+    #          imageUrl も同記事の写真で、本文の説明は
+    #          「2026年5月24日に開催された、みたけの森まつりで撮影した写真」。
+    #          別の催しの写真が og:image / twitter:image / JSON-LD /
+    #          sitemap の image:title に「Wi-Wi BOTANICAL Vol.2」として出ていた。
+    #        - one-love-sano-2026(9/20) の url は
+    #          **同名のアイドルグループ(ONE LOVE ONE HEART)のライブ日程頁**。
+    #          名前が同じだけの無関係なサイトを出典にしていた。
+    #      どちらも「頁は散文で日付を名乗っているのに、この回の開催日が
+    #      一度も出てこない」で機械的に落ちる。判定材料は check-cancelled.py が
+    #      書く(CI から外部の頁を取れるのはあれだけなので、監査側からは
+    #      見えない。coverage-gaps や sheetRows と同じ形)。
+    #      非対称にしてあるのが肝で、「名乗っているか」は「◯月◯日」だけ、
+    #      「この回の日付が出ているか」は全書式で見る。鳴りにくく消えやすい側に
+    #      倒す。実測(巡回23件)で誤検知0・実害2件だけが残った。
+    _edition_bad = []
+    _cw_ev = {e.get('slug'): e for e in events if e.get('slug')}
+    for _slug, _pg in sorted((_cw.get('pages') or {}).items()):
+        if not isinstance(_pg, dict):
+            continue
+        # 旧版の cancel-watch.json はこのキーを持たない。
+        # 「無い」を False とみなすと、日次が新しい版で回るまで全件鳴る
+        if 'eventDateSeen' not in _pg or _pg.get('eventDateSeen') is not False:
+            continue
+        if int(_pg.get('datesNamed') or 0) < 1:
+            continue
+        _ev = _cw_ev.get(_slug) or {}
+        _edition_bad.append(
+            f"{_ev.get('date', '')} {_slug}: 出典 {_pg.get('url', '')} は"
+            f"日付を{_pg.get('datesNamed')}種名乗っているが、"
+            f"開催日({_ev.get('date', '')}"
+            f"{'〜' + _ev['dateEnd'] if _ev.get('dateEnd') and _ev.get('dateEnd') != _ev.get('date') else ''})"
+            f"が1度も出てこない")
+    # 16c. 詳細頁の「出典」が、持っている出典より弱く名乗っていないか。
+    #      値ではなく**生成された頁を読む**(admission_free_mismatch と同じ型)。
+    #      2026-09-07 に dataSource を読ませたが、見たのはそこまでで、
+    #      sourceUrl / instagramUrl しか持たない回は素通しだった。
+    #      主催者本人の投稿を同じ頁に埋め込みながら脚注は
+    #      「出典 スタッフ収集情報」と名乗る回が24件あった(2026-09-08)。
+    #      about.html は「参照元と最終更新日を明記」を掲げているので、
+    #      これは掲載方針との食い違いでもある。
+    _STAFF_SRC = '出典 スタッフ収集情報'
+    _src_understated = []
+    for _e in events:
+        _slug = _e.get('slug') or ''
+        _f = rp('events', f'{_slug}.html')
+        if not _slug or not os.path.exists(_f):
+            continue
+        _have = next((v for v in (
+            (_e.get('url') or '').strip(),
+            (_e.get('dataSource') or '').strip(),
+            (_e.get('instagramUrl') or '').strip(),
+            (_e.get('sourceUrl') or '').strip()) if v), '')
+        if not _have:
+            continue
+        if _STAFF_SRC in _slurp(_f):
+            _src_understated.append(f'{_slug}: 頁は「スタッフ収集情報」だが '
+                                    f'{_have} を持っている')
+    add('source_label_understated', '出典を持っているのに頁が「スタッフ収集情報」と名乗る',
+        sorted(_src_understated),
+        'build-detail-pages.make_hero_meta_note の優先順は '
+        'url → dataSource → instagramUrl / sourceUrl → スタッフ収集情報。'
+        '主催者の投稿を埋め込みながら自社収集だと名乗るのは、'
+        'about.html の「参照元を明記」と食い違う。'
+        '出典を本当に持たない回(48件)はここに出ない')
+
+    add('source_page_wrong_edition', '出典の頁がその回の開催日を書いていない',
+        sorted(_edition_bad),
+        'URLを開いて、日付・イベント名・会場がその回と一致するかを見る。'
+        '同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。'
+        '一致しないなら **url ごと外す**(残すと裏取り済みに見える)。'
+        'その記事から採った imageUrl も別の回の写真なので一緒に外す。'
+        '日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない')
+
     # 1件2件の取得失敗は「巡回が壊れた」ではない。個別のサイトが
     # ボットを弾いたり落ちていたりするだけで、他の21件は取れている。
     # check_events.py が statusCode -1 をリンク切れに数えないのと同じ理屈。
@@ -1668,6 +1737,11 @@ def main():
     _cw_on = str(_cw.get('sweptOn') or '')
     _cw_targets = int((_cw.get('stats') or {}).get('targets') or 0)
     _cw_fetched = int((_cw.get('stats') or {}).get('fetched') or 0)
+    # 自己テストの失敗は「取得できなかった」とは別物。
+    # errors に混ぜると1件では cancel_watch_unreachable(info)に落ちて
+    # 判定が壊れていることが urgent に出ない(2026-09-08)
+    for _le in (_cw.get('logicErrors') or []):
+        _cw_broken.append(str(_le))
     if _cw_targets and _cw_fetched == 0:
         _cw_broken.append(f'巡回対象 {_cw_targets} 件のうち1件も取得できていない')
     elif _cw_targets and len(_cw_err) > max(2, _cw_targets * 0.3):

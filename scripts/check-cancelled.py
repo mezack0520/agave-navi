@@ -19,6 +19,14 @@ coverage-sweep.py の逆。あちらは「他所にあってこちらに無い�
 2. **変化**: 本文と画像URLの集合のハッシュを前回と比べる。開催が近い回の
    公式ページが動いたら、それだけで人が見る理由になる。
 
+3. **日付**: 頁が散文で日付を名乗っているのに、そこに**この回の開催日が
+   一度も出てこない**なら、その出典はこの回を裏付けていない。同じシリーズの
+   前回の記事を出典にしている型と、名前が同じだけの無関係な頁を掴んでいる型を
+   拾う(2026-09-08 に2件検出。Wi-Wi BOTANICAL Vol.2 は6月開催回のニュース記事、
+   ONE LOVE 佐野は同名のアイドルグループのライブ日程頁だった)。
+   `url` は「在るか」しか見られていないので、中身が別の回でも薄頁判定を外れ、
+   詳細頁は「裏取り済み」の顔で出る。判定は audit.source_page_wrong_edition。
+
 **2 が要るのは、日本の主催者が告知を画像で出すから。** collect-plants.com は
 トップのメインビジュアルに「開催中止のお知らせ」と大書していたが、
 HTMLの文字列には一言も無く、1 では絶対に見つからない。
@@ -45,7 +53,8 @@ from datetime import date, datetime, timedelta
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
-from sitelib import today_jst, is_cancelled, event_span   # noqa: E402
+from sitelib import (today_jst, is_cancelled, event_span,   # noqa: E402
+                     find_month_days, event_month_days)
 
 WATCH_JSON = os.path.join(REPO, 'cancel-watch.json')
 UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
@@ -136,11 +145,33 @@ def page_signature(html):
     }
 
 
-def analyze(html):
+def page_dates(html):
+    """頁が名乗っている日付。(散文で名乗った数, 全書式で拾った集合)
+
+    **判定は非対称にする。** 「日付を名乗っている頁か」は「◯月◯日」だけで
+    見る(スラッシュ形は画像パス /2026/09/ やページ送りにも出るので、
+    名乗りの根拠にならない)。一方「この回の日付が出ているか」は全書式で見る。
+    こうすると、鳴りにくく・消えやすい側に倒れる。
+    実測(2026-09-08・巡回23件): 非対称にすると誤検知0で実害2件だけが残る。
+    両方を狭い側で見ると 2026.10.10 表記の回が、両方を広い側で見ると
+    公式トップ頁(日付は画像の中)が、それぞれ誤検知になった。
+    """
+    body = strip_html(html)
+    blob = body + ' ' + ' '.join(meta_texts(html))
+    return len(find_month_days(blob, kanji_only=True)), find_month_days(blob)
+
+
+def analyze(html, event=None):
     texts = [strip_html(html)] + meta_texts(html) + image_tokens(html)
     strong, weak = find_words(texts)
     sig = page_signature(html)
-    return {'strong': strong, 'weak': weak, 'signature': sig}
+    named, found = page_dates(html)
+    out = {'strong': strong, 'weak': weak, 'signature': sig,
+           'datesNamed': named}
+    if event is not None:
+        span = event_month_days(event)
+        out['eventDateSeen'] = bool(span & found) if span else None
+    return out
 
 
 def fetch(url, timeout=20):
@@ -186,6 +217,18 @@ def main():
     if args.self_test:
         return self_test()
 
+    # 判定が壊れたまま巡回すると、もっともらしい「兆候なし」が書き込まれ、
+    # 読む側からは正常と区別が付かない。coverage-sweep が 2026-09-01 に
+    # 同じ穴(どのCIからも呼ばれない自己テスト)を塞いだのに、こちらは
+    # 外れたままだった(2026-09-08)。daily の push を巻き込みたくないので
+    # ジョブは止めず、logicErrors に積んで audit の
+    # cancel_watch_broken(urgent) に出す。
+    logic_errors = []
+    if self_test(verbose=False) != 0:
+        logic_errors.append('自己テストが失敗した。判定ロジックが壊れている。'
+                            'suspects と eventDateSeen は当てにならない'
+                            '(python3 scripts/check-cancelled.py --self-test)')
+
     with open(os.path.join(REPO, 'events.json'), encoding='utf-8') as f:
         events = json.load(f)
     try:
@@ -212,7 +255,7 @@ def main():
             errors.append(f'{slug}: {type(err).__name__} {url}')
             continue
 
-        res = analyze(html)
+        res = analyze(html, e)
         before = prev_pages.get(slug) or {}
         bsig = before.get('signature') or {}
         sig = res['signature']
@@ -226,6 +269,11 @@ def main():
         pages[slug] = {
             'url': url, 'checkedOn': today, 'signature': sig,
             'strong': res['strong'], 'weak': res['weak'],
+            # 出典がこの回を裏付けているか。audit.source_page_wrong_edition が読む。
+            # CI から頁を取れるのはこのスクリプトだけなので、判定材料を
+            # ここに置かないと監査側からは見えない
+            'datesNamed': res['datesNamed'],
+            'eventDateSeen': res.get('eventDateSeen'),
             'firstSeenOn': before.get('firstSeenOn') or today,
         }
 
@@ -256,6 +304,7 @@ def main():
                   'errors が空でないときは巡回そのものが失敗しているので、'
                   'suspects が0件でも「兆候なし」とは言えない。'),
         'sweptOn': today, 'stats': stats, 'errors': errors,
+        'logicErrors': logic_errors,
         'suspects': sorted(suspects, key=lambda x: x['date']),
         'pages': pages,
     }
@@ -295,8 +344,25 @@ FIX_PLAIN = '''<html><head><title>□□植物祭</title></head><body>
 <p>今年も開催します。出店者を募集中です。</p>
 <img src="/img/b.jpg" alt=""></body></html>'''
 
+# 出典が「同じ名前の前回の回」を指している型。頁は日付を名乗っているのに、
+# それは6月開催回のもの(2026-09-08 の wi-wi-botanical-minokamo-2026-09)
+FIX_WRONG_EDITION = '''<html><head><title>【美濃加茂市】「Wi-Wi BOTANICAL」開催</title></head><body>
+<p>2026年6月7日（日）、リバーポートパーク美濃加茂にて開催されます。</p>
+<p>関連記事 8月30日のマルシェ / 9月28日で休業</p></body></html>'''
 
-def self_test():
+# 出典は正しいが、日付は画像の中にしか無い公式トップ頁。
+# ここで鳴らすと、告知を画像で出す主催が全部誤検知になる
+FIX_DATE_IN_IMAGE = '''<html><head><title>【公式】On the Plants</title></head><body>
+<p>九州最大級の複合販売イベント。出店者を募集しています。</p>
+<img src="/wp-content/uploads/2026/09/keyvisual.jpg" alt=""></body></html>'''
+
+# 日付を「2026.10.10」形式だけで書く頁。名乗りの数は0でも、
+# この回の日付は拾えていなければならない
+FIX_DOT_DATE = '''<html><head><title>◇◇サボテン展</title></head><body>
+<p>会期 2026.10.10 - 2026.10.11 / 入場無料</p></body></html>'''
+
+
+def self_test(verbose=True):
     ok = True
 
     def chk(label, got, want):
@@ -304,9 +370,14 @@ def self_test():
         mark = 'OK ' if got == want else '★NG'
         if got != want:
             ok = False
-        print(f'  {mark} {label}: {got!r} 期待={want!r}')
+        if verbose or got != want:
+            print(f'  {mark} {label}: {got!r} 期待={want!r}')
 
-    print('--- 文言の検出 ---')
+    def say(msg):
+        if verbose:
+            print(msg)
+
+    say('--- 文言の検出 ---')
     a = analyze(FIX_TEXT_NOTICE)
     chk('本文に中止告知 → 強い語', bool(a['strong']), True)
     b = analyze(FIX_WEAK)
@@ -315,7 +386,7 @@ def self_test():
     c = analyze(FIX_PLAIN)
     chk('平常のページ → どちらも出ない', bool(c['strong'] or c['weak']), False)
 
-    print('\n--- 画像だけの告知(文言では拾えないことの確認) ---')
+    say('\n--- 画像だけの告知(文言では拾えないことの確認) ---')
     before = analyze(FIX_IMAGE_NOTICE_BEFORE)
     after = analyze(FIX_IMAGE_NOTICE_AFTER)
     chk('画像差し替えでは強い語は出ない', bool(after['strong']), False)
@@ -324,7 +395,22 @@ def self_test():
     chk('本文の署名は変わらない',
         before['signature']['text'] == after['signature']['text'], True)
 
-    print('\n--- 巡回対象の絞り込み ---')
+    say('\n--- 出典がこの回を裏付けているか ---')
+    ev_sep = {'slug': 'x', 'date': '2026-09-20', 'dateEnd': '2026-09-20'}
+    w = analyze(FIX_WRONG_EDITION, ev_sep)
+    chk('別の回の記事 → 開催日が出てこない', w['eventDateSeen'], False)
+    chk('別の回の記事 → 散文で日付は名乗っている', w['datesNamed'] > 0, True)
+    i = analyze(FIX_DATE_IN_IMAGE, ev_sep)
+    chk('日付が画像の中だけ → 名乗り0(判定しない)', i['datesNamed'], 0)
+    d = analyze(FIX_DOT_DATE, {'slug': 'y', 'date': '2026-10-10',
+                               'dateEnd': '2026-10-11'})
+    chk('2026.10.10 形式でも開催日は拾う', d['eventDateSeen'], True)
+    chk('2026.10.10 形式は名乗りには数えない', d['datesNamed'], 0)
+    g = analyze(FIX_WRONG_EDITION, {'slug': 'z', 'date': '2026-06-07',
+                                    'dateEnd': '2026-06-07'})
+    chk('同じ頁でも6月開催の回なら裏付けになる', g['eventDateSeen'], True)
+
+    say('\n--- 巡回対象の絞り込み ---')
     today = '2026-09-08'
     evs = [
         {'slug': 'near', 'date': '2026-09-22', 'url': 'https://example.com/'},
@@ -339,7 +425,7 @@ def self_test():
     got = sorted(e.get('slug') for e, _ in watch_targets(evs, today))
     chk('対象は開催前・出典あり・SNS以外・未中止だけ', got, ['near'])
 
-    print('\n結果: ' + ('すべて通過' if ok else '★失敗あり'))
+    say('\n結果: ' + ('すべて通過' if ok else '★失敗あり'))
     return 0 if ok else 1
 
 
