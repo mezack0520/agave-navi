@@ -1,5 +1,5 @@
 {
-  "total": 374,
+  "total": 417,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -547,8 +547,10 @@
     },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowもプレイブックも参照していないスクリプト",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "list-missing-eyecatch.py"
+      ],
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
       "severity": "urgent"
     },
@@ -687,6 +689,54 @@
       "items": [],
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
+    },
+    "eyecatch_backlog": {
+      "title": "開催予定でアイキャッチが無い回",
+      "count": 42,
+      "items": [
+        "2026-09-05 sakuya-green-jam-5-2026",
+        "2026-09-12 plants-festa-2-kawashima-2026-09",
+        "2026-09-12 soen-espulse-dream-plaza-2026-09",
+        "2026-09-18 yamashiro-aisenen-autumn-2026-09",
+        "2026-09-19 kourep-2026-autumn",
+        "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
+        "2026-09-19 ore-no-plants-collection-2026-09",
+        "2026-09-20 wi-wi-botanical-minokamo-2026-09",
+        "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
+        "2026-09-26 taniku-midori-marche-niitsu-2026-09",
+        "2026-09-27 exploring-unpredictable-plants-2026-09",
+        "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
+        "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
+        "2026-10-03 tochigi-tanippe-2026-10",
+        "2026-10-04 asamiya-tanikusai-7th-2026-10",
+        "2026-10-04 botanic-collection2-ube-2026-10",
+        "2026-10-04 souransai-koshigaya-2026-10",
+        "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
+        "2026-10-10 kadan-fes-2026-autumn",
+        "2026-10-10 nishikan-botanical-nominoichi-4th-2026-10",
+        "2026-10-10 shimane-cactus-succulent-ten-2026-10",
+        "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
+        "2026-10-17 plant-freaks-olinas-2026-10",
+        "2026-10-24 jurian-aki-taniku-cactus-2026-10",
+        "2026-10-24 plants-box-kofu-2026-10",
+        "2026-10-30 toyama-saboten-taniku-9th-2026-10",
+        "2026-11-07 chuushokushobutsusai-2026",
+        "2026-11-14 botanical-botanical-okinawa-2026-11",
+        "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
+        "2026-11-22 isij-big-bazaar-2026-11-22",
+        "2026-11-22 midorigakuen-himeji-2026-11",
+        "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
+        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
+        "2026-11-28 plant-freaks-olinas-2026-11",
+        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11",
+        "2027-01-10 isij-big-bazaar-2027-01-10",
+        "2027-01-24 aichin-shokusai-new-year-party-2027",
+        "2027-03-14 isij-big-bazaar-2027-03-14",
+        "2027-05-23 isij-big-bazaar-2027-05-23",
+        "2027-07-11 isij-big-bazaar-2027-07-11"
+      ],
+      "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
+      "severity": "metric"
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",

@@ -1640,6 +1640,20 @@ def main():
     for _s in (_cw.get('suspects') or []):
         _cw_suspects.append(
             f"{_s.get('date','')} {_s.get('slug','')}: {_s.get('why','')}")
+    # アイキャッチの積み残し。Instagram出典の回は CI から取れず、
+    # 組み込みブラウザを持つ定期タスクだけが埋められる(2026-09-08)。
+    # ゼロにはならないので metric。推移が見えれば十分。
+    _eye = [e for e in events
+            if not e.get('imageUrl') and not is_cancelled(e)
+            and is_upcoming(e, today_s)]
+    add('eyecatch_backlog', '開催予定でアイキャッチが無い回',
+        sorted(f"{e.get('date')} {e.get('slug')}" for e in _eye),
+        'scripts/list-missing-eyecatch.py で経路ごとに分かれる。'
+        'igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。'
+        'web は backfill-images.py が既に失敗した回なので、'
+        '出典そのものを見直さないと埋まらない',
+        severity='metric')
+
     add('cancel_suspects', '載せた回に中止・延期の兆候がある',
         sorted(_cw_suspects),
         '一次情報を確認する。中止なら events.json の eventStatus を cancelled に'
