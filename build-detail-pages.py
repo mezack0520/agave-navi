@@ -571,7 +571,6 @@ def build_page(template, ev, ctx):
         '{{dateDisplayFull}}': make_date_display_full(ev),
         '{{region}}': region,
         '{{regionEncoded}}': quote(region),
-        '{{prefectureOrRegion}}': prefecture or region,
         '{{venue}}': (html_escape(venue)
                       if venue and not _is_vague(venue)
                       else _venue_placeholder(ev)),

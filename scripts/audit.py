@@ -1767,6 +1767,74 @@ def main():
                  if _t not in _h]
         if _lack:
             _nav_bad.append(f'{_rel}: {", ".join(_lack)} が無い')
+    # style.css の中で同じセレクタが二度宣言されていないか。
+    # 「同じ部品が2箇所にある」状態は、片方だけ直して直った気になる
+    # 事故を必ず生む。2026-09-08 に実際に起きた:
+    #   .detail-hero-img が3箇所で違う比率を持ち、負けている方を直して
+    #   「1:1にした」と報告した(指摘されるまで気づかなかった)
+    #   .share-btn が2つあり、行きたい/カレンダーと高さが揃わなかった
+    #   .search-box が「入れ物」と「入力欄」の2つの意味で使われていた
+    # メディアクエリの中は画面幅ごとの上書きなので対象外。
+    # 基本形と変種(グループ指定 + 個別指定)も別物なので、
+    # **セレクタ列がまったく同じ規則が2つある場合だけ**を鳴らす。
+    _css_dups = []
+    try:
+        _css = open(rp('style.css'), encoding='utf-8').read()
+    except OSError:
+        _css = ''
+    if _css:
+        _i, _n, _rules = 0, len(_css), []
+        while _i < _n:
+            _c = _css[_i]
+            if _c in ' \n\t\r':
+                _i += 1
+                continue
+            if _css.startswith('/*', _i):
+                _e = _css.find('*/', _i)
+                _i = (_e + 2) if _e >= 0 else _n
+                continue
+            if _c == '@':
+                _b = _css.find('{', _i)
+                _sc = _css.find(';', _i)
+                if _b < 0 or (0 <= _sc < _b):
+                    _i = (_sc + 1) if _sc >= 0 else _n
+                    continue
+                _d, _j = 1, _b + 1
+                while _d and _j < _n:
+                    if _css[_j] == '{':
+                        _d += 1
+                    elif _css[_j] == '}':
+                        _d -= 1
+                    _j += 1
+                _i = _j
+                continue
+            _b = _css.find('{', _i)
+            if _b < 0:
+                break
+            _sel = _css[_i:_b].strip()
+            _d, _j = 1, _b + 1
+            while _d and _j < _n:
+                if _css[_j] == '{':
+                    _d += 1
+                elif _css[_j] == '}':
+                    _d -= 1
+                _j += 1
+            _rules.append((_sel, _css[:_i].count('\n') + 1))
+            _i = _j
+        _seen = {}
+        for _sel, _ln in _rules:
+            _key = ','.join(sorted(x.strip() for x in _sel.split(',') if x.strip()))
+            if not _key:
+                continue
+            if _key in _seen:
+                _css_dups.append(f'{_key[:70]}: {_seen[_key]} 行目と {_ln} 行目')
+            else:
+                _seen[_key] = _ln
+    add('css_duplicate_rule', 'style.css で同じセレクタを二度宣言している',
+        sorted(_css_dups),
+        '1箇所にまとめる。負けている方を直しても画面は変わらない。'
+        'メディアクエリ内の上書きは対象外')
+
     add('nav_missing', 'ヘッダーがあるのにメニューが無い', _nav_bad,
         '共通ヘッダーは sitelib.site_header() が唯一の元。'
         '開閉は nav.js。手書きページで消えていたら貼り直す')

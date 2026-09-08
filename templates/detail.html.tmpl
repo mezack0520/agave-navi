@@ -53,7 +53,9 @@
       <div class="eh-kicker">
         <span class="detail-status-badge" data-date="{{date}}" data-date-end="{{dateEnd}}"{{cancelledAttr}}></span>
         <span class="eh-chip">{{primaryCategory}}</span>
-        <span class="eh-chip eh-chip-ghost">{{prefectureOrRegion}}</span>
+        <!-- 都道府県はパンくずの「全国 > 関東 > 埼玉」に出ているので
+             ここには置かない。同じ言葉が2行続くだけだった
+             (2026-09-08 指摘) -->
       </div>
       <h1 class="eh-title">{{name}}</h1>
 
