@@ -16,7 +16,7 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908x'
+CSS_VERSION = '20260908y'
 JS_VERSION = '20260908g'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -696,6 +696,58 @@ def filter_updates(items, region=None, prefecture=None):
 # 「ホーム」と呼んでいたが、トップの絞り込みの現在地が「全国」なので
 # 同じ場所を2つの名前で呼んでいた(2026-09-08 指摘)。
 CRUMB_ROOT = ('全国', '/')
+
+
+# 外部リンクの表記。**ここが唯一の組み立て。**
+#
+# 2026-09-08 時点で「Instagram投稿 ↗」「関連サイト ↗」「Instagramで見る ↗」
+# 「Googleマップで開く ↗」「公式Instagram」がページの中に混在していた。
+# 同じ「外に出る」動作が5通りの言い方をしていた。
+#
+# 「関連サイト」はやめた。関係が曖昧で、読んだ人に何も伝わらない。
+# 出るのはたいてい公式サイトか Instagram なので、そう書く。
+#
+# 印は「↗」だけだと外部だと気づかれないので、枠を付けて
+# 読み上げ用に「外部サイト」を隠し文字で添える。
+EXT_MARK = ('<span class="ext-mark" aria-hidden="true">↗</span>'
+            '<span class="sr-only">（外部サイトを新しいタブで開く）</span>')
+
+
+def link_kind(url, field=None):
+    """URLの種別と、リンクに出す文字を返す。
+
+    field は events.json のどの項目から来たか。
+    'url' は掲載方針で「その回の公式ページ」と決めているので公式サイトと呼ぶ。
+    それ以外の素のURLは公式と言い切れないので「出典」にする。
+    """
+    u = (url or '')
+    ul = u.lower()
+    if not ul:
+        return ('', '')
+    if 'instagram.com' in ul:
+        handle = ''
+        m = re.search(r'instagram\.com/([A-Za-z0-9._]+)', u)
+        if m and m.group(1) not in ('p', 'reel', 'tv', 'explore'):
+            handle = '@' + m.group(1)
+        if '/p/' in ul or '/reel/' in ul or '/tv/' in ul:
+            return ('Instagram', handle or 'この回の告知')
+        return ('Instagram', handle or 'instagram.com')
+    if 'facebook.com' in ul:
+        return ('Facebook', 'facebook.com')
+    if 'twitter.com' in ul or '://x.com/' in ul:
+        m = re.search(r'(?:twitter|x)\.com/([A-Za-z0-9_]+)', u)
+        return ('X', ('@' + m.group(1)) if m else 'x.com')
+    if 'google.com/search' in ul:
+        return ('検索', 'Googleで探す')
+    host = re.sub(r'^www\.', '', re.sub(r'^https?://', '', u).split('/')[0])
+    return ('公式サイト' if field == 'url' else '出典', host or u)
+
+
+def ext_link(url, text, cls=''):
+    """外部リンク1本。印と rel はここでしか付けない。"""
+    c = ('ext ' + cls).strip()
+    return (f'<a class="{c}" href="{_attr(url)}" target="_blank"'
+            f' rel="noopener">{html_escape(text)}{EXT_MARK}</a>')
 
 
 def crumb_search_html():

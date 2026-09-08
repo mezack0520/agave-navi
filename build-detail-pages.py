@@ -129,7 +129,7 @@ def make_instagram_section(ev):
           <div class="instagram-embed-wrap">
             <iframe src="https://www.instagram.com/p/{post_id}/embed/" loading="lazy" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
           </div>
-          <p class="instagram-embed-link"><a href="{ig_url}" target="_blank" rel="noopener">Instagramで見る ↗</a></p>
+          <p class="instagram-embed-link">{sitelib.ext_link(ig_url, 'Instagramで見る')}</p>
         </div>
 '''
 
@@ -173,7 +173,7 @@ def make_venue_map(ev):
     where = (f'<p class="venue-place">{html_escape(place)}</p>' if place else '')
     return f'''          <div class="venue-map">
             {where}<iframe src="https://www.google.com/maps?q={q}&output=embed" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="会場の地図"></iframe>
-            <a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query={q}" target="_blank" rel="noopener">Googleマップで開く &#8599;</a>
+            {sitelib.ext_link(f'https://www.google.com/maps/search/?api=1&query={q}', 'Googleマップで開く', 'map-open-link')}
           </div>
 '''
 
@@ -327,8 +327,9 @@ def make_cancel_notice(ev):
     if body:
         lines.append('<p>' + ' / '.join(body) + '</p>')
     if notice:
-        lines.append(f'<p><a href="{html_escape(notice)}" target="_blank" '
-                     f'rel="noopener nofollow">主催者の告知を見る</a></p>')
+        lines.append('<p>'
+                     + sitelib.ext_link(notice, '主催者の告知を見る')
+                     + '</p>')
     lines.append('<p>最新の情報は主催者の発表をご確認ください。</p>')
     return ('        <div class="event-notice-cancelled">\n          '
             + '\n          '.join(lines) + '\n        </div>')
@@ -470,77 +471,54 @@ def make_event_jsonld(ev):
   </script>'''
 
 def make_official_links_rows(ev):
-    """公式情報の info-row。以下のルール:
-    - URL を種別(公式サイト/公式Instagram/公式X/公式Facebook/Instagram投稿)に分類
-    - 同じ種別は1件のみ表示(重複防止)
-    - 既に main column の Instagram 埋込が出る場合は「Instagram投稿」行を省略
-    - 全部なければ Google検索フォールバック"""
-    items = []  # list of (url, label, kind)
-    seen_kinds = set()
-    seen_urls = set()
+    """公式情報の行。ラベルに種別、値に行き先を出す。
 
-    def classify(u):
-        ul = (u or '').lower()
-        if not ul:
-            return None
-        if 'instagram.com' in ul:
-            if '/p/' in ul or '/reel/' in ul or '/tv/' in ul:
-                return 'ig_post'
-            return 'ig_profile'
-        if 'facebook.com' in ul:
-            return 'facebook'
-        if 'twitter.com' in ul or '://x.com/' in ul:
-            return 'x'
-        return 'site'
-
-    LABELS = {
-        'ig_post': 'Instagram投稿',
-        'ig_profile': 'Instagram',
-        'facebook': 'Facebook',
-        'x': 'X (Twitter)',
-        'site': '関連サイト',
-    }
-
+    以前は全部の行のラベルが「リンク」で、値のほうに
+    「Instagram投稿」「関連サイト」と書いていた。読む順が逆だった。
+    「関連サイト」は関係が曖昧で何も伝わらないのでやめた
+    (2026-09-08 指摘)。種別と文字は sitelib.link_kind が唯一の持ち主。
+    """
+    items, seen_kinds, seen_urls = [], set(), set()
     has_ig_embed = bool(ev.get('instagramPostId') or ev.get('instagramUrl'))
 
-    def add(url):
-        if not url or url in seen_urls:
+    def add(url, field):
+        u = (url or '').strip()
+        if not u or u in seen_urls:
             return
-        kind = classify(url)
+        kind, text = sitelib.link_kind(u, field)
         if not kind:
             return
         if kind in seen_kinds:
             return
-        # If main column already has IG iframe, skip the IG投稿 row in sidebar
-        if kind == 'ig_post' and has_ig_embed:
+        # 本文にInstagramの埋め込みが出る回は、同じ投稿への行を重ねない
+        if kind == 'Instagram' and has_ig_embed and text == 'この回の告知':
             return
-        seen_urls.add(url); seen_kinds.add(kind)
-        items.append((url, LABELS[kind], kind))
+        seen_urls.add(u)
+        seen_kinds.add(kind)
+        items.append((u, kind, text))
 
-    # Priority order: url, sourceUrl, instagramUrl
-    add(ev.get('url') or '')
-    add(ev.get('sourceUrl') or '')
-    add(ev.get('instagramUrl') or '')
+    add(ev.get('url'), 'url')
+    add(ev.get('sourceUrl'), 'sourceUrl')
+    add(ev.get('instagramUrl'), 'instagramUrl')
 
     if not items:
-        # If IG iframe is already shown in main column, that section already has
-        # an "Instagramで見る ↗" link. No need for sidebar fallback.
         if has_ig_embed:
             return ''
-        # Otherwise: Google search fallback
         name = ev.get('name', '')
         if not name:
             return ''
         venue = ev.get('venue') or ev.get('location') or ''
         q = quote(f'{name} {venue} 2026'.strip())
-        items.append((f'https://www.google.com/search?q={q}', 'Googleで検索', 'search'))
+        items.append((f'https://www.google.com/search?q={q}', '検索',
+                      'Googleで探す'))
 
     rows = []
-    for u, label, _ in items:
+    for u, kind, text in items:
         rows.append(
             f'          <div class="info-row">\n'
-            f'            <span class="info-label">{icon("link")}リンク</span>\n'
-            f'            <span class="info-value"><a href="{u}" target="_blank" rel="noopener">{html_escape(label)} ↗</a></span>\n'
+            f'            <span class="info-label">{html_escape(kind)}</span>\n'
+            f'            <span class="info-value">'
+            f'{sitelib.ext_link(u, text)}</span>\n'
             f'          </div>'
         )
     return '\n'.join(rows)
@@ -675,13 +653,10 @@ def make_hero_meta_note(ev):
         url = ((ev.get('instagramUrl') or '').strip()
                or (ev.get('sourceUrl') or '').strip())
     if url:
-        label = '公式サイト'
-        if 'instagram.com' in url:
-            label = '公式Instagram'
-        elif 'twitter.com' in url or 'x.com' in url:
-            label = '公式X'
-        parts.append(f'出典 <a href="{html_escape(url)}" target="_blank" '
-                     f'rel="noopener">{label}</a>')
+        # 表記は sitelib.link_kind が唯一の持ち主。ここで
+        # 「公式Instagram」と別名を作ると、表の行と脚注で呼び名が割れる
+        kind, _t = sitelib.link_kind(url, 'url' if ev.get('url') else None)
+        parts.append('出典 ' + sitelib.ext_link(url, kind))
     else:
         # dataSource は出所を人間語で持つ(例: 主催者からの掲載申請)。
         # url が無い回をすべて「スタッフ収集情報」と名乗ると、
@@ -695,8 +670,7 @@ def make_hero_meta_note(ev):
     # どこから来たかを黙っておくのは筋が通らない(2026-09-08)。
     isrc = (ev.get('imageSource') or '').strip()
     if isrc and (ev.get('imageUrl') or '').startswith('https://agave-navi.com/images/events/'):
-        parts.append(f'画像 <a href="{html_escape(isrc)}" target="_blank" '
-                     f'rel="noopener nofollow">主催者の告知より</a>')
+        parts.append('画像 ' + sitelib.ext_link(isrc, '主催者の告知より'))
 
     if not parts:
         return ''

@@ -4152,3 +4152,52 @@ main {
         padding-left: 0;
     }
 }
+
+/* 外部リンク。**印と見た目はここだけ。**
+   以前は「↗」を素で足すだけで、下線も無く本文の色と同じだった。
+   矢印1文字では外に出ることに気づかれない(2026-09-08 指摘)。
+   枠付きの矢印にして、読み上げ用の文字も添えている
+   (組み立ては sitelib.ext_link)。 */
+.ext {
+    color: var(--black);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    font-weight: 600;
+}
+
+.ext:hover {
+    color: var(--accent-pop);
+}
+
+.ext-mark {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.28em;
+    border: 1px solid var(--gray-300);
+    border-radius: 3px;
+    font-size: 0.68em;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--gray-500);
+    text-decoration: none;
+    vertical-align: 0.08em;
+}
+
+.ext:hover .ext-mark {
+    border-color: var(--accent-pop);
+    color: var(--accent-pop);
+}
+
+/* 読み上げ専用。目には出さないが読み飛ばされないようにする */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
