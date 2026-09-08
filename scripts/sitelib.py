@@ -16,7 +16,7 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260908h'
+CSS_VERSION = '20260908i'
 JS_VERSION = '20260908d'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -695,8 +695,6 @@ def updates_section_html(items, limit=UPDATES_MAX, region=None, prefecture=None,
         + feed +
         '</div>'
         '<ul class="updates-list">' + ''.join(rows) + '</ul>'
-        '<p class="updates-empty" id="updatesEmpty" hidden>'
-        'この絞り込みに該当する更新はありません。</p>'
         '</section>')
 
 
