@@ -225,114 +225,178 @@ MAP_JS_FIXED = '''<!-- PAGE-JS:START この下は build-static-html.py の生成
             });
         }
     </script>
-    <script>
-    // Ikitai badge count
-    (function(){
-        var b = document.getElementById('ikitaiBadge');
-        if (!b) return;
-        try {
-            var favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
-            if (favs.length > 0) {
-                b.textContent = favs.length;
-                b.classList.add('has-count');
-            }
-        } catch(e) {}
-    })();
-    </script>'''
+    <!-- 行きたいの件数バッジは nav.js が単一実装。
+         ここに写しを持っていたため、手書き側から消してもビルドで
+         戻っていた(2026-09-09) -->'''
 
 
 CAL_JS_FIXED = '''<!-- PAGE-JS:START この下は build-static-html.py の生成物。手で書かない -->
     <script>
-        // ハンバーガーの開閉は nav.js が単一実装。読み込みは </head> 側
-        // (sync-footers.py が入れる)。ここに写しを持っていたため、
-        // 手書き側を直してもビルドで元に戻っていた(2026-09-08)。
+        // 開閉と行きたいバッジは nav.js が単一実装。読み込みは </head> 側
+        // (sync-footers.py が入れる)。
+        //
+        // ## 描き方を2つ持つ理由(2026-09-09 に作り直し)
+        // 7列のグリッドは 375px の画面に入らない。1列216px×7=1518pxで、
+        // 日曜と月曜しか見えていなかった。
+        // 狭い画面は「日付ごとの一覧」、広い画面は「月のグリッド」。
+        // 両方を描いてCSSでどちらかを隠す。JS側で画面幅を見ると、
+        // 回転やウィンドウ操作のたびに描き直す番人が必要になる。
+        //
+        // ## 会期の長い回は初日だけに出す
+        // 以前は会期の全日にバーを出していた。9月は112本のうち
+        // 「Sakuya Green Jam 5」が16本、山城愛仙園が10本、
+        // NOVA CULTURA が9本。**カレンダーで見たいのは
+        // 「どの日が混んでいるか」なのに、それが潰れていた**。
+        // 初日に1本だけ出して「〜9/20」と会期を添える。
+        // 月をまたいで続いている回は、その月の最初の日に「開催中」で出す。
 
         let events = [];
-
         let currentYear = (new Date()).getFullYear();
         let currentMonth = (new Date()).getMonth();
+
+        const DOW = ['日', '月', '火', '水', '木', '金', '土'];
 
         function changeMonth(delta) {
             currentMonth += delta;
             if (currentMonth > 11) { currentMonth = 0; currentYear++; }
             if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-            renderCalendar();
+            render();
         }
 
-        function renderCalendar() {
-            const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-            document.getElementById('calTitle').textContent = `${currentYear}年 ${monthNames[currentMonth]}`;
+        function ymd(y, m, d) {
+            return y + '-' + String(m + 1).padStart(2, '0')
+                     + '-' + String(d).padStart(2, '0');
+        }
 
+        function mdLabel(iso) {
+            const p = (iso || '').split('-');
+            return p.length === 3 ? (+p[1]) + '/' + (+p[2]) : iso;
+        }
+
+        // その月に出す回を、出す日ごとにまとめる。
+        // 初日がその月にある回はその日。前月から続いている回は1日。
+        function monthBuckets(year, month) {
+            const first = ymd(year, month, 1);
+            const last = ymd(year, month, new Date(year, month + 1, 0).getDate());
+            const out = {};
+            events.forEach(ev => {
+                if (ev.end < first || ev.start > last) return;
+                const key = ev.start >= first ? ev.start : first;
+                (out[key] = out[key] || []).push(ev);
+            });
+            return out;
+        }
+
+        function eventLink(ev, dayKey) {
+            const a = document.createElement('a');
+            a.className = 'cal-event' + (ev.tag ? ' tag-' + ev.tag : '');
+            a.href = 'events/' + ev.slug + '.html';
+            const span = document.createElement('span');
+            span.className = 'cal-event-name';
+            span.textContent = ev.name;
+            a.appendChild(span);
+            let note = '';
+            if (ev.start < dayKey) {
+                note = '開催中 〜' + mdLabel(ev.end);
+            } else if (ev.end > ev.start) {
+                note = '〜' + mdLabel(ev.end);
+            }
+            if (note) {
+                const s = document.createElement('span');
+                s.className = 'cal-event-span';
+                s.textContent = note;
+                a.appendChild(s);
+            }
+            a.title = ev.name + (note ? ' (' + note + ')' : '');
+            return a;
+        }
+
+        function renderDays(year, month, buckets) {
+            const wrap = document.getElementById('calDays');
+            if (!wrap) return;
+            wrap.innerHTML = '';
+            const keys = Object.keys(buckets).sort();
+            if (!keys.length) {
+                const p = document.createElement('p');
+                p.className = 'cal-empty';
+                p.textContent = 'この月に掲載しているイベントはありません。';
+                wrap.appendChild(p);
+                return;
+            }
+            keys.forEach(k => {
+                const d = new Date(k + 'T12:00:00');
+                const row = document.createElement('section');
+                row.className = 'cal-day';
+                const h = document.createElement('h3');
+                h.className = 'cal-day-head';
+                const dow = DOW[d.getDay()];
+                h.innerHTML = '<span class="cal-day-date">' + mdLabel(k)
+                    + '</span><span class="cal-day-dow dow-' + d.getDay() + '">('
+                    + dow + ')</span><span class="cal-day-count">'
+                    + buckets[k].length + '件</span>';
+                row.appendChild(h);
+                const ul = document.createElement('div');
+                ul.className = 'cal-day-list';
+                buckets[k].forEach(ev => ul.appendChild(eventLink(ev, k)));
+                row.appendChild(ul);
+                wrap.appendChild(row);
+            });
+        }
+
+        function renderGrid(year, month, buckets) {
             const grid = document.getElementById('calGrid');
+            if (!grid) return;
             grid.innerHTML = '';
-
-            const dows = ['日','月','火','水','木','金','土'];
-            dows.forEach(d => {
+            DOW.forEach((d, i) => {
                 const el = document.createElement('div');
-                el.className = 'cal-dow';
+                el.className = 'cal-dow dow-' + i;
                 el.textContent = d;
                 grid.appendChild(el);
             });
-
-            const firstDay = new Date(currentYear, currentMonth, 1);
-            const lastDay = new Date(currentYear, currentMonth + 1, 0);
-            const startDow = firstDay.getDay();
-            const daysInMonth = lastDay.getDate();
-
-            const today = new Date();
-            const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-
-            const prevLast = new Date(currentYear, currentMonth, 0);
+            const startDow = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const t = new Date();
+            const todayStr = ymd(t.getFullYear(), t.getMonth(), t.getDate());
+            const prevLast = new Date(year, month, 0).getDate();
             for (let i = startDow - 1; i >= 0; i--) {
                 const cell = document.createElement('div');
                 cell.className = 'cal-cell other-month';
-                const dayNum = document.createElement('div');
-                dayNum.className = 'cal-day-num';
-                dayNum.textContent = prevLast.getDate() - i;
-                cell.appendChild(dayNum);
+                cell.innerHTML = '<div class="cal-day-num">' + (prevLast - i) + '</div>';
                 grid.appendChild(cell);
             }
-
             for (let d = 1; d <= daysInMonth; d++) {
+                const key = ymd(year, month, d);
                 const cell = document.createElement('div');
-                const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                cell.className = 'cal-cell';
-                if (dateStr === todayStr) cell.classList.add('today');
-
-                const dayNum = document.createElement('div');
-                dayNum.className = 'cal-day-num';
-                dayNum.textContent = d;
-                cell.appendChild(dayNum);
-
-                events.forEach(ev => {
-                    const start = new Date(ev.start + 'T00:00:00');
-                    const end = new Date(ev.end + 'T23:59:59');
-                    const cur = new Date(dateStr + 'T12:00:00');
-                    if (cur >= start && cur <= end) {
-                        const a = document.createElement('a');
-                        a.className = `cal-event tag-${ev.tag}`;
-                        a.href = `events/${ev.slug}.html`;
-                        a.textContent = ev.name;
-                        a.title = ev.name;
-                        cell.appendChild(a);
-                    }
-                });
-
+                cell.className = 'cal-cell' + (key === todayStr ? ' today' : '');
+                const num = document.createElement('div');
+                num.className = 'cal-day-num';
+                num.textContent = d;
+                cell.appendChild(num);
+                (buckets[key] || []).forEach(ev => cell.appendChild(eventLink(ev, key)));
                 grid.appendChild(cell);
             }
-
-            const totalCells = startDow + daysInMonth;
-            const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
-            for (let i = 1; i <= remaining; i++) {
+            const total = startDow + daysInMonth;
+            const rest = total % 7 === 0 ? 0 : 7 - (total % 7);
+            for (let i = 1; i <= rest; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'cal-cell other-month';
-                const dayNum = document.createElement('div');
-                dayNum.className = 'cal-day-num';
-                dayNum.textContent = i;
-                cell.appendChild(dayNum);
+                cell.innerHTML = '<div class="cal-day-num">' + i + '</div>';
                 grid.appendChild(cell);
             }
         }
+
+        function render() {
+            const names = ['1月','2月','3月','4月','5月','6月',
+                           '7月','8月','9月','10月','11月','12月'];
+            const el = document.getElementById('calTitle');
+            if (el) el.textContent = currentYear + '年 ' + names[currentMonth];
+            const buckets = monthBuckets(currentYear, currentMonth);
+            renderDays(currentYear, currentMonth, buckets);
+            renderGrid(currentYear, currentMonth, buckets);
+        }
+
+        // 後方互換。HTMLの onclick から呼ばれていた名前
+        function renderCalendar() { render(); }
 
         function loadEvents() {
             const inlineEl = document.getElementById('ssr-events-data');
@@ -355,25 +419,11 @@ CAL_JS_FIXED = '''<!-- PAGE-JS:START この下は build-static-html.py の生成
                     start: e.date,
                     end: e.dateEnd || e.date,
                     tag: (e.tags && e.tags[0]) || ''
-                }));
-            renderCalendar();
-        }).catch(() => renderCalendar());
-        </script>
-    <script>
-    // Ikitai badge count
-    (function(){
-        var b = document.getElementById('ikitaiBadge');
-        if (!b) return;
-        try {
-            var favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
-            if (favs.length > 0) {
-                b.textContent = favs.length;
-                b.classList.add('has-count');
-            }
-        } catch(e) {}
-    })();
-    </script>'''
-
+                }))
+                .sort((a, b) => (a.start < b.start ? -1 : a.start > b.start ? 1 : 0));
+            render();
+        }).catch(() => render());
+        </script>'''
 
 
 import re as _re_cleanup

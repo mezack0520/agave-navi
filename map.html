@@ -26,7 +26,7 @@
     <link rel="manifest" href="/manifest.webmanifest?v=2">
     <meta name="theme-color" content="#111">
     <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ 新着イベント" href="/rss.xml">
-    <link rel="stylesheet" href="style.css?v=20260909a">
+    <link rel="stylesheet" href="style.css?v=20260909b">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
@@ -891,19 +891,8 @@
             });
         }
     </script>
-    <script>
-    // Ikitai badge count
-    (function(){
-        var b = document.getElementById('ikitaiBadge');
-        if (!b) return;
-        try {
-            var favs = JSON.parse(localStorage.getItem('aen_favs') || '[]');
-            if (favs.length > 0) {
-                b.textContent = favs.length;
-                b.classList.add('has-count');
-            }
-        } catch(e) {}
-    })();
-    </script>
+    <!-- 行きたいの件数バッジは nav.js?v=20260908g が単一実装。
+         ここに写しを持っていたため、手書き側から消してもビルドで
+         戻っていた(2026-09-09) -->
 </body>
 </html>

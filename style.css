@@ -4202,3 +4202,280 @@ main {
         font-size: 2rem;
     }
 }
+
+/* ========================================
+   イベントカレンダー
+   ページ内の <style> に持っていたので共通の色や字の大きさが効かず、
+   直すたびにここと2箇所を見る必要があった(2026-09-09 に移設)。
+
+   **描き方を2つ持つ。**7列のグリッドは 375px の画面に入らない。
+   1列216px×7=1518pxで、日曜と月曜しか見えていなかった。
+   狭い画面は日付ごとの一覧、広い画面は月のグリッド。
+   ======================================== */
+
+.cal-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem 0.75rem 3rem;
+}
+
+.cal-subscribe {
+    margin: 0 0 1rem;
+    padding: 0.85rem 1rem;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.cal-subscribe p {
+    margin: 0;
+}
+
+.cal-subscribe a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.cal-subscribe-hint {
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--gray-500);
+}
+
+.cal-subscribe code {
+    font-size: 0.92em;
+    word-break: break-all;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+}
+
+.cal-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--black);
+}
+
+.cal-nav button {
+    padding: 0.4rem 0.8rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--gray-600);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cal-nav button:hover {
+    border-color: var(--black);
+    color: var(--black);
+}
+
+.cal-nav button:active {
+    background: var(--gray-100);
+}
+
+/* --- 狭い画面: 日付ごとの一覧 --- */
+
+.cal-grid {
+    display: none;
+}
+
+.cal-day {
+    border-top: 1px solid var(--gray-200);
+    padding: 0.75rem 0;
+}
+
+.cal-day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--black);
+}
+
+.cal-day-dow {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.dow-0 {
+    color: #d64545;
+}
+
+.dow-6 {
+    color: #3a6ea5;
+}
+
+.cal-day-count {
+    margin-left: auto;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--gray-500);
+}
+
+.cal-day-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.cal-empty {
+    padding: 1.5rem 0;
+    color: var(--gray-500);
+    font-size: 0.88rem;
+}
+
+.cal-event {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border-left: 3px solid var(--gray-400);
+    border-radius: 3px;
+    background: var(--gray-100);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.cal-event:hover {
+    background: var(--gray-200);
+}
+
+.cal-event-name {
+    min-width: 0;
+}
+
+.cal-event-span {
+    margin-left: auto;
+    flex: none;
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    white-space: nowrap;
+}
+
+/* 種別は左の線で示す。塗りつぶすと文字が読みにくい */
+.cal-event.tag-即売会 { border-left-color: #d64545; }
+.cal-event.tag-マルシェ { border-left-color: #d98324; }
+.cal-event.tag-大型 { border-left-color: #264653; }
+.cal-event.tag-展示会 { border-left-color: #2a9d8f; }
+
+.cal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    margin-top: 1.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.cal-legend-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 2px;
+}
+
+.cal-back {
+    margin-top: 1.5rem;
+}
+
+/* --- 広い画面: 月のグリッド --- */
+
+@media (min-width: 721px) {
+    .cal-container {
+        padding: 1.5rem 1.5rem 4rem;
+    }
+
+    .cal-days {
+        display: none;
+    }
+
+    .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        border: 1px solid var(--gray-200);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .cal-dow {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--gray-200);
+        background: var(--gray-100);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--gray-600);
+    }
+
+    .cal-cell {
+        min-height: 6.5rem;
+        padding: 0.35rem;
+        border-top: 1px solid var(--gray-200);
+        border-left: 1px solid var(--gray-200);
+    }
+
+    .cal-cell:nth-child(7n + 1) {
+        border-left: 0;
+    }
+
+    .cal-cell.other-month {
+        background: #fbfbfb;
+    }
+
+    .cal-cell.today {
+        background: #fffdf3;
+    }
+
+    .cal-day-num {
+        margin-bottom: 0.25rem;
+        font-size: 0.75rem
+        ;
+        font-weight: 700;
+        color: var(--gray-500);
+    }
+
+    /* グリッドの中は横に詰める。1行で収める */
+    .cal-grid .cal-event {
+        display: block;
+        margin-bottom: 0.2rem;
+        padding: 0.2rem 0.35rem;
+        border-left-width: 3px;
+        font-size: 0.7rem;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .cal-grid .cal-event-span {
+        margin-left: 0.3em;
+        font-size: 0.9em;
+    }
+}
