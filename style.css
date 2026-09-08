@@ -3039,6 +3039,9 @@ main {
 .eh-actions .detail-share-label{display:none}
 .detail-main{padding-top:.6rem}
 .detail-hero{margin:.2rem 0 1rem}
+/* 見た目の枠だけ。比率と object-fit は上の .detail-hero-img と
+   下の .eh-lead .detail-hero-img が持つ。ここに比率を書かないこと
+   (同じ規則が3か所に散ると必ず食い違う。2026-09-08 に実際に起きた) */
 .detail-hero-img{width:100%;border-radius:12px;border:1px solid #eee}
 @media (max-width:480px){
   .eh-spec .info-row{grid-template-columns:5.6em 1fr}
@@ -3063,11 +3066,16 @@ main {
     border: 1px solid #ececec;
     overflow: hidden;
 }
-/* フライヤーは縦長・正方形が多い。16:9で切ると会期や会場名が落ちるため
-   全体を収める。背景は薄いグレーで余白を埋める。 */
+/* フライヤーは正方形が多い。切ると会期や会場名が落ちるので全体を収める。
+   **ここが詳細ページの実効ルール。**基底の .detail-hero-img (上方) は
+   詳細相当度が低く、この .eh-lead 配下の指定に負ける。
+   2026-09-08 に基底だけを 1:1 に直して「効いていない」と誤認した。
+   枠は 1:1。自サイトに置いたフライヤーは正方形に揃えてあるので余白が出ない。
+   4:3 だと正方形に左右25%の帯が出る(実測。開催予定で画像がある103件のうち
+   74件が正方形)。 */
 .eh-lead .detail-hero-img {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     max-height: none;
     object-fit: contain;
     background: #f7f7f7;
@@ -3084,10 +3092,12 @@ main {
         grid-template-columns: 1fr;
         gap: .9rem;
     }
-    /* モバイルは画像を先に出すが、日時が画面内に残る高さに抑える */
+    /* モバイルも切らない。16:10 にすると正方形のフライヤーが
+       左右44%も帯になって、肝心の文字が小さくなる。
+       1:1 のまま max-height で高さを抑え、日時が画面内に残るようにする。 */
     .eh-lead .detail-hero-img {
-        aspect-ratio: 16 / 10;
-        max-height: 240px;
+        aspect-ratio: 1 / 1;
+        max-height: 320px;
     }
 }
 
