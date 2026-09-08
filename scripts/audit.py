@@ -1652,10 +1652,25 @@ def main():
     #      「開催予定」として載り続けていた。気づいたのは主催者からの
     #      削除依頼で、こちらからは何も見ていなかった(2026-09-08に検査化)。
     _cw = load_json('cancel-watch.json', {}) or {}
+    # 一次情報を見て「開催予定のまま」と判断した回は、その巡回ぶんは黙る。
+    # 署名の変化で鳴る検査なので、確認した事実を残さないと毎日同じものが
+    # 並び、本物の変化が埋まる(2026-09-09)。
+    # 記録より後の巡回で再び鳴ったら、それは新しい変化なので出す。
+    _reviewed = {}
+    for _r in ((load_json(os.path.join('scripts', 'cancel-reviewed.json'), {})
+                or {}).get('items') or []):
+        _sl = _r.get('slug')
+        _on = str(_r.get('checkedOn') or '')
+        if _sl and _on > _reviewed.get(_sl, ''):
+            _reviewed[_sl] = _on
+    _swept = str(_cw.get('sweptOn') or '')
     _cw_suspects = []
     for _s in (_cw.get('suspects') or []):
+        _sl = _s.get('slug', '')
+        if _swept and _reviewed.get(_sl, '') >= _swept:
+            continue
         _cw_suspects.append(
-            f"{_s.get('date','')} {_s.get('slug','')}: {_s.get('why','')}")
+            f"{_s.get('date','')} {_sl}: {_s.get('why','')}")
     # アイキャッチの積み残し。Instagram出典の回は CI から取れず、
     # 組み込みブラウザを持つ定期タスクだけが埋められる(2026-09-08)。
     # ゼロにはならないので metric。推移が見えれば十分。

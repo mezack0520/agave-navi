@@ -121,21 +121,70 @@ def meta_texts(html):
     return out
 
 
+# 天候の条件を述べているだけの言い回し。**告知ではない。**
+# 「※雨天時は中止となる場合があります」で毎日鳴っていた
+# (GreenSnap Marche 横浜。中止したのはイベントではなく、
+#  雨のときのマスコットのグリーティング。2026-09-09 確認)。
+#
+# 「場合」「際」「とき」が付く条件文と、雨天中止・荒天中止の熟語だけを
+# 落とす。「悪天候のため中止しました」は残す。過去形で言い切っている
+# ものは本物の告知なので、消してはいけない。
+CONDITIONAL_CANCEL = (
+    r'[雨荒悪][天候][時中]?[はの]?(?:場合|際|とき)?[はに]?(?:中止|順延|延期)',
+    r'(?:中止|順延|延期)(?:と)?(?:なる|する|の)?(?:場合|際|とき)',
+    r'雨天中止',
+    r'荒天中止',
+)
+
+
+def drop_conditional(text):
+    """条件文だけを落とす。判定に使う前に通す。"""
+    out = text
+    for pat in CONDITIONAL_CANCEL:
+        out = re.sub(pat, ' ', out)
+    return out
+
+
 def find_words(texts):
-    """強い語と弱い語をそれぞれ拾う"""
-    blob = ' '.join(texts)
+    """強い語と弱い語をそれぞれ拾う。条件文は数えない"""
+    blob = drop_conditional(' '.join(texts))
     strong = sorted({w for w in CANCEL_WORDS if w in blob})
     weak = sorted({w for w in WEAK_WORDS if w in blob})
     return strong, weak
 
 
-def page_signature(html):
+def drop_today(text, today=None):
+    """今日の日付を落とす。
+
+    「本日の開園時間 2026.09.09 9:30〜17:00」のような表示を持つ頁があり、
+    本文が毎日変わる。**未来のイベントが中止かどうかと、頁に今日の日付が
+    出ていることは何の関係もない**(しまね花の郷で2件が毎日鳴っていた。
+    2026-09-09 確認)。署名を作る前にこれだけ落とす。
+    イベントの日付は落とさない。日程変更は拾いたい信号なので。
+    """
+    d = today or today_jst()
+    if isinstance(d, str):
+        # sitelib.today_jst() は文字列を返す。date に揃える
+        d = date.fromisoformat(d[:10])
+    pats = [
+        f'{d.year}.{d.month:02d}.{d.day:02d}', f'{d.year}.{d.month}.{d.day}',
+        f'{d.year}/{d.month:02d}/{d.day:02d}', f'{d.year}/{d.month}/{d.day}',
+        f'{d.year}-{d.month:02d}-{d.day:02d}',
+        f'{d.year}年{d.month}月{d.day}日',
+    ]
+    out = text
+    for x in pats:
+        out = out.replace(x, ' ')
+    return out
+
+
+def page_signature(html, today=None):
     """本文と画像の集合から署名を作る。
 
     画像の中の文字は読めないので、URLの集合が変わったことをもって
     「差し替わった」と見る。メインビジュアルが告知画像に変わる型を拾うため。
     """
-    body = strip_html(html)
+    body = drop_today(strip_html(html), today)
     imgs = sorted(set(image_tokens(html)))
     return {
         'text': hashlib.sha256(body.encode('utf-8')).hexdigest()[:16],
@@ -376,6 +425,29 @@ FIX_DOT_DATE = '''<html><head><title>◇◇サボテン展</title></head><body>
 <p>会期 2026.10.10 - 2026.10.11 / 入場無料</p></body></html>'''
 
 
+FIX_COND = """<html><body><h1>◯◯マルシェ</h1>
+<p>2026年10月10日(土) 開催します。</p>
+<p>※雨天時は中止となる場合があります。最新情報はSNSでご確認ください。</p>
+</body></html>"""
+
+FIX_REAL_WEATHER = """<html><body><h1>◯◯マルシェ</h1>
+<p>悪天候のため中止しました。ご来場を予定されていた皆様にお詫び申し上げます。</p>
+</body></html>"""
+
+# 「本日の開園時間」を持つ頁。中身は同じで日付だけが違う
+FIX_TODAY_A = """<html><body><p>本日の開園時間 2026.09.09 9:30〜17:00</p>
+<h1>サボテン・多肉植物展</h1><p>開催期間 2026/10/10 〜 2026/10/12</p>
+</body></html>"""
+
+FIX_TODAY_B = """<html><body><p>本日の開園時間 2026.09.10 9:30〜17:00</p>
+<h1>サボテン・多肉植物展</h1><p>開催期間 2026/10/10 〜 2026/10/12</p>
+</body></html>"""
+
+FIX_DATE_CHANGED = """<html><body><p>本日の開園時間 2026.09.09 9:30〜17:00</p>
+<h1>サボテン・多肉植物展</h1><p>開催期間 2026/10/17 〜 2026/10/19</p>
+</body></html>"""
+
+
 def self_test(verbose=True):
     ok = True
 
@@ -396,9 +468,28 @@ def self_test(verbose=True):
     chk('本文に中止告知 → 強い語', bool(a['strong']), True)
     b = analyze(FIX_WEAK)
     chk('雨天中止 → 強い語ではない', bool(b['strong']), False)
-    chk('雨天中止 → 弱い語では拾う', bool(b['weak']), True)
+    # 2026-09-09 に方針を変えた。天候の条件文は数えない。
+    # 「※雨天時は中止となる場合があります」で毎日鳴っていた
+    chk('雨天中止は条件文なので弱い語でも数えない', bool(b['weak']), False)
+    d = analyze(FIX_COND)
+    chk('雨天時は中止となる場合 → 数えない', bool(d['strong'] or d['weak']), False)
+    e = analyze(FIX_REAL_WEATHER)
+    chk('悪天候のため中止しました → 拾う', bool(e['strong'] or e['weak']), True)
     c = analyze(FIX_PLAIN)
     chk('平常のページ → どちらも出ない', bool(c['strong'] or c['weak']), False)
+
+    say('')
+    say('--- 今日の日付は署名に入れない ---')
+    import datetime as _dt
+    _t = _dt.date(2026, 9, 9)
+    # 実際の巡回は「その日の頁をその日の today で署名する」。
+    # 昨日は昨日の日付が、今日は今日の日付が落ちるので署名は揃う。
+    # 同じ today で別の日の頁を比べても意味がない(最初そう書いて外した)
+    s1 = page_signature(FIX_TODAY_A, today=_t)
+    s2 = page_signature(FIX_TODAY_B, today=_dt.date(2026, 9, 10))
+    chk('今日の日付を出す頁 → 日をまたいでも署名は同じ', s1['text'], s2['text'])
+    s3 = page_signature(FIX_DATE_CHANGED, today=_t)
+    chk('開催日が変わった頁 → 署名は変わる', s1['text'] != s3['text'], True)
 
     say('\n--- 画像だけの告知(文言では拾えないことの確認) ---')
     before = analyze(FIX_IMAGE_NOTICE_BEFORE)
