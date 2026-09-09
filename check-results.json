@@ -1,8 +1,44 @@
 {
-  "check_date": "2026-09-08",
+  "check_date": "2026-09-09",
   "total_events": 405,
   "dead_links": [],
-  "unreachable": [],
+  "unreachable": [
+    {
+      "slug": "sakuya-green-jam-5-2026",
+      "name": "Sakuya Green Jam 5",
+      "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "kourep-2026-autumn",
+      "name": "コウレプ2026秋",
+      "sourceUrl": "https://kourep.jp",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "collect-plants-2026-09",
+      "name": "Collect Plants Vol.3（コレクトプランツ）",
+      "sourceUrl": "https://collect-plants.com/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "souransai-koshigaya-2026-10",
+      "name": "草乱祭with月刊チューズデイ - World Plant Market -",
+      "sourceUrl": "https://soransai.com/",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "botanical-monsters-2027-okazaki",
+      "name": "BOTANICAL MONSTERS 2027",
+      "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "botanical-botanical-fukuoka-2026-10",
@@ -76,6 +112,12 @@
     }
   ],
   "past_events": [
+    {
+      "slug": "notre-atelier-popup-tamagawa-2026-09",
+      "name": "notre atelier POP UP STORE AT TOKYO",
+      "date": "2026-09-02",
+      "dateEnd": "2026-09-08"
+    },
     {
       "slug": "kumagaya-taniku-fes-2026",
       "name": "第2回 熊谷多肉フェス",
@@ -2928,15 +2970,6 @@
   ],
   "today_events": [
     {
-      "slug": "notre-atelier-popup-tamagawa-2026-09",
-      "name": "notre atelier POP UP STORE AT TOKYO",
-      "date": "2026-09-02",
-      "dateEnd": "2026-09-08",
-      "location": "玉川髙島屋 5階 メゾン・エ・ターブル（東京都世田谷区玉川3-17-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/notreatelier.29/"
-    },
-    {
       "slug": "sakuya-green-jam-5-2026",
       "name": "Sakuya Green Jam 5",
       "date": "2026-09-05",
@@ -2951,8 +2984,8 @@
       "slug": "sakuya-green-jam-5-2026",
       "name": "Sakuya Green Jam 5",
       "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "yamashiro-aisenen-autumn-2026-09",
@@ -2965,8 +2998,8 @@
       "slug": "kourep-2026-autumn",
       "name": "コウレプ2026秋",
       "sourceUrl": "https://kourep.jp",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "midori-to-taniku-marche-nihonosato-2026-09",
@@ -2993,8 +3026,8 @@
       "slug": "collect-plants-2026-09",
       "name": "Collect Plants Vol.3（コレクトプランツ）",
       "sourceUrl": "https://collect-plants.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "taniku-midori-marche-niitsu-2026-09",
@@ -3014,8 +3047,8 @@
       "slug": "souransai-koshigaya-2026-10",
       "name": "草乱祭with月刊チューズデイ - World Plant Market -",
       "sourceUrl": "https://soransai.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "shimane-cactus-succulent-ten-2026-10",
@@ -3112,8 +3145,8 @@
       "slug": "botanical-monsters-2027-okazaki",
       "name": "BOTANICAL MONSTERS 2027",
       "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "mollis-exhibit-kinto-2026",
