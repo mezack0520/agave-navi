@@ -1,20 +1,33 @@
 {
   "_note": "他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-09",
+  "sweptOn": "2026-09-10",
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1136,
-    "in_scope": 76,
-    "covered": 60,
+    "candidates": 1138,
+    "in_scope": 80,
+    "covered": 61,
     "known_rejected": 16,
     "truncated_resolved": 225,
     "truncated_unresolved": 45,
-    "gaps_raw": 0
+    "gaps_raw": 3
   },
   "errors": [],
   "truncatedUnresolved": [
     "09/04 追加 国際多肉植物協会が9月のサボテン・多肉植物ビッ..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-09-26",
+      "title": "キムタロウが第2回アガベース2026を富里ベースで開催、アガベや多肉植物の販売と1000円くじを実施"
+    },
+    {
+      "date": "2026-09-26",
+      "title": "中山園芸が5周年感謝祭2026を開催、多肉植物やリメイク鉢など多数の出店者が参加"
+    },
+    {
+      "date": "2026-10-24",
+      "title": "MINE FARM POP UP In 沖縄2026を開催、実生多肉植物やサボテンと限定植木鉢を販売"
+    }
+  ]
 }
