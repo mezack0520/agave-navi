@@ -15,31 +15,9 @@ CONTENT_DIR = os.path.join(REPO_ROOT, 'guides_content')
 OUT_DIR = os.path.join(REPO_ROOT, 'guides')
 
 
-HEAD = '''<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-NKY8V1H8HY');</script>
-  <meta charset="UTF-8">
-  <link rel="canonical" href="{canonical}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title} | アガベイベントナビ</title>
-  <meta name="description" content="{description}">
-  <meta name="keywords" content="{keywords}">
-  <meta property="og:title" content="{title} | アガベイベントナビ">
-  <meta property="og:description" content="{description}">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="https://agave-navi.com/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=2">
-  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2">
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=2">
-  <link rel="manifest" href="../manifest.webmanifest?v=2">
-  <meta name="theme-color" content="#111">
-  <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="../rss.xml">
-  <link rel="stylesheet" href="../style.css?v=20260611a">
-  <script type="application/ld+json">
+# <head> の冒頭は sitelib.head_open が唯一の持ち主。ここは続きだけ持つ。
+# ガイドは /guides/ 直下なので root は常に '../'。format 時に渡す
+HEAD = sitelib.head_open('article') + '''  <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"Article","headline":"{title}","description":"{description}","datePublished":"{date_iso}","dateModified":"{date_iso}","author":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/"}},"publisher":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/","logo":{{"@type":"ImageObject","url":"https://agave-navi.com/android-chrome-512x512.png"}}}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{canonical}"}},"image":"https://agave-navi.com/og-image.png"}}
   </script>
   <script type="application/ld+json">
@@ -84,7 +62,6 @@ HEAD = '''<!DOCTYPE html>
     .guide-card .gc-meta{{font-size:.75rem;color:#888}}
   </style>
 </head>'''
-HEAD = HEAD.replace('style.css?v=20260611a', 'style.css?v=' + sitelib.CSS_VERSION)
 
 
 HEADER = sitelib.site_header()
@@ -208,7 +185,8 @@ def render_guide(meta, md, related):
     head = HEAD.format(
         title=meta['title'], description=meta['description'],
         keywords=meta['keywords'], canonical=f"{DOMAIN}/guides/{meta['slug']}.html",
-        date_iso=date_iso,
+        date_iso=date_iso, root='../',
+        robots_meta='<meta name="robots" content="index,follow">',
     )
     bc = sitelib.breadcrumb_html([sitelib.CRUMB_HOME,
                                  ('植物ガイド', '/guides/'),
@@ -260,7 +238,9 @@ def main():
                   f'<span class="gc-meta">{m["read_min"]}分で読める</span>'
                   f'</a></article>')
     head = HEAD.format(title='植物ガイド一覧', description='アガベ・塊根植物・ビザールプランツの育て方や購入時のチェックポイントを解説したガイド記事一覧。',
-                       keywords='植物ガイド,アガベ,塊根植物,育て方,即売会', canonical=f'{DOMAIN}/guides/', date_iso=datetime.now(JST).strftime('%Y-%m-%d'))
+                       keywords='植物ガイド,アガベ,塊根植物,育て方,即売会', canonical=f'{DOMAIN}/guides/',
+                       date_iso=datetime.now(JST).strftime('%Y-%m-%d'), root='../',
+                       robots_meta='<meta name="robots" content="index,follow">')
     index_bc = sitelib.breadcrumb_html(
         [sitelib.CRUMB_HOME, ('植物ガイド', None)])
     body_html = f'''<body>

@@ -2681,8 +2681,9 @@ def main():
         for name, rhs in d.items():
             if name not in _sitelib_names:
                 continue
-            # `X = sitelib.X` は写しではなく参照。名前を揃えているだけ
-            if re.fullmatch(r'sitelib\.' + re.escape(name), rhs):
+            # `X = sitelib.X` / `X = sitelib.f()` は写しではなく参照。
+            # 名前を揃えているだけなので、直す先は1つのまま
+            if re.match(r'sitelib\.\w+\s*(\(|$)', rhs):
                 continue
             dupe_rule.append(f'{fn}: sitelib.{name} を自前で定義している')
     add('sitelib_rule_duplicated', 'sitelib の規則を他スクリプトが二重に定義',
@@ -2720,6 +2721,8 @@ def main():
                 continue
             if rhs and _PATH_RHS.search(rhs):
                 continue
+            if rhs and re.match(r'sitelib\.\w+\s*(\(|$)', rhs):
+                continue      # sitelib の参照。写しではない
             _by_name[name].add(fn)
     dupe_cross = [f'{k}: {", ".join(sorted(v))}'
                   for k, v in _by_name.items() if len(v) >= 2]

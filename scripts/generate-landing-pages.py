@@ -27,38 +27,13 @@ from sitelib import (
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
 
-HEAD = '''<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NKY8V1H8HY"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-NKY8V1H8HY');</script>
-  <meta charset="UTF-8">
-  {robots_meta}
-  <link rel="canonical" href="{canonical}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title} | アガベイベントナビ</title>
-  <meta name="description" content="{description}">
-  <meta name="keywords" content="{keywords}">
-  <meta property="og:title" content="{title} | アガベイベントナビ">
-  <meta property="og:description" content="{description}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="https://agave-navi.com/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="{root}favicon.svg?v=2">
-  <link rel="icon" type="image/x-icon" href="{root}favicon.ico?v=2">
-  <link rel="apple-touch-icon" sizes="180x180" href="{root}apple-touch-icon.png?v=2">
-  <link rel="manifest" href="{root}manifest.webmanifest?v=2">
-  <meta name="theme-color" content="#111">
-  <link rel="alternate" type="application/rss+xml" title="アガベイベントナビ" href="{root}rss.xml">
-  <link rel="stylesheet" href="{root}style.css?v=20260611a">
-  <script type="application/ld+json">
+# <head> の冒頭は sitelib.head_open が唯一の持ち主。ここは続きだけ持つ
+HEAD = sitelib.head_open('website') + '''  <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"CollectionPage","name":"{title}","description":"{description}","url":"{canonical}","isPartOf":{{"@type":"WebSite","name":"アガベイベントナビ","url":"https://agave-navi.com/"}}}}
   </script>
 {breadcrumb_jsonld}
   <script src="{root}list-ui.js?v=20260820a"></script>
 </head>'''
-HEAD = HEAD.replace('style.css?v=20260611a', 'style.css?v=' + sitelib.CSS_VERSION)
 HEAD = HEAD.replace('list-ui.js?v=20260820a', 'list-ui.js?v=' + sitelib.JS_VERSION)  # 版数の正はsitelib
 
 HEADER = sitelib.site_header()

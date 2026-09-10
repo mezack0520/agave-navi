@@ -29,6 +29,7 @@ import requests
 from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitelib
 from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -61,17 +62,7 @@ def fetch_html(url):
     except requests.RequestException as e:
         return None, type(e).__name__
 
-def extract_og_image(html, base_url):
-    soup = BeautifulSoup(html, 'html.parser')
-    for prop in ('og:image:secure_url', 'og:image:url', 'og:image'):
-        m = soup.find('meta', attrs={'property': prop}) or soup.find('meta', attrs={'name': prop})
-        if m and m.get('content'):
-            return urljoin(base_url, m['content'].strip())
-    # twitter:image fallback
-    m = soup.find('meta', attrs={'name': 'twitter:image'}) or soup.find('meta', attrs={'property': 'twitter:image'})
-    if m and m.get('content'):
-        return urljoin(base_url, m['content'].strip())
-    return None
+# og:image の抽出は sitelib.extract_og_image が唯一の持ち主
 
 def verify_image(url):
     try:
@@ -200,7 +191,7 @@ def find_image_for_event(ev):
         if html is None:
             yield (source, page_url, None, f'fetch failed: {err}')
             continue
-        img = extract_og_image(html, page_url)
+        img = sitelib.extract_og_image(html, page_url)
         if not img:
             yield (source, page_url, None, 'no og:image')
             continue

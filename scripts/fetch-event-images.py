@@ -65,10 +65,6 @@ JPEG_QUALITY = 82
 # 1枚あたりの上限。これを超えるものは縮小しても大きすぎるので採らない
 MAX_BYTES = 400 * 1024
 
-OG_IMAGE = re.compile(
-    r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', re.I)
-OG_IMAGE_ALT = re.compile(
-    r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', re.I)
 
 
 def ig_post_url(ev):
@@ -94,12 +90,13 @@ def ig_post_url(ev):
 # 切り出しの無い画像は投稿ページのDOMにしか出ないので、
 # scripts/browser/ig-eyecatch.js（組み込みブラウザから実行）を使う。
 # ここは og:image しか見られないため、実質的に使えない。
-def extract_og_image(html):
-    m = OG_IMAGE.search(html or '') or OG_IMAGE_ALT.search(html or '')
-    if not m:
-        return ''
-    u = m.group(1).replace('&amp;', '&').strip()
-    return u if u.startswith('http') else ''
+def og_image_or_blank(html):
+    """sitelib の抽出に「無ければ空文字」の約束だけ被せる薄い包み。
+
+    判定そのものは持たない。sitelib と同じ名前にすると、
+    写しなのか包みなのかが名前から分からなくなる。
+    """
+    return sitelib.extract_og_image(html) or ''
 
 
 def targets(events, today, slug=None):
@@ -199,7 +196,7 @@ def main():
                 print(f'  ✗ {slug}: 投稿ページ HTTP {r.status_code}')
                 fail += 1
                 continue
-            src = extract_og_image(r.text)
+            src = og_image_or_blank(r.text)
             if not src:
                 print(f'  ✗ {slug}: og:image が取れない')
                 fail += 1
@@ -266,17 +263,17 @@ def self_test():
 
     print('\n--- og:image の抽出 ---')
     chk('property が先',
-        extract_og_image('<meta property="og:image" content="https://x/a.jpg">'),
+        og_image_or_blank('<meta property="og:image" content="https://x/a.jpg">'),
         'https://x/a.jpg')
     chk('content が先でも取れる',
-        extract_og_image('<meta content="https://x/b.jpg" property="og:image">'),
+        og_image_or_blank('<meta content="https://x/b.jpg" property="og:image">'),
         'https://x/b.jpg')
     chk('&amp; を戻す',
-        extract_og_image('<meta property="og:image" content="https://x/c.jpg?a=1&amp;b=2">'),
+        og_image_or_blank('<meta property="og:image" content="https://x/c.jpg?a=1&amp;b=2">'),
         'https://x/c.jpg?a=1&b=2')
     chk('相対パスは採らない',
-        extract_og_image('<meta property="og:image" content="/a.jpg">'), '')
-    chk('無ければ空', extract_og_image('<html></html>'), '')
+        og_image_or_blank('<meta property="og:image" content="/a.jpg">'), '')
+    chk('無ければ空', og_image_or_blank('<html></html>'), '')
 
     print('\n--- 対象の絞り込み ---')
     today = '2026-09-08'

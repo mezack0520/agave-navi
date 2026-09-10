@@ -1270,6 +1270,87 @@ HEART_SVG = ('<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0
              '1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>')
 
 
+_OG_IMAGE_KEYS = ('og:image:secure_url', 'og:image:url', 'og:image',
+                  'twitter:image')
+
+
+def extract_og_image(html, base_url=None):
+    """ページのHTMLから代表画像のURLを取る。優先順は _OG_IMAGE_KEYS。
+
+    backfill-images.py が BeautifulSoup 版、fetch-event-images.py が
+    正規表現版を別々に持っていて、拾う対象が違った(2026-09-10 に統合)。
+    正規表現版は og:image しか見ず、secure_url / twitter:image を落とす。
+    **同じ「代表画像を取る」という規則が、取る対象の違う2実装だった。**
+
+    sitelib は bs4 に依存させない(全ジェネレータが import するため)ので、
+    属性の順序を問わない正規表現で書く。base_url を渡すと相対URLを解決する。
+    """
+    if not html:
+        return None
+    for key in _OG_IMAGE_KEYS:
+        pat = re.compile(
+            r'<meta\b(?=[^>]*\b(?:property|name)\s*=\s*["\']'
+            + re.escape(key) + r'["\'])'
+            r'[^>]*\bcontent\s*=\s*["\']([^"\']+)["\']',
+            re.I)
+        for m in pat.finditer(html):
+            # &amp; を戻す。戻さないと ?a=1&amp;b=2 のURLをそのまま取りに行く
+            import html as _htmllib
+            u = _htmllib.unescape(m.group(1).strip())
+            if not u:
+                continue          # 空の og:image で打ち切らない。次を見る
+            if base_url:
+                from urllib.parse import urljoin
+                return urljoin(base_url, u)
+            return u if u.startswith('http') else ''
+    return None
+
+
+def head_open(og_type='website'):
+    """全ページ共通の <head> 冒頭を返す。**まだ format されていない雛形。**
+
+    プレースホルダは {title} {description} {keywords} {canonical}
+    {root} {robots_meta}。呼び出し側が自分の残り(JSON-LD・ページ固有CSS・
+    追加のscript)を継ぎ足して format する。
+
+    build-guides.py と generate-landing-pages.py が同じ24行を別々に持ち、
+    ガイド側は root を `../` で直書き、CSS版数はどちらも
+    `20260611a` と書いてから文字列置換で差し替えていた
+    (2026-09-10 に統合)。**版数のような「必ず変わる値」を雛形に
+    直書きすると、置換を忘れた側が古い版で出る。**ここでは直に埋める。
+    """
+    return (
+        '<!DOCTYPE html>\n'
+        '<html lang="ja">\n'
+        '<head>\n'
+        '  <script async src="https://www.googletagmanager.com/gtag/js?id='
+        + GA_ID + '"></script>\n'
+        '  <script>window.dataLayer=window.dataLayer||[];'
+        'function gtag(){{dataLayer.push(arguments);}}'
+        "gtag('js',new Date());gtag('config','" + GA_ID + "');</script>\n"
+        '  <meta charset="UTF-8">\n'
+        '  {robots_meta}\n'
+        '  <link rel="canonical" href="{canonical}">\n'
+        '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+        '  <title>{title} | アガベイベントナビ</title>\n'
+        '  <meta name="description" content="{description}">\n'
+        '  <meta name="keywords" content="{keywords}">\n'
+        '  <meta property="og:title" content="{title} | アガベイベントナビ">\n'
+        '  <meta property="og:description" content="{description}">\n'
+        '  <meta property="og:type" content="' + og_type + '">\n'
+        '  <meta property="og:url" content="{canonical}">\n'
+        '  <meta property="og:image" content="' + DOMAIN + '/og-image.png">\n'
+        '  <meta name="twitter:card" content="summary_large_image">\n'
+        '  <link rel="icon" type="image/svg+xml" href="{root}favicon.svg?v=2">\n'
+        '  <link rel="icon" type="image/x-icon" href="{root}favicon.ico?v=2">\n'
+        '  <link rel="apple-touch-icon" sizes="180x180" href="{root}apple-touch-icon.png?v=2">\n'
+        '  <link rel="manifest" href="{root}manifest.webmanifest?v=2">\n'
+        '  <meta name="theme-color" content="#111">\n'
+        '  <link rel="alternate" type="application/rss+xml" '
+        'title="アガベイベントナビ" href="{root}rss.xml">\n'
+        '  <link rel="stylesheet" href="{root}style.css?v=' + CSS_VERSION + '">\n')
+
+
 def _attr(s):
     return html_escape(s)
 
