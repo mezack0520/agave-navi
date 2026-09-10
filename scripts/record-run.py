@@ -103,9 +103,9 @@ def record(task_id, day):
 def flush_worklog(path):
     """push できなかった回の起動記録を台帳へ流し込む。
 
-    流し込んだら worklog の runs を空にする。空にしないと次の回が
-    同じ日をもう一度流し込む……ことは冪等なので害は無いが、
-    「まだ積み残しがある」と読めてしまう。
+    台帳に入った項目だけ worklog から消す。**弾かれた項目は残す。**
+    消し込みで起動記録が落ちるほうが、二重に流し込むより痛い(冪等なので
+    二重に流し込んでも履歴は増えない)。
     """
     if not os.path.exists(path):
         print(f'record-run: worklog が無い: {path}', file=sys.stderr)
@@ -115,13 +115,20 @@ def flush_worklog(path):
     if not runs:
         print(f'record-run: worklog は空: {path}')
         return 0
-    added, known = 0, 0
+    added, known, left = 0, 0, []
     for r in runs:
         task_id = (r.get('taskId') or '').strip()
         day = (r.get('date') or '').strip()
         if not task_id or not day:
-            print(f'record-run: taskId か date が無い項目を飛ばした: {r}',
+            print(f'record-run: taskId か date が無い項目を残した: {r}',
                   file=sys.stderr)
+            left.append(r)
+            continue
+        if (task_id != INQUIRY_TASK
+                and task_id not in load(TASK_RUNS).get('tasks', {})):
+            print(f'record-run: 未登録の taskId「{task_id}」を残した。'
+                  f'task-runs.json に登録してから流し込むこと', file=sys.stderr)
+            left.append(r)
             continue
         changed, where = record(task_id, day)
         if changed:
@@ -130,7 +137,11 @@ def flush_worklog(path):
             known += 1
         print(f'  {task_id} {day} → {where} '
               f'({"追記" if changed else "既に記録済み"})')
-    d['runs'] = []
+    # **台帳に入ったものだけ消す。**全部消すと、弾かれた項目の起動記録が
+    # 消し込みと一緒に落ちる。実際 agave-navi-eyecatch は未登録のままで、
+    # 登録が1日遅れていれば 09-09 の起動が黙って消えていた
+    # (2026-09-10 の event-monitor が同じ型を指摘している)。
+    d['runs'] = left
     d['_flushedOn'] = today_jst()
     try:
         save(path, d)
