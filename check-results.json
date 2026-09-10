@@ -1,44 +1,8 @@
 {
-  "check_date": "2026-09-09",
+  "check_date": "2026-09-10",
   "total_events": 405,
   "dead_links": [],
-  "unreachable": [
-    {
-      "slug": "sakuya-green-jam-5-2026",
-      "name": "Sakuya Green Jam 5",
-      "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/",
-      "statusCode": -1,
-      "alive": false
-    },
-    {
-      "slug": "kourep-2026-autumn",
-      "name": "コウレプ2026秋",
-      "sourceUrl": "https://kourep.jp",
-      "statusCode": -1,
-      "alive": false
-    },
-    {
-      "slug": "collect-plants-2026-09",
-      "name": "Collect Plants Vol.3（コレクトプランツ）",
-      "sourceUrl": "https://collect-plants.com/",
-      "statusCode": -1,
-      "alive": false
-    },
-    {
-      "slug": "souransai-koshigaya-2026-10",
-      "name": "草乱祭with月刊チューズデイ - World Plant Market -",
-      "sourceUrl": "https://soransai.com/",
-      "statusCode": -1,
-      "alive": false
-    },
-    {
-      "slug": "botanical-monsters-2027-okazaki",
-      "name": "BOTANICAL MONSTERS 2027",
-      "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
-      "statusCode": -1,
-      "alive": false
-    }
-  ],
+  "unreachable": [],
   "tbd_events": [
     {
       "slug": "botanical-botanical-fukuoka-2026-10",
@@ -2984,8 +2948,8 @@
       "slug": "sakuya-green-jam-5-2026",
       "name": "Sakuya Green Jam 5",
       "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "yamashiro-aisenen-autumn-2026-09",
@@ -2998,8 +2962,8 @@
       "slug": "kourep-2026-autumn",
       "name": "コウレプ2026秋",
       "sourceUrl": "https://kourep.jp",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "midori-to-taniku-marche-nihonosato-2026-09",
@@ -3026,8 +2990,8 @@
       "slug": "collect-plants-2026-09",
       "name": "Collect Plants Vol.3（コレクトプランツ）",
       "sourceUrl": "https://collect-plants.com/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "taniku-midori-marche-niitsu-2026-09",
@@ -3047,8 +3011,8 @@
       "slug": "souransai-koshigaya-2026-10",
       "name": "草乱祭with月刊チューズデイ - World Plant Market -",
       "sourceUrl": "https://soransai.com/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "shimane-cactus-succulent-ten-2026-10",
@@ -3145,8 +3109,8 @@
       "slug": "botanical-monsters-2027-okazaki",
       "name": "BOTANICAL MONSTERS 2027",
       "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "mollis-exhibit-kinto-2026",
