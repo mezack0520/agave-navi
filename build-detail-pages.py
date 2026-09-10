@@ -404,10 +404,17 @@ def breadcrumb_items(ev):
     items = [sitelib.CRUMB_ROOT]
     region = (ev.get('region') or '').strip()
     pref = (ev.get('prefecture') or '').strip()
+    # 実在する頁を指す。以前は `/?region=関西` `/?region=関西&pref=大阪` という
+    # トップの絞り込みクエリを指していた。同じ内容の `/region/kansai/`
+    # `/pref/osaka/` が別にあるのに、パンくずも BreadcrumbList も
+    # そちらを向いていない。**クエリURLは正規化されない**ので、
+    # 検索側には階層が無いのと同じだった(2026-09-10)。
+    # 47県・9地域とも generate-landing-pages.py が全イベントから作るので、
+    # 詳細ページがある回の県・地域の頁は必ず存在する。
     if region:
-        items.append((region, f'/?region={quote(region)}'))
+        items.append((region, f'/region/{sitelib.region_slug(region)}/'))
     if pref:
-        items.append((pref, f'/?region={quote(region)}&pref={quote(pref)}'))
+        items.append((pref, f'/pref/{sitelib.pref_slug(pref)}/'))
     items.append((ev.get('name') or '', None))
     return items
 
