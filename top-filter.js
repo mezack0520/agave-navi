@@ -286,6 +286,21 @@ function applyFilters(query) {
             emptyState.style.display = 'none';
         }
     }
+
+    // 絞り込んだ結果にも段数の制限をかける。
+    // 以前は絞ったら showAll() で全件出していた。関東を選ぶと50件が
+    // 一気に並び、「もっと見る」も消えた(2026-09-08 指摘)。
+    // 段数は list-ui.js が持つ。ここは「絞り終わったら描き直せ」だけ言う。
+    //
+    // **ここで呼ぶ。後付けのラッパーにしない。**
+    // 2026-09-10 まで、この呼び出しはファイル末尾で applyFilters を
+    // 包み直す形で足してあった。ところが localStorage からの地域復元
+    // (initRegion)はファイルの前半にあり、**包む前の applyFilters を
+    // 呼んでいた。** 結果、前回関東を選んだ人が翌日トップを開くと、
+    // 絞り込みは効くのにページャは全国のままで、最初の12枚のうち
+    // 関東の3枚しか出ない(件数だけ54件と出る)。
+    // 後から包む形は、包むより前にある呼び出しを必ず取りこぼす。
+    if (window.AEN_LIST_UI) window.AEN_LIST_UI.resetLoadMore();
 }
 
 // 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908g が単一実装。
@@ -295,17 +310,8 @@ window.AEN_ON_FAV_CHANGE = function() {
 };
 
 // もっと見る(initLoadMore / loadMoreEvents / initPastLoadMore)は
-// list-ui.js?v=20260908g が単一実装。件数も list-ui.js?v=20260908g が持つ。
-
-// 絞り込んだ結果にも段数の制限をかける。
-// 以前は絞ったら showAll() で全件出していた。関東を選ぶと50件が
-// 一気に並び、「もっと見る」も消えた(2026-09-08 指摘)。
-// 絞り込みを先に走らせてから、通ったカードだけを数えて切る。
-const _origApplyFilters = applyFilters;
-applyFilters = function(query) {
-    _origApplyFilters(query);
-    if (window.AEN_LIST_UI) window.AEN_LIST_UI.resetLoadMore();
-};
+// list-ui.js が単一実装。件数も list-ui.js が持つ。
+// 絞り込み後の描き直しは applyFilters の末尾で呼ぶ(上のコメント)。
 
 // 初期表示(並び替え・もっと見る・行きたいの同期)は
 // list-ui.js?v=20260908g と status-auto.js?v=20260908g が行う。ここで先に呼ぶと
