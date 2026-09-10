@@ -808,10 +808,9 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
+      "count": 1,
       "items": [
-        "2026-09-19 midori-to-taniku-marche-nihonosato-2026-09: 公式ページが変わった(本文)",
-        "2026-09-26 greensnap-marche-yokohama-2026-autumn: 公式ページが変わった(画像)"
+        "2026-09-21 tanikutta-popup-petit-marche-2026-09: 公式ページが変わった(本文)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -836,8 +835,10 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "取得できなかった: jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
+      ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },

@@ -3,29 +3,21 @@
   "sweptOn": "2026-09-10",
   "stats": {
     "targets": 24,
-    "fetched": 24
+    "fetched": 23
   },
-  "errors": [],
+  "errors": [
+    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
+  ],
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "midori-to-taniku-marche-nihonosato-2026-09",
-      "name": "第1回 緑と多肉を楽しむマルシェ",
-      "date": "2026-09-19",
-      "url": "https://www.nihonosato.com/post/succulentmarket",
+      "slug": "tanikutta-popup-petit-marche-2026-09",
+      "name": "たにくった POPUP プチマルシェ",
+      "date": "2026-09-21",
+      "url": "https://www.village-v.co.jp/popup/000328/",
       "why": "公式ページが変わった(本文)",
       "changed": [
         "本文"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-yokohama-2026-autumn",
-      "name": "GreenSnap Marche YOKOHAMA 2026 Autumn",
-      "date": "2026-09-26",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
-      "why": "公式ページが変わった(画像)",
-      "changed": [
-        "画像"
       ]
     }
   ],
@@ -164,7 +156,7 @@
       "url": "https://www.village-v.co.jp/popup/000328/",
       "checkedOn": "2026-09-10",
       "signature": {
-        "text": "014d69c2970b5916",
+        "text": "d9844053c484c08b",
         "images": "401ac3e6d2bb594a",
         "textLen": 38002,
         "imageCount": 82
@@ -174,7 +166,7 @@
       "datesNamed": 6,
       "eventDateSeen": false,
       "firstSeenOn": "2026-09-10",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "greensnap-marche-yokohama-2026-autumn": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
@@ -365,22 +357,6 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": false,
-      "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
-    },
-    "jurian-aki-taniku-cactus-2026-10": {
-      "url": "https://www.jurian.or.jp/event/article/?id=1475",
-      "checkedOn": "2026-09-10",
-      "signature": {
-        "text": "bf7de8e13bbf97cd",
-        "images": "8859875c86a5399f",
-        "textLen": 1287,
-        "imageCount": 20
-      },
-      "strong": [],
-      "weak": [],
-      "datesNamed": 1,
-      "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
