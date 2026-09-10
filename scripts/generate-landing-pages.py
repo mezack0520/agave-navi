@@ -369,6 +369,23 @@ def main():
         counters['tag']+=1
 
     # Pref pages
+    def pref_crumb(pref, region):
+        """県ページのパンくず。全国 > 地域 > 県。
+
+        以前は 全国 > 都道府県別 > 東京 だった。**`/pref/` は索引であって
+        階層ではない。**詳細ページが 全国 > 関東 > 東京 > イベント名 と
+        出すので、同じ県ページの親が来た経路で2通りになっていた
+        (2026-09-10 指摘)。イベントの範囲は 全国 > 地域 > 県 の1本。
+        `/pref/` と `/region/` の索引そのものは、その頁自身のパンくずで
+        「都道府県別」「地域別」を名乗る。
+        """
+        r = region or sitelib.pref_to_region(pref)
+        items = [sitelib.CRUMB_ROOT]
+        if r:
+            items.append((r, f'/region/{region_slug(r)}/'))
+        items.append((pref, None))
+        return items
+
     by_pref = defaultdict(list)
     for e in events:
         if e.get('prefecture'): by_pref[e['prefecture']].append(e)
@@ -384,7 +401,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'pref', sl, 'index.html'),
             render(f'{p}のアガベ・植物イベント', f'{p}で開催されるアガベ・多肉植物・塊根植物のイベント情報。{len(evs)}件掲載。',
                    f'{p},アガベ,多肉植物,イベント,即売会', f'{DOMAIN}/pref/{sl}/',
-                   [sitelib.CRUMB_ROOT,('都道府県別','/pref/'),(p,None)],
+                   pref_crumb(p, region),
                    f'{p}のイベント',
                    f'{p}で開催されるアガベ・塊根植物・多肉植物・ビザールプランツのイベントをまとめています。掲載{len(evs)}件。',
                    upcoming_then_past(evs), '../../',
@@ -417,7 +434,7 @@ def main():
         write_page(os.path.join(REPO_ROOT, 'region', sl, 'index.html'),
             render(f'{r}のアガベ・植物イベント', f'{r}地方で開催されるアガベ・多肉植物のイベント情報。{len(evs)}件掲載。',
                    f'{r},アガベ,イベント', f'{DOMAIN}/region/{sl}/',
-                   [sitelib.CRUMB_ROOT,('地域別','/region/'),(r,None)],
+                   [sitelib.CRUMB_ROOT, (r, None)],
                    f'{r}地方のイベント', f'{r}地方で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'region/{sl}/index.html',
