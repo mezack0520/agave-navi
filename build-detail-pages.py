@@ -404,17 +404,25 @@ def breadcrumb_items(ev):
     items = [sitelib.CRUMB_ROOT]
     region = (ev.get('region') or '').strip()
     pref = (ev.get('prefecture') or '').strip()
-    # 実在する頁を指す。以前は `/?region=関西` `/?region=関西&pref=大阪` という
-    # トップの絞り込みクエリを指していた。同じ内容の `/region/kansai/`
-    # `/pref/osaka/` が別にあるのに、パンくずも BreadcrumbList も
-    # そちらを向いていない。**クエリURLは正規化されない**ので、
-    # 検索側には階層が無いのと同じだった(2026-09-10)。
+    # 表示はトップの絞り込み、構造化データは実在する頁。
+    #
+    # **絞り込んで降りてきた人を、絞り込みのできない頁に出さない。**
+    # 一度 `/region/kansai/` `/pref/osaka/` に向けたが、あちらには
+    # 地域・県のチップが無いので、東京の回から千葉へ行けなくなる
+    # (2026-09-10 指摘)。次の県へ移れるのはトップの絞り込みだけ。
+    #
+    # 一方その絞り込みURLは canonical がトップなので、BreadcrumbList に
+    # 入れると「全国 > トップ > トップ > イベント名」に潰れる。
+    # そちらには実在してインデックスされる頁を出す。
     # 47県・9地域とも generate-landing-pages.py が全イベントから作るので、
     # 詳細ページがある回の県・地域の頁は必ず存在する。
     if region:
-        items.append((region, f'/region/{sitelib.region_slug(region)}/'))
+        items.append((region, f'/?region={quote(region)}',
+                      f'/region/{sitelib.region_slug(region)}/'))
     if pref:
-        items.append((pref, f'/pref/{sitelib.pref_slug(pref)}/'))
+        items.append((pref,
+                      f'/?region={quote(region)}&pref={quote(pref)}',
+                      f'/pref/{sitelib.pref_slug(pref)}/'))
     items.append((ev.get('name') or '', None))
     return items
 

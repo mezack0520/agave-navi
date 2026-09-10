@@ -858,6 +858,26 @@ def crumb_bar_html(navs, search=True, live=False):
     return '  <div class="crumb-bar">\n' + ''.join(rows) + '  </div>'
 
 
+def crumb_parts(item):
+    """パンくず1項目を (表示名, 可視リンク先, 構造化データのURL) に開く。
+
+    項目は (名前, URL) か (名前, 可視URL, LD用URL) のどちらでもよい。
+    **2つ書けるのは、人の導線と検索の階層が一致しない場所があるため。**
+    詳細・県・地域の上位はトップの絞り込み(`/?region=関東&pref=東京`)を
+    指す。絞り込んで降りてきた人が次に隣の県へ行けるのはそこだけで、
+    `/pref/tokyo/` にはチップが無く袋小路になる(2026-09-10 指摘)。
+    一方その絞り込みURLは canonical がトップなので、BreadcrumbList に
+    入れると階層が潰れる。そちらには実在する `/pref/tokyo/` を出す。
+
+    **items は1つ。**表示用とLD用でリストを別に組むと、片方だけ直る。
+    """
+    if len(item) == 3:
+        name, url, ld = item
+        return name, url, (ld if ld is not None else url)
+    name, url = item
+    return name, url, url
+
+
 def breadcrumb_html(items, search=True):
     """いちばん普通の1段のパンくず。items は [(表示名, リンク先 or None)]。
 
@@ -866,7 +886,8 @@ def breadcrumb_html(items, search=True):
     """
     n = len(items)
     nodes = []
-    for i, (name, url) in enumerate(items):
+    for i, item in enumerate(items):
+        name, url, _ld = crumb_parts(item)
         last = (i == n - 1)
         nodes.append(crumb_link(name, url) if (url and not last)
                      else crumb_here(name))
@@ -877,13 +898,17 @@ def crumb_jsonld(items, domain=None):
     """パンくずの構造化データ。表示と同じ items から作る。
 
     表示とJSON-LDを別々に書いていたので、片方だけ「ホーム」が残る。
+    項目が3つ組なら、URLは3つ目(LD用)を使う。crumb_parts を見ること。
     """
     d = domain or DOMAIN
     els = []
-    for i, (name, url) in enumerate(items):
+    n = len(items)
+    for i, item in enumerate(items):
+        name, _url, ld = crumb_parts(item)
         e = {'@type': 'ListItem', 'position': i + 1, 'name': name}
-        if url:
-            e['item'] = url if url.startswith('http') else d + url
+        # 現在地(最後)はURLを持たない。表示と同じ規則で切る
+        if ld and i != n - 1:
+            e['item'] = ld if ld.startswith('http') else d + ld
         els.append(e)
     return ('  <script type="application/ld+json">\n  '
             + json.dumps({'@context': 'https://schema.org',

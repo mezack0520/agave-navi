@@ -379,10 +379,14 @@ def main():
         `/pref/` と `/region/` の索引そのものは、その頁自身のパンくずで
         「都道府県別」「地域別」を名乗る。
         """
+        from urllib.parse import quote
         r = region or sitelib.pref_to_region(pref)
         items = [sitelib.CRUMB_ROOT]
         if r:
-            items.append((r, f'/region/{region_slug(r)}/'))
+            # 表示はトップの絞り込み(隣の県へ移れる)、LDは実在する頁。
+            # 詳細ページと同じ規則。crumb_parts を見ること
+            items.append((r, f'/?region={quote(r)}',
+                          f'/region/{region_slug(r)}/'))
         items.append((pref, None))
         return items
 
