@@ -1,5 +1,5 @@
 {
-  "total": 470,
+  "total": 472,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -273,7 +273,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 52,
+      "count": 53,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aichin-shokusai-new-year-party-2027",
@@ -303,6 +303,7 @@
         "isij-big-bazaar-2027-11-28",
         "jurian-aki-taniku-cactus-2026-10",
         "kadan-fes-2026-autumn",
+        "kimtaro-sakura-open-sale-2026-09",
         "kourep-2026-autumn",
         "kyoto-midori-marche-ibaraki-2026-09",
         "kyoto-midorino-marche-bangaihen-vol10-2026",
@@ -313,8 +314,7 @@
         "ore-no-plants-collection-2026-09",
         "picnic-garden-vol25-2026-09",
         "plant-freaks-olinas-2026-10",
-        "plant-freaks-olinas-2026-11",
-        "plants-box-kofu-2026-10"
+        "plant-freaks-olinas-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -724,13 +724,14 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 51,
+      "count": 52,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-12 plants-festa-2-kawashima-2026-09",
         "2026-09-12 soen-espulse-dream-plaza-2026-09",
         "2026-09-13 hamimoro-kitaharima-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
+        "2026-09-19 kimtaro-sakura-open-sale-2026-09",
         "2026-09-19 kourep-2026-autumn",
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
@@ -764,8 +765,7 @@
         "2026-11-22 botanical-yokocho-senju-2026-11",
         "2026-11-22 isij-big-bazaar-2026-11-22",
         "2026-11-22 midorigakuen-himeji-2026-11",
-        "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
-        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026"
+        "2026-11-22 tokimeki-marche-kodaihasu-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
