@@ -1,5 +1,5 @@
 {
-  "total": 463,
+  "total": 468,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -808,8 +808,11 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-09-19 midori-to-taniku-marche-nihonosato-2026-09: 公式ページが変わった(本文)",
+        "2026-09-26 greensnap-marche-yokohama-2026-autumn: 公式ページが変わった(画像)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -822,8 +825,12 @@
     },
     "source_page_wrong_edition": {
       "title": "出典の頁がその回の開催日を書いていない",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-09-19 botalife-4th-anniversary-popup-2026-09: 出典 https://botalife.net/event/ は日付を1種名乗っているが、開催日(2026-09-19〜2026-09-23)が1度も出てこない",
+        "2026-09-21 tanikutta-popup-petit-marche-2026-09: 出典 https://www.village-v.co.jp/popup/000328/ は日付を6種名乗っているが、開催日(2026-09-21〜2026-09-22)が1度も出てこない",
+        "2026-09-27 gamagori-taniku-festa-hyogo-2026-09: 出典 https://www.hapibell.jp/events/info_gamagori-taniku-festa_in_hyogo-2/2026/04/ は日付を2種名乗っているが、開催日(2026-09-27)が1度も出てこない"
+      ],
       "note": "URLを開いて、日付・イベント名・会場がその回と一致するかを見る。同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。一致しないなら **url ごと外す**(残すと裏取り済みに見える)。その記事から採った imageUrl も別の回の写真なので一緒に外す。日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない",
       "severity": "urgent"
     },

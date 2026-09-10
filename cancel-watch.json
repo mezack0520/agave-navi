@@ -2,12 +2,33 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-10",
   "stats": {
-    "targets": 21,
-    "fetched": 21
+    "targets": 24,
+    "fetched": 24
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "midori-to-taniku-marche-nihonosato-2026-09",
+      "name": "第1回 緑と多肉を楽しむマルシェ",
+      "date": "2026-09-19",
+      "url": "https://www.nihonosato.com/post/succulentmarket",
+      "why": "公式ページが変わった(本文)",
+      "changed": [
+        "本文"
+      ]
+    },
+    {
+      "slug": "greensnap-marche-yokohama-2026-autumn",
+      "name": "GreenSnap Marche YOKOHAMA 2026 Autumn",
+      "date": "2026-09-26",
+      "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
+      "why": "公式ページが変わった(画像)",
+      "changed": [
+        "画像"
+      ]
+    }
+  ],
   "pages": {
     "sakuya-green-jam-5-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22331/",
@@ -79,17 +100,17 @@
       "url": "https://www.nihonosato.com/post/succulentmarket",
       "checkedOn": "2026-09-10",
       "signature": {
-        "text": "9d2147c2f58543f2",
+        "text": "58c336d00c3968d6",
         "images": "21183e7db25110ca",
         "textLen": 2961,
         "imageCount": 57
       },
       "strong": [],
       "weak": [],
-      "datesNamed": 2,
+      "datesNamed": 3,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "ore-no-plants-collection-2026-09": {
       "url": "https://shimane-hananosato.com/event/event-903/",
@@ -107,6 +128,22 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
     },
+    "botalife-4th-anniversary-popup-2026-09": {
+      "url": "https://botalife.net/event/",
+      "checkedOn": "2026-09-10",
+      "signature": {
+        "text": "1c5e098e824def54",
+        "images": "735c4637e2042e36",
+        "textLen": 3918,
+        "imageCount": 13
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": false,
+      "firstSeenOn": "2026-09-10",
+      "textOnlyChanges": 0
+    },
     "jusai-ichinomiya-autumn-2026": {
       "url": "https://jusai.link/",
       "checkedOn": "2026-09-10",
@@ -123,12 +160,28 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
+    "tanikutta-popup-petit-marche-2026-09": {
+      "url": "https://www.village-v.co.jp/popup/000328/",
+      "checkedOn": "2026-09-10",
+      "signature": {
+        "text": "014d69c2970b5916",
+        "images": "401ac3e6d2bb594a",
+        "textLen": 38002,
+        "imageCount": 82
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 6,
+      "eventDateSeen": false,
+      "firstSeenOn": "2026-09-10",
+      "textOnlyChanges": 0
+    },
     "greensnap-marche-yokohama-2026-autumn": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
       "checkedOn": "2026-09-10",
       "signature": {
         "text": "66d4005b72698496",
-        "images": "0aeda67372d6edc3",
+        "images": "7e44b5d7bc2fe783",
         "textLen": 13479,
         "imageCount": 195
       },
@@ -137,7 +190,7 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 1
+      "textOnlyChanges": 0
     },
     "taniku-midori-marche-niitsu-2026-09": {
       "url": "https://nf-land.com/event/9050/",
@@ -185,6 +238,22 @@
       "datesNamed": 1,
       "eventDateSeen": true,
       "firstSeenOn": "2026-09-08",
+      "textOnlyChanges": 0
+    },
+    "gamagori-taniku-festa-hyogo-2026-09": {
+      "url": "https://www.hapibell.jp/events/info_gamagori-taniku-festa_in_hyogo-2/2026/04/",
+      "checkedOn": "2026-09-10",
+      "signature": {
+        "text": "36ba8aa159df1713",
+        "images": "2ab2db6987cbea79",
+        "textLen": 4446,
+        "imageCount": 3
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 2,
+      "eventDateSeen": false,
+      "firstSeenOn": "2026-09-10",
       "textOnlyChanges": 0
     },
     "on-the-plants-vol9-fukuoka-2026-10": {

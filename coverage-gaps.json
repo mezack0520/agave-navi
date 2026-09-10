@@ -9,23 +9,20 @@
     },
     "nextmeet": {
       "ok": true,
-      "fetched": 2,
-      "unit": "month",
-      "notes": [
-        "2026-09: URLError <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)>"
-      ]
+      "fetched": 3,
+      "unit": "month"
     }
   },
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1176,
-    "in_scope": 85,
-    "covered": 68,
+    "candidates": 1225,
+    "in_scope": 94,
+    "covered": 77,
     "known_rejected": 15,
     "truncated_resolved": 225,
     "truncated_unresolved": 45,
-    "fetched_nextmeet": 2,
+    "fetched_nextmeet": 3,
     "gaps_raw": 2
   },
   "errors": [],
