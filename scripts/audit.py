@@ -2781,19 +2781,40 @@ def main():
             _by_name[name].add(fn)
     dupe_cross = [f'{k}: {", ".join(sorted(v))}'
                   for k, v in _by_name.items() if len(v) >= 2]
-    # --- 同じCSSセレクタが同じ文脈で複数の規則に -----------------------------
+    # --- 同じセレクタの同じプロパティが、同じ文脈で二度書かれている -----------
     # 2026-09-08、`.detail-hero-img` が3か所にあり、直したのは詳細度の低い
     # 基底規則のほうで、実際に効いていたのは別の2つだった。**「直した」と
     # 報告したのに直っていない**という形でしか現れないので、数えておく。
-    # 同じ @media の中に2回出るものだけを見る。素の規則と @media の
-    # 上書きは意図した重ね方なので数えない。
+    #
+    # 2026-09-10 に「セレクタが2回」から「**同じプロパティが2回**」に変えた。
+    # 前の形は11件出したが、実害があったのは1件(.footer-nav-tertiary)だけで、
+    # 残り7件は「基底の group + そのセレクタ固有の別プロパティ」という
+    # 普通の書き方だった。**消えない検出は読まれなくなる**ので、
+    # 後から書いた値が前の値を実際に殺している場合だけ鳴らす。
+    # 素の規則と @media の上書きは意図した重ね方なので数えない(従来どおり)。
+    #
+    # 意図した重ね方(基底の見た目 → 状態で塗り替え)は _CSS_LAYER_OK に置く。
+    # ここに足すのは「後の規則が前を殺すのが正しい」と確認したものだけ。
+    _CSS_LAYER_OK = {
+        # 白いチップの基底 → 現在地だけ黒く塗る。.pref-crumb/.pref-crumb.active
+        # と同じ関係だが、現在地は状態クラスを持たないので同じ名前になる
+        '.breadcrumb .crumb-current',
+        # 3つのボタンの基底 → 主行動の「行きたい」だけ黒く塗る
+        '.eh-actions .detail-fav-btn',
+        # ボタンの基底 → 共有系は主動線でないので小さく灰色にする(2026-07-30)
+        '.eh-actions .share-btn',
+    }
     _css_dup = []
     try:
         sys.path.insert(0, rp('scripts'))
         import csslib as _csslib
         with open(rp('style.css'), encoding='utf-8') as f:
             _css_src = f.read()
-        _css_seen = {}
+        _css_seen = defaultdict(list)
+        _prop_re = re.compile(r'([-\w]+)\s*:')
+
+        def _css_props(body):
+            return set(_prop_re.findall(re.sub(r'/\*.*?\*/', '', body, flags=re.S)))
 
         def _css_scan(block, ctx):
             for kind, _a, _b, sel, bo, bc in _csslib.items(block):
@@ -2801,18 +2822,24 @@ def main():
                     _css_scan(block[bo + 1:bc - 1],
                               ctx + '|' + sel.split('{')[0].strip()[:40])
                 else:
+                    props = _css_props(block[bo + 1:bc - 1])
                     for one in [x.strip() for x in sel.split(',') if x.strip()]:
-                        k = (ctx, one)
-                        _css_seen[k] = _css_seen.get(k, 0) + 1
+                        _css_seen[(ctx, one)].append(props)
 
         _css_scan(_css_src, '')
-        for (ctx, one), n in sorted(_css_seen.items()):
-            if n >= 2:
-                _css_dup.append(f'{one} が{n}回'
+        for (ctx, one), plist in sorted(_css_seen.items()):
+            if len(plist) < 2 or one in _CSS_LAYER_OK:
+                continue
+            clash = set()
+            for _i in range(len(plist)):
+                for _j in range(_i + 1, len(plist)):
+                    clash |= plist[_i] & plist[_j]
+            if clash:
+                _css_dup.append(f'{one}: {", ".join(sorted(clash))} が{len(plist)}回'
                                 + (f'（{ctx.strip("|")} の中）' if ctx else ''))
     except Exception as e:                          # noqa: BLE001
         _css_dup.append(f'走査できなかった: {type(e).__name__} {e}')
-    add('css_selector_duplicated', '同じCSSセレクタが同じ文脈で複数の規則に',
+    add('css_selector_duplicated', '同じセレクタの同じプロパティを二度書いている',
         sorted(_css_dup),
         '1つにまとめる。分かれていると、詳細度の低いほうを直して'
         '「直した」と誤って報告する。まとめるときは表示を実際に見て確かめる',

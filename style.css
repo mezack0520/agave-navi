@@ -2782,7 +2782,7 @@ main {
 .ad-affiliate-area-inline { max-width: 100%; }
 
 /* === Footer extended nav (SEO internal linking, added 2026-05-04) === */
-.footer-nav-secondary, .footer-nav-tertiary {
+.footer-nav-secondary {
     margin-top: 0.6rem !important;
     font-size: 0.78rem;
     opacity: 0.9;
@@ -2797,6 +2797,7 @@ main {
     font-size: 0.7rem;
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 0.7rem;
+    flex-wrap: wrap;
 }
 
 /* Enriched content sections (AdSense / E-E-A-T 強化用 / モノクロ統一) */

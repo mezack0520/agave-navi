@@ -17,7 +17,7 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260910a'
+CSS_VERSION = '20260910b'
 JS_VERSION = '20260910b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'

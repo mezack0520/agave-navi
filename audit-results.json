@@ -1,5 +1,5 @@
 {
-  "total": 472,
+  "total": 461,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -543,7 +543,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260910a)と違うページ",
+      "title": "CSS版数が正規値(20260910b)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -947,21 +947,9 @@
       "severity": "urgent"
     },
     "css_selector_duplicated": {
-      "title": "同じCSSセレクタが同じ文脈で複数の規則に",
-      "count": 11,
-      "items": [
-        ".breadcrumb .crumb-current が3回",
-        ".detail-header h1 が2回（@media (max-width: 768px) の中）",
-        ".eh-actions .detail-fav-btn が2回",
-        ".eh-actions .share-btn が2回",
-        ".eh-actions .share-line が2回",
-        ".eh-actions .share-x が2回",
-        ".event-card.swipe-confirm が2回（@media (max-width: 768px) の中）",
-        ".event-card.swiping-right が2回（@media (max-width: 768px) の中）",
-        ".footer-nav-tertiary が2回",
-        ".landing-hero ~ .section-heading が2回",
-        ".landing-intro ~ .section-heading が2回"
-      ],
+      "title": "同じセレクタの同じプロパティを二度書いている",
+      "count": 0,
+      "items": [],
       "note": "1つにまとめる。分かれていると、詳細度の低いほうを直して「直した」と誤って報告する。まとめるときは表示を実際に見て確かめる",
       "severity": "info"
     },
