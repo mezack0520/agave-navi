@@ -1,5 +1,5 @@
 {
-  "total": 421,
+  "total": 464,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -163,8 +163,12 @@
     },
     "thin_needs_source": {
       "title": "薄い判定で開催予定なのに出典がない(要対処)",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "agabase-2nd-tomisato-2026-09",
+        "bizarre-farm-autumn-fes-9th-2026-09",
+        "hamimoro-kitaharima-2026-09"
+      ],
       "note": "一次情報を見つけるか、見つからなければ掲載基準により削除",
       "severity": "urgent"
     },
@@ -177,7 +181,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 99,
+      "count": 101,
       "items": [
         "bba-vol5-carpediem-2026-09",
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
@@ -201,6 +205,7 @@
         "felicita-hachitoari-yumegaoka-2026-09",
         "fujisan-garden-marche-2026-10",
         "fukuoka-green-party-7th-2026",
+        "gamagori-taniku-festa-hyogo-2026-09",
         "garden-link-festa-2026-10",
         "gifu-midori-marche-2nd-2026-09",
         "green-base-market-vol1-nishikata-2026-10",
@@ -217,15 +222,14 @@
         "jusai-ichinomiya-autumn-2026",
         "kagoen-aki-geijutsu-shokubutsu-matsuri-13th-2026",
         "kinshakusai-vol6-2026-10",
-        "kisarazu-cs-auction-2026-09",
-        "kkt-taniku-fes-vol6-machida-2026-11"
+        "kisarazu-cs-auction-2026-09"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 138,
+      "count": 140,
       "items": [
         "aobouzu-6raccoon-popup-2026-09",
         "aobouzu-kagoshima-popup-2026-09",
@@ -258,6 +262,7 @@
         "fujisan-garden-marche-2026-10",
         "fukuoka-green-party-6th-2026",
         "fukuoka-green-party-7th-2026",
+        "gamagori-taniku-festa-hyogo-2026-09",
         "garden-link-festa-2026-10",
         "gardens-umekita-2nd-anniv-2026-09",
         "gifu-midori-marche-2nd-2026-09",
@@ -265,28 +270,37 @@
         "green-champuroo-vol2-2026-10",
         "green-dayz-higashikawa-2026-07",
         "green-nuts-rumble-vol2-2026-09",
-        "greensnap-marche-toyosu-2026",
-        "greensnap-marche-yokohama-2026-autumn"
+        "greensnap-marche-toyosu-2026"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 45,
+      "count": 55,
       "items": [
+        "agabase-2nd-tomisato-2026-09",
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
+        "bizarre-farm-autumn-fes-9th-2026-09",
+        "botalife-4th-anniversary-popup-2026-09",
         "botanic-collection2-ube-2026-10",
         "botanical-botanical-okinawa-2026-11",
         "botanical-link-popup-kasugai-2026-10",
         "botanical-monsters-2027-okazaki",
+        "botanical-tamba-2026",
+        "botanical-yokocho-senju-2026-09",
+        "botanical-yokocho-senju-2026-10",
+        "botanical-yokocho-senju-2026-11",
         "chuushokushobutsusai-2026",
         "collect-plants-2026-09",
         "dio-plants-fes-vol1-kusatsu-2026-09",
         "exploring-unpredictable-plants-2026-09",
+        "fuji-taniku-plants-marche-2026-09",
+        "fujisan-festa-2026-autumn",
         "gen-x-bocchi-botanical-market-2026-10",
+        "hamimoro-kitaharima-2026-09",
         "hiroshima-cactus-succulent-ten-2026-10",
         "isij-big-bazaar-2026-11-22",
         "isij-big-bazaar-2027-01-10",
@@ -304,17 +318,7 @@
         "nihon-shaboten-taikai-51st-2026-10",
         "nishikan-botanical-nominoichi-4th-2026-10",
         "on-the-plants-vol9-fukuoka-2026-10",
-        "ore-no-plants-collection-2026-09",
-        "picnic-garden-vol25-2026-09",
-        "plant-freaks-olinas-2026-10",
-        "plant-freaks-olinas-2026-11",
-        "plants-box-kofu-2026-10",
-        "plants-festa-2-kawashima-2026-09",
-        "sakuya-green-jam-5-2026",
-        "shimane-cactus-succulent-ten-2026-10",
-        "soen-espulse-dream-plaza-2026-09",
-        "souransai-koshigaya-2026-10",
-        "taniku-midori-marche-niitsu-2026-09"
+        "ore-no-plants-collection-2026-09"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -335,8 +339,12 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "botalife-4th-anniversary-popup-2026-09: 本文 9月14日 が 2026-09-19〜2026-09-23 の外",
+        "botanical-yokocho-senju-2026-10: 本文 10月4日 が 2026-10-11〜2026-10-11 の外",
+        "botanical-yokocho-senju-2026-11: 本文 11月15日 が 2026-11-22〜2026-11-22 の外"
+      ],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
@@ -419,12 +427,25 @@
     },
     "blank_optional_fields": {
       "title": "任意フィールドが空(nullと空文字が混在)",
-      "count": 4,
+      "count": 17,
       "items": [
+        "agabase-2nd-tomisato-2026-09: sourceUrl = 空文字",
+        "agabase-2nd-tomisato-2026-09: url = 空文字",
+        "bizarre-farm-autumn-fes-9th-2026-09: sourceUrl = 空文字",
+        "bizarre-farm-autumn-fes-9th-2026-09: url = 空文字",
         "botanical-link-popup-kasugai-2026-10: imageUrl = null",
         "botanical-monsters-2027-okazaki: imageUrl = null",
+        "botanical-yokocho-senju-2026-09: url = 空文字",
+        "botanical-yokocho-senju-2026-10: url = 空文字",
+        "botanical-yokocho-senju-2026-11: url = 空文字",
+        "fuji-taniku-plants-marche-2026-09: url = 空文字",
+        "fujisan-festa-2026-autumn: url = 空文字",
+        "gamagori-taniku-festa-hyogo-2026-09: sourceUrl = 空文字",
         "green-holic-kariya-2026: imageUrl = null",
-        "picnic-garden-vol25-2026-09: imageUrl = null"
+        "hamimoro-kitaharima-2026-09: sourceUrl = 空文字",
+        "hamimoro-kitaharima-2026-09: url = 空文字",
+        "picnic-garden-vol25-2026-09: imageUrl = null",
+        "tanikutta-popup-petit-marche-2026-09: sourceUrl = 空文字"
       ],
       "note": "値が無いならキーごと消す。残すなら null に統一する",
       "severity": "info"
@@ -698,17 +719,23 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 44,
+      "count": 54,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-12 plants-festa-2-kawashima-2026-09",
         "2026-09-12 soen-espulse-dream-plaza-2026-09",
+        "2026-09-13 hamimoro-kitaharima-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
+        "2026-09-19 botalife-4th-anniversary-popup-2026-09",
         "2026-09-19 kourep-2026-autumn",
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
         "2026-09-19 picnic-garden-vol25-2026-09",
+        "2026-09-22 botanical-yokocho-senju-2026-09",
+        "2026-09-26 agabase-2nd-tomisato-2026-09",
+        "2026-09-26 bizarre-farm-autumn-fes-9th-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
+        "2026-09-26 fuji-taniku-plants-marche-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
         "2026-09-27 exploring-unpredictable-plants-2026-09",
         "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
@@ -722,24 +749,18 @@
         "2026-10-10 nishikan-botanical-nominoichi-4th-2026-10",
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
+        "2026-10-11 botanical-yokocho-senju-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
         "2026-10-17 plant-freaks-olinas-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
+        "2026-11-03 fujisan-festa-2026-autumn",
         "2026-11-07 chuushokushobutsusai-2026",
         "2026-11-14 botanical-botanical-okinawa-2026-11",
         "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
-        "2026-11-22 isij-big-bazaar-2026-11-22",
-        "2026-11-22 midorigakuen-himeji-2026-11",
-        "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
-        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
-        "2026-11-28 plant-freaks-olinas-2026-11",
-        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11",
-        "2027-01-10 isij-big-bazaar-2027-01-10",
-        "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-24 aichin-shokusai-new-year-party-2027",
-        "2027-03-14 isij-big-bazaar-2027-03-14"
+        "2026-11-22 botanical-yokocho-senju-2026-11",
+        "2026-11-22 isij-big-bazaar-2026-11-22"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1103,7 +1124,7 @@
       "title": "imageUrlが消えている",
       "count": 1,
       "items": [
-        "imageUrl のある回が 142 → 138 件（2026-09-09 比、イベント削除ぶん0件を差し引いて 3件が消失）"
+        "imageUrl のある回が 142 → 140 件（2026-09-09 比、イベント削除ぶん0件を差し引いて 1件が消失）"
       ],
       "note": "サイトロゴ等を意図して消した回はこれで正しい(1日だけ鳴る)。心当たりが無ければ git diff HEAD~1 -- events.json で imageUrl を見る。カード・og:image・twitter:image・JSON-LD・sitemap の5箇所が同時に落ちる",
       "severity": "urgent"
