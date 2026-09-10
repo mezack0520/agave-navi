@@ -1,39 +1,29 @@
 {
-  "_note": "タスクが手でやる巡回の台帳。CI から見られない情報源(NextMeet・Instagram)は coverage-sweep.py で自動化できないので、やった日を repo に残さないと『やらなかった日』と区別が付かない。agave-event-update が毎回 lastSweptOn / history を書き、audit.py の manual_sweep_stale が古くなったら鳴らす。",
-  "_why": "2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、NextMeet の月別ページを手で開いたら未掲載が15件出た。『3社は互いに取りこぼす』はプレイブック §3 に前から書いてあるが、機械化されていたのは LEAFLA だけで、残りを回ったかどうかは repo のどこにも残っていなかった。",
-  "sweeps": {
-    "nextmeet-monthly": {
-      "label": "NextMeet の月別一覧 /plants/monthly/YYYY-MM を先2か月ぶん",
-      "url": "https://nextmeet.app/plants/monthly/",
-      "staleDays": 7,
-      "lastSweptOn": "2026-09-07",
-      "lastScope": "2026-12 / 2027-01（2026-10 / 2026-11 は 09-06 に巡回済み）",
-      "history": [
-        "2026-09-06",
-        "2026-09-07"
-      ]
-    },
-    "matome-blog": {
-      "label": "まとめブログの期間まとめ記事(もすレコ。の半期まとめなど)",
-      "url": "https://mostgreenrecords.com/category/go_place/",
-      "staleDays": 14,
-      "lastSweptOn": "2026-09-06",
-      "lastScope": "2026秋冬(9〜12月)まとめ",
-      "history": [
-        "2026-09-06"
-      ]
-    },
-    "pukubook-events": {
-      "label": "PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）",
-      "url": "https://pukubook.jp/events/",
-      "staleDays": 7,
-      "why": "3社目のアグリゲータ。LEAFLA(coverage-sweep が自動巡回)と NextMeet(月別)のどちらにも出ない回を拾う。2026-09-07 の巡回で THE BOTANICAL SHOW 6th・トハメルカド境赤レンガ倉庫・アジア有用植物祭がここにだけ出ていた。プレイブック §3 に『pukubook の一覧を必ず1回読む』と 2026-08-12 から書いてあるが、回ったかを残す場所が無く、やらなくても誰も気づかない状態だった",
-      "lastSweptOn": "2026-09-07",
-      "lastScope": "全国の注目イベント + 今後のイベント（2026-09-20 まで表示分）",
-      "history": [
-        "2026-09-07"
-      ]
-    }
+ "_note": "タスクが手でやる巡回の台帳。coverage-sweep.py が自動で回れない情報源は、やった日を repo に残さないと『やらなかった日』と区別が付かない。agave-event-update が毎回 lastSweptOn / history を書き、audit.py の manual_sweep_stale が古くなったら鳴らす。何を巡回すべきかの単一情報源は listing-policy.json の coverageSources で、自動巡回(coverage-gaps.json の sweptSources)か この台帳のどちらかで埋まっていなければ coverage_source_missing が鳴る。",
+ "_why": "2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、NextMeet の月別ページを手で開いたら未掲載が15件出た。『3社は互いに取りこぼす』はプレイブック §3 に前から書いてあるが、機械化されていたのは LEAFLA だけで、残りを回ったかどうかは repo のどこにも残っていなかった。",
+ "sweeps": {
+  "matome-blog": {
+   "label": "まとめブログの期間まとめ記事(もすレコ。の半期まとめなど)",
+   "url": "https://mostgreenrecords.com/category/go_place/",
+   "staleDays": 14,
+   "lastSweptOn": "2026-09-06",
+   "lastScope": "2026秋冬(9〜12月)まとめ",
+   "history": [
+    "2026-09-06"
+   ]
   },
-  "updated": "2026-09-07"
+  "pukubook-events": {
+   "label": "PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）",
+   "url": "https://pukubook.jp/events/",
+   "staleDays": 7,
+   "why": "3社目のアグリゲータ。LEAFLA(coverage-sweep が自動巡回)と NextMeet(月別)のどちらにも出ない回を拾う。2026-09-07 の巡回で THE BOTANICAL SHOW 6th・トハメルカド境赤レンガ倉庫・アジア有用植物祭がここにだけ出ていた。プレイブック §3 に『pukubook の一覧を必ず1回読む』と 2026-08-12 から書いてあるが、回ったかを残す場所が無く、やらなくても誰も気づかない状態だった",
+   "lastSweptOn": "2026-09-07",
+   "lastScope": "全国の注目イベント + 今後のイベント（2026-09-20 まで表示分）",
+   "history": [
+    "2026-09-07"
+   ]
+  }
+ },
+ "updated": "2026-09-07",
+ "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
 }

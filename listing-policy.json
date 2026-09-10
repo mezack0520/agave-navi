@@ -216,7 +216,8 @@
       },
       "nextmeet": {
         "label": "NextMeet の月別ページ",
-        "manualSweepId": "nextmeet-monthly"
+        "manualSweepId": null,
+        "note": "2026-09-10 に coverage-sweep.py へ機械化。Actions からも 3/3 か月取得できた。届かなくなったら manual-sweeps.json に台帳を作り直して manualSweepId を戻す。"
       }
     }
   }

@@ -1032,8 +1032,13 @@
   規則は `listing-policy.json` の `plantCentric.compositeEvents.storeAnniversary` に書いた。
 
 - **`coverage-gaps.json` が0件でも「取りこぼしなし」ではない。あれは LEAFLA しか見ていない（2026-09-06）。**
-  `coverage-sweep.py` は LEAFLA の日付別ページだけを巡回する。CI から
-  NextMeet と Instagram は読めないので、他社を足す実装ができない。
+  ~~`coverage-sweep.py` は LEAFLA の日付別ページだけを巡回する。CI から
+  NextMeet と Instagram は読めないので、他社を足す実装ができない。~~
+  **2026-09-10 に NextMeet を機械化した。**「CI から読めない」は思い込みで、
+  実測すると Actions から 3/3 か月とも 200 で取れた（§2 の「到達性は変わる。
+  不通と書いてあってもまず1回叩いて確かめる」がここでも当たった）。
+  手動台帳の `nextmeet-monthly` は外した。残すと、手で回さなくなった
+  7日後に `manual_sweep_stale` が誤って鳴る。Instagram は未確認。
   今日、`coverage-gaps` は 0件・`errors` 0・`coverage_sweep_broken` も 0 という
   いちばん健全に見える状態だったが、**NextMeet の月別一覧を手で開いたら
   未掲載が15件出た**（10月5件・11月10件）。うち5件は 11/14 以降の回で、
@@ -1046,9 +1051,14 @@
   `audit.py` の `manual_sweep_stale`(urgent) が経過日数で鳴らす。
   毎回 `lastSweptOn` / `lastScope` / `history` を更新する。
   **回れなかった回は日付を進めない。**進めると回った回と区別が付かなくなる。
-  巡回するのは最低この2つ。
-  - `https://nextmeet.app/plants/monthly/YYYY-MM` を**先2か月ぶん**（staleDays 7）
+  手で巡回するのは now まとめブログと PUKUBOOK。NextMeet は自動に移した。
   - まとめブログの期間まとめ記事（もすレコ。の半期まとめ等・staleDays 14）
+  - PUKUBOOK の全国イベント一覧（staleDays 7）
+
+  **何を巡回すべきかは `listing-policy.json` の `coverageSources` が単一情報源。**
+  自動(`coverage-gaps.json` の `sweptSources`)でも手動台帳でも埋まっていない
+  情報源があれば `audit.py` の `coverage_source_missing`(urgent) が鳴る。
+  経路は問わない。**見ていない情報源があることだけを見る。**
   NextMeet の月別は1ページに全国の会期が並ぶので、
   `events.json` と機械照合すれば数分で差分が出る。名称の表記ゆれで外れるので
   （`ぶらりぷらんつ` と掲載済み `ぷらりぷらんつ`）、**日付+会場でも引く**
