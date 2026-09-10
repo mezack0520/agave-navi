@@ -452,9 +452,28 @@ body.no-scroll {
     --crumb-size: 0.74rem;
     --crumb-pad: 0.34rem 0.78rem;
     --crumb-sep-size: 0.68rem;
+    /* 上に居座る帯の高さ。sticky の top と scroll-margin-top は
+       すべてここから計算する。**数値を直に書かない。**
+       .filter-bar は top:40px、.detail-sidebar は top:70px と
+       手打ちで、実測のヘッダーは 50.8px。トップの帯は約11px
+       ヘッダーの下に潜っていた(2026-09-10 実測)。
+       この値は nav.js が走る前の初期値で、実際の高さは
+       nav.js が測って上書きする。 */
+    --header-h: 51px;
+    --crumb-h: 47px;
+    --stuck-h: calc(var(--header-h) + var(--crumb-h));
+}
+
+/* 見出しへのリンクで飛んだ先が固定の帯に隠れる。
+   帯の高さが変われば自動で追う。 */
+[id] {
+    scroll-margin-top: calc(var(--stuck-h) + 0.5rem);
 }
 
 .crumb-bar {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 900;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -568,30 +587,11 @@ body.no-scroll {
    FILTER BAR (Airbnb-style category tabs)
    ======================================== */
 
-.filter-bar {
-    position: sticky;
-    top: 40px;
-    z-index: 900;
-    background-color: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-}
 
-.filter-bar::-webkit-scrollbar {
-    display: none;
-}
 
-.filter-bar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+
+
+
 
 .filter-tabs {
     display: flex;
@@ -711,49 +711,22 @@ body.no-scroll {
 }
 
 /* === Area Filter Bar (Drill-down: Region → Prefecture in 1 row) === */
-.area-filter-bar {
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    overflow: hidden;
-}
 
 
-.area-filter-bar::-webkit-scrollbar { display: none; }
+
+
 
 /* エリアのパンくずと検索を同じ段に置く。
    並び順の選択を外したら検索だけが1段を占め、
    狭い画面で固定ヘッダーが2段になっていた(2026-09-08 指摘) */
-.area-filter-inner {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0.35rem 1.5rem;
-}
 
 
-.area-drilldown {
-    flex: 1;
-    min-width: 0;
-    position: relative;
-}
+
+
 
 /* 全国 > 地域 > 県 の1行。地域選択と県選択で同じ組み方にする */
-.crumb-row,
-.region-tabs,
-.pref-row {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-.crumb-row::-webkit-scrollbar,
-.region-tabs::-webkit-scrollbar,
-.pref-row::-webkit-scrollbar { display: none; }
+
+
 
 .pref-chips {
     display: flex;
@@ -1495,7 +1468,7 @@ main {
 
 .detail-sidebar {
     position: sticky;
-    top: 70px;
+    top: calc(var(--stuck-h) + 1rem);
     align-self: start;
 }
 
@@ -1908,17 +1881,9 @@ main {
         font-size: 1.2rem;
     }
 
-    .filter-bar {
-        top: 36px;
-        background-color: var(--white, #fff);
-        border-bottom: none;
-    }
+    
 
-    .filter-bar-inner {
-        padding: 0 0.75rem;
-        flex-wrap: wrap;
-        gap: 0.2rem;
-    }
+    
 
     .filter-controls {
         width: 100%;
@@ -1933,14 +1898,14 @@ main {
         padding: 0.3rem 1.4rem 0.3rem 0.5rem;
     }
 
-    .area-filter-inner {
-        padding: 0.3rem 0.75rem;
-    }
-    /* パンくずの大きさはここで一括。個別に書くと必ず食い違う */
+    
+    /* パンくずの大きさと帯の高さはここで一括。個別に書くと必ず食い違う */
     :root {
         --crumb-size: 0.72rem;
         --crumb-pad: 0.3rem 0.68rem;
         --crumb-sep-size: 0.66rem;
+        --header-h: 38px;
+        --crumb-h: 44px;
     }
 
     .filter-tabs {

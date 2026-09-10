@@ -64,14 +64,19 @@ def main():
             html = new_html
             reasons.append('logo')
 
-        # パンくず。sitelib.crumb_bar_html が唯一の組み立て。
+        # パンくず。sitelib.breadcrumb_html が唯一の組み立て。
         # 手書きのページは古い `<nav class="breadcrumb">` を直書きしていて、
         # 帯の見た目を .crumb-bar に移した瞬間に枠と余白が消えた
         # (2026-09-08。「取り残されてる」と言われた状態)。
         # 根っこの呼び名も「ホーム」のままで、トップの現在地「全国」と
         # 割れていた。ここで毎回作り直す。
+        # aria-label で対象を絞る。トップのエリア絞り込みは同じ
+        # .crumb-bar > nav.breadcrumb だが中身が button で、
+        # 階層ではなく絞り込みなので「エリア絞り込み」と名乗る。
+        # ここで拾うと生成物を手書き扱いで作り直してしまう。
         m_bc = re.search(r'([ \t]*)(?:<div class="crumb-bar">\s*)?'
-                         r'<(nav|div) class="breadcrumb"[^>]*>(.*?)</\2>'
+                         r'<(nav|div) class="breadcrumb"'
+                         r'(?![^>]*aria-label="エリア絞り込み")[^>]*>(.*?)</\2>'
                          r'(?:\s*<form class="search-field".*?</form>)?'
                          r'(?:\s*</div>)?', html, re.S)
         if m_bc:
@@ -111,7 +116,7 @@ def main():
                 if tail:
                     items.append((tail, None))
             if items:
-                want_bc = sitelib.crumb_bar_html(items)
+                want_bc = sitelib.breadcrumb_html(items)
                 if m_bc.group(0).strip() != want_bc.strip():
                     html = html[:m_bc.start()] + want_bc + html[m_bc.end():]
                     reasons.append('breadcrumb')

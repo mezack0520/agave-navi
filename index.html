@@ -41,9 +41,9 @@
     <link rel="dns-prefetch" href="https://www.amazon.co.jp">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
-    <link rel="stylesheet" href="style.css?v=20260909c">
+    <link rel="stylesheet" href="style.css?v=20260910a">
     <!-- 一覧の共通UI(行きたい・もっと見る)。body内のインラインから呼ぶため head で同期読み込み -->
-    <script src="list-ui.js?v=20260908g"></script>
+    <script src="list-ui.js?v=20260910a"></script>
 
 
     <script type="application/ld+json">
@@ -369,7 +369,7 @@
   ]
 }
 </script>
-    <script src="/nav.js?v=20260908g" defer></script>
+    <script src="/nav.js?v=20260910a" defer></script>
 </head>
 <body>
     <header class="header">
@@ -406,44 +406,22 @@
         </div>
     </nav>
 
-    <div class="filter-bar">
-        <!-- エリア絞り込みと検索は同じ段に置く。
-             並び順の選択を外したら検索だけが1段を占めることになり、
-             狭い画面で固定ヘッダーが2段になっていた(2026-09-08 指摘) -->
-        <!-- エリア絞り込み: ドリルダウン式（1行） -->
-        <div class="area-filter-bar" id="areaFilterBar">
-            <div class="area-filter-inner">
-                <div class="area-drilldown" id="areaDrilldown">
 <!-- AREA-FILTER:START 生成物。scripts/sync-index-cards.py が sitelib から貼り替える。手で書かない -->
-                <div class="crumb-row" id="regionTabs">
-                    <button class="pref-crumb active" onclick="selectRegion('all')">全国</button>
-                    <span class="pref-sep" aria-hidden="true">&gt;</span>
-                    <div class="pref-chips" id="regionChips"><button class="region-tab" data-region="北海道" onclick="selectRegion('北海道')">北海道</button><button class="region-tab" data-region="東北" onclick="selectRegion('東北')">東北</button><button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button><button class="region-tab" data-region="北陸" onclick="selectRegion('北陸')">北陸</button><button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button><button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button><button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button><button class="region-tab" data-region="四国" onclick="selectRegion('四国')">四国</button><button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button></div>
-                </div>
-                <div class="crumb-row" id="prefRow" style="display:none">
-                    <button class="pref-crumb" onclick="selectRegion('all')">全国</button>
-                    <span class="pref-sep" aria-hidden="true">&gt;</span>
-                    <button class="pref-crumb" id="prefRegionCrumb" onclick="selectPref('all')"></button>
-                    <span class="pref-sep" aria-hidden="true">&gt;</span>
-                    <div class="pref-chips" id="prefChips"></div>
-                </div>
+  <div class="crumb-bar">
+    <nav class="breadcrumb" id="regionTabs" aria-label="エリア絞り込み"><button class="pref-crumb active" onclick="selectRegion('all')">全国</button><span class="pref-sep" aria-hidden="true">&gt;</span><div class="pref-chips" id="regionChips"><button class="region-tab" data-region="北海道" onclick="selectRegion('北海道')">北海道</button><button class="region-tab" data-region="東北" onclick="selectRegion('東北')">東北</button><button class="region-tab" data-region="関東" onclick="selectRegion('関東')">関東</button><button class="region-tab" data-region="北陸" onclick="selectRegion('北陸')">北陸</button><button class="region-tab" data-region="東海" onclick="selectRegion('東海')">東海</button><button class="region-tab" data-region="関西" onclick="selectRegion('関西')">関西</button><button class="region-tab" data-region="中国" onclick="selectRegion('中国')">中国</button><button class="region-tab" data-region="四国" onclick="selectRegion('四国')">四国</button><button class="region-tab" data-region="九州" onclick="selectRegion('九州')">九州</button></div></nav>
+    <nav class="breadcrumb" id="prefRow" aria-label="エリア絞り込み" style="display:none"><button class="pref-crumb" onclick="selectRegion('all')">全国</button><span class="pref-sep" aria-hidden="true">&gt;</span><button class="pref-crumb" id="prefRegionCrumb" onclick="selectPref('all')"></button><span class="pref-sep" aria-hidden="true">&gt;</span><div class="pref-chips" id="prefChips"></div></nav>
+    <div class="search-field"><input type="text" id="searchInput" placeholder="イベント名・会場で検索" aria-label="イベントを検索" oninput="searchEvents(this.value)"></div>
+  </div>
 <!-- AREA-FILTER:END -->
-                </div>
-                <div class="search-field">
-                    <input type="text" id="searchInput" placeholder="イベント名・会場で検索" oninput="searchEvents(this.value)">
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <main class="page-content">
+<main class="page-content">
         <div class="content-inner">
 
             <section id="events" class="events-section">
                 <h1 class="section-heading">開催予定のアガベ・多肉植物・塊根植物イベント<span class="event-count" id="eventCount">144件</span></h1>
                 <p class="section-sub" style="color:var(--gray-500);font-size:0.82rem;margin:-0.5rem 0 1.5rem;line-height:1.6">アガベ・塊根植物（コーデックス）・多肉植物・珍奇植物・ビザールプランツの即売会やマルシェ、大型展示会の情報をまとめています。</p>
 
-                <!-- 開催中(会期4日以上)。status-auto.js?v=20260908g が該当カードをここへ移す。
+                <!-- 開催中(会期4日以上)。status-auto.js?v=20260910a が該当カードをここへ移す。
                      一覧本体に混ぜると会期の長さぶん先頭に居座るため枠を分けている。
                      該当0件のときは見出しごと非表示。 -->
                 <h2 class="section-heading section-heading--sub" id="ongoingHeading" style="display:none">開催中<span class="section-heading-note">会期4日以上</span></h2>
@@ -2900,8 +2878,8 @@
     </div>
   </footer>
 
-    <script src="/top-filter.js?v=20260908g" defer></script>
-<script src="status-auto.js?v=20260908g"></script>
-<script src="affiliate.js?v=20260908g"></script>
+    <script src="/top-filter.js?v=20260910a" defer></script>
+<script src="status-auto.js?v=20260910a"></script>
+<script src="affiliate.js?v=20260910a"></script>
 </body>
 </html>

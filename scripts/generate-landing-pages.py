@@ -101,7 +101,7 @@ def bc_jsonld(items):
 
 
 def bc_html(items):
-    return sitelib.crumb_bar_html(items)
+    return sitelib.breadcrumb_html(items)
 
 
 # イベントカードは sitelib.event_card_html が単一情報源。

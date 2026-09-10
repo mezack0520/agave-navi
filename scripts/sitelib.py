@@ -16,8 +16,8 @@ import json
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260909c'
-JS_VERSION = '20260908g'
+CSS_VERSION = '20260910a'
+JS_VERSION = '20260910a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -782,42 +782,95 @@ def correction_note(root='', lead=True, here=False):
     return (CORRECTION_LEAD + body) if lead else body
 
 
-def crumb_search_html():
+CRUMB_SEP = '<span class="pref-sep" aria-hidden="true">&gt;</span>'
+
+
+def crumb_search_html(live=False):
     """パンくずの右端に置く検索。トップと同じ見た目にする。
 
-    トップは入力しながら絞るが、他の頁は絞る対象が無いので
-    `/?q=` に飛ばす。トップ側が q を読んで絞る。
+    トップは入力しながら絞るので live=True。他の頁は絞る対象が
+    無いので `/?q=` に飛ばす。トップ側が q を読んで絞る。
     JSを足さずに form の GET で済ませる。
     """
+    if live:
+        # トップだけ入力しながら絞る。id と oninput は top-filter.js が見る
+        return ('<div class="search-field">'
+                '<input type="text" id="searchInput"'
+                ' placeholder="イベント名・会場で検索"'
+                ' aria-label="イベントを検索"'
+                ' oninput="searchEvents(this.value)"></div>')
     return ('<form class="search-field" action="/" method="get" role="search">'
             '<input type="search" name="q" placeholder="イベント名・会場で検索"'
             ' aria-label="イベントを検索"></form>')
 
 
-def crumb_bar_html(items, search=True):
-    """パンくず一段。items は [(表示名, リンク先 or None)]。最後が現在地。
+def crumb_link(name, url):
+    """上位。押すと1段上がる。"""
+    return f'<a href="{_attr(url)}">{html_escape(name)}</a>'
 
-    詳細・地域・県・タグ・ガイドで別々に組んでいたため、文字の大きさが
-    0.66〜0.75rem に散り、根っこの呼び名も揃っていなかった。
-    ここが唯一の組み立て。
+
+def crumb_here(name):
+    """現在地。**クラスで示す。**素の span を現在地の印にすると
+    区切りの span まで黒く塗られる(2026-09-08 本番で発生)。"""
+    return f'<span class="crumb-current">{html_escape(name)}</span>'
+
+
+def crumb_button(name, onclick, *, active=False, node_id='', cls='pref-crumb',
+                 data=''):
+    """押して絞る段。トップのエリア絞り込みが使う。
+
+    行き先がリンクではなくJSなので button。見た目は上位・現在地と
+    同じ部品を使う。ここを div や span で作ると、同じ形のものが
+    別のCSSを持つ(それが .crumb-row / .region-tabs / .pref-row だった)。
     """
-    parts = []
+    return ('<button class="' + cls + (' active' if active else '') + '"'
+            + (f' id="{node_id}"' if node_id else '')
+            + ((' ' + data) if data else '')
+            + f' onclick="{_attr(onclick)}">{html_escape(name)}</button>')
+
+
+def crumb_nav(nodes, label='パンくずリスト', node_id='', hidden=False):
+    """パンくず1段。**区切りを入れるのはここだけ。**
+
+    label はトップのエリア絞り込みだけ変える。見た目は同じでも
+    あちらは階層ではなく絞り込みなので、読み上げでパンくずと
+    名乗らせない。sync-footers.py が作り直す対象の目印も兼ねる。
+    """
+    return ('<nav class="breadcrumb"'
+            + (f' id="{node_id}"' if node_id else '')
+            + f' aria-label="{_attr(label)}"'
+            + (' style="display:none"' if hidden else '')
+            + '>' + CRUMB_SEP.join(nodes) + '</nav>')
+
+
+def crumb_bar_html(navs, search=True, live=False):
+    """パンくずの帯。navs は crumb_nav の並び。**帯の唯一の組み立て。**
+
+    詳細・地域・県・タグ・ガイドは .crumb-bar、トップだけ
+    .filter-bar > .area-filter-bar > .area-drilldown > .crumb-row という
+    別の作りで、同じ「全国 > 関東 > 埼玉」を4通りの器で出していた。
+    固定する位置もトップだけ手打ちの 40px で、実測 50.8px の
+    ヘッダーの下に約11px潜り込んでいた(2026-09-10 実測)。
+    """
+    rows = ['    ' + n + '\n' for n in navs]
+    if search:
+        rows.append('    ' + crumb_search_html(live) + '\n')
+    return '  <div class="crumb-bar">\n' + ''.join(rows) + '  </div>'
+
+
+def breadcrumb_html(items, search=True):
+    """いちばん普通の1段のパンくず。items は [(表示名, リンク先 or None)]。
+
+    最後が現在地。途中でリンク先が無いものも現在地として塗る
+    (カテゴリ頁の「全国 > カテゴリ > 即売会」がこれに当たる)。
+    """
     n = len(items)
+    nodes = []
     for i, (name, url) in enumerate(items):
         last = (i == n - 1)
-        if url and not last:
-            parts.append(f'<a href="{_attr(url)}">{html_escape(name)}</a>')
-        else:
-            # 現在地はクラスで示す。素の span を現在地の印にすると
-            # 区切りの span まで黒く塗られる(2026-09-08 本番で発生)
-            parts.append(f'<span class="crumb-current">{html_escape(name)}</span>')
-        if not last:
-            parts.append('<span class="pref-sep" aria-hidden="true">&gt;</span>')
-    return ('  <div class="crumb-bar">\n'
-            '    <nav class="breadcrumb" aria-label="パンくずリスト">'
-            + ''.join(parts) + '</nav>\n'
-            + ('    ' + crumb_search_html() + '\n' if search else '')
-            + '  </div>')
+        nodes.append(crumb_link(name, url) if (url and not last)
+                     else crumb_here(name))
+    return crumb_bar_html([crumb_nav(nodes)], search=search)
 
 
 def crumb_jsonld(items, domain=None):
@@ -861,11 +914,11 @@ def region_map_js():
 
 
 def area_filter_html(events=None):
-    """エリア絞り込み。全国 > 地域 > 県 のパンくず型。
+    """トップのエリア絞り込み。全国 > 地域 > 県 のパンくず。
 
-    現在地を黒、選択肢を白のチップで出す。区切りと語順は
-    詳細ページのパンくず(ホーム > 関東 > 埼玉)に合わせている。
-    「すべて」チップは置かない。地域名自体が現在地になる。
+    下層ページのパンくずと同じ器(.crumb-bar > nav.breadcrumb)で出す。
+    現在地を黒、選択肢を白のチップで出す。「すべて」チップは置かない。
+    地域名自体が現在地になる。
 
     events を渡すと、載っている回がある地域だけを出す。
     空振りするチップを並べても押す意味が無い。
@@ -883,27 +936,18 @@ def area_filter_html(events=None):
     for r in region_prefs():
         if have is not None and r not in have:
             continue
-        chips.append(f'<button class="region-tab" data-region="{_attr(r)}"'
-                     f' onclick="selectRegion(\'{_attr(r)}\')">'
-                     f'{html_escape(r)}</button>')
-    sep = '<span class="pref-sep" aria-hidden="true">&gt;</span>'
-    return (
-        '                <div class="crumb-row" id="regionTabs">\n'
-        '                    <button class="pref-crumb active"'
-        ' onclick="selectRegion(\'all\')">全国</button>\n'
-        '                    ' + sep + '\n'
-        '                    <div class="pref-chips" id="regionChips">'
-        + ''.join(chips) + '</div>\n'
-        '                </div>\n'
-        '                <div class="crumb-row" id="prefRow" style="display:none">\n'
-        '                    <button class="pref-crumb"'
-        ' onclick="selectRegion(\'all\')">全国</button>\n'
-        '                    ' + sep + '\n'
-        '                    <button class="pref-crumb" id="prefRegionCrumb"'
-        ' onclick="selectPref(\'all\')"></button>\n'
-        '                    ' + sep + '\n'
-        '                    <div class="pref-chips" id="prefChips"></div>\n'
-        '                </div>')
+        chips.append(crumb_button(r, f"selectRegion('{r}')", cls='region-tab',
+                                  data=f'data-region="{_attr(r)}"'))
+    region_nav = crumb_nav(
+        [crumb_button('全国', "selectRegion('all')", active=True),
+         '<div class="pref-chips" id="regionChips">' + ''.join(chips) + '</div>'],
+        label='エリア絞り込み', node_id='regionTabs')
+    pref_nav = crumb_nav(
+        [crumb_button('全国', "selectRegion('all')"),
+         crumb_button('', "selectPref('all')", node_id='prefRegionCrumb'),
+         '<div class="pref-chips" id="prefChips"></div>'],
+        label='エリア絞り込み', node_id='prefRow', hidden=True)
+    return crumb_bar_html([region_nav, pref_nav], live=True)
 
 
 def update_rows(picked, root=''):

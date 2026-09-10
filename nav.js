@@ -63,3 +63,46 @@
   // 「行きたい」を押した直後にも合わせる。list-ui.js が呼ぶ
   window.AEN_ON_FAV_CHANGE = paint;
 })();
+
+// 固定する帯の高さを実測して CSS 変数に返す。
+//
+// sticky の top と scroll-margin-top は --header-h / --crumb-h から
+// 計算している。style.css に書いてある値は JS が走る前の初期値で、
+// 実際の高さは文字の大きさ・折り返し・端末の実装で変わる。
+// 手打ちの数値を置いていた頃は、トップの帯が top:40px 固定で
+// 実測 50.8px のヘッダーの下に約11px潜っていた(2026-09-10 実測)。
+// 読み込み後と、大きさが変わるたびに測り直す。
+(function () {
+  'use strict';
+  var root = document.documentElement;
+
+  function h(sel) {
+    var el = document.querySelector(sel);
+    return el ? Math.round(el.getBoundingClientRect().height) : 0;
+  }
+
+  function measure() {
+    var head = h('.header');
+    // パンくずの帯が無い頁もある。その場合は 0。初期値を残すと
+    // 見出しへのリンクが帯1本ぶん行き過ぎる
+    root.style.setProperty('--crumb-h', h('.crumb-bar') + 'px');
+    if (head) root.style.setProperty('--header-h', head + 'px');
+  }
+
+  function watch() {
+    measure();
+    if (typeof ResizeObserver !== 'function') return;
+    var ro = new ResizeObserver(measure);
+    ['.header', '.crumb-bar'].forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (el) ro.observe(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watch);
+  } else {
+    watch();
+  }
+  window.addEventListener('load', measure);
+})();
