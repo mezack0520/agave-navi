@@ -65,22 +65,7 @@ jobs:
         run: |
           # 既定値は enrich-request.json。workflow_dispatch の入力があればそれで上書きする。
           # cron 実行もこのファイルを読むので、恒久的に件数を変えたいならファイルを直す。
-          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
-          import json, os
-          cfg = {}
-          try:
-              with open('enrich-request.json', encoding='utf-8') as f:
-                  cfg = json.load(f)
-          except (OSError, ValueError):
-              pass
-          limit = str(os.environ.get('IN_LIMIT') or cfg.get('limit') or 20)
-          slug = os.environ.get('IN_SLUG') or cfg.get('slug') or ''
-          orph = (os.environ.get('IN_ORPH') == 'true') or bool(cfg.get('removeOrphans'))
-          print(f'limit={limit}')
-          print(f'slug={slug}')
-          print(f'orphans={str(orph).lower()}')
-          EOF
-          cat "$GITHUB_OUTPUT"
+          python3 scripts/enrich-params.py | tee -a "$GITHUB_OUTPUT"
 
       - name: Run enrichment (Brave Search + scrape)
         env:

@@ -41,69 +41,11 @@ jobs:
           fi
 
       - name: Merge new-events.json (if exists)
-        run: |
-          python3 << 'PYEOF'
-          import json, os
-
-          if not os.path.exists("new-events.json"):
-              print("No new-events.json found. Skipping merge.")
-              exit(0)
-
-          with open("events.json", "r", encoding="utf-8") as f:
-              events = json.load(f)
-
-          with open("new-events.json", "r", encoding="utf-8") as f:
-              new_events = json.load(f)
-
-          existing = {e["slug"] for e in events}
-          added = []
-          updated = []
-
-          for ne in new_events:
-              if ne["slug"] not in existing:
-                  events.append(ne)
-                  added.append(ne["slug"])
-              else:
-                  for e in events:
-                      if e["slug"] == ne["slug"]:
-                          for k, v in ne.items():
-                              if v and v != e.get(k):
-                                  e[k] = v
-                                  if ne["slug"] not in updated:
-                                      updated.append(ne["slug"])
-                          break
-
-          events.sort(key=lambda e: (0 if e.get("status")=="upcoming" else 1, e.get("date","")))
-
-          with open("events.json", "w", encoding="utf-8") as f:
-              json.dump(events, f, indent=2, ensure_ascii=False)
-
-          up = sum(1 for e in events if e.get("status")=="upcoming")
-          print(f"Total: {len(events)}, Upcoming: {up}")
-          if added:
-              print(f"Added {len(added)}: {', '.join(added)}")
-          if updated:
-              print(f"Updated {len(updated)}: {', '.join(updated)}")
-          if not added and not updated:
-              print("No changes.")
-          PYEOF
+        run: python3 scripts/merge-new-events.py
 
       - name: Detect newly added slugs
         id: newslugs
-        run: |
-          python3 << 'PYEOF' >> $GITHUB_OUTPUT
-          import json, os, subprocess
-          # Compare current events.json to git HEAD (pre-merge) to find newly added slugs
-          try:
-              prev = subprocess.run(['git','show','HEAD:events.json'], capture_output=True, text=True).stdout
-              prev_slugs = {e.get('slug') for e in json.loads(prev)}
-          except Exception:
-              prev_slugs = set()
-          with open('events.json') as f:
-              cur = json.load(f)
-          new_slugs = sorted({e['slug'] for e in cur if e.get('slug') not in prev_slugs})
-          print(f'slugs={",".join(new_slugs)}')
-          PYEOF
+        run: python3 scripts/detect-new-slugs.py >> $GITHUB_OUTPUT
 
       - name: Enrich newly added slugs (Brave Search → og:image/url/etc)
         if: steps.newslugs.outputs.slugs != ''

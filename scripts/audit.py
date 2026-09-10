@@ -1286,6 +1286,28 @@ def main():
         'ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない',
         severity='urgent')
 
+    # workflow に直書きされたスクリプト。2026-09-10 に7本から6ブロック出した。
+    # 直書きは (1) ローカルで実行できないので直す前に確かめられない、
+    # (2) 自己テストを書く場所が無い、(3) 同じ処理が別の workflow にも
+    # 増える、の3つを同時に起こす。実際 sync-events.yml のカード挿入は
+    # 直書きだったせいでローカルのビルドから漏れ、手で足した回のカードが
+    # 作られなかった(2026-08-31)。人が気づく前に鳴らす。
+    inline = []
+    for f in sorted(glob.glob(rp('.github', 'workflows', '*.yml'))):
+        bn = os.path.basename(f)
+        code = '\n'.join(l for l in open(f, encoding='utf-8').read().splitlines()
+                         if not l.lstrip().startswith('#'))
+        for m in re.finditer(r'^\s*(?:[\w"\$\{\}]+=\S*\s+)*'
+                             r'(python3?|node|ruby|perl)\b[^\n|]*<<', code, re.M):
+            inline.append(f'{bn}: {m.group(1)} のヒアドキュメント')
+        for m in re.finditer(r'\b(?:cat|tee)\b[^\n]*<<[^\n]*\.(py|js|sh)\b', code):
+            inline.append(f'{bn}: スクリプトファイルを YAML から書き出している')
+    add('workflow_inline_code', 'workflowにスクリプトを直書きしている',
+        sorted(set(inline)),
+        'scripts/ 配下の実行可能なファイルに出して run: python3 scripts/x.py で呼ぶ。'
+        '直書きはローカルで実行できず、自己テストも書けない',
+        severity='urgent')
+
     # 時間軸の規則の一貫性。開始日(date)を単一の時間キーにすると、同じ原因から
     # 逆向きの事故が2つ出る(2026-08-20に是正)。
     #   1. 会期の長い回が開始日の古さで一覧の先頭に居座る

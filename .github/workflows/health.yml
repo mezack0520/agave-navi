@@ -48,43 +48,7 @@ jobs:
 
       - name: Detect newly added events (last 24h)
         if: github.event_name != 'push'
-        run: |
-          python3 << 'PYEOF'
-          import json, subprocess
-          with open("events.json") as f:
-              current = json.load(f)
-          current_slugs = {e["slug"] for e in current}
-          current_map = {e["slug"]: e for e in current}
-          old_slugs = set()
-          try:
-              result = subprocess.run(
-                  ["git", "log", "--since=24 hours ago", "--oneline", "--", "events.json"],
-                  capture_output=True, text=True)
-              commits = result.stdout.strip().split('\n')
-              if commits and commits[0]:
-                  oldest_hash = commits[-1].split()[0]
-                  old_json = subprocess.check_output(
-                      ["git", "show", f"{oldest_hash}~1:events.json"], stderr=subprocess.DEVNULL).decode()
-                  old_slugs = {e["slug"] for e in json.loads(old_json)}
-              else:
-                  old_json = subprocess.check_output(
-                      ["git", "show", "HEAD~1:events.json"], stderr=subprocess.DEVNULL).decode()
-                  old_slugs = {e["slug"] for e in json.loads(old_json)}
-          except Exception as ex:
-              print(f"Warning: could not get previous events: {ex}")
-              old_slugs = current_slugs
-          added = current_slugs - old_slugs
-          added_events = [current_map[s] for s in sorted(added) if s in current_map]
-          output = {"count": len(added), "events": []}
-          for e in added_events:
-              output["events"].append({
-                  "slug": e["slug"], "name": e.get("name", ""), "date": e.get("date", ""),
-                  "dateEnd": e.get("dateEnd", ""), "location": e.get("location", ""),
-                  "prefecture": e.get("prefecture", "")})
-          with open("new-events-added.json", "w", encoding="utf-8") as f:
-              json.dump(output, f, ensure_ascii=False, indent=2)
-          print(f"New events added (last 24h): {len(added)}")
-          PYEOF
+        run: python3 scripts/detect-added-events.py
 
       - name: 1. Data integrity check
         id: integrity
@@ -173,60 +137,8 @@ jobs:
         if: github.event_name != 'push'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          INTEGRITY_ERR=${{ steps.integrity.outputs.errors || 0 }}
-          LINKS_BROKEN=${{ steps.linkcheck.outputs.broken || 0 }}
-          IMAGES_DEAD=${{ steps.imghealth.outputs.dead || 0 }}
-          SSL_DAYS=${{ steps.domain.outputs.ssl_days_left || 999 }}
-
-          PROBLEMS=$((INTEGRITY_ERR + LINKS_BROKEN + IMAGES_DEAD))
-          SSL_ALERT=""
-          if [ "$SSL_DAYS" -lt 30 ]; then SSL_ALERT="⚠️ SSL残${SSL_DAYS}日"; PROBLEMS=$((PROBLEMS+1)); fi
-
-          if [ "$PROBLEMS" -eq 0 ]; then
-            echo "All health checks passed. No issue needed."
-            exit 0
-          fi
-
-          cat > /tmp/health-report.md <<EOF
-          ## 健全性レポート $(date +%Y-%m-%d)
-
-          | 項目 | 状態 |
-          |---|---|
-          | データ整合性エラー | ${INTEGRITY_ERR}件 |
-          | リンク切れ | ${LINKS_BROKEN}件 |
-          | 画像URL死亡 | ${IMAGES_DEAD}件 |
-          | SSL残日数 | ${SSL_DAYS}日 ${SSL_ALERT} |
-
-          ### 詳細ログ
-          <details><summary>data integrity</summary>
-
-          \`\`\`
-          $(tail -30 /tmp/integrity.log 2>/dev/null)
-          \`\`\`
-          </details>
-          <details><summary>links</summary>
-
-          \`\`\`
-          $(tail -20 /tmp/links.log 2>/dev/null)
-          \`\`\`
-          </details>
-          <details><summary>images</summary>
-
-          \`\`\`
-          $(tail -20 /tmp/img.log 2>/dev/null)
-          \`\`\`
-          </details>
-          <details><summary>events</summary>
-
-          \`\`\`
-          $(tail -20 /tmp/events.log 2>/dev/null)
-          \`\`\`
-          </details>
-          EOF
-
-          gh label create "auto-health" --description "自動健全性レポート" --color "F4A261" 2>/dev/null || true
-          gh issue create \
-            --title "🩺 健全性レポート $(date +%Y-%m-%d) (${PROBLEMS}件)" \
-            --body-file /tmp/health-report.md \
-            --label "auto-health" || true
+          INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
+          LINKS_BROKEN: ${{ steps.linkcheck.outputs.broken || 0 }}
+          IMAGES_DEAD: ${{ steps.imghealth.outputs.dead || 0 }}
+          SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
+        run: bash scripts/health-issue.sh

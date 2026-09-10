@@ -16,7 +16,11 @@
 pending-judgments.json / audit-results.json
 """
 import json
-from datetime import date
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitelib
 with open('check-results.json') as f:
     data = json.load(f)
 new_added = {"count": 0, "events": []}
@@ -25,7 +29,8 @@ try:
         new_added = json.load(f)
 except Exception:
     pass
-today = date.today().strftime('%Y/%m/%d')
+# ランナーはUTC。JSTで日付を決めないと 09:00 JST 実行が前日付になる
+today = sitelib.now_jst().strftime('%Y/%m/%d')
 # 要人間判断キュー(各スケジュールタスクが積む)を読み込み
 judgments = []
 try:
@@ -200,7 +205,6 @@ lines.append("アガベイベントナビ https://agave-navi.com")
 with open('email-body.txt', 'w') as f:
     f.write('\n'.join(lines))
 subj_prefix = f"【要判断{len(judgments)}件】" if judgments else ""
-import os
 # CI の外でも動くこと。GITHUB_OUTPUT が無いだけで落ちると、
 # ローカルで確かめられない = 直書きだった頃と同じになる
 _out = os.environ.get('GITHUB_OUTPUT')

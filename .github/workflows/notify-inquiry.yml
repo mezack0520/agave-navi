@@ -38,25 +38,7 @@ jobs:
 
       - name: Check handoff file is readable
         id: check
-        run: |
-          python3 - >> "$GITHUB_OUTPUT" <<'PY'
-          import json, pathlib
-
-          broken = ''
-          p = pathlib.Path('new-inquiries.json')
-          if not p.exists():
-              broken = 'new-inquiries.json が存在しません'
-          else:
-              try:
-                  d = json.loads(p.read_text(encoding='utf-8'))
-                  if not isinstance(d.get('items', []), list):
-                      broken = 'items が配列ではありません'
-              except Exception as e:
-                  broken = f'JSONとして読めません: {e}'
-
-          print('broken=' + ('true' if broken else 'false'))
-          print('reason=' + broken.replace('\n', ' '))
-          PY
+        run: python3 scripts/check-inquiry-handoff.py >> "$GITHUB_OUTPUT"
 
       - name: Alert on broken handoff file
         if: steps.check.outputs.broken == 'true'

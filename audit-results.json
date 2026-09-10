@@ -1,5 +1,5 @@
 {
-  "total": 478,
+  "total": 479,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -592,6 +592,13 @@
       "note": "ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない",
       "severity": "urgent"
     },
+    "workflow_inline_code": {
+      "title": "workflowにスクリプトを直書きしている",
+      "count": 0,
+      "items": [],
+      "note": "scripts/ 配下の実行可能なファイルに出して run: python3 scripts/x.py で呼ぶ。直書きはローカルで実行できず、自己テストも書けない",
+      "severity": "urgent"
+    },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
       "count": 1,
@@ -973,8 +980,10 @@
     },
     "cross_script_duplicate": {
       "title": "同じ名前が2つ以上のスクリプトにある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "FIELDS: detect-added-events.py, generate-csv.py"
+      ],
       "note": "sitelib へ寄せるか、役割が違うなら名前を分ける。規則が2か所にあると、足した日にどちらか片方だけが更新される。揃える意味の無い汎用名は audit.py の _DUP_OK に理由付きで足す",
       "severity": "info"
     },
