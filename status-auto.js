@@ -10,9 +10,18 @@
   // 以前は index.html のインラインJSに getCardDate / autoExpireEvents / sortAndFilter
   // の別実装があり、開始日だけで並べていたため会期の長い回が一覧の先頭に居座った。
   // 規則をここに集約し、index.html は UI のフックだけを持つ。
+  /* TIME-RULES:START
+     ここから TIME-RULES:END までが sitelib.py の event_phase /
+     list_sort_key / is_long_run と同じ規則。ブラウザで動く以上こちらの
+     実装は消せないが、**同じ規則が2つある**ことに変わりはない。
+     scripts/test-time-parity.py がこの範囲を node で切り出して実行し、
+     Python 側と同じ答えを返すかを毎ビルド突き合わせる。
+     この範囲は node から素で eval される。window / document を触らないこと。 */
   var AEN_TIME = (function () {
-    var LONG_RUN_DAYS = 4;      // sitelib.LONG_RUN_DAYS と同値
-    var PAST_KEEP_DAYS = 14;    // sitelib.PAST_KEEP_DAYS と同値
+/* TIME-CONSTS:START 生成物。scripts/sync-index-cards.py が sitelib から貼り替える。手で書かない */
+    var LONG_RUN_DAYS = 4;
+    var PAST_KEEP_DAYS = 14;
+/* TIME-CONSTS:END */
     var FAR_FUTURE = '9999-12-31';
     // JSTの「今日」。Date.now() は常にUTCエポックなので、9時間足して
     // UTCの読み出しを使えばJSTの暦日になる。閲覧者のタイムゾーンには依存しない。
@@ -78,6 +87,7 @@
       ongoingSortKey: ongoingSortKey, cmpKey: cmpKey, md: md
     };
   })();
+  /* TIME-RULES:END */
   window.AEN_TIME = AEN_TIME;
 
   var STATUS = {

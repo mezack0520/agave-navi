@@ -27,7 +27,8 @@ from sitelib import (today_jst, is_recent_past, event_span,
                      LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
                      list_sort_key, is_cancelled, cancel_label,
                      updates_section_html, load_updates,
-                     updates_scopes, area_filter_html, region_map_js)
+                     updates_scopes, area_filter_html, region_map_js,
+                     time_consts_js)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -305,6 +306,25 @@ def main():
                 with open(_tf, 'w', encoding='utf-8') as f:
                     f.write(_tfs[:_he] + _w + _tfs[_j:])
                 print('REGION-MAP: top-filter.js を更新')
+
+    # 時間軸の定数。status-auto.js が sitelib の event_phase /
+    # list_sort_key を書き直しているので、せめて数値は写さない。
+    # 挙動の一致は scripts/test-time-parity.py が毎ビルド見る。
+    _sa = os.path.join(ROOT, 'status-auto.js')
+    if os.path.exists(_sa):
+        with open(_sa, encoding='utf-8') as f:
+            _sas = f.read()
+        _i = _sas.find('/* TIME-CONSTS:START')
+        _j = _sas.find('/* TIME-CONSTS:END */')
+        if _i < 0 or _j <= _i:
+            print('::warning::TIME-CONSTS の受け口が status-auto.js に無い')
+        else:
+            _he = _sas.find('*/', _i) + 2
+            _w = '\n' + time_consts_js() + '\n'
+            if _sas[_he:_j] != _w:
+                with open(_sa, 'w', encoding='utf-8') as f:
+                    f.write(_sas[:_he] + _w + _sas[_j:])
+                print('TIME-CONSTS: status-auto.js を更新')
 
     for _tag, _body in (
             ('AREA-FILTER', area_filter_html(events)),

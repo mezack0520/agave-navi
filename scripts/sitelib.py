@@ -932,6 +932,17 @@ def region_prefs():
     return out
 
 
+def time_consts_js():
+    """status-auto.js の時間軸の定数。**数値を2か所に書かない。**
+
+    ブラウザ側は event_phase / list_sort_key を自前で持たざるを得ないが、
+    定数まで写すと片方だけ変えたときに黙ってずれる。ここから貼る。
+    挙動そのものの一致は scripts/test-time-parity.py が毎ビルド見る。
+    """
+    return (f'    var LONG_RUN_DAYS = {LONG_RUN_DAYS};\n'
+            f'    var PAST_KEEP_DAYS = {PAST_KEEP_DAYS};')
+
+
 def region_map_js():
     """トップの絞り込みが使う地域表。PREF_TO_REGION から作る。
 

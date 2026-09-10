@@ -25,6 +25,12 @@ else
   echo "::warning::node が無いため test-date-boundary.js をスキップしました"
 fi
 
+# 時間軸の規則が Python と JS でずれていないか。
+# status-auto.js は sitelib の event_phase / list_sort_key を書き直した
+# 別実装で、上の日付境界テストは JS 側だけを見る。**両者のずれは
+# どちらのテストも見ていなかった。**生成前に落とす。
+python3 scripts/test-time-parity.py
+
 python3 build-detail-pages.py
 python3 scripts/build-guides.py
 python3 scripts/build-static-html.py
