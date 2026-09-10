@@ -1647,6 +1647,53 @@ def main():
         'coverage-sweep.py の取得が失敗している。'
         'この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない')
 
+    # 巡回すべき情報源のうち、どこからも見られていないものが無いか。
+    # 2026-09-06 と 09-10、coverage-gaps.json は errors 0 / gaps 0 で
+    # いちばん健全に見えていたのに、NextMeet の月別を手で開いたら
+    # 未掲載が15件・17件出た。プレイブック §3 は前から
+    # 「アグリゲータ3社は互いに取りこぼす」と書いていたが、
+    # **散文で「両方見ろ」と書いても、片方しか実装されていないことに
+    # 気づける仕組みが無かった。** 要求は listing-policy.json の
+    # coverageSources が単一情報源で、自動巡回(coverage-gaps.sweptSources)か
+    # 手動台帳(manual-sweeps.json)のどちらかで埋まっていれば通す。
+    # 経路は問わない。**見ていない情報源があることだけを見る。**
+    _cs = (load_json('listing-policy.json', {}).get('coverageSources')
+           or {}).get('required') or {}
+    _swept_src = _cov.get('sweptSources') or {}
+    _ms_for_cov = load_json('manual-sweeps.json', {}).get('sweeps') or {}
+    _src_missing = []
+    for _sid in sorted(_cs):
+        _spec = _cs[_sid] or {}
+        _label = _spec.get('label') or _sid
+        if (_swept_src.get(_sid) or {}).get('ok'):
+            continue
+        _mid = _spec.get('manualSweepId')
+        _m = (_ms_for_cov.get(_mid) or {}) if _mid else {}
+        _last = str(_m.get('lastSweptOn') or '').strip()
+        _stale = _m.get('staleDays')
+        _covered = False
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _last) and isinstance(_stale, int):
+            import datetime as _dtcs
+            try:
+                _covered = ((_dtcs.date.fromisoformat(today_jst())
+                             - _dtcs.date.fromisoformat(_last)).days <= _stale)
+            except ValueError:
+                _covered = False
+        if _covered:
+            continue
+        _why = (_swept_src.get(_sid) or {}).get('notes') or []
+        _src_missing.append(
+            f'{_sid}({_label}): 自動巡回に出ていない'
+            + (f' / 手動台帳 {_mid} も {_last or "未記録"}' if _mid
+               else ' / 手動の代替経路が定義されていない')
+            + (f' / {_why[0]}' if _why else ''))
+    add('coverage_source_missing', '巡回すべき情報源を誰も見ていない',
+        _src_missing,
+        'listing-policy.json の coverageSources が要求する情報源のうち、'
+        'coverage-sweep.py の自動巡回にも manual-sweeps.json の台帳にも'
+        '出ていないものがある。1社では取りこぼすので、'
+        'coverage_gaps が0件でも取りこぼしが無い証拠にならない')
+
     # 16b. 中止・延期の見張り。掲載は長らく追加の一方通行で、
     #      Collect Plants Vol.3 は中止告知(2026-08-12)の27日後まで
     #      「開催予定」として載り続けていた。気づいたのは主催者からの

@@ -1,5 +1,5 @@
 {
-  "total": 464,
+  "total": 463,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -701,9 +701,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 3,
+      "count": 2,
       "items": [
-        "2026-09-26 キムタロウが第2回アガベース2026を富里ベースで開催、アガベや多肉植物の販売と1000円くじを実施",
         "2026-09-26 中山園芸が5周年感謝祭2026を開催、多肉植物やリメイク鉢など多数の出店者が参加",
         "2026-10-24 MINE FARM POP UP In 沖縄2026を開催、実生多肉植物やサボテンと限定植木鉢を販売"
       ],
@@ -715,6 +714,13 @@
       "count": 0,
       "items": [],
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
+      "severity": "urgent"
+    },
+    "coverage_source_missing": {
+      "title": "巡回すべき情報源を誰も見ていない",
+      "count": 0,
+      "items": [],
+      "note": "listing-policy.json の coverageSources が要求する情報源のうち、coverage-sweep.py の自動巡回にも manual-sweeps.json の台帳にも出ていないものがある。1社では取りこぼすので、coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
     },
     "eyecatch_backlog": {

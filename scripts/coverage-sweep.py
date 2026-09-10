@@ -16,9 +16,27 @@
 
 ## 何をするか
 
-LEAFLA の日付別ページ（1日1ページ・全国）を先の日付ぶん取得し、
-そこに出ているイベント名を events.json と rejected-events.json に突き合わせて、
+アグリゲータの一覧ページを巡回し、そこに出ているイベント名を
+events.json と rejected-events.json に突き合わせて、
 **どちらにも無いものを「取りこぼし候補」として書き出す。**
+
+見る先は `listing-policy.json` の `coverageSources` が単一情報源。
+
+  leafla   … 日付別ページ（1日1ページ・全国）を先の日付ぶん
+  nextmeet … 月別ページ（1ページに全国の会期）を先の月ぶん
+
+**1社では取りこぼす。**2026-09-06 と 09-10、LEAFLA 由来の巡回が
+errors 0 / gaps 0 でいちばん健全に見えている裏で、NextMeet の月別を
+手で開くと未掲載が15件・17件出た。プレイブック §3 は前から
+「3社は互いに取りこぼす」と書いていたが、機械化されていたのは1社だけで、
+**散文で「両方見ろ」と書いても、片方しか実装されていないことに
+気づける仕組みが無かった**(2026-09-10 に2社目を機械化)。
+
+到達できなかった情報源は `errors` ではなく `sweptSources` に落とす。
+`errors` は「巡回そのものが壊れている」の意味で使っていて、
+`coverage_sweep_broken`(urgent) が毎日鳴ると読まれなくなる。
+巡回できなかった情報源は `audit.py` の `coverage_source_missing` が、
+手動巡回の台帳(`manual-sweeps.json`)でも埋まっていない場合だけ鳴らす。
 
 出力: coverage-gaps.json
   audit.py が読んで件数を報告し、健全性メールに出る。
@@ -61,6 +79,9 @@ OUT = os.path.join(REPO, 'coverage-gaps.json')
 # 日付別ページ。1日1ページで全国のその日のイベントが並ぶ。
 # 先の日付は404になる(2026-08-27時点で約2か月先まで)。404は異常として扱わない。
 BASE = 'https://leaf-laboratory.com/blogs/media/event-list-'
+
+# 月別ページ。1ページに全国のその月の会期が並ぶ。
+NEXTMEET = 'https://nextmeet.app/plants/monthly/'
 UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
       '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
 
@@ -168,6 +189,79 @@ def extract_titles(html):
             seen.add(txt)
             titles.append(txt)
     return titles
+
+
+def extract_nextmeet(html):
+    """月別ページから (開催日, イベント名) を取る。
+
+    日付行 `2026/9/13(日)` が h3 の**直前**に出る。位置順に並べて、
+    直近の日付行を持ち越す。最初の h3（「この月に見つかりやすい植物・雑貨」）は
+    日付行より前にあるので、日付が無いものを捨てれば自然に落ちる。
+    """
+    marks = []
+    for m in re.finditer(r'(20\d\d)/(\d{1,2})/(\d{1,2})\([日月火水木金土]\)', html):
+        marks.append((m.start(), 'd',
+                      f'{int(m.group(1)):04d}-{int(m.group(2)):02d}-'
+                      f'{int(m.group(3)):02d}'))
+    for m in re.finditer(r'<h3\b[^>]*>(.*?)</h3>', html, re.S | re.I):
+        txt = re.sub(r'<[^>]+>', ' ', m.group(1))
+        txt = htmllib.unescape(txt)
+        txt = re.sub(r'\s+', ' ', txt).strip()
+        if txt:
+            marks.append((m.start(), 'h', txt))
+    marks.sort()
+    out, day = [], None
+    for _pos, kind, val in marks:
+        if kind == 'd':
+            day = val
+        elif day:
+            out.append((day, val))
+    return out
+
+
+def sweep_nextmeet(days, sleep=0.7):
+    """月別ページを先 days 日ぶんが収まる月数だけ取る。
+
+    返すのは LEAFLA と同じ (日付, [イベント名]) の並び。
+    到達できなかった場合は理由を返す。errors には積まない。
+    """
+    today = date.fromisoformat(today_jst())
+    last = today + timedelta(days=days)
+    months, y, m = [], today.year, today.month
+    while (y, m) <= (last.year, last.month) and len(months) < 12:
+        months.append(f'{y:04d}-{m:02d}')
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    # 先の窓に足りなくても当月+2か月は必ず見る。**月別の値打ちは
+    # 45日の窓の外にある回**で、2026-09-06 に手で見つけた15件のうち5件は
+    # 11/14 以降だった。日数で切ると、その5件をまた落とす。
+    while len(months) < 3:
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+        months.append(f'{y:04d}-{m:02d}')
+
+    by_day, fetched, notes = {}, 0, []
+    for ym in months:
+        try:
+            html = fetch(NEXTMEET + ym)
+        except Exception as e:                      # noqa: BLE001
+            notes.append(f'{ym}: {type(e).__name__} {e}')
+            continue
+        rows = extract_nextmeet(html)
+        if not rows:
+            notes.append(f'{ym}: 見出しを1件も抽出できなかった'
+                         f'(ページ構造が変わった可能性 / {len(html)}バイト)')
+            continue
+        fetched += 1
+        for day, title in rows:
+            # 上は切らない。取った月のぶんは全部見る(上のコメント)
+            if day < today.isoformat():
+                continue
+            by_day.setdefault(day, [])
+            if title not in by_day[day]:
+                by_day[day].append(title)
+        time.sleep(sleep)
+
+    pages = [(k, by_day[k]) for k in sorted(by_day)]
+    return pages, fetched, notes
 
 
 def load_json(path, default):
@@ -335,6 +429,20 @@ def sweep(days, sleep=0.7):
         pages.append((key, titles))
         time.sleep(sleep)
 
+    sources = {'leafla': {'ok': stats['fetched'] > 0,
+                          'fetched': stats['fetched'],
+                          'unit': 'day'}}
+
+    # 2社目。**片方が健全でも取りこぼす**ので、両方が同じ経路を通る。
+    nm_pages, nm_fetched, nm_notes = sweep_nextmeet(days, sleep)
+    stats['fetched_nextmeet'] = nm_fetched
+    stats['candidates'] += sum(len(t) for _, t in nm_pages)
+    pages.extend(nm_pages)
+    sources['nextmeet'] = {'ok': nm_fetched > 0, 'fetched': nm_fetched,
+                           'unit': 'month'}
+    if nm_notes:
+        sources['nextmeet']['notes'] = nm_notes[:10]
+
     # 切り詰め見出しは、全ページを取り終えてから完全版と突き合わせる。
     # 完全版は自分の開催日のページに出ているので、1パス目を終えないと揃わない。
     full_titles = list(dict.fromkeys(
@@ -395,7 +503,7 @@ def sweep(days, sleep=0.7):
             o.pop('lastSeen', None)
             o.pop('days', None)
     stats['gaps_raw'] = len(gaps)
-    return out, errors, stats, unresolved
+    return out, errors, stats, unresolved, sources
 
 
 # ---- 自己テスト（通信しない。判定ロジックだけ確かめる） -------------------
@@ -566,15 +674,19 @@ def main():
                             'gaps は当てにならない'
                             '(python3 scripts/coverage-sweep.py --self-test)')
 
-    gaps, errors, stats, unresolved = sweep(args.days, args.sleep)
+    gaps, errors, stats, unresolved, sources = sweep(args.days, args.sleep)
     errors = logic_errors + errors
     payload = {
-        '_note': ('他所(LEAFLAの日付別ページ)に出ていて当サイトに無いイベントの候補。'
+        '_note': ('他所のアグリゲータに出ていて当サイトに無いイベントの候補。'
                   'scripts/coverage-sweep.py が毎日書き出す。'
                   '一次情報で裏取りして、掲載するか rejected-events.json に落とす。'
                   'errors が空でないときは巡回そのものが失敗しているので、'
                   'gaps が0件でも「取りこぼしなし」とは言えない。'),
         'sweptOn': today_jst(),
+        # 何を見たか。**見ていない情報源があることを、読む側から見えるようにする。**
+        # audit.py の coverage_source_missing が listing-policy.json の
+        # coverageSources と突き合わせる。
+        'sweptSources': sources,
         'daysAhead': args.days,
         'stats': stats,
         'errors': errors,
@@ -585,7 +697,9 @@ def main():
         json.dump(payload, f, ensure_ascii=False, indent=2)
         f.write('\n')
 
-    print(f"取得できた日: {stats['fetched']} / 候補 {stats['candidates']}件")
+    print(f"取得できた日: {stats['fetched']} "
+          f"/ NextMeetの月: {stats.get('fetched_nextmeet', 0)} "
+          f"/ 候補 {stats['candidates']}件")
     print(f"  うち対象: {stats['in_scope']}件 "
           f"(掲載済み {stats['covered']} / 見送り済み {stats['known_rejected']})")
     print(f"★ 取りこぼし候補: {len(gaps)}件")
@@ -596,6 +710,11 @@ def main():
               f"(判定に使っていない)")
         for u in unresolved[:10]:
             print(f"    {u[:70]}")
+    for _sid, _sv in sources.items():
+        if not _sv.get('ok'):
+            print(f"⚠ 巡回できなかった情報源: {_sid}")
+            for _n in _sv.get('notes') or []:
+                print(f"    {_n}")
     if errors:
         print(f"⚠ 巡回できなかった日: {len(errors)}")
         for e in errors[:10]:
