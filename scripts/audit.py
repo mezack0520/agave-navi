@@ -432,8 +432,33 @@ def main():
         # 同じ展開を出典の頁の照合(check-cancelled)でも使う
         return int(d[:4]), event_month_days(e)
 
-    # 前回開催・雨天予備日・別年の告知など、範囲外にあって当然の言及を落とす
-    _EXCUSE = re.compile(r'(予備日|延期|順延|前回|初回|第\s*1\s*回|昨年|去年|翌年|来年|同時開催|次回)')
+    # 範囲外にあって当然の言及を落とす。
+    # **文書単位ではなく、その日付の周辺だけを見る**(2026-09-10)。
+    # 以前は説明文のどこかに1語あれば本文まるごと見逃していたので、
+    # 「前回は…」と書いた回の本当の誤植が素通りしていた。逆に、
+    # チケット受付開始日(ボタニカル横丁)や準備休業(ボタらいふ)のように
+    # 会期外にあって当然の日付は語彙に無く、3件が urgent で鳴っていた。
+    # 会期の日付そのものは告知に必ず出るので、周辺語で見るほうが precision も上がる。
+    _EXCUSE_NEAR = re.compile(
+        r'(予備日|延期|順延|前回|初回|第\s*1\s*回|昨年|去年|翌年|来年|同時開催|次回'
+        r'|チケット|受付|発売|販売開始|予約|申込|申し込み|エントリー|募集|締切|抽選'
+        r'|休業|休み|定休|臨時休|準備期間|搬入|搬出)')
+    _EXCUSE_WIN = 28          # 日付の前後この文字数だけを見る
+    def _date_excused(desc, md):
+        """その (月,日) が本文で会期外にあって当然か。**その出現の周辺だけを見る**"""
+        m, d = md
+        pats = (rf'{m}\s*月\s*{d}\s*日', rf'(?<!\d){m}\s*/\s*{d}(?!\d)',
+                rf'(?<!\d){m}\s*\.\s*{d}(?!\d)')
+        hits = 0
+        for pat in pats:
+            for mt in re.finditer(pat, desc):
+                hits += 1
+                lo = max(0, mt.start() - _EXCUSE_WIN)
+                near = desc[lo:mt.end() + _EXCUSE_WIN]
+                if not _EXCUSE_NEAR.search(near):
+                    return False        # 言い訳の無い出現が1つでもあれば鳴らす
+        return hits > 0                 # 拾えなかった書式は従来どおり鳴らす
+
     desc_bad, stale_year, time_bad = [], [], []
     for e in events:
         desc = (e.get('description') or '').strip()
@@ -444,7 +469,7 @@ def main():
         for yy, mm, dd in sorted(find_year_month_days(desc)):
             if yy != year:
                 stale_year.append(f"{e['slug']}: 本文に{yy}年{mm}月{dd}日 (開催は{year}年)")
-        if desc and not _EXCUSE.search(desc):
+        if desc:
             # 「6月1日」「6/1(土)」「2026.6.1」を拾う。書式の一覧は
             # sitelib.find_month_days が持つ(出典頁の照合と同じ規則)
             _found = find_month_days(desc)
@@ -452,7 +477,7 @@ def main():
             # それを日付の誤りとして数えると、中止の説明が書けなくなる
             if is_cancelled(e):
                 continue
-            out = sorted(_found - span)
+            out = sorted(d for d in (_found - span) if not _date_excused(desc, d))
             if out:
                 desc_bad.append(f"{e['slug']}: 本文 {'/'.join(f'{m}月{d}日' for m, d in out)} "
                                 f"が {e.get('date')}〜{e.get('dateEnd') or e.get('date')} の外")
@@ -2060,6 +2085,14 @@ def main():
         if int(_pg.get('datesNamed') or 0) < 1:
             continue
         _ev = _cw_ev.get(_slug) or {}
+        # 出典を外した回の見張り記録が残り続けて鳴らないようにする。
+        # cancel-watch.json は check-cancelled.py が巡回したときだけ更新されるので、
+        # url を消した直後は古いURLのまま残る。**今の出典と一致する記録だけ見る**
+        # (2026-09-10。この検査で外した2件がそのまま鳴り続けた)
+        _now_src = {(_ev.get('url') or '').strip(),
+                    (_ev.get('sourceUrl') or '').strip()} - {''}
+        if (_pg.get('url') or '').strip() not in _now_src:
+            continue
         _edition_bad.append(
             f"{_ev.get('date', '')} {_slug}: 出典 {_pg.get('url', '')} は"
             f"日付を{_pg.get('datesNamed')}種名乗っているが、"

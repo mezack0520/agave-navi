@@ -53,6 +53,7 @@ from datetime import date, datetime, timedelta
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
+import sitelib                                            # noqa: E402
 from sitelib import (today_jst, is_cancelled, event_span,   # noqa: E402
                      find_month_days, event_month_days)
 
@@ -194,20 +195,11 @@ def page_signature(html, today=None):
     }
 
 
-def page_dates(html):
-    """頁が名乗っている日付。(散文で名乗った数, 全書式で拾った集合)
-
-    **判定は非対称にする。** 「日付を名乗っている頁か」は「◯月◯日」だけで
-    見る(スラッシュ形は画像パス /2026/09/ やページ送りにも出るので、
-    名乗りの根拠にならない)。一方「この回の日付が出ているか」は全書式で見る。
-    こうすると、鳴りにくく・消えやすい側に倒れる。
-    実測(2026-09-08・巡回23件): 非対称にすると誤検知0で実害2件だけが残る。
-    両方を狭い側で見ると 2026.10.10 表記の回が、両方を広い側で見ると
-    公式トップ頁(日付は画像の中)が、それぞれ誤検知になった。
-    """
-    body = strip_html(html)
-    blob = body + ' ' + ' '.join(meta_texts(html))
-    return len(find_month_days(blob, kanji_only=True)), find_month_days(blob)
+# 頁が名乗っている日付の規則は sitelib.page_dates が単一情報源
+# (2026-09-10)。ここにしか無かったので、url を**書く側**の
+# enrich_events.py は同じ判定を持たず、別の回の記事を掴んだ2件を
+# 本番に出した。見張る側と書く側で同じ関数を呼ぶ。
+page_dates = sitelib.page_dates
 
 
 def analyze(html, event=None):

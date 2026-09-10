@@ -31,6 +31,7 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 from sitelib import DESC_MIN_CHARS, now_jst
+from sitelib import page_is_wrong_edition
 
 REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 EVENTS_PATH = os.path.join(REPO_ROOT, 'events.json')
@@ -136,11 +137,14 @@ def extract_page_info(url):
         # If we still got mojibake-looking bytes, fall back to letting
         # BeautifulSoup sniff from raw bytes (handles BOM + meta charset).
         soup = BeautifulSoup(resp.content, 'html.parser')
+        raw_html = resp.text
     except Exception as e:
         print(f"    Extract error: {e}")
         return {'error': str(e)}
 
-    info = {'url': url}
+    # 生のHTMLを残す。書き戻す前に「この回の頁か」を
+    # sitelib.page_is_wrong_edition で見るのに要る(2026-09-10)
+    info = {'url': url, 'html': raw_html}
 
     # --- OGP Metadata ---
     for meta_name, key in [
@@ -753,6 +757,16 @@ def main():
             # (those pages often list multiple events and we'd cross-contaminate).
             if best_url and is_aggregator_url(best_url):
                 print(f"    SKIP-ALL for {ev['slug']}: source is aggregator — {best_url[:70]}")
+                continue
+            # 別の回の記事・名前が同じだけの別サイトは、頁の値をどれも信じない。
+            # **これを持っていなかったので**、4月開催の記事(がまごおり多肉フェスタ)と
+            # 無関係のポップアップ頁(たにくった)を url と imageUrl に書き、
+            # 監査が鳴るまで本番に出ていた(2026-09-10 に是正)。
+            # 判定は sitelib.page_is_wrong_edition。監査 source_page_wrong_edition
+            # と同じ規則で、日付を名乗らない頁は判定しない。
+            if info.get('html') and page_is_wrong_edition(info['html'], ev):
+                print(f"    SKIP-ALL for {ev['slug']}: 頁がこの回の開催日を書いていない"
+                      f" — {(best_url or '')[:70]}")
                 continue
             changed_fields = []
 

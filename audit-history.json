@@ -511,12 +511,10 @@
   {
    "date": "2026-09-10",
    "urgent": {
-    "thin_needs_source": 3,
-    "desc_date_mismatch": 3,
-    "source_page_wrong_edition": 3
+    "thin_needs_source": 5
    },
    "info": {
-    "blank_optional_fields": 17,
+    "blank_optional_fields": 22,
     "duplicate_event_same_source": 1,
     "coverage_gaps": 2,
     "cancel_suspects": 1,
@@ -529,12 +527,12 @@
    "metric": {
     "thin_past_with_source": 34,
     "thin_archived": 48,
-    "upcoming_with_image": 106,
-    "events_with_image": 145,
-    "upcoming_no_image": 50,
+    "upcoming_with_image": 104,
+    "events_with_image": 143,
+    "upcoming_no_image": 52,
     "ongoing_events": 1,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 49
+    "eyecatch_backlog": 51
    },
    "events": 417,
    "upcoming": 155

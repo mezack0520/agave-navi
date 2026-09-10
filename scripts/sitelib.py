@@ -1317,6 +1317,68 @@ def extract_og_image(html, base_url=None):
     return None
 
 
+def page_text_blob(html):
+    """頁の散文。本文 + title/og:title/og:description/description。
+
+    出典が「その回の頁か」を見るための素材。check-cancelled.py が
+    strip_html + meta_texts で持っていたものを sitelib に寄せた
+    (2026-09-10)。enrich_events.py が **同じ判定を持たないまま** url を
+    書いていたため、別の回の記事(4月開催)と無関係のサイトを掴んだ
+    2件が本番に出た。書く側と見張る側で規則が違うと、
+    書いた直後に監査が鳴るだけで、事故は止まらない。
+    """
+    h = re.sub(r'(?is)<(script|style|noscript)\b.*?</\1>', ' ', html or '')
+    h = re.sub(r'(?s)<!--.*?-->', ' ', h)
+    body = re.sub(r'<[^>]+>', ' ', h)
+    parts = [body]
+    t = re.search(r'(?is)<title[^>]*>(.*?)</title>', html or '')
+    if t:
+        parts.append(re.sub(r'<[^>]+>', ' ', t.group(1)))
+    for prop in ('og:title', 'og:description', 'description'):
+        for m in re.finditer(
+                r'(?i)<meta[^>]+(?:property|name)=["\']' + re.escape(prop)
+                + r'["\'][^>]+content=["\']([^"\']*)', html or ''):
+            parts.append(m.group(1))
+    return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', ' '.join(parts))).strip()
+
+
+def page_dates(html):
+    """(散文で名乗った日付の数, 全書式で拾った (月,日) の集合)
+
+    **判定は非対称にする。** 「日付を名乗っている頁か」は「◯月◯日」だけで
+    見る(スラッシュ形は画像パス /2026/09/ やページ送りにも出るので
+    名乗りの根拠にならない)。「この回の日付が出ているか」は全書式で見る。
+    鳴りにくく・消えやすい側に倒れる。実測(2026-09-08・巡回23件)で
+    非対称なら誤検知0、両方を狭い側で見ると 2026.10.10 表記の回が、
+    両方を広い側で見ると公式トップ頁が誤検知になった。
+    """
+    blob = page_text_blob(html)
+    return len(find_month_days(blob, kanji_only=True)), find_month_days(blob)
+
+
+def page_matches_event(html, event):
+    """出典の頁にその回の開催日が出てくるか。(datesNamed, eventDateSeen)
+
+    eventDateSeen が None は「会期が分からないので判定しない」。
+    **名乗り数での足切りはここでやらない。** 呼ぶ側の判断
+    (page_is_wrong_edition / 監査)に残す。check-cancelled.py が
+    cancel-watch.json に書く値と同じ意味にしておく。
+    """
+    named, found = page_dates(html)
+    span = event_month_days(event) if event is not None else set()
+    return named, (bool(span & found) if span else None)
+
+
+def page_is_wrong_edition(html, event):
+    """**url や imageUrl を書く前に呼ぶ。** 別の回・無関係の頁なら True。
+
+    頁が散文で日付を1つも名乗っていない(告知が画像だけ)回は判定しない。
+    鳴りにくく・消えやすい側に倒す。監査 source_page_wrong_edition と同じ条件。
+    """
+    named, seen = page_matches_event(html, event)
+    return named >= 1 and seen is False
+
+
 def head_open(og_type='website'):
     """全ページ共通の <head> 冒頭を返す。**まだ format されていない雛形。**
 
