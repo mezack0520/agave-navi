@@ -1,5 +1,5 @@
 {
-  "total": 480,
+  "total": 470,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -163,14 +163,8 @@
     },
     "thin_needs_source": {
       "title": "薄い判定で開催予定なのに出典がない(要対処)",
-      "count": 5,
-      "items": [
-        "agabase-2nd-tomisato-2026-09",
-        "bizarre-farm-autumn-fes-9th-2026-09",
-        "gamagori-taniku-festa-hyogo-2026-09",
-        "hamimoro-kitaharima-2026-09",
-        "tanikutta-popup-petit-marche-2026-09"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を見つけるか、見つからなければ掲載基準により削除",
       "severity": "urgent"
     },
@@ -425,11 +419,9 @@
     },
     "blank_optional_fields": {
       "title": "任意フィールドが空(nullと空文字が混在)",
-      "count": 22,
+      "count": 17,
       "items": [
-        "agabase-2nd-tomisato-2026-09: sourceUrl = 空文字",
         "agabase-2nd-tomisato-2026-09: url = 空文字",
-        "bizarre-farm-autumn-fes-9th-2026-09: sourceUrl = 空文字",
         "bizarre-farm-autumn-fes-9th-2026-09: url = 空文字",
         "botalife-4th-anniversary-popup-2026-09: url = 空文字",
         "botanical-link-popup-kasugai-2026-10: imageUrl = null",
@@ -440,14 +432,11 @@
         "fuji-taniku-plants-marche-2026-09: url = 空文字",
         "fujisan-festa-2026-autumn: url = 空文字",
         "gamagori-taniku-festa-hyogo-2026-09: imageUrl = 空文字",
-        "gamagori-taniku-festa-hyogo-2026-09: sourceUrl = 空文字",
         "gamagori-taniku-festa-hyogo-2026-09: url = 空文字",
         "green-holic-kariya-2026: imageUrl = null",
-        "hamimoro-kitaharima-2026-09: sourceUrl = 空文字",
         "hamimoro-kitaharima-2026-09: url = 空文字",
         "picnic-garden-vol25-2026-09: imageUrl = null",
         "tanikutta-popup-petit-marche-2026-09: imageUrl = 空文字",
-        "tanikutta-popup-petit-marche-2026-09: sourceUrl = 空文字",
         "tanikutta-popup-petit-marche-2026-09: url = 空文字"
       ],
       "note": "値が無いならキーごと消す。残すなら null に統一する",
