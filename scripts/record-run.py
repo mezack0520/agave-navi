@@ -2,6 +2,7 @@
 """record-run.py — スケジュールタスクの実行日を台帳に記録する。
 
     python3 scripts/record-run.py <taskId>
+    python3 scripts/record-run.py --flush-worklog <path>
 
 **起動直後に一度だけ呼ぶ。** 終わりに呼ぶ設計にしていたが、
 成果物が無い回はそもそも push されず、記録だけが落ちた。
@@ -17,6 +18,17 @@ history が空、event-monitor は3回中1回しか書けていなかった。
 event-listing-review だけは new-inquiries.json の reviewedOn /
 reviewedHistory が同じ役目を持つので、そちらへ書く。
 二重に持つと必ず片方だけ更新されて食い違う。
+
+台帳への書き込みは push に乗っている。つまり **shell が落ちた日は
+「起動した日を記録する」が原理的に守れない**(2026-09-09 と 09-10 に
+agave-event-update / event-monitor / event-listing-review が2日連続で
+これに当たった)。その日は repo の外(Coworkのプロジェクトフォルダ)に
+起動記録を残しておき、次に push できた回が --flush-worklog で流し込む。
+**単一障害点に乗った記録は、障害の日にちょうど落ちる。**
+
+worklog の形:
+
+    {"runs": [{"taskId": "...", "date": "YYYY-MM-DD"}, ...]}
 
 冪等。同じ日に何度呼んでも履歴は増えない。
 """
@@ -54,7 +66,10 @@ def record_inquiry(day):
         hist.append(day)
         changed = True
     d['reviewedHistory'] = sorted(set(hist))[-KEEP:]
-    if d.get('reviewedOn') != day:
+    # reviewedOn は前へしか進めない。--flush-worklog で過去の回を
+    # 流し込むときに後ろへ戻すと、監査 inquiry_check_stale が
+    # 「止まっている」と誤って鳴る。履歴のほうが抜けを持っている
+    if day > (d.get('reviewedOn') or ''):
         d['reviewedOn'] = day
         changed = True
     save(INQUIRIES, d)
@@ -78,20 +93,67 @@ def record_task(task_id, day):
     return changed
 
 
+def record(task_id, day):
+    """taskId と日付を、その taskId の記録先へ書く。書き先は1つだけ。"""
+    if task_id == INQUIRY_TASK:
+        return record_inquiry(day), 'new-inquiries.json (reviewedOn / reviewedHistory)'
+    return record_task(task_id, day), 'task-runs.json'
+
+
+def flush_worklog(path):
+    """push できなかった回の起動記録を台帳へ流し込む。
+
+    流し込んだら worklog の runs を空にする。空にしないと次の回が
+    同じ日をもう一度流し込む……ことは冪等なので害は無いが、
+    「まだ積み残しがある」と読めてしまう。
+    """
+    if not os.path.exists(path):
+        print(f'record-run: worklog が無い: {path}', file=sys.stderr)
+        return 1
+    d = load(path)
+    runs = d.get('runs') or []
+    if not runs:
+        print(f'record-run: worklog は空: {path}')
+        return 0
+    added, known = 0, 0
+    for r in runs:
+        task_id = (r.get('taskId') or '').strip()
+        day = (r.get('date') or '').strip()
+        if not task_id or not day:
+            print(f'record-run: taskId か date が無い項目を飛ばした: {r}',
+                  file=sys.stderr)
+            continue
+        changed, where = record(task_id, day)
+        if changed:
+            added += 1
+        else:
+            known += 1
+        print(f'  {task_id} {day} → {where} '
+              f'({"追記" if changed else "既に記録済み"})')
+    d['runs'] = []
+    d['_flushedOn'] = today_jst()
+    try:
+        save(path, d)
+    except OSError as e:
+        print(f'record-run: worklog を空にできなかった({e})。手で消すこと。',
+              file=sys.stderr)
+    print(f'record-run: worklog を流し込んだ 追記{added} / 既知{known}')
+    print('  この変更を含めて push すること。push しないと台帳は残らない。')
+    return 0
+
+
 def main():
+    if len(sys.argv) == 3 and sys.argv[1] == '--flush-worklog':
+        return flush_worklog(sys.argv[2])
     if len(sys.argv) != 2:
         print(__doc__.strip().splitlines()[2].strip(), file=sys.stderr)
         return 2
     task_id = sys.argv[1]
     day = today_jst()
-    if task_id == INQUIRY_TASK:
-        changed = record_inquiry(day)
-        where = 'new-inquiries.json (reviewedOn / reviewedHistory)'
-    else:
-        changed = record_task(task_id, day)
-        if changed is False and task_id not in load(TASK_RUNS).get('tasks', {}):
-            return 1
-        where = 'task-runs.json'
+    changed, where = record(task_id, day)
+    if (task_id != INQUIRY_TASK and changed is False
+            and task_id not in load(TASK_RUNS).get('tasks', {})):
+        return 1
     print(f'record-run: {task_id} {day} → {where} '
           f'({"追記" if changed else "既に記録済み"})')
     print('  この変更を含めて push すること。push しないと台帳は残らない。')
