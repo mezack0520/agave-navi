@@ -136,6 +136,34 @@ git fetch origin main -q                     # これを忘れると
 - `$HOME/an` はユーザーのPC上の clone。`$HOME/mnt/<接続フォルダ>` にPC側が見える。
 - 一度に押すのは `origin/main..HEAD` の差分だけ。全体 bundle は要らない。
 - 転送の失敗は「成功したように見えて中身が古い」形で出る。**SHA照合だけが効く。**
+- **PC側でも先に `git fetch origin main` する。** bundle は差分なので、
+  土台になるコミット（CIが押した `chore(daily)` など）をPC側が持っていないと
+  `Repository lacks these prerequisite commits` で弾かれる。
+  2026-09-10 に実際に踏んだ。fetch し直せば通る。
+
+### CIと衝突したとき（クラウドセッション）
+
+コンテナで作業している間に CI が push していると `origin/main` が先に進む。
+`ci-push.sh` はCIの中の話なので、こちらは手で rebase する。
+**衝突するのは生成物だけ**（`scripts/ci-generated-paths.txt` にあるものと
+`cancel-watch.json`）なので、中身は解決せず作り直す:
+
+```bash
+git fetch origin main -q
+git rebase origin/main
+# 衝突するたびに:
+#   まず「生成物以外が混じっていないか」を必ず見る
+git diff --name-only --diff-filter=U \
+  | grep -vE '^(events\.ics|feeds/|rss\.xml|this-month\.ics|upcoming\.ics|watch-sources\.json|audit-.*\.json|cancel-watch\.json)'
+#   空なら中身は何でもよい。印だけ付けて進む
+for f in $(git diff --name-only --diff-filter=U); do git checkout --ours -- "$f"; git add "$f"; done
+GIT_EDITOR=true git rebase --continue
+# 最後に必ず作り直す。ここを飛ばすと古い生成物を本番に出す
+bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再生成"
+```
+
+**grep を飛ばしてはいけない。** ソースが衝突していたら、その解決は
+「作り直す」では済まない。
 
 ### クラウドセッションでできて、ローカルでできないこと
 
