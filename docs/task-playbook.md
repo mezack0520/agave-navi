@@ -93,6 +93,12 @@
 - `GITHUB_TOKEN` によるCI側のpushはワークフローを再起動しない仕様。だからループしない。
   PATでpushしたときだけ `on.push` が発火する
 - PATの値は出力・ログ・レポートに残さない。401ならPAT再発行が必要な旨をキューに積んで終了
+- **`gh` の認証は使わない。PATを使う（2026-09-10）。**
+  このPCの `gh auth status` は仕事用の `YujiMezaki` で、
+  repo の持ち主は個人の `mezack0520`。トークンに `repo` スコープはあるが
+  **別アカウントなので write が無く、push は 403 になる。**
+  Claude Code から押すときも同じ。使うのは
+  `mzplants\agave-navi\github.pat`。`gh auth login` で入り直す必要は無い。
 - **GitHubへの書き込み経路は PAT の `git push` だけ。** ブラウザからは一切書けない。
   Chromeは仕事用の `YujiMezaki` でログインしており `mezack0520` のリポジトリはWeb UIから編集できない。
   以前は Edge が `mezack0520` でログイン済みで `switch_browser` の逃げ道があったが、
