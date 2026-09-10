@@ -32,9 +32,8 @@ HEAD = sitelib.head_open('website') + '''  <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"CollectionPage","name":"{title}","description":"{description}","url":"{canonical}","isPartOf":{{"@type":"WebSite","name":"アガベイベントナビ","url":"https://agave-navi.com/"}}}}
   </script>
 {breadcrumb_jsonld}
-  <script src="{root}list-ui.js?v=20260820a"></script>
+  <script src="{root}list-ui.js?v=''' + sitelib.JS_VERSION + '''"></script>
 </head>'''
-HEAD = HEAD.replace('list-ui.js?v=20260820a', 'list-ui.js?v=' + sitelib.JS_VERSION)  # 版数の正はsitelib
 
 HEADER = sitelib.site_header()
 FOOTER = sitelib.site_footer()

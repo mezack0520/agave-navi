@@ -2726,6 +2726,43 @@ def main():
             _by_name[name].add(fn)
     dupe_cross = [f'{k}: {", ".join(sorted(v))}'
                   for k, v in _by_name.items() if len(v) >= 2]
+    # --- 同じCSSセレクタが同じ文脈で複数の規則に -----------------------------
+    # 2026-09-08、`.detail-hero-img` が3か所にあり、直したのは詳細度の低い
+    # 基底規則のほうで、実際に効いていたのは別の2つだった。**「直した」と
+    # 報告したのに直っていない**という形でしか現れないので、数えておく。
+    # 同じ @media の中に2回出るものだけを見る。素の規則と @media の
+    # 上書きは意図した重ね方なので数えない。
+    _css_dup = []
+    try:
+        sys.path.insert(0, rp('scripts'))
+        import csslib as _csslib
+        with open(rp('style.css'), encoding='utf-8') as f:
+            _css_src = f.read()
+        _css_seen = {}
+
+        def _css_scan(block, ctx):
+            for kind, _a, _b, sel, bo, bc in _csslib.items(block):
+                if kind == 'at':
+                    _css_scan(block[bo + 1:bc - 1],
+                              ctx + '|' + sel.split('{')[0].strip()[:40])
+                else:
+                    for one in [x.strip() for x in sel.split(',') if x.strip()]:
+                        k = (ctx, one)
+                        _css_seen[k] = _css_seen.get(k, 0) + 1
+
+        _css_scan(_css_src, '')
+        for (ctx, one), n in sorted(_css_seen.items()):
+            if n >= 2:
+                _css_dup.append(f'{one} が{n}回'
+                                + (f'（{ctx.strip("|")} の中）' if ctx else ''))
+    except Exception as e:                          # noqa: BLE001
+        _css_dup.append(f'走査できなかった: {type(e).__name__} {e}')
+    add('css_selector_duplicated', '同じCSSセレクタが同じ文脈で複数の規則に',
+        sorted(_css_dup),
+        '1つにまとめる。分かれていると、詳細度の低いほうを直して'
+        '「直した」と誤って報告する。まとめるときは表示を実際に見て確かめる',
+        severity='info')
+
     add('cross_script_duplicate', '同じ名前が2つ以上のスクリプトにある',
         sorted(dupe_cross),
         'sitelib へ寄せるか、役割が違うなら名前を分ける。'
