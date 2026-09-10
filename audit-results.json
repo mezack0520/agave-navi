@@ -1,5 +1,5 @@
 {
-  "total": 467,
+  "total": 471,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -951,6 +951,18 @@
       "items": [],
       "note": "sitelib から import する。写しを置くと、規則を足した日にどちらか片方だけが更新される",
       "severity": "urgent"
+    },
+    "cross_script_duplicate": {
+      "title": "同じ名前が2つ以上のスクリプトにある",
+      "count": 4,
+      "items": [
+        "FOOTER: build-guides.py, generate-landing-pages.py",
+        "HEAD: build-guides.py, generate-landing-pages.py",
+        "HEADER: build-guides.py, generate-landing-pages.py",
+        "extract_og_image: backfill-images.py, fetch-event-images.py"
+      ],
+      "note": "sitelib へ寄せるか、役割が違うなら名前を分ける。規則が2か所にあると、足した日にどちらか片方だけが更新される。揃える意味の無い汎用名は audit.py の _DUP_OK に理由付きで足す",
+      "severity": "info"
     },
     "landing_slug_collision": {
       "title": "複数の名前が同じランディングURLに書かれる",

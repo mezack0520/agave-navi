@@ -2640,8 +2640,13 @@ def main():
     # 2026-08-20、generate-rss.py が TAG_ROMAJI と safe_slug を自前で持っており、
     # sitelib に後から足した6タグを知らないまま feeds/tag-tag-<md5>.xml を吐いていた。
     # タグ頁は /tag/aroid/ を名乗っていたので、フィードのURLと一致していなかった。
-    # DOMAIN / JST のような値だけの定数は挙動を持たないので対象外。
-    _SITELIB_TRIVIAL = {'DOMAIN', 'JST', 'REPO', 'REPO_ROOT'}
+    # **値だけの定数も対象にする(2026-09-10)。**以前は「挙動を持たない」として
+    # DOMAIN / JST を外していたが、generate-ical.py の DOMAIN は
+    # 'agave-navi.com'(スキーム無し)で、sitelib の 'https://agave-navi.com' と
+    # 値が違っていた。同じ名前で違う値のほうが、関数の重複より気づきにくい。
+    # 残すのは置き場所の定数だけ。各スクリプトが自分の位置から解決するもので、
+    # 共有できない。
+    _SITELIB_TRIVIAL = {'REPO', 'REPO_ROOT', 'ROOT', 'SCRIPT_DIR'}
     _sitelib_src = ''
     try:
         with open(rp('scripts', 'sitelib.py'), encoding='utf-8') as f:
@@ -2652,8 +2657,11 @@ def main():
     for m in re.finditer(r'^(?:def\s+(\w+)|([A-Z][A-Z0-9_]{2,})\s*=)', _sitelib_src, re.M):
         _sitelib_names.add(m.group(1) or m.group(2))
     _sitelib_names -= _SITELIB_TRIVIAL
-    dupe_rule = []
-    for path in sorted(glob.glob(rp('scripts', '*.py'))):
+    # 直下の build-detail-pages.py も対象。scripts/ だけ見ていたので、
+    # 詳細ページの生成器はこの検査の外に居た(2026-09-10 に追加)。
+    _py_files = sorted(glob.glob(rp('scripts', '*.py'))) + sorted(glob.glob(rp('*.py')))
+    _defs = {}          # ファイル -> {名前: 右辺}
+    for path in _py_files:
         fn = os.path.basename(path)
         if fn == 'sitelib.py':
             continue
@@ -2662,13 +2670,65 @@ def main():
                 src = f.read()
         except OSError:
             continue
-        for m in re.finditer(r'^(?:def\s+(\w+)|([A-Z][A-Z0-9_]{2,})\s*=)', src, re.M):
-            name = m.group(1) or m.group(2)
-            if name in _sitelib_names:
-                dupe_rule.append(f'{fn}: sitelib.{name} を自前で定義している')
+        d = {}
+        for m in re.finditer(
+                r'^(?:def\s+(\w+)|([A-Z][A-Z0-9_]{2,})\s*=\s*([^\n]*))', src, re.M):
+            d[m.group(1) or m.group(2)] = (m.group(3) or '').strip()
+        _defs[fn] = d
+
+    dupe_rule = []
+    for fn, d in _defs.items():
+        for name, rhs in d.items():
+            if name not in _sitelib_names:
+                continue
+            # `X = sitelib.X` は写しではなく参照。名前を揃えているだけ
+            if re.fullmatch(r'sitelib\.' + re.escape(name), rhs):
+                continue
+            dupe_rule.append(f'{fn}: sitelib.{name} を自前で定義している')
     add('sitelib_rule_duplicated', 'sitelib の規則を他スクリプトが二重に定義',
         sorted(set(dupe_rule)),
         'sitelib から import する。写しを置くと、規則を足した日にどちらか片方だけが更新される')
+
+    # --- sitelib を介さないスクリプト間の重複 --------------------------------
+    # 上の検査は「sitelib に在るものを写したか」しか見ない。
+    # **sitelib に無い規則が2つのスクリプトに割れている場合は素通りする。**
+    # 2026-09-10 時点で is_quality_image_url / is_aggregator_url /
+    # AGGREGATOR_DOMAINS がまさにそれで、片方だけ直して 09-08 に
+    # http:// の画像を1件通していた。sitelib へ寄せて解消したが、
+    # **解消しただけでは同じことがまた起きる**のでここで数える。
+    #
+    # 除外するのは「たまたま名前が同じだけ」のもの。役割が違うので
+    # 揃える意味が無い。新しい名前は自動的に出る。
+    _DUP_OK = {
+        'main', 'self_test',                 # 実行の枠組み
+        'check', 'esc', 'norm', 'fetch',     # 汎用ヘルパ。中身も用途も別
+        'fetch_page', 'load_json', 'generate_report',
+        'HEADERS',        # 取得時の名乗り。スクリプトごとに変えている(UAで弾く先がある)
+        'SKIP_DOMAINS',   # 「辿らない先」。check-cancelled と enrich で対象が違う
+        'KEEP',           # 履歴の保持件数。台帳と更新履歴で別の数
+        'IG_HANDLE', 'OG_IMAGE', 'OG_IMAGE_ALT', 'NOT_HANDLE', 'TIMEOUT', 'UA',
+    }
+    # 置き場所の定数は数えない。同じファイルを各スクリプトが自分の位置から
+    # 解決しているだけで、規則ではない。名前ではなく**右辺の形**で判定する。
+    # 名前で除外リストを作ると、増えるたびに手で足すことになる。
+    _PATH_RHS = re.compile(r'os\.path\.|Path\(|rp\(|__file__'
+                           r'|^[\'"](?:/|\./)')   # '/tmp/xxx-report.md' の類
+    _by_name = defaultdict(set)
+    for fn, d in _defs.items():
+        for name, rhs in d.items():
+            if name in _sitelib_names or name in _SITELIB_TRIVIAL or name in _DUP_OK:
+                continue
+            if rhs and _PATH_RHS.search(rhs):
+                continue
+            _by_name[name].add(fn)
+    dupe_cross = [f'{k}: {", ".join(sorted(v))}'
+                  for k, v in _by_name.items() if len(v) >= 2]
+    add('cross_script_duplicate', '同じ名前が2つ以上のスクリプトにある',
+        sorted(dupe_cross),
+        'sitelib へ寄せるか、役割が違うなら名前を分ける。'
+        '規則が2か所にあると、足した日にどちらか片方だけが更新される。'
+        '揃える意味の無い汎用名は audit.py の _DUP_OK に理由付きで足す',
+        severity='info')
 
     # --- ランディングURLの衝突・退化 ----------------------------------------
     # 別のキーが同じURLに書かれると、後から書いたほうが前のページを黙って上書きする。

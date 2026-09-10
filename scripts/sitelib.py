@@ -15,6 +15,7 @@ import json
 
 # --- 定数 ---
 DOMAIN = 'https://agave-navi.com'
+DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
 CSS_VERSION = '20260910a'
 JS_VERSION = '20260910b'
@@ -22,6 +23,12 @@ ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
 WEEKDAYS_JA = ['月', '火', '水', '木', '金', '土', '日']
+
+# Instagram の投稿URL。1グループ目が投稿ID。
+# fetch-event-images と list-missing-eyecatch が別々に持っていて、
+# 片方は ID を取らない版だった(2026-09-10 に統合)。
+IG_POST_RE = re.compile(
+    r'https?://(?:www\.)?instagram\.com/(?:p|reel|tv)/([A-Za-z0-9_-]+)')
 
 # 「会場」として意味をなさない曖昧値(venueページ・同会場セクションの対象外)
 # 都道府県名そのものは会場名ではないので全県ぶんを下で追加する(2026-08-12)。
@@ -1176,6 +1183,79 @@ def is_generic_image_url(u):
     (カード / og:image / twitter:image / JSON-LD image / sitemap の image:image)。
     """
     return bool(u) and bool(GENERIC_IMAGE_RE.search(u))
+
+
+# --- 出典ドメインと画像URLの受け入れ (単一情報源) ---------------------------
+# アグリゲータの一覧は listing-policy.json の blockedUrlDomains が正。
+#
+# 2026-09-10 まで、**同じ一覧が6スクリプトに写してあり**、判定関数も
+# is_aggregator / is_aggregator_url / _url_contains_aggregator の3通りに
+# 割れていた。しかも写しの側だけが agavemaniacs.com を持ち、
+# listing-policy.json には入っていなかった。
+# 「単一情報源」と名乗りながら、**実際にそれを読むコードが1つも無かった。**
+# 画像の受け入れ判定も backfill と enrich に別々にあり、片方だけに
+# http:// を弾く行があって 2026-09-08 に事故を出している。ここに寄せる。
+
+def listing_policy():
+    """listing-policy.json。壊れていたら黙って通さず落とす。
+
+    出典の判定が空で通ると、アグリゲータのURLが素通りする。
+    **黙って0件になるのが最悪**なので、ここは握りつぶさない。
+    """
+    global _LISTING_POLICY
+    if _LISTING_POLICY is None:
+        p = os.path.join(os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__))), 'listing-policy.json')
+        with open(p, encoding='utf-8') as f:
+            _LISTING_POLICY = json.load(f)
+    return _LISTING_POLICY
+
+
+_LISTING_POLICY = None
+
+AGGREGATOR_DOMAINS = tuple(
+    listing_policy().get('blockedUrlDomains', {}).get('domains') or ())
+if not AGGREGATOR_DOMAINS:
+    raise RuntimeError(
+        'listing-policy.json の blockedUrlDomains.domains が空。'
+        'アグリゲータ判定が効かなくなるので落とす')
+
+# イベントとは無関係だが og:image に出てくる先。画像だけで弾く。
+UNRELATED_IMAGE_DOMAINS = ('jleague.jp', 'static.cdninstagram.com', 'mercari')
+
+# ファイル名で見る共通アセット。GENERIC_IMAGE_RE はパスで見るので両方要る。
+# backfill 側だけが sitelogo / noimage / placeholder / cropped- を持っていて、
+# enrich 側はそれらを通していた(2026-09-10 に統合。広いほうを採る)。
+GENERIC_IMAGE_NAME_RE = re.compile(
+    r'/(ogp|ogimage|og_image|og-image|default|logo|sitelogo|share|thumb|main'
+    r'|noimage|placeholder)\.(png|jpg|jpeg|webp|gif)(\?|$)'
+    r'|/cropped-',  # WordPressサイトアイコン(favicon)へのフォールバック
+    re.I)
+
+
+def is_aggregator_url(url):
+    """ホストでもパスでもアグリゲータ名を含んだら True。
+
+    ホストだけを見ると、CDN 経由でパスに入る形を取りこぼす。
+    """
+    return bool(url) and any(a in url.lower() for a in AGGREGATOR_DOMAINS)
+
+
+def is_quality_image_url(img_url):
+    """imageUrl として受け入れてよいか。書き込む側は必ずここを通す。"""
+    if not img_url:
+        return False
+    # 混在コンテンツ防止。サイトは https なので http の画像は落とされるか警告になる
+    if img_url.startswith('http://'):
+        return False
+    if is_aggregator_url(img_url):
+        return False
+    if GENERIC_IMAGE_NAME_RE.search(img_url):
+        return False
+    if is_generic_image_url(img_url):
+        return False
+    u = img_url.lower()
+    return not any(d in u for d in UNRELATED_IMAGE_DOMAINS)
 
 
 # --- 一覧カード (単一情報源) -------------------------------------------------

@@ -28,9 +28,9 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
+import sitelib
 from sitelib import today_jst, is_cancelled, event_span   # noqa: E402
 
-IG_POST = re.compile(r'instagram\.com/(?:p|reel|tv)/[A-Za-z0-9_-]+')
 IG_HANDLE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)')
 NOT_HANDLE = {'p', 'reel', 'tv', 'explore', 'accounts', 'stories'}
 
@@ -38,7 +38,7 @@ NOT_HANDLE = {'p', 'reel', 'tv', 'explore', 'accounts', 'stories'}
 def classify(ev):
     blob = ' '.join(str(ev.get(k) or '') for k in
                     ('url', 'sourceUrl', 'instagramUrl'))
-    m = IG_POST.search(blob)
+    m = sitelib.IG_POST_RE.search(blob)
     if m:
         return 'igPost', m.group(0) + '/'
     if 'instagram.com' in blob:

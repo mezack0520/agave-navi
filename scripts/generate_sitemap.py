@@ -6,7 +6,7 @@ from datetime import datetime
 import sitelib
 from sitelib import html_escape
 
-DOMAIN = "https://agave-navi.com"
+# ドメインは sitelib が単一情報源
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
 
@@ -26,8 +26,8 @@ PRIORITY_MAP = {
 }
 
 def url_for(rel):
-    if rel == "index.html": return DOMAIN + "/"
-    return DOMAIN + "/" + rel.replace(os.sep, "/")
+    if rel == "index.html": return sitelib.DOMAIN + "/"
+    return sitelib.DOMAIN + "/" + rel.replace(os.sep, "/")
 
 LASTMOD_MANIFEST = os.path.join(REPO_ROOT, 'scripts', 'sitemap-lastmod.json')
 
@@ -148,7 +148,7 @@ def generate():
         # Landing page index URLs end in / (trailing slash form)
         first = rel.split(os.sep)[0]
         if first in LANDING_DIRS and basename == 'index.html':
-            loc = DOMAIN + '/' + os.path.dirname(rel).replace(os.sep,'/') + '/'
+            loc = sitelib.DOMAIN + '/' + os.path.dirname(rel).replace(os.sep,'/') + '/'
         lm = lastmod(fp, loc, manifest, today)
 
         # directory-based rules first (so landing-page index.html does NOT inherit

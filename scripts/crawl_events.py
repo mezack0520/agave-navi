@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 from urllib.parse import urljoin
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sitelib import today_jst, now_jst   # noqa: E402
+from sitelib import today_jst, now_jst, is_aggregator_url   # noqa: E402,F401
 
 import requests
 from bs4 import BeautifulSoup
@@ -32,15 +32,11 @@ SOURCES_PATH = os.path.join(os.path.dirname(__file__), '..', 'crawl-sources.json
 EVENTS_PATH = os.path.join(os.path.dirname(__file__), '..', 'events.json')
 REPORT_PATH = '/tmp/crawl-report.md'
 
-AGGREGATOR_BLOCKLIST = (
-    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
-)
+# 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
+# ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
+# 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
 
-def is_aggregator(url):
-    if not url: return False
-    return any(ag in url.lower() for ag in AGGREGATOR_BLOCKLIST)
 
 
 HEADERS = {

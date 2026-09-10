@@ -12,14 +12,14 @@ from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS = os.path.join(ROOT, 'events.json')
-DOMAIN = 'https://agave-navi.com'
-JST = timezone(timedelta(hours=9))
+# ドメインと JST は sitelib が単一情報源
 
 # スラッグは sitelib が単一情報源。ここに写しを置くと必ず食い違う。
 # 2026-08-20まで TAG_ROMAJI と safe_slug をこのファイルで独自に持っており、
 # sitelib 側に後から足した6タグ(アロイド・サボテン・着生植物・塊根植物・
 # ビカクシダ・多肉植物)を知らないまま feeds/tag-tag-<md5>.xml を吐いていた。
 # タグページ側は /tag/aroid/ を名乗っており、フィードのURLと一致しなかった。
+import sitelib
 from sitelib import REGION_ROMAJI, region_slug, tag_slug
 
 
@@ -29,7 +29,7 @@ def render_rss(title, link, description, events, max_items=20):
     for e in events[:max_items]:
         slug = e.get('slug','')
         if not slug: continue
-        url = f'{DOMAIN}/events/{slug}.html'
+        url = f'{sitelib.DOMAIN}/events/{slug}.html'
         nm = e.get('name', slug)
         dd = e.get('dateDisplay') or e.get('date','')
         venue = e.get('location') or ''
@@ -49,7 +49,7 @@ def render_rss(title, link, description, events, max_items=20):
         for _k in ('addedDate', 'updatedAt', 'enrichedAt'):
             try:
                 pub_str = (datetime.strptime(str(e.get(_k) or '')[:10], '%Y-%m-%d')
-                           .replace(tzinfo=JST)
+                           .replace(tzinfo=sitelib.JST)
                            .strftime('%a, %d %b %Y %H:%M:%S +0900'))
                 break
             except Exception:
@@ -63,7 +63,7 @@ def render_rss(title, link, description, events, max_items=20):
     <guid>{url}</guid>{pub_line}
     <description><![CDATA[{body}]]></description>
   </item>''')
-    now = datetime.now(JST).strftime('%a, %d %b %Y %H:%M:%S +0900')
+    now = datetime.now(sitelib.JST).strftime('%a, %d %b %Y %H:%M:%S +0900')
     return f'''<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
@@ -101,8 +101,8 @@ def render_updates_rss(items, max_items=50):
         dd = it.get('date') or ''
         de = it.get('dateEnd') or ''
         span = dd if (not de or de == dd) else f'{dd}〜{de}'
-        url = f'{DOMAIN}/events/{slug}.html' if slug and kind != 'removed' else f'{DOMAIN}/#updates'
-        guid = f'{DOMAIN}/updates/{on}-{kind}-{slug or "-"}'
+        url = f'{sitelib.DOMAIN}/events/{slug}.html' if slug and kind != 'removed' else f'{sitelib.DOMAIN}/#updates'
+        guid = f'{sitelib.DOMAIN}/updates/{on}-{kind}-{slug or "-"}'
         body = [f'{label}: {name}']
         if span:
             body.append(f'会期: {span}')
@@ -116,7 +116,7 @@ def render_updates_rss(items, max_items=50):
         if len(on) == 10:
             try:
                 dt = datetime.strptime(on, '%Y-%m-%d').replace(
-                    hour=9, tzinfo=JST)
+                    hour=9, tzinfo=sitelib.JST)
                 pub = ('\n    <pubDate>'
                        + dt.strftime('%a, %d %b %Y %H:%M:%S +0900')
                        + '</pubDate>')
@@ -128,13 +128,13 @@ def render_updates_rss(items, max_items=50):
     <guid isPermaLink="false">{guid}</guid>{pub}
     <description><![CDATA[{'<br>'.join(body)}]]></description>
   </item>""")
-    now = datetime.now(JST).strftime('%a, %d %b %Y %H:%M:%S +0900')
+    now = datetime.now(sitelib.JST).strftime('%a, %d %b %Y %H:%M:%S +0900')
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>アガベイベントナビ - 更新のお知らせ</title>
-  <link>{DOMAIN}/#updates</link>
-  <atom:link href="{DOMAIN}/feeds/updates.xml" rel="self" type="application/rss+xml"/>
+  <link>{sitelib.DOMAIN}/#updates</link>
+  <atom:link href="{sitelib.DOMAIN}/feeds/updates.xml" rel="self" type="application/rss+xml"/>
   <description>掲載・中止・延期・日程変更・会場変更のお知らせ。開催されなくなった回もここで届きます。</description>
   <language>ja</language>
   <lastBuildDate>{now}</lastBuildDate>
@@ -150,7 +150,7 @@ def main():
 
     # 1. 全体
     with open(os.path.join(ROOT, 'rss.xml'), 'w', encoding='utf-8') as f:
-        f.write(render_rss('アガベイベントナビ - 新着イベント', f'{DOMAIN}/',
+        f.write(render_rss('アガベイベントナビ - 新着イベント', f'{sitelib.DOMAIN}/',
                           '全国のアガベ・塊根植物・多肉植物・珍奇植物のイベント情報、新着順', events))
 
     feeds_dir = os.path.join(ROOT, 'feeds')
@@ -180,7 +180,7 @@ def main():
         sl = region_slug(r)
         written.add(f'region-{sl}.xml')
         with open(os.path.join(feeds_dir, f'region-{sl}.xml'), 'w', encoding='utf-8') as f:
-            f.write(render_rss(f'アガベイベントナビ - {r}地方', f'{DOMAIN}/region/{sl}/',
+            f.write(render_rss(f'アガベイベントナビ - {r}地方', f'{sitelib.DOMAIN}/region/{sl}/',
                               f'{r}地方のアガベ・植物イベント新着情報', evs))
         region_count += 1
 
@@ -193,7 +193,7 @@ def main():
         sl = tag_slug(t)
         written.add(f'tag-{sl}.xml')
         with open(os.path.join(feeds_dir, f'tag-{sl}.xml'), 'w', encoding='utf-8') as f:
-            f.write(render_rss(f'アガベイベントナビ - {t}', f'{DOMAIN}/tag/{sl}/',
+            f.write(render_rss(f'アガベイベントナビ - {t}', f'{sitelib.DOMAIN}/tag/{sl}/',
                               f'{t}カテゴリのイベント新着情報', evs))
         tag_count += 1
 

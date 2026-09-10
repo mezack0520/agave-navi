@@ -10,12 +10,12 @@ from datetime import datetime, timedelta, timezone
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitelib
 from sitelib import is_cancelled
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
-DOMAIN = 'agave-navi.com'
-JST = timezone(timedelta(hours=9))
+# ドメインと JST は sitelib が単一情報源
 
 
 def fold(line):
@@ -64,9 +64,9 @@ def event_to_ics(e):
     loc = e.get('location') or ''
     pref = e.get('prefecture') or ''
     desc = e.get('description') or ''
-    url = f'https://{DOMAIN}/events/{slug}.html'
+    url = f'{sitelib.DOMAIN}/events/{slug}.html'
     location = ', '.join(x for x in [loc, pref] if x)
-    uid = f'{slug}@{DOMAIN}'
+    uid = f'{slug}@{sitelib.DOMAIN_HOST}'
     # DTSTAMP は RFC 5545 で UTC 必須。JST の時刻に Z を付けると
     # 9時間先の時刻を名乗ることになり、購読側が版の新旧を取り違える
     # (2026-08-28 に発覚。3本すべてが9時間ずれていた)。
@@ -115,8 +115,8 @@ def make_calendar(name, events):
 def main():
     with open(EVENTS_JSON, encoding='utf-8') as f:
         events = json.load(f)
-    today = datetime.now(JST).strftime('%Y-%m-%d')
-    cur_ym = datetime.now(JST).strftime('%Y-%m')
+    today = datetime.now(sitelib.JST).strftime('%Y-%m-%d')
+    cur_ym = datetime.now(sitelib.JST).strftime('%Y-%m')
 
     # 全イベント
     with open(os.path.join(REPO_ROOT, 'events.ics'), 'w', encoding='utf-8') as f:

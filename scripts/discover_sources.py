@@ -22,21 +22,17 @@ from bs4 import BeautifulSoup
 
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
-from sitelib import now_jst   # noqa: E402  時刻は sitelib が単一情報源
+from sitelib import now_jst, is_aggregator_url   # noqa: E402,F401  sitelib が単一情報源
 
 # Paths
 SOURCES_PATH = os.path.join(os.path.dirname(__file__), '..', 'crawl-sources.json')
 REPORT_PATH = '/tmp/discover-report.md'
 
-AGGREGATOR_BLOCKLIST = (
-    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
-)
+# 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
+# ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
+# 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
 
-def is_aggregator(url):
-    if not url: return False
-    return any(ag in url.lower() for ag in AGGREGATOR_BLOCKLIST)
 
 
 HEADERS = {

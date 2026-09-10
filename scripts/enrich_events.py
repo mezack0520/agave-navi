@@ -29,7 +29,7 @@ import requests
 from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sitelib import is_generic_image_url as _sitelib_is_generic
+from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 from sitelib import DESC_MIN_CHARS, now_jst
 
 REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
@@ -54,25 +54,9 @@ HEADERS = {
 SKIP_DOMAINS = {'instagram.com', 'twitter.com', 'x.com', 'facebook.com',
                 'tiktok.com', 'youtube.com', 'line.me'}
 
-# --- Aggregator/blocklist (used by image, url and field acceptance) ---
-AGGREGATOR_DOMAINS = (
-    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
-)
-_GENERIC_IMG_RE = re.compile(
-    r'/(ogp|og_image|og-image|default|logo|share|thumb|main)\.(png|jpg|jpeg|webp|gif)(\?|$)',
-    re.I
-)
-
-def _url_contains_aggregator(url):
-    """Detect aggregator anywhere in the URL (host or CDN-proxied path)."""
-    if not url: return False
-    u = url.lower()
-    return any(ag in u for ag in AGGREGATOR_DOMAINS)
-
-def is_aggregator_url(url):
-    """Reject URLs whose host or path contains a known aggregator domain."""
-    return _url_contains_aggregator(url)
+# 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
+# ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
+# 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
 _PLACEHOLDER_VALUES = {
     '', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表',
@@ -87,27 +71,6 @@ def _is_empty(v):
     return not bool(v)
 
 
-def is_quality_image_url(img_url):
-    """Image URL acceptance: reject aggregator-sourced AND generic-named images."""
-    if not img_url:
-        return False
-    # 混在コンテンツ防止。サイトは https なので http の画像はブラウザに
-    # 落とされるか警告になる。backfill-images.py は 2026-08 から弾いていたが
-    # こちらに同じ判定が無く、2026-09-08 に http の画像が1件入った。
-    # 同じ規則が2か所に割れていた(監査 insecure_image_url が拾って発覚)。
-    if img_url.startswith('http://'):
-        return False
-    if _url_contains_aggregator(img_url):
-        return False
-    if _GENERIC_IMG_RE.search(img_url):
-        return False
-    # サイト共通アセット(themes/ 配下・common/images/ 配下等)。
-    # _GENERIC_IMG_RE はファイル名しか見ないため、
-    # /wp-content/themes/.../common/images/facebook.png を通してしまう。
-    # 判定は sitelib が単一情報源(2026-08-20)。
-    if _sitelib_is_generic(img_url):
-        return False
-    return True
 
 
 

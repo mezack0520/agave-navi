@@ -6,10 +6,11 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+import sitelib
 from sitelib import today_jst, is_upcoming, split_ongoing
 EVENTS = os.path.join(ROOT, 'events.json')
 INDEX = os.path.join(ROOT, 'index.html')
-DOMAIN = 'https://agave-navi.com'
+# ドメインは sitelib が単一情報源
 
 def html_attr(s): return (s or '').replace('"','\\"')
 
@@ -33,7 +34,7 @@ def main():
                 "name": e.get('name',''),
                 "startDate": e.get('date',''),
                 "endDate": e.get('dateEnd') or e.get('date',''),
-                "url": f'{DOMAIN}/events/{e["slug"]}.html',
+                "url": f'{sitelib.DOMAIN}/events/{e["slug"]}.html',
                 "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
                 "eventStatus":"https://schema.org/EventScheduled",
                 "location":{

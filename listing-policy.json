@@ -73,7 +73,7 @@
     ]
   },
   "blockedUrlDomains": {
-    "rule": "url / sourceUrl に使用してはならないドメイン。手がかりとして参照するのは可",
+    "rule": "url / sourceUrl に使用してはならないドメイン。手がかりとして参照するのは可。**この一覧が唯一の定義。**sitelib.AGGREGATOR_DOMAINS がここを読み、各スクリプトは sitelib.is_aggregator_url / is_quality_image_url を使う。スクリプト側に一覧を写さない(2026-09-10 に6スクリプトの写しを廃止)。",
     "domains": [
       "nextmeet.app",
       "botanical-zone.tokyo",
@@ -81,8 +81,10 @@
       "tochinavi.net",
       "pukubook.jp",
       "fukuoka-now.com",
-      "churatoku.net"
-    ]
+      "churatoku.net",
+      "agavemaniacs.com"
+    ],
+    "_history": "2026-09-10 まで同じ一覧が6スクリプトに写してあり、判定関数も is_aggregator / is_aggregator_url / _url_contains_aggregator の3通りに割れていた。**写しの側だけが agavemaniacs.com を持ち、ここには入っていなかった。**単一情報源と名乗りながら、実際にこれを読むコードが1つも無かった。"
   },
   "escalate": {
     "rule": "上記で判断できない類型に限り pending-judgments に積む",

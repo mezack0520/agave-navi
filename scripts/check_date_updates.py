@@ -29,17 +29,13 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sitelib import compact_date  # dateDisplay整形の単一情報源
+from sitelib import compact_date, is_aggregator_url  # 整形と出典判定の単一情報源
 
-AGGREGATOR_BLOCKLIST = (
-    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
-)
+# 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
+# ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
+# 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
 
-def is_aggregator(url):
-    if not url: return False
-    return any(ag in url.lower() for ag in AGGREGATOR_BLOCKLIST)
 
 
 EVENTS_JSON = ROOT / "events.json"
@@ -267,7 +263,7 @@ def main():
         name = ev.get("name", "")
         slug = ev.get("slug", "")
         source = ev.get("sourceUrl", "")
-        if is_aggregator(source):
+        if is_aggregator_url(source):
             continue
         current_date = ev.get("date", "")
 

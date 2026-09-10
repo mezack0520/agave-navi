@@ -10,6 +10,9 @@ Usage:
 """
 import argparse, json, os, re, sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitelib   # noqa: E402  出典判定の単一情報源
+
 # チケット販売・コンサート系ドメイン → 植物イベントの url であるはずがない
 TICKETING_DOMAINS = (
     'l-tike.com', 'lawsonticket.com', 'eplus.jp',
@@ -25,10 +28,9 @@ UNRELATED_EVENT_DOMAINS = (
     'designfesta.com', 'tokyogameshow.jp',
 )
 # Aggregator (データ汚染源) → 同じく url にしてはいけない
-AGGREGATOR_DOMAINS = (
-    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
-)
+# 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
+# ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
+# 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
 def url_domain(u):
     m = re.match(r'https?://([^/]+)', (u or '').lower())
@@ -69,7 +71,7 @@ def reasons(ev):
     for d in UNRELATED_EVENT_DOMAINS:
         if d in full:
             rs.append(f'unrelated-event-domain: {d}')
-    for d in AGGREGATOR_DOMAINS:
+    for d in sitelib.AGGREGATOR_DOMAINS:
         if d in full:
             rs.append(f'aggregator-domain: {d}')
             break

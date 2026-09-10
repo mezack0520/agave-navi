@@ -29,7 +29,7 @@ import requests
 from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sitelib import is_generic_image_url as _sitelib_is_generic
+from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.normpath(os.path.join(SCRIPT_DIR, '..', 'events.json'))
@@ -39,52 +39,9 @@ UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
 HEADERS = {'User-Agent': UA, 'Accept-Language': 'ja,en;q=0.8'}
 TIMEOUT = 12
 
-# --- Aggregator/blocklist (used by image, url and field acceptance) ---
-AGGREGATOR_DOMAINS = (
-    'nextmeet.app', 'botanical-zone.tokyo', 'leaf-laboratory.com',
-    'tochinavi.net', 'pukubook.jp', 'fukuoka-now.com', 'churatoku.net', 'agavemaniacs.com',
-)
-_GENERIC_IMG_RE = re.compile(
-    r'/(ogp|ogimage|og_image|og-image|default|logo|sitelogo|share|thumb|main|noimage|placeholder)\.(png|jpg|jpeg|webp|gif)(\?|$)'
-    r'|/cropped-',  # WordPressサイトアイコン(favicon)へのフォールバック
-    re.I
-)
-# イベントと無関係なドメインの画像(会場運営元の汎用OGP等)。
-# 実例: カシマスタジアム経由で jleague.jp の汎用OGPが混入(2026-07-06検出)
-UNRELATED_IMAGE_DOMAINS = ('jleague.jp', 'static.cdninstagram.com', 'mercari')
-
-def _url_contains_aggregator(url):
-    """Detect aggregator anywhere in the URL (host or CDN-proxied path)."""
-    if not url: return False
-    u = url.lower()
-    return any(ag in u for ag in AGGREGATOR_DOMAINS)
-
-def is_aggregator_url(url):
-    """Reject URLs whose host or path contains a known aggregator domain."""
-    return _url_contains_aggregator(url)
-
-def is_quality_image_url(img_url):
-    """Image URL acceptance: reject aggregator-sourced / generic-named / unrelated-domain images."""
-    if not img_url:
-        return False
-    if img_url.startswith('http://'):
-        return False  # 混在コンテンツ防止(httpsのみ受け入れ)
-    if _url_contains_aggregator(img_url):
-        return False
-    if _GENERIC_IMG_RE.search(img_url):
-        return False
-    # サイト共通アセット(themes/ 配下・common/images/ 配下等)。
-    # _GENERIC_IMG_RE はファイル名しか見ないため、
-    # /wp-content/themes/.../common/images/facebook.png を通してしまう。
-    # 判定は sitelib が単一情報源(2026-08-20)。
-    if _sitelib_is_generic(img_url):
-        return False
-    u = img_url.lower()
-    if any(d in u for d in UNRELATED_IMAGE_DOMAINS):
-        return False
-    return True
-
-
+# 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
+# ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
+# 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
 
 # --- helpers ----------------------------------------------------------------

@@ -51,6 +51,7 @@ import time
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
+import sitelib
 from sitelib import today_jst, is_cancelled, event_span   # noqa: E402
 
 EVENTS_JSON = os.path.join(REPO, 'events.json')
@@ -64,7 +65,6 @@ JPEG_QUALITY = 82
 # 1枚あたりの上限。これを超えるものは縮小しても大きすぎるので採らない
 MAX_BYTES = 400 * 1024
 
-IG_POST = re.compile(r'https?://(?:www\.)?instagram\.com/(?:p|reel|tv)/([A-Za-z0-9_-]+)')
 OG_IMAGE = re.compile(
     r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', re.I)
 OG_IMAGE_ALT = re.compile(
@@ -78,7 +78,7 @@ def ig_post_url(ev):
     """
     for key in ('instagramUrl', 'url', 'sourceUrl'):
         v = (ev.get(key) or '').strip()
-        m = IG_POST.match(v)
+        m = sitelib.IG_POST_RE.match(v)
         if m:
             return m.group(0)
     pid = (ev.get('instagramPostId') or '').strip()
