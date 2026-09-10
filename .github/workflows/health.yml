@@ -114,7 +114,10 @@ jobs:
       - name: Send daily email
         if: github.event_name != 'push' && steps.emailbody.outputs.results_exist == 'true'
         continue-on-error: true
-        uses: dawidd6/action-send-mail@v3
+        # 第三者のactionはSHAで固定する。タグは動かせるので、v3 のままだと
+        # 相手のリポジトリが乗っ取られた日に GMAIL_APP_PASSWORD が渡る。
+        # 4226df7daafa6fc901a43789c49bf7ab309066e7 = v3.11.0 (2026-09-10 時点の v3)
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7
         with:
           server_address: smtp.gmail.com
           server_port: 465

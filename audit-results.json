@@ -584,6 +584,20 @@
       "note": "ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない",
       "severity": "urgent"
     },
+    "ci_job_no_timeout": {
+      "title": "CIのjobに timeout-minutes が無い",
+      "count": 0,
+      "items": [],
+      "note": "既定は6時間。1本ハングすると無料枠がその日で尽きる。そのjobの実測の2倍くらいを入れる",
+      "severity": "urgent"
+    },
+    "ci_action_unpinned": {
+      "title": "第三者のactionをタグで参照している",
+      "count": 0,
+      "items": [],
+      "note": "タグは動かせる。40桁のcommit SHAで固定して、横にバージョンをコメントで書く。git ls-remote <repo> refs/tags/<tag> でSHAが取れる",
+      "severity": "urgent"
+    },
     "workflow_inline_code": {
       "title": "workflowにスクリプトを直書きしている",
       "count": 0,

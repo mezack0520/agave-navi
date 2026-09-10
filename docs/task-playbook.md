@@ -79,12 +79,80 @@
 - 実行レポート: `mzplants\agave-navi\task-reports\<taskId>_YYYY-MM-DD.md`
 - 受け渡しJSON: `mzplants\agave-navi\work\`
 
+## 1.5 どの環境で動いているか（2026-09-10 追加）
+
+**この手順書は2つの環境で読まれる。到達性が違うので、まず自分がどちらかを判別する。**
+
+| | ローカルセッション（Claude Code / Windows上） | クラウドセッション（Cowork の cloud container） |
+|---|---|---|
+| リポジトリ | `mzplants\agave-navi` を直接触る | コンテナ内の clone |
+| `git push` | **通る**（PAT） | **403**（proxy の許可リストに github.com が無い） |
+| `api.github.com` | 通る（§2 の記述はこちら） | **不通**（"GitHub access ... not enabled"） |
+| `agave-navi.com` への curl | 通る | 通る |
+| Instagram | 届かない | 届かない（ログイン壁）。**組み込みブラウザなら読める** |
+| ユーザーのPC上のファイル | 直接 | `mcp__remote-devices__*` 経由 |
+
+判別のしかた: `git push` を試す前に、`curl -s https://api.github.com/` が
+`GitHub access ... not enabled` を返したらクラウド側。
+
+### クラウドセッションから本番に出す手順（実証済み・2026-09-10 に4回成功）
+
+`git push` が 403 なので、**bundle をユーザーのPCに渡して、あちらから押す。**
+
+```bash
+# 1) コンテナ側: origin と差分だけの bundle を作る
+git fetch origin main -q
+git bundle create /tmp/x.bundle origin/main..HEAD
+git bundle list-heads /tmp/x.bundle          # ← このSHAを控える
+
+# 2) 転送。iCloud配下に置くと同期層が古い内容に巻き戻すので Downloads を使う。
+#    rm → cp → touch の順。上書きだけだと mtime が変わらず古いまま渡る回がある
+rm -f /mnt/user-data/outputs/_transfer.bundle
+cp /tmp/x.bundle /mnt/user-data/outputs/_transfer.bundle
+touch /mnt/user-data/outputs/_transfer.bundle
+# device_commit_files で C:\Users\yujim\Downloads\_transfer.bundle へ
+```
+
+```bash
+# 3) device_bash 側: **SHAを照合してから**押す。古い bundle を押すと巻き戻る
+cd "$HOME/an"
+B="$HOME/mnt/Downloads/_transfer.bundle"
+git bundle list-heads "$B"                   # 控えたSHAと一致するか
+git fetch "$B" HEAD:refs/heads/incoming -f
+test "$(git rev-parse refs/heads/incoming)" = "<控えたSHA>" || exit 1
+PAT=$(tr -d ' \r\n' < "$HOME/mnt/mzplants/agave-navi/github.pat")
+git push "https://x-access-token:${PAT}@github.com/mezack0520/agave-navi.git" \
+  refs/heads/incoming:refs/heads/main
+git fetch origin main -q && git checkout -q main && git merge --ff-only origin/main -q
+git branch -D incoming -q
+```
+
+```bash
+# 4) コンテナ側: **押した直後に必ず fetch する**
+git fetch origin main -q                     # これを忘れると
+                                             # 「未pushのコミットがある」と誤報する
+```
+
+- `$HOME/an` はユーザーのPC上の clone。`$HOME/mnt/<接続フォルダ>` にPC側が見える。
+- 一度に押すのは `origin/main..HEAD` の差分だけ。全体 bundle は要らない。
+- 転送の失敗は「成功したように見えて中身が古い」形で出る。**SHA照合だけが効く。**
+
+### クラウドセッションでできて、ローカルでできないこと
+
+- **Instagram が読める**（組み込みブラウザ = デスクトップアプリ内のブラウザペイン）。
+  出典の裏取り・告知投稿のURL取得はここでしかできない。
+  プロフィールを開いて `document.querySelectorAll('a[href*="/p/"]')` の
+  `img.alt` を読むと、チラシの文字がOCR済みで返る。**開いて回るより速い。**
+
+---
+
 ## 2. 書き込み手順
 
 - コミットは `git push`（`https://github.com`、名義 `mezack0520 <88774621+mezack0520@users.noreply.github.com>`）
 - **PATは `.github/workflows/` も含めてpushできる**（2026-08-10に実証。以前「権限不足」と
   記録していたのは誤り）。`workflow_dispatch` はPATでも403で使えない
 - **サンドボックスから `api.github.com` は通る（2026-09-07 訂正・実測）。**
+  **ただしローカルセッションの話。クラウドセッションからは不通（§1.5）。**
   以前ここに「不通。`github.com`(git) のみ」と書いていたが、今日の実測では
   無認証 GET が200で返る。`Actions API は403で使えない` も読みに関しては誤りで、
   PAT を付ければ**ジョブの実行ログまで取れる**（`actions/jobs/<id>/logs` が200）。
@@ -112,6 +180,8 @@
   Claude Code から押すときも同じ。使うのは
   `mzplants\agave-navi\github.pat`。`gh auth login` で入り直す必要は無い。
 - **GitHubへの書き込み経路は PAT の `git push` だけ。** ブラウザからは一切書けない。
+  クラウドセッションはその `git push` 自体が 403 なので、bundle 経由で
+  ユーザーのPCから押す（§1.5 に実証済みの手順）。
   Chromeは仕事用の `YujiMezaki` でログインしており `mezack0520` のリポジトリはWeb UIから編集できない。
   以前は Edge が `mezack0520` でログイン済みで `switch_browser` の逃げ道があったが、
   **Edge は2026-08-18に廃止した。代替のブラウザは無い。**

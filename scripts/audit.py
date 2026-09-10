@@ -8,8 +8,8 @@
 読み取り専用。何も変更しない。検出結果を JSON とテキストで出す。
 終了コードは常に0(検出は失敗ではない)。件数は日次メールに載せる。
 """
-import html as _html
 import hashlib
+import html as _html
 import html as _htmllib
 import json
 import os
@@ -1327,6 +1327,46 @@ def main():
             inline.append(f'{bn}: {m.group(1)} のヒアドキュメント')
         for m in re.finditer(r'\b(?:cat|tee)\b[^\n]*<<[^\n]*\.(py|js|sh)\b', code):
             inline.append(f'{bn}: スクリプトファイルを YAML から書き出している')
+    # CI の衛生。2026-09-10 に棚卸しして、3本に timeout が無く、
+    # メール送信の第三者 action がタグ参照のままだったのを直した。
+    # どちらも「事故が起きるまで誰も見ない」種類なので機械に見張らせる。
+    #   timeout 無し … 既定は6時間。1本ハングすると無料枠を1日で溶かす
+    #   タグ参照   … タグは動かせる。相手のリポジトリが乗っ取られた日に
+    #                secrets(GMAIL_APP_PASSWORD 等)がそのまま渡る
+    _TRUSTED_ACTION_OWNERS = ('actions', 'github')   # GitHub 自身のものは major タグでよい
+    _ci_no_timeout, _ci_unpinned = [], []
+    for f in sorted(glob.glob(rp('.github', 'workflows', '*.yml'))):
+        bn = os.path.basename(f)
+        _src = open(f, encoding='utf-8').read()
+        # PyYAML は runner に必ずあるとは限らない。監査が依存を増やして
+        # 落ちるほうが困るので、job の切れ目だけを行頭の字下げで読む
+        _jobs = [(m.group(1), m.start()) for m in
+                 re.finditer(r'^  ([A-Za-z0-9_-]+):\s*$', _src, re.M)]
+        _jobs = [(n, o) for n, o in _jobs
+                 if _src.rfind('\njobs:', 0, o) > _src.rfind('\non:', 0, o)]
+        for _i, (_jn, _o) in enumerate(_jobs):
+            _end = _jobs[_i + 1][1] if _i + 1 < len(_jobs) else len(_src)
+            if not re.search(r'^\s*timeout-minutes:\s*\d+', _src[_o:_end], re.M):
+                _ci_no_timeout.append(f'{bn}: job {_jn}')
+        # `- uses:` と `  uses:` の両方。前者を落として checkout を見逃していた
+        for _m in re.finditer(r'^\s*(?:-\s*)?uses:\s*([^\s#]+)', _src, re.M):
+            _ref = _m.group(1)
+            if _ref.startswith('.') or '@' not in _ref:
+                continue
+            _repo, _at = _ref.rsplit('@', 1)
+            if _repo.split('/')[0] in _TRUSTED_ACTION_OWNERS:
+                continue
+            if not re.fullmatch(r'[0-9a-f]{40}', _at):
+                _ci_unpinned.append(f'{bn}: {_ref}')
+    add('ci_job_no_timeout', 'CIのjobに timeout-minutes が無い',
+        sorted(set(_ci_no_timeout)),
+        '既定は6時間。1本ハングすると無料枠がその日で尽きる。'
+        'そのjobの実測の2倍くらいを入れる')
+    add('ci_action_unpinned', '第三者のactionをタグで参照している',
+        sorted(set(_ci_unpinned)),
+        'タグは動かせる。40桁のcommit SHAで固定して、横にバージョンを'
+        'コメントで書く。git ls-remote <repo> refs/tags/<tag> でSHAが取れる')
+
     add('workflow_inline_code', 'workflowにスクリプトを直書きしている',
         sorted(set(inline)),
         'scripts/ 配下の実行可能なファイルに出して run: python3 scripts/x.py で呼ぶ。'
