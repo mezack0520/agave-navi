@@ -1,5 +1,5 @@
 {
-  "total": 469,
+  "total": 473,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -273,7 +273,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 53,
+      "count": 57,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aichin-shokusai-new-year-party-2027",
@@ -282,6 +282,7 @@
         "bizarre-farm-autumn-fes-9th-2026-09",
         "botanic-collection2-ube-2026-10",
         "botanical-botanical-okinawa-2026-11",
+        "botanical-life-kasama-2026-11",
         "botanical-link-popup-kasugai-2026-10",
         "botanical-monsters-2027-okazaki",
         "botanical-tamba-2026",
@@ -308,13 +309,12 @@
         "kyoto-midori-marche-ibaraki-2026-09",
         "kyoto-midorino-marche-bangaihen-vol10-2026",
         "midorigakuen-himeji-2026-11",
+        "minefarm-popup-okinawa-2026-10",
+        "nakayama-engei-5th-anniversary-2026-09",
         "nihon-shaboten-taikai-51st-2026-10",
         "nishikan-botanical-nominoichi-4th-2026-10",
         "on-the-plants-vol9-fukuoka-2026-10",
-        "ore-no-plants-collection-2026-09",
-        "picnic-garden-vol25-2026-09",
-        "plant-freaks-olinas-2026-10",
-        "plant-freaks-olinas-2026-11"
+        "ore-no-plants-collection-2026-09"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -743,7 +743,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 52,
+      "count": 56,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-12 plants-festa-2-kawashima-2026-09",
@@ -755,10 +755,12 @@
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
         "2026-09-19 picnic-garden-vol25-2026-09",
+        "2026-09-20 trillgreen-special-event-2026-09",
         "2026-09-21 tanikutta-popup-petit-marche-2026-09",
         "2026-09-26 agabase-2nd-tomisato-2026-09",
         "2026-09-26 bizarre-farm-autumn-fes-9th-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
+        "2026-09-26 nakayama-engei-5th-anniversary-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
         "2026-09-27 exploring-unpredictable-plants-2026-09",
         "2026-09-27 gamagori-taniku-festa-hyogo-2026-09",
@@ -776,15 +778,13 @@
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
         "2026-10-17 plant-freaks-olinas-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
+        "2026-10-24 minefarm-popup-okinawa-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
+        "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 chuushokushobutsusai-2026",
         "2026-11-14 botanical-botanical-okinawa-2026-11",
-        "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
-        "2026-11-22 botanical-yokocho-senju-2026-11",
-        "2026-11-22 isij-big-bazaar-2026-11-22",
-        "2026-11-22 midorigakuen-himeji-2026-11",
-        "2026-11-22 tokimeki-marche-kodaihasu-2026-11"
+        "2026-11-22 awajishima-taniku-smile-marche-3rd-2026"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -840,13 +840,8 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 4,
-      "items": [
-        "2026-09-20 trillgreen-special-event-2026-09: new-events.json に残ったまま events.json に無い",
-        "2026-09-26 nakayama-engei-5th-anniversary-2026-09: new-events.json に残ったまま events.json に無い",
-        "2026-10-24 minefarm-popup-okinawa-2026-10: new-events.json に残ったまま events.json に無い",
-        "2026-11-07 botanical-life-kasama-2026-11: new-events.json に残ったまま events.json に無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
