@@ -202,6 +202,20 @@ def page_signature(html, today=None):
 page_dates = sitelib.page_dates
 
 
+# 頁が「更新日」「投稿日」として名乗っている日付。**肩書のほうを見る。**
+# 本文中のどこに日付が在るかでは、更新日と開催日を区別できない(2026-09-12)。
+_META_DATE_RE = re.compile(
+    r'(?:最終更新|更新日|投稿日|公開日|掲載日|登録日)[^0-9]{0,8}'
+    r'(?:\d{4}[./年-][^0-9]{0,2})?(\d{1,2})\s*[月./-]\s*(\d{1,2})')
+
+
+def meta_dates(html):
+    """(月, 日) の集合。更新日・投稿日として書かれているものだけ。"""
+    blob = sitelib.page_text_blob(html)
+    return {(int(m), int(d)) for m, d in _META_DATE_RE.findall(blob)
+            if 1 <= int(m) <= 12 and 1 <= int(d) <= 31}
+
+
 def analyze(html, event=None):
     texts = [strip_html(html)] + meta_texts(html) + image_tokens(html)
     strong, weak = find_words(texts)
@@ -212,6 +226,22 @@ def analyze(html, event=None):
     if event is not None:
         span = event_month_days(event)
         out['eventDateSeen'] = bool(span & found) if span else None
+        # 会期の開始日が、頁の**更新日・投稿日**と同じでないか。
+        # audit の event_start_is_page_meta が読む(2026-09-12)。
+        # 道の駅仁保の郷の回は、告知が開催日を「9月19日（土）」1つしか
+        # 書いていないのに events.json が date=2026-09-02(頁の更新日) 〜
+        # dateEnd=2026-09-19 になっており、単日の回が18日間「開催中」で出ていた。
+        # 更新日も「◯月◯日」なので find_month_days には入る。つまり
+        # 「開始日が頁に無い」では落ちない。**日付の在処ではなく肩書を見る。**
+        start, _end = event_span(event)
+        sm = None
+        if start:
+            try:
+                _d = date.fromisoformat(start)
+                sm = (_d.month, _d.day) in meta_dates(html)
+            except ValueError:
+                sm = None
+        out['startDateIsPageMeta'] = sm
     return out
 
 
@@ -315,6 +345,7 @@ def main():
             # ここに置かないと監査側からは見えない
             'datesNamed': res['datesNamed'],
             'eventDateSeen': res.get('eventDateSeen'),
+            'startDateIsPageMeta': res.get('startDateIsPageMeta'),
             'firstSeenOn': before.get('firstSeenOn') or today,
         }
 
@@ -440,6 +471,22 @@ FIX_DATE_CHANGED = """<html><body><p>本日の開園時間 2026.09.09 9:30〜17:
 </body></html>"""
 
 
+
+# 単日の告知。開催日は「9月19日（土）」しか書いていない。
+# 頁の更新日を開始日に拾った事故の再現に使う(2026-09-12)
+FIX_ONE_DAY_PAGE = """<html><body>
+<p>更新日：9月2日</p>
+<h1>第1回「緑と多肉を楽しむマルシェ」開催</h1>
+<p>【開催日時】9月19日（土）　9:00〜15:00　雨天中止</p>
+</body></html>"""
+
+# 会期を省略形で書く告知。開始日は全形で出るが終了日は数字だけ
+FIX_SPAN_PAGE = """<html><body>
+<h1>SPECIAL EVENT</h1>
+<p>9月20日（日）から3日間。9/20-22 の開催です。</p>
+</body></html>"""
+
+
 def self_test(verbose=True):
     ok = True
 
@@ -503,6 +550,26 @@ def self_test(verbose=True):
                                'dateEnd': '2026-10-11'})
     chk('2026.10.10 形式でも開催日は拾う', d['eventDateSeen'], True)
     chk('2026.10.10 形式は名乗りには数えない', d['datesNamed'], 0)
+
+    say('\n--- 開始日が頁の更新日から来ていないか ---')
+    # 2026-09-12: 道の駅仁保の郷の告知は開催日を「9月19日（土）」1つしか
+    # 書いていないのに、events.json は date=2026-09-02(頁の更新日) 〜
+    # dateEnd=2026-09-19 の18日間になっていた。単日の回が18日間
+    # 「開催中」として出ていた。9/19 は頁にあるので eventDateSeen は True になり、
+    # source_page_wrong_edition では落ちない。更新日も「◯月◯日」なので
+    # 「開始日が頁に無いか」でも落ちない。肩書を見るしかない。
+    chk('更新日を拾う', meta_dates(FIX_ONE_DAY_PAGE), {(9, 2)})
+    bad = analyze(FIX_ONE_DAY_PAGE, {'slug': 'z', 'date': '2026-09-02',
+                                     'dateEnd': '2026-09-19'})
+    chk('開始日が更新日と同じ → True', bad['startDateIsPageMeta'], True)
+    chk('会期のどこかは出ている → eventDateSeen は True',
+        bad['eventDateSeen'], True)
+    good = analyze(FIX_ONE_DAY_PAGE, {'slug': 'z', 'date': '2026-09-19',
+                                      'dateEnd': '2026-09-19'})
+    chk('直した後 → False', good['startDateIsPageMeta'], False)
+    span = analyze(FIX_SPAN_PAGE, {'slug': 'w', 'date': '2026-09-20',
+                                   'dateEnd': '2026-09-22'})
+    chk('更新日を持たない頁では鳴らない', span['startDateIsPageMeta'], False)
     g = analyze(FIX_WRONG_EDITION, {'slug': 'z', 'date': '2026-06-07',
                                     'dateEnd': '2026-06-07'})
     chk('同じ頁でも6月開催の回なら裏付けになる', g['eventDateSeen'], True)

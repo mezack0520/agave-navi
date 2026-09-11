@@ -17,13 +17,14 @@
    "url": "https://pukubook.jp/events/",
    "staleDays": 7,
    "why": "3社目のアグリゲータ。LEAFLA(coverage-sweep が自動巡回)と NextMeet(月別)のどちらにも出ない回を拾う。2026-09-07 の巡回で THE BOTANICAL SHOW 6th・トハメルカド境赤レンガ倉庫・アジア有用植物祭がここにだけ出ていた。プレイブック §3 に『pukubook の一覧を必ず1回読む』と 2026-08-12 から書いてあるが、回ったかを残す場所が無く、やらなくても誰も気づかない状態だった",
-   "lastSweptOn": "2026-09-07",
-   "lastScope": "全国の注目イベント + 今後のイベント（2026-09-20 まで表示分）",
+   "lastSweptOn": "2026-09-12",
+   "lastScope": "全国の注目イベント + 今後のイベント（2026-09-19 まで表示分）",
    "history": [
-    "2026-09-07"
+    "2026-09-07",
+    "2026-09-12"
    ]
   }
  },
- "updated": "2026-09-07",
+ "updated": "2026-09-12",
  "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
 }

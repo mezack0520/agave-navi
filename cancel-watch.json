@@ -3,25 +3,11 @@
   "sweptOn": "2026-09-12",
   "stats": {
     "targets": 21,
-    "fetched": 20
+    "fetched": 21
   },
-  "errors": [
-    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
-  ],
+  "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "greensnap-marche-yokohama-2026-autumn",
-      "name": "GreenSnap Marche YOKOHAMA 2026 Autumn",
-      "date": "2026-09-26",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "sakuya-green-jam-5-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22331/",
@@ -38,6 +24,7 @@
       ],
       "datesNamed": 7,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-12",
       "textOnlyChanges": 0
     },
@@ -54,6 +41,7 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": false,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -70,6 +58,7 @@
       "weak": [],
       "datesNamed": 3,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
     },
@@ -86,6 +75,7 @@
       "weak": [],
       "datesNamed": 6,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-12",
       "textOnlyChanges": 0
     },
@@ -102,6 +92,7 @@
       "weak": [],
       "datesNamed": 3,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 1
     },
@@ -118,6 +109,7 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
     },
@@ -134,6 +126,7 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": false,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -150,6 +143,7 @@
       "weak": [],
       "datesNamed": 2,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -166,6 +160,7 @@
       "weak": [],
       "datesNamed": 2,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -182,6 +177,7 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -198,6 +194,7 @@
       "weak": [],
       "datesNamed": 1,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -214,6 +211,7 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": false,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -230,6 +228,7 @@
       "weak": [],
       "datesNamed": 1,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-12",
       "textOnlyChanges": 0
     },
@@ -246,6 +245,7 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
     },
@@ -262,6 +262,7 @@
       "weak": [],
       "datesNamed": 4,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -278,6 +279,7 @@
       "weak": [],
       "datesNamed": 1,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -294,6 +296,7 @@
       "weak": [],
       "datesNamed": 1,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -310,7 +313,25 @@
       "weak": [],
       "datesNamed": 0,
       "eventDateSeen": false,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
+      "textOnlyChanges": 0
+    },
+    "jurian-aki-taniku-cactus-2026-10": {
+      "url": "https://www.jurian.or.jp/event/article/?id=1475",
+      "checkedOn": "2026-09-12",
+      "signature": {
+        "text": "bf7de8e13bbf97cd",
+        "images": "8859875c86a5399f",
+        "textLen": 1287,
+        "imageCount": 20
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-12",
       "textOnlyChanges": 0
     },
     "toyama-saboten-taniku-9th-2026-10": {
@@ -326,6 +347,7 @@
       "weak": [],
       "datesNamed": 2,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
@@ -342,6 +364,7 @@
       "weak": [],
       "datesNamed": 2,
       "eventDateSeen": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     }

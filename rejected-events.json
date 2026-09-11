@@ -446,6 +446,30 @@
       "decided": "2026-09-08",
       "eventDate": "2026-09-30",
       "reason": "出店者 @sfera_verde の動画キャプションに『2026年9月30日（日）「路地裏ボタニカル」』とあるが、2026-09-30 は水曜で曜日が合わない。主催 @rojiuranogibousi の当該回の告知が無く、直近の主催投稿は 8/30 回の御礼と『10月までに気合いで素敵苗 揃えますねー』で、次回日程を出していない。主催告知が出たら日付と曜日をあわせて再評価する。8/30 回は rojiura-botanical-2026-08 として掲載済み"
+    },
+    {
+      "key": "hinata-garden-cactus-sale-2026-09",
+      "reasonType": "policy",
+      "name": "ひなたガーデン サボテンセールイベント2026 (2026-09-12〜14 ひなたガーデン・宮崎県宮崎市郡司分丙9955)",
+      "decided": "2026-09-12",
+      "eventDate": "2026-09-12",
+      "reason": "主催 @hinata.garden0805 の告知は『9月12(土)13(日)14(月)3日間サボテンセールイベントを開催します ¥600〜¥1000サボテンの商品をAll¥500で販売致します』で、中身は通常営業日(8:00〜16:00)の店頭価格の値引きだけ。出店者も企画も無い。2026-09-01 に見送った『ノハラ園芸センター Summer SALE 2026』(レジにて20%OFF)と同じ型。listing-policy の plantCentric.storeSale に規則として書いた"
+    },
+    {
+      "key": "botanical-wellness-marche-hakata-hankyu-2026-09",
+      "reasonType": "policy",
+      "name": "Botanical & Wellness Marché / N3SELECT 博多阪急POPUP (2026-09-24〜27 博多阪急 8階催場・福岡県福岡市博多区中央街1-1)",
+      "decided": "2026-09-12",
+      "eventDate": "2026-09-24",
+      "reason": "アグリゲータは『N3SELECTが博多阪急POPUP2026を開催』と1出店者の名前でイベントを立てているが、催事の主催は博多阪急で、名称は『Botanical & Wellness Marché』(公式の催しスケジュールで 9/24(木)〜27(日)・8階催場・最終日17時終了を確認)。阪急側の説明は『様々な種類の花や緑と、毎日をさらに健やかに過ごせるよう』で、確認できた出店はハーブティー専門店BISA・生姜専門店GINGER FACTORY・焼菓子くれーぶる・チーズケーキ店など飲食とウェルネスが中心。珍奇植物専門店 N3SELECT(@n3select・9/24〜27 10:00〜20:00・入場無料)は区画のひとつ。outOfScopeGenres.coTitledEvents と『1出店者の出展告知をイベントとして立てない』(SUPER ART & CRAFT MARKET 2026-09-01)に該当。listing-policy の plantCentric.vendorBoothInHostEvent に規則として書いた"
+    },
+    {
+      "key": "mind-warp-vol3-yonezawa-2026-09",
+      "reasonType": "policy",
+      "name": "MIND WARP vol.3 古着倉庫 × TRILLGREEN (2026-09-19 古着倉庫・山形県米沢市)",
+      "decided": "2026-09-12",
+      "eventDate": "2026-09-19",
+      "reason": "主催 @trillgreen_aburaya の告知(2026-09-07)で 9/19(土) 17:00〜21:00・古着倉庫(@furugisouko2017) を確認。内容は『FASHION・ART・PLANTS・SOUNDが交差する一夜限りのSPECIAL EVENT』で、古着のスペシャルプライス販売・フリーマーケット・ガラスアクセサリー・HIPHOPのDJ5組に TRILLGREEN の植物が加わる形。植物の出店はTRILLGREEN1者で、会場も古着店。compositeEvents に該当する。同じ主催が9/20〜22に自店で開く TRILLGREEN SPECIAL EVENT は掲載した"
     }
   ],
   "_reasonTypes": {
@@ -454,6 +478,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-08",
+  "updated": "2026-09-12",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

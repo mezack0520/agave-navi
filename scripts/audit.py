@@ -2172,6 +2172,41 @@ def main():
         'about.html の「参照元を明記」と食い違う。'
         '出典を本当に持たない回(48件)はここに出ない')
 
+    # 16b-2. 会期の開始日が、出典の頁の**更新日・投稿日**と同じ回。
+    #        2026-09-12、道の駅仁保の郷の「第1回 緑と多肉を楽しむマルシェ」は
+    #        告知が開催日を「9月19日（土）」1つしか書いていないのに、
+    #        events.json は date=2026-09-02(頁の更新日) 〜 dateEnd=2026-09-19 で、
+    #        **単日の回が18日間「開催中」として出ていた。**
+    #        9/19 は頁にあるので eventDateSeen は True になり、
+    #        source_page_wrong_edition では落ちない。更新日も「◯月◯日」なので
+    #        「開始日が頁に無いか」でも落ちない。**日付の在処ではなく肩書を見る。**
+    #        判定材料は check-cancelled.py が書く(監査側から外部の頁は取れない)。
+    #        単日の回は開始日=開催日なので対象外。会期を名乗る回だけ見る。
+    _start_meta = []
+    for _slug, _pg in sorted((_cw.get('pages') or {}).items()):
+        if not isinstance(_pg, dict):
+            continue
+        # 旧版の cancel-watch.json はこのキーを持たない
+        if _pg.get('startDateIsPageMeta') is not True:
+            continue
+        _ev = _cw_ev.get(_slug) or {}
+        _d, _de = _ev.get('date'), _ev.get('dateEnd')
+        if not _d or not _de or _de == _d:
+            continue
+        _now_src = {(_ev.get('url') or '').strip(),
+                    (_ev.get('sourceUrl') or '').strip()} - {''}
+        if (_pg.get('url') or '').strip() not in _now_src:
+            continue
+        _start_meta.append(
+            f"{_d}〜{_de} {_slug}: 出典 {_pg.get('url', '')} は "
+            f"{_d[5:7]}/{_d[8:10]} を更新日・投稿日として書いている")
+    add('event_start_is_page_meta', '会期の開始日が出典の頁の更新日と同じ',
+        sorted(_start_meta),
+        '頁の更新日・投稿日を開始日として取り込んだ疑い。'
+        '告知の【開催日時】を読み直して date / dateEnd / dateDisplay を直す。'
+        '単日の回を会期物にすると、開催日までの何日間も「開催中」として一覧に出て、'
+        '本当の開催日が埋まる。単日の回(dateEnd == date)はここに出ない')
+
     add('source_page_wrong_edition', '出典の頁がその回の開催日を書いていない',
         sorted(_edition_bad),
         'URLを開いて、日付・イベント名・会場がその回と一致するかを見る。'
