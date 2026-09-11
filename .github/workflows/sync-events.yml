@@ -11,8 +11,17 @@ on:
   repository_dispatch:
     types: [sync-events]
 
+# **daily / health と同じ group に入れない(2026-09-12)。**
+# GitHub は1つの concurrency group に pending を1本しか置けないので、
+# events.json と new-events.json を同じ push に入れると daily / health /
+# sync-events の3本が同時に queue され、**真ん中の sync-events が
+# その場で cancelled になる。** 取り込みは走らず new-events.json は
+# 公開URLに残ったままで、成功した2本だけが緑になるので気づけない
+# (2026-09-12 の push 18f91fc で実際に起きた。新規4件が落ちた)。
+# events.json への同時書き込みは scripts/ci-push.sh が捌く(2026-09-07)ので、
+# 直列化のために group を共有する必要はもう無い。
 concurrency:
-  group: events-write
+  group: sync-events
   cancel-in-progress: false
 
 permissions:

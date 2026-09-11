@@ -1,5 +1,5 @@
 {
-  "total": 465,
+  "total": 469,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -836,6 +836,18 @@
       "count": 0,
       "items": [],
       "note": "build-detail-pages.make_hero_meta_note の優先順は url → dataSource → instagramUrl / sourceUrl → スタッフ収集情報。主催者の投稿を埋め込みながら自社収集だと名乗るのは、about.html の「参照元を明記」と食い違う。出典を本当に持たない回(48件)はここに出ない",
+      "severity": "urgent"
+    },
+    "new_events_unmerged": {
+      "title": "new-events.json が取り込まれずに残っている",
+      "count": 4,
+      "items": [
+        "2026-09-20 trillgreen-special-event-2026-09: new-events.json に残ったまま events.json に無い",
+        "2026-09-26 nakayama-engei-5th-anniversary-2026-09: new-events.json に残ったまま events.json に無い",
+        "2026-10-24 minefarm-popup-okinawa-2026-10: new-events.json に残ったまま events.json に無い",
+        "2026-11-07 botanical-life-kasama-2026-11: new-events.json に残ったまま events.json に無い"
+      ],
+      "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
     "event_start_is_page_meta": {

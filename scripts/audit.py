@@ -2200,6 +2200,40 @@ def main():
         _start_meta.append(
             f"{_d}〜{_de} {_slug}: 出典 {_pg.get('url', '')} は "
             f"{_d[5:7]}/{_d[8:10]} を更新日・投稿日として書いている")
+    # 16b-3. new-events.json が取り込まれずに残っていないか。
+    #        sync-events.yml は取り込みに成功したらこのファイルを消す。
+    #        つまり**残っていること自体が「取り込まれていない」の証拠**。
+    #        2026-09-12、events.json と new-events.json を同じ push に入れたら
+    #        daily / health / sync-events の3本が同じ concurrency group に
+    #        queue され、真ん中の sync-events が cancelled になった。
+    #        緑になった2本だけが見えるので、新規4件が落ちたことに
+    #        本番の new-events.json を開くまで気づけなかった。
+    #        リポジトリは public なので、残ったファイルは
+    #        https://agave-navi.com/new-events.json として公開もされる。
+    #        **取り込みが走っている最中に監査が回ると1度だけ出る。**
+    #        翌日も出るなら本物。
+    _unmerged = []
+    _ne = rp('new-events.json')
+    if os.path.exists(_ne):
+        try:
+            _nel = json.loads(_slurp(_ne)) or []
+        except (ValueError, TypeError):
+            _nel = []
+            _unmerged.append('new-events.json が残っているがJSONとして読めない')
+        _have = {e.get('slug') for e in events}
+        for _n in (_nel if isinstance(_nel, list) else []):
+            if _n.get('slug') not in _have:
+                _unmerged.append(
+                    f"{_n.get('date', '')} {_n.get('slug')}: "
+                    f"new-events.json に残ったまま events.json に無い")
+    add('new_events_unmerged', 'new-events.json が取り込まれずに残っている',
+        sorted(_unmerged),
+        'sync-events.yml は取り込んだらこのファイルを消す。残っているなら'
+        '取り込みが走っていない。Actions で Sync New Events が cancelled に'
+        'なっていないか見る。**events.json と new-events.json を同じ push に'
+        '入れないこと。**再実行の手段は new-events.json を単独で push し直すこと'
+        '(workflow_dispatch は PAT でも403)')
+
     add('event_start_is_page_meta', '会期の開始日が出典の頁の更新日と同じ',
         sorted(_start_meta),
         '頁の更新日・投稿日を開始日として取り込んだ疑い。'
