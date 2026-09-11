@@ -1,7 +1,15 @@
 {
-  "check_date": "2026-09-10",
-  "total_events": 405,
-  "dead_links": [],
+  "check_date": "2026-09-11",
+  "total_events": 418,
+  "dead_links": [
+    {
+      "slug": "gardens-umekita-2nd-anniv-2026-09",
+      "name": "gardens umekita 2周年記念イベント 店頭即売会",
+      "sourceUrl": "https://gardens.hc-kohnan.com/9-5%ef%bc%88%e5%9c%9f%ef%bc%896%ef%bc%88%e6%97%a5%ef%bc%89gardens-umekita-2%e5%91%a8%e5%b9%b4%e8%a8%98%e5%bf%b5%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%ba%97%e9%a0%ad%e5%8d%b3%e5%a3%b2/",
+      "statusCode": 404,
+      "alive": false
+    }
+  ],
   "unreachable": [],
   "tbd_events": [
     {
@@ -76,12 +84,6 @@
     }
   ],
   "past_events": [
-    {
-      "slug": "notre-atelier-popup-tamagawa-2026-09",
-      "name": "notre atelier POP UP STORE AT TOKYO",
-      "date": "2026-09-02",
-      "dateEnd": "2026-09-08"
-    },
     {
       "slug": "kumagaya-taniku-fes-2026",
       "name": "第2回 熊谷多肉フェス",
@@ -1553,6 +1555,12 @@
       "dateEnd": "2026-08-30"
     },
     {
+      "slug": "notre-atelier-popup-tamagawa-2026-09",
+      "name": "notre atelier POP UP STORE AT TOKYO",
+      "date": "2026-09-02",
+      "dateEnd": "2026-09-08"
+    },
+    {
       "slug": "toge-to-hachi-2026-09",
       "name": "棘と鉢 -2026-",
       "date": "2026-09-03",
@@ -1735,6 +1743,15 @@
       "sourceUrl": "https://www.instagram.com/king.plants.slugger/"
     },
     {
+      "slug": "hamimoro-kitaharima-2026-09",
+      "name": "はみもろ（2026年9月）",
+      "date": "2026-09-13",
+      "dateEnd": "2026-09-13",
+      "location": "道の駅北はりまエコミュージアム（兵庫県西脇市寺内517-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DcvY6kJGApz/"
+    },
+    {
       "slug": "raflum-hankyu-mens-tokyo-2026-09",
       "name": "阪急メンズ東京 × RAFLUM POP-UP STORE",
       "date": "2026-09-16",
@@ -1789,15 +1806,6 @@
       "sourceUrl": "https://www.instagram.com/waltzbase_saga/"
     },
     {
-      "slug": "midori-to-taniku-marche-nihonosato-2026-09",
-      "name": "第1回 緑と多肉を楽しむマルシェ",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-19",
-      "location": "道の駅 仁保の郷 屋外 青空デッキ（山口県山口市仁保中郷1034）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.nihonosato.com/post/succulentmarket"
-    },
-    {
       "slug": "felicita-hachitoari-yumegaoka-2026-09",
       "name": "FELICITA × はちとあり 2社合同販売会",
       "date": "2026-09-19",
@@ -1841,6 +1849,24 @@
       "location": "しまね花の郷（島根県出雲市西新町二丁目1101-1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://shimane-hananosato.com/event/event-903/"
+    },
+    {
+      "slug": "botalife-4th-anniversary-popup-2026-09",
+      "name": "ボタらいふ 4周年祭POPUP",
+      "date": "2026-09-19",
+      "dateEnd": "2026-09-23",
+      "location": "ボタらいふ（静岡県焼津市石津1045-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dc-6pZ7FEEw/"
+    },
+    {
+      "slug": "kimtaro-sakura-open-sale-2026-09",
+      "name": "キムタロウ さくら植物園店 オープン販売会",
+      "date": "2026-09-19",
+      "dateEnd": "2026-09-23",
+      "location": "さくら植物園（千葉県佐倉市上座50）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dc8HK8OCUdB/"
     },
     {
       "slug": "one-love-sano-2026",
@@ -1933,6 +1959,15 @@
       "sourceUrl": "https://www.instagram.com/grizzlycoffee_and_supply/"
     },
     {
+      "slug": "tanikutta-popup-petit-marche-2026-09",
+      "name": "たにくった POPUP プチマルシェ",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-22",
+      "location": "南国ちゃたん たにくった（愛知県豊橋市東七根町字尻尾65-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dc40KKNzKm0/"
+    },
+    {
       "slug": "collect-plants-2026-09",
       "name": "Collect Plants Vol.3（コレクトプランツ）",
       "date": "2026-09-22",
@@ -1958,6 +1993,15 @@
       "location": "カリーノMSビル（熊本県熊本市中央区魚屋町2丁目1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/DcYbxwJhQnG/"
+    },
+    {
+      "slug": "botanical-yokocho-senju-2026-09",
+      "name": "ボタニカル横丁（2026年9月）",
+      "date": "2026-09-22",
+      "dateEnd": "2026-09-22",
+      "location": "千住本氷川神社（東京都足立区千住3丁目22）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DciQT3SyBMc/"
     },
     {
       "slug": "sapporo-cactus-club-aki-2026",
@@ -2059,6 +2103,33 @@
       "sourceUrl": "https://www.instagram.com/reel/DcalRTLSAQE/"
     },
     {
+      "slug": "agabase-2nd-tomisato-2026-09",
+      "name": "第二回 アガベース",
+      "date": "2026-09-26",
+      "dateEnd": "2026-09-26",
+      "location": "富里ベース（千葉県富里市七栄532-279）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dcf1yuIic5k/"
+    },
+    {
+      "slug": "fuji-taniku-plants-marche-2026-09",
+      "name": "FUJI TANIKU プランツマルシェ（2026年9月）",
+      "date": "2026-09-26",
+      "dateEnd": "2026-09-26",
+      "location": "富士川楽座 フリースペース（静岡県富士市岩淵1488-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dc4PxcTE4n9/"
+    },
+    {
+      "slug": "bizarre-farm-autumn-fes-9th-2026-09",
+      "name": "bizarre farm AUTUMN FES 9th",
+      "date": "2026-09-26",
+      "dateEnd": "2026-09-27",
+      "location": "道の駅いちごの里よしみ（埼玉県比企郡吉見町久保田1737）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DcnOymFuKSP/"
+    },
+    {
       "slug": "isij-big-bazaar-2026-09-27",
       "name": "9月のサボテン・多肉植物ビッグバザール",
       "date": "2026-09-27",
@@ -2120,6 +2191,15 @@
       "location": "小田原アリーナ サブアリーナ（神奈川県小田原市中曽根263）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/DcdeqxJgRoi/"
+    },
+    {
+      "slug": "gamagori-taniku-festa-hyogo-2026-09",
+      "name": "第4回 がまごおり多肉フェスタ in 兵庫",
+      "date": "2026-09-27",
+      "dateEnd": "2026-09-27",
+      "location": "光都プラザ 芝生広場（兵庫県赤穂郡上郡町光都2丁目23-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DcsrmHXytL1/"
     },
     {
       "slug": "tochigi-tanippe-2026-10",
@@ -2374,6 +2454,15 @@
       "sourceUrl": "https://www.instagram.com/p/Dc3KTaXkkJ-/"
     },
     {
+      "slug": "botanical-yokocho-senju-2026-10",
+      "name": "ボタニカル横丁（2026年10月）",
+      "date": "2026-10-11",
+      "dateEnd": "2026-10-11",
+      "location": "千住本氷川神社（東京都足立区千住3丁目22）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DciQT3SyBMc/"
+    },
+    {
       "slug": "nara-bikaku-fes-vol2-2026-10",
       "name": "ナラビカクフェス Vol.2",
       "date": "2026-10-12",
@@ -2590,6 +2679,15 @@
       "sourceUrl": "https://www.instagram.com/p/DcfJ8arI4Ma/"
     },
     {
+      "slug": "fujisan-festa-2026-autumn",
+      "name": "フジサンフェスタ 2026秋",
+      "date": "2026-11-03",
+      "dateEnd": "2026-11-03",
+      "location": "ふじさんめっせ 富士市産業交流展示場（静岡県富士市柳島189-8）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dc4QFwNTGMn/"
+    },
+    {
       "slug": "chuushokushobutsusai-2026",
       "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
       "date": "2026-11-07",
@@ -2734,6 +2832,15 @@
       "sourceUrl": ""
     },
     {
+      "slug": "botanical-yokocho-senju-2026-11",
+      "name": "ボタニカル横丁（2026年11月）",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "location": "千住本氷川神社（東京都足立区千住3丁目22）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DciQT3SyBMc/"
+    },
+    {
       "slug": "kyoto-midorino-marche-bangaihen-vol10-2026",
       "name": "Kyoto みどりのマルシェ 番外編 vol.10",
       "date": "2026-11-28",
@@ -2822,6 +2929,15 @@
       "location": "久屋大通庭園フラリエ",
       "eventStatus": "confirmed",
       "sourceUrl": ""
+    },
+    {
+      "slug": "botanical-tamba-2026",
+      "name": "BOTANICAL TAMBA 2026",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-05",
+      "location": "丹波年輪の里（兵庫県丹波市柏原町田路102-3）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DdBVLLOzldq/"
     },
     {
       "slug": "succulent-wonderland-2nd-tatebayashi-2026-12",
@@ -2941,6 +3057,15 @@
       "location": "咲くやこの花館（大阪市鶴見区）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/"
+    },
+    {
+      "slug": "midori-to-taniku-marche-nihonosato-2026-09",
+      "name": "第1回 緑と多肉を楽しむマルシェ",
+      "date": "2026-09-02",
+      "dateEnd": "2026-09-19",
+      "location": "道の駅 仁保の郷 屋外 青空デッキ（山口県山口市仁保中郷1034）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.nihonosato.com/post/succulentmarket"
     }
   ],
   "url_results": [
@@ -3151,8 +3276,8 @@
       "slug": "gardens-umekita-2nd-anniv-2026-09",
       "name": "gardens umekita 2周年記念イベント 店頭即売会",
       "sourceUrl": "https://gardens.hc-kohnan.com/9-5%ef%bc%88%e5%9c%9f%ef%bc%896%ef%bc%88%e6%97%a5%ef%bc%89gardens-umekita-2%e5%91%a8%e5%b9%b4%e8%a8%98%e5%bf%b5%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%ba%97%e9%a0%ad%e5%8d%b3%e5%a3%b2/",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 404,
+      "alive": false
     }
   ],
   "implausible": [
