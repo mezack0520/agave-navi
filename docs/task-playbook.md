@@ -1634,6 +1634,30 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   組み立てたら push の前に `sanity-check-new-events.py --in new-events.json` を
   必ず1回通す。検査は既にあるので、手順にするだけでよい。
 
+- **`events.json` と `new-events.json` を同じ push に入れない（2026-09-12）。**
+  両方を1コミットで押したら **`Sync New Events` が cancelled になり、新規4件が
+  取り込まれなかった。** 原因は concurrency group で、`daily`(events.json) と
+  `health`(events.json) と `sync-events`(new-events.json) が
+  3本とも `events-write` に入っていた。**GitHub は1つの group に pending を
+  1本しか置けない**ので、3本目が queue された瞬間に2本目(sync-events)が
+  その場で cancelled になる。
+  たちが悪いのは**残り2本が成功で緑になる**ことで、Actions の一覧を
+  「押したものが走ったか」という目で見ると気づけない。
+  `new-events.json` は消えずに残り、リポジトリは public なので
+  `https://agave-navi.com/new-events.json` として公開されたままになる。
+  対処は3つ入れた。
+  1. `sync-events.yml` の group を `sync-events` に分けた。
+     events.json への同時書き込みは `scripts/ci-push.sh` が捌く(2026-09-07)ので、
+     直列化のために group を共有する必要はもう無い
+  2. `audit.py` の `new_events_unmerged`(urgent)。取り込みに成功すれば
+     CI がファイルを消すので、**残っていること自体が「取り込まれていない」の証拠**。
+     new-events.json にあって events.json に無い slug を出す
+  3. 再実行の手段は **`new-events.json` を単独で push し直す**こと。
+     `workflow_dispatch` は PAT でも403なので、Run workflow は押せない(§2)
+  **押した後に Actions の conclusion を読むこと。** `push` で発火するはずの
+  ワークフローが3本あるなら3本とも数える。成功だけを見ると、
+  消えた1本は永久に見えない。
+
 ## アイキャッチの取り方 (2026-09-08)
 
 定期タスク `agave-navi-eyecatch`（毎日14:50、1回6件まで）が担当する。
