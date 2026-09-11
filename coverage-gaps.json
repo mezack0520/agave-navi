@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-11",
+  "sweptOn": "2026-09-12",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,21 +16,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1250,
-    "in_scope": 103,
-    "covered": 76,
+    "candidates": 1251,
+    "in_scope": 105,
+    "covered": 75,
     "known_rejected": 18,
-    "truncated_resolved": 135,
-    "truncated_unresolved": 135,
+    "truncated_resolved": 270,
+    "truncated_unresolved": 0,
     "fetched_nextmeet": 3,
-    "gaps_raw": 9
+    "gaps_raw": 12
   },
   "errors": [],
-  "truncatedUnresolved": [
-    "09/10 追加 安美園が夜アンビエン2026を9月19日に開催...",
-    "09/10 追加 新潟県立植物園が名月夜間開園～月と緑と物語～2...",
-    "09/10 追加 阿蘇高森暮らしのマルシェ2026を菊陽で開催、..."
-  ],
+  "truncatedUnresolved": [],
   "gaps": [
     {
       "date": "2026-09-12",
@@ -39,13 +35,15 @@
       "title": "ひなたガーデンがサボテンセールイベント2026を開催、600円から1000円の商品をAll500円で販売"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-20",
+      "lastSeen": "2026-09-22",
+      "days": 3,
       "title": "TRILLGREENがSPECIAL EVENT 2026を開催、CAUDEXやAGAVEの新着株を3日間販売予定"
     },
     {
       "date": "2026-09-24",
-      "lastSeen": "2026-09-26",
-      "days": 3,
+      "lastSeen": "2026-09-27",
+      "days": 4,
       "title": "N3SELECTが博多阪急POPUP2026を開催、パキポディウムグラキリスと初心者向け珍奇植物を展開"
     },
     {

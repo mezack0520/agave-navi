@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-11",
+  "updated": "2026-09-12",
   "items": [
+    {
+      "on": "2026-09-12",
+      "kind": "date",
+      "slug": "kourep-2026-autumn",
+      "name": "コウレプ2026秋",
+      "date": "2026-09-16",
+      "dateEnd": "2026-09-20",
+      "prefecture": "兵庫",
+      "detail": "2026.09.19-20 → 2026.09.16-20"
+    },
     {
       "on": "2026-09-11",
       "kind": "date",
@@ -1190,16 +1200,6 @@
       "date": "2026-09-21",
       "dateEnd": "2026-09-22",
       "prefecture": "石川",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-18",
-      "kind": "listed",
-      "slug": "botanical-marche-toyama-2026-10",
-      "name": "ボタニカルマルシェ富山2026",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "富山",
       "detail": ""
     }
   ]
