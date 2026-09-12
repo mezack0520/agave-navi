@@ -1802,6 +1802,18 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   検出できない。季節物の告知は会期の3か月前から出る。
   **窓は「開催までの日数」ではなく「告知が出始めてからの月数」で決める。**
 
+- **規則の文面に名前が挙がっている経路ほど、実装されたつもりになる（2026-09-13）。**
+  `listing-policy.json` の `cancelledOrPostponed.afterListing` は
+  「`sitelib.is_cancelled` が一覧・カレンダー・iCal・RSS・**件数バッジ**から外す」と
+  書いてあるが、バッジだけは `sync-index-cards.py` が
+  `e.get('status') == 'upcoming'` を直接数えていた。`status` は日付だけで決まるので、
+  中止が告知された回も開催日までは `upcoming` のまま残る。
+  熊本地震で中止になった Collect Plants Vol.3 を数えて、トップは 162件、
+  `sitelib.is_upcoming` は 161件だった。
+  **列挙した経路のどれが本当に同じ関数を呼んでいるかは、文面からは分からない。**
+  規則に経路名を書くときは、その場で `grep` してすべてが同じ関数を通るか見る。
+  検査は `index_badge_count_drift`(urgent)。
+
 ## アイキャッチの取り方 (2026-09-08)
 
 定期タスク `agave-navi-eyecatch`（毎日14:50、1回6件まで）が担当する。

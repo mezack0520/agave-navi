@@ -25,7 +25,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from sitelib import (today_jst, is_recent_past, event_span,
                      PAST_KEEP_DAYS, PAST_KEEP_MAX, PAST_KEEP_LABEL,
                      LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
-                     list_sort_key, is_cancelled, cancel_label,
+                     list_sort_key, is_cancelled, cancel_label, is_upcoming,
                      updates_section_html, load_updates,
                      updates_scopes, area_filter_html, region_map_js,
                      time_consts_js)
@@ -516,7 +516,15 @@ def main():
     # そのステップは build-all.sh(=auto-status-jst.py)より前に走るため
     # 終了に変わる回を数え落とし、さらに sync-events / weekly-enrichment 経由の
     # ビルドでは誰も更新しなかった。build-all.sh に載っているここへ移した。
-    up_count = sum(1 for e in events if e.get('status') == 'upcoming')
+    # **中止の回を数に入れない(2026-09-13)。** `status` は日付だけで決まるので、
+    # 中止が告知された回も開催日までは 'upcoming' のまま残る。
+    # listing-policy の cancelledOrPostponed.afterListing は
+    # 「is_cancelled が一覧・カレンダー・iCal・RSS・**件数バッジ**から外す」と
+    # 書いているのに、バッジだけが status を直接見ていた。
+    # 実測: collect-plants-2026-09(熊本地震で中止)を数えて 162、
+    # sitelib.is_upcoming は 161。**規則に名前が挙がっている経路ほど
+    # 実装されたつもりになる。**判定は sitelib に寄せる。
+    up_count = sum(1 for e in events if is_upcoming(e))
     new_html, n_badge = re.subn(
         r'(<span class="event-count" id="eventCount">)\d+(件</span>)',
         lambda m: m.group(1) + str(up_count) + m.group(2), new_html)

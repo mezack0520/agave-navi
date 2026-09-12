@@ -700,6 +700,13 @@
       "note": "status-auto.js がこの属性で開催中/終了を振り分けるため、古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
+    "index_badge_count_drift": {
+      "title": "トップの開催予定バッジがis_upcomingと不一致",
+      "count": 0,
+      "items": [],
+      "note": "数え方を sitelib.is_upcoming に寄せる。中止の回を数に入れない。scripts/sync-index-cards.py で直す",
+      "severity": "urgent"
+    },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
       "count": 0,

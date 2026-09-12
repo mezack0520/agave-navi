@@ -1720,6 +1720,28 @@ def main():
         'status-auto.js がこの属性で開催中/終了を振り分けるため、'
         '古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す')
 
+    # 15e. トップの「開催予定 N件」バッジ。**中止の回を数えていないか。**
+    #      status は日付だけで決まるので、中止が告知された回も開催日までは
+    #      'upcoming' のまま残る。バッジがそれを直接数えていたため、
+    #      collect-plants-2026-09(熊本地震で中止)を含む 162 を出していた。
+    #      listing-policy の cancelledOrPostponed.afterListing は
+    #      「is_cancelled が …・件数バッジから外す」と書いてあり、
+    #      **規則の側では既に外れていることになっていた。**
+    #      数え方が単一情報源から外れた瞬間に、規則の文面だけが正しくなる。
+    _badge_bad = []
+    _bm = re.search(r'<span class="event-count" id="eventCount">(\d+)件</span>',
+                    _idx or '')
+    if _bm:
+        _want = sum(1 for _e in events if is_upcoming(_e))
+        if int(_bm.group(1)) != _want:
+            _badge_bad.append(
+                f"トップの開催予定バッジ 頁={_bm.group(1)}件 / "
+                f"sitelib.is_upcoming={_want}件")
+    add('index_badge_count_drift', 'トップの開催予定バッジがis_upcomingと不一致',
+        _badge_bad,
+        '数え方を sitelib.is_upcoming に寄せる。中止の回を数に入れない。'
+        'scripts/sync-index-cards.py で直す')
+
     # 16c. 他所に載っていて当サイトに無いイベント（取りこぼし）。
     #      2026-08-27、「今週末の関東は？」に答えられなかった。掲載2件に対して
     #      実際は関東で10件以上、9月は全国で42件の未掲載があった。
