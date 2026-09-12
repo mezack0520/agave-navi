@@ -561,7 +561,9 @@
   },
   {
    "date": "2026-09-12",
-   "urgent": {},
+   "urgent": {
+    "access_pref_mismatch": 1
+   },
    "info": {
     "blank_optional_fields": 17,
     "duplicate_event_same_source": 1,
@@ -575,13 +577,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 104,
     "events_with_image": 143,
-    "upcoming_no_image": 57,
+    "upcoming_no_image": 58,
     "ongoing_events": 6,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 56
+    "eyecatch_backlog": 57
    },
-   "events": 422,
-   "upcoming": 160
+   "events": 423,
+   "upcoming": 161
   }
  ]
 }

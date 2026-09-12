@@ -1,5 +1,5 @@
 {
-  "total": 473,
+  "total": 476,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -273,7 +273,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 57,
+      "count": 58,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aichin-shokusai-new-year-party-2027",
@@ -363,8 +363,10 @@
     },
     "access_pref_mismatch": {
       "title": "アクセス文の路線が開催県を通っていない(別会場の案内の貼り付け)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plants-marche-aisai-tokushima-2026-10: access に「東京メトロ」(営業県 千葉/埼玉/東京) だが prefecture=徳島"
+      ],
       "note": "access は当該会場の一次情報から書く。裏取りできなければ消す",
       "severity": "urgent"
     },
@@ -743,7 +745,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 56,
+      "count": 57,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-12 plants-festa-2-kawashima-2026-09",
@@ -780,11 +782,11 @@
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 minefarm-popup-okinawa-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
+        "2026-10-25 plants-marche-aisai-tokushima-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 chuushokushobutsusai-2026",
-        "2026-11-14 botanical-botanical-okinawa-2026-11",
-        "2026-11-22 awajishima-taniku-smile-marche-3rd-2026"
+        "2026-11-14 botanical-botanical-okinawa-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
