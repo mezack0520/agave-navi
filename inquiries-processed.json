@@ -1,54 +1,63 @@
 {
-  "description": "掲載申請フォームの処理済み回答タイムスタンプ。event-listing-reviewタスクが管理。processed は重複判定用。outcomes は各回答をどう処理したかの記録(後から追跡できるようにするため。timestamp は processed と同じ値を使う)。",
-  "processed": [
-    "2026/04/27 18:19:12",
-    "2026/07/02 22:50:09",
-    "2026/08/31 12:41:01",
-    "2026/09/07 18:41:52",
-    "2026/09/08 9:18:02"
-  ],
-  "outcomes": [
-    {
-      "timestamp": "2026/04/27 18:19:12",
-      "type": "情報の修正・訂正",
-      "eventName": "サボテン・多肉植物ビッグバザール",
-      "action": "listed",
-      "detail": "5/24開催の指摘を反映。events.json の isij-big-bazaar-2026-05-24 として掲載済み",
-      "verifiedOn": "2026-08-12"
-    },
-    {
-      "timestamp": "2026/07/02 22:50:09",
-      "type": "情報の修正・訂正",
-      "eventName": "Agave Pop up market",
-      "action": "listed",
-      "detail": "種別は修正・訂正だが内容は新規掲載依頼。events.json の agave-popup-market-nagoya-2026-07 として掲載済み",
-      "verifiedOn": "2026-08-12"
-    },
-    {
-      "timestamp": "2026/08/31 12:41:01",
-      "type": "イベント掲載リクエスト",
-      "eventName": "PLANTS BAZAAR なんせ植物が好きなもんで。",
-      "action": "listed",
-      "detail": "events.json に plants-bazaar-null-kanazawa-2026-09 を追加。申請本文に開催日が無かったため、主催 studio null. の公式IG @null_kanazawa の2026-08-30 のリールで 2026-09-05〜06 / 10:00〜18:00 / 金沢市高岡町23-6 を確認した。申請者ドメイン studio-kujira.com は studio null. の運営元で住所・電話が会場と同一のため、出店者ではなく主催者本人の申請と判断した"
-    },
-    {
-      "timestamp": "2026/09/07 18:41:52",
-      "type": "イベント掲載リクエスト",
-      "eventName": "植ノ宴 -4-",
-      "action": "listed",
-      "detail": "掲載依頼どおり events.json に shokunoutage-4-kumamoto-2026-09 （植ノ宴 -4- in 熊本 / 2026-09-22〜23 / カリーノMSビル）を追加した。出典は主催 @syokunoutage の告知投稿 https://www.instagram.com/p/DcYbxwJhQnG/ で、日付・名称・会場の3点が一致することを確認済み（sourceUrlMatch）。本文は Collect Plants 熊本の中止を代替開催の理由として述べているだけで、この回そのものは掲載依頼。中止側の処理は 2026/09/08 9:18:02 の回の記録を見る。",
-      "verifiedOn": "2026-09-08",
-      "correctedOn": "2026-09-08",
-      "correctionNote": "2026-09-08 に修正。元の記録は action=cancelled で、detail が collect-plants-2026-09 の中止処理を述べる 9/08 9:18:02 の回と一字一句同じだった。掲載自体は同じコミット 65c589a6 で済んでいたが、記録の上では掲載依頼が処理されていないように見えていた。"
-    },
-    {
-      "timestamp": "2026/09/08 9:18:02",
-      "type": "このイベントは開催中止です。削除してください。",
-      "eventName": "コレクトプランツ熊本",
-      "action": "cancelled",
-      "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing",
-      "verifiedOn": "2026-09-08"
-    }
-  ],
-  "updated": "2026-09-08"
+ "description": "掲載申請フォームの処理済み回答タイムスタンプ。event-listing-reviewタスクが管理。processed は重複判定用。outcomes は各回答をどう処理したかの記録(後から追跡できるようにするため。timestamp は processed と同じ値を使う)。",
+ "processed": [
+  "2026/04/27 18:19:12",
+  "2026/07/02 22:50:09",
+  "2026/08/31 12:41:01",
+  "2026/09/07 18:41:52",
+  "2026/09/08 9:18:02",
+  "2026/09/11 20:24:30"
+ ],
+ "outcomes": [
+  {
+   "timestamp": "2026/04/27 18:19:12",
+   "type": "情報の修正・訂正",
+   "eventName": "サボテン・多肉植物ビッグバザール",
+   "action": "listed",
+   "detail": "5/24開催の指摘を反映。events.json の isij-big-bazaar-2026-05-24 として掲載済み",
+   "verifiedOn": "2026-08-12"
+  },
+  {
+   "timestamp": "2026/07/02 22:50:09",
+   "type": "情報の修正・訂正",
+   "eventName": "Agave Pop up market",
+   "action": "listed",
+   "detail": "種別は修正・訂正だが内容は新規掲載依頼。events.json の agave-popup-market-nagoya-2026-07 として掲載済み",
+   "verifiedOn": "2026-08-12"
+  },
+  {
+   "timestamp": "2026/08/31 12:41:01",
+   "type": "イベント掲載リクエスト",
+   "eventName": "PLANTS BAZAAR なんせ植物が好きなもんで。",
+   "action": "listed",
+   "detail": "events.json に plants-bazaar-null-kanazawa-2026-09 を追加。申請本文に開催日が無かったため、主催 studio null. の公式IG @null_kanazawa の2026-08-30 のリールで 2026-09-05〜06 / 10:00〜18:00 / 金沢市高岡町23-6 を確認した。申請者ドメイン studio-kujira.com は studio null. の運営元で住所・電話が会場と同一のため、出店者ではなく主催者本人の申請と判断した"
+  },
+  {
+   "timestamp": "2026/09/07 18:41:52",
+   "type": "イベント掲載リクエスト",
+   "eventName": "植ノ宴 -4-",
+   "action": "listed",
+   "detail": "掲載依頼どおり events.json に shokunoutage-4-kumamoto-2026-09 （植ノ宴 -4- in 熊本 / 2026-09-22〜23 / カリーノMSビル）を追加した。出典は主催 @syokunoutage の告知投稿 https://www.instagram.com/p/DcYbxwJhQnG/ で、日付・名称・会場の3点が一致することを確認済み（sourceUrlMatch）。本文は Collect Plants 熊本の中止を代替開催の理由として述べているだけで、この回そのものは掲載依頼。中止側の処理は 2026/09/08 9:18:02 の回の記録を見る。",
+   "verifiedOn": "2026-09-08",
+   "correctedOn": "2026-09-08",
+   "correctionNote": "2026-09-08 に修正。元の記録は action=cancelled で、detail が collect-plants-2026-09 の中止処理を述べる 9/08 9:18:02 の回と一字一句同じだった。掲載自体は同じコミット 65c589a6 で済んでいたが、記録の上では掲載依頼が処理されていないように見えていた。"
+  },
+  {
+   "timestamp": "2026/09/08 9:18:02",
+   "type": "このイベントは開催中止です。削除してください。",
+   "eventName": "コレクトプランツ熊本",
+   "action": "cancelled",
+   "detail": "削除ではなく中止表示にした。collect-plants-2026-09 の eventStatus を cancelled にし、cancelledOn=2026-08-12 / cancelReason=令和8年熊本地震の影響 を入れた。一覧・カレンダー・iCal・RSSからは外れ、詳細ページは中止の告知つきで残る。根拠は公式サイトのメインビジュアルの中止告知と、公式IG 2026-08-12 の投稿。削除しない理由は listing-policy.json の cancelledOrPostponed.afterListing",
+   "verifiedOn": "2026-09-08"
+  },
+  {
+   "timestamp": "2026/09/11 20:24:30",
+   "type": "イベント掲載リクエスト",
+   "eventName": "Plants marché",
+   "action": "listed",
+   "detail": "new-events.json に plants-marche-aisai-tokushima-2026-10 を追加した。申請本文に開催日・会場が無かったため、主催 Bizarre Plants Days の公式IG @bizarreplants_days の 2026-09-05 投稿 https://www.instagram.com/p/Dc7C-xLEyG0/ で裏取りした。キャプションに『10月25日(日)開催の Plants marché』『#あいさい広場』、添付チラシに 2026年10月25日(日) 9時半〜15時 / みはらしの丘あいさい広場 / 主催 Bizarre Plants Days が出ており、日付・名称・会場の3点が一致する。住所はチラシの『炭屋ヶ谷47』が欠けていたため JA東とくしま公式で 徳島県小松島市立江町炭屋ヶ谷47-3 と確認して補った。2026-10-25 は日曜で告知の曜日と一致。主催告知の扱う植物は サボテン・多肉植物・ビカクシダ・盆栽・アクアリウム で、対象ジャンルが主題(plantCentric.autoInclude)。総合マルシェではないので compositeEvents の比率は当てない。",
+   "verifiedOn": "2026-09-12"
+  }
+ ],
+ "updated": "2026-09-12"
 }
