@@ -74,6 +74,17 @@
    抜けが出たら `task-reports/<taskId>_<日付>.md` の有無を先に見る。
    同じセッション障害で複数のタスクが同時に台帳から消える。
 
+7. **台帳に `taskId` を足したら、同じ回にそのタスクの SKILL.md へも
+   `record-run.py` の行を入れる（2026-09-12 追加）。**
+   片方だけだと、そのタスクは毎日動いているのに台帳が空のままになり、
+   `task_run_gap` が `since` からの日数ぶん「動かなかった日」を出し続ける。
+   実例: `agave-navi-eyecatch` は 09-10 に台帳へ登録したが SKILL.md を直しておらず、
+   スケジューラの `lastRunAt` は毎日更新されているのに `history` は
+   09-09（登録前の手入力）止まり。09-11 の**本物の環境障害**（4タスク全滅）と
+   同じ行に並んで区別が付かなくなった。
+   この形は `audit.task_run_never_recorded` が「`since` 以降の記録が1件も無い」で
+   分けて出す。**repo 側では直せない**ので、出たら `pending-judgments.json` に積む。
+
 置き場（すべて `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` 配下）:
 - PAT: `agave-navi\github.pat`
 - 実行レポート: `mzplants\agave-navi\task-reports\<taskId>_YYYY-MM-DD.md`
@@ -1681,6 +1692,59 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
      既に入ってしまった値も翌日の監査で表に出る
   **掲載申請を処理したら、押して終わりにせず events.json に入った姿を読むこと。**
   自分が書いた値と、本番に出た値は別物になりうる。
+
+### 「値が無い」は null と空文字の2通りになる (2026-09-12)
+
+`events.json` に `"url": ""` が11件、`imageUrl` が null 4件・空文字2件あった。
+入口は2つ。
+
+- `merge-new-events.py` は**更新の側だけ** `if v` で空を弾いており、
+  **新規追加は dict をそのまま積んでいた**。Instagram 由来の回に
+  `"url": ""` が付いたまま入る。
+- `image-health-check.py` は死んだ画像に `imageUrl = None` を書いていた。
+
+読む側は `(x or '')` で吸収しているので実害は出ないが、
+`is None` や `in e` で書いた検査を1つ足した時点で片方だけ拾って静かに漏れる。
+**どちらもキーごと消す形に揃えた**（`audit.blank_optional_fields` の案内どおり）。
+`merge-new-events.py --self-test` に「新規追加でも空のキーは持ち込まない」を足してある。
+
+### 同じ建物の下位区画という除外が、本物の二重登録を隠す (2026-09-12)
+
+`duplicate_venue_date` は「京セラドーム大阪」と「京セラドーム大阪スカイホール」を
+別会場として通す（2026-08-10 の誤検知対応）。この除外に隠れて、
+`border-break-6th-2026` と `tenkaichi-2026` が同日・同会場・同出典で並んでいた。
+拾っていたのは `duplicate_event_same_source` だけで、しかもその note に
+**「併催の実例」として当のこの組が書かれていた**ため、毎回「正常」と読まれていた。
+
+no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イベント
+第六回 天下一植物界」と書いている。**改称した同じ回**であって併催ではない。
+`border-break-6th-2026` を削除して `tenkaichi-2026` に寄せ、note を訂正した。
+
+除外は「**両者の出典ホストが同じなら効かせない**」に変えた。
+同じ建物の別ホールで別イベントなら、出典まで同じになる理由が無い。
+
+**「正常に出る例」として note に書いた実例は、そのうち検算されなくなる。**
+書くなら「なぜ別イベントと言えるか」を一次情報で確かめてから書く。
+
+### `removed` は index.html に slug が出ない (2026-09-12)
+
+`updates_section_drift` は更新欄の項目を **slug の文字列一致**で探すが、
+`sitelib.update_rows()` は `kind == 'removed'` のとき詳細ページが無いので
+**リンクを張らない**。slug は頁のどこにも出ないため、載っているのに
+「TOPの更新欄に無い」と鳴る。**掲載を取り消すたびに必ず鳴る形**だった。
+`removed` だけ `name` で照合するように直した。
+
+### 中止巡回の取得失敗は一過性 (2026-09-12)
+
+`cancel_watch_unreachable` が毎日1〜4件出るが、**落ちる先が日替わり**で、
+09-10 は4件・09-11 は1件・09-12 は3件、重なりがほぼ無い。
+09-12 に出た3件（bookkasama / isij / ontheplants）を `check-cancelled.py` の
+`fetch()` をそのまま呼んで手元から引くと**3件とも200**で返った。
+落ちているのは相手ではなくその回の接続。`fetch()` に接続系だけ2回の
+引き直し（3秒待ち）を入れた。`HTTPError` は相手の返事なので引き直さない。
+
+**「巡回そのものが失敗している」は本物の警告**なので、
+毎日入れ替わる雑音で埋めてはいけない。
 
 ## アイキャッチの取り方 (2026-09-08)
 

@@ -3,13 +3,9 @@
   "sweptOn": "2026-09-12",
   "stats": {
     "targets": 22,
-    "fetched": 19
+    "fetched": 22
   },
-  "errors": [
-    "isij-big-bazaar-2026-09-27: URLError http://isij.net/",
-    "on-the-plants-vol9-fukuoka-2026-10: URLError https://ontheplants.com/",
-    "botanical-life-kasama-2026-11: URLError https://bookkasama.com/bot2611.html"
-  ],
+  "errors": [],
   "logicErrors": [],
   "suspects": [],
   "pages": {
@@ -168,6 +164,23 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
+    "isij-big-bazaar-2026-09-27": {
+      "url": "http://isij.net/",
+      "checkedOn": "2026-09-12",
+      "signature": {
+        "text": "9169c3d50a25c3e6",
+        "images": "a43a8b04c4332199",
+        "textLen": 6748,
+        "imageCount": 9
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-12",
+      "textOnlyChanges": 0
+    },
     "plants-show-kiryu-2026-autumn": {
       "url": "https://note.com/purveyors/n/nccecb7bfd245",
       "checkedOn": "2026-09-12",
@@ -183,6 +196,23 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
+      "textOnlyChanges": 0
+    },
+    "on-the-plants-vol9-fukuoka-2026-10": {
+      "url": "https://ontheplants.com/",
+      "checkedOn": "2026-09-12",
+      "signature": {
+        "text": "d1810f1e7075cccd",
+        "images": "1ac04d43b10efda9",
+        "textLen": 2238,
+        "imageCount": 22
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": false,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-12",
       "textOnlyChanges": 0
     },
     "souransai-koshigaya-2026-10": {
@@ -336,6 +366,23 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
+      "textOnlyChanges": 0
+    },
+    "botanical-life-kasama-2026-11": {
+      "url": "https://bookkasama.com/bot2611.html",
+      "checkedOn": "2026-09-12",
+      "signature": {
+        "text": "4577a10f8338a0d7",
+        "images": "372c61ca743c69b7",
+        "textLen": 15721,
+        "imageCount": 600
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-12",
       "textOnlyChanges": 0
     }
   }

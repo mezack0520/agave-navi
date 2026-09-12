@@ -563,15 +563,12 @@
    "date": "2026-09-12",
    "urgent": {},
    "info": {
-    "blank_optional_fields": 17,
-    "duplicate_event_same_source": 1,
-    "cancel_watch_unreachable": 3,
     "inquiry_review_gap": 1,
-    "task_run_gap": 3,
-    "cross_script_duplicate": 1
+    "task_run_never_recorded": 1,
+    "task_run_gap": 3
    },
    "metric": {
-    "thin_past_with_source": 34,
+    "thin_past_with_source": 33,
     "thin_archived": 48,
     "upcoming_with_image": 104,
     "events_with_image": 143,
@@ -580,7 +577,7 @@
     "workflow_secrets": 6,
     "eyecatch_backlog": 57
    },
-   "events": 423,
+   "events": 422,
    "upcoming": 161
   }
  ]

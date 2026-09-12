@@ -129,6 +129,20 @@ def main():
     # 「東京都内」「岐阜県内」のような広域指定でないときだけ同一とみなす。
     _vague = is_vague_venue
 
+    def _src_host(slug):
+        for e in events:
+            if e.get('slug') != slug:
+                continue
+            u = (e.get('sourceUrl') or e.get('url') or '').strip()
+            m = re.match(r'https?://([^/]+)', u)
+            return (m.group(1).lower().removeprefix('www.') if m else '')
+        return ''
+
+    def _same_source_host(slugs_a, slugs_b):
+        ha = {h for h in (_src_host(s) for s in slugs_a) if h}
+        hb = {h for h in (_src_host(s) for s in slugs_b) if h}
+        return bool(ha & hb)
+
     seen_vd = defaultdict(list)
     for e in events:
         vk = _venue_key(e)
@@ -151,9 +165,18 @@ def main():
                 # 例: 京セラドーム大阪 と 京セラドーム大阪スカイホール は別イベント
                 suffix = long_[len(short):] if long_.startswith(short) else ''
                 import re as _re_sub
+                # ただし**両者の出典が同じホストなら除外しない**(2026-09-12)。
+                # 下位区画の除外は「同じ建物の別ホールで別イベント」を通すため
+                # だが、出典まで同じなら同じ主催の同じ告知頁を指しており、
+                # 別イベントである説明が立たない。
+                # 実例: border-break-6th-2026(京セラドーム大阪 スカイホール) と
+                # tenkaichi-2026(京セラドーム大阪) が同日・同出典 no1plantae.com。
+                # BORDER BREAK!! は 天下一植物界 に改称した同じ回で、
+                # この除外に隠れて duplicate_venue_date からは見えていなかった
+                # (duplicate_event_same_source だけが拾っていた)。
                 if suffix and _re_sub.search(
                         r'ホール|会館|館|階|[0-9]+F|催事場|広場|会議室|展示場|棟|ルーム|コート|アリーナ',
-                        suffix):
+                        suffix) and not _same_source_host(a[1], b[1]):
                     continue
                 if len(short) < 6 or not long_.startswith(short):
                     continue
@@ -986,9 +1009,13 @@ def main():
         sorted(set(dup_src)),
         '表記違い(ローマ字/カタカナ)や会場名の1字違いで duplicate_event_entry を'
         'すり抜けた二重登録の候補。同じ回なら情報量の多い側に寄せて片方を消す。'
-        '同じ主催が同じ会場で併催する別イベントは正常に出る'
-        '(第6回 天下一植物界 と BORDER BREAK!! 6th が no1plantae.com を共有する組が実例)。'
-        'つまりゼロにはならないので info。urgent にすると併催のたびに鳴る', severity='info')
+        '同じ主催が同じ会場で併催する別イベントは正常に出るのでゼロにはならず info。'
+        'urgent にすると併催のたびに鳴る。'
+        '**「併催の実例」として第6回 天下一植物界 と BORDER BREAK!! 6th を挙げていたが、'
+        'これは誤りだった(2026-09-12 訂正)。**no1plantae.com は「BORDER BREAK!! は'
+        '13年を迎え」「次回イベント 第六回 天下一植物界」と書いており、改称した同じ回。'
+        'border-break-6th-2026 を削除して tenkaichi-2026 に寄せた。'
+        '併催と決める前に必ず出典を開くこと', severity='info')
 
     add('duplicate_event_entry', '同じ回が別slugで二重登録されている', sorted(dup_ev),
         '内容の濃いほうに寄せて片方を削除し、events/<slug>.html も消す。'
@@ -1869,11 +1896,18 @@ def main():
             _fx = ''
         for i in _want_imp[:10]:
             _sl = i.get('slug') or ''
-            if _sl and _sl not in _fx:
+            # removed は詳細ページが消えているので sitelib.update_rows() が
+            # **リンクを張らない**。slug は頁のどこにも出ないので、slug で
+            # 探すと載っているのに「無い」と出る。名前で照合する(2026-09-12)。
+            # border-break-6th-2026 を消した回に実際に鳴り、行は
+            # `<span class="upd-title">BORDER BREAK!! 6th</span>` として
+            # index.html に出ていた。**取り消すたびに必ず鳴る形**だった。
+            _mark = (i.get('name') or _sl) if i.get('kind') == 'removed' else _sl
+            if _mark and _mark not in _fx:
                 _upd_bad.append(
                     f"{i.get('kind')} の {_sl} が feeds/updates.xml に無い"
                     '（掲載に埋もれている）')
-            if _sl and _sl not in _ix:
+            if _mark and _mark not in _ix:
                 _upd_bad.append(
                     f"{i.get('kind')} の {_sl} がTOPの更新欄に無い")
     # 範囲別の行。トップで地域チップを押したときにJSが読む。
@@ -2740,6 +2774,35 @@ def main():
                 task_gap.append(
                     f'{_tid}(weekly) の実行が無かった週: ' + ' '.join(_miss)
                     + f'（直近{_win // 7}週で{len(_miss)}週）')
+    # 台帳に登録したのに、そのタスクが一度も自分で書いていない場合(2026-09-12)。
+    # task_run_gap は「動かなかった日」として出すが、原因が違う。
+    # 実際 agave-navi-eyecatch は since=2026-09-10 で登録され、
+    # スケジューラの lastRunAt は毎日更新されているのに history は
+    # 2026-09-09(登録前の手入力)止まりで、**タスク側が record-run.py を
+    # 呼んでいない**。この形は since からの日数ぶん毎日 task_run_gap に
+    # 出続けるので、「環境が落ちた日」と混ざって読めなくなる。
+    # 直す先はスケジュールタスクの SKILL.md であって repo ではない。
+    task_never = []
+    for _tid, _cfg in sorted((k, v or {}) for k, v in _tr.items()):
+        _since_s = str(_cfg.get('since') or '').strip()
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _since_s):
+            continue
+        _hist = [str(h) for h in (_cfg.get('history') or [])
+                 if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))]
+        if not any(h >= _since_s for h in _hist):
+            task_never.append(
+                f'{_tid}: since={_since_s} 以降の記録が1件も無い'
+                f'（台帳の最終記録 {max(_hist) if _hist else "なし"}）')
+    add('task_run_never_recorded', '台帳に登録したが一度も自分で書いていないタスク',
+        task_never,
+        note='起動記録の書き手はタスク自身なので、repo 側では直せない。'
+             'そのタスクの SKILL.md に「起動直後に '
+             'python3 scripts/record-run.py <taskId> を実行して push する」を'
+             '入れる(プレイブック §1 の 5)。'
+             '入れるまでは task_run_gap に毎日出続け、'
+             '本物の「環境が落ちた日」が埋もれる',
+        severity='info')
+
     add('task_run_gap', 'スケジュールタスクの実行が抜けた日', task_gap,
         note='task-runs.json はタスクが毎回自分の実行日を書く台帳。'
              'スケジュール側の lastRunAt は最新1回しか持たないので、'
@@ -2904,6 +2967,9 @@ def main():
         'SKIP_DOMAINS',   # 「辿らない先」。check-cancelled と enrich で対象が違う
         'KEEP',           # 履歴の保持件数。台帳と更新履歴で別の数
         'IG_HANDLE', 'OG_IMAGE', 'OG_IMAGE_ALT', 'NOT_HANDLE', 'TIMEOUT', 'UA',
+        # 出力する列。detect-added-events は通知に出す6項目、generate-csv は
+        # 配布CSVの全列。**中身も用途も別で、揃えると片方が壊れる**(2026-09-12)
+        'FIELDS',
     }
     # 置き場所の定数は数えない。同じファイルを各スクリプトが自分の位置から
     # 解決しているだけで、規則ではない。名前ではなく**右辺の形**で判定する。

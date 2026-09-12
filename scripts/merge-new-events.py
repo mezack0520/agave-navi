@@ -9,7 +9,7 @@ workflow の `run: |` に直書きされていて、ローカルで実行も検�
 
 取り込みの規則。
 
-- slug が無ければ追加する
+- slug が無ければ追加する。**空のキーは落としてから積む**
 - slug が既にあれば、**値のあるキーだけ**上書きする。空で潰さない
 - 並びは 開催予定を先、その中は日付昇順
 
@@ -26,6 +26,17 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+def drop_blanks(d):
+    """値の無いキーを落とす。null・空白だけの文字列・空配列が対象。
+
+    `audit.blank_optional_fields` の案内(「値が無いならキーごと消す」)に合わせる。
+    """
+    return {k: v for k, v in d.items()
+            if not (v is None
+                    or (isinstance(v, str) and not v.strip())
+                    or (isinstance(v, (list, dict)) and not v))}
+
+
 def merge(events, new_events):
     """(結果, 追加したslug, 更新したslug)。**この関数が取り込みの規則。**"""
     existing = {e.get('slug') for e in events}
@@ -33,7 +44,13 @@ def merge(events, new_events):
     for ne in new_events:
         slug = ne.get('slug')
         if slug not in existing:
-            events.append(ne)
+            # 空のキーは持ち込まない(2026-09-12)。更新の側は既に `if v` で
+            # 空を弾いているが、**新規追加だけは dict をそのまま積んでいた**
+            # ので `"url": ""` が events.json に入り続けていた。09-12 時点で
+            # 17件(url 空文字11 / imageUrl null 4 / imageUrl 空文字2)。
+            # 「値が無い」が null と空文字の2通りで同居すると、`is None` や
+            # `in e` で書いた検査が片方だけ拾って静かに漏れる。
+            events.append(drop_blanks(ne))
             existing.add(slug)
             added.append(slug)
             continue
@@ -72,6 +89,14 @@ def self_test():
     out, add, upd = merge([dict(x) for x in ev], [{'slug': 'a', 'name': ''}])
     chk('空では上書きしない', out[0]['name'], 'A')
     chk('空だけなら更新扱いにしない', upd, [])
+
+    out, add, upd = merge([dict(x) for x in ev],
+                          [{'slug': 'c', 'name': 'C', 'date': '2026-11-01',
+                            'status': 'upcoming', 'url': '', 'imageUrl': None,
+                            'tags': []}])
+    got = sorted(k for e in out if e['slug'] == 'c' for k in e)
+    chk('新規追加でも空のキーは持ち込まない', got,
+        ['date', 'name', 'slug', 'status'])
 
     out, add, upd = merge([dict(x) for x in ev],
                           [{'slug': 'a', 'time': '10:00〜16:00'}])

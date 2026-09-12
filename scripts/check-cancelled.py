@@ -245,12 +245,32 @@ def analyze(html, event=None):
     return out
 
 
-def fetch(url, timeout=20):
+def fetch(url, timeout=20, retries=2, wait=3.0):
+    """取得。**接続系の失敗は retries 回まで待って引き直す(2026-09-12)。**
+
+    errors に載ると audit.cancel_watch_unreachable が鳴るが、CI の
+    取りこぼしは一過性で、失敗する先が日替わりになる:
+    09-10 は sakuya-green-jam / kourep / souransai / jurian の4件、
+    09-11 は jurian の1件、09-12 は isij / ontheplants / bookkasama の3件。
+    09-12 にこの3件を同じ UA で手元から引くと3件とも200で返った。
+    **落ちているのは相手ではなく、その回の接続。**引き直さずに記録すると
+    「巡回が失敗している」という本物の警告が、毎日入れ替わる雑音に埋まる。
+
+    HTTPError(4xx/5xx) は相手の返事なので引き直さない。
+    """
     req = urllib.request.Request(url, headers={'User-Agent': UA,
                                                'Accept-Language': 'ja'})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        raw = r.read()
-    return raw.decode('utf-8', 'replace')
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                raw = r.read()
+            return raw.decode('utf-8', 'replace')
+        except urllib.error.HTTPError:
+            raise
+        except Exception:                             # noqa: BLE001
+            if attempt == retries:
+                raise
+            time.sleep(wait)
 
 
 def watch_targets(events, today, horizon=HORIZON_DAYS):

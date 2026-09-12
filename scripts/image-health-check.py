@@ -47,7 +47,11 @@ def main():
         print(f'\n{len(dead)} dead image(s). Clearing imageUrl...')
         if not args.dry_run:
             for i, slug, url, status in dead:
-                d[i]['imageUrl'] = None
+                # キーごと消す(2026-09-12)。None を書くと、取り込み側が書く
+                # 空文字と「値が無い」の表現が2通りになる。`is None` や
+                # `in e` で書いた検査が片方だけ拾って静かに漏れるので、
+                # audit.blank_optional_fields の案内どおり削除に揃える。
+                d[i].pop('imageUrl', None)
             with open(EVENTS, 'w', encoding='utf-8') as f:
                 json.dump(d, f, ensure_ascii=False, indent=2)
                 f.write('\n')

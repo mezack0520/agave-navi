@@ -1,7 +1,23 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [],
-  "updated": "2026-09-07",
+  "items": [
+    {
+      "id": "event-monitor:eyecatch-task-not-recording-runs",
+      "addedOn": "2026-09-12",
+      "source": "audit.task_run_never_recorded",
+      "question": "agave-navi-eyecatch の SKILL.md に起動記録の手順を入れてよいか。repo 側からは直せない。",
+      "facts": [
+        "task-runs.json に since=2026-09-10 で登録済みだが、history は 2026-09-09 止まり。since 以降の記録が1件も無い。",
+        "スケジューラ側は enabled: true、lastRunAt 2026-09-11T05:49Z(=09-11 14:49 JST)。起動自体はしている。",
+        "task-reports/ にも agave-navi-eyecatch_2026-09-09.md が最後で、09-10 以降のレポートが無い。",
+        "結果、task_run_gap が 09-10 / 09-11 を『動かなかった日』として毎日出し続け、09-11 の本物の環境障害(4タスク全滅)と混ざって読めない。"
+      ],
+      "proposal": "C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\agave-navi-eyecatch\\\\SKILL.md に、他3タスクと同じ2行を入れる。(1) リポジトリを clone した直後に python3 scripts/record-run.py agave-navi-eyecatch を実行し、その変更を含めて push する。(2) 実行レポートを mzplants\\\\agave-navi\\\\task-reports\\\\agave-navi-eyecatch_YYYY-MM-DD.md に保存する。手順はプレイブック §1 の 5。",
+      "whyHuman": "SKILL.md は C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\ 配下にあり、このタスクに接続されているのは mzplants だけなので書き込めない。プレイブックにも『タスクは自分のプロンプトを編集できない』とある。",
+      "policyProposal": "docs/task-playbook.md §1 に『台帳に taskId を足したら、同じ回にそのタスクの SKILL.md へ record-run.py の行を入れる。片方だけだと task_run_gap が毎日鳴り続ける』を追記済み(2026-09-12)。"
+    }
+  ],
+  "updated": "2026-09-12",
   "resolved": [
     {
       "id": "event-monitor:inquiry-pii-in-public-repo",
