@@ -363,10 +363,8 @@
     },
     "access_pref_mismatch": {
       "title": "アクセス文の路線が開催県を通っていない(別会場の案内の貼り付け)",
-      "count": 1,
-      "items": [
-        "plants-marche-aisai-tokushima-2026-10: access に「東京メトロ」(営業県 千葉/埼玉/東京) だが prefecture=徳島"
-      ],
+      "count": 0,
+      "items": [],
       "note": "access は当該会場の一次情報から書く。裏取りできなければ消す",
       "severity": "urgent"
     },
@@ -721,11 +719,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 2,
-      "items": [
-        "2026-09-26 中山園芸が5周年感謝祭2026を開催、多肉植物やリメイク鉢など多数の出店者が参加",
-        "2026-10-24 MINE FARM POP UP In 沖縄2026を開催、実生多肉植物やサボテンと限定植木鉢を販売"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -861,10 +856,21 @@
       "note": "URLを開いて、日付・イベント名・会場がその回と一致するかを見る。同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。一致しないなら **url ごと外す**(残すと裏取り済みに見える)。その記事から採った imageUrl も別の回の写真なので一緒に外す。日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない",
       "severity": "urgent"
     },
-    "cancel_watch_unreachable": {
-      "title": "中止の見張りで取得できなかった出典",
+    "field_names_other_prefecture": {
+      "title": "別の県を名乗る値が入っている",
       "count": 0,
       "items": [],
+      "note": "検索で名前が似た別イベントの頁を掴み、その頁の値を書き戻した疑い。主催の一次情報で確かめ、裏が取れないなら **その項目ごと消す**(残すと裏取り済みに見える)。同じ経路で入った url / imageUrl も見る。県を名乗らない値はここに出ない",
+      "severity": "urgent"
+    },
+    "cancel_watch_unreachable": {
+      "title": "中止の見張りで取得できなかった出典",
+      "count": 3,
+      "items": [
+        "取得できなかった: botanical-life-kasama-2026-11: URLError https://bookkasama.com/bot2611.html",
+        "取得できなかった: isij-big-bazaar-2026-09-27: URLError http://isij.net/",
+        "取得できなかった: on-the-plants-vol9-fukuoka-2026-10: URLError https://ontheplants.com/"
+      ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },

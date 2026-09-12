@@ -2,10 +2,14 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-12",
   "stats": {
-    "targets": 21,
-    "fetched": 21
+    "targets": 22,
+    "fetched": 19
   },
-  "errors": [],
+  "errors": [
+    "isij-big-bazaar-2026-09-27: URLError http://isij.net/",
+    "on-the-plants-vol9-fukuoka-2026-10: URLError https://ontheplants.com/",
+    "botanical-life-kasama-2026-11: URLError https://bookkasama.com/bot2611.html"
+  ],
   "logicErrors": [],
   "suspects": [],
   "pages": {
@@ -23,6 +27,23 @@
         "中止"
       ],
       "datesNamed": 7,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-12",
+      "textOnlyChanges": 0
+    },
+    "kourep-2026-autumn": {
+      "url": "https://kourep.jp",
+      "checkedOn": "2026-09-12",
+      "signature": {
+        "text": "7c0d11f7cfb64a78",
+        "images": "b602ef27f7097e78",
+        "textLen": 2379,
+        "imageCount": 98
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 6,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-12",
@@ -61,23 +82,6 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
-    },
-    "kourep-2026-autumn": {
-      "url": "https://kourep.jp",
-      "checkedOn": "2026-09-12",
-      "signature": {
-        "text": "7c0d11f7cfb64a78",
-        "images": "b602ef27f7097e78",
-        "textLen": 2379,
-        "imageCount": 98
-      },
-      "strong": [],
-      "weak": [],
-      "datesNamed": 6,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-12",
-      "textOnlyChanges": 0
     },
     "midori-to-taniku-marche-nihonosato-2026-09": {
       "url": "https://www.nihonosato.com/post/succulentmarket",
@@ -164,23 +168,6 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
-    "isij-big-bazaar-2026-09-27": {
-      "url": "http://isij.net/",
-      "checkedOn": "2026-09-12",
-      "signature": {
-        "text": "9169c3d50a25c3e6",
-        "images": "a43a8b04c4332199",
-        "textLen": 6748,
-        "imageCount": 9
-      },
-      "strong": [],
-      "weak": [],
-      "datesNamed": 0,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
-    },
     "plants-show-kiryu-2026-autumn": {
       "url": "https://note.com/purveyors/n/nccecb7bfd245",
       "checkedOn": "2026-09-12",
@@ -194,23 +181,6 @@
       "weak": [],
       "datesNamed": 1,
       "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
-    },
-    "on-the-plants-vol9-fukuoka-2026-10": {
-      "url": "https://ontheplants.com/",
-      "checkedOn": "2026-09-12",
-      "signature": {
-        "text": "d1810f1e7075cccd",
-        "images": "1ac04d43b10efda9",
-        "textLen": 2238,
-        "imageCount": 22
-      },
-      "strong": [],
-      "weak": [],
-      "datesNamed": 0,
-      "eventDateSeen": false,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
