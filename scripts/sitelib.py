@@ -1379,6 +1379,34 @@ def page_is_wrong_edition(html, event):
     return named >= 1 and seen is False
 
 
+def page_prefectures(html):
+    """頁の散文が名乗っている都道府県の集合。接尾辞の有無は問わない。"""
+    blob = page_text_blob(html)
+    return {p for p in PREF_TO_REGION if p in blob}
+
+
+def page_is_wrong_place(html, event):
+    """**頁から admission / access / time / venue を採る前に呼ぶ。** 別の土地の頁なら True。
+
+    頁が都道府県を1つも名乗っていない回は判定しない(False)。
+    page_is_wrong_edition と同じ形で、鳴りにくい側に倒す。
+
+    日付の検査だけでは足りない。名前が一般的な回は、**日付を散文で
+    名乗っていない別サイト**を掴むと page_is_wrong_edition が
+    datesNamed=0 で判定を降り、素通りする。2026-09-12、徳島の
+    「Plants marché」に andplants.jp(東京・中目黒のマルシェ)の
+    入場料 3,300円 と「東京メトロ 中目黒駅隣接」が入った。
+    検索の再試行が `<名称> 公式` まで文脈を捨てるので、
+    一般名の回では土地だけが唯一の手掛かりになる。
+    """
+    pref = (event or {}).get('prefecture') or ''
+    pref = pref.rstrip('都道府県') if pref not in PREF_TO_REGION else pref
+    if not pref or pref not in PREF_TO_REGION:
+        return False
+    named = page_prefectures(html)
+    return bool(named) and pref not in named
+
+
 def head_open(og_type='website'):
     """全ページ共通の <head> 冒頭を返す。**まだ format されていない雛形。**
 

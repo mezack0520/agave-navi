@@ -1658,6 +1658,30 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   ワークフローが3本あるなら3本とも数える。成功だけを見ると、
   消えた1本は永久に見えない。
 
+- **一般名のイベントは、掲載した直後に CI の enrich が別イベントの値を入れる（2026-09-12）。**
+  `new-events.json` を押すと `sync-events.yml` が新規 slug に
+  `enrich_events.py --write-back` を回す。出典が Instagram だけの回は
+  web検索に出るので、**1回目の検索が空振りすると `<名称> 公式` で再試行する。**
+  ここで会場も県も日付も落ちるため、名前が一般的な回は別物を掴む。
+  実際、徳島の `Plants marché` に `andplants.jp`(東京・中目黒のマルシェ)の
+  `admission=3,300円（税込）` と `access=東京メトロ 中目黒駅隣接` が入り、本番に出た。
+  既にあった2つの関門はどちらも効かない。
+  `_is_relevant_result` は名称のトークンが URL か題に1つあれば通すので
+  `plants` が `andplants.jp` に一致して通る。`page_is_wrong_edition` は
+  **頁が散文で日付を名乗る回しか判定しない**設計(鳴りにくい側に倒してある)で、
+  この頁は日付を書かないので `datesNamed=0` で判定を降りる。
+  **名称の一致は裏取りにならない。一般名では土地だけが手掛かりになる。**
+  対処は2つ入れた。
+  1. `sitelib.page_is_wrong_place` → `enrich_events.py` の2つ目の SKIP-ALL。
+     頁が名乗る都道府県に当該県が無ければ、その頁の値をどれも書かない。
+     県を名乗らない頁は判定しない(edition と同じ倒し方)
+  2. `audit.py` の `field_names_other_prefecture`(urgent)。
+     `access` / `admission` / `time` に当該県と違う県名が出る回を出す。
+     **外部の頁を取らずに repo だけで判定できる**ので、
+     既に入ってしまった値も翌日の監査で表に出る
+  **掲載申請を処理したら、押して終わりにせず events.json に入った姿を読むこと。**
+  自分が書いた値と、本番に出た値は別物になりうる。
+
 ## アイキャッチの取り方 (2026-09-08)
 
 定期タスク `agave-navi-eyecatch`（毎日14:50、1回6件まで）が担当する。

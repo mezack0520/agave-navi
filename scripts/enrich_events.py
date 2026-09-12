@@ -31,7 +31,7 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 from sitelib import DESC_MIN_CHARS, now_jst
-from sitelib import page_is_wrong_edition
+from sitelib import page_is_wrong_edition, page_is_wrong_place
 
 REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 EVENTS_PATH = os.path.join(REPO_ROOT, 'events.json')
@@ -767,6 +767,17 @@ def main():
             if info.get('html') and page_is_wrong_edition(info['html'], ev):
                 print(f"    SKIP-ALL for {ev['slug']}: 頁がこの回の開催日を書いていない"
                       f" — {(best_url or '')[:70]}")
+                continue
+            # 日付だけでは足りない。**頁が散文で日付を名乗らない**別サイトは
+            # page_is_wrong_edition が判定を降りるので素通りする。
+            # 一般名の回(`Plants marché` 等)は検索の再試行が `<名称> 公式` まで
+            # 文脈を捨てるため、名称の一致は裏取りにならない。土地で切る。
+            # 2026-09-12、徳島の Plants marché に andplants.jp(東京・中目黒)の
+            # 入場料と「東京メトロ 中目黒駅隣接」が入り、本番に出た。
+            # 判定は sitelib.page_is_wrong_place。県を名乗らない頁は判定しない。
+            if info.get('html') and page_is_wrong_place(info['html'], ev):
+                print(f"    SKIP-ALL for {ev['slug']}: 頁が {ev.get('prefecture')} を"
+                      f"名乗っていない — {(best_url or '')[:70]}")
                 continue
             changed_fields = []
 

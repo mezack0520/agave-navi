@@ -21,6 +21,7 @@ from collections import defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
+import sitelib
 from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
                      event_phase, is_long_run, event_days, LONG_RUN_DAYS,
                      is_vague_venue, venue_key, venue_slug, venue_display,
@@ -2248,6 +2249,37 @@ def main():
         '一致しないなら **url ごと外す**(残すと裏取り済みに見える)。'
         'その記事から採った imageUrl も別の回の写真なので一緒に外す。'
         '日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない')
+
+    # 16b-4. **別の土地の頁から採った値**。source_page_wrong_edition は
+    #        頁が散文で日付を名乗る回しか見ないので、日付を書かない別サイトは
+    #        素通りする。2026-09-12、徳島の「Plants marché」に
+    #        andplants.jp(東京・中目黒のマルシェ)の入場料 3,300円 と
+    #        「東京メトロ 中目黒駅隣接」が入り、本番に出た。
+    #        **一般名の回は名称の一致が裏取りにならない。**
+    #        こちらは外部の頁を取らずに repo だけで判定できる。
+    #        書いてある県が当該県と食い違う値は、別の回のものを掴んでいる。
+    _pref_mismatch = []
+    for _e in events:
+        _pref = (_e.get('prefecture') or '').strip()
+        _pref = _pref if _pref in sitelib.PREF_TO_REGION else _pref.rstrip('都道府県')
+        if _pref not in sitelib.PREF_TO_REGION:
+            continue
+        for _f in ('access', 'admission', 'time'):
+            _v = (_e.get(_f) or '').strip()
+            if not _v:
+                continue
+            _named = {x for x in sitelib.PREF_TO_REGION if x in _v}
+            if _named and _pref not in _named:
+                _pref_mismatch.append(
+                    f"{_e.get('slug')}: {_f}={_v[:60]} ← {_pref}の回に"
+                    f"{'・'.join(sorted(_named))}")
+
+    add('field_names_other_prefecture', '別の県を名乗る値が入っている',
+        sorted(_pref_mismatch),
+        '検索で名前が似た別イベントの頁を掴み、その頁の値を書き戻した疑い。'
+        '主催の一次情報で確かめ、裏が取れないなら **その項目ごと消す**'
+        '(残すと裏取り済みに見える)。同じ経路で入った url / imageUrl も見る。'
+        '県を名乗らない値はここに出ない')
 
     # 1件2件の取得失敗は「巡回が壊れた」ではない。個別のサイトが
     # ボットを弾いたり落ちていたりするだけで、他の21件は取れている。
