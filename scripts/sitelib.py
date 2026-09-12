@@ -1342,6 +1342,23 @@ def page_text_blob(html):
     return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', ' '.join(parts))).strip()
 
 
+# 頁が「更新日」「投稿日」として名乗っている日付。**肩書のほうを見る。**
+# 本文中のどこに日付が在るかでは、更新日と開催日を区別できない(2026-09-12)。
+# 2026-09-13 に check-cancelled.py から sitelib へ移した。見張る側だけが
+# 持っていたため、**書く側(check_date_updates.py)が同じ日付を開始日として
+# 書き戻し、前日の手修正を CI が巻き戻した。**
+_META_DATE_RE = re.compile(
+    r'(?:最終更新|更新日|投稿日|公開日|掲載日|登録日)[^0-9]{0,8}'
+    r'(?:\d{4}[./年-][^0-9]{0,2})?(\d{1,2})\s*[月./-]\s*(\d{1,2})')
+
+
+def meta_dates(html):
+    """(月, 日) の集合。更新日・投稿日として書かれているものだけ。"""
+    blob = page_text_blob(html)
+    return {(int(m), int(d)) for m, d in _META_DATE_RE.findall(blob)
+            if 1 <= int(m) <= 12 and 1 <= int(d) <= 31}
+
+
 def page_dates(html):
     """(散文で名乗った日付の数, 全書式で拾った (月,日) の集合)
 

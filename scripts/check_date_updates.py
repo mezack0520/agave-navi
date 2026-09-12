@@ -29,7 +29,8 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sitelib import compact_date, is_aggregator_url  # 整形と出典判定の単一情報源
+from sitelib import (compact_date, is_aggregator_url, meta_dates,
+                     page_is_wrong_place)  # 判定の単一情報源
 
 # 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
 # ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
@@ -274,12 +275,38 @@ def main():
         if not html:
             continue
 
+        # 別の土地の頁から日付を採らない。enrich_events.py は書く前に
+        # これを呼ぶのに、こちらは呼んでいなかった(2026-09-13)。
+        # **書く側どうしで規則が割れているほうが、書く側と見張る側で
+        # 割れているより見つけにくい。**県を名乗らない頁は判定しない。
+        if page_is_wrong_place(html, ev):
+            print("  別の土地の頁 → スキップ")
+            continue
+
         soup = BeautifulSoup(html, "html.parser")
         text = soup.get_text(separator="\n")
 
         dates = extract_dates(text, name)
         if not dates:
             print("  日付抽出できず")
+            continue
+
+        # 頁が「更新日」「投稿日」として名乗っている日付は開催日ではない。
+        # **この関門が無かったため、2026-09-12 に手で直した
+        # midori-to-taniku-marche-nihonosato-2026-09 の date を、同日深夜の
+        # daily が頁の「更新日：9月2日」で 09-19 → 09-02 に書き戻した。**
+        # 検査 event_start_is_page_meta(2026-09-12 追加)は鳴っていたが、
+        # 鳴らす側にしか判定が無く、書く側は素通しだった。
+        meta = meta_dates(html)
+        if meta:
+            kept = [c for c in dates
+                    if (lambda d: (d.month, d.day) not in meta)(
+                        datetime.strptime(c["date"], "%Y-%m-%d"))]
+            if len(kept) != len(dates):
+                print(f"  更新日・投稿日として除外: {len(dates)-len(kept)}件")
+            dates = kept
+        if not dates:
+            print("  頁の日付は更新日・投稿日だけ → スキップ")
             continue
 
         # サニティガード: dateEndと矛盾する候補(終了日より後 / 期間31日超)は除外。
@@ -301,6 +328,16 @@ def main():
 
         best = dates[0]
         print(f"  検出: {best['date']}")
+
+        # 単日の回(date == dateEnd)を、開始日だけ早めて会期物に化けさせない。
+        # この関数は dateEnd を一度も書かないので、date を早めると必ず
+        # 「開始日だけが動いた会期」になる。単日の回が18日間ずっと
+        # 「開催中」として一覧に出た事故(2026-09-12)はこの形だった。
+        # 会期が本当に伸びたなら、それは人が dateEnd ごと直す話。
+        if (date_end and date_end == current_date
+                and best["date"] < current_date):
+            print(f"  単日の回は開始日だけ早めない: {current_date} ← {best['date']}")
+            continue
 
         if best["date"] != current_date:
             print(f"  ⚡ 日程変更検出: {current_date} → {best['date']}")

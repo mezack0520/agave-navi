@@ -1,5 +1,5 @@
 {
-  "total": 462,
+  "total": 460,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -586,13 +586,12 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 11,
+      "count": 10,
       "items": [
         "botanical-hara-shogakko-2026-09(2026-09-13〜2026-09-13/1日)",
         "green-nuts-rumble-vol2-2026-09(2026-09-13〜2026-09-13/1日)",
         "hamimoro-kitaharima-2026-09(2026-09-13〜2026-09-13/1日)",
         "honwaka-pappa-3rd-2026-09(2026-09-13〜2026-09-13/1日)",
-        "midori-to-taniku-marche-nihonosato-2026-09(2026-09-02〜2026-09-19/18日/長期)",
         "plant-and-pot-vol15-2026-09(2026-09-12〜2026-09-13/2日)",
         "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)",
         "soen-espulse-dream-plaza-2026-09(2026-09-12〜2026-09-13/2日)",
@@ -828,10 +827,8 @@
     },
     "event_start_is_page_meta": {
       "title": "会期の開始日が出典の頁の更新日と同じ",
-      "count": 1,
-      "items": [
-        "2026-09-02〜2026-09-19 midori-to-taniku-marche-nihonosato-2026-09: 出典 https://www.nihonosato.com/post/succulentmarket は 09/02 を更新日・投稿日として書いている"
-      ],
+      "count": 0,
+      "items": [],
       "note": "頁の更新日・投稿日を開始日として取り込んだ疑い。告知の【開催日時】を読み直して date / dateEnd / dateDisplay を直す。単日の回を会期物にすると、開催日までの何日間も「開催中」として一覧に出て、本当の開催日が埋まる。単日の回(dateEnd == date)はここに出ない",
       "severity": "urgent"
     },

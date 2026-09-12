@@ -202,18 +202,11 @@ def page_signature(html, today=None):
 page_dates = sitelib.page_dates
 
 
-# 頁が「更新日」「投稿日」として名乗っている日付。**肩書のほうを見る。**
-# 本文中のどこに日付が在るかでは、更新日と開催日を区別できない(2026-09-12)。
-_META_DATE_RE = re.compile(
-    r'(?:最終更新|更新日|投稿日|公開日|掲載日|登録日)[^0-9]{0,8}'
-    r'(?:\d{4}[./年-][^0-9]{0,2})?(\d{1,2})\s*[月./-]\s*(\d{1,2})')
-
-
-def meta_dates(html):
-    """(月, 日) の集合。更新日・投稿日として書かれているものだけ。"""
-    blob = sitelib.page_text_blob(html)
-    return {(int(m), int(d)) for m, d in _META_DATE_RE.findall(blob)
-            if 1 <= int(m) <= 12 and 1 <= int(d) <= 31}
+# 更新日・投稿日として名乗られた日付。**単一情報源は sitelib**
+# (2026-09-13 に移管)。ここが持っていた間、書く側の
+# check_date_updates.py は同じ判定を持たず、頁の更新日を開始日として
+# 書き戻していた。見張る側と書く側で同じ関数を呼ぶ。
+meta_dates = sitelib.meta_dates
 
 
 def analyze(html, event=None):
