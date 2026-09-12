@@ -1,5 +1,5 @@
 {
-  "total": 460,
+  "total": 457,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -848,12 +848,8 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 3,
-      "items": [
-        "取得できなかった: kourep-2026-autumn: URLError https://kourep.jp",
-        "取得できなかった: sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
-        "取得できなかった: souransai-koshigaya-2026-10: URLError https://soransai.com/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },

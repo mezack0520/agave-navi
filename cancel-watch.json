@@ -3,16 +3,48 @@
   "sweptOn": "2026-09-13",
   "stats": {
     "targets": 22,
-    "fetched": 19
+    "fetched": 22
   },
-  "errors": [
-    "sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
-    "kourep-2026-autumn: URLError https://kourep.jp",
-    "souransai-koshigaya-2026-10: URLError https://soransai.com/"
-  ],
+  "errors": [],
   "logicErrors": [],
   "suspects": [],
   "pages": {
+    "sakuya-green-jam-5-2026": {
+      "url": "https://www.sakuyakonohana.jp/event/22331/",
+      "checkedOn": "2026-09-13",
+      "signature": {
+        "text": "75e4cf4d8714aac8",
+        "images": "a12af253dbc269ea",
+        "textLen": 5680,
+        "imageCount": 117
+      },
+      "strong": [],
+      "weak": [
+        "中止"
+      ],
+      "datesNamed": 7,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-13",
+      "textOnlyChanges": 0
+    },
+    "kourep-2026-autumn": {
+      "url": "https://kourep.jp",
+      "checkedOn": "2026-09-13",
+      "signature": {
+        "text": "7c0d11f7cfb64a78",
+        "images": "b602ef27f7097e78",
+        "textLen": 2379,
+        "imageCount": 98
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 6,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-13",
+      "textOnlyChanges": 0
+    },
     "yamashiro-aisenen-autumn-2026-09": {
       "url": "https://www.aisenen.com/",
       "checkedOn": "2026-09-13",
@@ -60,7 +92,7 @@
       "weak": [],
       "datesNamed": 3,
       "eventDateSeen": true,
-      "startDateIsPageMeta": true,
+      "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 1
     },
@@ -181,6 +213,23 @@
       "eventDateSeen": false,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-12",
+      "textOnlyChanges": 0
+    },
+    "souransai-koshigaya-2026-10": {
+      "url": "https://soransai.com/",
+      "checkedOn": "2026-09-13",
+      "signature": {
+        "text": "c852153ebefd50ba",
+        "images": "389802360dd40ef6",
+        "textLen": 342,
+        "imageCount": 10
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-13",
       "textOnlyChanges": 0
     },
     "shimane-cactus-succulent-ten-2026-10": {
