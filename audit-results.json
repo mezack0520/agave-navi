@@ -1,5 +1,5 @@
 {
-  "total": 457,
+  "total": 458,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -820,8 +820,10 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-12-20 rojiura-botanical-2026-12: new-events.json に残ったまま events.json に無い"
+      ],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },

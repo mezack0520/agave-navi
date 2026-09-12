@@ -470,6 +470,24 @@
       "decided": "2026-09-12",
       "eventDate": "2026-09-19",
       "reason": "主催 @trillgreen_aburaya の告知(2026-09-07)で 9/19(土) 17:00〜21:00・古着倉庫(@furugisouko2017) を確認。内容は『FASHION・ART・PLANTS・SOUNDが交差する一夜限りのSPECIAL EVENT』で、古着のスペシャルプライス販売・フリーマーケット・ガラスアクセサリー・HIPHOPのDJ5組に TRILLGREEN の植物が加わる形。植物の出店はTRILLGREEN1者で、会場も古着店。compositeEvents に該当する。同じ主催が9/20〜22に自店で開く TRILLGREEN SPECIAL EVENT は掲載した"
+    },
+    {
+      "key": "minami-no-machi-uekienngei-21st-2026-09",
+      "name": "第21回 南のまちの植木・園芸市 (2026-09-18〜21 メイクマン豊見城店 第2駐車場・沖縄県豊見城市)",
+      "decided": "2026-09-13",
+      "eventDate": "2026-09-18",
+      "reasonType": "policy",
+      "reason": "主催の株式会社メイクマン(ホームセンター)の公式イベント頁がこの催しを『DIY / ガーデニング / くらし』に分類しており、09-03 の主催Facebook告知も『珍しい形や面白いシルエットの植物、レアな植物、お買い得な植木や園芸品』と書く。主題は植木と園芸品で、outOfScopeGenres の『ガーデニング・造園』に当たる。多肉・アガベ・塊根が併売されていても主題ではない。**春(3月)と秋(9月)に第20回・第21回と続くシリーズなので、回ごとに判定し直さないよう precedents に残した。**出店者側(@arakaki_orchid_bikaku 等)の告知はあるが、それは vendorAnnouncementsOnly により掲載の根拠にならない"
+    },
+    {
+      "key": "nagoriba-hatsukaichi-2026-09",
+      "name": "ナゴリバ (2026-09-20 宮島口しゃもじ広場・広島県廿日市市)",
+      "decided": "2026-09-13",
+      "eventDate": "2026-09-20",
+      "reasonType": "unverified",
+      "revisit": true,
+      "revisitedOn": "2026-09-13",
+      "reason": "アグリゲータ4社と出店者IG(@taniku.odaki_ya / @yuzuka.7zq / @saikiengei_taniku)しか情報源が無く、主催アカウントが特定できない。primarySource.vendorAnnouncementsOnly により、出店者の告知は何件独立に一致しても主催の告知の代わりにならない。2026-09-10 から追っているが主催は判明していない"
     }
   ],
   "_reasonTypes": {
@@ -478,6 +496,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-12",
+  "updated": "2026-09-13",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
