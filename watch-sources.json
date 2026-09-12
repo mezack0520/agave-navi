@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-12 15:06 JST",
+ "generated": "2026-09-13 07:59 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
   "igAccounts": 237,
-  "awaitingNextEdition": 226,
+  "awaitingNextEdition": 228,
   "officialSiteCandidates": 66,
   "unresolvedIgHandles": 0
  },
@@ -319,24 +319,6 @@
    "url": "https://www.instagram.com/_and_plants/",
    "eventCount": 1,
    "lastEventName": "PLANT & POT Vol.15",
-   "lastEventDate": "2026-09-12",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "kawashimasyubyou",
-   "url": "https://www.instagram.com/kawashimasyubyou/",
-   "eventCount": 1,
-   "lastEventName": "プランツフェスタ2026",
-   "lastEventDate": "2026-09-12",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "the_factory_otto",
-   "url": "https://www.instagram.com/the_factory_otto/",
-   "eventCount": 1,
-   "lastEventName": "Succulent1987 in Country Park KUMAMOTO 2026",
    "lastEventDate": "2026-09-12",
    "hasUpcoming": true,
    "priority": 1
@@ -2140,6 +2122,24 @@
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "kawashimasyubyou",
+   "url": "https://www.instagram.com/kawashimasyubyou/",
+   "eventCount": 1,
+   "lastEventName": "プランツフェスタ2026",
+   "lastEventDate": "2026-09-12",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "the_factory_otto",
+   "url": "https://www.instagram.com/the_factory_otto/",
+   "eventCount": 1,
+   "lastEventName": "Succulent1987 in Country Park KUMAMOTO 2026",
+   "lastEventDate": "2026-09-12",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -2334,6 +2334,26 @@
    "recurring": false
   },
   {
+   "series": "プランツフェスタ2026",
+   "lastSlug": "plants-festa-2-kawashima-2026-09",
+   "lastDate": "2026-09-12",
+   "lastEnd": "2026-09-12",
+   "monthsSinceLast": 0,
+   "igHandle": "kawashimasyubyou",
+   "officialUrl": "https://www.instagram.com/kawashimasyubyou/",
+   "recurring": false
+  },
+  {
+   "series": "Succulent1987 in Country Park KUMAMOTO 2026",
+   "lastSlug": "succulent1987-kumamoto-2026-09",
+   "lastDate": "2026-09-12",
+   "lastEnd": "2026-09-12",
+   "monthsSinceLast": 0,
+   "igHandle": "the_factory_otto",
+   "officialUrl": "https://www.instagram.com/the_factory_otto/",
+   "recurring": false
+  },
+  {
    "series": "PLANTS UNITED 2026",
    "lastSlug": "plants-united-kumamoto-2026-08",
    "lastDate": "2026-08-01",
@@ -2522,26 +2542,6 @@
    "igHandle": "menosyama_official",
    "officialUrl": "https://www.instagram.com/menosyama_official/",
    "recurring": false
-  },
-  {
-   "series": "京都みどりのマルシェ 夏祭り vol.2",
-   "lastSlug": "kyoto-midori-marche-natsumatsuri-vol2-2026-08",
-   "lastDate": "2026-08-09",
-   "lastEnd": "2026-08-09",
-   "monthsSinceLast": 1,
-   "igHandle": "midorino_marche",
-   "officialUrl": "https://www.instagram.com/midorino_marche/",
-   "recurring": false
-  },
-  {
-   "series": "KAGOSHIMA VOLCANO MARKET ボルマ vol.3",
-   "lastSlug": "kagoshima-volcano-market-vol3-2026-08",
-   "lastDate": "2026-08-09",
-   "lastEnd": "2026-08-09",
-   "monthsSinceLast": 1,
-   "igHandle": "kagoshima_volcano_market",
-   "officialUrl": "https://www.instagram.com/kagoshima_volcano_market/",
-   "recurring": false
   }
  ],
  "officialSiteCandidates": [
@@ -2567,7 +2567,7 @@
    "domain": "nihonosato.com",
    "url": "https://www.nihonosato.com/post/succulentmarket",
    "eventName": "第1回 緑と多肉を楽しむマルシェ",
-   "eventDate": "2026-09-19"
+   "eventDate": "2026-09-02"
   },
   {
    "domain": "shimane-hananosato.com",
