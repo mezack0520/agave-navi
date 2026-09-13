@@ -1,5 +1,5 @@
 {
-  "total": 460,
+  "total": 455,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -52,10 +52,8 @@
     },
     "rejected_but_listed": {
       "title": "見送り記録があるのに掲載されているイベント",
-      "count": 1,
-      "items": [
-        "2026-09-20: 見送り nagoriba-hatsukaichi-2026-09 と掲載 nagoriba-miyajimaguchi-2026-09 が名称「ナゴリバ」と会場「宮島口しゃもじ広場」で一致"
-      ],
+      "count": 0,
+      "items": [],
       "note": "同じ回なら見送り記録のほうを消す(掲載が正しいと判断し直した結果なので、見送りを残すと revisit の期限切れが誤って鳴り、判断の履歴も二重になる)。同じ会期・会場で併催される別イベントなら、見送り側に coexistsWith=<掲載slug> を書いて除外する",
       "severity": "urgent"
     },
@@ -639,10 +637,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 1,
-      "items": [
-        "町田パリオ4階(3件) → /venue/v-1324528c/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -822,11 +818,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
-      "items": [
-        "2026-09-19 ore-no-plants-collection-2026-09: 中止・延期の語: 中止となりました",
-        "2026-09-27 plants-show-kiryu-2026-autumn: 公式ページが変わった(本文)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1047,10 +1040,8 @@
     },
     "shared_source_page_multi_date": {
       "title": "同じ出典頁を読む回が別の日付を持っている",
-      "count": 1,
-      "items": [
-        "https://www.threads.com/@tokimeki_marche/post/DWjBn6Ok3 → 未保護 tokimeki-marche-gunma-kenchomae-2026-11, tokimeki-marche-kodaihasu-2026-11 (同じ頁を読む回 2件)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知頁が回ごとに分かれているなら sourceUrl をそちらへ。分かれていないなら autoDateUpdate: false を入れて自動更新から外す",
       "severity": "info"
     },

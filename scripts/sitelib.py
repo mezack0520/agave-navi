@@ -109,7 +109,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
                 # 2件は増減しやすく、増えるたびにURLが変わるのを避ける。
                 'オリナス錦糸町':'olinas-kinshicho',
                 'さくら植物園':'sakura-shokubutsuen',
-                'フィールド妙高':'field-myoko'}
+                'フィールド妙高':'field-myoko',
+                # 2026-09-14 第10回の掲載で3件になった
+                '町田パリオ 4階':'machida-palio'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -121,6 +123,7 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 ハッシュ → ローマ字
+    'v-1324528c': '町田パリオ 4階',   # 2026-09-14
     'v-5d0f0de9': 'オリナス錦糸町',
     'v-98e5c913': 'さくら植物園',
     'v-d7fa600c': 'フィールド妙高',

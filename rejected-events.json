@@ -480,14 +480,32 @@
       "reason": "主催の株式会社メイクマン(ホームセンター)の公式イベント頁がこの催しを『DIY / ガーデニング / くらし』に分類しており、09-03 の主催Facebook告知も『珍しい形や面白いシルエットの植物、レアな植物、お買い得な植木や園芸品』と書く。主題は植木と園芸品で、outOfScopeGenres の『ガーデニング・造園』に当たる。多肉・アガベ・塊根が併売されていても主題ではない。**春(3月)と秋(9月)に第20回・第21回と続くシリーズなので、回ごとに判定し直さないよう precedents に残した。**出店者側(@arakaki_orchid_bikaku 等)の告知はあるが、それは vendorAnnouncementsOnly により掲載の根拠にならない"
     },
     {
-      "key": "nagoriba-hatsukaichi-2026-09",
-      "name": "ナゴリバ (2026-09-20 宮島口しゃもじ広場・広島県廿日市市)",
-      "decided": "2026-09-13",
-      "eventDate": "2026-09-20",
+      "key": "numa-fes-6th-nishihara-2026-09",
+      "name": "第6回 沼フェス (2026-09-27 西原さわふじマルシェ・沖縄県中頭郡西原町)",
+      "decided": "2026-09-14",
+      "eventDate": "2026-09-27",
+      "reasonType": "undisclosed",
+      "revisit": true,
+      "revisitedOn": "2026-09-14",
+      "reason": "主催は彩メダカ(ジモティーの告知主)。公式チラシの惹句が『珍しい植物とメダカのスペシャルイベント』で、対象ジャンル(植物)と対象外ジャンル(メダカ)を並記している。名称『沼フェス』は中立で、どちらの沼かを言っていない。会場企画も『3分メダカすくい！タイムアタック』が前面に出る。outOfScopeGenres.coTitledEvents の『併記は両方に客を呼ぶための表記で主題を言っていない』が名称ではなく主催の説明文で起きた形にあたり、出店者一覧も非公開なので比率を数えられない。内訳が公開されたら再評価する。琉球新報(2026-05-05)は第5回を『改良メダカと植物の愛好家たちが集うイベント』『植物合わせ30店』と書いている"
+    },
+    {
+      "key": "midori-to-ikimono-carnival-vol7-2026-10",
+      "name": "緑と生き物カーニバル vol.7 (2026-10-11 鶴見緑地公園 ハナミズキホール・大阪市鶴見区)",
+      "decided": "2026-09-14",
+      "eventDate": "2026-10-11",
       "reasonType": "unverified",
       "revisit": true,
-      "revisitedOn": "2026-09-13",
-      "reason": "アグリゲータ4社と出店者IG(@taniku.odaki_ya / @yuzuka.7zq / @saikiengei_taniku)しか情報源が無く、主催アカウントが特定できない。primarySource.vendorAnnouncementsOnly により、出店者の告知は何件独立に一致しても主催の告知の代わりにならない。2026-09-10 から追っているが主催は判明していない"
+      "revisitedOn": "2026-09-14",
+      "reason": "10/11(日)10:00〜16:00・ハナミズキホールという日程は出店者(@platycerium_love / @honoka.kakogawa / @mononoke_botanical_garden / @helisgarden)の告知で一致するが、主催アカウントが特定できない。primarySource.vendorAnnouncementsOnly により掲載の根拠にならない。あわせて名称が『緑』と『生き物』の併記で、過去回の出店者告知に #めだか #メダカイベント が付く。ブースが『緑◯番＝植物系ブース』と区分されており植物枠は確実にあるが、主題の比重は主催の告知を見ないと決められない"
+    },
+    {
+      "key": "green-expo-2027-yokohama",
+      "name": "GREEN×EXPO 2027 横浜国際園芸博覧会 (2027-03-19〜09-26 旧上瀬谷通信施設・神奈川県横浜市)",
+      "decided": "2026-09-14",
+      "eventDate": "2027-03-19",
+      "reasonType": "policy",
+      "reason": "国際園芸博覧会。主題は園芸・造園・緑化の総合博で、outOfScopeGenres の『ガーデニング・造園』に当たる(日比谷公園ガーデニングショーと同型)。会期が6か月あり当サイトの即売会・展示会の枠と性質が違う。PUKUBOOK が注目イベントとして常時掲載しているので、毎回の巡回で候補に出る"
     }
   ],
   "_reasonTypes": {
@@ -496,6 +514,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-13",
+  "updated": "2026-09-14",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

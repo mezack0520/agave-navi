@@ -138,10 +138,30 @@ CONDITIONAL_CANCEL = (
 )
 
 
+# 中止しているのがイベントではなく**出展者1組**である言い回し。
+# 「9月19日(土)、20日(日)に出展予定のkuwa.botanicalさんは都合により
+#  出展中止となりました。予めご了承ください。」(しまね花の郷『俺の！
+#  プランツ・コレクション！！』2026-09-14 確認)。
+# これは条件文ではなく言い切りなので CONDITIONAL_CANCEL では落ちず、
+# CANCEL_WORDS の「中止となりました」に当たって urgent で鳴っていた。
+# 会場が出展者の入れ替わりを本文に書き続ける頁では毎日鳴る。
+#
+# **主語が出展・出店・出品・参加であるときだけ落とす。**
+# 「開催中止」「イベント中止」は主語が違うので残る。
+VENDOR_CANCEL = (
+    r'(?:出展|出店|出品|参加)(?:を)?(?:中止|取り止め|取りやめ|辞退)'
+    r'(?:と)?(?:なりました|なります|いたします|します|させていただ\w*)?',
+)
+
+
 def drop_conditional(text):
-    """条件文だけを落とす。判定に使う前に通す。"""
+    """イベントの中止を指していない言い回しを落とす。判定に使う前に通す。
+
+    落とすのは2種類。(1) 天候の条件文 (2) 主語が出展者1組の取り止め。
+    どちらも「イベントが中止になったか」とは別のことを言っている。
+    """
     out = text
-    for pat in CONDITIONAL_CANCEL:
+    for pat in CONDITIONAL_CANCEL + VENDOR_CANCEL:
         out = re.sub(pat, ' ', out)
     return out
 
@@ -470,6 +490,12 @@ FIX_REAL_WEATHER = """<html><body><h1>◯◯マルシェ</h1>
 <p>悪天候のため中止しました。ご来場を予定されていた皆様にお詫び申し上げます。</p>
 </body></html>"""
 
+# 出展者1組が降りただけの頁。イベントは開催される(2026-09-14)
+FIX_VENDOR_CANCEL = """<html><body><h1>俺の！プランツ・コレクション！！</h1>
+<p>9月19日（土）、20日（日）に出展予定のkuwa.botanicalさん（展示物：アガベなど）は
+都合により出展中止となりました。予めご了承ください。</p>
+<p>開催期間 2026/09/19 〜 2026/09/21</p></body></html>"""
+
 # 「本日の開園時間」を持つ頁。中身は同じで日付だけが違う
 FIX_TODAY_A = """<html><body><p>本日の開園時間 2026.09.09 9:30〜17:00</p>
 <h1>サボテン・多肉植物展</h1><p>開催期間 2026/10/10 〜 2026/10/12</p>
@@ -527,6 +553,8 @@ def self_test(verbose=True):
     chk('雨天時は中止となる場合 → 数えない', bool(d['strong'] or d['weak']), False)
     e = analyze(FIX_REAL_WEATHER)
     chk('悪天候のため中止しました → 拾う', bool(e['strong'] or e['weak']), True)
+    f = analyze(FIX_VENDOR_CANCEL)
+    chk('出展者1組の出展中止 → 数えない', bool(f['strong'] or f['weak']), False)
     c = analyze(FIX_PLAIN)
     chk('平常のページ → どちらも出ない', bool(c['strong'] or c['weak']), False)
 
