@@ -23,6 +23,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
 import sitelib
 from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
+                     is_quality_image_url,
                      event_phase, is_long_run, event_days, LONG_RUN_DAYS,
                      is_vague_venue, venue_key, venue_slug, venue_display,
                      VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
@@ -868,6 +869,47 @@ def main():
     add('duplicate_image_url', '同じimageUrlを複数イベントが使用', sorted(dup_img),
         '同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス',
         severity='info')
+
+    # 9k-2. imageUrl が sitelib.is_quality_image_url を通らない。
+    #     **この規則には書く側が3つあって、見張る側が1つも無かった(2026-09-13)。**
+    #     enrich_events.py と backfill-images.py は書く前にこれを呼ぶが、
+    #     merge-new-events.py は new-events.json の dict を
+    #     `events.append(drop_blanks(ne))` でそのまま積むので通らない。
+    #     つまり取り込み経由なら http:// の画像もアグリゲータの画像も素通りする。
+    #     上の insecure_image_url / generic_image_asset は同関数の条件のうち
+    #     2つだけを別々に書き写した形で、`is_aggregator_url` と
+    #     `UNRELATED_IMAGE_DOMAINS` の2条件はどこも見ていなかった。
+    #     **規則の持ち主をそのまま呼ぶ。条件を数え直さない。**
+    #     2026-09-10 に一覧を sitelib へ寄せたのは「書く側どうしの割れ」の是正で、
+    #     見張る側が居ないことは別の穴。
+    not_quality = []
+    for e in events:
+        u = (e.get('imageUrl') or '').strip()
+        if u and not is_quality_image_url(u):
+            not_quality.append(f"{e.get('slug')}: {u[:70]}")
+    add('image_not_quality', 'imageUrlが掲載基準を満たさない(sitelib.is_quality_image_url)',
+        sorted(not_quality),
+        'アグリゲータ・無関係ドメイン・共通ロゴ・http:// のいずれか。'
+        '差し替えるか imageUrl をキーごと削除する')
+
+    # 9k-3. 自サイトから配っているアイキャッチに取得元が無い。
+    #     build-detail-pages.py は imageUrl が agave-navi.com/images/events/ で
+    #     始まるときだけ脚注「画像 主催者の告知より」を出し、その条件は
+    #     `if isrc and ...` なので **imageSource が無いと黙って出ない。**
+    #     他人の告知画像を複製して自分のドメインから配りながら出所を伏せる形で、
+    #     欠けても頁は正常に生成され、どの既存検査も鳴らない。
+    #     imageSource を書くのは fetch-event-images.py だけなので、
+    #     手で images/events/ に置いた回と、取り込み経由の回が落ちる。
+    hosted_no_src = []
+    for e in events:
+        u = (e.get('imageUrl') or '').strip()
+        if u.startswith('https://agave-navi.com/images/events/') \
+                and not (e.get('imageSource') or '').strip():
+            hosted_no_src.append(f"{e.get('slug')}: {u[:70]}")
+    add('hosted_image_no_source', '自サイト配信のアイキャッチに取得元(imageSource)が無い',
+        sorted(hosted_no_src),
+        '取得元の投稿URLを imageSource に入れる。'
+        '分からないなら画像を消す。出所を書けない画像は配らない')
 
     # 9k. 同じ回が別slugで二重登録されている。
     #     sanity-check-new-events.py は new-events.json 経由の流入だけを見るので、
@@ -3181,6 +3223,76 @@ def main():
         sorted(set(blocked_src)),
         '主催者の一次情報に差し替える。見つからないなら出典ごと外して薄頁に落とす。'
         'ドメインの一覧は listing-policy.json の blockedUrlDomains が単一情報源')
+
+    # --- sourceUrl が url の上位階層を指している ------------------------------
+    # `check_date_updates.py` は **sourceUrl を毎日読んで date を書き換える。**
+    # そこが施設・主催者のトップや一覧だと、同じ頁に載っている別の回の日付を
+    # 拾って上書きする。2026-09-13 に `botanical-life-kasama-2026-11` が
+    # 11/07 → 10/10(同じ笠間工芸の丘の別催事) に書き換わる直前だった。
+    # `listing-policy.json` の primarySource.insufficient は
+    # 「施設のトップページしか出典にできない」を**掲載の根拠として**禁じているが、
+    # **機械が毎日読みに行く先としての害は書いていない。**
+    # トップ・一覧は中身が入れ替わるので、弱いだけでなく能動的に危ない。
+    #
+    # 告知頁のURLが url にあるなら sourceUrl もそちらに合わせる、が
+    # 09-13 に決めた対処。**その日は直しただけで検査を足していない**ので、
+    # 同じ形が他に3件残っていた(okibota 2件 / fumakilla 1件)。
+    # 同一ホストで url のほうが深い場合だけを見る。ホストが違う組は
+    # 「主催者の告知 + 会場の案内」という正当な並びなので数えない。
+    shallow_src = []
+    for e in events:
+        u = (e.get('url') or '').strip()
+        s = (e.get('sourceUrl') or '').strip()
+        if not u or not s or u == s:
+            continue
+        mu = re.match(r'https?://([^/]+)(/[^?#]*)?', u, re.I)
+        ms = re.match(r'https?://([^/]+)(/[^?#]*)?', s, re.I)
+        if not mu or not ms:
+            continue
+        if mu.group(1).lower() != ms.group(1).lower():
+            continue
+        pu = (mu.group(2) or '').rstrip('/')
+        ps = (ms.group(2) or '').rstrip('/')
+        if ps == '' or pu.startswith(ps + '/'):
+            shallow_src.append(f"{e.get('slug')}: sourceUrl={s[:55]} ← url={u[:55]}")
+    add('source_url_shallower_than_url', '出典が告知頁ではなくその上位階層を指している',
+        sorted(shallow_src),
+        'sourceUrl を url と同じ告知頁に合わせる。'
+        'check_date_updates.py が毎日そこを読んで date を書き換えるので、'
+        'トップ・一覧のままだと別の回の日付を拾う')
+
+    # --- 同じ頁を複数の回が出典にしていて、日付が違う -------------------------
+    # 上と同じ事故のもう一つの入口。**同じ sourceUrl を読む2件に別の date が
+    # 入っていると、check_date_updates.py はどちらにも同じ「最良の候補」を
+    # 返すので、放っておけば必ず片方に寄る。**
+    # 今は extract_dates が候補を出せない頁・page_is_wrong_place で止まる頁が
+    # 多く、たまたま事故になっていないだけで、守っているのは偶然。
+    # autoDateUpdate: false が入っている回は読みに行かないので数えない
+    # (isij.net の定期バザールは6件全部がその形で保護済み)。
+    # instagram.com は check_date_updates.py 自身が除外するので対象外。
+    _by_src = defaultdict(list)
+    for e in events:
+        s = (e.get('sourceUrl') or '').strip()
+        if not s or 'instagram.com' in s:
+            continue
+        _by_src[s].append(e)
+    shared_src = []
+    for s, group in _by_src.items():
+        if len(group) < 2:
+            continue
+        if len({e.get('date') for e in group}) < 2:
+            continue          # 同日は duplicate_event_same_source の担当
+        open_ones = [e for e in group if e.get('autoDateUpdate') is not False]
+        if len(open_ones) < 1:
+            continue
+        shared_src.append(
+            f"{s[:55]} → 未保護 {', '.join(sorted(e.get('slug') for e in open_ones))}"
+            f" (同じ頁を読む回 {len(group)}件)")
+    add('shared_source_page_multi_date', '同じ出典頁を読む回が別の日付を持っている',
+        sorted(shared_src),
+        '告知頁が回ごとに分かれているなら sourceUrl をそちらへ。'
+        '分かれていないなら autoDateUpdate: false を入れて自動更新から外す',
+        severity='info')
 
     # --- index.html のカード集合 ----------------------------------------------
     # sync-index-cards.py が置換に失敗するとカードが増殖する。2026-08-24 に

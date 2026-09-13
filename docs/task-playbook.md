@@ -1817,6 +1817,58 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   規則に経路名を書くときは、その場で `grep` してすべてが同じ関数を通るか見る。
   検査は `index_badge_count_drift`(urgent)。
 
+- **規則の関数に、書く側が3つあって見張る側が0という形がある（2026-09-13）。**
+  `sitelib.is_quality_image_url` は imageUrl の唯一の規則で、
+  enrich_events.py と backfill-images.py は書く前に必ず呼ぶ。
+  だが **`audit.py` はこの関数を一度も呼んでいなかった**（名前は §重複検査の
+  コメントに出てくるだけ）。代わりに `insecure_image_url` と
+  `generic_image_asset` が同関数の条件のうち2つを別々に書き写していて、
+  `is_aggregator_url` と `UNRELATED_IMAGE_DOMAINS` の2条件は
+  **どの検査も見ていなかった**。
+  さらに `merge-new-events.py` は new-events.json の dict を
+  `events.append(drop_blanks(ne))` でまるごと積むので、書く側でありながら
+  この関数を通らない。**入る経路があって、鳴る経路が無い。**
+  2026-09-10 に一覧を sitelib へ寄せたのは「書く側どうしの割れ」の是正で、
+  見張る側が居ないことはそれとは別の穴として残っていた。
+  対処: `audit.image_not_quality`（規則の関数をそのまま呼ぶ）を新設し、
+  `merge-new-events.py` に `drop_bad_image()` と self-test 2件を足した。
+  **規則を関数にしたら、呼ぶ側を「書く側」と「見張る側」の両方で数える。**
+  `grep -l` で出た数が書く側の数と同じなら、見張る側が居ない。
+
+- **条件付きで出す表示は、条件が欠けても頁が正常に生成される（2026-09-13）。**
+  `build-detail-pages.py` の脚注「画像 主催者の告知より」は
+  `if isrc and imageUrl.startswith('https://agave-navi.com/images/events/')`。
+  **`imageSource` が無いと黙って出ない。**他人の告知画像を複製して
+  自分のドメインから配りながら出所を伏せる形になるが、
+  HTMLは壊れず、どの既存検査も鳴らなかった。
+  今は87件すべてに `imageSource` があるが、それを保っていたのは
+  `fetch-event-images.py` が必ず書くという1本の経路だけで、
+  手で置いた回・取り込み経由の回は素通りする。
+  検査 `hosted_image_no_source`(urgent, 現在0)。
+  **`if x and ...` で出す表示は、x が欠けた状態を別に数える。**
+
+### 出典は「掲載の根拠」であると同時に「毎日読みに行く先」 (2026-09-13)
+
+`check_date_updates.py` は **`sourceUrl` を毎日読んで `date` を書き換える。**
+だから出典の選び方は掲載基準の話だけでは済まない。
+
+- **`url` に告知頁があるのに `sourceUrl` がその上位階層**、という形が3件あった
+  (okibota 2件 / fumakilla 1件)。09-13 に `botanical-life-kasama-2026-11` で
+  同じ形を見つけて**直したが、検査を足していなかった**ので他が残った。
+  検査 `source_url_shallower_than_url`(urgent)。同一ホストで `url` のほうが
+  深いときだけ鳴らす。ホストが違う組は「主催者の告知 + 会場の案内」で正当。
+  **直した日に検査を足さないと、同じ形が必ず他に残っている。**
+- **同じ `sourceUrl` を読む回に別の `date` が入っている**と、
+  `check_date_updates.py` はどちらにも同じ「最良の候補」を返すので、
+  放っておけば必ず片方に寄る。09-13 時点で4組あったが、
+  **事故になっていなかったのは `extract_dates` が候補を出せない頁と
+  `page_is_wrong_place` で止まる頁がたまたま多かっただけ**で、
+  守っていたのは設計ではなく偶然。
+  終了済みの3件は自動更新に利得が無いので `autoDateUpdate: false` にした。
+  検査 `shared_source_page_multi_date`(info)。
+  **「今は事故が起きていない」は「起きない」ではない。**
+  止めているのが意図した関門か偶然かを確かめる。
+
 ## アイキャッチの取り方 (2026-09-08)
 
 定期タスク `agave-navi-eyecatch`（毎日14:50、1回6件まで）が担当する。

@@ -1,5 +1,5 @@
 {
-  "total": 459,
+  "total": 460,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -443,6 +443,20 @@
       "items": [],
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
       "severity": "info"
+    },
+    "image_not_quality": {
+      "title": "imageUrlが掲載基準を満たさない(sitelib.is_quality_image_url)",
+      "count": 0,
+      "items": [],
+      "note": "アグリゲータ・無関係ドメイン・共通ロゴ・http:// のいずれか。差し替えるか imageUrl をキーごと削除する",
+      "severity": "urgent"
+    },
+    "hosted_image_no_source": {
+      "title": "自サイト配信のアイキャッチに取得元(imageSource)が無い",
+      "count": 0,
+      "items": [],
+      "note": "取得元の投稿URLを imageSource に入れる。分からないなら画像を消す。出所を書けない画像は配らない",
+      "severity": "urgent"
     },
     "admission_free_mismatch": {
       "title": "詳細頁の本文と入場料の記載が食い違っている",
@@ -1021,6 +1035,22 @@
       "items": [],
       "note": "主催者の一次情報に差し替える。見つからないなら出典ごと外して薄頁に落とす。ドメインの一覧は listing-policy.json の blockedUrlDomains が単一情報源",
       "severity": "urgent"
+    },
+    "source_url_shallower_than_url": {
+      "title": "出典が告知頁ではなくその上位階層を指している",
+      "count": 0,
+      "items": [],
+      "note": "sourceUrl を url と同じ告知頁に合わせる。check_date_updates.py が毎日そこを読んで date を書き換えるので、トップ・一覧のままだと別の回の日付を拾う",
+      "severity": "urgent"
+    },
+    "shared_source_page_multi_date": {
+      "title": "同じ出典頁を読む回が別の日付を持っている",
+      "count": 1,
+      "items": [
+        "https://www.threads.com/@tokimeki_marche/post/DWjBn6Ok3 → 未保護 tokimeki-marche-gunma-kenchomae-2026-11, tokimeki-marche-kodaihasu-2026-11 (同じ頁を読む回 2件)"
+      ],
+      "note": "告知頁が回ごとに分かれているなら sourceUrl をそちらへ。分かれていないなら autoDateUpdate: false を入れて自動更新から外す",
+      "severity": "info"
     },
     "index_card_drift": {
       "title": "index.htmlのカードがevents.jsonの想定集合と不一致",

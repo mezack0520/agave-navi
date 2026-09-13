@@ -11,6 +11,7 @@ workflow の `run: |` に直書きされていて、ローカルで実行も検�
 
 - slug が無ければ追加する。**空のキーは落としてから積む**
 - slug が既にあれば、**値のあるキーだけ**上書きする。空で潰さない
+- imageUrl は `sitelib.is_quality_image_url` を通らなければ落とす
 - 並びは 開催予定を先、その中は日付昇順
 
 Usage:
@@ -24,6 +25,8 @@ import os
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(REPO, 'scripts'))
+from sitelib import is_quality_image_url        # noqa: E402
 
 
 def drop_blanks(d):
@@ -35,6 +38,23 @@ def drop_blanks(d):
             if not (v is None
                     or (isinstance(v, str) and not v.strip())
                     or (isinstance(v, (list, dict)) and not v))}
+
+
+def drop_bad_image(d):
+    """掲載基準を満たさない imageUrl を落とす。
+
+    `sitelib.is_quality_image_url` が imageUrl の唯一の規則で、
+    enrich_events.py と backfill-images.py は書く前に必ず呼ぶ。
+    **このスクリプトだけが呼んでいなかった**(2026-09-13)。
+    取り込みは dict をまるごと積むので、new-events.json に
+    http:// の画像やアグリゲータの画像が入っていれば素通りする。
+    見張る側(`audit.image_not_quality`)も同じ日まで居なかったので、
+    入ったら誰も鳴らさない経路だった。
+    """
+    u = (d.get('imageUrl') or '').strip()
+    if u and not is_quality_image_url(u):
+        d = {k: v for k, v in d.items() if k != 'imageUrl'}
+    return d
 
 
 def merge(events, new_events):
@@ -50,7 +70,7 @@ def merge(events, new_events):
             # 17件(url 空文字11 / imageUrl null 4 / imageUrl 空文字2)。
             # 「値が無い」が null と空文字の2通りで同居すると、`is None` や
             # `in e` で書いた検査が片方だけ拾って静かに漏れる。
-            events.append(drop_blanks(ne))
+            events.append(drop_bad_image(drop_blanks(ne)))
             existing.add(slug)
             added.append(slug)
             continue
@@ -59,6 +79,8 @@ def merge(events, new_events):
                 continue
             for k, v in ne.items():
                 # 空で既存を潰さない。取り込み側が持っていない項目は触らない
+                if k == 'imageUrl' and v and not is_quality_image_url(v):
+                    continue          # 既存の画像を粗悪なもので潰さない
                 if v and v != e.get(k):
                     e[k] = v
                     if slug not in updated:
@@ -97,6 +119,20 @@ def self_test():
     got = sorted(k for e in out if e['slug'] == 'c' for k in e)
     chk('新規追加でも空のキーは持ち込まない', got,
         ['date', 'name', 'slug', 'status'])
+
+    out, add, upd = merge([dict(x) for x in ev],
+                          [{'slug': 'd', 'name': 'D', 'date': '2026-11-02',
+                            'status': 'upcoming',
+                            'imageUrl': 'http://example.com/f.jpg'}])
+    chk('新規追加で粗悪な画像は落とす',
+        'imageUrl' in next(e for e in out if e['slug'] == 'd'), False)
+
+    out, add, upd = merge(
+        [{'slug': 'a', 'name': 'A', 'date': '2026-10-01', 'status': 'upcoming',
+          'imageUrl': 'https://agave-navi.com/images/events/a.jpg'}],
+        [{'slug': 'a', 'imageUrl': 'https://nextmeet.app/x.jpg'}])
+    chk('更新でも粗悪な画像で既存を潰さない', out[0]['imageUrl'],
+        'https://agave-navi.com/images/events/a.jpg')
 
     out, add, upd = merge([dict(x) for x in ev],
                           [{'slug': 'a', 'time': '10:00〜16:00'}])
