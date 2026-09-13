@@ -1974,6 +1974,44 @@ LEAFLA・NextMeet・PUKUBOOK のどれにも出ていない。
 巡回のたびに同じ判断をやり直すことになる。`listing-policy.json` の
 `precedents` に置いた。
 
+### 生成物を直しても、生成物を書き換えるコードが元に戻す (2026-09-14)
+
+09-13 に「トップの開催予定バッジが中止の回を数えていた」を直した。
+`sync-index-cards.py` の数え方を `sitelib.is_upcoming` に寄せ、検査
+`index_badge_count_drift` を足し、修正前の値(162)に当てて1件出ることまで確かめている。
+repo の `index.html` は 157 になった。
+
+**今日、本番のトップを開いたら 158 だった。**
+差分は 09-13 と同じ `collect-plants-2026-09`（熊本地震で中止）1件。
+
+原因は `status-auto.js`。読み込み後に
+
+```js
+var n = activeGrid.querySelectorAll('.event-card').length + ...;
+countBadge.textContent = n + '件';
+```
+
+でカードを数え直し、サーバが書いた正しい数字を上書きしていた。
+中止の回は `.event-cancelled` が付いたまま開催予定の枠に残るので、JSは数える。
+
+- `index_badge_count_drift` は **生成された HTML の数字** しか見ないので 0 のまま
+- push も CI も緑
+- 09-13 のレポートは「バッジ 161件に一致」と書いている。**repo の値を見ていた**
+
+**検査の対象を「生成物」に置くと、生成物を書き換えるコードは検査の外に出る。**
+サーバが書いてクライアントが上書きする値は、**書いた値ではなく表示された値**を見る。
+
+対処:
+- `status-auto.js` に `AEN_COUNT.upcoming(grid)` を置き、
+  `.event-card:not(.event-cancelled)` を数える単一実装にした
+- 検査 `js_badge_counts_cancelled`(urgent) を追加。AEN_COUNT の中身と、
+  バッジの代入がそれを通っているかを見る。修正前のコードに当てると2件出る
+- `JS_VERSION` を上げた（上げないと CDN が旧版を配り続ける。§JS/CSS を直したら版数を上げる）
+
+**同じ値を2か所が書いていないかは、`grep` ではなく本番の表示で確かめる。**
+09-13 の「規則に経路名を書くときは grep して同じ関数を通るか見る」は
+Python 側しか見ていなかった。**経路はブラウザの中にも伸びている。**
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。

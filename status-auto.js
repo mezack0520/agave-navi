@@ -297,6 +297,15 @@
     }
   });
 
+  // 「開催予定として数える」の単一実装(JS側)。
+  // Python 側は scripts/sitelib.py の is_upcoming。両者は同じ集合を返す。
+  var AEN_COUNT = {
+    upcoming: function (grid) {
+      if (!grid) return 0;
+      return grid.querySelectorAll('.event-card:not(.event-cancelled)').length;
+    }
+  };
+
   // 開催中/開催予定/終了への振り分けと並び替え(単一実装)
   arrangeList();
 
@@ -311,8 +320,13 @@
     var activeGrid = document.getElementById('eventsGrid');
     var ongoingGrid0 = document.getElementById('ongoingEventsGrid');
     if (countBadge && activeGrid) {
-      var n = activeGrid.querySelectorAll('.event-card').length
-              + (ongoingGrid0 ? ongoingGrid0.querySelectorAll('.event-card').length : 0);
+      // 中止の回は数えない。status は日付だけで決まるので、中止が告知された
+      // 回も開催日までは開催予定の枠に残る。Python 側の単一情報源は
+      // sitelib.is_upcoming で、そちらは is_cancelled を外している。
+      // 2026-09-13 に sync-index-cards.py の数え方だけを直したが、
+      // **この行が閲覧者のブラウザで数え直して元に戻していた**
+      // (repo の index.html は 157、本番の表示は 158。2026-09-14 に本番で発覚)。
+      var n = AEN_COUNT.upcoming(activeGrid) + AEN_COUNT.upcoming(ongoingGrid0);
       countBadge.textContent = n + '件';
     }
   }

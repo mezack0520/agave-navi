@@ -543,7 +543,7 @@
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260910b)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260914a)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -710,6 +710,13 @@
       "count": 0,
       "items": [],
       "note": "数え方を sitelib.is_upcoming に寄せる。中止の回を数に入れない。scripts/sync-index-cards.py で直す",
+      "severity": "urgent"
+    },
+    "js_badge_counts_cancelled": {
+      "title": "バッジをJSが数え直すとき中止の回を含めている",
+      "count": 0,
+      "items": [],
+      "note": "status-auto.js の AEN_COUNT.upcoming に寄せる。sitelib.is_upcoming と同じ集合を返すこと",
       "severity": "urgent"
     },
     "coverage_gaps": {

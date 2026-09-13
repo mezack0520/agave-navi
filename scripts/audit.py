@@ -1784,6 +1784,35 @@ def main():
         '数え方を sitelib.is_upcoming に寄せる。中止の回を数に入れない。'
         'scripts/sync-index-cards.py で直す')
 
+    # 15f. **そのバッジを閲覧者のブラウザが数え直している。**
+    #      15e は生成された HTML の数字しか見ない。status-auto.js は
+    #      読み込み後に .event-card を数えて textContent を上書きするので、
+    #      HTML が正しくても本番の表示は別の数字になる。
+    #      2026-09-13 に sync-index-cards.py の数え方を直したが、
+    #      repo の index.html が 157 のまま本番の表示は 158 だった
+    #      (中止の collect-plants-2026-09 を JS が数えていた。2026-09-14 発覚)。
+    #      **生成物を見る検査は、生成物を書き換えるコードを見ていない。**
+    #      JS 側の単一実装 AEN_COUNT.upcoming が中止を外していることを見る。
+    _js_badge = []
+    try:
+        _sa = open(rp('status-auto.js'), encoding='utf-8').read()
+    except OSError:
+        _sa = ''
+    if _sa:
+        _m = re.search(r'AEN_COUNT\s*=\s*\{(.{0,400}?)\}\s*;', _sa, re.S)
+        if not _m:
+            _js_badge.append('status-auto.js に AEN_COUNT が無い'
+                             '(バッジの数え方が単一実装から外れている)')
+        elif '.event-card:not(.event-cancelled)' not in _m.group(1):
+            _js_badge.append('AEN_COUNT.upcoming が中止の回を除外していない')
+        if re.search(r"countBadge\.textContent", _sa) and \
+           not re.search(r'AEN_COUNT\.upcoming\([^)]*\)\s*\+\s*AEN_COUNT\.upcoming', _sa):
+            _js_badge.append('バッジの代入が AEN_COUNT.upcoming を通っていない')
+    add('js_badge_counts_cancelled', 'バッジをJSが数え直すとき中止の回を含めている',
+        _js_badge,
+        'status-auto.js の AEN_COUNT.upcoming に寄せる。'
+        'sitelib.is_upcoming と同じ集合を返すこと')
+
     # 16c. 他所に載っていて当サイトに無いイベント（取りこぼし）。
     #      2026-08-27、「今週末の関東は？」に答えられなかった。掲載2件に対して
     #      実際は関東で10件以上、9月は全国で42件の未掲載があった。
