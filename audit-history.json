@@ -606,6 +606,8 @@
   {
    "date": "2026-09-14",
    "urgent": {
+    "rejected_but_listed": 1,
+    "venue_slug_romaji_candidates": 1,
     "metric_weekly_cycle_unmodeled": 1
    },
    "info": {
@@ -621,13 +623,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 106,
     "events_with_image": 154,
-    "upcoming_no_image": 47,
+    "upcoming_no_image": 52,
     "ongoing_events": 1,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 47
+    "eyecatch_backlog": 52
    },
-   "events": 424,
-   "upcoming": 152
+   "events": 429,
+   "upcoming": 157
   }
  ]
 }

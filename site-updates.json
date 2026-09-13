@@ -1,7 +1,57 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-13",
+  "updated": "2026-09-14",
   "items": [
+    {
+      "on": "2026-09-14",
+      "kind": "listed",
+      "slug": "nagoriba-miyajimaguchi-2026-09",
+      "name": "ナゴリバ",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-14",
+      "kind": "listed",
+      "slug": "taniku-the-hanbaikai-kibiji-2026-09",
+      "name": "多肉植物『The販売会』（農マル園芸吉備路農園）",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-21",
+      "prefecture": "岡山",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-14",
+      "kind": "listed",
+      "slug": "tick-tick-dyckia-popup-shikokuzouen-2026-09",
+      "name": "Tick-Tick（チクチク）ディッキアPOPUP",
+      "date": "2026-09-22",
+      "dateEnd": "2026-09-22",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-14",
+      "kind": "listed",
+      "slug": "chinki-plants-flea-market-2026-10",
+      "name": "第10回 珍奇植物フリーマーケット",
+      "date": "2026-10-04",
+      "dateEnd": "2026-10-04",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-14",
+      "kind": "listed",
+      "slug": "kamimusubi-1st-obihiro-2026-10",
+      "name": "神結び 第一章",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "prefecture": "北海道",
+      "detail": ""
+    },
     {
       "on": "2026-09-13",
       "kind": "listed",
@@ -1150,56 +1200,6 @@
       "date": "2026-09-26",
       "dateEnd": "2026-09-26",
       "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "aobouzu-6raccoon-popup-2026-09",
-      "name": "aobouzu × 6 RACCOON コラボPOP UP",
-      "date": "2026-09-04",
-      "dateEnd": "2026-09-05",
-      "prefecture": "宮崎",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-20",
-      "kind": "listed",
-      "slug": "yurutto-taniku-marche-1st-inabe-2026-10",
-      "name": "第1回 ゆるっと多肉マルシェ ONE DAY BOTANICAL ESCAPE",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-03",
-      "prefecture": "三重",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-20",
-      "kind": "listed",
-      "slug": "taniku-midori-marche-niitsu-2026-09",
-      "name": "多肉＆みどりのマルシェ 2026秋",
-      "date": "2026-09-26",
-      "dateEnd": "2026-09-27",
-      "prefecture": "新潟",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-20",
-      "kind": "listed",
-      "slug": "succulent-wonderland-2nd-tatebayashi-2026-12",
-      "name": "多肉ワンダーランド 第2回",
-      "date": "2026-12-06",
-      "dateEnd": "2026-12-06",
-      "prefecture": "群馬",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-20",
-      "kind": "listed",
-      "slug": "succulent-wonderland-1st-tatebayashi-2026-09",
-      "name": "多肉ワンダーランド 第1回",
-      "date": "2026-09-06",
-      "dateEnd": "2026-09-06",
-      "prefecture": "群馬",
       "detail": ""
     }
   ]
