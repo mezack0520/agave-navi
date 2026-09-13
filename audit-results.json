@@ -1,5 +1,5 @@
 {
-  "total": 461,
+  "total": 462,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 109,
+      "count": 111,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -197,6 +197,7 @@
         "botanical-yokocho-senju-2026-10",
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
+        "collect-plants-2026-09",
         "deep-green-ono-2026-09",
         "edamame-bikaku-itazuke-2026-09",
         "engei-raku-2026-09",
@@ -216,15 +217,14 @@
         "hamimoro-kitaharima-2026-09",
         "hanatomofesta-2026",
         "hanauchu-dream-garden-28th-2026-10",
-        "happy-smile-2nd-odawara-2026-09",
-        "honwaka-pappa-3rd-2026-09"
+        "happy-smile-2nd-odawara-2026-09"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 149,
+      "count": 151,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aobouzu-6raccoon-popup-2026-09",
@@ -252,6 +252,7 @@
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "code-tokyo-popup-2026-08",
+        "collect-plants-2026-09",
         "collection-plants-miuraengei-yukuhashi-2026-06",
         "deep-green-ono-2026-09",
         "edamame-bikaku-itazuke-2026-09",
@@ -264,15 +265,14 @@
         "fujisan-garden-marche-2026-10",
         "fukuoka-green-party-6th-2026",
         "fukuoka-green-party-7th-2026",
-        "garden-link-festa-2026-10",
-        "gardens-umekita-2nd-anniv-2026-09"
+        "garden-link-festa-2026-10"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 53,
+      "count": 51,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -285,7 +285,6 @@
         "botanical-tamba-2026",
         "botanical-yokocho-senju-2026-11",
         "chuushokushobutsusai-2026",
-        "collect-plants-2026-09",
         "dio-plants-fes-vol1-kusatsu-2026-09",
         "exploring-unpredictable-plants-2026-09",
         "gamagori-taniku-festa-hyogo-2026-09",
@@ -310,10 +309,11 @@
         "nishikan-botanical-nominoichi-4th-2026-10",
         "on-the-plants-vol9-fukuoka-2026-10",
         "ore-no-plants-collection-2026-09",
-        "picnic-garden-vol25-2026-09",
         "plant-freaks-olinas-2026-10",
         "plant-freaks-olinas-2026-11",
-        "plants-box-kofu-2026-10"
+        "plants-box-kofu-2026-10",
+        "plants-marche-aisai-tokushima-2026-10",
+        "rojiura-botanical-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -744,7 +744,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 52,
+      "count": 51,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-12 soen-espulse-dream-plaza-2026-09",
@@ -752,7 +752,6 @@
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
-        "2026-09-19 picnic-garden-vol25-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
         "2026-09-26 nakayama-engei-5th-anniversary-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
@@ -785,7 +784,8 @@
         "2026-11-22 isij-big-bazaar-2026-11-22",
         "2026-11-22 midorigakuen-himeji-2026-11",
         "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
-        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026"
+        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
+        "2026-11-28 plant-freaks-olinas-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
