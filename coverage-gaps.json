@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-13",
+  "sweptOn": "2026-09-14",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,16 +16,18 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1206,
-    "in_scope": 100,
-    "covered": 77,
-    "known_rejected": 23,
-    "truncated_resolved": 270,
-    "truncated_unresolved": 0,
+    "candidates": 664,
+    "in_scope": 59,
+    "covered": 50,
+    "known_rejected": 9,
+    "truncated_resolved": 225,
+    "truncated_unresolved": 45,
     "fetched_nextmeet": 4,
     "gaps_raw": 0
   },
   "errors": [],
-  "truncatedUnresolved": [],
+  "truncatedUnresolved": [
+    "09/10 追加 モンスターズハウス港店がNAMED AGAVE..."
+  ],
   "gaps": []
 }
