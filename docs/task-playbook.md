@@ -24,7 +24,10 @@
    台帳(`task-runs.json` / `event-listing-review` は `new-inquiries.json`)に
    起動日(JST)が入る。冪等なので同じ日に何度呼んでもよい。
    `<taskId>` は `agave-event-update` / `event-monitor` / `site-health-check` /
-   `event-listing-review`。
+   `event-listing-review` / `agave-navi-eyecatch`。
+   **この一覧に自分が無いと「自分は対象外」と読める。**`agave-navi-eyecatch` は
+   台帳に登録したのが 2026-09-10 で、ここに名前を足していなかった
+   (2026-09-13 に追記)。
 
    **これは最後ではなく最初にやる。**(2026-09-02 に是正)
    以前は「終わったら書く」設計だったが、成果物が無い回はそもそも push されず、
