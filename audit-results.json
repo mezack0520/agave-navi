@@ -1,5 +1,5 @@
 {
-  "total": 474,
+  "total": 464,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -52,10 +52,8 @@
     },
     "rejected_but_listed": {
       "title": "見送り記録があるのに掲載されているイベント",
-      "count": 1,
-      "items": [
-        "2026-09-20: 見送り golden-time-vol8-greenfeel-2026-09 と掲載 trillgreen-special-event-2026-09 が名称「TRILLGREEN SPECIAL EVENT SILVER WEEKEND」と会場「TRILLGREEN」で一致"
-      ],
+      "count": 0,
+      "items": [],
       "note": "同じ回なら見送り記録のほうを消す(掲載が正しいと判断し直した結果なので、見送りを残すと revisit の期限切れが誤って鳴り、判断の履歴も二重になる)。同じ会期・会場で併催される別イベントなら、見送り側に coexistsWith=<掲載slug> を書いて除外する",
       "severity": "urgent"
     },
@@ -329,11 +327,8 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 2,
-      "items": [
-        "enjoy-place-bangaihen-2026-12: 2026.12.26〜12.27 → 2026.12.26-27",
-        "gamagori-taniku-festa-6th-2026-11: 2026.11.14〜11.15 → 2026.11.14-15"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -642,10 +637,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 1,
-      "items": [
-        "シマムラ園芸第2ハウス(3件) → /venue/v-b6e1de21/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -728,23 +721,15 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 4,
-      "items": [
-        "2026-09-20 JSS北関東支部ミニ展示即売会",
-        "2026-09-26 Our Plants ver. 2.04",
-        "2026-11-14 第6回蒲郡多肉フェスタ",
-        "2026-12-26 enjoy place 番外編"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
     "coverage_sweep_broken": {
       "title": "取りこぼし巡回が機能していない",
-      "count": 2,
-      "items": [
-        "巡回失敗: 2026-10-16: HTTP 503",
-        "巡回失敗: 2026-10-19: HTTP 503"
-      ],
+      "count": 0,
+      "items": [],
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
     },

@@ -278,6 +278,24 @@ def main():
         if _e.get('date'):
             _ev_by_date[_e['date']].append(_e)
 
+    # 見送り側の name は「(開催日 会場・都道府県…)」の形で書く約束なので、
+    # たいてい県名が入っている(2026-09-15 時点で62件中48件)。
+    # **同じ日に別の県でやっている回は同じ回ではない。**
+    # 下の共通部分文字列だけで見ると、この分野に頻出する語が
+    # 名称と会場の両方に入っただけで一致する。実際 2026-09-15 に
+    # 見送り「GOLDEN TIME vol.8 (… GREEN FEEL・福島県福島市)」が
+    # 掲載「TRILLGREEN SPECIAL EVENT SILVER WEEKEND」(山形県米沢市)と
+    # **green の5文字だけで**一致した。閾値を上げると本物を落とすので、
+    # 語の長さではなく「開催地が違う」で外す。
+    _PREF_RE = re.compile(r'(北海道|東京都|京都府|大阪府|[^\s（）()]{2,3}県)')
+
+    def _rej_pref(name):
+        m = _PREF_RE.search(name or '')
+        if not m:
+            return ''
+        return m.group(1).replace('県', '').replace('都', '') \
+                         .replace('府', '') or m.group(1)
+
     conflict = []
     for r in rej_items:
         d = r.get('eventDate')
@@ -286,6 +304,7 @@ def main():
         rn = _rnorm(r.get('name'))
         if not rn:
             continue
+        rpref = _rej_pref(r.get('name'))
         ok = r.get('coexistsWith')
         ok = {ok} if isinstance(ok, str) else set(ok or [])
         for e in _ev_by_date.get(d, []):
@@ -300,6 +319,10 @@ def main():
             # 必ず引っかかって誤検知だらけになる(実測で7件)。
             # そこで名称と会場の2つが同時に当たった場合か、
             # 名称だけで8字以上の共通部分がある場合に限る。
+            # 開催地が分かっていて違うなら、名前が似ていても別の回
+            epref = (e.get('prefecture') or '').strip()
+            if rpref and epref and rpref != epref:
+                continue
             ven = (e.get('venue') or '').strip()
             if not ven:
                 ven = re.split(r'[（(]', e.get('location') or '')[0]
