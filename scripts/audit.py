@@ -2976,7 +2976,11 @@ def main():
              'python3 scripts/record-run.py <taskId> を実行して push する」を'
              '入れる(プレイブック §1 の 5)。'
              '入れるまでは task_run_gap に毎日出続け、'
-             '本物の「環境が落ちた日」が埋もれる',
+             '本物の「環境が落ちた日」が埋もれる。'
+             '**SKILL.md は Claude 内部領域なので Cowork セッションからは書けない'
+             '(2026-09-14 実測。親フォルダを接続しても protected location として'
+             '拒否される)。目崎が手で貼るしかない。**'
+             'フォルダ接続を頼む提案はしないこと',
         severity='info')
 
     add('task_run_gap', 'スケジュールタスクの実行が抜けた日', task_gap,

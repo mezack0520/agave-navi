@@ -971,7 +971,7 @@
       "items": [
         "agave-navi-eyecatch: since=2026-09-10 以降の記録が1件も無い（台帳の最終記録 2026-09-09）"
       ],
-      "note": "起動記録の書き手はタスク自身なので、repo 側では直せない。そのタスクの SKILL.md に「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」を入れる(プレイブック §1 の 5)。入れるまでは task_run_gap に毎日出続け、本物の「環境が落ちた日」が埋もれる",
+      "note": "起動記録の書き手はタスク自身なので、repo 側では直せない。そのタスクの SKILL.md に「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」を入れる(プレイブック §1 の 5)。入れるまでは task_run_gap に毎日出続け、本物の「環境が落ちた日」が埋もれる。**SKILL.md は Claude 内部領域なので Cowork セッションからは書けない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。目崎が手で貼るしかない。**フォルダ接続を頼む提案はしないこと",
       "severity": "info"
     },
     "task_run_gap": {

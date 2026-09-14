@@ -88,6 +88,14 @@
    この形は `audit.task_run_never_recorded` が「`since` 以降の記録が1件も無い」で
    分けて出す。**repo 側では直せない**ので、出たら `pending-judgments.json` に積む。
 
+   **SKILL.md は Cowork セッションからは書けない（2026-09-14 実測）。**
+   `C:\Users\yujim\iCloudDrive\Claude\Scheduled\` は Claude 内部領域で、
+   親の `Claude` フォルダを接続しても
+   「protected location (system, credential or Claude-internal data)」として
+   読み書きとも拒否される。`device_request_folder_access` も通らない。
+   **だから「フォルダを接続してください」と頼んではいけない。**接続しても変わらない。
+   目崎に貼ってもらう文面をそのまま出す。
+
 置き場（すべて `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` 配下）:
 - PAT: `agave-navi\github.pat`
 - 実行レポート: `mzplants\agave-navi\task-reports\<taskId>_YYYY-MM-DD.md`
