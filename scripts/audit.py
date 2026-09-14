@@ -2514,6 +2514,60 @@ def main():
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
 
+    # 商品枠の説明文が、その品目を出す月と食い違っていないか(2026-09-14 追加)。
+    # affiliate.js は amazon-links.json の season(旬の月の配列)を見て順位を上げるが、
+    # label(利用者が読む1行)は季節の語を直に書いている。season の窓と label の語が
+    # ずれていると、**その季節が終わってからも同じ文が出続ける。**
+    # 2026-09-14 に本番の詳細ページで「梅雨と夏の蒸れ対策に効く送風」が
+    # 最上位に出ていた。9月に梅雨は終わっている。
+    # season を持たない品目は通年扱いなので対象にしない(ガイドの本文が文脈を与える)。
+    _SEASON_WORD_MONTHS = {
+        '梅雨': {6, 7},
+        '長雨': {6, 7, 9},
+        '真夏': {7, 8},
+        '盛夏': {7, 8},
+        '残暑': {9},
+        '夏': {6, 7, 8, 9},
+        '秋': {9, 10, 11},
+        '真冬': {1, 2},
+        '越冬': {11, 12, 1, 2, 3},
+        '霜': {12, 1, 2, 3},
+        '冬': {12, 1, 2, 3},
+        '春': {3, 4, 5},
+    }
+    _label_season_bad = []
+    _aff_items = [('common', it) for it in (links.get('common') or [])]
+    for _grp in ('guides', 'categories'):
+        for _k, _v in (links.get(_grp) or {}).items():
+            _aff_items += [(f'{_grp}/{_k}', it) for it in _v]
+    for _where, _it in _aff_items:
+        _season = _it.get('season') or []
+        _label = _it.get('label') or ''
+        if not _season or not _label:
+            continue
+        _hit = {}
+        _rest = _label
+        # 長い語から当てる(「真夏」を「夏」で拾わない)
+        for _w in sorted(_SEASON_WORD_MONTHS, key=len, reverse=True):
+            if _w in _rest:
+                _hit[_w] = _SEASON_WORD_MONTHS[_w]
+                _rest = _rest.replace(_w, '')
+        if not _hit:
+            continue
+        _covered = set().union(*_hit.values())
+        _out = sorted(set(_season) - _covered)
+        if _out:
+            _label_season_bad.append(
+                f"{_where} / {_it.get('keyword')}: label「{_label}」は "
+                f"{'・'.join(sorted(_hit))} を指すが season に "
+                f"{'・'.join(str(m) + '月' for m in _out)} が入っている")
+    add('affiliate_label_season_mismatch',
+        '商品枠の説明文が、その品目を出す月と食い違っている',
+        sorted(_label_season_bad),
+        'label から季節の語を外して通年で読める文にするか、'
+        'season をその語が指す月に狭める。'
+        '放っておくと終わった季節の文が本番に出続ける', severity='urgent')
+
     # 掲載申請フォームの確認が止まっていないか。
     # event-listing-review は回答シートを読むたびに new-inquiries.json の
     # lastChecked を当日にして push する。新着ゼロの日でもこの値だけは動く。
@@ -4267,6 +4321,12 @@ def main():
         except ValueError:
             return None
 
+    def _date_of(_ds):
+        try:
+            return _dtw.date.fromisoformat(str(_ds))
+        except (ValueError, TypeError):
+            return None
+
     _today_weekend = _is_weekend(today_s)
     # 曜日区分ごとの基準を作るための広い窓。7回では土日が2回しか入らない
     _hist_wide = [r for r in _prev_runs if r.get('metric')][-28:]
@@ -4376,28 +4436,56 @@ def main():
     # 暦だけで動いて異常を読めないなら _METRIC_NO_ALARM に足す。
     # 平日・土日それぞれ3回以上の標本があるときだけ判定する。
     # 判定に使うのは自分の値の履歴だけなので、母数の割り引きとは独立。
+    # **平日と土日の中央値をそのまま比べてはいけない(2026-09-14 是正)。**
+    # 標本の途中で水準が一段上がる指標(単調増加・一括取り込み)では、
+    # 平日と土日が時間軸上で別の位置に散らばるため、中央値の差が
+    # 「週の周期」ではなく「途中の段差」を測ってしまう。
+    # 実例: events_with_image は 09-08 の画像一括取り込みで 67→142 に上がり、
+    # 平日中央値 67 / 土日中央値 149 と出て urgent が1件鳴った。
+    # 値は単調増加で曜日とは無関係であり、誤検知だった。
+    # そこで**各土日の値を、その前後3日の平日の中央値と比べる**(局所差)。
+    # 段差は前後で打ち消し合うので消え、曜日による上下だけが残る。
+    def _local_wd_median(_series, _date, _win=3):
+        _d0 = _date_of(_date)
+        if _d0 is None:
+            return None
+        _near = [v for (_ds, v) in _series
+                 if _is_weekend(_ds) is False
+                 and _date_of(_ds) is not None
+                 and abs((_date_of(_ds) - _d0).days) <= _win]
+        if not _near:
+            return None
+        return sorted(_near)[len(_near) // 2]
+
     _cycle_unmodeled = []
     for _k in sorted(set(_cur_metric) | {k for r in _hist_wide
                                          for k in (r.get('metric') or {})}):
         if _k in _METRIC_WEEKLY_CYCLE or _k in _METRIC_NO_ALARM:
             continue
-        _wd = [r['metric'][_k] for r in _hist_wide
-               if _k in (r.get('metric') or {})
-               and _is_weekend(r.get('date')) is False]
-        _we = [r['metric'][_k] for r in _hist_wide
-               if _k in (r.get('metric') or {})
-               and _is_weekend(r.get('date')) is True]
+        _series = [(r.get('date'), r['metric'][_k]) for r in _hist_wide
+                   if _k in (r.get('metric') or {})]
+        _wd = [v for (_ds, v) in _series if _is_weekend(_ds) is False]
+        _we = [(_ds, v) for (_ds, v) in _series if _is_weekend(_ds) is True]
         if len(_wd) < 3 or len(_we) < 3:
             continue        # 片側の標本が足りない。周期の有無を言えない
-        _mwd = sorted(_wd)[len(_wd) // 2]
-        _mwe = sorted(_we)[len(_we) // 2]
-        _gap = abs(_mwe - _mwd)
-        _ref = max(_mwd, _mwe)
+        _diffs = []
+        for (_ds, v) in _we:
+            _base = _local_wd_median(_series, _ds)
+            if _base is not None:
+                _diffs.append((v - _base, _base))
+        if len(_diffs) < 3:
+            continue        # 前後に平日が無い土日ばかりで、段差を差し引けない
+        _sorted = sorted(_diffs, key=lambda t: t[0])
+        _eff, _ref = _sorted[len(_sorted) // 2]
+        _gap = abs(_eff)
+        _ref = max(abs(_ref), 1)
         # 絶対5件以上かつ相対30%以上の差。片方だけだと小さい値の±1で鳴る
-        if _ref > 0 and _gap >= 5 and _gap / _ref >= 0.30:
+        if _gap >= 5 and _gap / _ref >= 0.30:
+            _mwd = sorted(_wd)[len(_wd) // 2]
+            _mwe = sorted([v for (_ds, v) in _we])[len(_we) // 2]
             _cycle_unmodeled.append(
-                f'{_k}: 平日の中央値 {_mwd}(n={len(_wd)}) / '
-                f'土日の中央値 {_mwe}(n={len(_we)}) — 週の周期がある')
+                f'{_k}: 土日は前後の平日より中央で {_eff:+d} (n={len(_diffs)}) '
+                f'— 週の周期がある(平日中央値 {_mwd} / 土日中央値 {_mwe})')
     add('metric_weekly_cycle_unmodeled',
         '参考値が曜日で上下するのに曜日を無視した基準で比べている',
         _cycle_unmodeled,
