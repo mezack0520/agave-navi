@@ -506,6 +506,24 @@
       "eventDate": "2027-03-19",
       "reasonType": "policy",
       "reason": "国際園芸博覧会。主題は園芸・造園・緑化の総合博で、outOfScopeGenres の『ガーデニング・造園』に当たる(日比谷公園ガーデニングショーと同型)。会期が6か月あり当サイトの即売会・展示会の枠と性質が違う。PUKUBOOK が注目イベントとして常時掲載しているので、毎回の巡回で候補に出る"
+    },
+    {
+      "key": "tana-mama-marche-vol24-2026-10",
+      "name": "тαηα мαмα мαя¢нє vol.24（田名ママ マルシェ） (2026-10-03〜04 ブンブン小麦の郷 田名店・神奈川県相模原市中央区)",
+      "decided": "2026-09-15",
+      "eventDate": "2026-10-03",
+      "reasonType": "policy",
+      "reason": "主催 @tanamamamarche の告知が自ら『ハンドメイドマルシェ』『心ときめく、手作りとの出逢いを』『ハンドメイドを楽しむ4日間』と名乗る。出店者紹介はインド刺繍リボン・クレープ・ラーメン・お笑いショー・お客様参加型ライブ・町の手相屋・おりがみ教室で、植物の出店は1件も出ていない。植物イベントではないので compositeEvents の比率以前の問題。植物のキーワードで検索すると名称が中立なぶん候補に出てくるため記録しておく"
+    },
+    {
+      "key": "golden-time-vol8-greenfeel-2026-09",
+      "name": "GOLDEN TIME vol.8 (2026-09-20 GREEN FEEL・福島県福島市成川久保32-2)",
+      "decided": "2026-09-15",
+      "eventDate": "2026-09-20",
+      "reasonType": "undisclosed",
+      "revisit": true,
+      "revisitedOn": "2026-09-15",
+      "reason": "会場は観葉植物専門店 GREEN FEEL(株式会社福華園)の敷地内で、店の業態は植物専門。だが主催 @greenfeel_fukukaen の当該回の告知は『美味しいものを食べて！素敵な物を見て！作って！』『フリマスペース』『素敵なアーティストさん達の歌』で、出店者募集も FOOD / DRINK / GOODS / WORKSHOP、付けているタグも #マルシェ。植物の即売が主題とは書いていない。名称 GOLDEN TIME は中立で出店内訳も非公開なので undisclosedBreakdown.exclude に当たる。storeAnniversary は『主催告知の名称または内容が即売会・展示会・販売会』であることを条件にしており、ここは満たさない。内訳か植物即売の企画が公開されたら再評価する"
     }
   ],
   "_reasonTypes": {
@@ -514,6 +532,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-14",
+  "updated": "2026-09-15",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
