@@ -97,10 +97,22 @@ IN_SCOPE = (
     'アデニウム', 'ステファニア', 'ユッカ', 'アロエ', 'メセン',
 )
 
-# 対象キーワードを含んでいても、これらが主題なら範囲外
+# 対象キーワードを含んでいても、これらが主題なら範囲外。
+# listing-policy.json の outOfScopeGenres.genres に対応する。
+# **あちらは散文なので機械で読めない。** 写しであることを承知で置いており、
+# 片方を足したらもう片方も足す。
+#
+# NextMeet のように prescoped で通す情報源では、**ここが唯一の関門**になる。
+# IN_SCOPE が前段にあるうちは「洋ラン展」も「メダカフェス」も
+# 対象語を持たないので自然に落ちていたが、前段を外すと素通りする。
+# 2026-09-15 に洋ラン・メダカ・山野草・造園・有用植物を追加した。
 OUT_OF_SCOPE = (
     'ダリア', '盆栽', 'ボンサイ', '観察会', '講座', 'ポトス',
     '苔テラリウム', 'テラリウムのみ', '援農', '商談会', '卸し',
+    '洋ラン', '洋らん', '東洋蘭', '富貴蘭', '万年青',
+    '山野草', '山草', '野草',
+    'メダカ', 'めだか', '熱帯魚', 'アクアリウム',
+    '造園', 'ガーデニングショー', '有用植物', 'ハーブ',
 )
 
 
@@ -153,9 +165,19 @@ def tokens(name):
     return out
 
 
-def in_scope(title):
+def in_scope(title, prescoped=False):
+    """この見出しが当サイトの対象ジャンルにあたるか。
+
+    `prescoped` は「その情報源が既に植物イベントだけを並べている」の意。
+    IN_SCOPE の語を要求するのは、LEAFLA のように
+    「<会場>で<名前>を開催、アガベや塊根植物を展開」という**文**が来る
+    情報源に対してだけ有効な絞り込みで、NextMeet の月別ページのように
+    **イベント名そのもの**が来る情報源に当てると、名前にジャンル語を
+    持たない回（「緑楽宴」「植祭」「BOTANICBOMB vol.11」）が全部落ちる。
+    その場合は OUT_OF_SCOPE だけを当てる。
+    """
     n = norm(title)
-    if not any(norm(k) in n for k in IN_SCOPE):
+    if not prescoped and not any(norm(k) in n for k in IN_SCOPE):
         return False
     if any(norm(k) in n for k in OUT_OF_SCOPE):
         return False
@@ -240,9 +262,16 @@ def sweep_nextmeet(days, sleep=0.7):
     # オキボタ December は 12/4)。12月を一度も取りに行かない設計だと、
     # 12月の取りこぼしは 10月下旬まで検出できない。
     # 季節物の告知は会期の3か月前から出るので、窓は月単位で3か月先まで要る。
+    # 上の while を抜けた時点で (y, m) は**まだ取っていない次の月**を指す。
+    # 先に進めてから append すると、その1か月を飛ばす。
+    # 2026-09-15 まで実際に飛んでいた: 窓が 10/30 までの日に
+    # ['2026-09','2026-10','2026-12','2027-01'] を取りに行き、
+    # **11月を一度も見ていなかった**。fetched は 4 を返し notes も空なので、
+    # 健全に見える。4か月に広げた狙いがちょうど 11月・12月の回だったのに、
+    # その片方が落ちていた(ぶらりぷらんつ 11/01、さんたあな植物園 11/01 など)。
     while len(months) < 4:
-        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
         months.append(f'{y:04d}-{m:02d}')
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
 
     by_day, fetched, notes = {}, 0, []
     for ym in months:
@@ -342,14 +371,35 @@ def dates_in_title(title, page_day, horizon=400):
 PAREN_SUFFIX_RE = re.compile(r'\s*[（(][^（）()]*[）)]\s*$')
 
 
-def matches(title, name):
+def matches(title, name, bare=False):
     """候補のリンク文字列が、こちらのイベント名を指しているか。
 
     LEAFLA の文字列は「<会場>で<イベント名>を開催、…」のような文なので、
     こちらの名前の特徴語がその中に出てくるかで見る。
     2語以上一致、または5文字以上の語が1つ一致したら同じとみなす。
+
+    `bare` は「候補が文ではなくイベント名そのもの」の意(NextMeet の月別)。
+    **この関数は全体が「長い文の中に短い名前が出るか」を見る向きに
+    できていて、同値の検査が1つも無い。**文どうしを比べている限り
+    それで足りていたが、名前どうしを比べると
+    「ナゴリバ」対「ナゴリバ」が一致しない(4文字なので包含の下限6にも
+    特徴語の下限5にも届かない)。2026-09-15 に NextMeet の見出しを
+    素通しにしたところ、掲載済みの回が10件中5件、取りこぼしとして出た。
     """
     n = norm(title)
+    if bare:
+        # 名前どうしなので、短いほうが長いほうに入っていれば同じ回とみなす。
+        # 候補は既に開催日で絞ってあるので、3文字でも別の回を巻き込まない。
+        nn0 = norm(name)
+        if n and nn0 and min(len(n), len(nn0)) >= 3 and (n in nn0 or nn0 in n):
+            return True
+        # 回数が名前の**途中**に入る形("植ノ宴 -4- in 熊本" 対 "植ノ宴 in 熊本")は
+        # 包含にならない。数字を落としてから見る。数字は元から照合に
+        # 使っていない(tokens が純数字を捨て、GENERIC に年が入っている)ので、
+        # ここだけ特別な扱いをしているわけではない
+        a, b = re.sub(r'\d+', '', n), re.sub(r'\d+', '', nn0)
+        if a and b and min(len(a), len(b)) >= 3 and (a in b or b in a):
+            return True
     # 正規化した名前がそのまま本文に出るなら同じ回とみなす。
     # 「PLANT & POT Vol.15」は特徴語が pot しか残らず語の数では拾えない。
     nn = norm(name)
@@ -444,7 +494,7 @@ def sweep(days, sleep=0.7):
                           f'(ページ構造が変わった可能性 / {len(html)}バイト)')
             continue
         stats['candidates'] += len(titles)
-        pages.append((key, titles))
+        pages.append((key, titles, 'leafla'))
         time.sleep(sleep)
 
     sources = {'leafla': {'ok': stats['fetched'] > 0,
@@ -455,7 +505,9 @@ def sweep(days, sleep=0.7):
     nm_pages, nm_fetched, nm_notes = sweep_nextmeet(days, sleep)
     stats['fetched_nextmeet'] = nm_fetched
     stats['candidates'] += sum(len(t) for _, t in nm_pages)
-    pages.extend(nm_pages)
+    # NextMeet は /plants/ 配下の植物イベント専用インデックスなので、
+    # 見出しにジャンル語を要求しない(in_scope の prescoped)
+    pages.extend((k, t, 'nextmeet') for k, t in nm_pages)
     sources['nextmeet'] = {'ok': nm_fetched > 0, 'fetched': nm_fetched,
                            'unit': 'month'}
     if nm_notes:
@@ -464,10 +516,10 @@ def sweep(days, sleep=0.7):
     # 切り詰め見出しは、全ページを取り終えてから完全版と突き合わせる。
     # 完全版は自分の開催日のページに出ているので、1パス目を終えないと揃わない。
     full_titles = list(dict.fromkeys(
-        t for _, ts in pages for t in ts if not is_truncated(t)))
+        t for _k, ts, _src in pages for t in ts if not is_truncated(t)))
     unresolved = []
 
-    for key, titles in pages:
+    for key, titles, source in pages:
         for t in titles:
             if is_truncated(t):
                 # 完全版が同じ巡回で見えているなら、そちらが自分の開催日の
@@ -481,9 +533,10 @@ def sweep(days, sleep=0.7):
                 if t not in unresolved:
                     unresolved.append(t[:180])
                 continue
-            if not in_scope(t):
+            if not in_scope(t, prescoped=(source == 'nextmeet')):
                 continue
             stats['in_scope'] += 1
+            stats['in_scope_' + source] = stats.get('in_scope_' + source, 0) + 1
             look = [key] + sorted(dates_in_title(t, key, horizon=days))
             cand = [e for k in look for e in by_day.get(k, [])]
             # 「08/28 追加」で始まる新着告知は、その日のイベントではなく
@@ -492,12 +545,14 @@ def sweep(days, sleep=0.7):
             # この形の見出しに限り全期間から探す
             if ADDED_PREFIX.match(unicodedata.normalize('NFKC', t)):
                 cand = [e for v in by_day.values() for e in v]
-            if any(matches(t, e.get('name', '')) or
-                   matches(t, e.get('venue') or e.get('location') or '')
+            bare = (source == 'nextmeet')
+            if any(matches(t, e.get('name', ''), bare=bare) or
+                   matches(t, e.get('venue') or e.get('location') or '',
+                           bare=bare)
                    for e in cand):
                 stats['covered'] += 1
                 continue
-            if any(matches(t, r) for r in rejected):
+            if any(matches(t, r, bare=bare) for r in rejected):
                 stats['known_rejected'] += 1
                 continue
             gaps.append({'date': key, 'title': t[:180]})
@@ -565,6 +620,29 @@ def self_test(verbose=True):
             ok = False
         _p(f'  {mark} 範囲内={got!s:5} 期待={want!s:5} {t[:52]}')
 
+    _p('\n--- 情報源ごとの対象判定 ---')
+    # NextMeet の月別は「イベント名そのもの」が来るので、ジャンル語を
+    # 要求すると名前にそれを持たない回が全部落ちる。2026-09-15 の実測で
+    # 取得86件のうち通っていたのは16件だけだった(ぶらりぷらんつ /
+    # さんたあな植物園 / 緑楽宴 / 植祭 / BOTANICBOMB が落ちていた)。
+    pcases = [
+        ('ぶらりぷらんつ vol.3 × feel 15th Anniversary', False, True),
+        ('緑楽宴', False, True),
+        ('BOTANICBOMB vol.11', False, True),
+        # prescoped でも対象外ジャンルは落とす
+        ('秋の洋ラン展', False, False),
+        ('にしかたメダカフェス', False, False),
+        # LEAFLA 側(文が来る)は今までどおりジャンル語を要求する
+        ('ぶらりぷらんつ vol.3 × feel 15th Anniversary', True, False),
+    ]
+    for t, plain, want in pcases:
+        got = in_scope(t, prescoped=not plain)
+        mark = 'OK ' if got == want else '★NG'
+        if got != want:
+            ok = False
+        _p(f'  {mark} 対象={got!s:5} 期待={want!s:5} '
+           f'prescoped={not plain!s:5} {t[:40]}')
+
     _p('\n--- 本文中の開催日の抽出 ---')
     dcases = [
         ('08/28 追加 妙高多肉市場 vol.15が9月27日に開催、', '2026-08-31', ['2026-09-27']),
@@ -616,6 +694,29 @@ def self_test(verbose=True):
         if got != want:
             ok = False
         _p(f'  {mark} 一致={got!s:5} 期待={want!s:5} {name[:28]}')
+
+    _p('\n--- 名前どうしの照合(NextMeet の月別) ---')
+    # 2026-09-15。NextMeet の見出しは文ではなく名前そのもの。
+    # 文向きの照合しか無かったので、同じ名前が一致しなかった。
+    bcases = [
+        ('ナゴリバ', 'ナゴリバ', True),
+        ('神結び', '神結び 第一章', True),
+        ('GREEN BASE MARKET', 'GREEN BASE MARKET vol.1', True),
+        ('BOTANICAL LIFE', 'BOTANICAL LIFE 2026', True),
+        ('園芸楽', '園芸楽 2026', True),
+        ('植ノ宴 in 熊本', '植ノ宴 -4- in 熊本', True),
+        # 別の回を巻き込まないこと
+        ('GOLDEN TIME vol.8', 'ナゴリバ', False),
+        ('神結び', 'サボテン・多肉植物展（広島市植物公園）', False),
+        # 2文字は短すぎるので照合しない(候補として人に出す)
+        ('植祭', '第3回 植祭り', False),
+    ]
+    for title, name, want in bcases:
+        got = matches(title, name, bare=True)
+        mark = 'OK ' if got == want else '★NG'
+        if got != want:
+            ok = False
+        _p(f'  {mark} 一致={got!s:5} 期待={want!s:5} {title[:20]} / {name[:26]}')
 
     _p('\n--- 切り詰め見出しの復元 ---')
     # 2026-09-01 の誤検知。ページ下部の「最近追加されたイベント」は
