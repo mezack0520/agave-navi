@@ -1,5 +1,5 @@
 {
-  "total": 451,
+  "total": 453,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 50,
+      "count": 51,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-7th-2026-10",
@@ -742,7 +742,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 50,
+      "count": 51,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-16 kourep-2026-autumn",
@@ -757,6 +757,7 @@
         "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
         "2026-10-03 tochigi-tanippe-2026-10",
+        "2026-10-03 wako-jurin-unique-plants-2026-10",
         "2026-10-04 asamiya-tanikusai-7th-2026-10",
         "2026-10-04 botanic-collection2-ube-2026-10",
         "2026-10-04 chinki-plants-flea-market-2026-10",
@@ -782,8 +783,7 @@
         "2026-11-22 midorigakuen-himeji-2026-11",
         "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
         "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
-        "2026-11-28 plant-freaks-olinas-2026-11",
-        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11"
+        "2026-11-28 plant-freaks-olinas-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
