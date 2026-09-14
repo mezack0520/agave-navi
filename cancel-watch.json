@@ -2,17 +2,21 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-15",
   "stats": {
-    "targets": 23,
-    "fetched": 23
+    "targets": 24,
+    "fetched": 21
   },
-  "errors": [],
+  "errors": [
+    "sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
+    "kourep-2026-autumn: URLError https://kourep.jp",
+    "souransai-koshigaya-2026-10: URLError https://soransai.com/"
+  ],
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "greensnap-marche-yokohama-2026-autumn",
-      "name": "GreenSnap Marche YOKOHAMA 2026 Autumn",
-      "date": "2026-09-26",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
+      "slug": "chuushokushobutsusai-2026",
+      "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
+      "date": "2026-11-07",
+      "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
       "why": "公式ページが変わった(本文)",
       "changed": [
         "本文"
@@ -20,42 +24,6 @@
     }
   ],
   "pages": {
-    "sakuya-green-jam-5-2026": {
-      "url": "https://www.sakuyakonohana.jp/event/22331/",
-      "checkedOn": "2026-09-15",
-      "signature": {
-        "text": "75e4cf4d8714aac8",
-        "images": "a12af253dbc269ea",
-        "textLen": 5680,
-        "imageCount": 117
-      },
-      "strong": [],
-      "weak": [
-        "中止"
-      ],
-      "datesNamed": 7,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-14",
-      "textOnlyChanges": 0
-    },
-    "kourep-2026-autumn": {
-      "url": "https://kourep.jp",
-      "checkedOn": "2026-09-15",
-      "signature": {
-        "text": "4f21cc76c7c91963",
-        "images": "b602ef27f7097e78",
-        "textLen": 2418,
-        "imageCount": 98
-      },
-      "strong": [],
-      "weak": [],
-      "datesNamed": 6,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-14",
-      "textOnlyChanges": 1
-    },
     "yamashiro-aisenen-autumn-2026-09": {
       "url": "https://www.aisenen.com/",
       "checkedOn": "2026-09-15",
@@ -123,6 +91,23 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 3
+    },
+    "jss-kitakanto-mini-tenji-sokubai-2026-09": {
+      "url": "https://www.florence.jp/news/9-20%e3%80%80%e7%89%b9%e5%88%a5%e5%b1%95%e9%96%a2%e9%80%a3%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%83%9f%e3%83%8b%e5%b1%95%e7%a4%ba%ef%bc%86%e5%8d%b3/",
+      "checkedOn": "2026-09-15",
+      "signature": {
+        "text": "7ba35797cc4aba58",
+        "images": "d1c16fb81f5ee1ed",
+        "textLen": 898,
+        "imageCount": 16
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-15",
+      "textOnlyChanges": 0
     },
     "jusai-ichinomiya-autumn-2026": {
       "url": "https://jusai.link/",
@@ -238,23 +223,6 @@
       "strong": [],
       "weak": [],
       "datesNamed": 2,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-14",
-      "textOnlyChanges": 0
-    },
-    "souransai-koshigaya-2026-10": {
-      "url": "https://soransai.com/",
-      "checkedOn": "2026-09-15",
-      "signature": {
-        "text": "c852153ebefd50ba",
-        "images": "389802360dd40ef6",
-        "textLen": 342,
-        "imageCount": 10
-      },
-      "strong": [],
-      "weak": [],
-      "datesNamed": 1,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-14",
@@ -383,18 +351,18 @@
       "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
       "checkedOn": "2026-09-15",
       "signature": {
-        "text": "e285efb1398ce5b8",
+        "text": "2e3bb339191731a5",
         "images": "121e2972574a1126",
-        "textLen": 3041,
+        "textLen": 1334,
         "imageCount": 2
       },
       "strong": [],
       "weak": [],
-      "datesNamed": 2,
+      "datesNamed": 1,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "botanical-life-kasama-2026-11": {
       "url": "https://bookkasama.com/bot2611.html",
