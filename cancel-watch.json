@@ -2,12 +2,23 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-14",
   "stats": {
-    "targets": 22,
-    "fetched": 22
+    "targets": 23,
+    "fetched": 23
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "kourep-2026-autumn",
+      "name": "コウレプ2026秋",
+      "date": "2026-09-16",
+      "url": "https://kourep.jp",
+      "why": "公式ページが変わった(本文)",
+      "changed": [
+        "本文"
+      ]
+    }
+  ],
   "pages": {
     "sakuya-green-jam-5-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22331/",
@@ -32,9 +43,9 @@
       "url": "https://kourep.jp",
       "checkedOn": "2026-09-14",
       "signature": {
-        "text": "7c0d11f7cfb64a78",
+        "text": "4f21cc76c7c91963",
         "images": "b602ef27f7097e78",
-        "textLen": 2379,
+        "textLen": 2418,
         "imageCount": 98
       },
       "strong": [],
@@ -43,7 +54,7 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-14",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "yamashiro-aisenen-autumn-2026-09": {
       "url": "https://www.aisenen.com/",
@@ -213,6 +224,23 @@
       "eventDateSeen": false,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-12",
+      "textOnlyChanges": 0
+    },
+    "wako-jurin-unique-plants-2026-10": {
+      "url": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
+      "checkedOn": "2026-09-14",
+      "signature": {
+        "text": "3d6054ac8f1dd770",
+        "images": "3c9f6abea206247e",
+        "textLen": 927,
+        "imageCount": 16
+      },
+      "strong": [],
+      "weak": [],
+      "datesNamed": 2,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-14",
       "textOnlyChanges": 0
     },
     "souransai-koshigaya-2026-10": {
