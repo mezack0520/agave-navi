@@ -339,6 +339,9 @@ def dates_in_title(title, page_day, horizon=400):
     return out
 
 
+PAREN_SUFFIX_RE = re.compile(r'\s*[（(][^（）()]*[）)]\s*$')
+
+
 def matches(title, name):
     """候補のリンク文字列が、こちらのイベント名を指しているか。
 
@@ -351,6 +354,15 @@ def matches(title, name):
     # 「PLANT & POT Vol.15」は特徴語が pot しか残らず語の数では拾えない。
     nn = norm(name)
     if len(nn) >= 6 and nn in n:
+        return True
+    # こちらは一般名の回に会場名を括弧で足して区別している
+    # (「多肉植物『The販売会』（農マル園芸吉備路農園）」)。
+    # 向こうは括弧を付けない素の名前で出すので、上の包含は
+    # 「長いほうが短いほうに入るか」を見ていて必ず外れる。
+    # 括弧を外した側でもう一度見る。括弧の中はこちらが足した注記で、
+    # 相手がそれを書いていないことは不一致の証拠にならない。
+    base = norm(PAREN_SUFFIX_RE.sub('', name))
+    if len(base) >= 6 and base in n:
         return True
     ts = tokens(name)
     if not ts:
@@ -588,6 +600,12 @@ def self_test(verbose=True):
         # (3) 新着告知はページの日付と開催日が違う
         ('08/28 追加 妙高多肉市場 vol.15が9月27日に開催、',
          '妙高多肉市場 vol.15', True),
+        # 2026-09-15 の誤検知。こちらは一般名に会場名を括弧で足して区別し、
+        # 向こうは素の名前で出す。長いほうが短いほうに入るかを見ていたので
+        # 必ず外れ、掲載した翌日から毎日「取りこぼし」として出ていた
+        ('多肉植物『The販売会』', '多肉植物『The販売会』（農マル園芸吉備路農園）', True),
+        # 括弧を外したせいで別の回に当たらないこと
+        ('狂植祭 Vol.7が2026年10月10日に開催', '多肉植物『The販売会』（農マル園芸吉備路農園）', False),
         # 名前が似ていない回を巻き込まないこと
         ('GREEN HOLIC in KARIYA 2026が刈谷市で開催', 'Sakuya Green Jam 5', False),
         ('狂植祭 Vol.7が2026年10月10日に開催、奈良で実施', '狂仙会 2026', False),
