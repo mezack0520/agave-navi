@@ -156,6 +156,31 @@ def split_venue(ev):
     return (venue[:m.start()].strip(), inner)
 
 
+_BARE_ADDR = re.compile(r'[市区町村郡][^\s]*?\d+[-−ー]\d+|丁目|番地|字')
+
+
+def _split_place(raw):
+    """JSON-LD の Place 用に (会場名, 住所) へ分ける。
+
+    split_venue と同じ規則(括弧の中が都道府県名で始まるものだけ住所)に
+    従う。加えて、残った名前が番地だけの住所だったときは会場名として
+    出さず住所側へ回す。「読谷村字上地101-1」を Place.name にすると、
+    構造化データが施設名の無い会場を主張することになる。
+    """
+    raw = (raw or '').strip()
+    if not raw:
+        return ('', '')
+    name, addr = raw, ''
+    m = re.search(r'[（(]([^（()）]+)[)）]\s*$', raw)
+    if m and any(m.group(1).strip().startswith(p)
+                 for p in sitelib.PREF_TO_REGION):
+        name, addr = raw[:m.start()].strip(), m.group(1).strip()
+    if name and _BARE_ADDR.search(name):
+        addr = f'{name} {addr}'.strip() if addr else name
+        name = ''
+    return (name, addr)
+
+
 def make_venue_value(ev):
     """スペック表の会場欄。会場名と住所を2行に分ける。"""
     name, addr = split_venue(ev)
@@ -438,10 +463,19 @@ def make_event_jsonld(ev):
     _raw_venue = (ev.get('venue') or ev.get('location') or '').strip()
     # 都道府県名・「調整中」等は会場名ではない。Place.name に入れると
     # 構造化データが誤った施設を指すため、その場合は名前を持たせない。
-    venue = html_escape(_raw_venue) if not _is_vague(_raw_venue) else ''
+    _raw_venue = _raw_venue if not _is_vague(_raw_venue) else ''
+    # Place.name は会場の名前であって住所ではない。住所は PostalAddress 側に
+    # 置き場がある。events.json の location は「会場名（都道府県…住所）」の形で
+    # 住所を括弧に入れて1つの文字列で持つので、生のまま入れると
+    # リッチリザルトの会場欄が括弧ごと出る。表示側(make_venue_value)は
+    # split_venue で既に分けており、ここだけ分けていなかった(2026-09-14)。
+    _vname, _vaddr = _split_place(_raw_venue)
+    venue = html_escape(_vname)
     # 空文字の name を出すと、構造化データ上「名前が空の会場」を主張することになる。
     # 会場が分からない回はキーごと省く。
     venue_name_field = f'\n      "name": "{venue}",' if venue else ''
+    street_field = (f'\n        "streetAddress": "{html_escape(_vaddr)}",'
+                    if _vaddr else '')
     pref = ev.get('prefecture', '') or ev.get('region', '')
     desc = html_escape(make_meta_description(ev))
     image_url = (ev.get('imageUrl') or '').replace('"', '&quot;')
@@ -491,7 +525,7 @@ def make_event_jsonld(ev):
     "location": {{
       "@type": "Place",{venue_name_field}
       "address": {{
-        "@type": "PostalAddress",
+        "@type": "PostalAddress",{street_field}
         "addressRegion": "{pref}",
         "addressCountry": "JP"
       }}

@@ -1,5 +1,5 @@
 {
-  "total": 452,
+  "total": 451,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -900,12 +900,26 @@
       "note": "会場や主催が不明な回は、空文字を入れずキーごと省く。build-detail-pages.py のテンプレート側で分岐する",
       "severity": "urgent"
     },
+    "jsonld_place_name_not_venue": {
+      "title": "JSON-LDのPlace.nameが会場名でなく住所(リッチリザルトの会場欄が壊れる)",
+      "count": 0,
+      "items": [],
+      "note": "build-detail-pages.make_event_jsonld で split_venue を通し、住所は PostalAddress.streetAddress に置く。施設名が無い回は Place.name ごと省く",
+      "severity": "urgent"
+    },
     "rakuten_config_missing": {
       "title": "楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)",
       "count": 0,
       "items": [],
       "note": "検索語 40 件がこの設定に依存する",
       "severity": "info"
+    },
+    "affiliate_label_season_mismatch": {
+      "title": "商品枠の説明文が、その品目を出す月と食い違っている",
+      "count": 0,
+      "items": [],
+      "note": "label から季節の語を外して通年で読める文にするか、season をその語が指す月に狭める。放っておくと終わった季節の文が本番に出続ける",
+      "severity": "urgent"
     },
     "inquiry_check_stale": {
       "title": "掲載申請フォームの処理が止まっている",
@@ -1225,10 +1239,8 @@
     },
     "metric_weekly_cycle_unmodeled": {
       "title": "参考値が曜日で上下するのに曜日を無視した基準で比べている",
-      "count": 1,
-      "items": [
-        "events_with_image: 平日の中央値 67(n=9) / 土日の中央値 149(n=4) — 週の周期がある"
-      ],
+      "count": 0,
+      "items": [],
       "note": "このままだと正常な週末のたびに metric_moved が鳴り、そのうち中身を見ずに閉じられる。audit.py の _METRIC_WEEKLY_CYCLE に足して曜日区分ごとの基準にするか、暦だけで動いて異常を読めないなら _METRIC_NO_ALARM に足す",
       "severity": "urgent"
     }

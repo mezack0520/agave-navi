@@ -2455,7 +2455,11 @@ def main():
     #     さらに Event の日付・名称が events.json と一致するかを見る。
     #     不一致は詳細ページの再生成漏れ(2026-08-11に検査化)。
     _LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
-    ld_bad, ld_drift, ld_blank = [], [], []
+    ld_bad, ld_drift, ld_blank, ld_place = [], [], [], []
+    _LD_PAREN = re.compile(r'[（(]([^（()）]+)[)）]\s*$')
+    # 「市/区/町/村/字 + 数字-数字」または「丁目・番地・字」を含む値は
+    # 施設名ではなく住所。『コロレ（横）』のような但し書きは拾わない。
+    _LD_BARE_ADDR = re.compile(r'[市区町村郡][^\s]*?\d+[-−ー]\d+|丁目|番地|字')
     ev_by_slug = {e.get('slug'): e for e in events}
     for f in sorted(glob.glob(rp('**', '*.html'), recursive=True)):
         rel = os.path.relpath(f, REPO).replace(os.sep, '/')
@@ -2492,6 +2496,24 @@ def main():
                     if isinstance(_vv, str) and _vv.strip() == '':
                         ld_blank.append(f'{slug}: {_k}.{_kk} が空文字')
 
+        # Place.name は「会場の名前」であって住所ではない。住所は
+        # PostalAddress 側に置く場所がある。ここに住所が混ざると、
+        # リッチリザルトの会場欄が「宮島口しゃもじ広場（広島県廿日市市…）」の
+        # ように括弧ごと出るか、施設名を持たない番地だけの会場を主張する。
+        # 表示側には既に sitelib.venue_display / split_venue があり
+        # 括弧書きを落としているのに、JSON-LD だけが生の location を
+        # そのまま入れていた(2026-09-14 に 17件検出)。
+        _pn = ((node.get('location') or {}).get('name') or '') \
+            if isinstance(node.get('location'), dict) else ''
+        _pn = _html.unescape(_pn).strip()
+        if _pn:
+            _m = _LD_PAREN.search(_pn)
+            if _m and any(_m.group(1).strip().startswith(_p) for _p in _P2R):
+                ld_place.append(f'{slug}: Place.name に住所の括弧書き → {_pn[:40]}')
+            elif _LD_BARE_ADDR.search(_pn):
+                ld_place.append(f'{slug}: Place.name が住所そのもので施設名がない'
+                                f' → {_pn[:40]}')
+
         want_end = ev.get('dateEnd') or ev.get('date')
         for label, got, want in (
                 ('startDate', (node.get('startDate') or '')[:10], ev.get('date')),
@@ -2510,6 +2532,13 @@ def main():
     add('jsonld_blank_value', 'JSON-LDに空文字の値(値が無いのではなく空を主張してしまう)',
         sorted(ld_blank),
         '会場や主催が不明な回は、空文字を入れずキーごと省く。build-detail-pages.py のテンプレート側で分岐する')
+
+    add('jsonld_place_name_not_venue',
+        'JSON-LDのPlace.nameが会場名でなく住所(リッチリザルトの会場欄が壊れる)',
+        sorted(ld_place),
+        'build-detail-pages.make_event_jsonld で split_venue を通し、'
+        '住所は PostalAddress.streetAddress に置く。'
+        '施設名が無い回は Place.name ごと省く')
 
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
