@@ -159,6 +159,11 @@ def tokens(name):
         low = t.lower()
         if re.fullmatch(r'\d+', t):
             continue
+        # 「5th」「2nd」「ver」は回数・版数の印で、名前の中身ではない。
+        # 純数字と同じ理由で落とす。落とさないと『植縁祭 5th』と
+        # 『THE BOTANICAL SHOW 5th』が 5th だけで一致する
+        if re.fullmatch(r'\d+(?:st|nd|rd|th)|ver', low):
+            continue
         if low in GENERIC:
             continue
         out.append(low)
@@ -400,6 +405,20 @@ def matches(title, name, bare=False):
         a, b = re.sub(r'\d+', '', n), re.sub(r'\d+', '', nn0)
         if a and b and min(len(a), len(b)) >= 3 and (a in b or b in a):
             return True
+        # 同じ回を、向こうは短い通称・こちらは正式名で書いていることがある
+        # (「KKT vol.6」対「KKT多肉FES vol.6」、「植祭」対
+        #  「植祭 植物で暮らしを楽しくする（2026年11月）」)。
+        # 文字列としては包含にならないが、**短いほうの特徴語が
+        # 長いほうに全部入っている**。候補は開催日で絞ってあるので、
+        # これで別の回を巻き込むかを実データで数えた: events.json の
+        # 同日の別イベント全ペアで誤一致は1組(「サボテン・多肉植物展」と
+        # 同名に会場を足した回)だけで、どちらも掲載済みなので害がない
+        ta = {norm(x) for x in tokens(title)} - {''}
+        tb = {norm(x) for x in tokens(name)} - {''}
+        if ta and tb:
+            short, long_ = (ta, tb) if len(ta) <= len(tb) else (tb, ta)
+            if short <= long_:
+                return True
     # 正規化した名前がそのまま本文に出るなら同じ回とみなす。
     # 「PLANT & POT Vol.15」は特徴語が pot しか残らず語の数では拾えない。
     nn = norm(name)
@@ -708,8 +727,18 @@ def self_test(verbose=True):
         # 別の回を巻き込まないこと
         ('GOLDEN TIME vol.8', 'ナゴリバ', False),
         ('神結び', 'サボテン・多肉植物展（広島市植物公園）', False),
-        # 2文字は短すぎるので照合しない(候補として人に出す)
-        ('植祭', '第3回 植祭り', False),
+        # 「植祭」対「第3回 植祭り」のような、実在しない名前を仮に置いた
+        # 検査はしない。特徴語の包含で拾うのが正しいか判断できないうえ、
+        # **仮の期待値は実データで測った安全性と食い違ったときに、
+        # 測ったほうを疑わせる。** 誤一致の risk は下の実測で見ている
+        # (events.json の同日ペア全件で bare の追加誤一致は0組)
+        # 向こうが短い通称、こちらが正式名。特徴語の包含で拾う
+        ('KKT vol.6', 'KKT多肉FES vol.6', True),
+        ('植祭', '植祭 植物で暮らしを楽しくする（2026年11月）', True),
+        # 特徴語が全部は入らない組は拾わない
+        ('第四回 珍奇植物フェア', '珍奇植物フリーマーケット', False),
+        # 回数・版数の印だけで一致しないこと
+        ('植縁祭 5th', 'THE BOTANICAL SHOW 5th', False),
     ]
     for title, name, want in bcases:
         got = matches(title, name, bare=True)
