@@ -1,10 +1,10 @@
 {
- "generated": "2026-09-14 21:12 JST",
+ "generated": "2026-09-15 08:40 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
  "stats": {
-  "igAccounts": 239,
-  "awaitingNextEdition": 233,
-  "officialSiteCandidates": 66,
+  "igAccounts": 241,
+  "awaitingNextEdition": 232,
+  "officialSiteCandidates": 67,
   "unresolvedIgHandles": 0
  },
  "igAccounts": [
@@ -14,6 +14,15 @@
    "eventCount": 5,
    "lastEventName": "妙高多肉大市 2026",
    "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "gamagori_taniku_festa",
+   "url": "https://www.instagram.com/gamagori_taniku_festa/",
+   "eventCount": 5,
+   "lastEventName": "第6回 蒲郡多肉フェスタ",
+   "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -63,15 +72,6 @@
    "priority": 0
   },
   {
-   "handle": "gamagori_taniku_festa",
-   "url": "https://www.instagram.com/gamagori_taniku_festa/",
-   "eventCount": 4,
-   "lastEventName": "第4回 がまごおり多肉フェスタ in 兵庫",
-   "lastEventDate": "2026-09-27",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
    "handle": "fuji_taniku",
    "url": "https://www.instagram.com/fuji_taniku/",
    "eventCount": 4,
@@ -104,6 +104,15 @@
    "eventCount": 3,
    "lastEventName": "路地裏ボタニカル（2026年12月）",
    "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "taniten_kengo202",
+   "url": "https://www.instagram.com/taniten_kengo202/",
+   "eventCount": 3,
+   "lastEventName": "enjoy place 番外編",
+   "lastEventDate": "2026-12-26",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -189,11 +198,11 @@
    "priority": 0
   },
   {
-   "handle": "taniten_kengo202",
-   "url": "https://www.instagram.com/taniten_kengo202/",
+   "handle": "jss_event_info",
+   "url": "https://www.instagram.com/jss_event_info/",
    "eventCount": 2,
-   "lastEventName": "enjoy place outside 2nd",
-   "lastEventDate": "2026-11-07",
+   "lastEventName": "JSS秋の多肉市",
+   "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -585,6 +594,15 @@
    "priority": 1
   },
   {
+   "handle": "our_plants_commune",
+   "url": "https://www.instagram.com/our_plants_commune/",
+   "eventCount": 1,
+   "lastEventName": "Our Plants ver. 2.04",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "acu.s_forest",
    "url": "https://www.instagram.com/acu.s_forest/",
    "eventCount": 1,
@@ -945,6 +963,15 @@
    "priority": 1
   },
   {
+   "handle": "santaanagarden",
+   "url": "https://www.instagram.com/santaanagarden/",
+   "eventCount": 1,
+   "lastEventName": "さんたあな植物園 vol.11",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "botajam2026",
    "url": "https://www.instagram.com/botajam2026/",
    "eventCount": 1,
@@ -967,15 +994,6 @@
    "url": "https://www.instagram.com/the_botanical_show/",
    "eventCount": 1,
    "lastEventName": "THE BOTANICAL SHOW 6TH",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "jss_event_info",
-   "url": "https://www.instagram.com/jss_event_info/",
-   "eventCount": 1,
-   "lastEventName": "JSS秋の多肉市",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 1
@@ -2594,6 +2612,12 @@
    "eventDate": "2026-09-19"
   },
   {
+   "domain": "florence.jp",
+   "url": "https://www.florence.jp/news/9-20%e3%80%80%e7%89%b9%e5%88%a5%e5%b1%95%e9%96%a2%e9%80%a3%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%83%9f%e3%83%8b%e5%b1%95%e7%a4%ba%ef%bc%86%e5%8d%b3/",
+   "eventName": "JSS北関東支部 多肉植物ミニ展示＆即売会",
+   "eventDate": "2026-09-20"
+  },
+  {
    "domain": "jusai.link",
    "url": "https://jusai.link/",
    "eventName": "樹祭 一宮 2026 Autumn",
@@ -2735,12 +2759,6 @@
    "domain": "visit-oita.jp",
    "url": "https://www.visit-oita.jp/events/detail/13493",
    "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
-  },
-  {
-   "domain": "fujisanmesse.com",
-   "url": "https://www.fujisanmesse.com/",
-   "eventName": "FUJISAN FESTA",
    "eventDate": "2026-05-03"
   }
  ],
