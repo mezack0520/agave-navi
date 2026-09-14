@@ -4,7 +4,7 @@
   "sweptSources": {
     "leafla": {
       "ok": true,
-      "fetched": 45,
+      "fetched": 43,
       "unit": "day"
     },
     "nextmeet": {
@@ -15,27 +15,26 @@
   },
   "daysAhead": 45,
   "stats": {
-    "fetched": 45,
-    "candidates": 687,
+    "fetched": 43,
+    "candidates": 667,
     "in_scope": 145,
     "covered": 129,
-    "known_rejected": 11,
-    "truncated_resolved": 225,
-    "truncated_unresolved": 45,
+    "known_rejected": 12,
+    "truncated_resolved": 215,
+    "truncated_unresolved": 43,
     "fetched_nextmeet": 4,
     "in_scope_leafla": 42,
     "in_scope_nextmeet": 103,
-    "gaps_raw": 5
+    "gaps_raw": 4
   },
-  "errors": [],
+  "errors": [
+    "2026-10-16: HTTP 503",
+    "2026-10-19: HTTP 503"
+  ],
   "truncatedUnresolved": [
     "09/10 追加 モンスターズハウス港店がNAMED AGAVE..."
   ],
   "gaps": [
-    {
-      "date": "2026-09-20",
-      "title": "GOLDEN TIME vol.8"
-    },
     {
       "date": "2026-09-20",
       "title": "JSS北関東支部ミニ展示即売会"

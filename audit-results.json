@@ -1,5 +1,5 @@
 {
-  "total": 473,
+  "total": 474,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -728,9 +728,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 5,
+      "count": 4,
       "items": [
-        "2026-09-20 GOLDEN TIME vol.8",
         "2026-09-20 JSS北関東支部ミニ展示即売会",
         "2026-09-26 Our Plants ver. 2.04",
         "2026-11-14 第6回蒲郡多肉フェスタ",
@@ -741,8 +740,11 @@
     },
     "coverage_sweep_broken": {
       "title": "取りこぼし巡回が機能していない",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "巡回失敗: 2026-10-16: HTTP 503",
+        "巡回失敗: 2026-10-19: HTTP 503"
+      ],
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
     },
@@ -840,7 +842,7 @@
       "title": "載せた回に中止・延期の兆候がある",
       "count": 1,
       "items": [
-        "2026-09-16 kourep-2026-autumn: 公式ページが変わった(本文)"
+        "2026-09-26 greensnap-marche-yokohama-2026-autumn: 公式ページが変わった(本文)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
