@@ -1,5 +1,5 @@
 {
-  "total": 501,
+  "total": 627,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -587,11 +587,50 @@
     },
     "ci_generated_paths_drift": {
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
-      "count": 1,
+      "count": 131,
       "items": [
-        "category/sokubai.html (12743d4e3 が変更)"
+        ".github/ISSUE_TEMPLATE/add-shop.yml (b2c68ccea が変更)",
+        ".github/workflows/daily.yml (b2c68ccea が変更)",
+        ".github/workflows/health.yml (b2c68ccea が変更)",
+        ".github/workflows/notify-inquiry.yml (b2c68ccea が変更)",
+        ".github/workflows/ops.yml (b2c68ccea が変更)",
+        ".github/workflows/sync-events.yml (b2c68ccea が変更)",
+        ".github/workflows/weekly-discovery.yml (b2c68ccea が変更)",
+        ".github/workflows/weekly-enrichment.yml (b2c68ccea が変更)",
+        ".gitignore (b2c68ccea が変更)",
+        ".nojekyll (b2c68ccea が変更)",
+        "404.html (b2c68ccea が変更)",
+        "CNAME (b2c68ccea が変更)",
+        "about.html (b2c68ccea が変更)",
+        "affiliate.js (b2c68ccea が変更)",
+        "amazon-links.json (b2c68ccea が変更)",
+        "android-chrome-192x192.png (b2c68ccea が変更)",
+        "android-chrome-512x512.png (b2c68ccea が変更)",
+        "android-chrome-maskable-512x512.png (b2c68ccea が変更)",
+        "apple-touch-icon.png (b2c68ccea が変更)",
+        "build-detail-pages.py (b2c68ccea が変更)",
+        "category/exhibition.html (b2c68ccea が変更)",
+        "category/large.html (b2c68ccea が変更)",
+        "category/marche.html (b2c68ccea が変更)",
+        "category/sokubai.html (12743d4e3 が変更)",
+        "category/sokubai.html (b2c68ccea が変更)",
+        "contact.html (b2c68ccea が変更)",
+        "crawl-sources.json (b2c68ccea が変更)",
+        "dashboard.html (b2c68ccea が変更)",
+        "disclaimer.html (b2c68ccea が変更)",
+        "docs/api.md (b2c68ccea が変更)",
+        "docs/architecture-2026-05.md (b2c68ccea が変更)",
+        "docs/architecture-2026-07.md (b2c68ccea が変更)",
+        "docs/brave-search-setup.md (b2c68ccea が変更)",
+        "docs/event-data-prompt.md (b2c68ccea が変更)",
+        "docs/events-needing-image.md (b2c68ccea が変更)",
+        "docs/quick-add-from-instagram.md (b2c68ccea が変更)",
+        "docs/setup-guide.md (b2c68ccea が変更)",
+        "docs/task-playbook.md (b2c68ccea が変更)",
+        "docs/workflow-audit-2026-05.md (b2c68ccea が変更)",
+        "enrich-request.json (b2c68ccea が変更)"
       ],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -740,21 +779,17 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 13,
+      "count": 9,
       "items": [
         "2026-09-17 east side tokyoが17th Anniversary SALE 2026を開催、造花や観葉植物などをSALE価格で販売",
-        "2026-09-19 Jolie Nurseryが即売会2026を大阪で開催、よりすぐりの株から初心者向け植物まで販売",
         "2026-09-19 植物販売会(仮) in仁保の郷が道の駅仁保の郷で開催、植物関連商品を扱う販売会を実施予定",
         "2026-09-22 植ノ宴 in KUMAMOTO2026が熊本で開催、植物と雑貨を楽しむ2日間のマーケット",
         "2026-09-26 FANTASTIC MARKET in HERBIS 29を2026年9月に開催、旬の食材や植物と暮らしのアイテムが集結",
-        "2026-09-26 ジョイフル本田瑞穂店で観葉植物の即売会「GLOBAL PLANTS MARKET」開催",
         "2026-09-28 LIFECONCEPTIEGがRINGOYAとのPOPUPEVENT2026を開催、観葉植物や鉢やフラワーベースを販売",
         "2026-10-01 カフェ＆ブックマルシェ2026が神代植物公園で開催、雑貨や植物・自然関連の本が集結",
         "2026-10-03 HOME/FLEA/WORK #6が10月3日と4日に開催、古着や植物などのマーケットとワークショップを展開",
-        "2026-10-12 garage NAGOYAがSCHOP vol.7を開催、植物福袋やワークショップなど多彩な企画を実施",
         "2026-10-16 GREEN PRICKLEが植トゥザ・フューチャー2026を大阪で開催、植物を表現したアート100点以上などを展示",
-        "2026-10-17 BUNASAUNAがやんばる植物万遊記2026を開催、植物の採取や蒸留とサウナを組み合わせた3周年記念企画",
-        "2026-10-17 園藝野郎勢第十二回大会2026秋の陣を開催、熊山英国庭園で植物出展と10kmラン企画"
+        "2026-10-17 BUNASAUNAがやんばる植物万遊記2026を開催、植物の採取や蒸留とサウナを組み合わせた3周年記念企画"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"

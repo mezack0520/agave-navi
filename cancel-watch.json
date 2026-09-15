@@ -2,8 +2,8 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-16",
   "stats": {
-    "targets": 24,
-    "fetched": 24
+    "targets": 28,
+    "fetched": 28
   },
   "errors": [],
   "logicErrors": [],
@@ -119,6 +119,42 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 3
     },
+    "jolie-nursery-vivahome-ibaraki-2026-09": {
+      "url": "https://jolienursery.co.jp/blogs/events/vivahome-ibaraki-20260919",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "d8dc10e640ccdae3",
+        "images": "af5113a56c5ed9d0",
+        "textLen": 1551,
+        "imageCount": 12
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 3,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
+    "miuraengei-aroid-protoleaf-futako-2026-09": {
+      "url": "https://www.protoleaf.com/?p=24182",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "2144c73a8d8d0628",
+        "images": "26ea1e17c52265b9",
+        "textLen": 1806,
+        "imageCount": 16
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 13,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
     "jss-kitakanto-mini-tenji-sokubai-2026-09": {
       "url": "https://www.florence.jp/news/9-20%e3%80%80%e7%89%b9%e5%88%a5%e5%b1%95%e9%96%a2%e9%80%a3%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%83%9f%e3%83%8b%e5%b1%95%e7%a4%ba%ef%bc%86%e5%8d%b3/",
       "checkedOn": "2026-09-16",
@@ -189,6 +225,24 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
+      "textOnlyChanges": 0
+    },
+    "shokufes-global-plants-market-mizuho-2026-09": {
+      "url": "https://jolienursery.co.jp/pages/events",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "31f0fbee79b1c4f5",
+        "images": "9f27c5b184f67974",
+        "textLen": 2261,
+        "imageCount": 14
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 12,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
       "textOnlyChanges": 0
     },
     "isij-big-bazaar-2026-09-27": {
@@ -351,6 +405,24 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
+      "textOnlyChanges": 0
+    },
+    "jolie-nursery-musashi-niigata-2026-10": {
+      "url": "https://jolienursery.co.jp/pages/events",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "31f0fbee79b1c4f5",
+        "images": "9f27c5b184f67974",
+        "textLen": 2261,
+        "imageCount": 14
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 12,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
       "textOnlyChanges": 0
     },
     "nihon-shaboten-taikai-51st-2026-10": {
