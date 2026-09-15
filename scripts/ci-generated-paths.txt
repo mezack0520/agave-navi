@@ -31,3 +31,15 @@ audit-results.json
 audit-history.json
 scripts/sitemap-lastmod.json
 scripts/events-meta.json
+
+# --- ここから下は build-all.sh では作り直せない。だが**持ち越さなくてよい**。---
+# 外部を巡回した観測結果で、次の巡回が丸ごと書き換える。remote 側の版も
+# 同じ性質なので、衝突したらこちらを捨てて構わない。捨てても失うのは
+# 「その回の巡回結果」だけで、翌朝には同じものが入る。
+#
+# ここに無かったせいで、2026-09-15 の daily が cancel-watch.json の衝突で
+# 落ちた。ci-push.sh がこれを「データファイル」と判定して復旧を諦め、
+# その回の status 更新と再生成が丸ごと捨てられた。**毎回書き換わるものを
+# 持ち越そうとすると、同時に走った回の数だけ衝突する。**
+cancel-watch.json
+coverage-gaps.json

@@ -45,6 +45,11 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 既定の depth 1 だと監査 ci_generated_paths_drift が
+          # 直近のCIコミットを1件も見られず、黙って無効になる。
+          # ci-push.sh の復旧が取る merge-base の足場にもなる。
+          fetch-depth: 10
 
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }

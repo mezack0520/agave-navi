@@ -15,6 +15,7 @@ import json
 import os
 import re
 import glob
+import subprocess
 import unicodedata
 import sys
 from collections import defaultdict
@@ -1402,6 +1403,68 @@ def main():
     add('ci_generated_paths_missing', '生成物リストに実在しないパスがある',
         sorted(gen_missing),
         'ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない',
+        severity='urgent')
+
+    # 逆向き。**CIのコミットが触ったのに、除外リストにも「運ぶデータ」にも
+    # 入っていないパス**を出す。ci-generated-paths.txt の冒頭は 2026-09-07 から
+    # 「ci_generated_paths_drift が漏れを検出する」と書いていたが、
+    # **その検査は書かれていなかった。**そのせいで cancel-watch.json と
+    # coverage-gaps.json が毎回書き換わるのに除外リストに入らないまま残り、
+    # 2026-09-15 に daily が衝突で落ちた(その回の更新は丸ごと捨てられた)。
+    # 手順書が「機械が見張っている」と言っているのに見張っていないのが一番危ない。
+    #
+    # 運んでよいデータは明示する。ここに無いものが CI のコミットに出たら、
+    # 「生成物なのか、運ぶべきデータなのか」を**その場で決めさせる**。
+    _CI_CARRY_DATA = {
+        'events.json', 'new-events.json', 'rejected-events.json',
+        'new-inquiries.json', 'inquiries-processed.json',
+        'pending-judgments.json', 'task-runs.json', 'site-updates.json',
+        'site-updates-scopes.json', 'check-results.json',
+        'listing-policy.json', 'scripts/eyecatch-review.json',
+        'images/',
+    }
+    _gen_prefixes, _gen_exact = [], set()
+    for _line in (open(gen_list, encoding='utf-8') if os.path.exists(gen_list) else []):
+        _line = _line.strip()
+        if not _line or _line.startswith('#'):
+            continue
+        (_gen_prefixes.append(_line) if _line.endswith('/')
+         else _gen_exact.add(_line))
+
+    def _ci_covered(path):
+        if path in _gen_exact or path in _CI_CARRY_DATA:
+            return True
+        return any(path.startswith(pre) for pre in
+                   list(_gen_prefixes) + [d for d in _CI_CARRY_DATA if d.endswith('/')])
+
+    _drift, _drift_seen = [], 0
+    try:
+        _shas = subprocess.run(
+            ['git', 'log', '-5', '--format=%H',
+             '--grep=^chore(daily)', '--grep=^chore(health)', '--grep=^chore(ops)'],
+            cwd=REPO, capture_output=True, text=True).stdout.split()
+        for _sha in _shas:
+            _files = subprocess.run(['git', 'show', '--name-only', '--format=', _sha],
+                                    cwd=REPO, capture_output=True, text=True).stdout.split()
+            if not _files:
+                continue
+            _drift_seen += 1
+            for _f in _files:
+                if not _ci_covered(_f):
+                    _drift.append(f'{_f} ({_sha[:9]} が変更)')
+    except Exception as e:                          # noqa: BLE001
+        # shallow clone や git が無い環境では判定しない。鳴らさない側に倒す
+        print(f'audit: ci_generated_paths_drift をたどれない: {e}', file=sys.stderr)
+    add('ci_generated_paths_drift',
+        'CIのコミットが触るのに、生成物にもデータにも分類されていないパス',
+        sorted(set(_drift)),
+        'scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、'
+        'audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。'
+        'どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、'
+        '同時に走った回と衝突したときに daily ごと落ちる'
+        + (f'。直近の CI コミット {_drift_seen} 件を見た'
+           if _drift_seen else '。**CIコミットが1件も見えない'
+           '(shallow clone か履歴不足)。この検査は効いていない**'),
         severity='urgent')
 
     # workflow に直書きされたスクリプト。2026-09-10 に7本から6ブロック出した。
