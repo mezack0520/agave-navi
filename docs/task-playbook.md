@@ -639,8 +639,14 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   前段ステップの既存コミット / 単発の割り込み / 2連続の割り込み /
   旧ロジックが残した rebase 途中 の6通りで、両者の変更が残ることを確認済み。
   **`ci-generated-paths.txt` に「版数bumpで変わったファイル」を入れないこと。**
-  `sync-footers.py` は手書きの静的頁(`category/*.html` `ikitai.html` `about.html` 等)の
+  `sync-footers.py` は手書きの静的頁(`ikitai.html` `about.html` 等)の
   `?v=` も書き換えるので、JS/CSS の版数を上げると生成物と同じ顔で差分に出る。
+  （**2026-09-16 訂正: ここに `category/*.html` を挙げていたのは誤り。**
+  あれは 2026-07-06 の `bb64db4a8` で手作りをやめ、
+  `generate-landing-pages.py` の日次生成に移している。本文ごと作り直せるので
+  除外してよい。同一バイト再生成を確認のうえ `category/` を追加した。
+  **「手書きだ」という記述は、その頁を作る側が変わっても自動では古くならない。**
+  判定はいつも `grep` で、その頁を書き出す生成器が scripts/ にあるかで見る。）
   だが build-all は**それらの本文を作れない**ので、除外すると衝突復旧で
   手書きの変更が消える。除外してよいのは「build-all が中身ごと作り直せるもの」だけ。
   判定は「そのパスを書き出す生成器が scripts/ にあるか」で見る。

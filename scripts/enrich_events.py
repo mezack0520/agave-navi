@@ -31,6 +31,7 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 from sitelib import DESC_MIN_CHARS, now_jst
+import sitelib
 from sitelib import page_is_wrong_edition, page_is_wrong_place
 
 REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
@@ -946,6 +947,11 @@ def main():
                 v = venues[0]
                 import re as _re
                 v = _re.sub(r'^(会場|開催場所|場所)\s*[：:]\s*', '', v).strip()
+                # 郵便番号付きの住所は会場名ではない。規則は sitelib が持つ
+                # (2026-09-16: 見張る側 audit.venue_postal_address だけが
+                #  この規則を持っていて、書く側は素通しだった)
+                if sitelib.venue_is_postal_address(v):
+                    v = ''
                 if 3 < len(v) < 120:
                     ev['venue'] = v[:100]
                     changed_fields.append('venue')

@@ -654,7 +654,9 @@ def main():
     postal_venue = []
     for e in events:
         val = (e.get('venue') or '').strip()
-        if val.startswith('〒') or re.match(r'^\d{3}-\d{4}', val):
+        # 規則の本体は sitelib。書く側(enrich_events.py)も同じ関数を呼ぶ
+        # (2026-09-16 まで、この検査だけが規則を持っていた)
+        if sitelib.venue_is_postal_address(val):
             postal_venue.append(f"{e['slug']}: venue=\"{val[:40]}\"")
     add('venue_postal_address', 'venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)',
         sorted(postal_venue),
@@ -1235,9 +1237,11 @@ def main():
         sorted(set(linked) - guide_files))
 
     # 12. CSS版数の乖離
+    # **ここで `import sitelib` と書かない(2026-09-16)。** main() の中で書くと
+    # sitelib が main のローカル変数になり、**この行より前にある
+    # `sitelib.xxx` が全部 UnboundLocalError になる。** モジュール先頭で
+    # 既に import してあるので、ここは参照するだけでよい。
     try:
-        sys.path.insert(0, rp('scripts'))
-        import sitelib
         want = sitelib.CSS_VERSION
     except Exception:
         want = None

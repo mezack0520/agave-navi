@@ -11,6 +11,13 @@ guides/
 tag/
 pref/
 region/
+# category/*.html は 2026-07-06 の bb64db4a8 で「手作りの静的ページ」から
+# generate-landing-pages.py の日次生成に変わっている。にもかかわらず
+# ここに無く、ci_generated_paths_drift が chore(daily) のたびに出していた。
+# ci-push.sh はこれを「持ち越すデータ」と判定するので、衝突すると
+# cancel-watch.json と同じ形で復旧が止まる(2026-09-15 に踏んだ型)。
+# build-all で同一バイト再生成できることを確認済み(2026-09-16)。
+category/
 archive/
 venue/
 this-month/

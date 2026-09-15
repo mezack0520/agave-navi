@@ -1,5 +1,5 @@
 {
-  "total": 627,
+  "total": 489,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -327,14 +327,8 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 5,
-      "items": [
-        "engei-yarouzei-12th-2026-10: 2026.10.17 - 10.18 → 2026.10.17-18",
-        "jolie-nursery-musashi-niigata-2026-10: 2026.10.10 - 10.11 → 2026.10.10-11",
-        "jolie-nursery-vivahome-ibaraki-2026-09: 2026.09.19 - 09.20 → 2026.09.19-20",
-        "miuraengei-aroid-protoleaf-futako-2026-09: 2026.09.19 - 09.20 → 2026.09.19-20",
-        "shokubutsu-tengoku-hakusan-2026-09: 2026.09.20 - 09.21 → 2026.09.20-21"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -382,10 +376,8 @@
     },
     "venue_postal_address": {
       "title": "venue が会場名でなく郵便番号付き住所(スペック表とJSON-LDに住所が出る)",
-      "count": 1,
-      "items": [
-        "souryokusai-4th-oshu-2026-10: venue=\"〒023-8501　岩手県奥州市水沢大手町1丁目1番地\""
-      ],
+      "count": 0,
+      "items": [],
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
     },
@@ -587,50 +579,9 @@
     },
     "ci_generated_paths_drift": {
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
-      "count": 131,
-      "items": [
-        ".github/ISSUE_TEMPLATE/add-shop.yml (b2c68ccea が変更)",
-        ".github/workflows/daily.yml (b2c68ccea が変更)",
-        ".github/workflows/health.yml (b2c68ccea が変更)",
-        ".github/workflows/notify-inquiry.yml (b2c68ccea が変更)",
-        ".github/workflows/ops.yml (b2c68ccea が変更)",
-        ".github/workflows/sync-events.yml (b2c68ccea が変更)",
-        ".github/workflows/weekly-discovery.yml (b2c68ccea が変更)",
-        ".github/workflows/weekly-enrichment.yml (b2c68ccea が変更)",
-        ".gitignore (b2c68ccea が変更)",
-        ".nojekyll (b2c68ccea が変更)",
-        "404.html (b2c68ccea が変更)",
-        "CNAME (b2c68ccea が変更)",
-        "about.html (b2c68ccea が変更)",
-        "affiliate.js (b2c68ccea が変更)",
-        "amazon-links.json (b2c68ccea が変更)",
-        "android-chrome-192x192.png (b2c68ccea が変更)",
-        "android-chrome-512x512.png (b2c68ccea が変更)",
-        "android-chrome-maskable-512x512.png (b2c68ccea が変更)",
-        "apple-touch-icon.png (b2c68ccea が変更)",
-        "build-detail-pages.py (b2c68ccea が変更)",
-        "category/exhibition.html (b2c68ccea が変更)",
-        "category/large.html (b2c68ccea が変更)",
-        "category/marche.html (b2c68ccea が変更)",
-        "category/sokubai.html (12743d4e3 が変更)",
-        "category/sokubai.html (b2c68ccea が変更)",
-        "contact.html (b2c68ccea が変更)",
-        "crawl-sources.json (b2c68ccea が変更)",
-        "dashboard.html (b2c68ccea が変更)",
-        "disclaimer.html (b2c68ccea が変更)",
-        "docs/api.md (b2c68ccea が変更)",
-        "docs/architecture-2026-05.md (b2c68ccea が変更)",
-        "docs/architecture-2026-07.md (b2c68ccea が変更)",
-        "docs/brave-search-setup.md (b2c68ccea が変更)",
-        "docs/event-data-prompt.md (b2c68ccea が変更)",
-        "docs/events-needing-image.md (b2c68ccea が変更)",
-        "docs/quick-add-from-instagram.md (b2c68ccea が変更)",
-        "docs/setup-guide.md (b2c68ccea が変更)",
-        "docs/task-playbook.md (b2c68ccea が変更)",
-        "docs/workflow-audit-2026-05.md (b2c68ccea が変更)",
-        "enrich-request.json (b2c68ccea が変更)"
-      ],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "count": 0,
+      "items": [],
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1131,10 +1082,8 @@
     },
     "shared_source_page_multi_date": {
       "title": "同じ出典頁を読む回が別の日付を持っている",
-      "count": 1,
-      "items": [
-        "https://jolienursery.co.jp/pages/events → 未保護 jolie-nursery-musashi-niigata-2026-10, shokufes-global-plants-market-mizuho-2026-09 (同じ頁を読む回 2件)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知頁が回ごとに分かれているなら sourceUrl をそちらへ。分かれていないなら autoDateUpdate: false を入れて自動更新から外す",
       "severity": "info"
     },

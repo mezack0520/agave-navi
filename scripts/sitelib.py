@@ -1140,6 +1140,26 @@ _VAGUE_MARKER = re.compile(r'(未定|未確定|調整中)')
 _AREA_ONLY = re.compile(r'(都|道|府|県|市|区|町|村)内(会場)?$')
 
 
+# venue に会場名ではなく郵便番号付きの住所が入る事故。
+# venue は build-detail-pages で location より優先され、スペック表・FAQ・
+# JSON-LD の Place.name にそのまま出るので、住所が入ると会場名が住所になる。
+# **2026-09-16 まで、この規則は audit.venue_postal_address(見張る側)だけが
+# 持っていて、書く側の enrich_events.py は何も見ていなかった。**
+# 実際 2026-09-16 に掲載した「第肆回 草力祭 in 奥州市江刺」へ、CI の
+# エンリッチが会場と無関係な**奥州市役所の住所**
+# (〒023-8501 岩手県奥州市水沢大手町1丁目1番地)を venue として書き込んだ。
+# 検出側だけに規則があると、消して回っても書く側が翌週また戻す。
+_POSTAL_VENUE = re.compile(r'^(〒|\d{3}-\d{4})')
+
+
+def venue_is_postal_address(v):
+    """venue の値が会場名ではなく郵便番号付き住所か。
+
+    書く側(enrich_events.py)と見張る側(audit.py)の両方がこれを呼ぶ。
+    """
+    return bool(_POSTAL_VENUE.match((v or '').strip()))
+
+
 def is_vague_venue(v):
     """会場として使えない値か。
 
