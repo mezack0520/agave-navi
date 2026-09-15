@@ -2536,6 +2536,41 @@ def main():
         'check-cancelled.py の取得が失敗しているか、日次で走っていない。'
         'この状態では cancel_suspects が0件でも「中止は無い」証拠にならない')
 
+    # 出典の本文が大きく短くなった回(2026-09-15)。
+    # cancel_suspects の「公式ページが変わった(本文)」は署名(ハッシュ)の
+    # 一致だけを見るので、**告知が足された回と、告知が消えた回が
+    # 同じ1行になる。**足されたほうは毎日出る雑音で、消えたほうは
+    # 「案内が取り下げられた」「頁が別物に差し替わった」「出典が壊れた」の
+    # どれかで、必ず人が見るべきもの。この2つを字数の向きで分ける。
+    # 実測(cancel-watch.json の 27 世代): 4割以上短くなった例は
+    # 2026-09-15 の chuushokushobutsusai-2026(3041→1334字/-56%)だけで、
+    # 増えるほうは greensnap/kourep/ore-no-plants など毎週動いている。
+    # **向きを見るだけで、同じ材料から雑音と本物が分かれる。**
+    # 一次情報を見て記録した回(cancel-reviewed.json)は cancel_suspects と
+    # 同じ規則で黙らせる。判定を2か所に持たないため _reviewed を使い回す。
+    _cw_shrunk = []
+    for _sl, _pg in sorted((_cw.get('pages') or {}).items()):
+        _b = (_pg or {}).get('prevTextLen')
+        _a = ((_pg or {}).get('signature') or {}).get('textLen')
+        if not isinstance(_b, int) or not isinstance(_a, int) or _b <= 0:
+            continue
+        if _a * 10 > _b * 6:          # 4割以上は減っていない
+            continue
+        if _swept and _reviewed.get(_sl, '') >= _swept:
+            continue
+        _cw_shrunk.append(
+            f'{_sl}: 本文が {_b}→{_a}字（{(_a - _b) * 100 // _b:+d}%） '
+            f'{(_pg or {}).get("url", "")}')
+    add('cancel_watch_body_shrunk', '出典の本文が前回より4割以上短くなった',
+        _cw_shrunk,
+        '中止・延期の語は出ていないが、頁から中身が消えている。'
+        '案内の取り下げ・別ページへの差し替え・出典の破損のどれか。'
+        'JS で描く頁(Notion系など)は取得のたびに描画量が変わるので、'
+        'それだけのこともある。一次情報を開いて '
+        'scripts/cancel-reviewed.json に判断を書けば黙る'
+        '（cancel_suspects と同じ規則）',
+        severity='info')
+
     # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
     #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
     #     さらに Event の日付・名称が events.json と一致するかを見る。
@@ -2988,7 +3023,26 @@ def main():
         _tday = _dtm.date.fromisoformat(today_jst())
     except ValueError:
         _tday = None
+    # 「since 以降の記録が1件も無い」タスクは task_run_never_recorded が
+    # 単独で出す。同じ事実を task_run_gap にも並べると、since からの日数ぶん
+    # 「動かなかった日」が積み上がり、**本物の環境障害(全タスクが同じ日に
+    # 揃って抜ける形)がその中に埋もれる**。プレイブック §6 に
+    # 「台帳の抜けを数える前に task_run_never_recorded を先に引く」と
+    # 人手の手順として書いてあったものを機械側に移す(2026-09-15)。
+    # 実測: 除外前 3件(うち agave-navi-eyecatch が 09-10〜09-14 の5日)、
+    # 除外後 2件(agave-event-update と event-monitor の 09-11 のみ=全タスク同日)。
+    _never_tids = set()
+    for _tid, _cfg in ((k, v or {}) for k, v in _tr.items()):
+        _s = str(_cfg.get('since') or '').strip()
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _s):
+            continue
+        _h = [str(x) for x in (_cfg.get('history') or [])
+              if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(x))]
+        if not any(x >= _s for x in _h):
+            _never_tids.add(_tid)
     for _tid in sorted(_tr):
+        if _tid in _never_tids:
+            continue
         _cfg = _tr[_tid] or {}
         _cad = str(_cfg.get('cadence') or '').strip()
         if _tday is None or _cad not in ('daily', 'weekly'):
@@ -3044,17 +3098,17 @@ def main():
     # 呼んでいない**。この形は since からの日数ぶん毎日 task_run_gap に
     # 出続けるので、「環境が落ちた日」と混ざって読めなくなる。
     # 直す先はスケジュールタスクの SKILL.md であって repo ではない。
+    # 判定は上の _never_tids で済ませてある。ここは文面を作るだけ。
+    # 同じ判定を2か所に持つと必ず食い違うので、条件はここに書かない。
     task_never = []
-    for _tid, _cfg in sorted((k, v or {}) for k, v in _tr.items()):
+    for _tid in sorted(_never_tids):
+        _cfg = _tr[_tid] or {}
         _since_s = str(_cfg.get('since') or '').strip()
-        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _since_s):
-            continue
         _hist = [str(h) for h in (_cfg.get('history') or [])
                  if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))]
-        if not any(h >= _since_s for h in _hist):
-            task_never.append(
-                f'{_tid}: since={_since_s} 以降の記録が1件も無い'
-                f'（台帳の最終記録 {max(_hist) if _hist else "なし"}）')
+        task_never.append(
+            f'{_tid}: since={_since_s} 以降の記録が1件も無い'
+            f'（台帳の最終記録 {max(_hist) if _hist else "なし"}）')
     add('task_run_never_recorded', '台帳に登録したが一度も自分で書いていないタスク',
         task_never,
         note='起動記録の書き手はタスク自身なので、repo 側では直せない。'
@@ -3082,7 +3136,11 @@ def main():
              '2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が'
              '揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。'
              'その場合ここには同じ日付が3行に分かれて出るので、'
-             '3つの別々の問題に見える',
+             '3つの別々の問題に見える。'
+             '**since 以降の記録が1件も無いタスクはここには出さない。**'
+             'それは task_run_never_recorded が単独で出す別の問題(タスク側が'
+             'record-run.py を呼んでいない)で、ここに並べると since からの'
+             '日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)',
         severity='info')
 
     # --- 手でやる巡回が止まっていないか -------------------------------------

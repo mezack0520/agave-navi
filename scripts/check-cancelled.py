@@ -370,8 +370,13 @@ def main():
             if bsig.get('images') != sig['images']:
                 changed.append('画像')
 
+        # 前回の本文の長さを持ち回る(2026-09-15)。**署名はハッシュなので、
+        # 「増えたのか減ったのか」が分からない。**告知が足された回と、
+        # 告知が消えた/差し替わった回が、同じ「本文が変わった」1行になる。
+        # 監査側 audit.cancel_watch_body_shrunk が この差を読む。
         pages[slug] = {
             'url': url, 'checkedOn': today, 'signature': sig,
+            'prevTextLen': bsig.get('textLen'),
             'strong': res['strong'], 'weak': res['weak'],
             # 出典がこの回を裏付けているか。audit.source_page_wrong_edition が読む。
             # CI から頁を取れるのはこのスクリプトだけなので、判定材料を
@@ -402,7 +407,16 @@ def main():
         elif '画像' in changed:
             why.append('公式ページが変わった(' + '・'.join(changed) + ')')
         elif text_only and before and noisy <= 2:
-            why.append('公式ページが変わった(本文)')
+            # 字数の増減を添える。**「変わった」だけでは、足されたのか
+            # 消えたのかが読めず、一次情報を開くまで軽重が分からない。**
+            # 2026-09-15 の食虫植物祭は 3041→1334字(-56%)で、
+            # 文面は「チケット販売のお知らせが増えた」形に見えていた。
+            _b, _a = bsig.get('textLen'), sig.get('textLen')
+            if isinstance(_b, int) and isinstance(_a, int) and _b:
+                why.append('公式ページが変わった(本文: '
+                           f'{_b}→{_a}字 {(_a - _b) * 100 // _b:+d}%)')
+            else:
+                why.append('公式ページが変わった(本文)')
         if why:
             suspects.append({
                 'slug': slug, 'name': e.get('name') or '',
