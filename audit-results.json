@@ -1,5 +1,5 @@
 {
-  "total": 616,
+  "total": 501,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 115,
+      "count": 116,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -224,7 +224,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 163,
+      "count": 164,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aobouzu-6raccoon-popup-2026-09",
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 52,
+      "count": 56,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "american-and-plants-sano-2026-10",
@@ -288,6 +288,7 @@
         "chinki-plants-flea-market-2026-10",
         "chuushokushobutsusai-2026",
         "dio-plants-fes-vol1-kusatsu-2026-09",
+        "engei-yarouzei-12th-2026-10",
         "enjoy-place-bangaihen-2026-12",
         "exploring-unpredictable-plants-2026-09",
         "gen-x-bocchi-botanical-market-2026-10",
@@ -299,6 +300,8 @@
         "isij-big-bazaar-2027-07-11",
         "isij-big-bazaar-2027-09-26",
         "isij-big-bazaar-2027-11-28",
+        "jolie-nursery-musashi-niigata-2026-10",
+        "jolie-nursery-vivahome-ibaraki-2026-09",
         "jss-kitakanto-mini-tenji-sokubai-2026-09",
         "jurian-aki-taniku-cactus-2026-10",
         "kadan-fes-2026-autumn",
@@ -310,10 +313,7 @@
         "nishikan-botanical-nominoichi-4th-2026-10",
         "on-the-plants-vol9-fukuoka-2026-10",
         "ore-no-plants-collection-2026-09",
-        "plant-freaks-olinas-2026-10",
-        "plant-freaks-olinas-2026-11",
-        "plants-box-kofu-2026-10",
-        "rojiura-botanical-2026-12"
+        "plant-freaks-olinas-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -327,8 +327,12 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 1,
+      "count": 5,
       "items": [
+        "engei-yarouzei-12th-2026-10: 2026.10.17 - 10.18 → 2026.10.17-18",
+        "jolie-nursery-musashi-niigata-2026-10: 2026.10.10 - 10.11 → 2026.10.10-11",
+        "jolie-nursery-vivahome-ibaraki-2026-09: 2026.09.19 - 09.20 → 2026.09.19-20",
+        "miuraengei-aroid-protoleaf-futako-2026-09: 2026.09.19 - 09.20 → 2026.09.19-20",
         "shokubutsu-tengoku-hakusan-2026-09: 2026.09.20 - 09.21 → 2026.09.20-21"
       ],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
@@ -583,50 +587,11 @@
     },
     "ci_generated_paths_drift": {
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
-      "count": 131,
+      "count": 1,
       "items": [
-        ".github/ISSUE_TEMPLATE/add-shop.yml (97ca72f1d が変更)",
-        ".github/workflows/daily.yml (97ca72f1d が変更)",
-        ".github/workflows/health.yml (97ca72f1d が変更)",
-        ".github/workflows/notify-inquiry.yml (97ca72f1d が変更)",
-        ".github/workflows/ops.yml (97ca72f1d が変更)",
-        ".github/workflows/sync-events.yml (97ca72f1d が変更)",
-        ".github/workflows/weekly-discovery.yml (97ca72f1d が変更)",
-        ".github/workflows/weekly-enrichment.yml (97ca72f1d が変更)",
-        ".gitignore (97ca72f1d が変更)",
-        ".nojekyll (97ca72f1d が変更)",
-        "404.html (97ca72f1d が変更)",
-        "CNAME (97ca72f1d が変更)",
-        "about.html (97ca72f1d が変更)",
-        "affiliate.js (97ca72f1d が変更)",
-        "amazon-links.json (97ca72f1d が変更)",
-        "android-chrome-192x192.png (97ca72f1d が変更)",
-        "android-chrome-512x512.png (97ca72f1d が変更)",
-        "android-chrome-maskable-512x512.png (97ca72f1d が変更)",
-        "apple-touch-icon.png (97ca72f1d が変更)",
-        "build-detail-pages.py (97ca72f1d が変更)",
-        "category/exhibition.html (97ca72f1d が変更)",
-        "category/large.html (97ca72f1d が変更)",
-        "category/marche.html (97ca72f1d が変更)",
-        "category/sokubai.html (12743d4e3 が変更)",
-        "category/sokubai.html (97ca72f1d が変更)",
-        "contact.html (97ca72f1d が変更)",
-        "crawl-sources.json (97ca72f1d が変更)",
-        "dashboard.html (97ca72f1d が変更)",
-        "disclaimer.html (97ca72f1d が変更)",
-        "docs/api.md (97ca72f1d が変更)",
-        "docs/architecture-2026-05.md (97ca72f1d が変更)",
-        "docs/architecture-2026-07.md (97ca72f1d が変更)",
-        "docs/brave-search-setup.md (97ca72f1d が変更)",
-        "docs/event-data-prompt.md (97ca72f1d が変更)",
-        "docs/events-needing-image.md (97ca72f1d が変更)",
-        "docs/quick-add-from-instagram.md (97ca72f1d が変更)",
-        "docs/setup-guide.md (97ca72f1d が変更)",
-        "docs/task-playbook.md (97ca72f1d が変更)",
-        "docs/workflow-audit-2026-05.md (97ca72f1d が変更)",
-        "enrich-request.json (97ca72f1d が変更)"
+        "category/sokubai.html (12743d4e3 が変更)"
       ],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -810,15 +775,17 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 52,
+      "count": 56,
       "items": [
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-16 kourep-2026-autumn",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
+        "2026-09-19 jolie-nursery-vivahome-ibaraki-2026-09",
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
         "2026-09-20 jss-kitakanto-mini-tenji-sokubai-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
+        "2026-09-26 shokufes-global-plants-market-mizuho-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
         "2026-09-27 exploring-unpredictable-plants-2026-09",
         "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
@@ -830,12 +797,14 @@
         "2026-10-04 chinki-plants-flea-market-2026-10",
         "2026-10-04 souransai-koshigaya-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
+        "2026-10-10 jolie-nursery-musashi-niigata-2026-10",
         "2026-10-10 kadan-fes-2026-autumn",
         "2026-10-10 nishikan-botanical-nominoichi-4th-2026-10",
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
         "2026-10-11 souryokusai-4th-oshu-2026-10",
+        "2026-10-17 engei-yarouzei-12th-2026-10",
         "2026-10-17 plant-freaks-olinas-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
@@ -847,11 +816,7 @@
         "2026-11-14 botanical-botanical-okinawa-2026-11",
         "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
         "2026-11-22 botanical-yokocho-senju-2026-11",
-        "2026-11-22 isij-big-bazaar-2026-11-22",
-        "2026-11-22 midorigakuen-himeji-2026-11",
-        "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
-        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
-        "2026-11-28 plant-freaks-olinas-2026-11"
+        "2026-11-22 isij-big-bazaar-2026-11-22"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1131,8 +1096,10 @@
     },
     "shared_source_page_multi_date": {
       "title": "同じ出典頁を読む回が別の日付を持っている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "https://jolienursery.co.jp/pages/events → 未保護 jolie-nursery-musashi-niigata-2026-10, shokufes-global-plants-market-mizuho-2026-09 (同じ頁を読む回 2件)"
+      ],
       "note": "告知頁が回ごとに分かれているなら sourceUrl をそちらへ。分かれていないなら autoDateUpdate: false を入れて自動更新から外す",
       "severity": "info"
     },
