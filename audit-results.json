@@ -1,5 +1,5 @@
 {
-  "total": 462,
+  "total": 593,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -579,9 +579,50 @@
     },
     "ci_generated_paths_drift": {
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
-      "count": 0,
-      "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "count": 130,
+      "items": [
+        ".github/ISSUE_TEMPLATE/add-shop.yml (48c43b519 が変更)",
+        ".github/workflows/daily.yml (48c43b519 が変更)",
+        ".github/workflows/health.yml (48c43b519 が変更)",
+        ".github/workflows/notify-inquiry.yml (48c43b519 が変更)",
+        ".github/workflows/ops.yml (48c43b519 が変更)",
+        ".github/workflows/sync-events.yml (48c43b519 が変更)",
+        ".github/workflows/weekly-discovery.yml (48c43b519 が変更)",
+        ".github/workflows/weekly-enrichment.yml (48c43b519 が変更)",
+        ".gitignore (48c43b519 が変更)",
+        ".nojekyll (48c43b519 が変更)",
+        "404.html (48c43b519 が変更)",
+        "CNAME (48c43b519 が変更)",
+        "about.html (48c43b519 が変更)",
+        "affiliate.js (48c43b519 が変更)",
+        "amazon-links.json (48c43b519 が変更)",
+        "android-chrome-192x192.png (48c43b519 が変更)",
+        "android-chrome-512x512.png (48c43b519 が変更)",
+        "android-chrome-maskable-512x512.png (48c43b519 が変更)",
+        "apple-touch-icon.png (48c43b519 が変更)",
+        "build-detail-pages.py (48c43b519 が変更)",
+        "category/exhibition.html (48c43b519 が変更)",
+        "category/large.html (48c43b519 が変更)",
+        "category/marche.html (48c43b519 が変更)",
+        "category/sokubai.html (48c43b519 が変更)",
+        "contact.html (48c43b519 が変更)",
+        "crawl-sources.json (48c43b519 が変更)",
+        "dashboard.html (48c43b519 が変更)",
+        "disclaimer.html (48c43b519 が変更)",
+        "docs/api.md (48c43b519 が変更)",
+        "docs/architecture-2026-05.md (48c43b519 が変更)",
+        "docs/architecture-2026-07.md (48c43b519 が変更)",
+        "docs/brave-search-setup.md (48c43b519 が変更)",
+        "docs/event-data-prompt.md (48c43b519 が変更)",
+        "docs/events-needing-image.md (48c43b519 が変更)",
+        "docs/quick-add-from-instagram.md (48c43b519 が変更)",
+        "docs/setup-guide.md (48c43b519 が変更)",
+        "docs/task-playbook.md (48c43b519 が変更)",
+        "docs/workflow-audit-2026-05.md (48c43b519 が変更)",
+        "enrich-request.json (48c43b519 が変更)",
+        "favicon-32x32.png (48c43b519 が変更)"
+      ],
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -832,8 +873,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-09-05 sakuya-green-jam-5-2026: 弱い語(中止)＋ページが変わった"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },

@@ -627,8 +627,11 @@
   },
   {
    "date": "2026-09-15",
-   "urgent": {},
+   "urgent": {
+    "ci_generated_paths_drift": 130
+   },
    "info": {
+    "cancel_suspects": 1,
     "inquiry_review_gap": 1,
     "task_run_never_recorded": 1,
     "task_run_gap": 2

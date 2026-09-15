@@ -7,18 +7,39 @@
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "sakuya-green-jam-5-2026",
+      "name": "Sakuya Green Jam 5",
+      "date": "2026-09-05",
+      "url": "https://www.sakuyakonohana.jp/event/22331/",
+      "why": "弱い語(中止)＋ページが変わった",
+      "changed": [
+        "本文"
+      ]
+    },
+    {
+      "slug": "chuushokushobutsusai-2026",
+      "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
+      "date": "2026-11-07",
+      "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
+      "why": "公式ページが変わった(本文: 1334→3041字 +127%)",
+      "changed": [
+        "本文"
+      ]
+    }
+  ],
   "pages": {
     "sakuya-green-jam-5-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22331/",
       "checkedOn": "2026-09-15",
       "signature": {
-        "text": "75e4cf4d8714aac8",
+        "text": "85f5edc3e6e98029",
         "images": "a12af253dbc269ea",
-        "textLen": 5680,
+        "textLen": 5683,
         "imageCount": 117
       },
-      "prevTextLen": null,
+      "prevTextLen": 5680,
       "strong": [],
       "weak": [
         "中止"
@@ -27,7 +48,7 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-15",
-      "textOnlyChanges": 0
+      "textOnlyChanges": 1
     },
     "kourep-2026-autumn": {
       "url": "https://kourep.jp",
@@ -38,7 +59,7 @@
         "textLen": 2418,
         "imageCount": 98
       },
-      "prevTextLen": null,
+      "prevTextLen": 2418,
       "strong": [],
       "weak": [],
       "datesNamed": 6,
@@ -272,7 +293,7 @@
         "textLen": 342,
         "imageCount": 10
       },
-      "prevTextLen": null,
+      "prevTextLen": 342,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -411,19 +432,19 @@
       "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
       "checkedOn": "2026-09-15",
       "signature": {
-        "text": "2e3bb339191731a5",
+        "text": "e285efb1398ce5b8",
         "images": "121e2972574a1126",
-        "textLen": 1334,
+        "textLen": 3041,
         "imageCount": 2
       },
       "prevTextLen": 1334,
       "strong": [],
       "weak": [],
-      "datesNamed": 1,
+      "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
-      "textOnlyChanges": 1
+      "textOnlyChanges": 2
     },
     "botanical-life-kasama-2026-11": {
       "url": "https://bookkasama.com/bot2611.html",
