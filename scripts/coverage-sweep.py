@@ -95,6 +95,17 @@ IN_SCOPE = (
     '珍奇', 'エケベリア', 'ハオルチア', 'ユーフォルビア',
     'チランジア', 'ティランジア', 'ブロメリア', 'ディッキア',
     'アデニウム', 'ステファニア', 'ユッカ', 'アロエ', 'メセン',
+    # ジャンル語を1つも名乗らない回を落とさないための総称。
+    # 2026-09-16 に「植物天国『植と食』のマーケット in 白山市場」
+    # (9/20-21・新潟・観葉植物の展示即売会・植物ブース11店)を
+    # 45日の窓の中で取りこぼしていたのが分かった。LEAFLA の見出しは
+    # 「植物天国『植と食』のマーケット…」で、当サイトの対象ジャンル語が
+    # 1語も出てこない。2026-09-15 に NextMeet で直したのと同じ穴が
+    # LEAFLA 側にも残っていた(あちらは prescoped で前段ごと外した)。
+    # ここは前段を外せない(LEAFLA は植物全般を載せる)ので、総称を足して
+    # OUT_OF_SCOPE で絞る。実測: in_scope 42→94件、gaps 0→13件、
+    # うち一次情報で裏取りして掲載3件・見送り3件。
+    '植物', 'ボタニカル', 'botanical', '観葉', 'plants', 'plant',
 )
 
 # 対象キーワードを含んでいても、これらが主題なら範囲外。
@@ -113,6 +124,12 @@ OUT_OF_SCOPE = (
     '山野草', '山草', '野草',
     'メダカ', 'めだか', '熱帯魚', 'アクアリウム',
     '造園', 'ガーデニングショー', '有用植物', 'ハーブ',
+    # 2026-09-16 に IN_SCOPE へ総称('植物'など)を足したぶん、
+    # LEAFLA が載せる植物世界の残りがここへ流れ込む。実測した雑音だけを足す。
+    'バラ展', 'ばら展', 'バラフェス', '薔薇', 'シンポジウム', '苔玉',
+    '夜間開園', '絵画', '彫刻', '写真展', '標本', '生け花', 'いけばな',
+    'フラワーアレンジ', '寄せ植え', 'ラン科', '菊花', '朝顔',
+    '角鉢展', '器展', 'うつわ展',
 )
 
 
@@ -435,11 +452,60 @@ def matches(title, name, bare=False):
         return True
     ts = tokens(name)
     if not ts:
-        return False
+        # 名前が共通語だけで出来ていると、特徴語が1つも残らない。
+        # 掲載435件のうち16件がこれ(「BOTANICAL LIFE 2026」
+        # 「PLANTS FES vol.4」「On the Plants Vol.09」など)。
+        # 普段は上の `nn in n` が拾うが、**向こうが名前の途中に
+        # 通称を挟むと包含が外れる**。2026-09-16 実測:
+        # 「On the PlantsオンプラVol.09が…」は掲載済みなのに
+        # 取りこぼし候補として出た。
+        # 共通語のまま、**全部が・その順で**出ることを求める。
+        # 誤って「掲載済み」に倒すと本物の取りこぼしが消えるので、
+        # 語数3以上・合計10文字以上と併せて厳しい側に置く。
+        # 検算(2026-09-16): events.json の同日ペア全件で誤一致0組、
+        # その日の取りこぼし候補13件のうち当たったのは On the Plants の1件だけ。
+        return generic_only_match(n, name)
     hit = [t for t in ts if norm(t) and norm(t) in n]
     if len(hit) >= 2:
         return True
     return any(len(t) >= 5 for t in hit)
+
+
+def tokens_keep_generic(name):
+    """tokens() と同じ切り方で、GENERIC を落とさずに返す。"""
+    nm = unicodedata.normalize('NFKC', name or '')
+    raw = re.findall(r'[㐀-鿿]{2,}|[぀-ヿ]{3,}|[A-Za-z0-9]{3,}', nm)
+    out = []
+    for t in raw:
+        low = t.lower()
+        if re.fullmatch(r'\d+', t):
+            continue
+        if re.fullmatch(r'\d+(?:st|nd|rd|th)|ver', low):
+            continue
+        out.append(low)
+    return out
+
+
+def generic_only_match(normed_title, name):
+    """特徴語がゼロの名前を、共通語の並びで照合する。
+
+    tokens() が空を返す名前だけに使う。単独では使わないこと。
+    """
+    if tokens(name):
+        return False
+    ts = tokens_keep_generic(name)
+    if len(ts) < 3 or sum(len(t) for t in ts) < 10:
+        return False
+    pos = 0
+    for t in ts:
+        nt = norm(t)
+        if not nt:
+            return False
+        i = normed_title.find(nt, pos)
+        if i < 0:
+            return False
+        pos = i + len(nt)
+    return True
 
 
 TRUNCATED_RE = re.compile(r'(?:\.{2,}|…)\s*$')
@@ -614,8 +680,13 @@ SELFTEST_TITLES = [
     'Jolie Nurseryが長野初上陸、ホームセンタームサシ須坂店でインドアプランツ即売会を開催',
     '花と獣いろとかたち2026が札幌芸術の森で開催、動植物を主題にした絵画彫刻写真を展示',
 ]
+# 「第1回 ボタニカルX」(5件目)は 2026-09-16 に False → True へ直した。
+# 掲載済み(botanical-x-vol1-2026・ワイルドプランツ路地裏のギボウシ)なので、
+# 範囲外であるはずがない。総称('ボタニカル')を IN_SCOPE に持っていなかった
+# ころの挙動をそのまま期待値にしていたもので、**取りこぼしを正常として
+# 固定していた**。期待値は「当サイトがその回を載せるか」で決める。
 SELFTEST_EXPECT_SCOPE = [
-    True, True, True, True, False,
+    True, True, True, True, True,
     False, False, False, False, False, False, False, False,
 ]
 
@@ -653,6 +724,17 @@ def self_test(verbose=True):
         ('にしかたメダカフェス', False, False),
         # LEAFLA 側(文が来る)は今までどおりジャンル語を要求する
         ('ぶらりぷらんつ vol.3 × feel 15th Anniversary', True, False),
+        # 2026-09-16。LEAFLA の見出しがジャンル語を1つも名乗らない回。
+        # 総称('植物')を足すまで、45日の窓の中にいるのに落ちていた
+        ('植物天国『植と食』のマーケット in 白山市場 2026を開催、'
+         '9月20日と21日に白山市場で実施', True, True),
+        # 総称を足したぶん流れ込む雑音は OUT_OF_SCOPE で落とす
+        ('神代植物公園「秋のバラフェスタ」2026年開催、'
+         '早朝開園や秋のバラ展など多彩な企画を実施', True, False),
+        ('2026年苔玉ワークショップを開催、観葉植物で小ぶりな苔玉作りを体験',
+         True, False),
+        ('第18回みんなで守ろう日本の野生ランシンポジウム2026を開催、'
+         'ウイルス対策やラン科植物の保全を紹介', True, False),
     ]
     for t, plain, want in pcases:
         got = in_scope(t, prescoped=not plain)
@@ -706,6 +788,19 @@ def self_test(verbose=True):
         # 名前が似ていない回を巻き込まないこと
         ('GREEN HOLIC in KARIYA 2026が刈谷市で開催', 'Sakuya Green Jam 5', False),
         ('狂植祭 Vol.7が2026年10月10日に開催、奈良で実施', '狂仙会 2026', False),
+        # 2026-09-16。名前が共通語だけで出来ている回は特徴語が空になる。
+        # 向こうが名前の**途中**に通称を挟むと `nn in n` も外れ、
+        # 掲載済みなのに毎日「取りこぼし」として出ていた
+        ('On the PlantsオンプラVol.09が2026年に福岡で開催、'
+         '植物と爬虫類昆虫とアート作品が交差する複合展示販売イベント',
+         'On the Plants Vol.09', True),
+        # 共通語の並びが崩れていたら当てない(順序を見ている)
+        ('Vol.09 the Plants on 2026', 'On the Plants Vol.09', False),
+        # 共通語だけの別イベントを巻き込まないこと
+        ('American and Plants2026が佐野市で開催、'
+         '植物とアメリカンカルチャーとフードが集まる祭典',
+         'On the Plants Vol.09', False),
+        ('American and Plants2026が佐野市で開催', 'PLANTS PLANTS PLANTS', False),
     ]
     for title, name, want in cases:
         got = matches(title, name)

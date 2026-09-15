@@ -524,6 +524,45 @@
       "revisit": true,
       "revisitedOn": "2026-09-15",
       "reason": "会場は観葉植物専門店 GREEN FEEL(株式会社福華園)の敷地内で、店の業態は植物専門。だが主催 @greenfeel_fukukaen の当該回の告知は『美味しいものを食べて！素敵な物を見て！作って！』『フリマスペース』『素敵なアーティストさん達の歌』で、出店者募集も FOOD / DRINK / GOODS / WORKSHOP、付けているタグも #マルシェ。植物の即売が主題とは書いていない。名称 GOLDEN TIME は中立で出店内訳も非公開なので undisclosedBreakdown.exclude に当たる。storeAnniversary は『主催告知の名称または内容が即売会・展示会・販売会』であることを条件にしており、ここは満たさない。内訳か植物即売の企画が公開されたら再評価する"
+    },
+    {
+      "key": "yoru-ambien-2026-09",
+      "name": "夜アンビエン（2026年9月）(2026-09-19 安美園・沖縄県宜野湾市普天間2-31-9 2F)",
+      "decided": "2026-09-16",
+      "reason": "サボテンを中心に扱う店舗 安美園が月1回、15:00〜22:00 まで店を開けて日本酒・クラフトビール・コーヒーを出す夜のラウンジ。主催告知(@ambien_2020 2026-09-10)に販売企画も外部出店者も書かれておらず、通常営業の延長にあたる。storeSale.exclude と同じ切り方",
+      "reasonType": "policy",
+      "eventDate": "2026-09-19",
+      "revisit": false,
+      "source": "https://www.instagram.com/ambien_2020/p/DdGW9iOkaTg/"
+    },
+    {
+      "key": "kaku-plants-pot-ten-vol2-2026-09",
+      "name": "KAKU PLANTS POT展 vol.2 (2026-09 森田美術館・高知県土佐市新居1945-8)",
+      "decided": "2026-09-16",
+      "reason": "陶芸作家 角 による『植物のための角鉢展』。主題は鉢という器そのもので、植物は展示の添え物。作家の器の個展にあたるため対象外",
+      "reasonType": "policy",
+      "revisit": false,
+      "source": "https://www.instagram.com/moritautsuwa/"
+    },
+    {
+      "key": "valo-plants-room-2026-10",
+      "name": "valo plants room 2026 (2026-10-09〜11 cafe licht 横アトリエ・兵庫県)",
+      "decided": "2026-09-16",
+      "reason": "@natu.cafe（植物のある暮らし・植え替え教室）が年1回開く個人アトリエの販売会。扱いはアオダモなどの庭木とオージープランツ、鉢、植え替え相談で、アガベ・多肉・塊根・サボテン・ビザールが主役という告知が無い",
+      "reasonType": "policy",
+      "eventDate": "2026-10-09",
+      "revisit": false,
+      "source": "https://www.instagram.com/natu.cafe/"
+    },
+    {
+      "key": "shizuoka-bizarre-plants-market-2026",
+      "name": "SHIZUOKA Bizarre Plants Market (開催日未確定 Kenmay・静岡県)",
+      "decided": "2026-09-16",
+      "reason": "PUKUBOOK が『仮予定／非公式・9月』として常設で並べているだけで、主催の一次情報が見つからない。2026年回の日付も会場の告知も無い。venueUnannounced.doNotList（日付が未確定なら掲載しない）に当たる",
+      "reasonType": "unverified",
+      "revisit": true,
+      "revisitedOn": "2026-09-16",
+      "source": "https://pukubook.jp/events/"
     }
   ],
   "_reasonTypes": {
@@ -532,6 +571,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-15",
+  "updated": "2026-09-16",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
