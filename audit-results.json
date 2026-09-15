@@ -581,7 +581,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -985,7 +985,7 @@
       "items": [
         "agave-navi-eyecatch: since=2026-09-10 以降の記録が1件も無い（台帳の最終記録 2026-09-09）"
       ],
-      "note": "起動記録の書き手はタスク自身なので、repo 側では直せない。そのタスクの SKILL.md に「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」を入れる(プレイブック §1 の 5)。入れるまでは task_run_gap に毎日出続け、本物の「環境が落ちた日」が埋もれる。**SKILL.md は Claude 内部領域なので Cowork セッションからは書けない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。目崎が手で貼るしかない。**フォルダ接続を頼む提案はしないこと",
+      "note": "**原因は2つある。先に切り分ける。**(A) タスクは動いているが記録していない … task-reports/<taskId>_<日付>.md が**ある**。そのタスクの SKILL.md に「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」を入れる(プレイブック §1 の 5)。(B) タスクがそもそも動いていない … レポートも**無い**。SKILL.md をいくら直しても直らない。Coworkデスクトップのスケジュールタスク一覧で、そのタスクが有効か・最後の実行がどうなったかを見る。**2026-09-15、この検査を (A) と決めつけて SKILL.md を2回直そうとしたが、実際は (B) だった**(agave-navi-eyecatch はレポートも成果物も6日間ゼロで、アイキャッチ残数が 41→54 に増えていた)。成果の指標が悪化していないかを必ず併せて見る。なお SKILL.md は Claude 内部領域なので Cowork セッションからは書けない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。目崎が手で貼るしかなく、フォルダ接続を頼む提案はしないこと",
       "severity": "info"
     },
     "task_run_gap": {
