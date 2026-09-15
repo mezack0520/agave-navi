@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-15",
+  "updated": "2026-09-16",
   "items": [
+    {
+      "on": "2026-09-16",
+      "kind": "listed",
+      "slug": "shokubutsu-tengoku-hakusan-2026-09",
+      "name": "植物天国 in 白山市場（2026年秋）",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-21",
+      "prefecture": "新潟",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-16",
+      "kind": "listed",
+      "slug": "souryokusai-4th-oshu-2026-10",
+      "name": "第肆回 草力祭 in 奥州市江刺",
+      "date": "2026-10-11",
+      "dateEnd": "2026-10-11",
+      "prefecture": "岩手",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-16",
+      "kind": "listed",
+      "slug": "american-and-plants-sano-2026-10",
+      "name": "American and Plants（アメプラ）",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "栃木",
+      "detail": ""
+    },
     {
       "on": "2026-09-15",
       "kind": "listed",
@@ -1169,36 +1199,6 @@
       "name": "gardens umekita 2周年記念イベント 店頭即売会",
       "date": "2026-09-05",
       "dateEnd": "2026-09-06",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "fujisan-garden-marche-2026-10",
-      "name": "富士山Garden marche",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-17",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "felicita-hachitoari-yumegaoka-2026-09",
-      "name": "FELICITA × はちとあり 2社合同販売会",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-19",
-      "prefecture": "神奈川",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "exploring-unpredictable-plants-2026-09",
-      "name": "Exploring Unpredictable Plants 2026",
-      "date": "2026-09-27",
-      "dateEnd": "2026-09-27",
       "prefecture": "大阪",
       "detail": ""
     }

@@ -651,7 +651,11 @@
   },
   {
    "date": "2026-09-16",
-   "urgent": {},
+   "urgent": {
+    "datedisplay_format": 1,
+    "venue_postal_address": 1,
+    "ci_generated_paths_drift": 1
+   },
    "info": {
     "cancel_suspects": 1,
     "inquiry_review_gap": 1,
@@ -661,15 +665,15 @@
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 48,
-    "upcoming_with_image": 114,
-    "events_with_image": 162,
-    "upcoming_no_image": 50,
+    "upcoming_with_image": 115,
+    "events_with_image": 163,
+    "upcoming_no_image": 52,
     "ongoing_events": 3,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 50
+    "eyecatch_backlog": 52
    },
-   "events": 435,
-   "upcoming": 163
+   "events": 438,
+   "upcoming": 166
   }
  ]
 }
