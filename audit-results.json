@@ -1,5 +1,5 @@
 {
-  "total": 467,
+  "total": 462,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -581,7 +581,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -832,10 +832,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-11-07 chuushokushobutsusai-2026: 公式ページが変わった(本文)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -876,12 +874,8 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 3,
-      "items": [
-        "取得できなかった: kourep-2026-autumn: URLError https://kourep.jp",
-        "取得できなかった: sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
-        "取得できなかった: souransai-koshigaya-2026-10: URLError https://soransai.com/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },
@@ -891,6 +885,13 @@
       "items": [],
       "note": "check-cancelled.py の取得が失敗しているか、日次で走っていない。この状態では cancel_suspects が0件でも「中止は無い」証拠にならない",
       "severity": "urgent"
+    },
+    "cancel_watch_body_shrunk": {
+      "title": "出典の本文が前回より4割以上短くなった",
+      "count": 0,
+      "items": [],
+      "note": "中止・延期の語は出ていないが、頁から中身が消えている。案内の取り下げ・別ページへの差し替え・出典の破損のどれか。JS で描く頁(Notion系など)は取得のたびに描画量が変わるので、それだけのこともある。一次情報を開いて scripts/cancel-reviewed.json に判断を書けば黙る（cancel_suspects と同じ規則）",
+      "severity": "info"
     },
     "jsonld_invalid": {
       "title": "JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)",
@@ -989,13 +990,12 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 3,
+      "count": 2,
       "items": [
         "agave-event-update(daily) が動かなかった日: 2026-09-11（直近7日で1日）",
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-10 2026-09-11 2026-09-12 2026-09-13 2026-09-14（直近7日で5日）",
         "event-monitor(daily) が動かなかった日: 2026-09-11（直近7日で1日）"
       ],
-      "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える",
+      "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
     "manual_sweep_stale": {

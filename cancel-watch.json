@@ -3,27 +3,50 @@
   "sweptOn": "2026-09-15",
   "stats": {
     "targets": 24,
-    "fetched": 21
+    "fetched": 24
   },
-  "errors": [
-    "sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
-    "kourep-2026-autumn: URLError https://kourep.jp",
-    "souransai-koshigaya-2026-10: URLError https://soransai.com/"
-  ],
+  "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "chuushokushobutsusai-2026",
-      "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
-      "date": "2026-11-07",
-      "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
-      "why": "公式ページが変わった(本文)",
-      "changed": [
-        "本文"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
+    "sakuya-green-jam-5-2026": {
+      "url": "https://www.sakuyakonohana.jp/event/22331/",
+      "checkedOn": "2026-09-15",
+      "signature": {
+        "text": "75e4cf4d8714aac8",
+        "images": "a12af253dbc269ea",
+        "textLen": 5680,
+        "imageCount": 117
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [
+        "中止"
+      ],
+      "datesNamed": 7,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-15",
+      "textOnlyChanges": 0
+    },
+    "kourep-2026-autumn": {
+      "url": "https://kourep.jp",
+      "checkedOn": "2026-09-15",
+      "signature": {
+        "text": "4f21cc76c7c91963",
+        "images": "b602ef27f7097e78",
+        "textLen": 2418,
+        "imageCount": 98
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 6,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-15",
+      "textOnlyChanges": 0
+    },
     "yamashiro-aisenen-autumn-2026-09": {
       "url": "https://www.aisenen.com/",
       "checkedOn": "2026-09-15",
@@ -33,6 +56,7 @@
         "textLen": 13,
         "imageCount": 0
       },
+      "prevTextLen": 13,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -50,6 +74,7 @@
         "textLen": 892,
         "imageCount": 4
       },
+      "prevTextLen": 892,
       "strong": [],
       "weak": [],
       "datesNamed": 3,
@@ -67,6 +92,7 @@
         "textLen": 2974,
         "imageCount": 57
       },
+      "prevTextLen": 2974,
       "strong": [],
       "weak": [],
       "datesNamed": 3,
@@ -84,6 +110,7 @@
         "textLen": 733,
         "imageCount": 6
       },
+      "prevTextLen": 733,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -101,6 +128,7 @@
         "textLen": 898,
         "imageCount": 16
       },
+      "prevTextLen": 898,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -118,6 +146,7 @@
         "textLen": 35,
         "imageCount": 1
       },
+      "prevTextLen": 35,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -135,6 +164,7 @@
         "textLen": 13985,
         "imageCount": 208
       },
+      "prevTextLen": 13985,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -152,6 +182,7 @@
         "textLen": 475,
         "imageCount": 12
       },
+      "prevTextLen": 475,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -169,6 +200,7 @@
         "textLen": 6748,
         "imageCount": 9
       },
+      "prevTextLen": 6748,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -186,6 +218,7 @@
         "textLen": 4165,
         "imageCount": 6
       },
+      "prevTextLen": 4165,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -203,6 +236,7 @@
         "textLen": 2238,
         "imageCount": 22
       },
+      "prevTextLen": 2238,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -220,12 +254,31 @@
         "textLen": 927,
         "imageCount": 16
       },
+      "prevTextLen": 927,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-14",
+      "textOnlyChanges": 0
+    },
+    "souransai-koshigaya-2026-10": {
+      "url": "https://soransai.com/",
+      "checkedOn": "2026-09-15",
+      "signature": {
+        "text": "c852153ebefd50ba",
+        "images": "389802360dd40ef6",
+        "textLen": 342,
+        "imageCount": 10
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-15",
       "textOnlyChanges": 0
     },
     "shimane-cactus-succulent-ten-2026-10": {
@@ -237,6 +290,7 @@
         "textLen": 700,
         "imageCount": 6
       },
+      "prevTextLen": 700,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -254,6 +308,7 @@
         "textLen": 690,
         "imageCount": 19
       },
+      "prevTextLen": 690,
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -271,6 +326,7 @@
         "textLen": 549,
         "imageCount": 26
       },
+      "prevTextLen": 549,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -288,6 +344,7 @@
         "textLen": 1499,
         "imageCount": 36
       },
+      "prevTextLen": 1499,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -305,6 +362,7 @@
         "textLen": 23259,
         "imageCount": 0
       },
+      "prevTextLen": 23259,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -322,6 +380,7 @@
         "textLen": 1287,
         "imageCount": 20
       },
+      "prevTextLen": 1287,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -339,6 +398,7 @@
         "textLen": 710,
         "imageCount": 1
       },
+      "prevTextLen": 710,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -356,6 +416,7 @@
         "textLen": 1334,
         "imageCount": 2
       },
+      "prevTextLen": 1334,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -373,6 +434,7 @@
         "textLen": 15721,
         "imageCount": 600
       },
+      "prevTextLen": 15721,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
