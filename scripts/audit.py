@@ -1447,7 +1447,23 @@ def main():
             ['git', 'log', '-5', '--format=%H',
              '--grep=^chore(daily)', '--grep=^chore(health)', '--grep=^chore(ops)'],
             cwd=REPO, capture_output=True, text=True).stdout.split()
+        _shallow_skipped = 0
         for _sha in _shas:
+            # **親が手元に無いコミットは判定しない(2026-09-16)。**
+            # CI の checkout は fetch-depth: 10 で、CIコミットが立て込んだ日は
+            # `git log -5` の後ろのほうが shallow の境界に当たる。境界の
+            # コミットは親が無いので `git show` が**ツリー全体**を「変更」として
+            # 並べ、`.gitignore` `CNAME` `404.html` のような手書きファイルが
+            # まとめて未分類として出る。2026-09-16 の実測で 126件の urgent が
+            # 出たが、完全な履歴を持つ手元で同じ監査を回すと 0件だった。
+            # **毎日鳴る urgent は、そのうち中身を見ずに閉じられる。**
+            # 上の except と同じで、判定できない回は鳴らさない側に倒す。
+            _has_parent = subprocess.run(
+                ['git', 'rev-parse', '-q', '--verify', f'{_sha}^^{{commit}}'],
+                cwd=REPO, capture_output=True, text=True).returncode == 0
+            if not _has_parent:
+                _shallow_skipped += 1
+                continue
             _files = subprocess.run(['git', 'show', '--name-only', '--format=', _sha],
                                     cwd=REPO, capture_output=True, text=True).stdout.split()
             if not _files:
@@ -1468,7 +1484,9 @@ def main():
         '同時に走った回と衝突したときに daily ごと落ちる'
         + (f'。直近の CI コミット {_drift_seen} 件を見た'
            if _drift_seen else '。**CIコミットが1件も見えない'
-           '(shallow clone か履歴不足)。この検査は効いていない**'),
+           '(shallow clone か履歴不足)。この検査は効いていない**')
+        + (f'(親が手元に無い {_shallow_skipped} 件は判定していない)'
+           if _shallow_skipped else ''),
         severity='urgent')
 
     # workflow に直書きされたスクリプト。2026-09-10 に7本から6ブロック出した。
