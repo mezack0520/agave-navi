@@ -71,6 +71,7 @@ import urllib.request
 from datetime import date, datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitelib                 # noqa: E402  取得の引き直し規則は sitelib が単一情報源
 from sitelib import today_jst   # noqa: E402  「今日」は sitelib が単一情報源
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -230,10 +231,13 @@ def in_scope(title, prescoped=False):
 
 
 def fetch(url, timeout=20):
-    req = urllib.request.Request(url, headers={'User-Agent': UA,
-                                              'Accept-Language': 'ja'})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read().decode('utf-8', 'replace')
+    """取得。引き直しの規則は sitelib.fetch_text が単一情報源(2026-09-17)。
+
+    2026-09-17 に LEAFLA の日付ページ2枚が 503 で落ち、
+    `coverage_sweep_broken`(urgent) が鳴った。手元から引くと200で返る。
+    503 は「あとで来い」という返事なので引き直す。404/403 は引き直さない。
+    """
+    return sitelib.fetch_text(url, timeout=timeout, ua=UA)
 
 
 def extract_titles(html):
@@ -930,6 +934,18 @@ def self_test(verbose=True):
         if got != want:
             ok = False
         _p(f'  {mark} 復元={str(got)[:34]!s:36} 期待={str(want)[:20]}')
+
+    _p('\n--- 取得の引き直し規則(sitelib.should_retry_status) ---')
+    # 2026-09-17。「HTTPError は相手の返事なので引き直さない」と書いてあったが、
+    # 503 は「今は無理、あとで来い」という返事で、引き直すべき側にある。
+    # 同日 LEAFLA の日付ページ2枚が 503 で落ち、手元から引くと200で返った。
+    for code, want in ((503, True), (502, True), (504, True), (429, True),
+                       (500, True), (404, False), (403, False), (200, False)):
+        got = sitelib.should_retry_status(code)
+        mark = 'OK ' if got == want else '★NG'
+        if got != want:
+            ok = False
+        _p(f'  {mark} {code} 引き直す={got!s:5} 期待={want!s:5}')
 
     _p('\n--- リンク抽出 ---')
     html = ('<a href="/blogs/media/topics1">アガベ即売会2026を開催</a>'

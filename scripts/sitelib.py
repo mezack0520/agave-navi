@@ -113,7 +113,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
                 # 2026-09-14 第10回の掲載で3件になった
                 '町田パリオ 4階':'machida-palio',
                 # 2026-09-15 enjoy place 番外編の掲載で3件になった
-                'シマムラ園芸 第2ハウス':'shimamura-engei'}
+                'シマムラ園芸 第2ハウス':'shimamura-engei',
+                # 2026-09-17 鹿鳥風月(ゆくはし植物園 会場)の掲載で3件になった
+                'ゆくはし植物園':'yukuhashi-shokubutsuen'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -125,6 +127,7 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 ハッシュ → ローマ字
+    'v-fe00aeb0': 'ゆくはし植物園',   # 2026-09-17
     'v-b6e1de21': 'シマムラ園芸 第2ハウス',   # 2026-09-15
     'v-1324528c': '町田パリオ 4階',   # 2026-09-14
     'v-5d0f0de9': 'オリナス錦糸町',
@@ -140,6 +143,58 @@ _VENUE_REDIRECTS_RAW = {
     'v-707ba17c': None,
     'v-af503a5c': None,
 }
+
+# --- 外部ページの取得 (単一情報源) ---
+# 巡回スクリプトは2本とも自前の fetch() を持っており、引き直しの規則が
+# 片方にしか無かった。2026-09-12 に check-cancelled.py へ
+# 「接続系の失敗だけ引き直す。HTTPError は相手の返事なので引き直さない」を
+# 入れたが、**503 は『今は無理、あとで来い』という返事**で、引き直すべき側。
+# 2026-09-17 の coverage-sweep は LEAFLA の日付ページ2枚が 503 で落ち、
+# `coverage_sweep_broken`(urgent) が鳴った。手元から同じURLを引くと200だった。
+# 落ちているのは相手ではなくその回の応答で、引き直さずに記録すると
+# 「巡回が壊れている」という本物の警告が毎日入れ替わる雑音に埋まる。
+# 引き直す status は「あとで来い」を意味するものだけ。404/403 は引き直さない。
+RETRY_HTTP_STATUS = frozenset({429, 500, 502, 503, 504})
+
+
+def should_retry_status(code):
+    """この HTTP status は引き直してよいか。
+
+    判定を関数にしてあるのは、**ネットワークを張らずに検査できるように**
+    するため。fetch_text 全体を試すには urlopen を差し替えるしかなく、
+    CI から呼ぶ自己テストでそれをやると差し替えが漏れたときに巡回が壊れる。
+    """
+    return code in RETRY_HTTP_STATUS
+
+
+def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
+    """外部ページを取って文字列で返す。接続系の失敗と RETRY_HTTP_STATUS を引き直す。
+
+    引き直しても駄目なら最後の例外をそのまま上げる。呼び出し側が
+    errors に積むかどうかを決める。
+    """
+    import time as _time
+    import urllib.request as _ureq
+    import urllib.error as _uerr
+    h = {'Accept-Language': 'ja'}
+    if ua:
+        h['User-Agent'] = ua
+    if headers:
+        h.update(headers)
+    req = _ureq.Request(url, headers=h)
+    for attempt in range(retries + 1):
+        try:
+            with _ureq.urlopen(req, timeout=timeout) as r:
+                return r.read().decode('utf-8', 'replace')
+        except _uerr.HTTPError as ex:
+            if not should_retry_status(ex.code) or attempt == retries:
+                raise
+            _time.sleep(wait)
+        except Exception:                             # noqa: BLE001
+            if attempt == retries:
+                raise
+            _time.sleep(wait)
+
 
 # --- 基本ユーティリティ ---
 

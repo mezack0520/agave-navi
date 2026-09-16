@@ -269,21 +269,15 @@ def fetch(url, timeout=20, retries=2, wait=3.0):
     **落ちているのは相手ではなく、その回の接続。**引き直さずに記録すると
     「巡回が失敗している」という本物の警告が、毎日入れ替わる雑音に埋まる。
 
-    HTTPError(4xx/5xx) は相手の返事なので引き直さない。
+    **2026-09-17 訂正: 「HTTPError は相手の返事なので引き直さない」は
+    503 では誤り。**503/502/504/429 は「今は無理、あとで来い」という返事で、
+    引き直すべき側にある。404/403 とは意味が違う。同じ日に coverage-sweep が
+    LEAFLA の 503 を2枚拾って urgent を鳴らし、手元から引くと200で返った。
+    引き直す status の一覧と実装は sitelib.fetch_text が単一情報源。
+    **同じ判断を2本の巡回スクリプトが別々に持っていたので寄せた。**
     """
-    req = urllib.request.Request(url, headers={'User-Agent': UA,
-                                               'Accept-Language': 'ja'})
-    for attempt in range(retries + 1):
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as r:
-                raw = r.read()
-            return raw.decode('utf-8', 'replace')
-        except urllib.error.HTTPError:
-            raise
-        except Exception:                             # noqa: BLE001
-            if attempt == retries:
-                raise
-            time.sleep(wait)
+    return sitelib.fetch_text(url, timeout=timeout, retries=retries,
+                              wait=wait, ua=UA)
 
 
 def watch_targets(events, today, horizon=HORIZON_DAYS):

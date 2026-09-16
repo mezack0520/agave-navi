@@ -27,6 +27,17 @@
         "2026-09-16",
         "2026-09-17"
       ]
+    },
+    "nextmeet-monthly-check": {
+      "label": "NextMeet の月別ページ(自動巡回の目視照合)",
+      "url": "https://nextmeet.app/plants/monthly/",
+      "staleDays": 10,
+      "why": "NextMeet は 2026-09-10 に coverage-sweep.py へ機械化したが、**機械が拾えるのは『判定を通った候補』だけ**で、一覧をそのまま events.json と並べて見る回が無かった。2026-09-17 に10月の一覧(46件)を目で突き合わせたら、coverage-gaps が出していない未掲載が1件(Green marche 花の湯)あった。coverage_source_missing は『自動で回った』で満たされてしまうので、この台帳で別に数える。",
+      "lastSweptOn": "2026-09-17",
+      "lastScope": "2026年10月の一覧46件を events.json の10月分59件と目視照合。未掲載9件を精査し、掲載4件(BOTANICAL STYLE / ONE / ツンツンぷくぷくワンダーランドmini / セラモール販売会)、見送り3件(ポルカマルシェ・Green marche 花の湯・GREEN DAYS まつやま vol.4)、残りは掲載済みだった",
+      "history": [
+        "2026-09-17"
+      ]
     }
   },
   "updated": "2026-09-17",
