@@ -2575,6 +2575,30 @@ NAMED AGAVE PARTY を2店舗同時で開いていた。当サイトは1件も載
 出典が外部サイトの回で同じことをするなら `autoDateUpdate: false` が要る。
 
 
+### 積み上げ式のファイルも「作り直せる」なら生成物に入れる (2026-09-17)
+
+2026-09-16 23:39 UTC の `Daily Maintenance`(schedule) が
+`ci-push.sh` の「データファイルが remote と衝突した」で落ちた。
+衝突したのは `site-updates.json` と `site-updates-scopes.json` の2本。
+同時刻にこちらの push で `Sync New Events` が走っており、
+**両方が同じ2ファイルへ項目を積んだ。**
+
+2026-09-15 の `cancel-watch.json` と同じ型で、
+**毎回書き換わるものを `ci-generated-paths.txt` に入れ忘れると、
+同時に走った回の数だけ衝突する。**
+
+迷いどころは「積み上げ式だから捨てたら履歴が消えるのでは」だが、消えない。
+`scripts/track-updates.py` は **ディスク上の site-updates.json を読んでから
+`git show HEAD:events.json` との差分を積む**ので、`origin/main` に作り直して
+build-all を回せば、remote 側の項目を読み込んだ上に自分の差分が乗る。
+同じ `(date, kind, slug)` は二重に積まないので2回走らせてもバイト一致する
+(2026-09-17 に実測)。
+
+判定は playbook §3 に前からある一文のとおり、
+**「そのパスを書き出す生成器が scripts/ にあるか」**。
+`track-updates.py` は `build-all.sh` の中にいる。それで足りる。
+「積み上げ式かどうか」は判定材料ではない。
+
 ### 503 は「相手の返事」だが、引き直すべき返事 (2026-09-17)
 
 2026-09-12 に `check-cancelled.py` の `fetch()` へ引き直しを入れたとき、

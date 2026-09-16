@@ -50,3 +50,16 @@ scripts/events-meta.json
 # 持ち越そうとすると、同時に走った回の数だけ衝突する。**
 cancel-watch.json
 coverage-gaps.json
+
+# --- 積み上げ式だが、作り直せる(2026-09-17) ---
+# scripts/track-updates.py が build-all.sh の中で書く。TOPの更新欄とRSSの元。
+# `git show HEAD:events.json` との差分を積むので、origin/main に作り直してから
+# 回せば **remote 側の項目を読み込んだ上に自分の差分が乗る**。同じ
+# (date, kind, slug) は二重に積まないので、2回走らせてもバイト一致する(実測)。
+# ここに無かったせいで、2026-09-16 23:39 UTC の Daily Maintenance が
+# 「データファイルが remote と衝突した」で落ちた。同時刻に sync-events が
+# 新規3件を取り込んでおり、両方が同じ2ファイルへ項目を積んだため。
+# cancel-watch.json と同じ型で、**毎回書き換わるものを持ち越そうとすると
+# 同時に走った回の数だけ衝突する。**
+site-updates.json
+site-updates-scopes.json
