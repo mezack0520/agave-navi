@@ -3,19 +3,50 @@
   "sweptOn": "2026-09-16",
   "stats": {
     "targets": 28,
-    "fetched": 22
+    "fetched": 28
   },
-  "errors": [
-    "sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
-    "kourep-2026-autumn: URLError https://kourep.jp",
-    "isij-big-bazaar-2026-09-27: URLError http://isij.net/",
-    "on-the-plants-vol9-fukuoka-2026-10: URLError https://ontheplants.com/",
-    "souransai-koshigaya-2026-10: URLError https://soransai.com/",
-    "botanical-life-kasama-2026-11: URLError https://bookkasama.com/bot2611.html"
-  ],
+  "errors": [],
   "logicErrors": [],
   "suspects": [],
   "pages": {
+    "sakuya-green-jam-5-2026": {
+      "url": "https://www.sakuyakonohana.jp/event/22331/",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "85f5edc3e6e98029",
+        "images": "a12af253dbc269ea",
+        "textLen": 5683,
+        "imageCount": 117
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [
+        "中止"
+      ],
+      "datesNamed": 7,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
+    "kourep-2026-autumn": {
+      "url": "https://kourep.jp",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "4f21cc76c7c91963",
+        "images": "b602ef27f7097e78",
+        "textLen": 2418,
+        "imageCount": 98
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 6,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
     "yamashiro-aisenen-autumn-2026-09": {
       "url": "https://www.aisenen.com/",
       "checkedOn": "2026-09-16",
@@ -214,6 +245,24 @@
       "firstSeenOn": "2026-09-16",
       "textOnlyChanges": 0
     },
+    "isij-big-bazaar-2026-09-27": {
+      "url": "http://isij.net/",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "9169c3d50a25c3e6",
+        "images": "a43a8b04c4332199",
+        "textLen": 6748,
+        "imageCount": 9
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
     "plants-show-kiryu-2026-autumn": {
       "url": "https://note.com/purveyors/n/nccecb7bfd245",
       "checkedOn": "2026-09-16",
@@ -232,6 +281,24 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
     },
+    "on-the-plants-vol9-fukuoka-2026-10": {
+      "url": "https://ontheplants.com/",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "d1810f1e7075cccd",
+        "images": "1ac04d43b10efda9",
+        "textLen": 2238,
+        "imageCount": 22
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": false,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
     "wako-jurin-unique-plants-2026-10": {
       "url": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
       "checkedOn": "2026-09-16",
@@ -248,6 +315,24 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-14",
+      "textOnlyChanges": 0
+    },
+    "souransai-koshigaya-2026-10": {
+      "url": "https://soransai.com/",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "c852153ebefd50ba",
+        "images": "389802360dd40ef6",
+        "textLen": 342,
+        "imageCount": 10
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
       "textOnlyChanges": 0
     },
     "shimane-cactus-succulent-ten-2026-10": {
@@ -411,6 +496,24 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 2
+    },
+    "botanical-life-kasama-2026-11": {
+      "url": "https://bookkasama.com/bot2611.html",
+      "checkedOn": "2026-09-16",
+      "signature": {
+        "text": "4577a10f8338a0d7",
+        "images": "372c61ca743c69b7",
+        "textLen": 15721,
+        "imageCount": 600
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
     }
   }
 }
