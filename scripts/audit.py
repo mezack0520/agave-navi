@@ -23,7 +23,7 @@ from collections import defaultdict
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
 import sitelib
-from sitelib import (today_jst, VAGUE_VENUES, is_generic_image_url,
+from sitelib import (today_jst, ADSENSE_CLIENT, VAGUE_VENUES, is_generic_image_url,
                      is_quality_image_url,
                      event_phase, is_long_run, event_days, LONG_RUN_DAYS,
                      is_vague_venue, venue_key, venue_slug, venue_display,
@@ -1410,6 +1410,38 @@ def main():
                 gen_missing.append(line)
     except OSError:
         gen_missing.append('scripts/ci-generated-paths.txt が無い')
+    # AdSense のタグが全頁に載っているか。2026-07-30 に撤去して 09-16 に戻した。
+    # **撤去のときは sync-footers が毎ビルド消しており、sitelib の ADSENSE_HEAD は
+    # 定義だけあって誰も使っていなかった。**入れ直したつもりで入っていない、が
+    # 一番起きやすい形なので、実ファイルを数える。
+    # 除外は2種類だけ。リダイレクトstub(広告を出す面ではない)と
+    # Search Console の所有確認ファイル(Googleが中身を書き換えるなと言っている)。
+    _ads_missing, _ads_wrong = [], []
+    for _f in sorted(glob.glob(rp('*.html'))
+                     + glob.glob(rp('*', '*.html'))
+                     + glob.glob(rp('*', '*', 'index.html'))):
+        _rel = os.path.relpath(_f, REPO)
+        if os.path.basename(_f).startswith('google'):
+            continue
+        _h = _slurp(_f)
+        if 'http-equiv="refresh"' in _h:
+            continue                      # リダイレクトstub
+        _m = re.search(r'<meta name="google-adsense-account" content="([^"]+)"', _h)
+        if not _m:
+            _ads_missing.append(_rel)
+        elif _m.group(1) != ADSENSE_CLIENT:
+            _ads_wrong.append(f'{_rel}: {_m.group(1)}')
+    add('adsense_tag_missing', 'AdSenseのタグが載っていない頁',
+        sorted(_ads_missing)[:40],
+        'sitelib.ANALYTICS_HEAD が唯一の持ち主。生成物は head_open か '
+        'detail.html.tmpl の {{analyticsHead}} を通り、root直下の手書きHTMLは '
+        'sync-footers が差し込む。どれかの経路から漏れている',
+        severity='urgent')
+    add('adsense_client_mismatch', 'AdSenseのクライアントIDが違う頁',
+        sorted(_ads_wrong),
+        'sitelib.ADSENSE_CLIENT と一致させる。別IDが混ざると成果が別口に計上される',
+        severity='urgent')
+
     add('ci_generated_paths_missing', '生成物リストに実在しないパスがある',
         sorted(gen_missing),
         'ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない',

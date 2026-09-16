@@ -684,6 +684,7 @@ def build_page(template, ev, ctx):
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),
         '{{weatherRow}}': make_weather_row(ev, ctx),
         '{{siteFooter}}': sitelib.site_footer(),
+        '{{analyticsHead}}': sitelib.ANALYTICS_HEAD,
     }
 
     html = template

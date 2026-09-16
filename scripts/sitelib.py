@@ -546,6 +546,10 @@ def normalize_series_name(name):
 
 # --- 共通HTMLフラグメント (単一情報源) ---
 
+# AdSense。2026-07-30 に撤去したが 2026-09-16 に再申請を決めて戻した。
+# **定義だけあって誰も使っていない状態が撤去後もずっと続いていた**ので、
+# 今回は head_open / detail.html.tmpl / sync-footers の3経路すべてを
+# この定数に向け、監査 adsense_tag_missing が全頁の実在を見る。
 ADSENSE_HEAD = (f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
                 f'?client={ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n'
                 f'  <meta name="google-adsense-account" content="{ADSENSE_CLIENT}">')
@@ -553,6 +557,11 @@ ADSENSE_HEAD = (f'<script async src="https://pagead2.googlesyndication.com/pagea
 GTAG_HEAD = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>\n'
              f"  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}"
              f"gtag('js',new Date());gtag('config','{GA_ID}');</script>")
+
+# 計測タグの唯一の持ち主。detail.html.tmpl は {{analyticsHead}} で受け取り、
+# head_open は直に埋め、root直下の手書きHTMLは sync-footers が正規化する。
+# 2026-09-16 までは同じ gtag が3箇所に直書きされていた。
+ANALYTICS_HEAD = GTAG_HEAD + '\n  ' + ADSENSE_HEAD
 
 # ナビの行き先。ヘッダーのメニューはこれを唯一の元にする。
 NAV_LINKS = (
@@ -1472,6 +1481,7 @@ def head_open(og_type='website'):
         '  <script>window.dataLayer=window.dataLayer||[];'
         'function gtag(){{dataLayer.push(arguments);}}'
         "gtag('js',new Date());gtag('config','" + GA_ID + "');</script>\n"
+        '  ' + ADSENSE_HEAD + '\n'
         '  <meta charset="UTF-8">\n'
         '  {robots_meta}\n'
         '  <link rel="canonical" href="{canonical}">\n'

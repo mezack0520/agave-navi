@@ -12,6 +12,11 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+# AdSense の審査・配信クローラ。Allow: / の既定で通るが、
+# 「害悪ボット」のブロックを足すときに巻き込まないよう明示しておく(2026-09-16)
+User-agent: Mediapartners-Google
+Allow: /
+
 # AI スクレイパー(任意で許可: 学習させたい派)
 # User-agent: GPTBot
 # Disallow: /

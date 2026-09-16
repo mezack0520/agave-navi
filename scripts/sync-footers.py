@@ -47,10 +47,18 @@ def main():
             html = new_html
             reasons.append('cssver')
 
-        # AdSenseの撤去(2026-07-30 に利用を断念)。外部スクリプトを毎ページ読む無駄を消す。
-        h2 = re.sub(r'[ \t]*<script async src="https://pagead2\.googlesyndication\.com[^\n]*\n', '', html)
-        h2 = re.sub(r'[ \t]*<meta name="google-adsense-account"[^\n]*\n', '', h2)
-        h2 = re.sub(r'[ \t]*<script src="[^"]*ads\.js[^"]*"></script>\n', '', h2)
+        # AdSense。2026-07-30 に撤去したが 2026-09-16 に再申請を決めて**注入に反転**した。
+        # ここは root 直下の手書きHTML(index / calendar / map / about / 404)だけが対象。
+        # 生成物は sitelib.ANALYTICS_HEAD を通る。
+        # ads.js は AdSense 初期化専用だったので戻さない(サイドバー制御は affiliate.js)。
+        h2 = re.sub(r'[ \t]*<script src="[^"]*ads\.js[^"]*"></script>\n', '', html)
+        if 'google-adsense-account' not in h2:
+            # gtag の設定行の直後に差し込む。<head> 直下に置くのが AdSense の案内どおり
+            h2, n = re.subn(r"(gtag\('config',\s*'" + re.escape(sitelib.GA_ID) + r"'\);\s*</script>\n)",
+                            lambda mo: mo.group(1) + '  ' + sitelib.ADSENSE_HEAD + '\n', h2, count=1)
+            if not n:
+                print(f'  !! {os.path.basename(fp)}: gtag が見つからず AdSense を差せなかった',
+                      file=sys.stderr)
         if h2 != html:
             html = h2
             reasons.append('adsense')
