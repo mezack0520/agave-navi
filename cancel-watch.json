@@ -2,8 +2,8 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-17",
   "stats": {
-    "targets": 28,
-    "fetched": 28
+    "targets": 29,
+    "fetched": 29
   },
   "errors": [],
   "logicErrors": [],
@@ -243,6 +243,24 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-16",
+      "textOnlyChanges": 0
+    },
+    "onokoro-green-festa-2026-09": {
+      "url": "https://awaji-botanicalgarden.com/onokoro-green-festa/",
+      "checkedOn": "2026-09-17",
+      "signature": {
+        "text": "1387dc72dea4d044",
+        "images": "25ce87541e84c1ac",
+        "textLen": 947,
+        "imageCount": 2
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-17",
       "textOnlyChanges": 0
     },
     "isij-big-bazaar-2026-09-27": {
