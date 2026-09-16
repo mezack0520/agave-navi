@@ -160,6 +160,32 @@ def norm(s):
     return re.sub(r'[^0-9a-z぀-ヿ㐀-鿿]', '', s)
 
 
+_TOKEN_RE = re.compile(r'[㐀-鿿]{2,}|[぀-ヿ]{3,}|[A-Za-z0-9]{3,}')
+# 日本語のイベント名は漢字・カタカナ・ひらがなが混ざる。上の正規表現は
+# 文字クラスごとに切るので、**混ざった3文字の固有名がどのクラスにも
+# 届かず、丸ごと消える**。「植ノ宴」は 植(漢1)・ノ(カナ1)・宴(漢1) に
+# 割れて照合語が1つも残らず、LEAFLA の
+# 「植ノ宴 in KUMAMOTO2026が熊本で開催、…」が掲載済みの
+# 「植ノ宴 -4- in 熊本」に当たらなかった(2026-09-17)。
+# bare 側には数字を落として包含を見る逃げ道があるが、
+# LEAFLA は文なので包含では拾えない。
+# 混在の連なりを別に拾う。クラス別の語と併せて集合にするので、
+# 既存の語が減ることはない。
+_TOKEN_MIXED_RE = re.compile(r'[㐀-鿿぀-ヿ]{3,}')
+
+
+def _raw_tokens(n):
+    """照合語の素の切り出し。クラス別 + 漢字仮名の混在。
+
+    順序は出現順のまま。重複は呼び出し側が集合で潰す。
+    """
+    out = _TOKEN_RE.findall(n)
+    for t in _TOKEN_MIXED_RE.findall(n):
+        if t not in out:
+            out.append(t)
+    return out
+
+
 def tokens(name):
     """イベント名から照合用の特徴語を取る。
 
@@ -167,10 +193,7 @@ def tokens(name):
     「第1回」「2026」「vol」のような共通語は照合の役に立たないので落とす。
     """
     n = unicodedata.normalize('NFKC', name or '')
-    # 漢字・仮名は2文字で1語になる(樹祭/一宮/叢宴)。3文字以上に限ると
-    # 「樹祭 一宮 2026 Autumn」の照合語が空になり、何とも一致しなくなる。
-    # ラテン文字は2文字だと略語・前置詞を拾いすぎるので3文字のまま。
-    raw = re.findall(r'[㐀-鿿]{2,}|[぀-ヿ]{3,}|[A-Za-z0-9]{3,}', n)
+    raw = _raw_tokens(n)
     out = []
     for t in raw:
         low = t.lower()
@@ -474,7 +497,7 @@ def matches(title, name, bare=False):
 def tokens_keep_generic(name):
     """tokens() と同じ切り方で、GENERIC を落とさずに返す。"""
     nm = unicodedata.normalize('NFKC', name or '')
-    raw = re.findall(r'[㐀-鿿]{2,}|[぀-ヿ]{3,}|[A-Za-z0-9]{3,}', nm)
+    raw = _raw_tokens(nm)
     out = []
     for t in raw:
         low = t.lower()
@@ -808,6 +831,20 @@ def self_test(verbose=True):
          '植物とアメリカンカルチャーとフードが集まる祭典',
          'On the Plants Vol.09', False),
         ('American and Plants2026が佐野市で開催', 'PLANTS PLANTS PLANTS', False),
+        # 2026-09-17。漢字・仮名が混ざった3文字の固有名は、文字クラスごとに
+        # 切ると照合語が1つも残らない。「植ノ宴」は 植/ノ/宴 に割れていた。
+        # bare 側には数字を落として包含を見る逃げ道があるが、LEAFLA は文なので
+        # 包含では拾えず、掲載済みの回が毎日「取りこぼし」として出ていた
+        ('植ノ宴 in KUMAMOTO2026が熊本で開催、植物と雑貨を楽しむ2日間のマーケット',
+         '植ノ宴 -4- in 熊本', True),
+        # 同じ日に開催された別の回(グランメッセ熊本)を巻き込まないこと。
+        # 「熊本」だけでは当たらない
+        ('植ノ宴 in KUMAMOTO2026が熊本で開催、植物と雑貨を楽しむ2日間のマーケット',
+         'Collect Plants Vol.3（コレクトプランツ）', False),
+        # 会場側も同じ理由で外れていた。こちらは会場名に館内スポットを
+        # 足しているので包含にならず、照合語も「仁保」しか当たらなかった
+        ('植物販売会(仮) in仁保の郷が道の駅仁保の郷で開催、植物関連商品を扱う販売会を実施予定',
+         '道の駅 仁保の郷 屋外 青空デッキ', True),
     ]
     for title, name, want in cases:
         got = matches(title, name)

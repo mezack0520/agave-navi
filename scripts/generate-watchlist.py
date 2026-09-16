@@ -23,6 +23,7 @@ from sitelib import normalize_series_name, today_jst, now_jst
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS_JSON = os.path.join(REPO_ROOT, 'events.json')
 CRAWL_SOURCES = os.path.join(REPO_ROOT, 'crawl-sources.json')
+SEEDS = os.path.join(REPO_ROOT, 'watch-seeds.json')
 OUT = os.path.join(REPO_ROOT, 'watch-sources.json')
 
 IG_RE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?')
@@ -65,6 +66,19 @@ def site_domain(url):
     return d
 
 
+def load_seeds():
+    """watch-seeds.json の igAccounts を返す。無ければ空。
+
+    掲載実績が無い主催をウォッチに乗せる唯一の経路。
+    読む側は audit.py の watch_seed_dropped。
+    """
+    try:
+        with open(SEEDS, encoding='utf-8') as f:
+            return json.load(f).get('igAccounts') or []
+    except FileNotFoundError:
+        return []
+
+
 def main():
     with open(EVENTS_JSON, encoding='utf-8') as f:
         events = json.load(f)
@@ -92,6 +106,28 @@ def main():
             'hasUpcoming': has_future,
             # 優先度: 複数回実績 > 直近まで活動 > その他。未来イベント掲載済みなら急がない
             'priority': (0 if has_future else 1) + (0 if len(evs) >= 2 else 1),
+        })
+    # 手で足したウォッチ対象を混ぜる(2026-09-17)。
+    # 上のループは events.json からの導出なので、**一度も掲載したことがない
+    # 主催は何度イベントを開いてもここに入らない。**自己拡張ループの入口が
+    # 無かった。掲載実績ができれば導出側が同じ handle を持つので、
+    # そのときは seed を足さない(既存を上書きしない)。
+    seen_handles = {a['handle'] for a in ig_accounts}
+    for sd in load_seeds():
+        h = (sd.get('handle') or '').strip().lstrip('@').lower()
+        if not h or h in seen_handles:
+            continue
+        seen_handles.add(h)
+        ig_accounts.append({
+            'handle': h,
+            'url': f'https://www.instagram.com/{h}/',
+            'eventCount': 0,
+            'lastEventName': sd.get('label'),
+            'lastEventDate': None,
+            'hasUpcoming': False,
+            'priority': 1,
+            'source': 'seed',
+            'seedWhy': sd.get('why'),
         })
     # priority昇順(0が最重要)→イベント数降順→最終開催日降順
     ig_accounts.sort(key=lambda a: (a['priority'], -a['eventCount'], a['lastEventDate'] or ''), reverse=False)
@@ -159,7 +195,7 @@ def main():
 
     out = {
         'generated': now_jst().strftime('%Y-%m-%d %H:%M JST'),
-        'description': 'events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。',
+        'description': 'events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。',
         'stats': {
             'igAccounts': len(ig_accounts),
             'awaitingNextEdition': len(awaiting),

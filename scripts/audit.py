@@ -3279,6 +3279,40 @@ def main():
              '回った日に lastSweptOn / lastScope / history を更新する。'
              '回れなかった回は進めない。進めると回った回と区別が付かなくなる')
 
+    # --- 手で足したウォッチ対象が、生成物から落ちていないか ----------------
+    # watch-sources.json は events.json からの導出なので、**一度も掲載した
+    # ことがない主催は何度イベントを開いてもウォッチに入らない。**
+    # 2026-09-17、アガベ専門店モンスターズハウスの4日間イベントを、
+    # 終わってから coverage-gaps.json の truncatedUnresolved で知った。
+    # 入口として watch-seeds.json を作り、generate-watchlist.py が
+    # igAccounts へ source="seed" で混ぜる。
+    # **データに書いた値は、読む側を同じコミットで足す**(blockedUrlDomains /
+    # _reasonTypes と同じ型)。ここが読む側。
+    # seed を書いても生成側が拾っていなければ、書いた本人以外には
+    # 何も起きない。0が正常なので urgent。
+    seed_dropped = []
+    _seeds = load_json('watch-seeds.json', {}).get('igAccounts') or []
+    _ws = load_json('watch-sources.json', {})
+    _ws_handles = {str((a or {}).get('handle') or '').lower()
+                   for a in (_ws.get('igAccounts') or [])}
+    for _sd in _seeds:
+        _h = str((_sd or {}).get('handle') or '').strip().lstrip('@').lower()
+        if not _h:
+            seed_dropped.append('handle が空の項目がある')
+            continue
+        if not re.fullmatch(r'[a-z0-9_.]+', _h):
+            seed_dropped.append(f'{_h}: handle に使えない文字が入っている')
+            continue
+        if _ws_handles and _h not in _ws_handles:
+            seed_dropped.append(
+                f'{_h}({(_sd or {}).get("label") or ""}): '
+                'watch-seeds.json に在るのに watch-sources.json の igAccounts に出ていない')
+    add('watch_seed_dropped', '手で足したウォッチ対象が生成物に出ていない', seed_dropped,
+        note='watch-seeds.json は掲載実績の無い主催をウォッチに乗せる唯一の経路。'
+             'generate-watchlist.py の load_seeds() が読む。'
+             'ここに出たら、生成を回していないか handle の書式が違う。'
+             '掲載実績ができたら導出側が同じ handle を持つので seed は消してよい')
+
     # --- フィードの pubDate がビルドのたびに動いていないか ------------------
     # 2026-08-30 に sitemap の lastmod で塞いだのと同じ型。
     # generate-rss.py は addedDate が無い回に datetime.now() を入れており、

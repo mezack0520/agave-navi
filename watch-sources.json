@@ -1,8 +1,8 @@
 {
- "generated": "2026-09-16 17:05 JST",
- "description": "events.jsonから自動導出されるウォッチ対象。手動編集不要(毎日のビルドで再生成)。",
+ "generated": "2026-09-17 08:27 JST",
+ "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 246,
+  "igAccounts": 248,
   "awaitingNextEdition": 232,
   "officialSiteCandidates": 68,
   "unresolvedIgHandles": 0
@@ -1150,6 +1150,28 @@
    "lastEventDate": "2027-01-24",
    "hasUpcoming": true,
    "priority": 1
+  },
+  {
+   "handle": "monster_house_nagoya",
+   "url": "https://www.instagram.com/monster_house_nagoya/",
+   "eventCount": 0,
+   "lastEventName": "モンスターズハウス（アガベアイテム専門店・名古屋 緑店/港店）",
+   "lastEventDate": null,
+   "hasUpcoming": false,
+   "priority": 1,
+   "source": "seed",
+   "seedWhy": "2026-09-12〜15 に2店舗同時で NAMED AGAVE PARTY / BLUE AGAVE PARTY を開いたが当サイトは1件も掲載していない。6月にOPENイベント、3月にハンズ名古屋出展と、数か月おきに店舗イベントを開く。告知は開催の数日前にしか出ない"
+  },
+  {
+   "handle": "monsters_house_minato",
+   "url": "https://www.instagram.com/monsters_house_minato/",
+   "eventCount": 0,
+   "lastEventName": "モンスターズハウス 港店",
+   "lastEventDate": null,
+   "hasUpcoming": false,
+   "priority": 1,
+   "source": "seed",
+   "seedWhy": "上と同じ主催の店舗別アカウント。回ごとに港店・緑店で内容が違うので両方見る"
   },
   {
    "handle": "kumagaya_taniku_fes",

@@ -573,6 +573,69 @@
       "eventDate": "2026-10-12",
       "revisit": false,
       "source": "https://garage-garden.com/news/event/garage-nagoya-%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%8eschop-vol-7%e3%80%8f%e9%96%8b%e5%82%ac/"
+    },
+    {
+      "key": "east-side-tokyo-17th-anniv-sale-2026-09",
+      "name": "17th Anniversary SALE (2026-09-14〜20 east side tokyo・東京都台東区蔵前1-5-7)",
+      "reason": "造花・花材の問屋 east side tokyo が開く周年セール。主催告知(@eastsidetokyo)の中身は『SALE価格で造花をご用意！観葉植物が10％off！クラフト商材Max50％off！その他ドライフラワーや花器の一部もセール価格販売中』で、企画は平日限定のガラガラ抽選会(3000円以上購入)のみ。値引きだけの回なので storeSale.exclude。扱う主題も造花・花材で、観葉植物は売場の一部",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-09-14",
+      "decided": "2026-09-17"
+    },
+    {
+      "key": "ringoya-ieg-popup-2026-09",
+      "name": "RINGOYA × IEG POP UP EVENT (2026-09-15〜29 LIFE CONCEPT IEG・徳島県小松島市江田町敷地前76-7)",
+      "reason": "鳴門市のフラワーショップ RINGOYA が家具・インテリア店 LIFE CONCEPT IEG に観葉植物を期間限定で展開する POPUP。主催告知(@ringoya87)は『インテリアをぐっと上質にする、植物のある心地よい空間』で、並ぶのは観葉植物・鉢・フラワーベース。アガベ・多肉・塊根の系統ではない。and-plants-and-flower-marche-2026-09(2026-09-12 見送り)と同型",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-09-15",
+      "decided": "2026-09-17"
+    },
+    {
+      "key": "fantastic-market-herbis-29-2026-09",
+      "name": "FANTASTIC MARKET in HERBIS 29 (2026-09-26〜27 ハービスPLAZA ENT・大阪市北区)",
+      "reason": "2010年から続く食のマルシェ。主催告知(@fantasticmarket2010)の副題が『WELCOMING the First Harvests of Autumn』、惹句が『美味しい恵みを探しに』で、30店舗の主体は旬の食材と飲食。名称は中立で出店内訳も非公開のため compositeEvents / undisclosedBreakdown.exclude に当たる。29回目のシリーズなので listing-policy の precedents に置いた",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-09-26",
+      "decided": "2026-09-17"
+    },
+    {
+      "key": "cafe-book-marche-jindai-2026-10",
+      "name": "カフェ＆ブックマルシェ (2026-10-01 神代植物公園 雑木林・東京都調布市)",
+      "reason": "都民の日に神代植物公園の雑木林を会場として開く、本と雑貨とカフェのマルシェ。会場が植物公園というだけで、集まるのは雑貨と植物・自然関連の本。植物の即売が主題ではない",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-10-01",
+      "decided": "2026-09-17"
+    },
+    {
+      "key": "home-flea-work-6th-2026-10",
+      "name": "HOME/FLEA/WORK #6 -Back to school- (2026-10-03〜04 HOME/WORK VILLAGE・東京都世田谷区池尻2-4-5)",
+      "reason": "旧池尻中学校を活用した複合施設で開く古着・雑貨のマーケット。主催告知(@home_flea_work)は服フェス FASHION IN JAPAN FESTIVAL 2026 との同時開催を前面に出しており、出店は古着が主体でワークショップと植物販売が一部。名称が中立で内訳も非公開のため compositeEvents / undisclosedBreakdown.exclude",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-10-03",
+      "decided": "2026-09-17"
+    },
+    {
+      "key": "shoku-to-the-future-2026-10",
+      "name": "植トゥザ・フューチャー2026 (2026-10-16〜18 Motorpool gallery・大阪市中央区西心斎橋2-8-17)",
+      "reason": "三重県桑名市の植物とアートのブランド GREEN PRICKLE(デザイナー山田一馬)の初個展。主催告知(@green_prickle)に『※植物の販売はございません。』と明記があり、並ぶのはアート作品100点以上・ポスター・ステッカー・雑貨・アパレル。植物ではなく作品が主題なので outOfScopeGenres.artworkShows",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-10-16",
+      "decided": "2026-09-17"
+    },
+    {
+      "key": "yanbaru-shokubutsu-banyuki-vol2-2026-10",
+      "name": "やんばる植物万遊記 Vol.2 (2026-10-17〜18 BUNASAUNA・沖縄県国頭郡)",
+      "reason": "ハーバルサウナ BUNASAUNA の3周年記念企画。主催告知(@bunasauna_okinawa / note)は『各日10名限定の開催となります。ご応募いただいた方の中から抽選』で、内容はやんばる植物の採取・蒸留・スクラブ作りの体験とサウナ。一般来場者が当日立ち寄って買える回ではないので closedGatherings / workshopOnly",
+      "reasonType": "policy",
+      "revisit": false,
+      "eventDate": "2026-10-17",
+      "decided": "2026-09-17"
     }
   ],
   "_reasonTypes": {
@@ -581,6 +644,6 @@
     "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
     "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
   },
-  "updated": "2026-09-16",
+  "updated": "2026-09-17",
   "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

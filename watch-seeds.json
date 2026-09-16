@@ -1,0 +1,19 @@
+{
+  "_note": "手で足すウォッチ対象。generate-watchlist.py が watch-sources.json の igAccounts へ source=\"seed\" として混ぜる。掲載実績が無くてもウォッチに残る唯一の経路。",
+  "_why": "watch-sources.json は events.json からの導出なので、自己拡張ループに入れるのは『一度でも掲載した主催』だけ。**一度も掲載したことがない主催は、何度イベントを開いても永久にウォッチ対象にならない。**2026-09-17、アガベ専門店モンスターズハウス(名古屋・2店舗)が 9/12〜15 に4日間の NAMED AGAVE PARTY を開いていたのを、終わってから coverage-gaps.json の truncatedUnresolved で知った。LEAFLA の記事は開催前日の 09-11 に出ており、店舗イベントの告知は直前にしか出ない。掲載を1件も持っていない以上、次回も同じ形で落とす。generate-watchlist.py の docstring は『手動でウォッチリストを管理する必要はない』と書いているが、それはループに入った後の話で、入口は誰も持っていなかった。",
+  "_howToUse": "掲載を取りこぼした主催・これから開きそうな専門店を見つけたら handle を足す。掲載実績ができたら自動導出のほうが詳しくなるので、ここから消してよい(消さなくても二重にはならない。generate-watchlist が既存の handle を上書きしない)。audit.py の watch_seed_dropped が、ここに在って watch-sources.json に出ていない handle を鳴らす。",
+  "igAccounts": [
+    {
+      "handle": "monster_house_nagoya",
+      "label": "モンスターズハウス（アガベアイテム専門店・名古屋 緑店/港店）",
+      "why": "2026-09-12〜15 に2店舗同時で NAMED AGAVE PARTY / BLUE AGAVE PARTY を開いたが当サイトは1件も掲載していない。6月にOPENイベント、3月にハンズ名古屋出展と、数か月おきに店舗イベントを開く。告知は開催の数日前にしか出ない",
+      "addedOn": "2026-09-17"
+    },
+    {
+      "handle": "monsters_house_minato",
+      "label": "モンスターズハウス 港店",
+      "why": "上と同じ主催の店舗別アカウント。回ごとに港店・緑店で内容が違うので両方見る",
+      "addedOn": "2026-09-17"
+    }
+  ]
+}
