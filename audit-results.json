@@ -1,5 +1,5 @@
 {
-  "total": 621,
+  "total": 494,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 116,
+      "count": 115,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -196,7 +196,6 @@
         "botanical-yokocho-senju-2026-10",
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
-        "collect-plants-2026-09",
         "deep-green-ono-2026-09",
         "edamame-bikaku-itazuke-2026-09",
         "engei-raku-2026-09",
@@ -217,7 +216,8 @@
         "hanatomofesta-2026",
         "hanauchu-dream-garden-28th-2026-10",
         "happy-smile-2nd-odawara-2026-09",
-        "ibatama-vol9-2026-10"
+        "ibatama-vol9-2026-10",
+        "isij-big-bazaar-2026-09-27"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -579,50 +579,9 @@
     },
     "ci_generated_paths_drift": {
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
-      "count": 126,
-      "items": [
-        ".github/ISSUE_TEMPLATE/add-shop.yml (12743d4e3 が変更)",
-        ".github/workflows/daily.yml (12743d4e3 が変更)",
-        ".github/workflows/health.yml (12743d4e3 が変更)",
-        ".github/workflows/notify-inquiry.yml (12743d4e3 が変更)",
-        ".github/workflows/ops.yml (12743d4e3 が変更)",
-        ".github/workflows/sync-events.yml (12743d4e3 が変更)",
-        ".github/workflows/weekly-discovery.yml (12743d4e3 が変更)",
-        ".github/workflows/weekly-enrichment.yml (12743d4e3 が変更)",
-        ".gitignore (12743d4e3 が変更)",
-        ".nojekyll (12743d4e3 が変更)",
-        "404.html (12743d4e3 が変更)",
-        "CNAME (12743d4e3 が変更)",
-        "about.html (12743d4e3 が変更)",
-        "affiliate.js (12743d4e3 が変更)",
-        "amazon-links.json (12743d4e3 が変更)",
-        "android-chrome-192x192.png (12743d4e3 が変更)",
-        "android-chrome-512x512.png (12743d4e3 が変更)",
-        "android-chrome-maskable-512x512.png (12743d4e3 が変更)",
-        "apple-touch-icon.png (12743d4e3 が変更)",
-        "build-detail-pages.py (12743d4e3 が変更)",
-        "contact.html (12743d4e3 が変更)",
-        "crawl-sources.json (12743d4e3 が変更)",
-        "dashboard.html (12743d4e3 が変更)",
-        "disclaimer.html (12743d4e3 が変更)",
-        "docs/api.md (12743d4e3 が変更)",
-        "docs/architecture-2026-05.md (12743d4e3 が変更)",
-        "docs/architecture-2026-07.md (12743d4e3 が変更)",
-        "docs/brave-search-setup.md (12743d4e3 が変更)",
-        "docs/event-data-prompt.md (12743d4e3 が変更)",
-        "docs/events-needing-image.md (12743d4e3 が変更)",
-        "docs/quick-add-from-instagram.md (12743d4e3 が変更)",
-        "docs/setup-guide.md (12743d4e3 が変更)",
-        "docs/task-playbook.md (12743d4e3 が変更)",
-        "docs/workflow-audit-2026-05.md (12743d4e3 が変更)",
-        "enrich-request.json (12743d4e3 が変更)",
-        "favicon-32x32.png (12743d4e3 が変更)",
-        "favicon.ico (12743d4e3 が変更)",
-        "favicon.svg (12743d4e3 が変更)",
-        "google1583aeeac67a0d00.html (12743d4e3 が変更)",
-        "guides_content/01_agave_winter_hardiness.py (12743d4e3 が変更)"
-      ],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "count": 0,
+      "items": [],
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -791,6 +750,13 @@
       "count": 0,
       "items": [],
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
+      "severity": "urgent"
+    },
+    "stats_count_list_mismatch": {
+      "title": "件数の参考値と中身の配列の長さが合わない",
+      "count": 0,
+      "items": [],
+      "note": "同じものを数える2つの値が別の数え方をしている。件数は配列と同じ数え方にし、延べは *_hits など別の名前で残す",
       "severity": "urgent"
     },
     "coverage_source_missing": {
@@ -1288,6 +1254,13 @@
       "items": [],
       "note": "データに規則を書いただけでは規則にならない。読む側を同じコミットで足すか、機械可読な形をやめて散文にする",
       "severity": "info"
+    },
+    "metric_partition_mismatch": {
+      "title": "母集団を分けた参考値の和が母数と合わない",
+      "count": 0,
+      "items": [],
+      "note": "分割側と母数側が別の定義で数えている。開催予定は sitelib.is_upcoming が単一情報源で、中止・延期の回を外す。`status == 'upcoming'` を素で書くと中止の回が混ざる",
+      "severity": "urgent"
     },
     "event_image_lost": {
       "title": "imageUrlが消えている",

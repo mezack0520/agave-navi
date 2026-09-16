@@ -2437,6 +2437,60 @@ event-listing-review なら `inquiries-processed.json`)。
 
 ---
 
+### 監査自身が、監査している誤りを犯していた (2026-09-16)
+
+`upcoming_with_image` 116 + `upcoming_no_image` 56 = 172 に対し、
+同じ回の母数 `upcoming` は 171。**5日ぶんの履歴すべてで1件ずれていた。**
+
+分割側の2つが `e.get('status') == 'upcoming'` を素で書いており、
+`eventStatus: cancelled` の回(`collect-plants-2026-09`)を開催予定に数えていた。
+`sitelib.is_upcoming` は中止・延期を外す。docstring にも
+「件数バッジ・カレンダー・iCal・RSS がすべてここを見ているので、
+1か所で外せば全部に効く」と書いてある。
+`js_badge_counts_cancelled` は **JS に対してこの誤りを禁じる検査**で、
+`inline_rule_reimplementation` は **素の式での再実装を禁じる検査**である。
+その両方を持っている `audit.py` が、自分のメトリクスで同じことをしていた。
+`inline_rule_reimplementation` は `audit.py` と `sitelib.py` を走査から除いており、
+除外の理由（自分自身の規則定義を拾わないため）がそのまま抜け穴になっていた。
+
+**なぜ誰も鳴らさなかったか。** 個々の値は妥当な大きさで、
+`metric_moved` は前日との差しか見ない。**定義の食い違いは毎日同じだけずれるので、
+差を見る検査には原理的に映らない。**静かに正しくない値が毎日出る。
+
+対処: 分割側を `is_upcoming(e, today_s)` に寄せ、
+`metric_partition_mismatch`(urgent) を足した。
+**値の動きではなく、値どうしが満たすべき等式を見る。**
+同じ母集団を2つに割った値は、足すと母数に戻る。戻らないなら定義が2つある。
+`_METRIC_PARTITIONS` に組を足せば同じ形の検査が増やせる。
+
+`short_descriptions` も同じ書き方だったので併せて寄せた。
+残る `status == 'upcoming'` の素書き（`enrich_events.py` の優先順、
+`merge-new-events.py` の並び、`check_events.py` の出力妥当性）は、
+中止の回が混ざっても害が無い場所なので触っていない。
+**一律に禁じると誤検知が止まらなくなる**ので、検査は等式の側に置いた。
+
+### 件数は、中身の配列と同じ数え方にする (2026-09-16)
+
+`coverage-gaps.json` の `stats.truncated_unresolved` が 45、
+`truncatedUnresolved` の配列は 1件だった。
+LEAFLA の「最近追加されたイベント」枠は45ページ全部に同じ内容で出るので、
+カウンタは延べで45、配列は重複を落として1になる。
+**読む側は件数しか見ない。**1件の問題が45件の山に見える。
+
+カウンタを配列と同じ数え方（初出のときだけ加算）に直し、
+延べは `truncated_unresolved_hits` として別の名前で残した。
+検査は `stats_count_list_mismatch`(urgent)。
+`stats` の件数と、その中身を出している配列の長さを突き合わせる。
+逆向き（配列だけ上限で切って件数は延べのまま）も同じ形で出る。
+
+**`gaps_raw` と `gaps` は対象にしない。**前者は畳む前、後者は畳んだ後で、
+`gaps_raw >= len(gaps)` が正しい。等式が成り立つ組だけを `_COUNT_PAIRS` に入れる。
+
+`gaps: 0` が「取りこぼしが無い」ではないのと同じで、
+**件数はそれが何を数えているかを名前で保証していない。**
+延べを出すなら名前に出す。
+
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。

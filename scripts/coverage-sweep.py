@@ -612,11 +612,18 @@ def sweep(days, sleep=0.7):
                 # (ページの日付は枠の中身と無関係なので、判定すると
                 #  開催日の1日ずれで誤検知する)
                 if resolve_truncated(t, full_titles) is not None:
-                    stats['truncated_resolved'] += 1
+                    stats['truncated_resolved'] += 1   # こちらは延べ(中身を出さない)
                     continue
-                stats['truncated_unresolved'] += 1
+                # 「最近追加されたイベント」枠は45ページ全部に同じ内容で出る。
+                # 延べで数えると、実体1件が45件に見える(2026-09-16 実測:
+                # truncated_unresolved=45 に対し truncatedUnresolved は1件)。
+                # **件数は中身の配列と同じ数え方にする。**読む側は件数しか見ない。
+                # 延べは巡回の重さを見る値なので、別の名前で残す。
+                stats['truncated_unresolved_hits'] = (
+                    stats.get('truncated_unresolved_hits', 0) + 1)
                 if t not in unresolved:
                     unresolved.append(t[:180])
+                    stats['truncated_unresolved'] += 1
                 continue
             if not in_scope(t, prescoped=(source == 'nextmeet')):
                 continue

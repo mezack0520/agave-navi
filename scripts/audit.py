@@ -397,7 +397,7 @@ def main():
         f'開催予定で説明文{DESC_MIN_CHARS}字未満(モバイルのSERPスニペットが埋まらない)',
         sorted(f"{e['slug']}({len((e.get('description') or '').strip())}字)"
                for e in events
-               if e.get('status') == 'upcoming'
+               if is_upcoming(e, today_s)
                and len((e.get('description') or '').strip()) < DESC_MIN_CHARS), severity='info')
 
     # 8b. サムネイルの無い開催予定
@@ -414,9 +414,15 @@ def main():
     # 今日の events.json をそのまま先送りすると 9/28 に 13、10/26 に 4 まで
     # 落ちる。画像は1枚も失われていない。
     # 「追加では減らない」は正しいが、「減ったら消失」は成り立たない。
+    # 母数は sitelib.is_upcoming で数える。`status == 'upcoming'` を素で書くと
+    # **中止の回が開催予定に混ざる**(2026-09-16 実測: collect-plants-2026-09 が
+    # eventStatus=cancelled のまま status=upcoming で残っており、
+    # upcoming_with_image 116 + upcoming_no_image 56 = 172 が母数 171 と1件ずれていた)。
+    # js_badge_counts_cancelled が JS に対して禁じているのと同じ誤りを、
+    # 監査自身がメトリクスでやっていた。単一情報源は sitelib(docstring 参照)。
     add('upcoming_with_image', '開催予定でimageUrlがある',
         sorted(e['slug'] for e in events
-               if e.get('status') == 'upcoming' and (e.get('imageUrl') or '').strip()),
+               if is_upcoming(e, today_s) and (e.get('imageUrl') or '').strip()),
         '開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う',
         severity='metric')
 
@@ -430,7 +436,7 @@ def main():
         severity='metric')
     add('upcoming_no_image', '開催予定でimageUrlが無い',
         sorted(e['slug'] for e in events
-               if e.get('status') == 'upcoming' and not (e.get('imageUrl') or '').strip()),
+               if is_upcoming(e, today_s) and not (e.get('imageUrl') or '').strip()),
         '新規イベントは必ず画像なしで入るので、この件数はゼロにならない。'
         'カード側は県名と開催日を出す枠になっており(2026-08-24)、'
         '画像が無いこと自体は表示の不具合ではない。'
@@ -1962,6 +1968,29 @@ def main():
         sorted(_cov_stale),
         'coverage-sweep.py の取得が失敗している。'
         'この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない')
+
+    # 16c-2. 件数の stat と、その中身を出している配列の長さが合っているか。
+    #     **読む側は件数しか見ない。** 件数が延べ・配列が実体だと、
+    #     1件の問題が45件に見える(2026-09-16 実測: truncated_unresolved=45 /
+    #     truncatedUnresolved は1件。「最近追加されたイベント」枠が
+    #     45ページ全部に同じ内容で出るため)。逆向きもあり、配列だけを
+    #     上限で切って件数を延べのまま出すと、中身の無い件数が残る。
+    #     どちらも「数が違う」という一つの形で出る。
+    #     延べを見たいときは *_hits のように別の名前を付ける(等式の対象にしない)。
+    _cov_stats = (_cov.get('stats') or {})
+    _COUNT_PAIRS = [('truncated_unresolved', 'truncatedUnresolved'),
+                    ('errors_count', 'errors')]
+    _cnt_bad = []
+    for _sk, _lk in _COUNT_PAIRS:
+        if _sk not in _cov_stats or not isinstance(_cov.get(_lk), list):
+            continue
+        if _cov_stats[_sk] != len(_cov[_lk]):
+            _cnt_bad.append(f'coverage-gaps.json: stats.{_sk}={_cov_stats[_sk]} '
+                            f'だが {_lk} は {len(_cov[_lk])}件')
+    add('stats_count_list_mismatch', '件数の参考値と中身の配列の長さが合わない',
+        sorted(_cnt_bad),
+        '同じものを数える2つの値が別の数え方をしている。'
+        '件数は配列と同じ数え方にし、延べは *_hits など別の名前で残す')
 
     # 巡回すべき情報源のうち、どこからも見られていないものが無いか。
     # 2026-09-06 と 09-10、coverage-gaps.json は errors 0 / gaps 0 で
@@ -4539,6 +4568,37 @@ def main():
 
     _ev_now = len(events)
     _up_now = sum(1 for e in events if is_upcoming(e))
+
+    # 参考値どうしの整合。**同じ母集団を2つに割った値は、足すと母数に戻る。**
+    # 戻らないなら、割った側と母数側が別の定義で数えている。
+    # 2026-09-16 実測: upcoming_with_image 116 + upcoming_no_image 56 = 172 に対し
+    # 母数 upcoming は 171。分割側が `status == 'upcoming'` を素で書いており、
+    # 中止の回(collect-plants-2026-09 / eventStatus=cancelled)を開催予定に数えていた。
+    # このずれは5日ぶんの履歴すべてに出ていたが、**どの検査も1件も鳴らさなかった。**
+    # 個々の値は妥当な大きさで、metric_moved は前日との差しか見ないので、
+    # 定義の食い違いは「毎日同じだけずれている」という形で完全に静かに在り続ける。
+    # 検査は値の動きではなく、値どうしが満たすべき等式を見る。
+    # 母数は sitelib.is_upcoming(単一情報源)で数え直したものを使う。
+    _METRIC_PARTITIONS = [
+        ('upcoming', _up_now, ('upcoming_with_image', 'upcoming_no_image')),
+    ]
+    _part_bad = []
+    for _whole_name, _whole, _parts in _METRIC_PARTITIONS:
+        if any(_p not in findings for _p in _parts):
+            continue        # 検査を消したときに巻き込んで鳴らさない
+        _sum = sum(findings[_p]['count'] for _p in _parts)
+        if _sum != _whole:
+            _part_bad.append(
+                f"{_whole_name}={_whole} だが "
+                + ' + '.join(f"{_p}={findings[_p]['count']}" for _p in _parts)
+                + f" = {_sum}({_sum - _whole:+d})")
+    add('metric_partition_mismatch', '母集団を分けた参考値の和が母数と合わない',
+        _part_bad,
+        '分割側と母数側が別の定義で数えている。開催予定は sitelib.is_upcoming が'
+        '単一情報源で、中止・延期の回を外す。`status == \'upcoming\'` を素で書くと'
+        '中止の回が混ざる',
+        severity='urgent')
+
     metric_moves = []
     for _k, _v in _cur_metric.items():
         # そのキーを実際に持っている履歴だけで基準を作る。

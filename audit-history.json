@@ -651,9 +651,7 @@
   },
   {
    "date": "2026-09-16",
-   "urgent": {
-    "ci_generated_paths_drift": 126
-   },
+   "urgent": {},
    "info": {
     "coverage_gaps": 9,
     "cancel_watch_unreachable": 6,
@@ -664,7 +662,7 @@
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 48,
-    "upcoming_with_image": 116,
+    "upcoming_with_image": 115,
     "events_with_image": 164,
     "upcoming_no_image": 56,
     "ongoing_events": 3,
