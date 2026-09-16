@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-16",
+  "updated": "2026-09-17",
   "items": [
+    {
+      "on": "2026-09-17",
+      "kind": "listed",
+      "slug": "kachofugetsu-fukuoka-effect-2026-09",
+      "name": "鹿鳥風月（FUKUOKA EFFECT 会場）",
+      "date": "2026-09-19",
+      "dateEnd": "2026-09-19",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-17",
+      "kind": "listed",
+      "slug": "kachofugetsu-yukuhashi-2026-09",
+      "name": "鹿鳥風月（ゆくはし植物園 会場）",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-17",
+      "kind": "listed",
+      "slug": "onokoro-green-festa-2026-09",
+      "name": "Onokoro Green Festa",
+      "date": "2026-09-26",
+      "dateEnd": "2026-09-27",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
     {
       "on": "2026-09-16",
       "kind": "venue",
@@ -1170,36 +1200,6 @@
       "date": "2026-10-12",
       "dateEnd": "2026-10-12",
       "prefecture": "奈良",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "kyousenkai-2026-09",
-      "name": "狂仙会 2026",
-      "date": "2026-09-06",
-      "dateEnd": "2026-09-06",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "kisarazu-cs-auction-2026-09",
-      "name": "KISARAZU C&S AUCTION",
-      "date": "2026-09-22",
-      "dateEnd": "2026-09-22",
-      "prefecture": "千葉",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "kinshakusai-vol6-2026-10",
-      "name": "金鯱祭 VOL.6",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "愛知",
       "detail": ""
     }
   ]

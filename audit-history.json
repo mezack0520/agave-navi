@@ -674,6 +674,8 @@
   {
    "date": "2026-09-17",
    "urgent": {
+    "datedisplay_format": 1,
+    "venue_slug_romaji_candidates": 1,
     "coverage_sweep_broken": 2
    },
    "info": {
@@ -685,15 +687,15 @@
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 48,
-    "upcoming_with_image": 118,
-    "events_with_image": 167,
-    "upcoming_no_image": 53,
+    "upcoming_with_image": 119,
+    "events_with_image": 168,
+    "upcoming_no_image": 55,
     "ongoing_events": 3,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 53
+    "eyecatch_backlog": 55
    },
-   "events": 443,
-   "upcoming": 171
+   "events": 446,
+   "upcoming": 174
   }
  ]
 }

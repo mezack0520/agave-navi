@@ -1,10 +1,10 @@
 {
- "generated": "2026-09-17 08:31 JST",
+ "generated": "2026-09-17 08:33 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 248,
+  "igAccounts": 250,
   "awaitingNextEdition": 232,
-  "officialSiteCandidates": 68,
+  "officialSiteCandidates": 69,
   "unresolvedIgHandles": 0
  },
  "igAccounts": [
@@ -122,6 +122,15 @@
    "eventCount": 3,
    "lastEventName": "enjoy place 番外編",
    "lastEventDate": "2026-12-26",
+   "hasUpcoming": true,
+   "priority": 0
+  },
+  {
+   "handle": "ta29.wind.sun",
+   "url": "https://www.instagram.com/ta29.wind.sun/",
+   "eventCount": 2,
+   "lastEventName": "鹿鳥風月（ゆくはし植物園 会場）",
+   "lastEventDate": "2026-09-20",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -616,6 +625,15 @@
    "url": "https://www.instagram.com/our_plants_commune/",
    "eventCount": 1,
    "lastEventName": "Our Plants ver. 2.04",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
+   "handle": "mononoke_botanical_garden",
+   "url": "https://www.instagram.com/mononoke_botanical_garden/",
+   "eventCount": 1,
+   "lastEventName": "Onokoro Green Festa",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
    "priority": 1
@@ -2715,6 +2733,12 @@
    "eventDate": "2026-09-26"
   },
   {
+   "domain": "awaji-botanicalgarden.com",
+   "url": "https://awaji-botanicalgarden.com/onokoro-green-festa/",
+   "eventName": "Onokoro Green Festa",
+   "eventDate": "2026-09-26"
+  },
+  {
    "domain": "note.com",
    "url": "https://note.com/purveyors/n/nccecb7bfd245",
    "eventName": "PLANTS SHOW 2026秋",
@@ -2821,12 +2845,6 @@
    "url": "https://raflum.com/",
    "eventName": "RAFLUM POP-UP（ジェイアール名古屋タカシマヤ）",
    "eventDate": "2026-04-22"
-  },
-  {
-   "domain": "fumakilla.co.jp",
-   "url": "https://www.fumakilla.co.jp/new/6926/",
-   "eventName": "カダンフェス2026 春",
-   "eventDate": "2026-04-25"
   }
  ],
  "unresolvedIgHandles": []
