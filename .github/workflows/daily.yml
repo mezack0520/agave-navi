@@ -23,6 +23,13 @@ on:
       # 手で直したときに確認する経路が無いと、動くかどうかを翌朝まで待つことになる。
       - 'scripts/coverage-sweep.py'
       - 'scripts/check-cancelled.py'
+      # sitelib は生成物すべての単一情報源(会場スラッグ・CSS/JS版数・
+      # 日付整形)。ここを直しても再生成が走らないので、翌朝まで本番は
+      # 旧版のままだった。2026-09-17、会場ローマ字URLを2件足した直後に
+      # venue_redirect_broken(urgent) が鳴り、宛先の頁はビルドされていなかった。
+      # **「直した」と「本番に出ている」が別なのは §5 に書いてあるが、
+      # 出す経路そのものが無かった。**
+      - 'scripts/sitelib.py'
   repository_dispatch:
     types: [daily]
   workflow_dispatch:
