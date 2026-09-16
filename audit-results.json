@@ -595,7 +595,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -744,25 +744,26 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 9,
+      "count": 7,
       "items": [
-        "2026-09-17 east side tokyoが17th Anniversary SALE 2026を開催、造花や観葉植物などをSALE価格で販売",
-        "2026-09-19 植物販売会(仮) in仁保の郷が道の駅仁保の郷で開催、植物関連商品を扱う販売会を実施予定",
-        "2026-09-22 植ノ宴 in KUMAMOTO2026が熊本で開催、植物と雑貨を楽しむ2日間のマーケット",
-        "2026-09-26 FANTASTIC MARKET in HERBIS 29を2026年9月に開催、旬の食材や植物と暮らしのアイテムが集結",
-        "2026-09-28 LIFECONCEPTIEGがRINGOYAとのPOPUPEVENT2026を開催、観葉植物や鉢やフラワーベースを販売",
-        "2026-10-01 カフェ＆ブックマルシェ2026が神代植物公園で開催、雑貨や植物・自然関連の本が集結",
-        "2026-10-03 HOME/FLEA/WORK #6が10月3日と4日に開催、古着や植物などのマーケットとワークショップを展開",
-        "2026-10-16 GREEN PRICKLEが植トゥザ・フューチャー2026を大阪で開催、植物を表現したアート100点以上などを展示",
-        "2026-10-17 BUNASAUNAがやんばる植物万遊記2026を開催、植物の採取や蒸留とサウナを組み合わせた3周年記念企画"
+        "2026-09-23 セラモール販売会",
+        "2026-10-10 BOTANICAL STYLE",
+        "2026-10-10 GREEN DAYS まつやま vol.4",
+        "2026-10-10 ポルカマルシェ",
+        "2026-10-11 ONE",
+        "2026-10-11 多肉植物イベントツンツンぷくぷくワンダーランドmini！",
+        "2026-11-28 ボタニックフロントフェス"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
     "coverage_sweep_broken": {
       "title": "取りこぼし巡回が機能していない",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "巡回失敗: 2026-09-26: HTTP 503",
+        "巡回失敗: 2026-09-30: HTTP 503"
+      ],
       "note": "coverage-sweep.py の取得が失敗している。この状態では coverage_gaps が0件でも取りこぼしが無い証拠にならない",
       "severity": "urgent"
     },
@@ -1036,6 +1037,13 @@
       "count": 0,
       "items": [],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。NextMeet と まとめブログは CI から読めないので coverage-sweep.py に入れられず、回ったかどうかを残せるのはこのファイルだけ。coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない(あれは LEAFLA しか見ていない)。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
+      "severity": "urgent"
+    },
+    "watch_seed_dropped": {
+      "title": "手で足したウォッチ対象が生成物に出ていない",
+      "count": 0,
+      "items": [],
+      "note": "watch-seeds.json は掲載実績の無い主催をウォッチに乗せる唯一の経路。generate-watchlist.py の load_seeds() が読む。ここに出たら、生成を回していないか handle の書式が違う。掲載実績ができたら導出側が同じ handle を持つので seed は消してよい",
       "severity": "urgent"
     },
     "feed_pubdate_unstable": {

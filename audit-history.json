@@ -670,6 +670,30 @@
    },
    "events": 443,
    "upcoming": 171
+  },
+  {
+   "date": "2026-09-17",
+   "urgent": {
+    "coverage_sweep_broken": 2
+   },
+   "info": {
+    "coverage_gaps": 7,
+    "inquiry_review_gap": 1,
+    "task_run_never_recorded": 1,
+    "task_run_gap": 2
+   },
+   "metric": {
+    "thin_past_with_source": 33,
+    "thin_archived": 48,
+    "upcoming_with_image": 118,
+    "events_with_image": 167,
+    "upcoming_no_image": 53,
+    "ongoing_events": 3,
+    "workflow_secrets": 6,
+    "eyecatch_backlog": 53
+   },
+   "events": 443,
+   "upcoming": 171
   }
  ]
 }

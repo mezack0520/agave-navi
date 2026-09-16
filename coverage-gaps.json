@@ -1,10 +1,10 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-16",
+  "sweptOn": "2026-09-17",
   "sweptSources": {
     "leafla": {
       "ok": true,
-      "fetched": 45,
+      "fetched": 43,
       "unit": "day"
     },
     "nextmeet": {
@@ -15,59 +15,54 @@
   },
   "daysAhead": 45,
   "stats": {
-    "fetched": 45,
-    "candidates": 687,
+    "fetched": 43,
+    "candidates": 656,
     "in_scope": 201,
-    "covered": 166,
-    "known_rejected": 26,
-    "truncated_resolved": 225,
+    "covered": 162,
+    "known_rejected": 32,
+    "truncated_resolved": 215,
     "truncated_unresolved": 1,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 98,
-    "truncated_unresolved_hits": 45,
-    "in_scope_nextmeet": 103,
-    "gaps_raw": 9
+    "in_scope_leafla": 80,
+    "truncated_unresolved_hits": 43,
+    "in_scope_nextmeet": 121,
+    "gaps_raw": 7
   },
-  "errors": [],
+  "errors": [
+    "2026-09-26: HTTP 503",
+    "2026-09-30: HTTP 503"
+  ],
   "truncatedUnresolved": [
     "09/10 追加 モンスターズハウス港店がNAMED AGAVE..."
   ],
   "gaps": [
     {
-      "date": "2026-09-17",
-      "title": "east side tokyoが17th Anniversary SALE 2026を開催、造花や観葉植物などをSALE価格で販売"
+      "date": "2026-09-23",
+      "title": "セラモール販売会"
     },
     {
-      "date": "2026-09-19",
-      "title": "植物販売会(仮) in仁保の郷が道の駅仁保の郷で開催、植物関連商品を扱う販売会を実施予定"
+      "date": "2026-10-10",
+      "title": "BOTANICAL STYLE"
     },
     {
-      "date": "2026-09-22",
-      "title": "植ノ宴 in KUMAMOTO2026が熊本で開催、植物と雑貨を楽しむ2日間のマーケット"
+      "date": "2026-10-10",
+      "title": "GREEN DAYS まつやま vol.4"
     },
     {
-      "date": "2026-09-26",
-      "title": "FANTASTIC MARKET in HERBIS 29を2026年9月に開催、旬の食材や植物と暮らしのアイテムが集結"
+      "date": "2026-10-10",
+      "title": "ポルカマルシェ"
     },
     {
-      "date": "2026-09-28",
-      "title": "LIFECONCEPTIEGがRINGOYAとのPOPUPEVENT2026を開催、観葉植物や鉢やフラワーベースを販売"
+      "date": "2026-10-11",
+      "title": "ONE"
     },
     {
-      "date": "2026-10-01",
-      "title": "カフェ＆ブックマルシェ2026が神代植物公園で開催、雑貨や植物・自然関連の本が集結"
+      "date": "2026-10-11",
+      "title": "多肉植物イベントツンツンぷくぷくワンダーランドmini！"
     },
     {
-      "date": "2026-10-03",
-      "title": "HOME/FLEA/WORK #6が10月3日と4日に開催、古着や植物などのマーケットとワークショップを展開"
-    },
-    {
-      "date": "2026-10-16",
-      "title": "GREEN PRICKLEが植トゥザ・フューチャー2026を大阪で開催、植物を表現したアート100点以上などを展示"
-    },
-    {
-      "date": "2026-10-17",
-      "title": "BUNASAUNAがやんばる植物万遊記2026を開催、植物の採取や蒸留とサウナを組み合わせた3周年記念企画"
+      "date": "2026-11-28",
+      "title": "ボタニックフロントフェス"
     }
   ]
 }
