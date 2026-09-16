@@ -673,7 +673,9 @@
   },
   {
    "date": "2026-09-17",
-   "urgent": {},
+   "urgent": {
+    "venue_slug_romaji_candidates": 1
+   },
    "info": {
     "coverage_gaps": 5,
     "inquiry_review_gap": 1,
@@ -685,13 +687,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 119,
     "events_with_image": 168,
-    "upcoming_no_image": 55,
+    "upcoming_no_image": 60,
     "ongoing_events": 3,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 55
+    "eyecatch_backlog": 60
    },
-   "events": 446,
-   "upcoming": 174
+   "events": 451,
+   "upcoming": 179
   }
  ]
 }
