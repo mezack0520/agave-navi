@@ -652,16 +652,14 @@
   {
    "date": "2026-09-16",
    "urgent": {
-    "datedisplay_format": 5,
-    "venue_postal_address": 1,
-    "ci_generated_paths_drift": 131
+    "ci_generated_paths_drift": 126
    },
    "info": {
     "coverage_gaps": 9,
+    "cancel_watch_unreachable": 6,
     "inquiry_review_gap": 1,
     "task_run_never_recorded": 1,
-    "task_run_gap": 2,
-    "shared_source_page_multi_date": 1
+    "task_run_gap": 2
    },
    "metric": {
     "thin_past_with_source": 33,
