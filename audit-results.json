@@ -1,5 +1,5 @@
 {
-  "total": 500,
+  "total": 502,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -623,7 +623,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -649,9 +649,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 4,
+      "count": 6,
       "items": [
         "kourep-2026-autumn(2026-09-16〜2026-09-20/5日/長期)",
+        "miuraengei-aroid-protoleaf-futako-2026-09(2026-09-04〜2026-09-20/17日/長期)",
+        "onokoro-green-festa-2026-09(2026-09-01〜2026-09-27/27日/長期)",
         "raflum-hankyu-mens-tokyo-2026-09(2026-09-16〜2026-09-22/7日/長期)",
         "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)",
         "yamashiro-aisenen-autumn-2026-09(2026-09-18〜2026-09-27/10日/長期)"
@@ -803,6 +805,7 @@
       "title": "開催予定でアイキャッチが無い回",
       "count": 56,
       "items": [
+        "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-05 sakuya-green-jam-5-2026",
         "2026-09-16 kourep-2026-autumn",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
@@ -811,7 +814,6 @@
         "2026-09-19 ore-no-plants-collection-2026-09",
         "2026-09-20 jss-kitakanto-mini-tenji-sokubai-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
-        "2026-09-26 onokoro-green-festa-2026-09",
         "2026-09-26 shokufes-global-plants-market-mizuho-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
         "2026-09-27 exploring-unpredictable-plants-2026-09",

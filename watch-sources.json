@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-18 08:21 JST",
+ "generated": "2026-09-18 08:27 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 253,
@@ -360,6 +360,15 @@
    "priority": 1
   },
   {
+   "handle": "mononoke_botanical_garden",
+   "url": "https://www.instagram.com/mononoke_botanical_garden/",
+   "eventCount": 1,
+   "lastEventName": "Onokoro Green Festa",
+   "lastEventDate": "2026-09-01",
+   "hasUpcoming": true,
+   "priority": 1
+  },
+  {
    "handle": "raflum.tokyo",
    "url": "https://www.instagram.com/raflum.tokyo/",
    "eventCount": 1,
@@ -652,15 +661,6 @@
    "url": "https://www.instagram.com/our_plants_commune/",
    "eventCount": 1,
    "lastEventName": "Our Plants ver. 2.04",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "mononoke_botanical_garden",
-   "url": "https://www.instagram.com/mononoke_botanical_garden/",
-   "eventCount": 1,
-   "lastEventName": "Onokoro Green Festa",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
    "priority": 1
@@ -2733,7 +2733,7 @@
    "domain": "protoleaf.com",
    "url": "https://www.protoleaf.com/?p=24182",
    "eventName": "三浦園芸 アロイド販売会",
-   "eventDate": "2026-09-19"
+   "eventDate": "2026-09-04"
   },
   {
    "domain": "florence.jp",
@@ -2763,7 +2763,7 @@
    "domain": "awaji-botanicalgarden.com",
    "url": "https://awaji-botanicalgarden.com/onokoro-green-festa/",
    "eventName": "Onokoro Green Festa",
-   "eventDate": "2026-09-26"
+   "eventDate": "2026-09-01"
   },
   {
    "domain": "note.com",
