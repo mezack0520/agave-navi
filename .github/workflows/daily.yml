@@ -64,6 +64,24 @@ jobs:
       - name: Install deps
         run: pip install requests beautifulsoup4 lxml
 
+      # push で入ったときは「何が変わったか」で巡回の要否を決める。
+      # 巡回(外部サイトを叩く3ステップ)は6〜9分かかり、cancel-watch.json と
+      # coverage-gaps.json を毎回書き換える。この2つは同時に走った回と
+      # 必ず衝突するので、**用が無い push で回すと事故だけが増える**
+      # (2026-09-15 と 09-17 の daily はどちらもこれで落ちた)。
+      # 巡回スクリプト自身を直した回は確かめたいので、そこだけ回す。
+      - name: What changed (push のときだけ)
+        id: changed
+        if: github.event_name == 'push'
+        run: |
+          FILES=$(git diff --name-only HEAD^ HEAD || true)
+          echo "$FILES"
+          if echo "$FILES" | grep -qE '^scripts/(coverage-sweep|check-cancelled)\.py$'; then
+            echo "crawl=true" >> $GITHUB_OUTPUT
+          else
+            echo "crawl=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Check date updates (scrape official sources)
         # pushトリガ(再生成目的)では外部サイトを叩かない
         if: github.event_name != 'push' && github.event.inputs.skip_date_check != 'true'
@@ -87,6 +105,7 @@ jobs:
       # 失敗しても後続を止めない(|| true)が、失敗自体は coverage-gaps.json の
       # errors に残り、audit の coverage_sweep_broken が鳴る。
       - name: Sweep coverage gaps (他所にあって当サイトに無いイベント)
+        if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
         run: python3 scripts/coverage-sweep.py --days 45 || true
 
       # 逆向きの巡回。載せた回がもう開催されないことに気づくための経路。
@@ -95,6 +114,7 @@ jobs:
       # 失敗しても後続を止めないが、失敗は cancel-watch.json の errors に残り
       # audit の cancel_watch_broken が鳴る。
       - name: Watch for cancellations (載せた回が中止・延期になっていないか)
+        if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
         run: python3 scripts/check-cancelled.py || true
 
       - name: Regenerate all static files
