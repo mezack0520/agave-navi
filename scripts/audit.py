@@ -1460,11 +1460,16 @@ def main():
     _CI_CARRY_DATA = {
         'events.json', 'new-events.json', 'rejected-events.json',
         'new-inquiries.json', 'inquiries-processed.json',
-        'pending-judgments.json', 'task-runs.json', 'site-updates.json',
-        'site-updates-scopes.json', 'check-results.json',
+        'pending-judgments.json', 'task-runs.json', 'check-results.json',
         'listing-policy.json', 'scripts/eyecatch-review.json',
         'images/',
     }
+    # 分け方の判定は1つ。**remote の版に乗せて build-all.sh を回し直したとき、
+    # この回の情報が失われるか。**失われるなら運ぶデータ、失われないなら生成物。
+    # 「毎回書き換わるか」でも「積み上げか」でもない。site-updates.json は
+    # 積み上げだが track-updates.py が積み直して重複も弾くので生成物side。
+    # 2026-09-17、これを確かめずに運ぶ側へ入れて daily を落とした。
+    # 迷ったら実際に古い版へ戻して build-all.sh を回し、差分を見ること。
     _gen_prefixes, _gen_exact = [], set()
     for _line in (open(gen_list, encoding='utf-8') if os.path.exists(gen_list) else []):
         _line = _line.strip()
@@ -1513,6 +1518,22 @@ def main():
     except Exception as e:                          # noqa: BLE001
         # shallow clone や git が無い環境では判定しない。鳴らさない側に倒す
         print(f'audit: ci_generated_paths_drift をたどれない: {e}', file=sys.stderr)
+    # 2つのリストが食い違っていないか。**同じパスが両方に載っていたら矛盾。**
+    # 2026-09-17、site-updates.json が ci-generated-paths.txt(生成物)と
+    # _CI_CARRY_DATA(運ぶデータ)の両方に載った。定期タスクが前者を直したとき、
+    # 後者が残っていることに誰も気づかなかった。drift 検査は
+    # 「どちらかに載っているか」しか見ないので、両方に載っている状態は素通しだった。
+    # **片方だけ直して終わり、を防ぐのはこの検査の役目。**
+    _both = sorted((_gen_exact | {p for p in _gen_prefixes}) & _CI_CARRY_DATA)
+    add('ci_path_classified_twice',
+        '同じパスが生成物リストと運ぶデータの両方に載っている',
+        _both,
+        'どちらか一方にする。判定は「remote の版に乗せて build-all.sh を'
+        '回し直したとき、この回の情報が失われるか」。失われるなら _CI_CARRY_DATA、'
+        '失われないなら ci-generated-paths.txt。'
+        '両方に載っていると、片方を直しても ci-push.sh の挙動が変わらない',
+        severity='urgent')
+
     add('ci_generated_paths_drift',
         'CIのコミットが触るのに、生成物にもデータにも分類されていないパス',
         sorted(set(_drift)),
