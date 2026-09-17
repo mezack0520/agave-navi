@@ -1,5 +1,5 @@
 {
-  "total": 495,
+  "total": 500,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 123,
+      "count": 125,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -215,16 +215,16 @@
         "gifu-midori-marche-2nd-2026-09",
         "green-base-market-vol1-nishikata-2026-10",
         "green-champuroo-vol2-2026-10",
-        "greensnap-marche-yokohama-2026-autumn",
-        "hanatomofesta-2026",
-        "hanauchu-dream-garden-28th-2026-10"
+        "greensnap-marche-odaiba-2026",
+        "greensnap-marche-toyosu-2026-autumn",
+        "greensnap-marche-yokohama-2026-autumn"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 172,
+      "count": 174,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aobouzu-6raccoon-popup-2026-09",
@@ -623,7 +623,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -649,11 +649,12 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 3,
+      "count": 4,
       "items": [
         "kourep-2026-autumn(2026-09-16〜2026-09-20/5日/長期)",
         "raflum-hankyu-mens-tokyo-2026-09(2026-09-16〜2026-09-22/7日/長期)",
-        "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)"
+        "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)",
+        "yamashiro-aisenen-autumn-2026-09(2026-09-18〜2026-09-27/10日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"

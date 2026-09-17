@@ -1,7 +1,27 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-17",
+  "updated": "2026-09-18",
   "items": [
+    {
+      "on": "2026-09-18",
+      "kind": "listed",
+      "slug": "greensnap-marche-toyosu-2026-autumn",
+      "name": "GreenSnap Marche 豊洲 2026 Autumn",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-18",
+      "kind": "listed",
+      "slug": "greensnap-marche-odaiba-2026",
+      "name": "GreenSnap Marche お台場 2026",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-29",
+      "prefecture": "東京",
+      "detail": ""
+    },
     {
       "on": "2026-09-17",
       "kind": "listed",
@@ -1180,26 +1200,6 @@
       "date": "2026-09-19",
       "dateEnd": "2026-09-19",
       "prefecture": "山形",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "papan-vol5-2026-09",
-      "name": "第5回 パパ〜ん！ばにらとぼたんとユカいな仲間たち",
-      "date": "2026-09-21",
-      "dateEnd": "2026-09-21",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "okinawa-chinki-plants-futako-2026",
-      "name": "沖縄育ちの珍奇な植物店 vol.2",
-      "date": "2026-08-28",
-      "dateEnd": "2026-08-31",
-      "prefecture": "東京",
       "detail": ""
     }
   ]
