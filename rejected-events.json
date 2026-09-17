@@ -1,679 +1,705 @@
 {
-  "description": "掲載見送りを決定したイベントの記録。agave-event-update は候補がここに載っていれば再提案せずスキップする。方針転換で掲載する場合はここから削除して new-events.json に追加する。",
-  "items": [
-    {
-      "key": "ferme-de-fes-vol29",
-      "name": "フェルム・ド・フェスVol.29 (2026-08-01/02 こもれび森のイバライド)",
-      "decided": "2026-07-27",
-      "reason": "植物比率が低くサイトの軸から外れる(公式SHOPリスト約120店中、植物系はBotanical6+Garden3)",
-      "reasonType": "policy",
-      "eventDate": "2026-08-01"
-    },
-    {
-      "key": "localgreen-festival-2026",
-      "name": "LOCALGREEN FESTIVAL'26 (2026-11-07/08 横浜赤レンガ倉庫)",
-      "decided": "2026-07-27",
-      "reason": "主体は音楽フェスでアガベ・塊根専門ではない",
-      "reasonType": "policy",
-      "eventDate": "2026-11-07"
-    },
-    {
-      "key": "gen-2026-shimizu",
-      "reasonType": "policy",
-      "name": "愿2026 (2026-09-12/13 エスパルスドリームプラザやすらぎ広場)",
-      "decided": "2026-07-30",
-      "reason": "日毎60店規模の雑貨・飲食・音楽を含む総合マーケットで、植物出店比率が確認できない。2026-09-05 再確認: 愿(ゲン)の主催は @gen_2025_ivent で、「観て・食べて・遊ぶ」五感を刺激するステージイベントとして2日で55〜60店舗を集める総合マーケット。同じ会期・同じ会場の海側やすらぎ広場で、ぼっち植堂 @bocchi_syokudou 主催の植物即売会「叢宴(soen)」が愿とのコラボとして併催される。叢宴は植物が主題なので soen-espulse-dream-plaza-2026-09 として掲載済み。愿本体の見送りは維持する(別イベントであり、二重登録ではない)",
-      "eventDate": "2026-09-12",
-      "coexistsWith": "soen-espulse-dream-plaza-2026-09",
-      "revisitedOn": "2026-09-05"
-    },
-    {
-      "key": "no1plantae-2026-autumn",
-      "reasonType": "unverified",
-      "revisit": false,
-      "name": "天下一植物界 2026秋回（HDC神戸）",
-      "decided": "2026-07-31",
-      "reason": "公式 no1plantae.com/next は第六回(2026年5月23-24日 京セラドーム、終了)のままで、公式IG @borderbreakbeyond の最新も5月24日の終了報告。第四回以降は毎年5月の年1回開催で秋回の実績が無く、第六回の告知は開催3か月前に出ていた。8月末で秋回の告知が無いことから2026年秋回は存在しないと判断する。次は第七回(2027年春)を新規エントリとして扱う。pukubookの『毎年5月、10月頃／HDC神戸』は会場も旧い",
-      "reviewedOn": "2026-09-01"
-    },
-    {
-      "key": "sagami-vibes-park-vol3-2026",
-      "reasonType": "policy",
-      "name": "SAGAMI VIBES PARK vol.3 (2026-09-05/06 淵野辺公園)",
-      "decided": "2026-08-10",
-      "reason": "飲食・アパレル・音楽・アート・スケート等を含む総合フェスで植物は一区画。植物系出店は棘棘など数店にとどまり複合イベントの掲載閾値に届かない",
-      "eventDate": "2026-09-05"
-    },
-    {
-      "key": "earth-garden-aki-2026",
-      "reasonType": "policy",
-      "name": "アースガーデン\"秋\" 2026 (2026-10-24/25 代々木公園)",
-      "decided": "2026-08-10",
-      "reason": "主体は環境・音楽系の総合イベント。植物出店はあるが軸が異なりLOCALGREEN FESTIVAL'26と同じ扱い",
-      "eventDate": "2026-10-24"
-    },
-    {
-      "key": "midori-meguru-marche-6th-2026",
-      "reasonType": "policy",
-      "name": "第6回 みどりめぐるマルシェ (2026-10-12 大阪府立花の文化園)",
-      "decided": "2026-08-10",
-      "reason": "主催 @midori_meguru の告知はあるが『地元の味や手仕事に出会う一日』とうたう総合マルシェで、多肉・アガベ・塊根の出店比率が確認できない。愿2026と同じ判断",
-      "eventDate": "2026-10-12"
-    },
-    {
-      "key": "wassa-marche-22nd-2026",
-      "reasonType": "policy",
-      "name": "第22回 わっさまるしぇ (2026-09-12 米沢総合公園)",
-      "decided": "2026-08-10",
-      "reason": "地域の総合マルシェ。出店者情報で植物系は露苦出凪刺plantsなど少数にとどまり、植物が主役の回ではない",
-      "eventDate": "2026-09-12"
-    },
-    {
-      "key": "connect-noasobi-market-2026",
-      "reasonType": "policy",
-      "name": "CONNECT-noasobi market- 2026 (2026-10-03 NOASOBI camp field・飛騨市)",
-      "decided": "2026-08-12",
-      "reason": "主催 @connect_noasobi の告知はあるが『こだわりのフードやクラフト、音楽、空間』を掲げる総合アウトドアマーケット。名称も中立で植物出店の内訳は非公開。listing-policy の compositeEvents.undisclosedBreakdown の exclude に該当",
-      "eventDate": "2026-10-03"
-    },
-    {
-      "key": "neighborhood-marche-vol5-2026",
-      "reasonType": "policy",
-      "name": "NEIGHBORHOOD MARCHE vol.5 (2026-08-22/23 幕張ベイパーク)",
-      "decided": "2026-08-12",
-      "reason": "主催 @neighborhood_marche の告知はあるが地域のナイトマルシェ。名称が中立で植物出店の内訳も非公開。undisclosedBreakdown の exclude に該当",
-      "eventDate": "2026-08-22"
-    },
-    {
-      "key": "gujo-de-cactus-night-market-2026-08",
-      "reasonType": "unverified",
-      "revisit": false,
-      "name": "郡上 de サボテン多肉植物夜市 (2026-08-16 cafe finkys・岐阜県郡上市白鳥町)",
-      "decided": "2026-08-12",
-      "reason": "pukubook のイベントカレンダーにのみ掲載。同カレンダーは会期を『8月1日〜8月31日』と書く回もあり日付が揺れている。主催者・cafe finkys 側の当該回の告知が確認できない。開催日(2026-08-16)を過ぎたため再評価を終了(2026-08-27)",
-      "eventDate": "2026-08-16",
-      "revisitedOn": "2026-08-27"
-    },
-    {
-      "key": "aki-no-shokubutsu-no-ichi-2026-10",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "秋の植物の市 (2026-10-04)",
-      "decided": "2026-08-12",
-      "reason": "複数の出店者アカウントが『10月4日日曜日、秋の植物の市、開催決定』と同一文面で告知しているが、会場も主催者も判明しない。会場が特定できたら掲載する / 2026-09-08 再評価: 会場・主催とも依然不明。「10月4日日曜日、秋の植物の市、開催決定です。出店者様は…」の同一文面が複数アカウントの検索結果に出るだけで、会場を書いた投稿が無い",
-      "eventDate": "2026-10-04",
-      "revisitedOn": "2026-09-08"
-    },
-    {
-      "key": "isij-tokyo-reikai-2026-08-23",
-      "reasonType": "cancelled",
-      "name": "I.S.I.J. 東京例会 (2026-08-23 板橋区立熱帯環境植物館)",
-      "decided": "2026-08-12",
-      "reason": "pukubook が『近日開催』として掲載しているが、主催の国際多肉植物協会 isij.net のイベントスケジュールに『8/23（日）東京例会 → 休会とさせていただきます』と明記されている。アグリゲータが中止・休会を反映していない例",
-      "eventDate": "2026-08-23"
-    },
-    {
-      "key": "machi-towns-marche-7th-2026-09",
-      "reasonType": "policy",
-      "name": "第7回 街＊TOWNS＊マルシェ (2026-09-13 研究学園駅前公園・茨城県つくば市)",
-      "decided": "2026-08-18",
-      "reason": "キッチンカー・餃子・ハンドメイドを含む地域の総合マルシェで、植物は出店の一部。名称も中立で出店内訳は非公開。compositeEvents.undisclosedBreakdown の exclude に該当",
-      "eventDate": "2026-09-13"
-    },
-    {
-      "key": "crafters-marche-hanazono-2026-09",
-      "reasonType": "policy",
-      "name": "CRAFTERS MARCHE 9月 (2026-09-12/13 道の駅はなぞの芝生広場・埼玉県深谷市)",
-      "decided": "2026-08-18",
-      "reason": "クラフト作家中心のマルシェで多肉は出店の一部。名称が中立で出店内訳も非公開。compositeEvents.undisclosedBreakdown の exclude に該当",
-      "eventDate": "2026-09-12"
-    },
-    {
-      "key": "sumori-sai-2026-aki",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "スモリ祭 2026秋 (スモリの家 ムサシ名取展示場・宮城県名取市)",
-      "decided": "2026-08-18",
-      "reason": "pukubook が『仮予定／非公式・秋』として掲載しているのみで開催日が未確定。主催の一次情報も見つからない。venueUnannounced.doNotList（日付も未確定なら掲載しない）に該当。日程が告知されたら再評価する / 2026-09-08 再評価: 秋回の日程はまだ主催から出ていない。検索に出る「11/4.5」「11月5日,6日」はいずれも2022〜2023年回の投稿で、pukubook も過去回しか持たない。出店者の予定表に「10月31日(土)スモリ祭り」とあるが主催の裏付けが無い",
-      "revisitedOn": "2026-09-08"
-    },
-    {
-      "key": "plants-only-bbq-2026-09",
-      "reasonType": "policy",
-      "name": "PLANTS ONLY BBQ (2026-09-22 X-PLANTS)",
-      "decided": "2026-08-18",
-      "reason": "参加費5,000円・持ち物指定ありの愛好家向け交流会（植物トーク・交換会・抽選会）で、一般来場者が立ち寄れる販売会ではない。closedGatherings に該当",
-      "eventDate": "2026-09-22"
-    },
-    {
-      "key": "neighborhood-marche-vol5-2026-08",
-      "reasonType": "undisclosed",
-      "name": "NEIGHBORHOOD MARCHE vol.5 (2026-08-22/23 幕張ベイパーク 若葉3丁目公園・千葉市)",
-      "decided": "2026-08-20",
-      "reason": "マルシェ・キッチンカー90店舗以上に音楽ライブとライブペインティングを併せた地域の総合ナイトマルシェ。名称が中立で、出店者の内訳から植物系の比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown.exclude に該当",
-      "eventDate": "2026-08-22"
-    },
-    {
-      "key": "bikaku-shop-popup-2026-08",
-      "reasonType": "policy",
-      "name": "BIKAKU SHOP × BIKAKU GURASHI POP UP 2026 (2026-08-29/30 BIKAKU SHOP・東京都杉並区)",
-      "decided": "2026-08-27",
-      "reason": "ビカクシダ専門店での開催だが、POPUPの中身はTシャツ新色・限定グッズ・対面ライブイラスト受注が主体で、植物の販売が主役ではない。板付けワークショップは併催されるが物販の中心はグッズ。listing-policy の plantCentric に照らして掲載しない",
-      "eventDate": "2026-08-29"
-    },
-    {
-      "key": "shokubutsu-to-furudougu-waco-2026",
-      "reasonType": "undisclosed",
-      "name": "植物と古道具 (2026-08-22〜09-06 古道具waco・千葉県鎌ケ谷市)",
-      "decided": "2026-08-27",
-      "reason": "古道具店の店内企画で、植物はBABABAが担当と告知にあるものの扱う品目の明記がない。植物が主役か古道具の添え物かを判断する材料が公開されていない。品目が明かされたら再評価する",
-      "eventDate": "2026-08-22"
-    },
-    {
-      "key": "hibi-open-day-2026-08",
-      "reasonType": "undisclosed",
-      "name": "榧日(ひび) 2026 OPEN DAY (2026-08-29/30 榧日・神奈川県横浜市青葉区)",
-      "decided": "2026-08-27",
-      "reason": "住宅事業者のオープンデーに植物店yu25plantsがPOP UP出店する形。おうち本屋との併催で、植物の品目も規模も告知に出ていない。植物イベントとして案内できる材料がない",
-      "eventDate": "2026-08-29"
-    },
-    {
-      "key": "tonemi-de-natsumatsuri-17th-2026",
-      "reasonType": "undisclosed",
-      "name": "第17回 手づくりまごころマーケット「とねミde夏祭り」 (2026-08-30 共和電設とねミドリ館・茨城県古河市)",
-      "decided": "2026-08-27",
-      "reason": "約55〜70ブースの総合ハンドメイド夏祭り。多肉植物・エアプランツの扱いは出店者側の告知にしかなく、主催告知に植物の明記がない。名称も中立で出店の内訳から植物系の比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown に該当",
-      "eventDate": "2026-08-30"
-    },
-    {
-      "key": "nishikata-medaka-taniku-2026-09",
-      "reasonType": "policy",
-      "name": "にしかた メダカ即売会×多肉植物販売 in 道の駅にしかた (2026-09-27 栃木県栃木市)",
-      "decided": "2026-08-27",
-      "reason": "主催 @inumeshik_1 の告知で 2026-09-27(日) 9:00〜14:00・道の駅にしかた・雨天決行荒天中止を確認したので、2026-08-27 の『主催の該当投稿に到達できない』は解消した(2026-09-08 再評価)。ただし回の主題はメダカで、主催の案内も『各ブリーダーによる厳選メダカの直売・イベント限定個体』が中心、メダカ業界の一覧サイトは内容を『改良メダカ販売・飼育用品販売』とだけ書く。名称に『多肉』が併記されるが outOfScopeGenres.coTitledEvents に該当し対象外。同じ主催は植物主題の GREEN BASE MARKET を同じ道の駅で別に開いており(green-base-market-vol1-nishikata-2026-10 として掲載済み)、当サイトの対象はそちら",
-      "eventDate": "2026-09-27",
-      "revisitedOn": "2026-09-08"
-    },
-    {
-      "key": "autumn-marche-kuroda-engei-2026-09",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "name": "Autumn marche 秋のマルシェ (2026-09-27 フローラ黒田園芸・埼玉県さいたま市中央区)",
-      "decided": "2026-08-27",
-      "reason": "日付と会場は主催Instagramで確認できたが、告知の内容は「植物と雑貨、美味しいもの」までで多肉・アガベ・塊根の品目明記がない。同投稿内の多肉の記載は別件の決算セールの話。品目が明かされたら再評価する / 2026-09-08 再評価: 主催 @florakurodaengei_staff の告知は今日時点でも「植物と雑貨 美味しいものとの出会い」までで、多肉・アガベ・塊根の品目明記が無い。店の主軸は寄せ植え・ガーデニングなので outOfScopeGenres 側にも振れる",
-      "eventDate": "2026-09-27",
-      "revisitedOn": "2026-09-08"
-    },
-    {
-      "key": "sousouka-bangaimen-2026-09",
-      "reasonType": "policy",
-      "name": "艸化 番外麺 (2026-09-13 麺ノ小池・栃木県真岡市)",
-      "decided": "2026-08-27",
-      "reason": "主催@cusasucの投稿で日時・会場は確認できたが、扱うのは「艸」「花」「古物」で、プロフィールも山野草・古物寄り。アガベ・多肉・塊根の系統ではないため掲載しない",
-      "eventDate": "2026-09-13"
-    },
-    {
-      "key": "kankichi-koubou-popup-2026-09",
-      "reasonType": "policy",
-      "name": "カンキチ工房 POP UP SHOP (2026-09-07〜10-01 横浜ロフト／そごう横浜店・神奈川県横浜市)",
-      "decided": "2026-08-27",
-      "reason": "会期は確認できるが扱うのはガジュマルのみ。アガベ・塊根・多肉のイベントとして案内する対象ではない",
-      "eventDate": "2026-09-07"
-    },
-    {
-      "key": "and-plants-and-flower-marche-2026-09",
-      "reasonType": "policy",
-      "name": "アンドプランツ＆アンドフラワーマルシェ'26 (2026-09-19 中目黒GTタワー前広場・東京都目黒区)",
-      "decided": "2026-08-27",
-      "reason": "主催告知の内容が「観葉植物とお花のマルシェ」で、アガベ・多肉・塊根の系統ではない",
-      "eventDate": "2026-09-19"
-    },
-    {
-      "key": "vege-life-26-odaiba-2026-09",
-      "reasonType": "undisclosed",
-      "name": "VEGE LIFE 26 (2026-09-26/27 お台場潮風公園・東京都品川区)",
-      "decided": "2026-08-27",
-      "reason": "約100店舗の総合マルシェで、主催告知に植物の品目明記がない。listing-policy の compositeEvents.undisclosedBreakdown に該当",
-      "eventDate": "2026-09-26"
-    },
-    {
-      "key": "bizarre-park-local-market-2026-09",
-      "reasonType": "unverified",
-      "revisit": false,
-      "name": "bizarre Park monthly LOCAL MARKET 9月回 (埼玉県鴻巣市)",
-      "decided": "2026-08-27",
-      "reason": "月1回の定例開催だが、2026年9月の日程を示す一次情報は最後まで出なかった。開催日(2026-09-01)を過ぎたため確定。公式IG @bizarreparkmonthly_localmarket が告知しているのは次回2026.11/28-29で、9月回の告知は無い",
-      "eventDate": "2026-09-01",
-      "revisitedOn": "2026-09-02"
-    },
-    {
-      "key": "atelier-nana-yuusuzumi-2026-09",
-      "reasonType": "policy",
-      "name": "アトリエnana 夕涼みしながら多肉時間 2026 (愛知県)",
-      "decided": "2026-09-01",
-      "reason": "主催者の告知は夏季休業中に設けた店舗の夕方営業日案内(15:00-19:00・計6日)で、即売会・展示会として告知されていない",
-      "eventDate": "2026-09-11"
-    },
-    {
-      "key": "nohara-engei-summer-sale-2026",
-      "reasonType": "policy",
-      "name": "ノハラ園芸センター Summer SALE 2026 (千葉県)",
-      "decided": "2026-09-01",
-      "reason": "レジにて20%OFFの期間限定割引販売(8/15-8/31)であり、イベントではない。同店の NOHARA green marche は別途対象",
-      "eventDate": "2026-08-31"
-    },
-    {
-      "key": "wakasaya-park-2026-09-20",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "若狭屋パーク 出店回 (2026-09-20 富山県富山市) D.G.C.TOYAMA 出店",
-      "decided": "2026-09-01",
-      "reason": "主催 @wakasaya_park に9/20回の告知がなく、確認できたのは出店者側の告知のみ。会場の定例名は WAKASAYA MARCHE で名称に植物語がなく、出店内訳も未公表のため比率を数えられない。主催告知が出たら再評価する",
-      "eventDate": "2026-09-20"
-    },
-    {
-      "key": "sumori-open-garden-2026-09",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "sumori open garden 2026秋 (2026-09-26/27 宮城県名取市)",
-      "decided": "2026-09-01",
-      "reason": "主催 @sumori_634 / スモリの家公式サイトに当該回の告知がなく、出店者 @simijimi0711 の投稿のみ。前年回は9月上旬に主催告知が出ているので、出たら掲載する / 2026-09-08 再評価: 出店者4者(@simijimi0711 / @sumi.sinfa4490 / @taniten_kengo202 / @solis_radix)とアグリゲータが 9/26(土)-27(日) 9:30-15:00 スモリの家中庭で一致するが、主催 @sumori_634 の当該回の投稿は確認できない(プロフィールにも告知なし)。primarySource.vendorAnnouncementsOnly に該当し、出店者告知が何件揃っても主催の代わりにはしない",
-      "eventDate": "2026-09-26",
-      "revisitedOn": "2026-09-08"
-    },
-    {
-      "key": "super-art-craft-market-2026-10",
-      "reasonType": "policy",
-      "name": "SUPER ART & CRAFT MARKET 2026 (MEET YOUR ART FESTIVAL 2026 内 / 2026-10-09〜12 東京都品川区)",
-      "decided": "2026-09-01",
-      "reason": "公式出店者リストで植物系は solxsol と PERK SHOP の2者のみ(80超中)。名称にも植物語がなく、本体は現代アートフェス。1出店者の出展告知をイベントとして立てない",
-      "eventDate": "2026-10-09"
-    },
-    {
-      "key": "bizarre-park-local-market-2026-11",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "name": "bizarre Park monthly LOCAL MARKET 11月回 (埼玉県鴻巣市)",
-      "decided": "2026-09-02",
-      "reason": "公式IG @bizarreparkmonthly_localmarket のプロフィール「次回2026.11/28.29」と 投稿 /p/DchcgnmKCwn/ のフライヤー(11/28sat-29sun OPEN10:00 CLOSE16:00 / 埼玉県鴻巣市安養寺214-2 bizarre Park)で日程・時間・会場は一次情報で確定。ただし名称が中立(LOCAL MARKET)で、出店者募集は「ジャンルは問いません」、出店内訳も非公開のため植物比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown.exclude に該当。会場と主催が多肉・サボテンの専門店(bizarre Park / @bizarre_farm)である点は掲載側に振れる材料だが、イベント自身の位置づけは植物主題ではない。出店内訳が公開されるか、主催が植物主題と明示したら再評価する",
-      "eventDate": "2026-11-28"
-    },
-    {
-      "key": "aqua-festa-vol2-2026-09",
-      "reasonType": "policy",
-      "name": "AQUA FESTA vol.2 〜はじめようアクアリウム生活〜 (2026-09-05 神奈川県横浜市)",
-      "decided": "2026-09-05",
-      "eventDate": "2026-09-05",
-      "reason": "公式IG @aquafesta.reeffesta と公式X @AquaFreaks で 2026-09-05・横浜産貿ホール マリネリア 1階展示場・先行入場11:00/一般12:30/閉場17:00・有料入場(先行大人2,000円)を確認。主題は名称どおりアクアリウムで、公式の副題も『はじめようアクアリウム生活』、扱いは熱帯魚・水草・メダカ・海水魚・サンゴ。出展者紹介がパート39まで続く規模に対し植物系はライセンスプランツ等の数店にとどまり、compositeEvents の『植物系出店が全出店の3割以上』に届かない。SAGAMI VIBES PARK vol.3 と同型"
-    },
-    {
-      "key": "machikado-geijutsusai-2026-09",
-      "reasonType": "policy",
-      "name": "まちかど芸術祭 2026 (2026-09-06 長野県飯田市 りんご並木)",
-      "decided": "2026-09-05",
-      "eventDate": "2026-09-06",
-      "reason": "拾えた一次情報は出店者側(@daiki_wild_agave)の出店予定告知のみで、内容は『9月6日 11:00〜17:00 長野県飯田市 〜まちかど芸術祭〜 飯田市りんご並木』という1店の出店案内。イベント本体は市街地の芸術祭で植物が主題ではなく、確認できた植物系出店者も1者。SUPER ART & CRAFT MARKET 2026 と同じく『1出店者の出展告知をイベントとして立てない』に該当"
-    },
-    {
-      "key": "medaka-fes-kanto-vol5-2026-09",
-      "reasonType": "policy",
-      "name": "メダカフェス関東 2026 Vol.5 (2026-09-13 埼玉県加須市 ホームプラザナフコ北加須店)",
-      "decided": "2026-09-05",
-      "eventDate": "2026-09-13",
-      "reason": "主催 @inumeshik_1 の告知で 2026-09-13(日) 9:00〜14:00・ホームプラザナフコ北加須店(埼玉県加須市柳生302)・雨天決行を確認。名称のとおり主題は改良メダカで、出店者一覧の先頭も幸來めだか・akaめだか・熊庭めだか等のメダカ店。植物エリアは併設区画として案内されているが全体に対する比率は小さく、compositeEvents の閾値に届かない。植物エリアの出店内訳が公開され、比率が3割以上または著名専門店3者以上を確認できたら再評価する"
-    },
-    {
-      "key": "ozaki-bikaku-itazuke-ws-2026-09",
-      "reasonType": "policy",
-      "name": "ビカクシダ板付けワークショップ（オザキフラワーパーク）(2026-09-12/13 東京都練馬区)",
-      "decided": "2026-09-05",
-      "eventDate": "2026-09-12",
-      "reason": "主催の公式サイト ozaki-flowerpark.co.jp と公式IG/X で 9/12(土)・13(日) 11:00〜/14:00〜(所要90分)・料金5,500円(税込)・定員制・講師 groote plantage 水山氏を確認。物販イベントではなく定員制の有料ワークショップ単独開催で、告知時点で既に満席・予約受付終了。listing-policy の workshopOnly に該当"
-    },
-    {
-      "key": "saitama-saboten-club-daimeihinten-23rd-2026-10",
-      "reasonType": "policy",
-      "name": "埼玉サボテンクラブ 第23回 サボテン大銘品展 (2026-10-04 むさしの村さくらホール・埼玉県加須市)",
-      "decided": "2026-09-06",
-      "eventDate": "2026-10-04",
-      "reason": "主催 @saitamasabotenclub の告知で 2026-10-04・むさしの村さくらホール・参加費1500円(弁当飲物付)・受付8:10〜9:40 を確認。内容は第1部が大銘品展(品評会)、第2部が交換会(1人10点まで)で、告知に『即売会はありませんのでご留意ください。』と明記されている。一般来場者が当日立ち寄って買える販売会ではなく、参加費を条件に愛好家が集まる会なので listing-policy の closedGatherings に該当。NextMeet は『誰でも参加できる優良苗の交換会』とだけ書いており即売会が無いことは読み取れない"
-    },
-    {
-      "key": "yumenoshima-shokubutsu-kokankai-2026-10",
-      "reasonType": "policy",
-      "name": "夢の島公園 植物交換会 2026秋 (2026-10-24/25 夢の島公園 熱帯植物館横広場・東京都江東区)",
-      "decided": "2026-09-06",
-      "eventDate": "2026-10-24",
-      "reason": "半年に一度、夢の島公園で開かれる植物交換会。11:00〜15:00・雨天中止。販売会ではなく、参加するには交換する植物を必ず持ち込む必要がある。持ち物が参加条件になっているため closedGatherings に該当し、読者が『行けるイベント』として使えない"
-    },
-    {
-      "key": "jurian-aki-koten-engei-2026-09",
-      "reasonType": "policy",
-      "name": "秋の古典園芸植物展（樹里安）(2026-09-26/27 川口緑化センター 樹里安・埼玉県川口市)",
-      "decided": "2026-09-06",
-      "eventDate": "2026-09-26",
-      "reason": "会場公式 jurian.or.jp のイベント一覧で会期を確認。主題は古典園芸植物(盆栽・山野草・万年青など)で、多肉植物も一部並ぶが主役ではない。listing-policy の plantCentric『アガベ・塊根植物・多肉植物・サボテン・ビザールプランツが主役の回だけ掲載する』に当たらない。同会場の『秋の多肉植物・サボテン展示会』(10/24-25)は主題が合致するので掲載した"
-    },
-    {
-      "key": "jurian-banshu-koten-engei-2026-11",
-      "reasonType": "policy",
-      "name": "晩秋の古典園芸植物展（樹里安）(2026-11-28/29 川口緑化センター 樹里安・埼玉県川口市)",
-      "decided": "2026-09-06",
-      "eventDate": "2026-11-28",
-      "reason": "秋の古典園芸植物展と同じ理由。主題が古典園芸植物であり植物ジャンルが当サイトの対象と一致しない"
-    },
-    {
-      "key": "hibiya-gardening-show-2026",
-      "reasonType": "policy",
-      "name": "日比谷公園ガーデニングショー2026 (2026-10-17〜25 日比谷公園・東京都千代田区)",
-      "decided": "2026-09-06",
-      "eventDate": "2026-10-17",
-      "reason": "主体はガーデニング(造園)の展示コンテストで、植物販売やキッチンカーは併設。多肉植物・サボテン・アガベ・塊根植物が主役の回ではないため plantCentric に当たらない"
-    },
-    {
-      "key": "toha-mercado-aka-renga-15th-2026-09",
-      "reasonType": "policy",
-      "name": "トハメルカド境赤レンガ倉庫 第15回 ボタニカル × オータムフェス (2026-09-20〜21 境赤レンガ倉庫・群馬県伊勢崎市)",
-      "decided": "2026-09-07",
-      "eventDate": "2026-09-20",
-      "reason": "主催公式(tanikutoha.com)の出店者紹介ページで内訳が公開されており、63店舗中で植物を売るのは主催の多肉永遠を含めて5店ほど(約8%)。残りはハンドメイド雑貨・飲食・整体・占い・ヒーリングで、主催自身が『体験・ワークショップを主役として募集』と書いている。compositeEvents の『植物系3割以上または著名ナーセリー3者以上』に届かない。テーマ名に『ボタニカル』が入るが、undisclosedBreakdown は内訳が非公開のときの規則なので当たらない"
-    },
-    {
-      "key": "lala-botaniq-vol2-2026-11",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "name": "LaLa Botaniq 第二回 (2026-11-29 群馬県・株式会社多肉永遠主催)",
-      "decided": "2026-09-07",
-      "eventDate": "2026-11-29",
-      "reason": "主催公式に日程はあるが出店者募集中で内訳が未公開。同主催・同形式の第1回(2025-07-27・32店舗)と、同主催のトハメルカド第15回(植物系約8%)から総合マルシェの可能性が高い。名称の Botaniq だけを根拠に掲載しない。出店者一覧が出たら数えて再評価する"
-    },
-    {
-      "key": "shiba-no-kaori-echeveria-agave-greenmarche-2026-12",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13 道の駅たかねざわ 元気あっぷむら・栃木県高根沢町)",
-      "decided": "2026-09-07",
-      "eventDate": "2026-12-13",
-      "reason": "日時・会場を書いているのは出店者側(キッチンカー・コミュニティスペース等)の投稿だけで、主催とみられる @tyutyu_ivt 自身の当該回の告知が確認できない。同アカウントはハンドメイド系マルシェの企画運営で、芝の香りマルシェは総合マルシェのシリーズ。主催の告知が出たら日程と植物比率をあわせて再評価する"
-    },
-    {
-      "key": "kirishima-car-boots-vol1-2026-09",
-      "reasonType": "policy",
-      "name": "第1回 霧島カーブーツ (2026-09-12 天降川ふるさとの川河川公園・鹿児島県霧島市)",
-      "decided": "2026-09-07",
-      "eventDate": "2026-09-12",
-      "reason": "主催 @amarcord0148 の説明が『車のトランクを使ってお宝や手作り品を販売するカーブーツ(車フリマ)』で、名称も中立。多肉植物・アガベ・サボテンを扱う M&T succulents の1店が出店するだけで、植物が主題の回ではない"
-    },
-    {
-      "key": "core-marche-2026-autumn",
-      "reasonType": "undisclosed",
-      "name": "コアマルシェ2026Autumn (2026-11-08 キヤッセ羽生・埼玉県羽生市)",
-      "decided": "2026-09-07",
-      "eventDate": "2026-11-08",
-      "reason": "主催は靴・鞄店 @shoes_and_bag_core のママ向けマルシェで名称が中立、出店内訳も非公開。多肉の出店者が自分の告知で日時を出しているだけで、植物が主題という主催側の位置づけが無い。undisclosedBreakdown の exclude に該当",
-      "coexistsWith": "wonder-market-2026-11"
-    },
-    {
-      "key": "asian-plant-festival-otaki-2026-09",
-      "reasonType": "policy",
-      "name": "アジア有用植物祭 (2026-09-19〜20 大多喜有用植物苑・千葉県大多喜町)",
-      "decided": "2026-09-07",
-      "eventDate": "2026-09-19",
-      "reason": "主催 @otaki_herbgarden の告知どおり主題はアジアの有用植物とその食文化で、出店もビリヤニなど飲食が中心。ハーブ・有用植物は当サイトの対象ジャンル(アガベ・塊根・多肉・サボテン・ビザールプランツ)ではない。outOfScopeGenres に追記した"
-    },
-    {
-      "key": "toha-mercado-yurinkan-4th-2026-10",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "name": "トハメルカド～有鄰館 第4回 ボタニカル × ハロウィンフェス (2026-10-11〜12 有鄰館・群馬県桐生市)",
-      "decided": "2026-09-08",
-      "eventDate": "2026-10-11",
-      "reason": "主催公式 tanikutoha.com で 10/11(日)・12(月祝)、有鄰館(桐生市本町2-6-32)、入場・駐車場無料を確認。出店者募集は9/7締切で、この回の出店者一覧はまだ公開されていない(reshopyurin.html にあるのは第1〜3回のみ)。会場紹介頁が並べるジャンルは『ボタニカル/ハンドメイド/癒し系/おいしいもの/ワークショップ』で植物は5分の1、募集区画にも美容・占い・整体ブースがある。同主催の境赤レンガ倉庫 第15回は内訳が公開されており植物系は約8%だった。テーマ名の『ボタニカル』だけを根拠に掲載しない。出店者一覧が出たら数えて再評価する"
-    },
-    {
-      "key": "nakakkura-marche-2026-10",
-      "reasonType": "undisclosed",
-      "name": "なかっ蔵マルシェ (2026-10-17〜18 旧廣盛酒造・群馬県吾妻郡中之条町909)",
-      "decided": "2026-09-08",
-      "eventDate": "2026-10-17",
-      "reason": "主催 @nakakkura_marche の告知で 10/17(土)・18(日) 11:00-16:00・入場無料・旧廣盛酒造を確認。名称が中立で、主催の告知にも植物を主題とする記述が無い。2026年4月回は31組の出店で、名前が分かる出店者はアクセサリー・菓子・雑貨・アップサイクル。多肉の出店者が自分の告知で日時を出しているだけなので undisclosedBreakdown の exclude に該当。Googleの検索結果では別投稿のハッシュタグ(#多肉植物イベント #トハメルカド)が同じ結果ブロックに混ざるが、これはこの回の内容ではない"
-    },
-    {
-      "key": "rojiura-botanical-2026-09-30",
-      "reasonType": "unverified",
-      "revisit": true,
-      "name": "路地裏ボタニカル 秋回 (2026-09-30? ワイルドプランツ路地裏のギボウシ・茨城県稲敷郡阿見町荒川本郷1-60)",
-      "decided": "2026-09-08",
-      "eventDate": "2026-09-30",
-      "reason": "出店者 @sfera_verde の動画キャプションに『2026年9月30日（日）「路地裏ボタニカル」』とあるが、2026-09-30 は水曜で曜日が合わない。主催 @rojiuranogibousi の当該回の告知が無く、直近の主催投稿は 8/30 回の御礼と『10月までに気合いで素敵苗 揃えますねー』で、次回日程を出していない。主催告知が出たら日付と曜日をあわせて再評価する。8/30 回は rojiura-botanical-2026-08 として掲載済み"
-    },
-    {
-      "key": "hinata-garden-cactus-sale-2026-09",
-      "reasonType": "policy",
-      "name": "ひなたガーデン サボテンセールイベント2026 (2026-09-12〜14 ひなたガーデン・宮崎県宮崎市郡司分丙9955)",
-      "decided": "2026-09-12",
-      "eventDate": "2026-09-12",
-      "reason": "主催 @hinata.garden0805 の告知は『9月12(土)13(日)14(月)3日間サボテンセールイベントを開催します ¥600〜¥1000サボテンの商品をAll¥500で販売致します』で、中身は通常営業日(8:00〜16:00)の店頭価格の値引きだけ。出店者も企画も無い。2026-09-01 に見送った『ノハラ園芸センター Summer SALE 2026』(レジにて20%OFF)と同じ型。listing-policy の plantCentric.storeSale に規則として書いた"
-    },
-    {
-      "key": "botanical-wellness-marche-hakata-hankyu-2026-09",
-      "reasonType": "policy",
-      "name": "Botanical & Wellness Marché / N3SELECT 博多阪急POPUP (2026-09-24〜27 博多阪急 8階催場・福岡県福岡市博多区中央街1-1)",
-      "decided": "2026-09-12",
-      "eventDate": "2026-09-24",
-      "reason": "アグリゲータは『N3SELECTが博多阪急POPUP2026を開催』と1出店者の名前でイベントを立てているが、催事の主催は博多阪急で、名称は『Botanical & Wellness Marché』(公式の催しスケジュールで 9/24(木)〜27(日)・8階催場・最終日17時終了を確認)。阪急側の説明は『様々な種類の花や緑と、毎日をさらに健やかに過ごせるよう』で、確認できた出店はハーブティー専門店BISA・生姜専門店GINGER FACTORY・焼菓子くれーぶる・チーズケーキ店など飲食とウェルネスが中心。珍奇植物専門店 N3SELECT(@n3select・9/24〜27 10:00〜20:00・入場無料)は区画のひとつ。outOfScopeGenres.coTitledEvents と『1出店者の出展告知をイベントとして立てない』(SUPER ART & CRAFT MARKET 2026-09-01)に該当。listing-policy の plantCentric.vendorBoothInHostEvent に規則として書いた"
-    },
-    {
-      "key": "mind-warp-vol3-yonezawa-2026-09",
-      "reasonType": "policy",
-      "name": "MIND WARP vol.3 古着倉庫 × TRILLGREEN (2026-09-19 古着倉庫・山形県米沢市)",
-      "decided": "2026-09-12",
-      "eventDate": "2026-09-19",
-      "reason": "主催 @trillgreen_aburaya の告知(2026-09-07)で 9/19(土) 17:00〜21:00・古着倉庫(@furugisouko2017) を確認。内容は『FASHION・ART・PLANTS・SOUNDが交差する一夜限りのSPECIAL EVENT』で、古着のスペシャルプライス販売・フリーマーケット・ガラスアクセサリー・HIPHOPのDJ5組に TRILLGREEN の植物が加わる形。植物の出店はTRILLGREEN1者で、会場も古着店。compositeEvents に該当する。同じ主催が9/20〜22に自店で開く TRILLGREEN SPECIAL EVENT は掲載した"
-    },
-    {
-      "key": "minami-no-machi-uekienngei-21st-2026-09",
-      "name": "第21回 南のまちの植木・園芸市 (2026-09-18〜21 メイクマン豊見城店 第2駐車場・沖縄県豊見城市)",
-      "decided": "2026-09-13",
-      "eventDate": "2026-09-18",
-      "reasonType": "policy",
-      "reason": "主催の株式会社メイクマン(ホームセンター)の公式イベント頁がこの催しを『DIY / ガーデニング / くらし』に分類しており、09-03 の主催Facebook告知も『珍しい形や面白いシルエットの植物、レアな植物、お買い得な植木や園芸品』と書く。主題は植木と園芸品で、outOfScopeGenres の『ガーデニング・造園』に当たる。多肉・アガベ・塊根が併売されていても主題ではない。**春(3月)と秋(9月)に第20回・第21回と続くシリーズなので、回ごとに判定し直さないよう precedents に残した。**出店者側(@arakaki_orchid_bikaku 等)の告知はあるが、それは vendorAnnouncementsOnly により掲載の根拠にならない"
-    },
-    {
-      "key": "numa-fes-6th-nishihara-2026-09",
-      "name": "第6回 沼フェス (2026-09-27 西原さわふじマルシェ・沖縄県中頭郡西原町)",
-      "decided": "2026-09-14",
-      "eventDate": "2026-09-27",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "revisitedOn": "2026-09-14",
-      "reason": "主催は彩メダカ(ジモティーの告知主)。公式チラシの惹句が『珍しい植物とメダカのスペシャルイベント』で、対象ジャンル(植物)と対象外ジャンル(メダカ)を並記している。名称『沼フェス』は中立で、どちらの沼かを言っていない。会場企画も『3分メダカすくい！タイムアタック』が前面に出る。outOfScopeGenres.coTitledEvents の『併記は両方に客を呼ぶための表記で主題を言っていない』が名称ではなく主催の説明文で起きた形にあたり、出店者一覧も非公開なので比率を数えられない。内訳が公開されたら再評価する。琉球新報(2026-05-05)は第5回を『改良メダカと植物の愛好家たちが集うイベント』『植物合わせ30店』と書いている"
-    },
-    {
-      "key": "midori-to-ikimono-carnival-vol7-2026-10",
-      "name": "緑と生き物カーニバル vol.7 (2026-10-11 鶴見緑地公園 ハナミズキホール・大阪市鶴見区)",
-      "decided": "2026-09-14",
-      "eventDate": "2026-10-11",
-      "reasonType": "unverified",
-      "revisit": true,
-      "revisitedOn": "2026-09-14",
-      "reason": "10/11(日)10:00〜16:00・ハナミズキホールという日程は出店者(@platycerium_love / @honoka.kakogawa / @mononoke_botanical_garden / @helisgarden)の告知で一致するが、主催アカウントが特定できない。primarySource.vendorAnnouncementsOnly により掲載の根拠にならない。あわせて名称が『緑』と『生き物』の併記で、過去回の出店者告知に #めだか #メダカイベント が付く。ブースが『緑◯番＝植物系ブース』と区分されており植物枠は確実にあるが、主題の比重は主催の告知を見ないと決められない"
-    },
-    {
-      "key": "green-expo-2027-yokohama",
-      "name": "GREEN×EXPO 2027 横浜国際園芸博覧会 (2027-03-19〜09-26 旧上瀬谷通信施設・神奈川県横浜市)",
-      "decided": "2026-09-14",
-      "eventDate": "2027-03-19",
-      "reasonType": "policy",
-      "reason": "国際園芸博覧会。主題は園芸・造園・緑化の総合博で、outOfScopeGenres の『ガーデニング・造園』に当たる(日比谷公園ガーデニングショーと同型)。会期が6か月あり当サイトの即売会・展示会の枠と性質が違う。PUKUBOOK が注目イベントとして常時掲載しているので、毎回の巡回で候補に出る"
-    },
-    {
-      "key": "tana-mama-marche-vol24-2026-10",
-      "name": "тαηα мαмα мαя¢нє vol.24（田名ママ マルシェ） (2026-10-03〜04 ブンブン小麦の郷 田名店・神奈川県相模原市中央区)",
-      "decided": "2026-09-15",
-      "eventDate": "2026-10-03",
-      "reasonType": "policy",
-      "reason": "主催 @tanamamamarche の告知が自ら『ハンドメイドマルシェ』『心ときめく、手作りとの出逢いを』『ハンドメイドを楽しむ4日間』と名乗る。出店者紹介はインド刺繍リボン・クレープ・ラーメン・お笑いショー・お客様参加型ライブ・町の手相屋・おりがみ教室で、植物の出店は1件も出ていない。植物イベントではないので compositeEvents の比率以前の問題。植物のキーワードで検索すると名称が中立なぶん候補に出てくるため記録しておく"
-    },
-    {
-      "key": "golden-time-vol8-greenfeel-2026-09",
-      "name": "GOLDEN TIME vol.8 (2026-09-20 GREEN FEEL・福島県福島市成川久保32-2)",
-      "decided": "2026-09-15",
-      "eventDate": "2026-09-20",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "revisitedOn": "2026-09-15",
-      "reason": "会場は観葉植物専門店 GREEN FEEL(株式会社福華園)の敷地内で、店の業態は植物専門。だが主催 @greenfeel_fukukaen の当該回の告知は『美味しいものを食べて！素敵な物を見て！作って！』『フリマスペース』『素敵なアーティストさん達の歌』で、出店者募集も FOOD / DRINK / GOODS / WORKSHOP、付けているタグも #マルシェ。植物の即売が主題とは書いていない。名称 GOLDEN TIME は中立で出店内訳も非公開なので undisclosedBreakdown.exclude に当たる。storeAnniversary は『主催告知の名称または内容が即売会・展示会・販売会』であることを条件にしており、ここは満たさない。内訳か植物即売の企画が公開されたら再評価する"
-    },
-    {
-      "key": "yoru-ambien-2026-09",
-      "name": "夜アンビエン（2026年9月）(2026-09-19 安美園・沖縄県宜野湾市普天間2-31-9 2F)",
-      "decided": "2026-09-16",
-      "reason": "サボテンを中心に扱う店舗 安美園が月1回、15:00〜22:00 まで店を開けて日本酒・クラフトビール・コーヒーを出す夜のラウンジ。主催告知(@ambien_2020 2026-09-10)に販売企画も外部出店者も書かれておらず、通常営業の延長にあたる。storeSale.exclude と同じ切り方",
-      "reasonType": "policy",
-      "eventDate": "2026-09-19",
-      "revisit": false,
-      "source": "https://www.instagram.com/ambien_2020/p/DdGW9iOkaTg/"
-    },
-    {
-      "key": "kaku-plants-pot-ten-vol2-2026-09",
-      "name": "KAKU PLANTS POT展 vol.2 (2026-09 森田美術館・高知県土佐市新居1945-8)",
-      "decided": "2026-09-16",
-      "reason": "陶芸作家 角 による『植物のための角鉢展』。主題は鉢という器そのもので、植物は展示の添え物。作家の器の個展にあたるため対象外",
-      "reasonType": "policy",
-      "revisit": false,
-      "source": "https://www.instagram.com/moritautsuwa/"
-    },
-    {
-      "key": "valo-plants-room-2026-10",
-      "name": "valo plants room 2026 (2026-10-09〜11 cafe licht 横アトリエ・兵庫県)",
-      "decided": "2026-09-16",
-      "reason": "@natu.cafe（植物のある暮らし・植え替え教室）が年1回開く個人アトリエの販売会。扱いはアオダモなどの庭木とオージープランツ、鉢、植え替え相談で、アガベ・多肉・塊根・サボテン・ビザールが主役という告知が無い",
-      "reasonType": "policy",
-      "eventDate": "2026-10-09",
-      "revisit": false,
-      "source": "https://www.instagram.com/natu.cafe/"
-    },
-    {
-      "key": "shizuoka-bizarre-plants-market-2026",
-      "name": "SHIZUOKA Bizarre Plants Market (開催日未確定 Kenmay・静岡県)",
-      "decided": "2026-09-16",
-      "reason": "PUKUBOOK が『仮予定／非公式・9月』として常設で並べているだけで、主催の一次情報が見つからない。2026年回の日付も会場の告知も無い。venueUnannounced.doNotList（日付が未確定なら掲載しない）に当たる",
-      "reasonType": "unverified",
-      "revisit": true,
-      "revisitedOn": "2026-09-16",
-      "source": "https://pukubook.jp/events/"
-    },
-    {
-      "key": "schop-vol7-garage-nagoya-2026-10",
-      "name": "SCHOP vol.7 (2026-10-12 garage NAGOYA・愛知県名古屋市中村区平池町4-60-12 グローバルゲート3F/4F)",
-      "decided": "2026-09-16",
-      "reason": "園芸店 garage NAGOYA が年1回開く店内イベント。主催公式に出店者の内訳が全部出ており、GREEN が3組(ボタらいふ=塊根・アガベ／武農園=シダ観葉／mossmile=苔テラリウムWS)に対し CRAFT 5組・FOOD 12組以上。ワークショップも革小物・苔テラリウム・苔玉・生花アレンジで、催しの中身は飲食と雑貨が主体。storeAnniversary.hostedMarche（業態ではなく催しの中身で切る）と compositeEvents の閾値(3割 / 専門店3者)のどちらにも届かない",
-      "reasonType": "policy",
-      "eventDate": "2026-10-12",
-      "revisit": false,
-      "source": "https://garage-garden.com/news/event/garage-nagoya-%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%8eschop-vol-7%e3%80%8f%e9%96%8b%e5%82%ac/"
-    },
-    {
-      "key": "east-side-tokyo-17th-anniv-sale-2026-09",
-      "name": "17th Anniversary SALE (2026-09-14〜20 east side tokyo・東京都台東区蔵前1-5-7)",
-      "reason": "造花・花材の問屋 east side tokyo が開く周年セール。主催告知(@eastsidetokyo)の中身は『SALE価格で造花をご用意！観葉植物が10％off！クラフト商材Max50％off！その他ドライフラワーや花器の一部もセール価格販売中』で、企画は平日限定のガラガラ抽選会(3000円以上購入)のみ。値引きだけの回なので storeSale.exclude。扱う主題も造花・花材で、観葉植物は売場の一部",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-09-14",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "ringoya-ieg-popup-2026-09",
-      "name": "RINGOYA × IEG POP UP EVENT (2026-09-15〜29 LIFE CONCEPT IEG・徳島県小松島市江田町敷地前76-7)",
-      "reason": "鳴門市のフラワーショップ RINGOYA が家具・インテリア店 LIFE CONCEPT IEG に観葉植物を期間限定で展開する POPUP。主催告知(@ringoya87)は『インテリアをぐっと上質にする、植物のある心地よい空間』で、並ぶのは観葉植物・鉢・フラワーベース。アガベ・多肉・塊根の系統ではない。and-plants-and-flower-marche-2026-09(2026-09-12 見送り)と同型",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-09-15",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "fantastic-market-herbis-29-2026-09",
-      "name": "FANTASTIC MARKET in HERBIS 29 (2026-09-26〜27 ハービスPLAZA ENT・大阪市北区)",
-      "reason": "2010年から続く食のマルシェ。主催告知(@fantasticmarket2010)の副題が『WELCOMING the First Harvests of Autumn』、惹句が『美味しい恵みを探しに』で、30店舗の主体は旬の食材と飲食。名称は中立で出店内訳も非公開のため compositeEvents / undisclosedBreakdown.exclude に当たる。29回目のシリーズなので listing-policy の precedents に置いた",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-09-26",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "cafe-book-marche-jindai-2026-10",
-      "name": "カフェ＆ブックマルシェ (2026-10-01 神代植物公園 雑木林・東京都調布市)",
-      "reason": "都民の日に神代植物公園の雑木林を会場として開く、本と雑貨とカフェのマルシェ。会場が植物公園というだけで、集まるのは雑貨と植物・自然関連の本。植物の即売が主題ではない",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-10-01",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "home-flea-work-6th-2026-10",
-      "name": "HOME/FLEA/WORK #6 -Back to school- (2026-10-03〜04 HOME/WORK VILLAGE・東京都世田谷区池尻2-4-5)",
-      "reason": "旧池尻中学校を活用した複合施設で開く古着・雑貨のマーケット。主催告知(@home_flea_work)は服フェス FASHION IN JAPAN FESTIVAL 2026 との同時開催を前面に出しており、出店は古着が主体でワークショップと植物販売が一部。名称が中立で内訳も非公開のため compositeEvents / undisclosedBreakdown.exclude",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-10-03",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "shoku-to-the-future-2026-10",
-      "name": "植トゥザ・フューチャー2026 (2026-10-16〜18 Motorpool gallery・大阪市中央区西心斎橋2-8-17)",
-      "reason": "三重県桑名市の植物とアートのブランド GREEN PRICKLE(デザイナー山田一馬)の初個展。主催告知(@green_prickle)に『※植物の販売はございません。』と明記があり、並ぶのはアート作品100点以上・ポスター・ステッカー・雑貨・アパレル。植物ではなく作品が主題なので outOfScopeGenres.artworkShows",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-10-16",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "yanbaru-shokubutsu-banyuki-vol2-2026-10",
-      "name": "やんばる植物万遊記 Vol.2 (2026-10-17〜18 BUNASAUNA・沖縄県国頭郡)",
-      "reason": "ハーバルサウナ BUNASAUNA の3周年記念企画。主催告知(@bunasauna_okinawa / note)は『各日10名限定の開催となります。ご応募いただいた方の中から抽選』で、内容はやんばる植物の採取・蒸留・スクラブ作りの体験とサウナ。一般来場者が当日立ち寄って買える回ではないので closedGatherings / workshopOnly",
-      "reasonType": "policy",
-      "revisit": false,
-      "eventDate": "2026-10-17",
-      "decided": "2026-09-17"
-    },
-    {
-      "key": "polka-marche-takahashi-2026-10",
-      "name": "ポルカマルシェ (2026-10-10 ポルカ天満屋ハピータウン セントラルコート・岡山県高梁市中原町1084-1)",
-      "reason": "出店者の告知しか見つからない(@otk_plants / @foresthouse_michie / @tacorio531 が同じ内容を貼っている)。主催が特定できないので primarySource.vendorAnnouncementsOnly に当たる。出店内訳は公開されており全11組中 植物系が6組(いろどりほいくえん・OTK PLANTS・かごめ庵・greemo・和・HIROPON WEST GARDEN)で比率は満たすため、主催の告知が出たら掲載する。2025年10月にも同名の回があり、年次のシリーズと思われる",
-      "reasonType": "unverified",
-      "revisit": true,
-      "eventDate": "2026-10-10",
-      "decided": "2026-09-17",
-      "revisitedOn": "2026-09-17"
-    },
-    {
-      "key": "green-marche-hananoyu-2026-10",
-      "name": "Green marche 花の湯 (2026-10-04 富嶽温泉 花の湯 エントランス1階・静岡県富士宮市ひばりが丘805)",
-      "reason": "多肉植物の出店者7組が同じ告知文を貼っているだけで、主催が特定できない(@tsumugiwa.march / @feel1187 / @leaf.garden0515 / @kirakira_marche_ など)。primarySource.vendorAnnouncementsOnly。主題は多肉植物で掲載相当の内容なので、主催の告知か会場公式(富嶽温泉 花の湯)の案内が出たら掲載する",
-      "reasonType": "unverified",
-      "revisit": true,
-      "eventDate": "2026-10-04",
-      "decided": "2026-09-17",
-      "revisitedOn": "2026-09-17"
-    },
-    {
-      "key": "green-days-matsuyama-vol4-2026-10",
-      "name": "GREEN DAYS まつやま vol.4 (2026-10-10〜11 松山中央公園 坊っちゃんスタジアム前広場・愛媛県松山市市坪西町625-1)",
-      "reason": "主催 @greendays_matsuyama のテーマは『暮らしを、育てる。』で、告知は植物・雑貨・フード・アウトドアを並べるライフスタイルイベント。名称の GREEN はジャンルを名指ししていない。出店者紹介が始まったところだが、公開済みの回はパイ専門店・菓子店で、植物系の比率がまだ数えられない。undisclosedBreakdown.exclude。出店者一覧が出そろったら breakdownPublished どおり数える",
-      "reasonType": "undisclosed",
-      "revisit": true,
-      "eventDate": "2026-10-10",
-      "decided": "2026-09-17",
-      "revisitedOn": "2026-09-17"
-    }
-  ],
-  "_reasonTypes": {
-    "policy": "掲載基準に照らして載せないと決めた。再提案しない",
-    "unverified": "植物軸はあるが一次情報が確認できず今は載せない。revisit=true なら一次情報が出たら再評価する",
-    "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
-    "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
+ "description": "掲載見送りを決定したイベントの記録。agave-event-update は候補がここに載っていれば再提案せずスキップする。方針転換で掲載する場合はここから削除して new-events.json に追加する。",
+ "items": [
+  {
+   "key": "ferme-de-fes-vol29",
+   "name": "フェルム・ド・フェスVol.29 (2026-08-01/02 こもれび森のイバライド)",
+   "decided": "2026-07-27",
+   "reason": "植物比率が低くサイトの軸から外れる(公式SHOPリスト約120店中、植物系はBotanical6+Garden3)",
+   "reasonType": "policy",
+   "eventDate": "2026-08-01"
   },
-  "updated": "2026-09-17",
-  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
+  {
+   "key": "localgreen-festival-2026",
+   "name": "LOCALGREEN FESTIVAL'26 (2026-11-07/08 横浜赤レンガ倉庫)",
+   "decided": "2026-07-27",
+   "reason": "主体は音楽フェスでアガベ・塊根専門ではない",
+   "reasonType": "policy",
+   "eventDate": "2026-11-07"
+  },
+  {
+   "key": "gen-2026-shimizu",
+   "reasonType": "policy",
+   "name": "愿2026 (2026-09-12/13 エスパルスドリームプラザやすらぎ広場)",
+   "decided": "2026-07-30",
+   "reason": "日毎60店規模の雑貨・飲食・音楽を含む総合マーケットで、植物出店比率が確認できない。2026-09-05 再確認: 愿(ゲン)の主催は @gen_2025_ivent で、「観て・食べて・遊ぶ」五感を刺激するステージイベントとして2日で55〜60店舗を集める総合マーケット。同じ会期・同じ会場の海側やすらぎ広場で、ぼっち植堂 @bocchi_syokudou 主催の植物即売会「叢宴(soen)」が愿とのコラボとして併催される。叢宴は植物が主題なので soen-espulse-dream-plaza-2026-09 として掲載済み。愿本体の見送りは維持する(別イベントであり、二重登録ではない)",
+   "eventDate": "2026-09-12",
+   "coexistsWith": "soen-espulse-dream-plaza-2026-09",
+   "revisitedOn": "2026-09-05"
+  },
+  {
+   "key": "no1plantae-2026-autumn",
+   "reasonType": "unverified",
+   "revisit": false,
+   "name": "天下一植物界 2026秋回（HDC神戸）",
+   "decided": "2026-07-31",
+   "reason": "公式 no1plantae.com/next は第六回(2026年5月23-24日 京セラドーム、終了)のままで、公式IG @borderbreakbeyond の最新も5月24日の終了報告。第四回以降は毎年5月の年1回開催で秋回の実績が無く、第六回の告知は開催3か月前に出ていた。8月末で秋回の告知が無いことから2026年秋回は存在しないと判断する。次は第七回(2027年春)を新規エントリとして扱う。pukubookの『毎年5月、10月頃／HDC神戸』は会場も旧い",
+   "reviewedOn": "2026-09-01"
+  },
+  {
+   "key": "sagami-vibes-park-vol3-2026",
+   "reasonType": "policy",
+   "name": "SAGAMI VIBES PARK vol.3 (2026-09-05/06 淵野辺公園)",
+   "decided": "2026-08-10",
+   "reason": "飲食・アパレル・音楽・アート・スケート等を含む総合フェスで植物は一区画。植物系出店は棘棘など数店にとどまり複合イベントの掲載閾値に届かない",
+   "eventDate": "2026-09-05"
+  },
+  {
+   "key": "earth-garden-aki-2026",
+   "reasonType": "policy",
+   "name": "アースガーデン\"秋\" 2026 (2026-10-24/25 代々木公園)",
+   "decided": "2026-08-10",
+   "reason": "主体は環境・音楽系の総合イベント。植物出店はあるが軸が異なりLOCALGREEN FESTIVAL'26と同じ扱い",
+   "eventDate": "2026-10-24"
+  },
+  {
+   "key": "midori-meguru-marche-6th-2026",
+   "reasonType": "policy",
+   "name": "第6回 みどりめぐるマルシェ (2026-10-12 大阪府立花の文化園)",
+   "decided": "2026-08-10",
+   "reason": "主催 @midori_meguru の告知はあるが『地元の味や手仕事に出会う一日』とうたう総合マルシェで、多肉・アガベ・塊根の出店比率が確認できない。愿2026と同じ判断",
+   "eventDate": "2026-10-12"
+  },
+  {
+   "key": "wassa-marche-22nd-2026",
+   "reasonType": "policy",
+   "name": "第22回 わっさまるしぇ (2026-09-12 米沢総合公園)",
+   "decided": "2026-08-10",
+   "reason": "地域の総合マルシェ。出店者情報で植物系は露苦出凪刺plantsなど少数にとどまり、植物が主役の回ではない",
+   "eventDate": "2026-09-12"
+  },
+  {
+   "key": "connect-noasobi-market-2026",
+   "reasonType": "policy",
+   "name": "CONNECT-noasobi market- 2026 (2026-10-03 NOASOBI camp field・飛騨市)",
+   "decided": "2026-08-12",
+   "reason": "主催 @connect_noasobi の告知はあるが『こだわりのフードやクラフト、音楽、空間』を掲げる総合アウトドアマーケット。名称も中立で植物出店の内訳は非公開。listing-policy の compositeEvents.undisclosedBreakdown の exclude に該当",
+   "eventDate": "2026-10-03"
+  },
+  {
+   "key": "neighborhood-marche-vol5-2026",
+   "reasonType": "policy",
+   "name": "NEIGHBORHOOD MARCHE vol.5 (2026-08-22/23 幕張ベイパーク)",
+   "decided": "2026-08-12",
+   "reason": "主催 @neighborhood_marche の告知はあるが地域のナイトマルシェ。名称が中立で植物出店の内訳も非公開。undisclosedBreakdown の exclude に該当",
+   "eventDate": "2026-08-22"
+  },
+  {
+   "key": "gujo-de-cactus-night-market-2026-08",
+   "reasonType": "unverified",
+   "revisit": false,
+   "name": "郡上 de サボテン多肉植物夜市 (2026-08-16 cafe finkys・岐阜県郡上市白鳥町)",
+   "decided": "2026-08-12",
+   "reason": "pukubook のイベントカレンダーにのみ掲載。同カレンダーは会期を『8月1日〜8月31日』と書く回もあり日付が揺れている。主催者・cafe finkys 側の当該回の告知が確認できない。開催日(2026-08-16)を過ぎたため再評価を終了(2026-08-27)",
+   "eventDate": "2026-08-16",
+   "revisitedOn": "2026-08-27"
+  },
+  {
+   "key": "aki-no-shokubutsu-no-ichi-2026-10",
+   "reasonType": "unverified",
+   "revisit": true,
+   "name": "秋の植物の市 (2026-10-04)",
+   "decided": "2026-08-12",
+   "reason": "複数の出店者アカウントが『10月4日日曜日、秋の植物の市、開催決定』と同一文面で告知しているが、会場も主催者も判明しない。会場が特定できたら掲載する / 2026-09-08 再評価: 会場・主催とも依然不明。「10月4日日曜日、秋の植物の市、開催決定です。出店者様は…」の同一文面が複数アカウントの検索結果に出るだけで、会場を書いた投稿が無い",
+   "eventDate": "2026-10-04",
+   "revisitedOn": "2026-09-08"
+  },
+  {
+   "key": "isij-tokyo-reikai-2026-08-23",
+   "reasonType": "cancelled",
+   "name": "I.S.I.J. 東京例会 (2026-08-23 板橋区立熱帯環境植物館)",
+   "decided": "2026-08-12",
+   "reason": "pukubook が『近日開催』として掲載しているが、主催の国際多肉植物協会 isij.net のイベントスケジュールに『8/23（日）東京例会 → 休会とさせていただきます』と明記されている。アグリゲータが中止・休会を反映していない例",
+   "eventDate": "2026-08-23"
+  },
+  {
+   "key": "machi-towns-marche-7th-2026-09",
+   "reasonType": "policy",
+   "name": "第7回 街＊TOWNS＊マルシェ (2026-09-13 研究学園駅前公園・茨城県つくば市)",
+   "decided": "2026-08-18",
+   "reason": "キッチンカー・餃子・ハンドメイドを含む地域の総合マルシェで、植物は出店の一部。名称も中立で出店内訳は非公開。compositeEvents.undisclosedBreakdown の exclude に該当",
+   "eventDate": "2026-09-13"
+  },
+  {
+   "key": "crafters-marche-hanazono-2026-09",
+   "reasonType": "policy",
+   "name": "CRAFTERS MARCHE 9月 (2026-09-12/13 道の駅はなぞの芝生広場・埼玉県深谷市)",
+   "decided": "2026-08-18",
+   "reason": "クラフト作家中心のマルシェで多肉は出店の一部。名称が中立で出店内訳も非公開。compositeEvents.undisclosedBreakdown の exclude に該当",
+   "eventDate": "2026-09-12"
+  },
+  {
+   "key": "sumori-sai-2026-aki",
+   "reasonType": "unverified",
+   "revisit": true,
+   "name": "スモリ祭 2026秋 (スモリの家 ムサシ名取展示場・宮城県名取市)",
+   "decided": "2026-08-18",
+   "reason": "pukubook が『仮予定／非公式・秋』として掲載しているのみで開催日が未確定。主催の一次情報も見つからない。venueUnannounced.doNotList（日付も未確定なら掲載しない）に該当。日程が告知されたら再評価する / 2026-09-08 再評価: 秋回の日程はまだ主催から出ていない。検索に出る「11/4.5」「11月5日,6日」はいずれも2022〜2023年回の投稿で、pukubook も過去回しか持たない。出店者の予定表に「10月31日(土)スモリ祭り」とあるが主催の裏付けが無い",
+   "revisitedOn": "2026-09-08"
+  },
+  {
+   "key": "plants-only-bbq-2026-09",
+   "reasonType": "policy",
+   "name": "PLANTS ONLY BBQ (2026-09-22 X-PLANTS)",
+   "decided": "2026-08-18",
+   "reason": "参加費5,000円・持ち物指定ありの愛好家向け交流会（植物トーク・交換会・抽選会）で、一般来場者が立ち寄れる販売会ではない。closedGatherings に該当",
+   "eventDate": "2026-09-22"
+  },
+  {
+   "key": "neighborhood-marche-vol5-2026-08",
+   "reasonType": "undisclosed",
+   "name": "NEIGHBORHOOD MARCHE vol.5 (2026-08-22/23 幕張ベイパーク 若葉3丁目公園・千葉市)",
+   "decided": "2026-08-20",
+   "reason": "マルシェ・キッチンカー90店舗以上に音楽ライブとライブペインティングを併せた地域の総合ナイトマルシェ。名称が中立で、出店者の内訳から植物系の比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown.exclude に該当",
+   "eventDate": "2026-08-22"
+  },
+  {
+   "key": "bikaku-shop-popup-2026-08",
+   "reasonType": "policy",
+   "name": "BIKAKU SHOP × BIKAKU GURASHI POP UP 2026 (2026-08-29/30 BIKAKU SHOP・東京都杉並区)",
+   "decided": "2026-08-27",
+   "reason": "ビカクシダ専門店での開催だが、POPUPの中身はTシャツ新色・限定グッズ・対面ライブイラスト受注が主体で、植物の販売が主役ではない。板付けワークショップは併催されるが物販の中心はグッズ。listing-policy の plantCentric に照らして掲載しない",
+   "eventDate": "2026-08-29"
+  },
+  {
+   "key": "shokubutsu-to-furudougu-waco-2026",
+   "reasonType": "undisclosed",
+   "name": "植物と古道具 (2026-08-22〜09-06 古道具waco・千葉県鎌ケ谷市)",
+   "decided": "2026-08-27",
+   "reason": "古道具店の店内企画で、植物はBABABAが担当と告知にあるものの扱う品目の明記がない。植物が主役か古道具の添え物かを判断する材料が公開されていない。品目が明かされたら再評価する",
+   "eventDate": "2026-08-22"
+  },
+  {
+   "key": "hibi-open-day-2026-08",
+   "reasonType": "undisclosed",
+   "name": "榧日(ひび) 2026 OPEN DAY (2026-08-29/30 榧日・神奈川県横浜市青葉区)",
+   "decided": "2026-08-27",
+   "reason": "住宅事業者のオープンデーに植物店yu25plantsがPOP UP出店する形。おうち本屋との併催で、植物の品目も規模も告知に出ていない。植物イベントとして案内できる材料がない",
+   "eventDate": "2026-08-29"
+  },
+  {
+   "key": "tonemi-de-natsumatsuri-17th-2026",
+   "reasonType": "undisclosed",
+   "name": "第17回 手づくりまごころマーケット「とねミde夏祭り」 (2026-08-30 共和電設とねミドリ館・茨城県古河市)",
+   "decided": "2026-08-27",
+   "reason": "約55〜70ブースの総合ハンドメイド夏祭り。多肉植物・エアプランツの扱いは出店者側の告知にしかなく、主催告知に植物の明記がない。名称も中立で出店の内訳から植物系の比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown に該当",
+   "eventDate": "2026-08-30"
+  },
+  {
+   "key": "nishikata-medaka-taniku-2026-09",
+   "reasonType": "policy",
+   "name": "にしかた メダカ即売会×多肉植物販売 in 道の駅にしかた (2026-09-27 栃木県栃木市)",
+   "decided": "2026-08-27",
+   "reason": "主催 @inumeshik_1 の告知で 2026-09-27(日) 9:00〜14:00・道の駅にしかた・雨天決行荒天中止を確認したので、2026-08-27 の『主催の該当投稿に到達できない』は解消した(2026-09-08 再評価)。ただし回の主題はメダカで、主催の案内も『各ブリーダーによる厳選メダカの直売・イベント限定個体』が中心、メダカ業界の一覧サイトは内容を『改良メダカ販売・飼育用品販売』とだけ書く。名称に『多肉』が併記されるが outOfScopeGenres.coTitledEvents に該当し対象外。同じ主催は植物主題の GREEN BASE MARKET を同じ道の駅で別に開いており(green-base-market-vol1-nishikata-2026-10 として掲載済み)、当サイトの対象はそちら",
+   "eventDate": "2026-09-27",
+   "revisitedOn": "2026-09-08"
+  },
+  {
+   "key": "autumn-marche-kuroda-engei-2026-09",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "name": "Autumn marche 秋のマルシェ (2026-09-27 フローラ黒田園芸・埼玉県さいたま市中央区)",
+   "decided": "2026-08-27",
+   "reason": "日付と会場は主催Instagramで確認できたが、告知の内容は「植物と雑貨、美味しいもの」までで多肉・アガベ・塊根の品目明記がない。同投稿内の多肉の記載は別件の決算セールの話。品目が明かされたら再評価する / 2026-09-08 再評価: 主催 @florakurodaengei_staff の告知は今日時点でも「植物と雑貨 美味しいものとの出会い」までで、多肉・アガベ・塊根の品目明記が無い。店の主軸は寄せ植え・ガーデニングなので outOfScopeGenres 側にも振れる",
+   "eventDate": "2026-09-27",
+   "revisitedOn": "2026-09-08"
+  },
+  {
+   "key": "sousouka-bangaimen-2026-09",
+   "reasonType": "policy",
+   "name": "艸化 番外麺 (2026-09-13 麺ノ小池・栃木県真岡市)",
+   "decided": "2026-08-27",
+   "reason": "主催@cusasucの投稿で日時・会場は確認できたが、扱うのは「艸」「花」「古物」で、プロフィールも山野草・古物寄り。アガベ・多肉・塊根の系統ではないため掲載しない",
+   "eventDate": "2026-09-13"
+  },
+  {
+   "key": "kankichi-koubou-popup-2026-09",
+   "reasonType": "policy",
+   "name": "カンキチ工房 POP UP SHOP (2026-09-07〜10-01 横浜ロフト／そごう横浜店・神奈川県横浜市)",
+   "decided": "2026-08-27",
+   "reason": "会期は確認できるが扱うのはガジュマルのみ。アガベ・塊根・多肉のイベントとして案内する対象ではない",
+   "eventDate": "2026-09-07"
+  },
+  {
+   "key": "and-plants-and-flower-marche-2026-09",
+   "reasonType": "policy",
+   "name": "アンドプランツ＆アンドフラワーマルシェ'26 (2026-09-19 中目黒GTタワー前広場・東京都目黒区)",
+   "decided": "2026-08-27",
+   "reason": "主催告知の内容が「観葉植物とお花のマルシェ」で、アガベ・多肉・塊根の系統ではない",
+   "eventDate": "2026-09-19"
+  },
+  {
+   "key": "vege-life-26-odaiba-2026-09",
+   "reasonType": "undisclosed",
+   "name": "VEGE LIFE 26 (2026-09-26/27 お台場潮風公園・東京都品川区)",
+   "decided": "2026-08-27",
+   "reason": "約100店舗の総合マルシェで、主催告知に植物の品目明記がない。listing-policy の compositeEvents.undisclosedBreakdown に該当",
+   "eventDate": "2026-09-26"
+  },
+  {
+   "key": "bizarre-park-local-market-2026-09",
+   "reasonType": "unverified",
+   "revisit": false,
+   "name": "bizarre Park monthly LOCAL MARKET 9月回 (埼玉県鴻巣市)",
+   "decided": "2026-08-27",
+   "reason": "月1回の定例開催だが、2026年9月の日程を示す一次情報は最後まで出なかった。開催日(2026-09-01)を過ぎたため確定。公式IG @bizarreparkmonthly_localmarket が告知しているのは次回2026.11/28-29で、9月回の告知は無い",
+   "eventDate": "2026-09-01",
+   "revisitedOn": "2026-09-02"
+  },
+  {
+   "key": "atelier-nana-yuusuzumi-2026-09",
+   "reasonType": "policy",
+   "name": "アトリエnana 夕涼みしながら多肉時間 2026 (愛知県)",
+   "decided": "2026-09-01",
+   "reason": "主催者の告知は夏季休業中に設けた店舗の夕方営業日案内(15:00-19:00・計6日)で、即売会・展示会として告知されていない",
+   "eventDate": "2026-09-11"
+  },
+  {
+   "key": "nohara-engei-summer-sale-2026",
+   "reasonType": "policy",
+   "name": "ノハラ園芸センター Summer SALE 2026 (千葉県)",
+   "decided": "2026-09-01",
+   "reason": "レジにて20%OFFの期間限定割引販売(8/15-8/31)であり、イベントではない。同店の NOHARA green marche は別途対象",
+   "eventDate": "2026-08-31"
+  },
+  {
+   "key": "wakasaya-park-2026-09-20",
+   "reasonType": "unverified",
+   "revisit": true,
+   "name": "若狭屋パーク 出店回 (2026-09-20 富山県富山市) D.G.C.TOYAMA 出店",
+   "decided": "2026-09-01",
+   "reason": "主催 @wakasaya_park に9/20回の告知がなく、確認できたのは出店者側の告知のみ。会場の定例名は WAKASAYA MARCHE で名称に植物語がなく、出店内訳も未公表のため比率を数えられない。主催告知が出たら再評価する",
+   "eventDate": "2026-09-20"
+  },
+  {
+   "key": "sumori-open-garden-2026-09",
+   "reasonType": "unverified",
+   "revisit": true,
+   "name": "sumori open garden 2026秋 (2026-09-26/27 宮城県名取市)",
+   "decided": "2026-09-01",
+   "reason": "主催 @sumori_634 / スモリの家公式サイトに当該回の告知がなく、出店者 @simijimi0711 の投稿のみ。前年回は9月上旬に主催告知が出ているので、出たら掲載する / 2026-09-08 再評価: 出店者4者(@simijimi0711 / @sumi.sinfa4490 / @taniten_kengo202 / @solis_radix)とアグリゲータが 9/26(土)-27(日) 9:30-15:00 スモリの家中庭で一致するが、主催 @sumori_634 の当該回の投稿は確認できない(プロフィールにも告知なし)。primarySource.vendorAnnouncementsOnly に該当し、出店者告知が何件揃っても主催の代わりにはしない",
+   "eventDate": "2026-09-26",
+   "revisitedOn": "2026-09-08"
+  },
+  {
+   "key": "super-art-craft-market-2026-10",
+   "reasonType": "policy",
+   "name": "SUPER ART & CRAFT MARKET 2026 (MEET YOUR ART FESTIVAL 2026 内 / 2026-10-09〜12 東京都品川区)",
+   "decided": "2026-09-01",
+   "reason": "公式出店者リストで植物系は solxsol と PERK SHOP の2者のみ(80超中)。名称にも植物語がなく、本体は現代アートフェス。1出店者の出展告知をイベントとして立てない",
+   "eventDate": "2026-10-09"
+  },
+  {
+   "key": "bizarre-park-local-market-2026-11",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "name": "bizarre Park monthly LOCAL MARKET 11月回 (埼玉県鴻巣市)",
+   "decided": "2026-09-02",
+   "reason": "公式IG @bizarreparkmonthly_localmarket のプロフィール「次回2026.11/28.29」と 投稿 /p/DchcgnmKCwn/ のフライヤー(11/28sat-29sun OPEN10:00 CLOSE16:00 / 埼玉県鴻巣市安養寺214-2 bizarre Park)で日程・時間・会場は一次情報で確定。ただし名称が中立(LOCAL MARKET)で、出店者募集は「ジャンルは問いません」、出店内訳も非公開のため植物比率を数えられない。listing-policy の compositeEvents.undisclosedBreakdown.exclude に該当。会場と主催が多肉・サボテンの専門店(bizarre Park / @bizarre_farm)である点は掲載側に振れる材料だが、イベント自身の位置づけは植物主題ではない。出店内訳が公開されるか、主催が植物主題と明示したら再評価する",
+   "eventDate": "2026-11-28"
+  },
+  {
+   "key": "aqua-festa-vol2-2026-09",
+   "reasonType": "policy",
+   "name": "AQUA FESTA vol.2 〜はじめようアクアリウム生活〜 (2026-09-05 神奈川県横浜市)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-05",
+   "reason": "公式IG @aquafesta.reeffesta と公式X @AquaFreaks で 2026-09-05・横浜産貿ホール マリネリア 1階展示場・先行入場11:00/一般12:30/閉場17:00・有料入場(先行大人2,000円)を確認。主題は名称どおりアクアリウムで、公式の副題も『はじめようアクアリウム生活』、扱いは熱帯魚・水草・メダカ・海水魚・サンゴ。出展者紹介がパート39まで続く規模に対し植物系はライセンスプランツ等の数店にとどまり、compositeEvents の『植物系出店が全出店の3割以上』に届かない。SAGAMI VIBES PARK vol.3 と同型"
+  },
+  {
+   "key": "machikado-geijutsusai-2026-09",
+   "reasonType": "policy",
+   "name": "まちかど芸術祭 2026 (2026-09-06 長野県飯田市 りんご並木)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-06",
+   "reason": "拾えた一次情報は出店者側(@daiki_wild_agave)の出店予定告知のみで、内容は『9月6日 11:00〜17:00 長野県飯田市 〜まちかど芸術祭〜 飯田市りんご並木』という1店の出店案内。イベント本体は市街地の芸術祭で植物が主題ではなく、確認できた植物系出店者も1者。SUPER ART & CRAFT MARKET 2026 と同じく『1出店者の出展告知をイベントとして立てない』に該当"
+  },
+  {
+   "key": "medaka-fes-kanto-vol5-2026-09",
+   "reasonType": "policy",
+   "name": "メダカフェス関東 2026 Vol.5 (2026-09-13 埼玉県加須市 ホームプラザナフコ北加須店)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-13",
+   "reason": "主催 @inumeshik_1 の告知で 2026-09-13(日) 9:00〜14:00・ホームプラザナフコ北加須店(埼玉県加須市柳生302)・雨天決行を確認。名称のとおり主題は改良メダカで、出店者一覧の先頭も幸來めだか・akaめだか・熊庭めだか等のメダカ店。植物エリアは併設区画として案内されているが全体に対する比率は小さく、compositeEvents の閾値に届かない。植物エリアの出店内訳が公開され、比率が3割以上または著名専門店3者以上を確認できたら再評価する"
+  },
+  {
+   "key": "ozaki-bikaku-itazuke-ws-2026-09",
+   "reasonType": "policy",
+   "name": "ビカクシダ板付けワークショップ（オザキフラワーパーク）(2026-09-12/13 東京都練馬区)",
+   "decided": "2026-09-05",
+   "eventDate": "2026-09-12",
+   "reason": "主催の公式サイト ozaki-flowerpark.co.jp と公式IG/X で 9/12(土)・13(日) 11:00〜/14:00〜(所要90分)・料金5,500円(税込)・定員制・講師 groote plantage 水山氏を確認。物販イベントではなく定員制の有料ワークショップ単独開催で、告知時点で既に満席・予約受付終了。listing-policy の workshopOnly に該当"
+  },
+  {
+   "key": "saitama-saboten-club-daimeihinten-23rd-2026-10",
+   "reasonType": "policy",
+   "name": "埼玉サボテンクラブ 第23回 サボテン大銘品展 (2026-10-04 むさしの村さくらホール・埼玉県加須市)",
+   "decided": "2026-09-06",
+   "eventDate": "2026-10-04",
+   "reason": "主催 @saitamasabotenclub の告知で 2026-10-04・むさしの村さくらホール・参加費1500円(弁当飲物付)・受付8:10〜9:40 を確認。内容は第1部が大銘品展(品評会)、第2部が交換会(1人10点まで)で、告知に『即売会はありませんのでご留意ください。』と明記されている。一般来場者が当日立ち寄って買える販売会ではなく、参加費を条件に愛好家が集まる会なので listing-policy の closedGatherings に該当。NextMeet は『誰でも参加できる優良苗の交換会』とだけ書いており即売会が無いことは読み取れない"
+  },
+  {
+   "key": "yumenoshima-shokubutsu-kokankai-2026-10",
+   "reasonType": "policy",
+   "name": "夢の島公園 植物交換会 2026秋 (2026-10-24/25 夢の島公園 熱帯植物館横広場・東京都江東区)",
+   "decided": "2026-09-06",
+   "eventDate": "2026-10-24",
+   "reason": "半年に一度、夢の島公園で開かれる植物交換会。11:00〜15:00・雨天中止。販売会ではなく、参加するには交換する植物を必ず持ち込む必要がある。持ち物が参加条件になっているため closedGatherings に該当し、読者が『行けるイベント』として使えない"
+  },
+  {
+   "key": "jurian-aki-koten-engei-2026-09",
+   "reasonType": "policy",
+   "name": "秋の古典園芸植物展（樹里安）(2026-09-26/27 川口緑化センター 樹里安・埼玉県川口市)",
+   "decided": "2026-09-06",
+   "eventDate": "2026-09-26",
+   "reason": "会場公式 jurian.or.jp のイベント一覧で会期を確認。主題は古典園芸植物(盆栽・山野草・万年青など)で、多肉植物も一部並ぶが主役ではない。listing-policy の plantCentric『アガベ・塊根植物・多肉植物・サボテン・ビザールプランツが主役の回だけ掲載する』に当たらない。同会場の『秋の多肉植物・サボテン展示会』(10/24-25)は主題が合致するので掲載した"
+  },
+  {
+   "key": "jurian-banshu-koten-engei-2026-11",
+   "reasonType": "policy",
+   "name": "晩秋の古典園芸植物展（樹里安）(2026-11-28/29 川口緑化センター 樹里安・埼玉県川口市)",
+   "decided": "2026-09-06",
+   "eventDate": "2026-11-28",
+   "reason": "秋の古典園芸植物展と同じ理由。主題が古典園芸植物であり植物ジャンルが当サイトの対象と一致しない"
+  },
+  {
+   "key": "hibiya-gardening-show-2026",
+   "reasonType": "policy",
+   "name": "日比谷公園ガーデニングショー2026 (2026-10-17〜25 日比谷公園・東京都千代田区)",
+   "decided": "2026-09-06",
+   "eventDate": "2026-10-17",
+   "reason": "主体はガーデニング(造園)の展示コンテストで、植物販売やキッチンカーは併設。多肉植物・サボテン・アガベ・塊根植物が主役の回ではないため plantCentric に当たらない"
+  },
+  {
+   "key": "toha-mercado-aka-renga-15th-2026-09",
+   "reasonType": "policy",
+   "name": "トハメルカド境赤レンガ倉庫 第15回 ボタニカル × オータムフェス (2026-09-20〜21 境赤レンガ倉庫・群馬県伊勢崎市)",
+   "decided": "2026-09-07",
+   "eventDate": "2026-09-20",
+   "reason": "主催公式(tanikutoha.com)の出店者紹介ページで内訳が公開されており、63店舗中で植物を売るのは主催の多肉永遠を含めて5店ほど(約8%)。残りはハンドメイド雑貨・飲食・整体・占い・ヒーリングで、主催自身が『体験・ワークショップを主役として募集』と書いている。compositeEvents の『植物系3割以上または著名ナーセリー3者以上』に届かない。テーマ名に『ボタニカル』が入るが、undisclosedBreakdown は内訳が非公開のときの規則なので当たらない"
+  },
+  {
+   "key": "lala-botaniq-vol2-2026-11",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "name": "LaLa Botaniq 第二回 (2026-11-29 群馬県・株式会社多肉永遠主催)",
+   "decided": "2026-09-07",
+   "eventDate": "2026-11-29",
+   "reason": "主催公式に日程はあるが出店者募集中で内訳が未公開。同主催・同形式の第1回(2025-07-27・32店舗)と、同主催のトハメルカド第15回(植物系約8%)から総合マルシェの可能性が高い。名称の Botaniq だけを根拠に掲載しない。出店者一覧が出たら数えて再評価する"
+  },
+  {
+   "key": "shiba-no-kaori-echeveria-agave-greenmarche-2026-12",
+   "reasonType": "unverified",
+   "revisit": true,
+   "name": "芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13 道の駅たかねざわ 元気あっぷむら・栃木県高根沢町)",
+   "decided": "2026-09-07",
+   "eventDate": "2026-12-13",
+   "reason": "日時・会場を書いているのは出店者側(キッチンカー・コミュニティスペース等)の投稿だけで、主催とみられる @tyutyu_ivt 自身の当該回の告知が確認できない。同アカウントはハンドメイド系マルシェの企画運営で、芝の香りマルシェは総合マルシェのシリーズ。主催の告知が出たら日程と植物比率をあわせて再評価する"
+  },
+  {
+   "key": "kirishima-car-boots-vol1-2026-09",
+   "reasonType": "policy",
+   "name": "第1回 霧島カーブーツ (2026-09-12 天降川ふるさとの川河川公園・鹿児島県霧島市)",
+   "decided": "2026-09-07",
+   "eventDate": "2026-09-12",
+   "reason": "主催 @amarcord0148 の説明が『車のトランクを使ってお宝や手作り品を販売するカーブーツ(車フリマ)』で、名称も中立。多肉植物・アガベ・サボテンを扱う M&T succulents の1店が出店するだけで、植物が主題の回ではない"
+  },
+  {
+   "key": "core-marche-2026-autumn",
+   "reasonType": "undisclosed",
+   "name": "コアマルシェ2026Autumn (2026-11-08 キヤッセ羽生・埼玉県羽生市)",
+   "decided": "2026-09-07",
+   "eventDate": "2026-11-08",
+   "reason": "主催は靴・鞄店 @shoes_and_bag_core のママ向けマルシェで名称が中立、出店内訳も非公開。多肉の出店者が自分の告知で日時を出しているだけで、植物が主題という主催側の位置づけが無い。undisclosedBreakdown の exclude に該当",
+   "coexistsWith": "wonder-market-2026-11"
+  },
+  {
+   "key": "asian-plant-festival-otaki-2026-09",
+   "reasonType": "policy",
+   "name": "アジア有用植物祭 (2026-09-19〜20 大多喜有用植物苑・千葉県大多喜町)",
+   "decided": "2026-09-07",
+   "eventDate": "2026-09-19",
+   "reason": "主催 @otaki_herbgarden の告知どおり主題はアジアの有用植物とその食文化で、出店もビリヤニなど飲食が中心。ハーブ・有用植物は当サイトの対象ジャンル(アガベ・塊根・多肉・サボテン・ビザールプランツ)ではない。outOfScopeGenres に追記した"
+  },
+  {
+   "key": "toha-mercado-yurinkan-4th-2026-10",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "name": "トハメルカド～有鄰館 第4回 ボタニカル × ハロウィンフェス (2026-10-11〜12 有鄰館・群馬県桐生市)",
+   "decided": "2026-09-08",
+   "eventDate": "2026-10-11",
+   "reason": "主催公式 tanikutoha.com で 10/11(日)・12(月祝)、有鄰館(桐生市本町2-6-32)、入場・駐車場無料を確認。出店者募集は9/7締切で、この回の出店者一覧はまだ公開されていない(reshopyurin.html にあるのは第1〜3回のみ)。会場紹介頁が並べるジャンルは『ボタニカル/ハンドメイド/癒し系/おいしいもの/ワークショップ』で植物は5分の1、募集区画にも美容・占い・整体ブースがある。同主催の境赤レンガ倉庫 第15回は内訳が公開されており植物系は約8%だった。テーマ名の『ボタニカル』だけを根拠に掲載しない。出店者一覧が出たら数えて再評価する"
+  },
+  {
+   "key": "nakakkura-marche-2026-10",
+   "reasonType": "undisclosed",
+   "name": "なかっ蔵マルシェ (2026-10-17〜18 旧廣盛酒造・群馬県吾妻郡中之条町909)",
+   "decided": "2026-09-08",
+   "eventDate": "2026-10-17",
+   "reason": "主催 @nakakkura_marche の告知で 10/17(土)・18(日) 11:00-16:00・入場無料・旧廣盛酒造を確認。名称が中立で、主催の告知にも植物を主題とする記述が無い。2026年4月回は31組の出店で、名前が分かる出店者はアクセサリー・菓子・雑貨・アップサイクル。多肉の出店者が自分の告知で日時を出しているだけなので undisclosedBreakdown の exclude に該当。Googleの検索結果では別投稿のハッシュタグ(#多肉植物イベント #トハメルカド)が同じ結果ブロックに混ざるが、これはこの回の内容ではない"
+  },
+  {
+   "key": "rojiura-botanical-2026-09-30",
+   "reasonType": "unverified",
+   "revisit": true,
+   "name": "路地裏ボタニカル 秋回 (2026-09-30? ワイルドプランツ路地裏のギボウシ・茨城県稲敷郡阿見町荒川本郷1-60)",
+   "decided": "2026-09-08",
+   "eventDate": "2026-09-30",
+   "reason": "出店者 @sfera_verde の動画キャプションに『2026年9月30日（日）「路地裏ボタニカル」』とあるが、2026-09-30 は水曜で曜日が合わない。主催 @rojiuranogibousi の当該回の告知が無く、直近の主催投稿は 8/30 回の御礼と『10月までに気合いで素敵苗 揃えますねー』で、次回日程を出していない。主催告知が出たら日付と曜日をあわせて再評価する。8/30 回は rojiura-botanical-2026-08 として掲載済み"
+  },
+  {
+   "key": "hinata-garden-cactus-sale-2026-09",
+   "reasonType": "policy",
+   "name": "ひなたガーデン サボテンセールイベント2026 (2026-09-12〜14 ひなたガーデン・宮崎県宮崎市郡司分丙9955)",
+   "decided": "2026-09-12",
+   "eventDate": "2026-09-12",
+   "reason": "主催 @hinata.garden0805 の告知は『9月12(土)13(日)14(月)3日間サボテンセールイベントを開催します ¥600〜¥1000サボテンの商品をAll¥500で販売致します』で、中身は通常営業日(8:00〜16:00)の店頭価格の値引きだけ。出店者も企画も無い。2026-09-01 に見送った『ノハラ園芸センター Summer SALE 2026』(レジにて20%OFF)と同じ型。listing-policy の plantCentric.storeSale に規則として書いた"
+  },
+  {
+   "key": "botanical-wellness-marche-hakata-hankyu-2026-09",
+   "reasonType": "policy",
+   "name": "Botanical & Wellness Marché / N3SELECT 博多阪急POPUP (2026-09-24〜27 博多阪急 8階催場・福岡県福岡市博多区中央街1-1)",
+   "decided": "2026-09-12",
+   "eventDate": "2026-09-24",
+   "reason": "アグリゲータは『N3SELECTが博多阪急POPUP2026を開催』と1出店者の名前でイベントを立てているが、催事の主催は博多阪急で、名称は『Botanical & Wellness Marché』(公式の催しスケジュールで 9/24(木)〜27(日)・8階催場・最終日17時終了を確認)。阪急側の説明は『様々な種類の花や緑と、毎日をさらに健やかに過ごせるよう』で、確認できた出店はハーブティー専門店BISA・生姜専門店GINGER FACTORY・焼菓子くれーぶる・チーズケーキ店など飲食とウェルネスが中心。珍奇植物専門店 N3SELECT(@n3select・9/24〜27 10:00〜20:00・入場無料)は区画のひとつ。outOfScopeGenres.coTitledEvents と『1出店者の出展告知をイベントとして立てない』(SUPER ART & CRAFT MARKET 2026-09-01)に該当。listing-policy の plantCentric.vendorBoothInHostEvent に規則として書いた"
+  },
+  {
+   "key": "mind-warp-vol3-yonezawa-2026-09",
+   "reasonType": "policy",
+   "name": "MIND WARP vol.3 古着倉庫 × TRILLGREEN (2026-09-19 古着倉庫・山形県米沢市)",
+   "decided": "2026-09-12",
+   "eventDate": "2026-09-19",
+   "reason": "主催 @trillgreen_aburaya の告知(2026-09-07)で 9/19(土) 17:00〜21:00・古着倉庫(@furugisouko2017) を確認。内容は『FASHION・ART・PLANTS・SOUNDが交差する一夜限りのSPECIAL EVENT』で、古着のスペシャルプライス販売・フリーマーケット・ガラスアクセサリー・HIPHOPのDJ5組に TRILLGREEN の植物が加わる形。植物の出店はTRILLGREEN1者で、会場も古着店。compositeEvents に該当する。同じ主催が9/20〜22に自店で開く TRILLGREEN SPECIAL EVENT は掲載した"
+  },
+  {
+   "key": "minami-no-machi-uekienngei-21st-2026-09",
+   "name": "第21回 南のまちの植木・園芸市 (2026-09-18〜21 メイクマン豊見城店 第2駐車場・沖縄県豊見城市)",
+   "decided": "2026-09-13",
+   "eventDate": "2026-09-18",
+   "reasonType": "policy",
+   "reason": "主催の株式会社メイクマン(ホームセンター)の公式イベント頁がこの催しを『DIY / ガーデニング / くらし』に分類しており、09-03 の主催Facebook告知も『珍しい形や面白いシルエットの植物、レアな植物、お買い得な植木や園芸品』と書く。主題は植木と園芸品で、outOfScopeGenres の『ガーデニング・造園』に当たる。多肉・アガベ・塊根が併売されていても主題ではない。**春(3月)と秋(9月)に第20回・第21回と続くシリーズなので、回ごとに判定し直さないよう precedents に残した。**出店者側(@arakaki_orchid_bikaku 等)の告知はあるが、それは vendorAnnouncementsOnly により掲載の根拠にならない"
+  },
+  {
+   "key": "numa-fes-6th-nishihara-2026-09",
+   "name": "第6回 沼フェス (2026-09-27 西原さわふじマルシェ・沖縄県中頭郡西原町)",
+   "decided": "2026-09-14",
+   "eventDate": "2026-09-27",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "revisitedOn": "2026-09-14",
+   "reason": "主催は彩メダカ(ジモティーの告知主)。公式チラシの惹句が『珍しい植物とメダカのスペシャルイベント』で、対象ジャンル(植物)と対象外ジャンル(メダカ)を並記している。名称『沼フェス』は中立で、どちらの沼かを言っていない。会場企画も『3分メダカすくい！タイムアタック』が前面に出る。outOfScopeGenres.coTitledEvents の『併記は両方に客を呼ぶための表記で主題を言っていない』が名称ではなく主催の説明文で起きた形にあたり、出店者一覧も非公開なので比率を数えられない。内訳が公開されたら再評価する。琉球新報(2026-05-05)は第5回を『改良メダカと植物の愛好家たちが集うイベント』『植物合わせ30店』と書いている"
+  },
+  {
+   "key": "midori-to-ikimono-carnival-vol7-2026-10",
+   "name": "緑と生き物カーニバル vol.7 (2026-10-11 鶴見緑地公園 ハナミズキホール・大阪市鶴見区)",
+   "decided": "2026-09-14",
+   "eventDate": "2026-10-11",
+   "reasonType": "unverified",
+   "revisit": true,
+   "revisitedOn": "2026-09-14",
+   "reason": "10/11(日)10:00〜16:00・ハナミズキホールという日程は出店者(@platycerium_love / @honoka.kakogawa / @mononoke_botanical_garden / @helisgarden)の告知で一致するが、主催アカウントが特定できない。primarySource.vendorAnnouncementsOnly により掲載の根拠にならない。あわせて名称が『緑』と『生き物』の併記で、過去回の出店者告知に #めだか #メダカイベント が付く。ブースが『緑◯番＝植物系ブース』と区分されており植物枠は確実にあるが、主題の比重は主催の告知を見ないと決められない"
+  },
+  {
+   "key": "green-expo-2027-yokohama",
+   "name": "GREEN×EXPO 2027 横浜国際園芸博覧会 (2027-03-19〜09-26 旧上瀬谷通信施設・神奈川県横浜市)",
+   "decided": "2026-09-14",
+   "eventDate": "2027-03-19",
+   "reasonType": "policy",
+   "reason": "国際園芸博覧会。主題は園芸・造園・緑化の総合博で、outOfScopeGenres の『ガーデニング・造園』に当たる(日比谷公園ガーデニングショーと同型)。会期が6か月あり当サイトの即売会・展示会の枠と性質が違う。PUKUBOOK が注目イベントとして常時掲載しているので、毎回の巡回で候補に出る"
+  },
+  {
+   "key": "tana-mama-marche-vol24-2026-10",
+   "name": "тαηα мαмα мαя¢нє vol.24（田名ママ マルシェ） (2026-10-03〜04 ブンブン小麦の郷 田名店・神奈川県相模原市中央区)",
+   "decided": "2026-09-15",
+   "eventDate": "2026-10-03",
+   "reasonType": "policy",
+   "reason": "主催 @tanamamamarche の告知が自ら『ハンドメイドマルシェ』『心ときめく、手作りとの出逢いを』『ハンドメイドを楽しむ4日間』と名乗る。出店者紹介はインド刺繍リボン・クレープ・ラーメン・お笑いショー・お客様参加型ライブ・町の手相屋・おりがみ教室で、植物の出店は1件も出ていない。植物イベントではないので compositeEvents の比率以前の問題。植物のキーワードで検索すると名称が中立なぶん候補に出てくるため記録しておく"
+  },
+  {
+   "key": "golden-time-vol8-greenfeel-2026-09",
+   "name": "GOLDEN TIME vol.8 (2026-09-20 GREEN FEEL・福島県福島市成川久保32-2)",
+   "decided": "2026-09-15",
+   "eventDate": "2026-09-20",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "revisitedOn": "2026-09-15",
+   "reason": "会場は観葉植物専門店 GREEN FEEL(株式会社福華園)の敷地内で、店の業態は植物専門。だが主催 @greenfeel_fukukaen の当該回の告知は『美味しいものを食べて！素敵な物を見て！作って！』『フリマスペース』『素敵なアーティストさん達の歌』で、出店者募集も FOOD / DRINK / GOODS / WORKSHOP、付けているタグも #マルシェ。植物の即売が主題とは書いていない。名称 GOLDEN TIME は中立で出店内訳も非公開なので undisclosedBreakdown.exclude に当たる。storeAnniversary は『主催告知の名称または内容が即売会・展示会・販売会』であることを条件にしており、ここは満たさない。内訳か植物即売の企画が公開されたら再評価する"
+  },
+  {
+   "key": "yoru-ambien-2026-09",
+   "name": "夜アンビエン（2026年9月）(2026-09-19 安美園・沖縄県宜野湾市普天間2-31-9 2F)",
+   "decided": "2026-09-16",
+   "reason": "サボテンを中心に扱う店舗 安美園が月1回、15:00〜22:00 まで店を開けて日本酒・クラフトビール・コーヒーを出す夜のラウンジ。主催告知(@ambien_2020 2026-09-10)に販売企画も外部出店者も書かれておらず、通常営業の延長にあたる。storeSale.exclude と同じ切り方",
+   "reasonType": "policy",
+   "eventDate": "2026-09-19",
+   "revisit": false,
+   "source": "https://www.instagram.com/ambien_2020/p/DdGW9iOkaTg/"
+  },
+  {
+   "key": "kaku-plants-pot-ten-vol2-2026-09",
+   "name": "KAKU PLANTS POT展 vol.2 (2026-09 森田美術館・高知県土佐市新居1945-8)",
+   "decided": "2026-09-16",
+   "reason": "陶芸作家 角 による『植物のための角鉢展』。主題は鉢という器そのもので、植物は展示の添え物。作家の器の個展にあたるため対象外",
+   "reasonType": "policy",
+   "revisit": false,
+   "source": "https://www.instagram.com/moritautsuwa/"
+  },
+  {
+   "key": "valo-plants-room-2026-10",
+   "name": "valo plants room 2026 (2026-10-09〜11 cafe licht 横アトリエ・兵庫県)",
+   "decided": "2026-09-16",
+   "reason": "@natu.cafe（植物のある暮らし・植え替え教室）が年1回開く個人アトリエの販売会。扱いはアオダモなどの庭木とオージープランツ、鉢、植え替え相談で、アガベ・多肉・塊根・サボテン・ビザールが主役という告知が無い",
+   "reasonType": "policy",
+   "eventDate": "2026-10-09",
+   "revisit": false,
+   "source": "https://www.instagram.com/natu.cafe/"
+  },
+  {
+   "key": "shizuoka-bizarre-plants-market-2026",
+   "name": "SHIZUOKA Bizarre Plants Market (開催日未確定 Kenmay・静岡県)",
+   "decided": "2026-09-16",
+   "reason": "PUKUBOOK が『仮予定／非公式・9月』として常設で並べているだけで、主催の一次情報が見つからない。2026年回の日付も会場の告知も無い。venueUnannounced.doNotList（日付が未確定なら掲載しない）に当たる",
+   "reasonType": "unverified",
+   "revisit": true,
+   "revisitedOn": "2026-09-16",
+   "source": "https://pukubook.jp/events/"
+  },
+  {
+   "key": "schop-vol7-garage-nagoya-2026-10",
+   "name": "SCHOP vol.7 (2026-10-12 garage NAGOYA・愛知県名古屋市中村区平池町4-60-12 グローバルゲート3F/4F)",
+   "decided": "2026-09-16",
+   "reason": "園芸店 garage NAGOYA が年1回開く店内イベント。主催公式に出店者の内訳が全部出ており、GREEN が3組(ボタらいふ=塊根・アガベ／武農園=シダ観葉／mossmile=苔テラリウムWS)に対し CRAFT 5組・FOOD 12組以上。ワークショップも革小物・苔テラリウム・苔玉・生花アレンジで、催しの中身は飲食と雑貨が主体。storeAnniversary.hostedMarche（業態ではなく催しの中身で切る）と compositeEvents の閾値(3割 / 専門店3者)のどちらにも届かない",
+   "reasonType": "policy",
+   "eventDate": "2026-10-12",
+   "revisit": false,
+   "source": "https://garage-garden.com/news/event/garage-nagoya-%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%8eschop-vol-7%e3%80%8f%e9%96%8b%e5%82%ac/"
+  },
+  {
+   "key": "east-side-tokyo-17th-anniv-sale-2026-09",
+   "name": "17th Anniversary SALE (2026-09-14〜20 east side tokyo・東京都台東区蔵前1-5-7)",
+   "reason": "造花・花材の問屋 east side tokyo が開く周年セール。主催告知(@eastsidetokyo)の中身は『SALE価格で造花をご用意！観葉植物が10％off！クラフト商材Max50％off！その他ドライフラワーや花器の一部もセール価格販売中』で、企画は平日限定のガラガラ抽選会(3000円以上購入)のみ。値引きだけの回なので storeSale.exclude。扱う主題も造花・花材で、観葉植物は売場の一部",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-09-14",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "ringoya-ieg-popup-2026-09",
+   "name": "RINGOYA × IEG POP UP EVENT (2026-09-15〜29 LIFE CONCEPT IEG・徳島県小松島市江田町敷地前76-7)",
+   "reason": "鳴門市のフラワーショップ RINGOYA が家具・インテリア店 LIFE CONCEPT IEG に観葉植物を期間限定で展開する POPUP。主催告知(@ringoya87)は『インテリアをぐっと上質にする、植物のある心地よい空間』で、並ぶのは観葉植物・鉢・フラワーベース。アガベ・多肉・塊根の系統ではない。and-plants-and-flower-marche-2026-09(2026-09-12 見送り)と同型",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-09-15",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "fantastic-market-herbis-29-2026-09",
+   "name": "FANTASTIC MARKET in HERBIS 29 (2026-09-26〜27 ハービスPLAZA ENT・大阪市北区)",
+   "reason": "2010年から続く食のマルシェ。主催告知(@fantasticmarket2010)の副題が『WELCOMING the First Harvests of Autumn』、惹句が『美味しい恵みを探しに』で、30店舗の主体は旬の食材と飲食。名称は中立で出店内訳も非公開のため compositeEvents / undisclosedBreakdown.exclude に当たる。29回目のシリーズなので listing-policy の precedents に置いた",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-09-26",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "cafe-book-marche-jindai-2026-10",
+   "name": "カフェ＆ブックマルシェ (2026-10-01 神代植物公園 雑木林・東京都調布市)",
+   "reason": "都民の日に神代植物公園の雑木林を会場として開く、本と雑貨とカフェのマルシェ。会場が植物公園というだけで、集まるのは雑貨と植物・自然関連の本。植物の即売が主題ではない",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-01",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "home-flea-work-6th-2026-10",
+   "name": "HOME/FLEA/WORK #6 -Back to school- (2026-10-03〜04 HOME/WORK VILLAGE・東京都世田谷区池尻2-4-5)",
+   "reason": "旧池尻中学校を活用した複合施設で開く古着・雑貨のマーケット。主催告知(@home_flea_work)は服フェス FASHION IN JAPAN FESTIVAL 2026 との同時開催を前面に出しており、出店は古着が主体でワークショップと植物販売が一部。名称が中立で内訳も非公開のため compositeEvents / undisclosedBreakdown.exclude",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-03",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "shoku-to-the-future-2026-10",
+   "name": "植トゥザ・フューチャー2026 (2026-10-16〜18 Motorpool gallery・大阪市中央区西心斎橋2-8-17)",
+   "reason": "三重県桑名市の植物とアートのブランド GREEN PRICKLE(デザイナー山田一馬)の初個展。主催告知(@green_prickle)に『※植物の販売はございません。』と明記があり、並ぶのはアート作品100点以上・ポスター・ステッカー・雑貨・アパレル。植物ではなく作品が主題なので outOfScopeGenres.artworkShows",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-16",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "yanbaru-shokubutsu-banyuki-vol2-2026-10",
+   "name": "やんばる植物万遊記 Vol.2 (2026-10-17〜18 BUNASAUNA・沖縄県国頭郡)",
+   "reason": "ハーバルサウナ BUNASAUNA の3周年記念企画。主催告知(@bunasauna_okinawa / note)は『各日10名限定の開催となります。ご応募いただいた方の中から抽選』で、内容はやんばる植物の採取・蒸留・スクラブ作りの体験とサウナ。一般来場者が当日立ち寄って買える回ではないので closedGatherings / workshopOnly",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-17",
+   "decided": "2026-09-17"
+  },
+  {
+   "key": "polka-marche-takahashi-2026-10",
+   "name": "ポルカマルシェ (2026-10-10 ポルカ天満屋ハピータウン セントラルコート・岡山県高梁市中原町1084-1)",
+   "reason": "出店者の告知しか見つからない(@otk_plants / @foresthouse_michie / @tacorio531 が同じ内容を貼っている)。主催が特定できないので primarySource.vendorAnnouncementsOnly に当たる。出店内訳は公開されており全11組中 植物系が6組(いろどりほいくえん・OTK PLANTS・かごめ庵・greemo・和・HIROPON WEST GARDEN)で比率は満たすため、主催の告知が出たら掲載する。2025年10月にも同名の回があり、年次のシリーズと思われる",
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-10-10",
+   "decided": "2026-09-17",
+   "revisitedOn": "2026-09-17"
+  },
+  {
+   "key": "green-marche-hananoyu-2026-10",
+   "name": "Green marche 花の湯 (2026-10-04 富嶽温泉 花の湯 エントランス1階・静岡県富士宮市ひばりが丘805)",
+   "reason": "多肉植物の出店者7組が同じ告知文を貼っているだけで、主催が特定できない(@tsumugiwa.march / @feel1187 / @leaf.garden0515 / @kirakira_marche_ など)。primarySource.vendorAnnouncementsOnly。主題は多肉植物で掲載相当の内容なので、主催の告知か会場公式(富嶽温泉 花の湯)の案内が出たら掲載する",
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-10-04",
+   "decided": "2026-09-17",
+   "revisitedOn": "2026-09-17"
+  },
+  {
+   "key": "green-days-matsuyama-vol4-2026-10",
+   "name": "GREEN DAYS まつやま vol.4 (2026-10-10〜11 松山中央公園 坊っちゃんスタジアム前広場・愛媛県松山市市坪西町625-1)",
+   "reason": "主催 @greendays_matsuyama のテーマは『暮らしを、育てる。』で、告知は植物・雑貨・フード・アウトドアを並べるライフスタイルイベント。名称の GREEN はジャンルを名指ししていない。出店者紹介が始まったところだが、公開済みの回はパイ専門店・菓子店で、植物系の比率がまだ数えられない。undisclosedBreakdown.exclude。出店者一覧が出そろったら breakdownPublished どおり数える",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-10-10",
+   "decided": "2026-09-17",
+   "revisitedOn": "2026-09-17"
+  },
+  {
+   "key": "green-market-akebono-selection-2026-10",
+   "name": "Green Market “AKEBONO” Selection (2026-10-24〜25 あけぼの山農業公園 ふるさと広場・千葉県柏市)",
+   "reason": "会場公式(akebonoyama-nougyoukouen.jp)の告知は『季節の花苗や観葉植物、産地直送の生花販売』が主題で、同時開催はパンフェス。出店4者はオザキフラワーパーク・フレネットHIBIYA(花の競り体験・蘭鉢)・高松商事(苗)・ハルディン(花苗と観葉)で、企画も花の競り体験・ガーベラすくい。アガベ・塊根・多肉・サボテンが主役の回ではない。outOfScopeGenres(ガーデニング・生花)。多肉植物の語はオザキフラワーパークの常設取扱いの紹介文に出るだけで、この回の品目ではない",
+   "reasonType": "policy",
+   "eventDate": "2026-10-24",
+   "decided": "2026-09-18"
+  },
+  {
+   "key": "hokusetsu-nominoichi-green-antique-autumn-2026-11",
+   "name": "北摂蚤の市 GREEN＆ANTIQUE 〜秋編〜 (2026-11-01 安満遺跡公園 サンスター広場・人工芝広場・大阪府高槻市)",
+   "reason": "主催 @hokusetsu_nominoichi 自身の告知が『アンティークを中心に、植物やグリーンが彩る秋の北摂蚤の市』で、主題はアンティーク。約50店舗の紹介も古道具・北欧ヴィンテージ食器・インテリア雑貨・フードが並ぶ。名称の GREEN＆ANTIQUE は対象ジャンルと対象外ジャンルの併記で、outOfScopeGenres.coTitledEvents どおり名称に GREEN があることを掲載の根拠にしない。春編・秋編で回を重ねるシリーズなので次の回も同じ判断でよい",
+   "reasonType": "policy",
+   "eventDate": "2026-11-01",
+   "decided": "2026-09-18"
+  },
+  {
+   "key": "hyakkaten-aki-no-bara-2026-11",
+   "name": "秋のバラ咲く百花店（マルシェ百花店）(2026-11-08 島田市中央公園 ふれあい広場・静岡県島田市)",
+   "reason": "主催 @hyakkadan(静岡フリーマガジン百花壇)の出店者紹介が『フードやクラフト、暮らしを彩るもの』で、名称の『バラ咲く』は会場の島田市中央公園ばら園を指す季節の枕。植物のジャンルを名乗っておらず、植物系の比率も紹介が進行中で数えられない。undisclosedBreakdown.exclude。出店者一覧が出そろったら breakdownPublished どおり数える",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-11-08",
+   "decided": "2026-09-18",
+   "revisitedOn": "2026-09-18"
+  }
+ ],
+ "_reasonTypes": {
+  "policy": "掲載基準に照らして載せないと決めた。再提案しない",
+  "unverified": "植物軸はあるが一次情報が確認できず今は載せない。revisit=true なら一次情報が出たら再評価する",
+  "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
+  "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
+ },
+ "updated": "2026-09-18",
+ "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
