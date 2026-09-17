@@ -39,6 +39,18 @@
    "history": [
     "2026-09-17"
    ]
+  },
+  "organizer-official-index": {
+   "label": "掲載済みシリーズの主催公式サイトの「イベント一覧」",
+   "url": "https://greensnap.jp/event/",
+   "staleDays": 14,
+   "why": "watch-sources.json の officialSiteCandidates は、**最後に掲載した回の個別ページのURL**しか持たない。個別ページを開いても同じ主催の別の回は出ないので、主催が自分のサイトに並べている次の回が丸ごと見えない。2026-09-18、GreenSnap Marche 豊洲 2026 Autumn(10/31-11/1)と お台場 2026(11/28-29)がこれに当たった。アグリゲータ3社(LEAFLA / NextMeet / PUKUBOOK)にも無く coverage-gaps も0件で、主催公式の /event/ を開いて初めて2件とも見えた。**一覧を持っている主催は、一覧のほうを見る。**",
+   "how": "officialSiteCandidates の domain ごとに、個別ページの1〜2階層上(イベント一覧)を開いて events.json と並べる。まず greensnap.jp/event/(GreenSnap Marche・カダンフェス)。新しく一覧を持つ主催が見つかったらこの url に足す",
+   "lastSweptOn": "2026-09-18",
+   "lastScope": "greensnap.jp/event/ のイベント一覧4件(YOKOHAMA 2026 AUTUMN / カダンフェス2026秋 / 豊洲 2026 Autumn / お台場 2026)を events.json と照合。未掲載2件(豊洲 Autumn・お台場)を掲載した",
+   "history": [
+    "2026-09-18"
+   ]
   }
  },
  "updated": "2026-09-18",
