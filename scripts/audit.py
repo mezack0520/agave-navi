@@ -1416,7 +1416,7 @@ def main():
     # 一番起きやすい形なので、実ファイルを数える。
     # 除外は2種類だけ。リダイレクトstub(広告を出す面ではない)と
     # Search Console の所有確認ファイル(Googleが中身を書き換えるなと言っている)。
-    _ads_missing, _ads_wrong = [], []
+    _ads_missing, _ads_wrong, _ads_on_noindex = [], [], []
     for _f in sorted(glob.glob(rp('*.html'))
                      + glob.glob(rp('*', '*.html'))
                      + glob.glob(rp('*', '*', 'index.html'))):
@@ -1427,6 +1427,13 @@ def main():
         if 'http-equiv="refresh"' in _h:
             continue                      # リダイレクトstub
         _m = re.search(r'<meta name="google-adsense-account" content="([^"]+)"', _h)
+        _ni = 'content="noindex' in _h
+        if _ni:
+            # noindex の頁に広告のタグが載っていたら、それは載りすぎ。
+            # AdSense の Valuable Inventory は「中身の無い頁に広告を出すな」。
+            if _m or 'pagead2.googlesyndication.com' in _h:
+                _ads_on_noindex.append(_rel)
+            continue
         if not _m:
             _ads_missing.append(_rel)
         elif _m.group(1) != ADSENSE_CLIENT:
@@ -1437,6 +1444,14 @@ def main():
         'detail.html.tmpl の {{analyticsHead}} を通り、root直下の手書きHTMLは '
         'sync-footers が差し込む。どれかの経路から漏れている',
         severity='urgent')
+    add('adsense_on_noindex', 'noindexの頁に広告のタグが載っている',
+        sorted(_ads_on_noindex)[:40],
+        'sitelib.adsense_head(noindex=True) は空を返す。'
+        'そこを通っていない経路がある。終了30日超のアーカイブに広告を出すのは '
+        'AdSense の Valuable Inventory(中身の無い頁に広告を出すな)に触れる。'
+        'アフィリ枠を noindex 頁に出さない方針(2026-07-30)とも揃える',
+        severity='urgent')
+
     add('adsense_client_mismatch', 'AdSenseのクライアントIDが違う頁',
         sorted(_ads_wrong),
         'sitelib.ADSENSE_CLIENT と一致させる。別IDが混ざると成果が別口に計上される',

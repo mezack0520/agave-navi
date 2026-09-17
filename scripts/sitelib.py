@@ -625,6 +625,26 @@ GTAG_HEAD = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={G
 # 2026-09-16 までは同じ gtag が3箇所に直書きされていた。
 ANALYTICS_HEAD = GTAG_HEAD + '\n  ' + ADSENSE_HEAD
 
+
+def adsense_head(noindex=False):
+    """noindex の頁には広告のタグを出さない。**この判断はサイトの既存方針。**
+
+    generate-landing-pages.aff_block が 2026-07-30 から
+    「noindexの薄いページには出さない(薄頁×広告を避ける)」でアフィリ枠を
+    外している。2026-09-16 に AdSense を戻したとき全頁に入れてしまい、
+    自分の方針を破っていた。AdSense の Valuable Inventory は
+    「広告だけで中身の無い頁に広告を出すな」と言っており、
+    終了30日超のアーカイブ219頁はまさにそれに当たる。
+
+    GA は全頁に残す。見たいのは広告の有無と関係ない。
+    """
+    return '' if noindex else '  ' + ADSENSE_HEAD + '\n'
+
+
+def analytics_head(noindex=False):
+    """detail.html.tmpl の {{analyticsHead}} に入る一式。"""
+    return GTAG_HEAD + ('\n  ' + ADSENSE_HEAD if not noindex else '')
+
 # ナビの行き先。ヘッダーのメニューはこれを唯一の元にする。
 NAV_LINKS = (
     ('/', 'ホーム'),
@@ -1543,7 +1563,7 @@ def head_open(og_type='website'):
         '  <script>window.dataLayer=window.dataLayer||[];'
         'function gtag(){{dataLayer.push(arguments);}}'
         "gtag('js',new Date());gtag('config','" + GA_ID + "');</script>\n"
-        '  ' + ADSENSE_HEAD + '\n'
+        '{adsense_head}'
         '  <meta charset="UTF-8">\n'
         '  {robots_meta}\n'
         '  <link rel="canonical" href="{canonical}">\n'

@@ -171,7 +171,8 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
     if noindex and rel_path:
         NOINDEX_PATHS.append(rel_path)
     head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon,
-                       root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta=robots_meta)
+                       root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta=robots_meta,
+                       adsense_head=sitelib.adsense_head(noindex))
     if feed_href:
         # generate-rss.py が吐くタグ別・地域別フィードへの導線。
         # 貼らないと、生成しているだけでどこからも辿れないファイルになる
@@ -285,7 +286,8 @@ def index_page(out_path, title, desc, kw, canon, h1, lead, items, root='../'):
     cards = ''.join(f'<article class="landing-card"><a href="{u}"><h2 class="lc-name">{n}</h2><div class="lc-meta">{c}件</div></a></article>' for n,u,c in items)  # 索引のリンクタイル(イベントカードではない)
     grid = f'  <div class="landing-grid">\n{cards}\n  </div>'
     bc = [sitelib.CRUMB_ROOT, (title.replace('一覧','').replace('別',''), None)]
-    head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon, root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta='<meta name="robots" content="index,follow">')
+    head = HEAD.format(title=title, description=desc, keywords=kw, canonical=canon, root=root, breadcrumb_jsonld=bc_jsonld(bc), robots_meta='<meta name="robots" content="index,follow">',
+                       adsense_head=sitelib.adsense_head(False))
     bch = bc_html(bc)
     aff, aff_js = aff_block(root)
     body = (f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1>'
@@ -585,7 +587,8 @@ def main():
     n_head = HEAD.format(
         title='新着掲載イベント', description='アガベ・塊根植物・多肉植物イベントの新着掲載情報。当サイトに最近追加されたイベントを掲載日順に一覧できます。',
         keywords='新着,植物イベント,アガベ,即売会', canonical=f'{DOMAIN}/new/', root='../',
-        breadcrumb_jsonld=bc_jsonld(n_bc), robots_meta='<meta name="robots" content="index,follow">')
+        breadcrumb_jsonld=bc_jsonld(n_bc), robots_meta='<meta name="robots" content="index,follow">',
+        adsense_head=sitelib.adsense_head(False))
     n_style = ''   # スタイルは style.css(.event-added)。インライン<style>は持たない
     n_intro = ('<p>当サイトのデータベースに最近追加されたイベント30件を、掲載日の新しい順に並べています。'
                '毎日の自動収集と手動確認で随時追加しているため、定期的にチェックすると新しいイベントをいち早く見つけられます。'

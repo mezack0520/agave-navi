@@ -52,7 +52,12 @@ def main():
         # 生成物は sitelib.ANALYTICS_HEAD を通る。
         # ads.js は AdSense 初期化専用だったので戻さない(サイドバー制御は affiliate.js)。
         h2 = re.sub(r'[ \t]*<script src="[^"]*ads\.js[^"]*"></script>\n', '', html)
-        if 'google-adsense-account' not in h2:
+        if 'content="noindex' in h2:
+            # noindex の頁には広告のタグを出さない(sitelib.adsense_head と同じ方針)。
+            # 既に入っていれば剥がす。root直下では dashboard.html が該当。
+            h2 = re.sub(r'[ \t]*<script async src="https://pagead2\.googlesyndication\.com[^\n]*\n', '', h2)
+            h2 = re.sub(r'[ \t]*<meta name="google-adsense-account"[^\n]*\n', '', h2)
+        elif 'google-adsense-account' not in h2:
             # gtag の設定行の直後に差し込む。<head> 直下に置くのが AdSense の案内どおり
             h2, n = re.subn(r"(gtag\('config',\s*'" + re.escape(sitelib.GA_ID) + r"'\);\s*</script>\n)",
                             lambda mo: mo.group(1) + '  ' + sitelib.ADSENSE_HEAD + '\n', h2, count=1)

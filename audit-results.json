@@ -577,6 +577,13 @@
       "note": "sitelib.ANALYTICS_HEAD が唯一の持ち主。生成物は head_open か detail.html.tmpl の {{analyticsHead}} を通り、root直下の手書きHTMLは sync-footers が差し込む。どれかの経路から漏れている",
       "severity": "urgent"
     },
+    "adsense_on_noindex": {
+      "title": "noindexの頁に広告のタグが載っている",
+      "count": 0,
+      "items": [],
+      "note": "sitelib.adsense_head(noindex=True) は空を返す。そこを通っていない経路がある。終了30日超のアーカイブに広告を出すのは AdSense の Valuable Inventory(中身の無い頁に広告を出すな)に触れる。アフィリ枠を noindex 頁に出さない方針(2026-07-30)とも揃える",
+      "severity": "urgent"
+    },
     "adsense_client_mismatch": {
       "title": "AdSenseのクライアントIDが違う頁",
       "count": 0,

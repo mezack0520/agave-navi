@@ -632,6 +632,9 @@ def build_page(template, ev, ctx):
     region = ev.get('region', '')
     prefecture = ev.get('prefecture', region)
     venue = ev.get('venue') or ev.get('location') or ''
+    # 1回だけ呼ぶ。NOINDEX_EVENT_SLUGS に積む副作用があるので二度呼ばない。
+    # 広告のタグもこの判定に従う(noindex の頁には出さない)。
+    robots = make_robots_meta(ev)
 
     replacements = {
         '{{slug}}': slug,
@@ -664,7 +667,7 @@ def build_page(template, ev, ctx):
         '{{heroSection}}': make_hero_section(ev),
         '{{eventJsonLd}}': make_event_jsonld(ev),
         '{{accessRow}}': make_access_row(ev),
-        '{{robotsMeta}}': make_robots_meta(ev),
+        '{{robotsMeta}}': robots,
         '{{officialLinksRows}}': make_official_links_rows(ev),
         '{{ogImage}}': make_og_image(ev),
         '{{shareSection}}': make_share_section(ev),
@@ -684,7 +687,7 @@ def build_page(template, ev, ctx):
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),
         '{{weatherRow}}': make_weather_row(ev, ctx),
         '{{siteFooter}}': sitelib.site_footer(),
-        '{{analyticsHead}}': sitelib.ANALYTICS_HEAD,
+        '{{analyticsHead}}': sitelib.analytics_head('noindex' in robots),
     }
 
     html = template

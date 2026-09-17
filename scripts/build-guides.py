@@ -187,6 +187,7 @@ def render_guide(meta, md, related):
         keywords=meta['keywords'], canonical=f"{DOMAIN}/guides/{meta['slug']}.html",
         date_iso=date_iso, root='../',
         robots_meta='<meta name="robots" content="index,follow">',
+        adsense_head=sitelib.adsense_head(False),
     )
     bc = sitelib.breadcrumb_html([sitelib.CRUMB_HOME,
                                  ('植物ガイド', '/guides/'),
@@ -240,7 +241,8 @@ def main():
     head = HEAD.format(title='植物ガイド一覧', description='アガベ・塊根植物・ビザールプランツの育て方や購入時のチェックポイントを解説したガイド記事一覧。',
                        keywords='植物ガイド,アガベ,塊根植物,育て方,即売会', canonical=f'{DOMAIN}/guides/',
                        date_iso=datetime.now(JST).strftime('%Y-%m-%d'), root='../',
-                       robots_meta='<meta name="robots" content="index,follow">')
+                       robots_meta='<meta name="robots" content="index,follow">',
+                       adsense_head=sitelib.adsense_head(False))
     index_bc = sitelib.breadcrumb_html(
         [sitelib.CRUMB_HOME, ('植物ガイド', None)])
     body_html = f'''<body>
