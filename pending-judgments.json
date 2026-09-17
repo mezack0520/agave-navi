@@ -12,15 +12,16 @@
         "task-reports/ にも agave-navi-eyecatch_2026-09-09.md が最後で、09-10 以降のレポートが無い。",
         "結果、task_run_gap が 09-10 / 09-11 を『動かなかった日』として毎日出し続け、09-11 の本物の環境障害(4タスク全滅)と混ざって読めない。",
         "2026-09-16 追記(event-listing-review): 09-15 に commit 13e5313「アイキャッチ4件追加、目視で2件を見送り」があり、images/events/ に4枚入っている。CI にこれを作る経路は無い(.github/workflows/ と scripts/*.sh に eyecatch を含むものは0件)ので、押したのは agave-navi-eyecatch 本体。**タスクは動いている。動いていないのはレポートと台帳の記録だけ。** 09-15 に一度「動いていない」と判定したのは誤りで、下の proposal(SKILL.md に record-run.py の行を入れる)がそのまま正しい。",
-        "2026-09-16 時点で台帳の抜けは since=2026-09-10 から7日ぶんに伸びた。task_run_gap は 09-11(4タスク同時の環境障害)しか出しておらず、eyecatch は task_run_never_recorded 側で1件のまま。"
+        "2026-09-16 時点で台帳の抜けは since=2026-09-10 から7日ぶんに伸びた。task_run_gap は 09-11(4タスク同時の環境障害)しか出しておらず、eyecatch は task_run_never_recorded 側で1件のまま。",
+        "2026-09-17 確認(event-monitor): 台帳 agave-navi-eyecatch の history は 2026-09-09 のまま、task-reports も agave-navi-eyecatch_2026-09-09.md が最後。since=2026-09-10 からの抜けは8日ぶんに伸びた。一方 09-16 に 95d9cac「アイキャッチ3件追加（IG投稿より）」が押されており、**タスクは動き続けている**。欠けているのは記録だけで、proposal は変わらない。"
       ],
       "proposal": "C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\agave-navi-eyecatch\\\\SKILL.md に、他3タスクと同じ2行を入れる。(1) リポジトリを clone した直後に python3 scripts/record-run.py agave-navi-eyecatch を実行し、その変更を含めて push する。(2) 実行レポートを mzplants\\\\agave-navi\\\\task-reports\\\\agave-navi-eyecatch_YYYY-MM-DD.md に保存する。手順はプレイブック §1 の 5。 (2026-09-16: レポートの行も同時に入れる。09-10 以降は成果物だけ出てレポートが1本も無い。)",
       "whyHuman": "SKILL.md は C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\ 配下にあり、このタスクに接続されているのは mzplants だけなので書き込めない。プレイブックにも『タスクは自分のプロンプトを編集できない』とある。",
       "policyProposal": "docs/task-playbook.md §1 に『台帳に taskId を足したら、同じ回にそのタスクの SKILL.md へ record-run.py の行を入れる。片方だけだと task_run_gap が毎日鳴り続ける』を追記済み(2026-09-12)。",
-      "lastVerifiedOn": "2026-09-16"
+      "lastVerifiedOn": "2026-09-17"
     }
   ],
-  "updated": "2026-09-16",
+  "updated": "2026-09-17",
   "resolved": [
     {
       "id": "event-monitor:inquiry-pii-in-public-repo",

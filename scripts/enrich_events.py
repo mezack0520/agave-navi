@@ -922,7 +922,7 @@ def main():
             # time (only if empty)
             times_found = info.get('times_found') or []
             if times_found and _is_empty(ev.get('time')):
-                ev['time'] = times_found[0]
+                ev['time'] = sitelib.strip_field_label(times_found[0])
                 changed_fields.append('time')
 
             # admission (only if empty)
@@ -930,6 +930,9 @@ def main():
             if prices and _is_empty(ev.get('admission')):
                 # pick the shortest non-trivial entry as the headline price
                 pick = sorted(prices, key=lambda s: (len(s) > 60, len(s)))[0]
+                # 「入場料: 無料」のままだとスペック表に項目名が二重に出る
+                # (2026-09-17 に1件検出)。規則は sitelib
+                pick = sitelib.strip_field_label(pick)
                 if pick:
                     ev['admission'] = pick[:80]
                     changed_fields.append('admission')
@@ -937,7 +940,8 @@ def main():
             # access (new field, only if empty)
             access_lines = info.get('access_found') or []
             if access_lines and _is_empty(ev.get('access')):
-                ev['access'] = ' / '.join(access_lines)[:300]
+                ev['access'] = sitelib.strip_field_label(
+                    ' / '.join(access_lines))[:300]
                 changed_fields.append('access')
 
             # venue (only if empty/placeholder; pick the first venue extracted)
@@ -945,12 +949,17 @@ def main():
             if venues and _is_empty(ev.get('venue')):
                 # venues_found entries may contain prefix like '会場：' — strip
                 v = venues[0]
-                import re as _re
-                v = _re.sub(r'^(会場|開催場所|場所)\s*[：:]\s*', '', v).strip()
+                # 先頭に残った項目名のラベルを剥がす。規則は sitelib が持つ
+                # (2026-09-17: ここだけが自前の正規表現を持っていて、
+                #  admission / description の同じ事故を誰も見ていなかった)
+                v = sitelib.strip_field_label(v)
                 # 郵便番号付きの住所は会場名ではない。規則は sitelib が持つ
                 # (2026-09-16: 見張る側 audit.venue_postal_address だけが
                 #  この規則を持っていて、書く側は素通しだった)
-                if sitelib.venue_is_postal_address(v):
+                # 施設名の後ろに括弧書きで住所を足した形も同じく会場名ではない
+                # (2026-09-17 追加)
+                if (sitelib.venue_is_postal_address(v)
+                        or sitelib.venue_has_embedded_address(v)):
                     v = ''
                 if 3 < len(v) < 120:
                     ev['venue'] = v[:100]

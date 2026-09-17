@@ -1251,6 +1251,55 @@ def venue_is_postal_address(v):
     return bool(_POSTAL_VENUE.match((v or '').strip()))
 
 
+# venue に「会場名＋住所」を丸ごと貼った事故。_POSTAL_VENUE は 〒 か 3桁-4桁で
+# **始まる**値しか見ないので、施設名の後ろに括弧書きで住所を足した形は素通りする。
+# 2026-09-17 に okibota-spring-2026-sunshine で検出:
+#   venue="サンシャインシティ 展示ホールA（東京都豊島区東池袋3-1）" / location="サンシャインシティ"
+# 住所と会場名が venue と location で逆に入っていた。venue は location より
+# 優先されるので、build 側が括弧を落とす処理を持っていなければ
+# スペック表と JSON-LD の Place.name に住所がそのまま出る。
+# 判定は「都道府県名 → 市/郡/区 → 数字」が1つの値の中で揃うこと。
+# 「埼玉県営和光樹林公園」「東京都立小台橋高等学校」「やまぎん県民ホール」は
+# 市区郡＋数字が続かないので掛からない(2026-09-17 に全451件で実測。venue は1件のみ)。
+_VENUE_EMBEDDED_ADDRESS = re.compile(
+    r'(北海道|東京都|京都府|大阪府|[^\s（）()]{2,3}県)[^\s]{0,12}?(市|郡|区)[^\s]{0,20}?[0-9０-９]')
+
+
+def venue_has_embedded_address(v):
+    """venue の値に住所が丸ごと埋め込まれているか。
+
+    住所は mapQuery と location の括弧書きの役割。venue は会場名だけにする。
+    書く側(enrich_events.py)と見張る側(audit.py)の両方がこれを呼ぶ。
+    """
+    return bool(_VENUE_EMBEDDED_ADDRESS.search((v or '').strip()))
+
+
+# 値の先頭に項目名のラベルが残っている事故(「入場料: 無料」「日時：… 会場：…」)。
+# スクレイプした行を項目に振り分けるとき、ラベルを剥がし忘れるとこうなる。
+# 詳細頁のスペック表は項目名を自前で描くので、「入場料 / 入場料: 無料」と二重に出る。
+# 2026-09-17 に2件検出(admission 1件・description 1件)。
+# enrich_events.py は venue についてだけ同じ剥がし処理を自前で持っていた
+# (scripts/enrich_events.py:949)。**検出側と書く側で別々に持つと必ず片方が遅れる**ので、
+# 規則はここに一本化して両方から呼ぶ。
+# 先頭だけを見る。「主催: gunma.parryi_freaks。」のように本文の途中に出る
+# ラベルは読める日本語なので対象外(途中まで見ると誤検知が止まらない)。
+_FIELD_LABELS = ('開催日時', '開催時間', '開催場所', '開催日', '日時', '時間',
+                 '会場', '場所', '住所', 'アクセス', '入場料', '料金',
+                 '参加費', '費用', '主催', '入場')
+FIELD_LABEL_PREFIX_RE = re.compile(
+    r'^\s*(' + '|'.join(_FIELD_LABELS) + r')\s*[:：]\s*')
+
+
+def has_field_label_prefix(v):
+    """値の先頭に項目名のラベルが貼り付いたままか。"""
+    return bool(FIELD_LABEL_PREFIX_RE.match(v or ''))
+
+
+def strip_field_label(v):
+    """値の先頭に残った項目名のラベルを剥がす。"""
+    return FIELD_LABEL_PREFIX_RE.sub('', (v or '')).strip()
+
+
 def is_vague_venue(v):
     """会場として使えない値か。
 

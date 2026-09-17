@@ -381,6 +381,20 @@
       "note": "住所は mapQuery に置き、venue は会場名だけにする。会場名が location にあるなら venue を削除して location へフォールバックさせる",
       "severity": "urgent"
     },
+    "venue_embedded_address": {
+      "title": "venueに会場名と住所が両方入っている(JSON-LDのPlace.nameとスペック表に住所が出る)",
+      "count": 0,
+      "items": [],
+      "note": "住所は location の括弧書きと mapQuery の役割。venue は会場名だけにする",
+      "severity": "urgent"
+    },
+    "field_label_residue": {
+      "title": "値の先頭に項目名のラベルが残っている(スペック表に項目名が二重に出る)",
+      "count": 0,
+      "items": [],
+      "note": "sitelib.strip_field_label で剥がす。書く側で剥がさないと、消して回っても次のエンリッチが戻す",
+      "severity": "urgent"
+    },
     "place_field_not_a_venue": {
       "title": "venue/mapQuery/location が会場名になっていない(地図とJSON-LDのPlace.nameが壊れる)",
       "count": 0,

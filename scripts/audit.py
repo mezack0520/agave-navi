@@ -669,6 +669,48 @@ def main():
         '住所は mapQuery に置き、venue は会場名だけにする。'
         '会場名が location にあるなら venue を削除して location へフォールバックさせる')
 
+    # 9c-4b. venue が「会場名＋住所」になっていないか。
+    #        venue_postal_address は 〒 か 3桁-4桁で**始まる**値しか見ないので、
+    #        施設名の後ろに括弧書きで住所を足した形は素通りしていた。
+    #        2026-09-17 に okibota-spring-2026-sunshine で検出。
+    #        venue="サンシャインシティ 展示ホールA（東京都豊島区東池袋3-1）" に対し
+    #        location="サンシャインシティ" で、住所と会場名が逆に入っていた。
+    #        venue は location より優先されるので、build 側が括弧を落とす処理を
+    #        持っていなければ Place.name とスペック表に住所がそのまま出る。
+    #        規則は sitelib。書く側(enrich_events.py)も同じ関数を呼ぶ。
+    embedded_addr = []
+    for e in events:
+        val = (e.get('venue') or '').strip()
+        if sitelib.venue_has_embedded_address(val):
+            embedded_addr.append(f"{e['slug']}: venue=\"{val[:50]}\"")
+    add('venue_embedded_address', 'venueに会場名と住所が両方入っている'
+        '(JSON-LDのPlace.nameとスペック表に住所が出る)',
+        sorted(embedded_addr),
+        '住所は location の括弧書きと mapQuery の役割。venue は会場名だけにする')
+
+    # 9c-4c. 値の先頭に項目名のラベルが残っている回。
+    #        スクレイプした行を項目に振り分けるときラベルを剥がし忘れると、
+    #        「入場料: 無料」のまま入る。詳細頁のスペック表は項目名を自前で描くので
+    #        「入場料 / 入場料: 無料」と二重に出る。
+    #        2026-09-17 に2件検出(gamagori… の admission、uomachi… の description)。
+    #        enrich_events.py は venue についてだけ同じ剥がし処理を自前で持っていた。
+    #        規則を sitelib に寄せ、書く側と見張る側が同じものを呼ぶようにした。
+    #        先頭だけを見る。本文の途中の「主催: <名前>。」は読める日本語で、
+    #        そこまで見ると誤検知が止まらない(2026-09-17 に実測で3件→2件に絞った)。
+    label_residue = []
+    for e in events:
+        for f in ('name', 'description', 'venue', 'location', 'time',
+                  'admission', 'access', 'organizer', 'mapQuery', 'dateDisplay'):
+            val = e.get(f)
+            if isinstance(val, str) and sitelib.has_field_label_prefix(val):
+                label_residue.append(f"{e['slug']}: {f}=\"{val[:40]}\"")
+    add('field_label_residue', '値の先頭に項目名のラベルが残っている'
+        '(スペック表に項目名が二重に出る)',
+        sorted(label_residue),
+        'sitelib.strip_field_label で剥がす。'
+        '書く側で剥がさないと、消して回っても次のエンリッチが戻す',
+        severity='urgent')
+
     # 9c-5. venue / mapQuery が「会場名」として成立していないもの。
     #       venue は location より優先して スペック表・FAQ・JSON-LD の Place.name に入り、
     #       mapQuery は埋め込み地図の検索語そのものになる。したがってここに会場名以外が
