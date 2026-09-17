@@ -2428,7 +2428,9 @@ LEAFLA は 08-28 に記事を出しており**取得もできていた**。
 **順番はこう。** 台帳が空 → レポートを見る → **無ければ成果物を `git log` で見る**
 → それも無ければスケジューラ。成果物はそのタスクに固有の変更で引く
 (eyecatch なら `git log -- images/events/`、
-event-listing-review なら `inquiries-processed.json`)。
+event-listing-review なら **`new-inquiries.json`**
+— `inquiries-processed.json` と書いていたが、あれは新着があった回にしか動かない。
+2026-09-17 に訂正。§3 の「新着ゼロの回は、そのタスクの『成果物』が動かない」)。
 `--author` では引けない。どのタスクも同じ bot 名義で押す。
 
 **レポートは「唯一の物証」ではない。**§1 の 6 にそう書いてあるが、
@@ -2627,6 +2629,53 @@ build-all を回せば、remote 側の項目を読み込んだ上に自分の差
 
 **「相手の返事だから引き直さない」は、返事の中身を見ていない。**
 status は3桁の数字ではなく指示で、4xx と 5xx では指示が違う。
+
+
+### 新着ゼロの回は、そのタスクの「成果物」が動かない (2026-09-17)
+
+昨日ここに足した3分岐（§3「レポートが無くても、成果物を見れば動いたかが分かる」）は、
+成果物の引きかたとして **`event-listing-review` なら `inquiries-processed.json`** を挙げた。
+**これが外れる。**あのファイルは新着があった回にしか動かない。
+問い合わせは月に数件なので、**動かないほうが平常**で、
+挙げた引きかたは「ほとんどの日に空を返す」ことになる。
+
+今日の実測。09-16 の `task-reports/event-listing-review_2026-09-16.md` は**無い**。
+3分岐どおり `git log -- inquiries-processed.json` を引くと 09-16 は出ない。
+ここで止めると「動いていない」に倒れる。実際は
+`a16ac6685`(10:18 起動記録) と `1695fc838`(10:22 回答シート実測) の2つを押しており、
+台帳の `reviewedHistory` にも 2026-09-16 が入っている。**完走している。**
+
+引くべきは **`new-inquiries.json`**。このタスクは
+起動時に `reviewedOn` / `reviewedHistory` を、シートを読んだら
+`sheetRows` / `sheetCheckedOn` を書く。**どちらも新着の有無と無関係に毎回動く。**
+
+```
+git log --format='%h %ad %s' --date=short -- new-inquiries.json
+```
+
+一般化するとこうなる。**成果物で生存を見るなら、「仕事があった回だけ動くファイル」ではなく
+「起動するたび動くファイル」を選ぶ。**前者を選ぶと、
+**暇な日と死んだ日が同じ見た目になる。**これは §1 の 5 で
+「記録するのは起動した日であって完走した日ではない」と決めたのと同じ理屈で、
+台帳をそう設計しておきながら、成果物の引きかたのほうは逆を選んでいた。
+
+各タスクの「毎回動く成果物」:
+
+| taskId | 引く先 |
+|---|---|
+| `event-listing-review` | `new-inquiries.json`（`reviewedOn` / `sheetCheckedOn`） |
+| `agave-navi-eyecatch` | `images/events/`（アイキャッチを足した回のみ。毎回ではない） |
+| `event-monitor` / `agave-event-update` | `task-runs.json`（`record-run.py` が毎回書く） |
+
+`agave-navi-eyecatch` だけは毎回動く成果物を持たない。
+`record-run.py` を SKILL.md に入れる話（`pending-judgments.json` の
+`event-monitor:eyecatch-task-not-recording-runs`）が片付くまでは、
+あのタスクに限り「成果物が無い＝動いていない」とは言えない。
+
+**なお、レポートの書き忘れ自体は直せていない。** 09-16 は push まで通って
+レポートだけが落ちた。落ちても本番に害は無いが、
+§1 の 6 が転記の起点をレポートに置いているので、
+**shell が落ちた日の台帳転記が、書き忘れた回のぶんだけ空振りする。**
 
 
 ## 4. 自己改善のやり方
