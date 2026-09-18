@@ -1,6 +1,24 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [],
+  "items": [
+    {
+      "id": "event-monitor:ig-post-known-but-not-embedded",
+      "addedOn": "2026-09-18",
+      "source": "audit(手動調査。検査は未追加)",
+      "question": "告知投稿のURLを imageSource に持っている回に、instagramPostId を入れて詳細頁にIG埋め込みを出してよいか。",
+      "facts": [
+        "events.json 454件のうち 103件が imageSource に instagram.com/p/<id> を持つ。うち 90件は instagramPostId も instagramUrl も持たない。",
+        "build-detail-pages.make_instagram_section は instagramPostId / instagramUrl が無いと return '' で節ごと消す。つまりこの90件は告知投稿が判明しているのに詳細頁からその投稿へ行けない。",
+        "audit.instagram_embed_missing は `if not _pid and not _iurl: continue` で始まる。**入口の条件が、欠けているまさにその項目**なので、この90件は設計どおり素通りする。",
+        "さらに絞ると 48件(うち開催予定41件)は url / sourceUrl にも投稿IDが無く、出典が主催のIGプロフィールだけ。プロフィールは投稿が流れると告知に辿り着けなくなる。",
+        "出典がゼロの回は無い(全件 url か sourceUrl を持つ)ので、掲載の根拠としては欠けていない。欠けているのは読者の導線。"
+      ],
+      "proposal": "imageSource の投稿IDを instagramPostId に写す(90件)。写せば埋め込みが出て、audit.instagram_embed_missing の監視下にも入る。",
+      "whyHuman": "アイキャッチはその投稿の画像そのものなので、埋め込みを足すと同じ絵が詳細頁に2回出る。絵の重複を許してでも告知への導線を優先するかは見た目の判断で、機械では決められない。「開催予定だけ」「出典がプロフィールしかない48件だけ」に絞る案もある。",
+      "policyProposal": "listing-policy.json に primarySource.instagram を新設し「主催IGが出典のとき、投稿URLが判明していれば sourceUrl は投稿を指す。プロフィールURLは watch 対象として別に持つ」を書く。決まれば instagramPostId の充足を audit の検査にできる。",
+      "lastVerifiedOn": "2026-09-18"
+    }
+  ],
   "updated": "2026-09-18",
   "resolved": [
     {

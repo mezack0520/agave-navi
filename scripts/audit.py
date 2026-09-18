@@ -711,6 +711,48 @@ def main():
         '書く側で剥がさないと、消して回っても次のエンリッチが戻す',
         severity='urgent')
 
+    # 9c-4d. mapQuery に URL クエリの符号化残骸が残っている回。
+    #        make_venue_map は mapQuery を quote() して
+    #        `maps?q=<値>&output=embed` に入れる。値の `+` が空白の代わりなら
+    #        quote() は `%2B` に変えるので、Google Maps はリテラルの `+` として読む。
+    #        **地図の枠は出るし、何かしらの場所も出る。**存在確認では捕まらない。
+    #        2026-09-18 に okibota-spring-2026-sunshine の
+    #        「サンシャインシティ+展示ホールA」で検出。テンプレート化した
+    #        650baa5(2026-07-xx) からずっと入っており、2か月以上ずれた地図を出していた。
+    #        見るのは mapQuery だけにする。venue / name の `+` は
+    #        「A+B」と読ませる書き方が正当にあり、mapQuery だけが機械の引数。
+    enc_residue = []
+    for e in events:
+        val = (e.get('mapQuery') or '').strip()
+        if val and sitelib.has_encoding_residue(val):
+            enc_residue.append(f"{e['slug']}: mapQuery=\"{val[:50]}\"")
+    add('map_query_encoding_residue', '地図クエリにURL符号化の残骸'
+        '(+ が空白の代わり / %XX。地図が別の場所を指す)',
+        sorted(enc_residue),
+        'sitelib.strip_encoding_residue で空白に戻す。%XX は元の文字が分からないので'
+        '出典から引き直す',
+        severity='urgent')
+
+    # 9c-4e. access に、駅名として成立しない「〜口駅」が入っている回。
+    #        enrich_events の access 抽出は出典の1行を丸ごと取るので、
+    #        出典が「JR大阪 中央北出口 より徒歩9分」を字詰めの都合で詰めて
+    #        書いていると「JR大阪中央北出口駅より」のまま入る。
+    #        2026-09-18 に gardens-umekita-2nd-anniv-2026-09 で検出。
+    #        出典は会場公式(= 一次情報)で、**出典が正しいことは値が正しいことを保証しない。**
+    #        「川口駅」「山口駅」は方角でも出口でもないので掛からない。
+    #        「浅草駅北口から」も駅の後ろに口が来る正しい語順なので掛からない。
+    bad_station = []
+    for e in events:
+        val = (e.get('access') or '').strip()
+        if val and sitelib.access_has_malformed_station(val):
+            bad_station.append(f"{e['slug']}: access=\"{val[:50]}\"")
+    add('access_malformed_station', 'アクセス文の駅名が「〜口駅」になっている'
+        '(出口名と駅名がつながった形。その駅は存在しない)',
+        sorted(bad_station),
+        '裏取りできない出口名は落として駅名だけ残す。'
+        '書く側で落とさないと、消しても次のエンリッチが同じ行を戻す',
+        severity='urgent')
+
     # 9c-5. venue / mapQuery が「会場名」として成立していないもの。
     #       venue は location より優先して スペック表・FAQ・JSON-LD の Place.name に入り、
     #       mapQuery は埋め込み地図の検索語そのものになる。したがってここに会場名以外が

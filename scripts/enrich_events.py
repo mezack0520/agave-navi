@@ -940,6 +940,14 @@ def main():
             # access (new field, only if empty)
             access_lines = info.get('access_found') or []
             if access_lines and _is_empty(ev.get('access')):
+                # 「JR大阪中央北出口駅より」のように出口名と駅名がつながった行は
+                # 落とす。規則は sitelib が持ち、audit.access_malformed_station が
+                # 同じものを呼ぶ (2026-09-18 追加)。
+                # **出典が一次情報でも、その行が正しい形とは限らない。**
+                # 書く側で落とさないと、消して回っても次のエンリッチが戻す。
+                access_lines = [ln for ln in access_lines
+                                if not sitelib.access_has_malformed_station(ln)]
+            if access_lines and _is_empty(ev.get('access')):
                 ev['access'] = sitelib.strip_field_label(
                     ' / '.join(access_lines))[:300]
                 changed_fields.append('access')
@@ -965,8 +973,11 @@ def main():
                     ev['venue'] = v[:100]
                     changed_fields.append('venue')
                     # mapQuery を venue で更新(plaheolderだった場合)
+                    # `+` が空白の代わりに入っていると quote() が %2B に変え、
+                    # Google Maps はリテラルの `+` として読む。規則は sitelib
+                    # (2026-09-18 追加。audit.map_query_encoding_residue が同じものを呼ぶ)
                     if _is_empty(ev.get('mapQuery')):
-                        ev['mapQuery'] = v[:100]
+                        ev['mapQuery'] = sitelib.strip_encoding_residue(v)[:100]
                         changed_fields.append('mapQuery')
 
             if changed_fields:

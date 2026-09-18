@@ -1300,6 +1300,61 @@ def strip_field_label(v):
     return FIELD_LABEL_PREFIX_RE.sub('', (v or '')).strip()
 
 
+# --- 会場・地図の値に残った URL 符号化の残骸 --------------------------------
+# mapQuery は build-detail-pages.make_venue_map が quote() して
+# `https://www.google.com/maps?q=<値>&output=embed` にそのまま入れる。
+# 値に `+` が空白の代わりに入っていると quote() が `%2B` に変えるので、
+# Google Maps は空白ではなく**リテラルの `+`** として読む。
+# 2026-09-18 に `okibota-spring-2026-sunshine` の
+# 「サンシャインシティ+展示ホールA」で検出。テンプレート化した
+# 650baa5(2026-07) から一度も直っておらず、地図は 2か月以上ずれた場所を出していた。
+# `%XX` のほうは二重符号化(quote 済みの値をもう一度 quote する)の痕。
+# **どちらも「地図が出ている」ことは確認できるので、存在確認では捕まらない。**
+_ENCODING_RESIDUE = re.compile(
+    r'%[0-9A-Fa-f]{2}'                      # 二重符号化
+    r'|(?<=[^\sA-Za-z0-9&])\+(?=[^\s0-9])'  # 空白の代わりの `+`
+)
+
+
+def has_encoding_residue(v):
+    """値に URL クエリの符号化残骸(`+` が空白の代わり / `%XX`)が残っているか。
+
+    書く側(enrich_events.py)と見張る側(audit.py)の両方がこれを呼ぶ。
+    `A+B` のような英数だけの並びは型番・商品名で正当なので見ない。
+    `令和+年` のような和文の間に来た `+` だけを空白の代わりと読む。
+    """
+    return bool(_ENCODING_RESIDUE.search((v or '').strip()))
+
+
+def strip_encoding_residue(v):
+    """符号化残骸のうち、空白の代わりの `+` を空白に戻す。
+
+    `%XX` は元の文字が分からないので触らない(検出だけする)。
+    """
+    v = (v or '').strip()
+    return re.sub(r'(?<=[^\sA-Za-z0-9&])\+(?=[^\s0-9])', ' ', v)
+
+
+# --- access に混じる、駅名として成立しない形 --------------------------------
+# enrich_events.extract_info の access 正規表現は
+# `(?:JR|地下鉄|…)[^改行]{5,80}徒歩<数字>[分秒]` で1行を丸ごと取る。
+# 出典側が「JR大阪 中央北出口 より徒歩9分」を字詰めの都合で
+# 「JR大阪中央北出口駅より徒歩9分」と書いていると、そのまま値に入る。
+# 2026-09-18 に `gardens-umekita-2nd-anniv-2026-09` で検出(出典は会場公式)。
+# 「出口 / 方角+口」の直後に「駅」が来る駅名は日本に無い。
+# 「川口駅」「山口駅」のような本物は方角でも出口でもないので掛からない。
+_MALFORMED_STATION = re.compile(r'(出口|改札口|[東西南北中央]{1,2}口)駅')
+
+
+def access_has_malformed_station(v):
+    """access の値に、駅名として成立しない「〜口駅」が入っているか。
+
+    出典が一次情報でも、こちらの項目に入れる形としては誤り。
+    裏取りできない出口名は落として駅名だけ残す(プレイブック §3)。
+    """
+    return bool(_MALFORMED_STATION.search(v or ''))
+
+
 def is_vague_venue(v):
     """会場として使えない値か。
 
