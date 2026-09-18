@@ -135,12 +135,13 @@ def event_sections(evs, today_str):
     """
     up = [e for e in evs if is_upcoming(e, today_str)]
     past = [e for e in evs if not is_upcoming(e, today_str)]
-    ongoing, coming = split_ongoing(up, today_str)
+    # 開催中の回も本体の一覧に混ぜる(2026-09-18)。専用の節を立てると
+    # 該当1件の県で4カラムの行がほぼ空になる。カードの「開催中 〜9/22」
+    # バッジで区別でき、list_sort_key が開催中を「今日」の位置に置くので
+    # 会期の長さで先頭に居座ることもない。判断は status-auto.js と揃える。
+    coming = sorted(up, key=lambda e: list_sort_key(e, today_str))
     past.sort(key=lambda e: (event_span(e)[1] or '', e.get('name') or ''), reverse=True)
     parts = [
-        section_heading_html('開催中' if ongoing else '', f'会期{LONG_RUN_DAYS}日以上',
-                             'h2', 'ongoingHeading'),
-        event_grid_html(ongoing, 'ongoingEventsGrid', today=today_str),
         section_heading_html('これから開催' if coming else '', f'{len(coming)}件',
                              'h2', 'upcomingHeading'),
         event_grid_html(coming, 'eventsGrid', eager_first=True, today=today_str),

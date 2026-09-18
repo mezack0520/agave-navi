@@ -1823,7 +1823,8 @@ def main():
             h = open(f, encoding='utf-8').read()
         except OSError:
             continue
-        for m in re.finditer(r'id="(pastEventsHeading|ongoingHeading|upcomingHeading)"([^>]*)>(.*?)</h[23]>',
+        # ongoingHeading は 2026-09-18 に廃止(開催中は本体の一覧に混ぜる)
+        for m in re.finditer(r'id="(pastEventsHeading|upcomingHeading)"([^>]*)>(.*?)</h[23]>',
                              h, re.S):
             body = m.group(3)
             if 'display:none' in m.group(2):

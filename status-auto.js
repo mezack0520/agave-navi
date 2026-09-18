@@ -198,20 +198,20 @@
       var t = c.querySelector('.event-title');
       return t ? t.textContent : '';
     }
-    // 開催中が1〜2件のときは専用の節を立てない。
-    // 見出し「開催中 会期4日以上」＋「これから開催」＋カード1枚で
-    // 3行ぶんを食うのに、中身は1件しかない(2026-09-08 指摘)。
-    // 本体の一覧に混ぜれば、カード側の「開催中 〜9/8」バッジで分かる。
-    var ONGOING_MIN = 3;
-    if (ongoing.length && ongoing.length < ONGOING_MIN) {
-      main = main.concat(ongoing);
-      ongoing = [];
-    }
-
-    ongoing.sort(function (a, b) {
-      return AEN_TIME.cmpKey(AEN_TIME.ongoingSortKey(a.__aenSpan.start, a.__aenSpan.end, nameOf(a)),
-                             AEN_TIME.ongoingSortKey(b.__aenSpan.start, b.__aenSpan.end, nameOf(b)));
-    });
+    // 開催中は専用の節を立てず、常に本体の一覧に混ぜる(2026-09-18)。
+    //
+    // 2026-09-08 に「1〜2件のときは節を立てない」を入れたが、**その判定は
+    // 読み込み時の絞り込み前の集合で1回しか走らない。**全国で6件あれば節が
+    // 立ち、そのまま関東で絞ると2件になって4カラムの行に2枚、残り空白という
+    // 形になる(2026-09-18 指摘)。top-filter.js 側は見えている枚数で
+    // 節の表示/非表示だけを切り替えており、混ぜる判断はやり直さない。
+    // 件数をしきい値にする限り、絞り込みのたびに同じことが起きる。
+    //
+    // 混ぜても分かる。カードに「開催中 〜9/22」のバッジが出ている。
+    // 並び順は AEN_TIME.listSortKey が開催中の回を「今日」の位置に置くので、
+    // 会期の長さで先頭に居座ることもない(別枠を作った 2026-08-20 の理由)。
+    main = main.concat(ongoing);
+    ongoing = [];
     main.sort(function (a, b) {
       var r = AEN_TIME.cmpKey(AEN_TIME.listSortKey(a.__aenSpan.start, a.__aenSpan.end, today, nameOf(a)),
                               AEN_TIME.listSortKey(b.__aenSpan.start, b.__aenSpan.end, today, nameOf(b)));
@@ -223,25 +223,26 @@
     main.forEach(function (c) { grid.appendChild(c); });
     if (pastGrid) past.forEach(function (c) { pastGrid.appendChild(c); });
 
-    var show = ongoing.length > 0;
+    // 「開催中」の節は作らないので、残っている器があれば畳む。
+    // 古いHTMLがキャッシュから出てきた回でも空の見出しを出さない。
     var oh = document.getElementById('ongoingHeading');
+    if (ongoingGrid) ongoingGrid.style.display = 'none';
+    if (oh) oh.style.display = 'none';
+    // 「これから開催」は、下に終了の節がある頁(ランディング)だけ残す。
+    // トップは h1 が「開催予定の…イベント」なので二重になる。
     var uh = document.getElementById('upcomingHeading');
-    if (ongoingGrid) ongoingGrid.style.display = show ? '' : 'none';
-    if (oh) oh.style.display = show ? '' : 'none';
-    // トップは開催中が無ければ「これから開催」の見出しも消して元の見た目に戻す。
-    // ランディングは下に終了の節があるので見出しを残す。意図はDOM側に書く。
-    if (uh && uh.hasAttribute('data-hide-when-no-ongoing')) {
-      uh.style.display = show ? '' : 'none';
-    }
-    // 見出しには、その節に何件載っているかを書く。
     if (uh) {
-      var note = uh.querySelector('.section-heading-note');
-      if (!note) {
-        note = document.createElement('span');
-        note.className = 'section-heading-note';
-        uh.appendChild(note);
+      var keep = !uh.hasAttribute('data-hide-when-no-ongoing');
+      uh.style.display = keep ? '' : 'none';
+      if (keep) {
+        var note = uh.querySelector('.section-heading-note');
+        if (!note) {
+          note = document.createElement('span');
+          note.className = 'section-heading-note';
+          uh.appendChild(note);
+        }
+        note.textContent = main.length + '件';
       }
-      note.textContent = main.length + '件';
     }
   }
   window.AEN_LIST = { arrange: arrangeList };

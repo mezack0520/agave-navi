@@ -505,12 +505,8 @@ def main():
         r'(?:<span class="section-heading-note">[^<]*</span>)?(</h3>)',
         lambda m: m.group(1) + '終了したイベント' + _note(PAST_KEEP_LABEL) + m.group(2),
         new_html)
-    new_html, n_oh = re.subn(
-        r'(id="ongoingHeading"[^>]*>)開催中'
-        r'(?:<span class="section-heading-note">[^<]*</span>)?(</h2>)',
-        lambda m: m.group(1) + '開催中' + _note(f'会期{LONG_RUN_DAYS}日以上') + m.group(2),
-        new_html)
-    print(f'section headings:    終了={n_ph} 開催中={n_oh}')
+    # 「開催中」の見出しは 2026-09-18 に廃止した(本体の一覧に混ぜる)。
+    print(f'section headings:    終了={n_ph}')
 
     # 開催予定件数のバッジ。以前は daily.yml のステップが更新していたが、
     # そのステップは build-all.sh(=auto-status-jst.py)より前に走るため

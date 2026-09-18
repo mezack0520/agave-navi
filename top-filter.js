@@ -263,17 +263,11 @@ function applyFilters(query) {
     if (pastHeading) pastHeading.style.display = visiblePast > 0 ? '' : 'none';
     if (pastGrid) pastGrid.style.display = visiblePast > 0 ? '' : 'none';
 
-    // 開催中セクションもフィルタ結果に連動させる
-    const ongoingGrid = document.getElementById('ongoingEventsGrid');
-    const ongoingHeading = document.getElementById('ongoingHeading');
-    const upcomingHeading = document.getElementById('upcomingHeading');
-    const visibleOngoing = ongoingGrid
-      ? Array.from(ongoingGrid.querySelectorAll('.event-card'))
-             .filter(c => c.style.display !== 'none' && !c.classList.contains('filter-hide')).length
-      : 0;
-    if (ongoingGrid) ongoingGrid.style.display = visibleOngoing > 0 ? '' : 'none';
-    if (ongoingHeading) ongoingHeading.style.display = visibleOngoing > 0 ? '' : 'none';
-    if (upcomingHeading) upcomingHeading.style.display = visibleOngoing > 0 ? '' : 'none';
+    // 開催中の節はここでは扱わない。status-auto.js が常に本体へ混ぜる。
+    // 以前はここで「見えている開催中の枚数」で節を出し入れしていたが、
+    // 混ぜる判断は読み込み時に1回しか走らないため、絞り込みで1〜2件に
+    // なった状態の節がそのまま残り、4カラムの行がほぼ空になっていた
+    // (2026-09-18 指摘)。「これから開催」の見出しも status-auto.js が持つ。
 
     // 行きたい空状態表示
     const emptyState = document.getElementById('emptyState');
