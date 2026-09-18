@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-18",
+  "updated": "2026-09-19",
   "items": [
+    {
+      "on": "2026-09-19",
+      "kind": "date",
+      "slug": "premium-rock-garden-festa-2026",
+      "name": "プレミアム ロックガーデン フェスタ2026",
+      "date": "2026-09-09",
+      "dateEnd": "2026-09-27",
+      "prefecture": "群馬",
+      "detail": "2026.09.19-27 → 2026.09.09-27"
+    },
     {
       "on": "2026-09-18",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2026-09-12",
       "dateEnd": "2026-09-12",
       "prefecture": "滋賀",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "plants-dive-vol5-nara-2026-10",
-      "name": "PLANTS DIVE vol.5 in NARA",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "奈良",
       "detail": ""
     }
   ]
