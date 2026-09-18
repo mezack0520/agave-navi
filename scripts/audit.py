@@ -3178,6 +3178,52 @@ def main():
     # (generate-rss.py が TAG_ROMAJI の写しを持って壊れたのと同じ型)。
     # severity は info。daily のタスクは Chrome の許可待ちなどで実際に落ちる回があり、
     # 0が正常とは言えない。urgent にすると鳴りっぱなしになって読まれなくなる。
+    # 成果物から起動日が分かるタスクは、台帳が空でもそれを起動の証拠にする。
+    # **台帳は自己申告で、自己申告は落ちる。**agave-navi-eyecatch は
+    # 2026-09-10 以降ずっと台帳に書けていないが、毎日アイキャッチを
+    # 取って push している。そのぶん task_run_never_recorded が毎日出て、
+    # 5日連続で目崎に転送され、5回とも同じ「SKILL.md に2行入れて」を返した。
+    # **直せない指摘を出し続けるのは、検出していないのと同じ。**
+    # プレイブック §1 の 7 が 09-16 に「動いているかどうかは成果物の
+    # コミットで見る」と結論しているので、それを機械側に入れる。
+    #
+    # 条件は2つ揃ったときだけ。指定パスへの**追加**があり、かつ
+    # コミットの件名がそのタスクのものと読めること。片方だけだと、
+    # 手で画像を足した回や無関係な画像整理を起動と誤認する。
+    _TASK_FOOTPRINT = {
+        'agave-navi-eyecatch': {'paths': ['images/events/'],
+                                'subject': r'アイキャッチ|eyecatch'},
+    }
+
+    def _footprint_days(tid, since):
+        cfg = _TASK_FOOTPRINT.get(tid)
+        if not cfg:
+            return set()
+        try:
+            log = subprocess.run(
+                ['git', 'log', f'--since={since}', '--format=%H\t%ad\t%s',
+                 '--date=short', '--'] + cfg['paths'],
+                cwd=REPO, capture_output=True, text=True).stdout
+        except Exception:                           # noqa: BLE001
+            return set()
+        days, pat = set(), re.compile(cfg['subject'])
+        for line in log.strip().split('\n'):
+            if not line or '\t' not in line:
+                continue
+            sha, day, subj = line.split('\t', 2)
+            if not pat.search(subj):
+                continue
+            try:
+                names = subprocess.run(
+                    ['git', 'show', '--name-only', '--format=',
+                     '--diff-filter=A', sha, '--'] + cfg['paths'],
+                    cwd=REPO, capture_output=True, text=True).stdout
+            except Exception:                       # noqa: BLE001
+                continue
+            if any(n.startswith(tuple(cfg['paths'])) for n in names.split()):
+                days.add(day)
+        return days
+
     task_gap = []
     _tr = load_json('task-runs.json', {}).get('tasks') or {}
     try:
@@ -3193,14 +3239,23 @@ def main():
     # 実測: 除外前 3件(うち agave-navi-eyecatch が 09-10〜09-14 の5日)、
     # 除外後 2件(agave-event-update と event-monitor の 09-11 のみ=全タスク同日)。
     _never_tids = set()
+    _footprints, _unrecorded = {}, []
     for _tid, _cfg in ((k, v or {}) for k, v in _tr.items()):
         _s = str(_cfg.get('since') or '').strip()
         if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _s):
             continue
         _h = [str(x) for x in (_cfg.get('history') or [])
               if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(x))]
-        if not any(x >= _s for x in _h):
+        _fp = _footprint_days(_tid, _s)
+        _footprints[_tid] = _fp
+        if not any(x >= _s for x in _h) and not _fp:
             _never_tids.add(_tid)
+        elif not any(x >= _s for x in _h):
+            # 台帳は空だが成果物からは動いている。**死んでいるのではない。**
+            _unrecorded.append(
+                f'{_tid}: 台帳は since={_s} 以降も空だが、成果物から '
+                f'{len(_fp)}日ぶんの起動が分かる'
+                f'（{min(_fp)}〜{max(_fp)}）')
     for _tid in sorted(_tr):
         if _tid in _never_tids:
             continue
@@ -3215,6 +3270,9 @@ def main():
             continue
         _seen = {h for h in (_cfg.get('history') or [])
                  if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))}
+        # 成果物から分かる起動日も「動いた日」に数える。台帳への記録が
+        # 落ちている期間を「動かなかった日」として並べない
+        _seen |= _footprints.get(_tid) or set()
         _since = _dtm.date.fromisoformat(_since_s)
         # 窓は daily=7日 / weekly=28日(4回ぶん)。当日は監査より後に走ることが
         # あるので窓に入れない。since より前は台帳が無いので判定しない。
@@ -3291,6 +3349,20 @@ def main():
              '**空の結果を「無い」と読まないこと。**そのとき使ったコマンドが'
              '壊れていただけ、ということがある(実際そうだった)。'
              '既知の真なケースで問い合わせ自体を検証してから結論にする',
+        severity='info')
+
+    add('task_run_unrecorded_but_working',
+        '台帳に書いていないが成果物から動いているタスク',
+        sorted(_unrecorded),
+        note='**死んでいない。記録だけが落ちている。**'
+             'この形を task_run_never_recorded として出していたので、'
+             '2026-09-10〜18 に同じ指摘が9日出続け、そのうち5回が'
+             '目崎に転送され、5回とも「SKILL.md に2行入れて」と返した。'
+             '直せない指摘を出し続けるのは検出していないのと同じ。'
+             '記録を入れたいなら、Cowork デスクトップのタスク画面の'
+             '「手順」(鉛筆アイコン)に record-run.py とレポート保存の2行を'
+             '足す。**目崎しか触れない**(Claude\\Scheduled は内部領域)ので、'
+             'repo 側からは直せない。入れなくても稼働は成果物で追える',
         severity='info')
 
     add('task_run_gap', 'スケジュールタスクの実行が抜けた日', task_gap,

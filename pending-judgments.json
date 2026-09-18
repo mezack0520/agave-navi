@@ -1,27 +1,7 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "event-monitor:eyecatch-task-not-recording-runs",
-      "addedOn": "2026-09-12",
-      "source": "audit.task_run_never_recorded",
-      "question": "agave-navi-eyecatch の SKILL.md に起動記録の手順を入れてよいか。repo 側からは直せない。",
-      "facts": [
-        "task-runs.json に since=2026-09-10 で登録済みだが、history は 2026-09-09 止まり。since 以降の記録が1件も無い。",
-        "スケジューラ側は enabled: true、lastRunAt 2026-09-11T05:49Z(=09-11 14:49 JST)。起動自体はしている。",
-        "task-reports/ にも agave-navi-eyecatch_2026-09-09.md が最後で、09-10 以降のレポートが無い。",
-        "結果、task_run_gap が 09-10 / 09-11 を『動かなかった日』として毎日出し続け、09-11 の本物の環境障害(4タスク全滅)と混ざって読めない。",
-        "2026-09-16 追記(event-listing-review): 09-15 に commit 13e5313「アイキャッチ4件追加、目視で2件を見送り」があり、images/events/ に4枚入っている。CI にこれを作る経路は無い(.github/workflows/ と scripts/*.sh に eyecatch を含むものは0件)ので、押したのは agave-navi-eyecatch 本体。**タスクは動いている。動いていないのはレポートと台帳の記録だけ。** 09-15 に一度「動いていない」と判定したのは誤りで、下の proposal(SKILL.md に record-run.py の行を入れる)がそのまま正しい。",
-        "2026-09-16 時点で台帳の抜けは since=2026-09-10 から7日ぶんに伸びた。task_run_gap は 09-11(4タスク同時の環境障害)しか出しておらず、eyecatch は task_run_never_recorded 側で1件のまま。",
-        "2026-09-17 確認(event-monitor): 台帳 agave-navi-eyecatch の history は 2026-09-09 のまま、task-reports も agave-navi-eyecatch_2026-09-09.md が最後。since=2026-09-10 からの抜けは8日ぶんに伸びた。一方 09-16 に 95d9cac「アイキャッチ3件追加（IG投稿より）」が押されており、**タスクは動き続けている**。欠けているのは記録だけで、proposal は変わらない。"
-      ],
-      "proposal": "C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\agave-navi-eyecatch\\\\SKILL.md に、他3タスクと同じ2行を入れる。(1) リポジトリを clone した直後に python3 scripts/record-run.py agave-navi-eyecatch を実行し、その変更を含めて push する。(2) 実行レポートを mzplants\\\\agave-navi\\\\task-reports\\\\agave-navi-eyecatch_YYYY-MM-DD.md に保存する。手順はプレイブック §1 の 5。 (2026-09-16: レポートの行も同時に入れる。09-10 以降は成果物だけ出てレポートが1本も無い。)",
-      "whyHuman": "SKILL.md は C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\ 配下にあり、このタスクに接続されているのは mzplants だけなので書き込めない。プレイブックにも『タスクは自分のプロンプトを編集できない』とある。",
-      "policyProposal": "docs/task-playbook.md §1 に『台帳に taskId を足したら、同じ回にそのタスクの SKILL.md へ record-run.py の行を入れる。片方だけだと task_run_gap が毎日鳴り続ける』を追記済み(2026-09-12)。",
-      "lastVerifiedOn": "2026-09-17"
-    }
-  ],
-  "updated": "2026-09-17",
+  "items": [],
+  "updated": "2026-09-18",
   "resolved": [
     {
       "id": "event-monitor:inquiry-pii-in-public-repo",
@@ -35,6 +15,28 @@
       "decision": "Apps Script の コード.gs を scripts/google-apps-script.js の内容へ差し替えて保存した。raw.githubusercontent.com から取得して SHA-256 が repo と一致することを確認してから流し込んでいる。testConnection の実行ログは OK items=1 lastChecked=2026-09-07 sheetRows=3。プロジェクトの最終更新が 2026-08-24 → 2026-09-07 に進み、new-inquiries.json の gasVersion も 2026-09-06 になった",
       "note": "作業中に実行関数の切り替えを失敗し、onFormSubmit を空で1回走らせてしまった。空の項目1件が書き込まれ 7bfcd2e として公開された（氏名・メールは含まない＝新版が意図どおり連絡先を書かないことの実地確認にはなった）。項目は削除し、偽って進んだ lastChecked も 2026-08-31 に戻した",
       "policyAdded": "listing-policy.json inquiryPii.deployment"
+    },
+    {
+      "id": "event-monitor:eyecatch-task-not-recording-runs",
+      "addedOn": "2026-09-12",
+      "source": "audit.task_run_never_recorded",
+      "question": "agave-navi-eyecatch の SKILL.md に起動記録の手順を入れてよいか。repo 側からは直せない。",
+      "facts": [
+        "task-runs.json に since=2026-09-10 で登録済みだが、history は 2026-09-09 止まり。since 以降の記録が1件も無い。",
+        "スケジューラ側は enabled: true、lastRunAt 2026-09-11T05:49Z(=09-11 14:49 JST)。起動自体はしている。",
+        "task-reports/ にも agave-navi-eyecatch_2026-09-09.md が最後で、09-10 以降のレポートが無い。",
+        "結果、task_run_gap が 09-10 / 09-11 を『動かなかった日』として毎日出し続け、09-11 の本物の環境障害(4タスク全滅)と混ざって読めない。",
+        "2026-09-16 追記(event-listing-review): 09-15 に commit 13e5313「アイキャッチ4件追加、目視で2件を見送り」があり、images/events/ に4枚入っている。CI にこれを作る経路は無い(.github/workflows/ と scripts/*.sh に eyecatch を含むものは0件)ので、押したのは agave-navi-eyecatch 本体。**タスクは動いている。動いていないのはレポートと台帳の記録だけ。** 09-15 に一度「動いていない」と判定したのは誤りで、下の proposal(SKILL.md に record-run.py の行を入れる)がそのまま正しい。",
+        "2026-09-16 時点で台帳の抜けは since=2026-09-10 から7日ぶんに伸びた。task_run_gap は 09-11(4タスク同時の環境障害)しか出しておらず、eyecatch は task_run_never_recorded 側で1件のまま。",
+        "2026-09-17 確認(event-monitor): 台帳 agave-navi-eyecatch の history は 2026-09-09 のまま、task-reports も agave-navi-eyecatch_2026-09-09.md が最後。since=2026-09-10 からの抜けは8日ぶんに伸びた。一方 09-16 に 95d9cac「アイキャッチ3件追加（IG投稿より）」が押されており、**タスクは動き続けている**。欠けているのは記録だけで、proposal は変わらない。",
+        "2026-09-18 (このセッション): **判断待ちを閉じる。**台帳への自己申告を待つのをやめ、監査が成果物から起動日を出すようにした(audit.py の _TASK_FOOTPRINT)。images/events/ への追加があり、かつコミット件名に「アイキャッチ」を含む回を起動とみなす。実測で 09-10・09-12〜09-17 の7日が拾え、09-11 だけが欠ける。これは他2タスクも同時に抜けた本物の環境障害の日で、独立に裏が取れた形になった。task_run_never_recorded は 0 になり、代わりに task_run_unrecorded_but_working(info) が「記録だけ落ちている」と正確に出す。task_run_gap は3件すべてが 09-11 に揃い、**本物の障害が埋もれなくなった。**手順への2行追加は帳簿として望ましいが必須ではなくなった。目崎しか触れない領域なので、この項目を判断待ちに置いたまま毎日転送し続けるのをやめる。"
+      ],
+      "proposal": "C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\agave-navi-eyecatch\\\\SKILL.md に、他3タスクと同じ2行を入れる。(1) リポジトリを clone した直後に python3 scripts/record-run.py agave-navi-eyecatch を実行し、その変更を含めて push する。(2) 実行レポートを mzplants\\\\agave-navi\\\\task-reports\\\\agave-navi-eyecatch_YYYY-MM-DD.md に保存する。手順はプレイブック §1 の 5。 (2026-09-16: レポートの行も同時に入れる。09-10 以降は成果物だけ出てレポートが1本も無い。)",
+      "whyHuman": "SKILL.md は C:\\\\Users\\\\yujim\\\\iCloudDrive\\\\Claude\\\\Scheduled\\\\ 配下にあり、このタスクに接続されているのは mzplants だけなので書き込めない。プレイブックにも『タスクは自分のプロンプトを編集できない』とある。",
+      "policyProposal": "docs/task-playbook.md §1 に『台帳に taskId を足したら、同じ回にそのタスクの SKILL.md へ record-run.py の行を入れる。片方だけだと task_run_gap が毎日鳴り続ける』を追記済み(2026-09-12)。",
+      "lastVerifiedOn": "2026-09-17",
+      "resolvedOn": "2026-09-18",
+      "resolution": "検査側を直して解消。手順の2行追加は任意(目崎がアプリのタスク画面から入れる場合のみ)"
     }
   ]
 }

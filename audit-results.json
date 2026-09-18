@@ -1,5 +1,5 @@
 {
-  "total": 504,
+  "total": 505,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -623,7 +623,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1035,18 +1035,26 @@
     },
     "task_run_never_recorded": {
       "title": "台帳に登録したが一度も自分で書いていないタスク",
+      "count": 0,
+      "items": [],
+      "note": "そのタスクのプロンプトに「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」と「レポートを task-reports/<taskId>_<日付>.md に保存する」を入れる(プレイブック §1 の 5)。**編集するのは Cowork デスクトップのタスク画面の「手順」**(鉛筆アイコン)。Claude\\Scheduled\\<task>\\SKILL.md は Claude 内部領域で、Cowork セッションからは読み書きできない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。フォルダ接続を頼む提案はしないこと。**動いている処理には触らない。**この検査が言っているのは「記録していない」だけで、「動いていない」ではない。2026-09-15〜16 に agave-navi-eyecatch をそう誤診して2日使った。実際は毎日走って画像を取って push までしていて、記録の2手順だけが抜けていた。**動いているかどうかは成果物のコミットで見る**(例: git log --since=... -- images/events/)。**空の結果を「無い」と読まないこと。**そのとき使ったコマンドが壊れていただけ、ということがある(実際そうだった)。既知の真なケースで問い合わせ自体を検証してから結論にする",
+      "severity": "info"
+    },
+    "task_run_unrecorded_but_working": {
+      "title": "台帳に書いていないが成果物から動いているタスク",
       "count": 1,
       "items": [
-        "agave-navi-eyecatch: since=2026-09-10 以降の記録が1件も無い（台帳の最終記録 2026-09-09）"
+        "agave-navi-eyecatch: 台帳は since=2026-09-10 以降も空だが、成果物から 7日ぶんの起動が分かる（2026-09-10〜2026-09-17）"
       ],
-      "note": "そのタスクのプロンプトに「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」と「レポートを task-reports/<taskId>_<日付>.md に保存する」を入れる(プレイブック §1 の 5)。**編集するのは Cowork デスクトップのタスク画面の「手順」**(鉛筆アイコン)。Claude\\Scheduled\\<task>\\SKILL.md は Claude 内部領域で、Cowork セッションからは読み書きできない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。フォルダ接続を頼む提案はしないこと。**動いている処理には触らない。**この検査が言っているのは「記録していない」だけで、「動いていない」ではない。2026-09-15〜16 に agave-navi-eyecatch をそう誤診して2日使った。実際は毎日走って画像を取って push までしていて、記録の2手順だけが抜けていた。**動いているかどうかは成果物のコミットで見る**(例: git log --since=... -- images/events/)。**空の結果を「無い」と読まないこと。**そのとき使ったコマンドが壊れていただけ、ということがある(実際そうだった)。既知の真なケースで問い合わせ自体を検証してから結論にする",
+      "note": "**死んでいない。記録だけが落ちている。**この形を task_run_never_recorded として出していたので、2026-09-10〜18 に同じ指摘が9日出続け、そのうち5回が目崎に転送され、5回とも「SKILL.md に2行入れて」と返した。直せない指摘を出し続けるのは検出していないのと同じ。記録を入れたいなら、Cowork デスクトップのタスク画面の「手順」(鉛筆アイコン)に record-run.py とレポート保存の2行を足す。**目崎しか触れない**(Claude\\Scheduled は内部領域)ので、repo 側からは直せない。入れなくても稼働は成果物で追える",
       "severity": "info"
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 2,
+      "count": 3,
       "items": [
         "agave-event-update(daily) が動かなかった日: 2026-09-11（直近7日で1日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-11（直近7日で1日）",
         "event-monitor(daily) が動かなかった日: 2026-09-11（直近7日で1日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
