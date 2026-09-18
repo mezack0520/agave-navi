@@ -1,5 +1,5 @@
 {
-  "total": 502,
+  "total": 504,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 56,
+      "count": 57,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "american-and-plants-sano-2026-10",
@@ -623,7 +623,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -803,7 +803,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 56,
+      "count": 57,
       "items": [
         "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-05 sakuya-green-jam-5-2026",
@@ -812,6 +812,7 @@
         "2026-09-19 jolie-nursery-vivahome-ibaraki-2026-09",
         "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
+        "2026-09-19 premium-rock-garden-festa-2026",
         "2026-09-20 jss-kitakanto-mini-tenji-sokubai-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
         "2026-09-26 shokufes-global-plants-market-mizuho-2026-09",
@@ -843,8 +844,7 @@
         "2026-11-14 botanical-botanical-okinawa-2026-11",
         "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
         "2026-11-22 botanical-yokocho-senju-2026-11",
-        "2026-11-22 isij-big-bazaar-2026-11-22",
-        "2026-11-22 midorigakuen-himeji-2026-11"
+        "2026-11-22 isij-big-bazaar-2026-11-22"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"

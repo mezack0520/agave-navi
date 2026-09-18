@@ -1,33 +1,26 @@
 {
-  "_note": "問い合わせ新着の受け渡し箱。GAS(Apps Scriptプロジェクト「agave-navi フォーム→GitHub連携」)がフォーム送信時に items へ追記し lastChecked と sheetRows を書く。そのpushで notify-inquiry.yml が発火しメールが飛ぶ。event-listing-review は items を処理して inquiries-processed.json の processed / outcomes へ移し、items を空にして reviewedOn を実行日に更新し reviewedHistory に実行日を追記する。1件の形: {timestamp, type, eventName, body}。**氏名・メールアドレス・電話番号は入れない。**リポジトリは public で、同じ内容が https://agave-navi.com/new-inquiries.json としても配信されるため。連絡先は GAS が ALERT_TO へ直接メールする(規則は listing-policy.json の inquiryPii、検査は audit.py の published_pii)。 lastChecked=GASが最後にフォーム送信を受けた日(送信が無ければ更新されない)。reviewedOn=event-listing-review が最後に動いた日(監査 inquiry_check_stale が見る)。reviewedHistory=起動日の履歴、直近14件だけ保持(監査 inquiry_review_gap が抜けた日を数える)。**起動直後に scripts/record-run.py event-listing-review を実行して書く。**終わりに書く設計では、成果物が無い回は push されず記録だけ落ちた(2026-09-02 是正)。reviewedSince=この日より前は抜けを判定しない。記録の仕組みが働いていなかった期間を遡って抜けと呼ばないため。reviewedOn だけだと、次の回が成功した瞬間に抜けた日が消えて後から検出できない。 sheetRows=回答シートのデータ行数。GAS の onFormSubmit(countSheetRows) と event-listing-review の実測の**どちらが書いてもよい**。2026-09-01 に「GASだけが書く」としたが、**現に動いている GAS は 2026-08-24 版で countSheetRows を持たない**ため(2026-09-06 に判明)、それだけに預けると誰も測らない。タスク側は Claude in Chrome から個人アカウントで回答シートの gviz CSV を読んで数える(組み込みブラウザはGoogleにログインしておらず読めない)。sheetCheckedOn=その値を書いた日。監査 inquiry_sheet_row_mismatch が sheetRows == processed + items を照合し、sheet_measurement_stale が実測が止まっていないかを見る。 gasVersion=実機の Apps Script に貼られている scripts/google-apps-script.js の SCRIPT_VERSION。putFile が書き込みのたびに載せる。repo 側の SCRIPT_VERSION と食い違ったら「直したが貼っていない」ので監査 gas_script_undeployed が urgent で鳴る。2026-09-06 の初期値 2026-08-24 は、プロジェクト一覧の最終更新日から実測した値。",
-  "items": [
-    {
-      "timestamp": "2026/09/17 13:33:15",
-      "type": "イベント掲載リクエスト",
-      "eventName": "プレミアム ロックガーデン フェスタ2026",
-      "body": "関東最大級！群馬県千代田町にある約30,000㎡の広大な植栽大型専門店「Kayu style Botaniqa Atelier」にて、\n9/19（土）〜9/27（日）のシルバーウィーク9日間にわたり『プレミアム・ロックガーデン・フェスタ2026』を開催いたします。\n一生に一度は出会いたい『ブラックボーイ』や古木オリーブなどの海外の希少樹木から、お庭の主役になるこだわりのドライプランツ、ユッカ・ロストラータやアガベなどが圧倒的なスケールで勢ぞろいする特別なボタニカルイベントです。\n\n園内は【ペット同伴可】の広大な施設ですので、ワンちゃんと一緒に非日常のボタニカル空間をお楽しみいただけます。\n\n🌿 今回のイベントの見どころ\n* 超希少！奇跡の木「ブラックボーイ（マルチヘッド等）」特別展示＆限定販売 圧倒的な存在感を放つオーストラリア原産のグラスツリー（ヤンソロッヘア）。今回は激レアなマルチヘッド株を含め、選りすぐりの個体を特別展示・限定販売いたします。\n* 大人気！アガベが当たる「アガベガチャ」人気のアガベの子株が当たるプレミアムなガチャをご用意！何が引き当てられるか、ぜひ運試しに挑戦してください。\n* お気に入りの１本を探せ！広大な敷地をワンちゃんと冒険！「ボタニカルハント！」 約30,000㎡の広大なナーセリーを探索し、ディープな植物たちの中から自分だけの特別な1本を見つけ出す、宝探し型の体験イベントです。\n* お庭のDIYに最適！超希少インドネシア産サンゴ石と厳選ドライ植物がセット（30,000円〜）で超お買い得！ これだけで自宅に本格的なロックガーデン・ドライガーデンが作れる、特製のDIYパッケージをイベント限定価格で販売します。\n\n🎁 【とちぎテレビ放送記念】ご来店特典\n受付にてスタッフに合言葉「イヴ6プラス見た」とお伝えいただいた方に、当店で育てたプレミアム アガベの子株を先着でプレゼントいたします！（※数に限りがございますのでお早めにどうぞ！）\n\n•\tイベント名：プレミアム ロックガーデン フェスタ2026\n•\t開催期間: 2026年9月19日（土）〜 9月27日（日）\n       ※イベント開催中は休まず営業\n•\t営業時間: 10:00 〜 17:00\n•\t開催場所: 植栽大型専門店 Kayu style Botaniqa Atelier\n     （群馬県邑楽郡千代田町福島190）\n•\t入場無料/無料駐車場有"
-    }
-  ],
-  "lastChecked": "2026-09-17",
-  "reviewedOn": "2026-09-17",
-  "reviewedHistory": [
-    "2026-09-01",
-    "2026-09-02",
-    "2026-09-05",
-    "2026-09-06",
-    "2026-09-07",
-    "2026-09-08",
-    "2026-09-09",
-    "2026-09-10",
-    "2026-09-12",
-    "2026-09-13",
-    "2026-09-14",
-    "2026-09-15",
-    "2026-09-16",
-    "2026-09-17"
-  ],
-  "sheetRows": 7,
-  "sheetCheckedOn": "2026-09-17",
-  "gasVersion": "2026-09-08",
-  "reviewedSince": "2026-09-02"
+ "_note": "問い合わせ新着の受け渡し箱。GAS(Apps Scriptプロジェクト「agave-navi フォーム→GitHub連携」)がフォーム送信時に items へ追記し lastChecked と sheetRows を書く。そのpushで notify-inquiry.yml が発火しメールが飛ぶ。event-listing-review は items を処理して inquiries-processed.json の processed / outcomes へ移し、items を空にして reviewedOn を実行日に更新し reviewedHistory に実行日を追記する。1件の形: {timestamp, type, eventName, body}。**氏名・メールアドレス・電話番号は入れない。**リポジトリは public で、同じ内容が https://agave-navi.com/new-inquiries.json としても配信されるため。連絡先は GAS が ALERT_TO へ直接メールする(規則は listing-policy.json の inquiryPii、検査は audit.py の published_pii)。 lastChecked=GASが最後にフォーム送信を受けた日(送信が無ければ更新されない)。reviewedOn=event-listing-review が最後に動いた日(監査 inquiry_check_stale が見る)。reviewedHistory=起動日の履歴、直近14件だけ保持(監査 inquiry_review_gap が抜けた日を数える)。**起動直後に scripts/record-run.py event-listing-review を実行して書く。**終わりに書く設計では、成果物が無い回は push されず記録だけ落ちた(2026-09-02 是正)。reviewedSince=この日より前は抜けを判定しない。記録の仕組みが働いていなかった期間を遡って抜けと呼ばないため。reviewedOn だけだと、次の回が成功した瞬間に抜けた日が消えて後から検出できない。 sheetRows=回答シートのデータ行数。GAS の onFormSubmit(countSheetRows) と event-listing-review の実測の**どちらが書いてもよい**。2026-09-01 に「GASだけが書く」としたが、**現に動いている GAS は 2026-08-24 版で countSheetRows を持たない**ため(2026-09-06 に判明)、それだけに預けると誰も測らない。タスク側は Claude in Chrome から個人アカウントで回答シートの gviz CSV を読んで数える(組み込みブラウザはGoogleにログインしておらず読めない)。sheetCheckedOn=その値を書いた日。監査 inquiry_sheet_row_mismatch が sheetRows == processed + items を照合し、sheet_measurement_stale が実測が止まっていないかを見る。 gasVersion=実機の Apps Script に貼られている scripts/google-apps-script.js の SCRIPT_VERSION。putFile が書き込みのたびに載せる。repo 側の SCRIPT_VERSION と食い違ったら「直したが貼っていない」ので監査 gas_script_undeployed が urgent で鳴る。2026-09-06 の初期値 2026-08-24 は、プロジェクト一覧の最終更新日から実測した値。",
+ "items": [],
+ "lastChecked": "2026-09-17",
+ "reviewedOn": "2026-09-18",
+ "reviewedHistory": [
+  "2026-09-02",
+  "2026-09-05",
+  "2026-09-06",
+  "2026-09-07",
+  "2026-09-08",
+  "2026-09-09",
+  "2026-09-10",
+  "2026-09-12",
+  "2026-09-13",
+  "2026-09-14",
+  "2026-09-15",
+  "2026-09-16",
+  "2026-09-17",
+  "2026-09-18"
+ ],
+ "sheetRows": 7,
+ "sheetCheckedOn": "2026-09-17",
+ "gasVersion": "2026-09-08",
+ "reviewedSince": "2026-09-02"
 }
