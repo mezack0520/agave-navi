@@ -1,5 +1,5 @@
 {
-  "total": 541,
+  "total": 538,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 128,
+      "count": 124,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -206,7 +206,6 @@
         "engei-yarouzei-12th-2026-10",
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
-        "felicita-hachitoari-yumegaoka-2026-09",
         "fuji-taniku-plants-marche-2026-09",
         "fujisan-festa-2026-autumn",
         "fujisan-garden-marche-2026-10",
@@ -217,7 +216,8 @@
         "gifu-midori-marche-2nd-2026-09",
         "green-base-market-vol1-nishikata-2026-10",
         "green-champuroo-vol2-2026-10",
-        "greensnap-marche-odaiba-2026"
+        "greensnap-marche-odaiba-2026",
+        "greensnap-marche-toyosu-2026-autumn"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 54,
+      "count": 53,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "american-and-plants-sano-2026-10",
@@ -304,7 +304,6 @@
         "jurian-aki-taniku-cactus-2026-10",
         "kadan-fes-2026-autumn",
         "kourep-2026-autumn",
-        "kyoto-midori-marche-ibaraki-2026-09",
         "kyoto-midorino-marche-bangaihen-vol10-2026",
         "midorigakuen-himeji-2026-11",
         "nihon-shaboten-taikai-51st-2026-10",
@@ -313,7 +312,8 @@
         "onokoro-green-festa-2026-09",
         "ore-no-plants-collection-2026-09",
         "plant-freaks-olinas-2026-10",
-        "plant-freaks-olinas-2026-11"
+        "plant-freaks-olinas-2026-11",
+        "plants-box-kofu-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -663,27 +663,33 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 20,
+      "count": 26,
       "items": [
         "botalife-4th-anniversary-popup-2026-09(2026-09-19〜2026-09-23/5日/長期)",
+        "botanical-auction-3rd-hamamatsu-2026-09(2026-09-20〜2026-09-20/1日)",
         "botanical-life-arita-2026-09(2026-09-19〜2026-09-20/2日)",
-        "felicita-hachitoari-yumegaoka-2026-09(2026-09-19〜2026-09-19/1日)",
         "jolie-nursery-vivahome-ibaraki-2026-09(2026-09-19〜2026-09-20/2日)",
-        "kachofugetsu-fukuoka-effect-2026-09(2026-09-19〜2026-09-19/1日)",
+        "jss-kitakanto-mini-tenji-sokubai-2026-09(2026-09-20〜2026-09-20/1日)",
+        "kachofugetsu-yukuhashi-2026-09(2026-09-20〜2026-09-20/1日)",
         "kimtaro-sakura-open-sale-2026-09(2026-09-19〜2026-09-23/5日/長期)",
         "kourep-2026-autumn(2026-09-16〜2026-09-20/5日/長期)",
-        "kyoto-midori-marche-ibaraki-2026-09(2026-09-19〜2026-09-19/1日)",
-        "midori-to-taniku-marche-nihonosato-2026-09(2026-09-19〜2026-09-19/1日)",
         "miuraengei-aroid-protoleaf-futako-2026-09(2026-09-04〜2026-09-20/17日/長期)",
+        "nagoriba-miyajimaguchi-2026-09(2026-09-20〜2026-09-20/1日)",
         "nova-cultura-tradmans-2026-09(2026-09-19〜2026-09-27/9日/長期)",
         "okibota-max-2026-sunshine(2026-09-19〜2026-09-21/3日)",
+        "one-love-sano-2026(2026-09-20〜2026-09-20/1日)",
         "onokoro-green-festa-2026-09(2026-09-01〜2026-09-27/27日/長期)",
         "ore-no-plants-collection-2026-09(2026-09-19〜2026-09-21/3日)",
-        "picnic-garden-vol25-2026-09(2026-09-19〜2026-09-19/1日)",
+        "otsujiya-popup-engeiya-tanaka-2026-09(2026-09-20〜2026-09-20/1日)",
         "premium-rock-garden-festa-2026(2026-09-09〜2026-09-27/19日/長期)",
         "raflum-hankyu-mens-tokyo-2026-09(2026-09-16〜2026-09-22/7日/長期)",
         "sakuya-green-jam-5-2026(2026-09-05〜2026-09-20/16日/長期)",
+        "santafe-gakko-vol21-2026-09(2026-09-20〜2026-09-20/1日)",
+        "shokubutsu-tengoku-hakusan-2026-09(2026-09-20〜2026-09-21/2日)",
         "takanomiya-ichi-shokubutsu-2026-09(2026-09-19〜2026-09-20/2日)",
+        "taniku-collection-sapporo-2026-09(2026-09-20〜2026-09-20/1日)",
+        "trillgreen-special-event-2026-09(2026-09-20〜2026-09-22/3日)",
+        "wi-wi-botanical-minokamo-2026-09(2026-09-20〜2026-09-20/1日)",
         "yamashiro-aisenen-autumn-2026-09(2026-09-18〜2026-09-27/10日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -805,10 +811,10 @@
       "title": "他所に出ていて当サイトに無いイベント候補",
       "count": 14,
       "items": [
-        "2026-09-19 TaiShoDoがシルバーウィークSALE2026を開催、塊根植物とアガベの在庫商品が10%OFF",
-        "2026-09-19 鶴仙園池袋店一周年記念 三世代厳選植物",
         "2026-09-20 F.O.B NIGHT MARKET 2026が9月20日に開催、Incomplete potがセメント鉢や植物を初出店",
+        "2026-09-20 TaiShoDoがシルバーウィークSALE2026を開催、塊根植物とアガベの在庫商品が10%OFF",
         "2026-09-20 日本サボテン狂人会が交換会2026を開催、仙人掌と多肉植物を対象にワークヒルズ羽生で実施",
+        "2026-09-20 秋の福市",
         "2026-09-25 道の駅花の駅千曲川が花の駅ガーデンツアー2026を開催、樹木医山本裕美さんが植物の育て方を紹介",
         "2026-09-26 オルソ×プランツ2026を串焼きバルOrso Campoで開催、4つの植物アカウントが夜のイベントに出店",
         "2026-09-26 コーナン港北インター店 多肉植物・サボテン即売会",
@@ -817,7 +823,7 @@
         "2026-10-04 セイバーズがSAVERS FLEA MARKET2026を初開催、south peak plantsが塊根植物や古着を販売",
         "2026-10-10 草パラダイス vol.10",
         "2026-10-19 季節の植物を楽しむ小さなワークショップ2026が10月19日に開催、お散歩会と季節の植物を使った手仕事体験を実施",
-        "2026-11-07 ALLEY JAM",
+        "2026-11-07 POPUP ALLEY JAM",
         "2026-11-28 BOTANICAL JOURNEY"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -846,7 +852,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 54,
+      "count": 53,
       "items": [
         "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-05 sakuya-green-jam-5-2026",
@@ -854,7 +860,6 @@
         "2026-09-16 kourep-2026-autumn",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
         "2026-09-19 jolie-nursery-vivahome-ibaraki-2026-09",
-        "2026-09-19 kyoto-midori-marche-ibaraki-2026-09",
         "2026-09-19 ore-no-plants-collection-2026-09",
         "2026-09-20 jss-kitakanto-mini-tenji-sokubai-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
@@ -887,7 +892,8 @@
         "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
         "2026-11-22 isij-big-bazaar-2026-11-22",
         "2026-11-22 midorigakuen-himeji-2026-11",
-        "2026-11-22 tokimeki-marche-kodaihasu-2026-11"
+        "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
+        "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -929,16 +935,12 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 8,
+      "count": 4,
       "items": [
-        "2026-09-04 miuraengei-aroid-protoleaf-futako-2026-09: 公式ページが変わった(本文・画像)",
-        "2026-09-19 jolie-nursery-vivahome-ibaraki-2026-09: 公式ページが変わった(本文・画像)",
-        "2026-09-19 midori-to-taniku-marche-nihonosato-2026-09: 公式ページが変わった(本文: 2974→2982字 +0%)",
-        "2026-09-26 greensnap-marche-yokohama-2026-autumn: 公式ページが変わった(本文・画像)",
-        "2026-09-26 shokufes-global-plants-market-mizuho-2026-09: 公式ページが変わった(本文・画像)",
-        "2026-09-27 isij-big-bazaar-2026-09-27: 公式ページが変わった(本文: 6748→6869字 +1%)",
-        "2026-10-03 wako-jurin-unique-plants-2026-10: 公式ページが変わった(本文・画像)",
-        "2026-10-10 jolie-nursery-musashi-niigata-2026-10: 公式ページが変わった(本文・画像)"
+        "2026-09-09 premium-rock-garden-festa-2026: 公式ページが変わった(本文: 1990→1999字 +0%)",
+        "2026-09-19 jolie-nursery-vivahome-ibaraki-2026-09: 公式ページが変わった(本文: 1550→1550字 +0%)",
+        "2026-09-26 shokufes-global-plants-market-mizuho-2026-09: 公式ページが変わった(本文: 2260→2269字 +0%)",
+        "2026-10-10 jolie-nursery-musashi-niigata-2026-10: 公式ページが変わった(本文: 2260→2269字 +0%)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -980,12 +982,8 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 3,
-      "items": [
-        "取得できなかった: kourep-2026-autumn: URLError https://kourep.jp",
-        "取得できなかった: sakuya-green-jam-5-2026: URLError https://www.sakuyakonohana.jp/event/22331/",
-        "取得できなかった: souransai-koshigaya-2026-10: URLError https://soransai.com/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },
@@ -1082,8 +1080,10 @@
     },
     "inquiry_review_gap": {
       "title": "event-listing-review の実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "event-listing-review が動かなかった日: 2026-09-19（直近7日で1日）"
+      ],
       "note": "reviewedHistory は起動日の記録で、scripts/record-run.py が起動直後に書く。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。ただし 2026-09-02 までの空白は「走らなかった」ではなく「走ったが記録できていなかった」で、reviewedSince より前は判定しない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
     },
@@ -1105,9 +1105,11 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 1,
+      "count": 3,
       "items": [
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-12 2026-09-13 2026-09-14 2026-09-15 2026-09-16 2026-09-17（直近7日で6日）"
+        "agave-event-update(daily) が動かなかった日: 2026-09-19（直近7日で1日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-13 2026-09-14 2026-09-15 2026-09-16 2026-09-17 2026-09-19（直近7日で6日）",
+        "event-monitor(daily) が動かなかった日: 2026-09-19（直近7日で1日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
@@ -1373,8 +1375,10 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "ongoing_events: 直近中央値 10 → 26（掲載454件で換算 11）（+15）"
+      ],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },

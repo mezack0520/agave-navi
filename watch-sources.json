@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-19 08:11 JST",
+ "generated": "2026-09-20 07:44 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 253,
-  "awaitingNextEdition": 231,
+  "awaitingNextEdition": 236,
   "officialSiteCandidates": 70,
   "unresolvedIgHandles": 0
  },
@@ -41,15 +41,6 @@
    "eventCount": 5,
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "picnic.king.plants",
-   "url": "https://www.instagram.com/picnic.king.plants/",
-   "eventCount": 4,
-   "lastEventName": "PICNIC GARDEN vol.25 in 鶴岡公園",
-   "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -297,6 +288,15 @@
    "priority": 0
   },
   {
+   "handle": "picnic.king.plants",
+   "url": "https://www.instagram.com/picnic.king.plants/",
+   "eventCount": 4,
+   "lastEventName": "PICNIC GARDEN vol.25 in 鶴岡公園",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -391,15 +391,6 @@
    "url": "https://www.instagram.com/waltzbase_saga/",
    "eventCount": 1,
    "lastEventName": "BOTANICAL LIFE 2026",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "protoleaf.shop_yumegaoka",
-   "url": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
-   "eventCount": 1,
-   "lastEventName": "FELICITA × はちとあり 2社合同販売会",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
    "priority": 1
@@ -2288,6 +2279,15 @@
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
    "priority": 2
+  },
+  {
+   "handle": "protoleaf.shop_yumegaoka",
+   "url": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
+   "eventCount": 1,
+   "lastEventName": "FELICITA × はちとあり 2社合同販売会",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 2
   }
  ],
  "awaitingNextEdition": [
@@ -2296,6 +2296,16 @@
    "lastSlug": "picnic-garden-vol24-sendai-2026-09",
    "lastDate": "2026-09-06",
    "lastEnd": "2026-09-06",
+   "monthsSinceLast": 0,
+   "igHandle": "picnic.king.plants",
+   "officialUrl": "https://www.instagram.com/picnic.king.plants/",
+   "recurring": true
+  },
+  {
+   "series": "PICNIC GARDEN vol.25 in 鶴岡公園",
+   "lastSlug": "picnic-garden-vol25-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-19",
    "monthsSinceLast": 0,
    "igHandle": "picnic.king.plants",
    "officialUrl": "https://www.instagram.com/picnic.king.plants/",
@@ -2582,6 +2592,46 @@
    "recurring": false
   },
   {
+   "series": "KYOTO MIDORI NO MARCHE IN 茨木",
+   "lastSlug": "kyoto-midori-marche-ibaraki-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-19",
+   "monthsSinceLast": 0,
+   "igHandle": "midorino_marche",
+   "officialUrl": "https://www.instagram.com/midorino_marche/",
+   "recurring": false
+  },
+  {
+   "series": "第1回 緑と多肉を楽しむマルシェ",
+   "lastSlug": "midori-to-taniku-marche-nihonosato-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-19",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.nihonosato.com/post/succulentmarket",
+   "recurring": false
+  },
+  {
+   "series": "FELICITA × はちとあり 2社合同販売会",
+   "lastSlug": "felicita-hachitoari-yumegaoka-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-19",
+   "monthsSinceLast": 0,
+   "igHandle": "protoleaf.shop_yumegaoka",
+   "officialUrl": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
+   "recurring": false
+  },
+  {
+   "series": "鹿鳥風月（FUKUOKA EFFECT 会場）",
+   "lastSlug": "kachofugetsu-fukuoka-effect-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-19",
+   "monthsSinceLast": 0,
+   "igHandle": "ta29.wind.sun",
+   "officialUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/",
+   "recurring": false
+  },
+  {
    "series": "PLANTS UNITED 2026",
    "lastSlug": "plants-united-kumamoto-2026-08",
    "lastDate": "2026-08-01",
@@ -2639,56 +2689,6 @@
    "monthsSinceLast": 1,
    "igHandle": "king.plants.slugger",
    "officialUrl": "https://www.instagram.com/king.plants.slugger",
-   "recurring": false
-  },
-  {
-   "series": "CODE 単独東京POP UP",
-   "lastSlug": "code-tokyo-popup-2026-08",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "_code.official_",
-   "officialUrl": "https://www.instagram.com/_code.official_/",
-   "recurring": false
-  },
-  {
-   "series": "Paradise Garage in TOMOYA FARM",
-   "lastSlug": "paradise-garage-tomoya-farm-2026-08",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "tomoyafarm",
-   "officialUrl": "https://www.instagram.com/tomoyafarm/",
-   "recurring": false
-  },
-  {
-   "series": "埼玉サボテンクラブ 夏の大即売会",
-   "lastSlug": "saitama-saboten-club-summer-2026",
-   "lastDate": "2026-08-02",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "saitamasabotenclub",
-   "officialUrl": "https://www.instagram.com/saitamasabotenclub/",
-   "recurring": false
-  },
-  {
-   "series": "GREEN BASE AWAJI 2026",
-   "lastSlug": "green-base-awaji-2026",
-   "lastDate": "2026-08-02",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "green_base_awaji",
-   "officialUrl": "https://www.instagram.com/green_base_awaji/",
-   "recurring": false
-  },
-  {
-   "series": "LIFE CIRCLE WORLD 2026",
-   "lastSlug": "life-circle-world-2026-08",
-   "lastDate": "2026-08-02",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "life_circle_world",
-   "officialUrl": "https://www.instagram.com/life_circle_world/",
    "recurring": false
   }
  ],

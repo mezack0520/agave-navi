@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-19",
+  "sweptOn": "2026-09-20",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,40 +16,37 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 773,
-    "in_scope": 269,
-    "covered": 204,
-    "known_rejected": 47,
-    "truncated_resolved": 225,
-    "truncated_unresolved": 1,
+    "candidates": 726,
+    "in_scope": 245,
+    "covered": 190,
+    "known_rejected": 38,
+    "truncated_resolved": 270,
+    "truncated_unresolved": 0,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 139,
-    "truncated_unresolved_hits": 45,
-    "in_scope_nextmeet": 130,
-    "gaps_raw": 18
+    "in_scope_leafla": 124,
+    "in_scope_nextmeet": 121,
+    "gaps_raw": 17
   },
   "errors": [],
-  "truncatedUnresolved": [
-    "09/18 追加 FUJISAN FESTA 2026秋が11月..."
-  ],
+  "truncatedUnresolved": [],
   "gaps": [
-    {
-      "date": "2026-09-19",
-      "lastSeen": "2026-09-23",
-      "days": 5,
-      "title": "TaiShoDoがシルバーウィークSALE2026を開催、塊根植物とアガベの在庫商品が10%OFF"
-    },
-    {
-      "date": "2026-09-19",
-      "title": "鶴仙園池袋店一周年記念 三世代厳選植物"
-    },
     {
       "date": "2026-09-20",
       "title": "F.O.B NIGHT MARKET 2026が9月20日に開催、Incomplete potがセメント鉢や植物を初出店"
     },
     {
       "date": "2026-09-20",
+      "lastSeen": "2026-09-23",
+      "days": 4,
+      "title": "TaiShoDoがシルバーウィークSALE2026を開催、塊根植物とアガベの在庫商品が10%OFF"
+    },
+    {
+      "date": "2026-09-20",
       "title": "日本サボテン狂人会が交換会2026を開催、仙人掌と多肉植物を対象にワークヒルズ羽生で実施"
+    },
+    {
+      "date": "2026-09-20",
+      "title": "秋の福市"
     },
     {
       "date": "2026-09-25",
@@ -85,7 +82,7 @@
     },
     {
       "date": "2026-11-07",
-      "title": "ALLEY JAM"
+      "title": "POPUP ALLEY JAM"
     },
     {
       "date": "2026-11-28",
