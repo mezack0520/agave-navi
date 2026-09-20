@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-20 14:58 JST",
+ "generated": "2026-09-21 08:04 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 253,
-  "awaitingNextEdition": 236,
+  "awaitingNextEdition": 251,
   "officialSiteCandidates": 70,
   "unresolvedIgHandles": 0
  },
@@ -122,24 +122,6 @@
    "eventCount": 2,
    "lastEventName": "プレミアム ロックガーデン フェスタ2026",
    "lastEventDate": "2026-09-09",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "ta29.wind.sun",
-   "url": "https://www.instagram.com/ta29.wind.sun/",
-   "eventCount": 2,
-   "lastEventName": "鹿鳥風月（ゆくはし植物園 会場）",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "wi_wibotanical",
-   "url": "https://www.instagram.com/wi_wibotanical/",
-   "eventCount": 2,
-   "lastEventName": "Wi-Wi BOTANICAL Vol.2",
-   "lastEventDate": "2026-09-20",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -369,6 +351,24 @@
    "priority": 1
   },
   {
+   "handle": "ta29.wind.sun",
+   "url": "https://www.instagram.com/ta29.wind.sun/",
+   "eventCount": 2,
+   "lastEventName": "鹿鳥風月（ゆくはし植物園 会場）",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
+   "handle": "wi_wibotanical",
+   "url": "https://www.instagram.com/wi_wibotanical/",
+   "eventCount": 2,
+   "lastEventName": "Wi-Wi BOTANICAL Vol.2",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
    "handle": "mononoke_botanical_garden",
    "url": "https://www.instagram.com/mononoke_botanical_garden/",
    "eventCount": 1,
@@ -387,28 +387,10 @@
    "priority": 1
   },
   {
-   "handle": "waltzbase_saga",
-   "url": "https://www.instagram.com/waltzbase_saga/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL LIFE 2026",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "kinoco__inc",
    "url": "https://www.instagram.com/kinoco__inc/",
    "eventCount": 1,
    "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "ichigoichie_antique",
-   "url": "https://www.instagram.com/ichigoichie_antique/",
-   "eventCount": 1,
-   "lastEventName": "高の宮市 〜植物のある暮らし〜",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
    "priority": 1
@@ -419,51 +401,6 @@
    "eventCount": 1,
    "lastEventName": "ボタらいふ 4周年祭POPUP",
    "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "tkc.2nd.life",
-   "url": "https://www.instagram.com/tkc.2nd.life/",
-   "eventCount": 1,
-   "lastEventName": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "b.g_ozman",
-   "url": "https://www.instagram.com/b.g_ozman/",
-   "eventCount": 1,
-   "lastEventName": "第3回 ボタニカルオークション＆即売会",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "greensanta2020",
-   "url": "https://www.instagram.com/greensanta2020/",
-   "eventCount": 1,
-   "lastEventName": "サンタフェ 学校編 vol.21",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "ichikawazouen_mine",
-   "url": "https://www.instagram.com/ichikawazouen_mine/",
-   "eventCount": 1,
-   "lastEventName": "TANIKU collection（タニコレ）",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "engeiyatanaka",
-   "url": "https://www.instagram.com/engeiyatanaka/",
-   "eventCount": 1,
-   "lastEventName": "大辻屋さん 出張販売会",
-   "lastEventDate": "2026-09-20",
    "hasUpcoming": true,
    "priority": 1
   },
@@ -2281,11 +2218,74 @@
    "priority": 2
   },
   {
+   "handle": "waltzbase_saga",
+   "url": "https://www.instagram.com/waltzbase_saga/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL LIFE 2026",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "protoleaf.shop_yumegaoka",
    "url": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
    "eventCount": 1,
    "lastEventName": "FELICITA × はちとあり 2社合同販売会",
    "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "ichigoichie_antique",
+   "url": "https://www.instagram.com/ichigoichie_antique/",
+   "eventCount": 1,
+   "lastEventName": "高の宮市 〜植物のある暮らし〜",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "tkc.2nd.life",
+   "url": "https://www.instagram.com/tkc.2nd.life/",
+   "eventCount": 1,
+   "lastEventName": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "b.g_ozman",
+   "url": "https://www.instagram.com/b.g_ozman/",
+   "eventCount": 1,
+   "lastEventName": "第3回 ボタニカルオークション＆即売会",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "greensanta2020",
+   "url": "https://www.instagram.com/greensanta2020/",
+   "eventCount": 1,
+   "lastEventName": "サンタフェ 学校編 vol.21",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "ichikawazouen_mine",
+   "url": "https://www.instagram.com/ichikawazouen_mine/",
+   "eventCount": 1,
+   "lastEventName": "TANIKU collection（タニコレ）",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "engeiyatanaka",
+   "url": "https://www.instagram.com/engeiyatanaka/",
+   "eventCount": 1,
+   "lastEventName": "大辻屋さん 出張販売会",
+   "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
    "priority": 2
   }
@@ -2309,6 +2309,16 @@
    "monthsSinceLast": 0,
    "igHandle": "picnic.king.plants",
    "officialUrl": "https://www.instagram.com/picnic.king.plants/",
+   "recurring": true
+  },
+  {
+   "series": "Wi-Wi BOTANICAL Vol.2",
+   "lastSlug": "wi-wi-botanical-minokamo-2026-09",
+   "lastDate": "2026-09-20",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": "wi_wibotanical",
+   "officialUrl": null,
    "recurring": true
   },
   {
@@ -2632,63 +2642,53 @@
    "recurring": false
   },
   {
-   "series": "PLANTS UNITED 2026",
-   "lastSlug": "plants-united-kumamoto-2026-08",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-01",
-   "monthsSinceLast": 1,
-   "igHandle": "_plantsheaven_",
-   "officialUrl": "https://www.instagram.com/_plantsheaven_/",
+   "series": "三浦園芸 アロイド販売会",
+   "lastSlug": "miuraengei-aroid-protoleaf-futako-2026-09",
+   "lastDate": "2026-09-04",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.protoleaf.com/?p=24182",
    "recurring": false
   },
   {
-   "series": "bizarreplants Outlet vol.5",
-   "lastSlug": "bizarreplants-outlet-vol5-2026",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-01",
-   "monthsSinceLast": 1,
-   "igHandle": "kaikon_ningen",
-   "officialUrl": "https://www.instagram.com/kaikon_ningen/",
+   "series": "Sakuya Green Jam 5",
+   "lastSlug": "sakuya-green-jam-5-2026",
+   "lastDate": "2026-09-05",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.sakuyakonohana.jp/event/22331/",
    "recurring": false
   },
   {
-   "series": "群パリ GPF感謝祭 2026",
-   "lastSlug": "gunpari-gpf-kanshasai-2026-08",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-01",
-   "monthsSinceLast": 1,
-   "igHandle": "yuya0860",
-   "officialUrl": "https://www.instagram.com/p/DaXx4jCSon5/",
+   "series": "コウレプ2026秋",
+   "lastSlug": "kourep-2026-autumn",
+   "lastDate": "2026-09-16",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://kourep.jp",
    "recurring": false
   },
   {
-   "series": "間然（KAN-ZEN）",
-   "lastSlug": "kanzen-anjo-2026-08",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-01",
-   "monthsSinceLast": 1,
-   "igHandle": "kanzen.event",
-   "officialUrl": "https://www.instagram.com/kanzen.event/",
+   "series": "BOTANICAL LIFE 2026",
+   "lastSlug": "botanical-life-arita-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": "waltzbase_saga",
+   "officialUrl": "https://www.instagram.com/waltzbase_saga/",
    "recurring": false
   },
   {
-   "series": "ORDINARY『GARDEN』",
-   "lastSlug": "ordinary-garden-hikarudo-2026-07",
-   "lastDate": "2026-07-03",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "hikarudo.___",
-   "officialUrl": "https://www.instagram.com/hikarudo.___/",
-   "recurring": false
-  },
-  {
-   "series": "実生サークル 第2回",
-   "lastSlug": "mishou-circle-vol2-2026-08",
-   "lastDate": "2026-08-01",
-   "lastEnd": "2026-08-02",
-   "monthsSinceLast": 1,
-   "igHandle": "king.plants.slugger",
-   "officialUrl": "https://www.instagram.com/king.plants.slugger",
+   "series": "高の宮市 〜植物のある暮らし〜",
+   "lastSlug": "takanomiya-ichi-shokubutsu-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": "ichigoichie_antique",
+   "officialUrl": "https://www.instagram.com/p/DcbDS-oEz06/",
    "recurring": false
   }
  ],
