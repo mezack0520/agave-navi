@@ -265,11 +265,12 @@
   {
    "key": "wakasaya-park-2026-09-20",
    "reasonType": "unverified",
-   "revisit": true,
+   "revisit": false,
    "name": "若狭屋パーク 出店回 (2026-09-20 富山県富山市) D.G.C.TOYAMA 出店",
    "decided": "2026-09-01",
-   "reason": "主催 @wakasaya_park に9/20回の告知がなく、確認できたのは出店者側の告知のみ。会場の定例名は WAKASAYA MARCHE で名称に植物語がなく、出店内訳も未公表のため比率を数えられない。主催告知が出たら再評価する",
-   "eventDate": "2026-09-20"
+   "reason": "主催 @wakasaya_park に9/20回の告知がなく、確認できたのは出店者側の告知のみ。会場の定例名は WAKASAYA MARCHE で名称に植物語がなく、出店内訳も未公表のため比率を数えられない。主催告知が出たら再評価する。開催日(2026-09-20)を過ぎたので再評価を打ち切る。シリーズの次回は改めて判定する",
+   "eventDate": "2026-09-20",
+   "revisitClosedOn": "2026-09-21"
   },
   {
    "key": "sumori-open-garden-2026-09",
@@ -521,9 +522,10 @@
    "decided": "2026-09-15",
    "eventDate": "2026-09-20",
    "reasonType": "undisclosed",
-   "revisit": true,
+   "revisit": false,
    "revisitedOn": "2026-09-15",
-   "reason": "会場は観葉植物専門店 GREEN FEEL(株式会社福華園)の敷地内で、店の業態は植物専門。だが主催 @greenfeel_fukukaen の当該回の告知は『美味しいものを食べて！素敵な物を見て！作って！』『フリマスペース』『素敵なアーティストさん達の歌』で、出店者募集も FOOD / DRINK / GOODS / WORKSHOP、付けているタグも #マルシェ。植物の即売が主題とは書いていない。名称 GOLDEN TIME は中立で出店内訳も非公開なので undisclosedBreakdown.exclude に当たる。storeAnniversary は『主催告知の名称または内容が即売会・展示会・販売会』であることを条件にしており、ここは満たさない。内訳か植物即売の企画が公開されたら再評価する"
+   "reason": "会場は観葉植物専門店 GREEN FEEL(株式会社福華園)の敷地内で、店の業態は植物専門。だが主催 @greenfeel_fukukaen の当該回の告知は『美味しいものを食べて！素敵な物を見て！作って！』『フリマスペース』『素敵なアーティストさん達の歌』で、出店者募集も FOOD / DRINK / GOODS / WORKSHOP、付けているタグも #マルシェ。植物の即売が主題とは書いていない。名称 GOLDEN TIME は中立で出店内訳も非公開なので undisclosedBreakdown.exclude に当たる。storeAnniversary は『主催告知の名称または内容が即売会・展示会・販売会』であることを条件にしており、ここは満たさない。内訳か植物即売の企画が公開されたら再評価する。開催日(2026-09-20)を過ぎたので再評価を打ち切る。シリーズの次回は改めて判定する",
+   "revisitClosedOn": "2026-09-21"
   },
   {
    "key": "yoru-ambien-2026-09",
@@ -620,15 +622,6 @@
    "decided": "2026-09-17"
   },
   {
-   "key": "shoku-to-the-future-2026-10",
-   "name": "植トゥザ・フューチャー2026 (2026-10-16〜18 Motorpool gallery・大阪市中央区西心斎橋2-8-17)",
-   "reason": "三重県桑名市の植物とアートのブランド GREEN PRICKLE(デザイナー山田一馬)の初個展。主催告知(@green_prickle)に『※植物の販売はございません。』と明記があり、並ぶのはアート作品100点以上・ポスター・ステッカー・雑貨・アパレル。植物ではなく作品が主題なので outOfScopeGenres.artworkShows",
-   "reasonType": "policy",
-   "revisit": false,
-   "eventDate": "2026-10-16",
-   "decided": "2026-09-17"
-  },
-  {
    "key": "yanbaru-shokubutsu-banyuki-vol2-2026-10",
    "name": "やんばる植物万遊記 Vol.2 (2026-10-17〜18 BUNASAUNA・沖縄県国頭郡)",
    "reason": "ハーバルサウナ BUNASAUNA の3周年記念企画。主催告知(@bunasauna_okinawa / note)は『各日10名限定の開催となります。ご応募いただいた方の中から抽選』で、内容はやんばる植物の採取・蒸留・スクラブ作りの体験とサウナ。一般来場者が当日立ち寄って買える回ではないので closedGatherings / workshopOnly",
@@ -700,6 +693,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-18",
+ "updated": "2026-09-21",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
