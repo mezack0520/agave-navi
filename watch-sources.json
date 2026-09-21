@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-21 21:32 JST",
+ "generated": "2026-09-22 08:56 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 252,
-  "awaitingNextEdition": 251,
+  "awaitingNextEdition": 257,
   "officialSiteCandidates": 70,
   "unresolvedIgHandles": 0
  },
@@ -41,15 +41,6 @@
    "eventCount": 5,
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0
-  },
-  {
-   "handle": "nagomitaniku",
-   "url": "https://www.instagram.com/nagomitaniku/",
-   "eventCount": 4,
-   "lastEventName": "多肉植物『The販売会』（農マル園芸吉備路農園）",
-   "lastEventDate": "2026-09-21",
    "hasUpcoming": true,
    "priority": 0
   },
@@ -279,6 +270,15 @@
    "priority": 1
   },
   {
+   "handle": "nagomitaniku",
+   "url": "https://www.instagram.com/nagomitaniku/",
+   "eventCount": 4,
+   "lastEventName": "多肉植物『The販売会』（農マル園芸吉備路農園）",
+   "lastEventDate": "2026-09-21",
+   "hasUpcoming": false,
+   "priority": 1
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -414,15 +414,6 @@
    "priority": 1
   },
   {
-   "handle": "apartment_niigata",
-   "url": "https://www.instagram.com/apartment_niigata/",
-   "eventCount": 1,
-   "lastEventName": "植物天国 in 白山市場（2026年秋）",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "jusai_japan",
    "url": "https://www.instagram.com/jusai_japan/",
    "eventCount": 1,
@@ -436,24 +427,6 @@
    "url": "https://www.instagram.com/engei_raku/",
    "eventCount": 1,
    "lastEventName": "園芸楽 2026",
-   "lastEventDate": "2026-09-21",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "mini.vani",
-   "url": "https://www.instagram.com/mini.vani/",
-   "eventCount": 1,
-   "lastEventName": "第5回 パパ〜ん！ばにらとぼたんとユカいな仲間たち",
-   "lastEventDate": "2026-09-21",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "grizzlycoffee_and_supply",
-   "url": "https://www.instagram.com/grizzlycoffee_and_supply/",
-   "eventCount": 1,
-   "lastEventName": "DEEP GREEN 2026",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": true,
    "priority": 1
@@ -2277,6 +2250,33 @@
    "eventCount": 1,
    "lastEventName": "大辻屋さん 出張販売会",
    "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "apartment_niigata",
+   "url": "https://www.instagram.com/apartment_niigata/",
+   "eventCount": 1,
+   "lastEventName": "植物天国 in 白山市場（2026年秋）",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "mini.vani",
+   "url": "https://www.instagram.com/mini.vani/",
+   "eventCount": 1,
+   "lastEventName": "第5回 パパ〜ん！ばにらとぼたんとユカいな仲間たち",
+   "lastEventDate": "2026-09-21",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "grizzlycoffee_and_supply",
+   "url": "https://www.instagram.com/grizzlycoffee_and_supply/",
+   "eventCount": 1,
+   "lastEventName": "DEEP GREEN 2026",
+   "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
    "priority": 2
   }
