@@ -1,5 +1,5 @@
 {
-  "check_date": "2026-09-20",
+  "check_date": "2026-09-21",
   "total_events": 454,
   "dead_links": [
     {
@@ -10,7 +10,15 @@
       "alive": false
     }
   ],
-  "unreachable": [],
+  "unreachable": [
+    {
+      "slug": "jurian-aki-taniku-cactus-2026-10",
+      "name": "秋の多肉植物・サボテン展示会（樹里安）",
+      "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "botanical-botanical-fukuoka-2026-10",
@@ -85,10 +93,34 @@
   ],
   "past_events": [
     {
+      "slug": "miuraengei-aroid-protoleaf-futako-2026-09",
+      "name": "三浦園芸 アロイド販売会",
+      "date": "2026-09-04",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "sakuya-green-jam-5-2026",
+      "name": "Sakuya Green Jam 5",
+      "date": "2026-09-05",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "kourep-2026-autumn",
+      "name": "コウレプ2026秋",
+      "date": "2026-09-16",
+      "dateEnd": "2026-09-20"
+    },
+    {
       "slug": "kyoto-midori-marche-ibaraki-2026-09",
       "name": "KYOTO MIDORI NO MARCHE IN 茨木",
       "date": "2026-09-19",
       "dateEnd": ""
+    },
+    {
+      "slug": "botanical-life-arita-2026-09",
+      "name": "BOTANICAL LIFE 2026",
+      "date": "2026-09-19",
+      "dateEnd": "2026-09-20"
     },
     {
       "slug": "midori-to-taniku-marche-nihonosato-2026-09",
@@ -109,10 +141,76 @@
       "dateEnd": "2026-09-19"
     },
     {
+      "slug": "takanomiya-ichi-shokubutsu-2026-09",
+      "name": "高の宮市 〜植物のある暮らし〜",
+      "date": "2026-09-19",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "jolie-nursery-vivahome-ibaraki-2026-09",
+      "name": "Jolie Nursery 即売会（スーパービバホーム茨木目垣店）",
+      "date": "2026-09-19",
+      "dateEnd": "2026-09-20"
+    },
+    {
       "slug": "kachofugetsu-fukuoka-effect-2026-09",
       "name": "鹿鳥風月（FUKUOKA EFFECT 会場）",
       "date": "2026-09-19",
       "dateEnd": "2026-09-19"
+    },
+    {
+      "slug": "one-love-sano-2026",
+      "name": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "wi-wi-botanical-minokamo-2026-09",
+      "name": "Wi-Wi BOTANICAL Vol.2",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "botanical-auction-3rd-hamamatsu-2026-09",
+      "name": "第3回 ボタニカルオークション＆即売会",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "santafe-gakko-vol21-2026-09",
+      "name": "サンタフェ 学校編 vol.21",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "taniku-collection-sapporo-2026-09",
+      "name": "TANIKU collection（タニコレ）",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "otsujiya-popup-engeiya-tanaka-2026-09",
+      "name": "大辻屋さん 出張販売会",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "nagoriba-miyajimaguchi-2026-09",
+      "name": "ナゴリバ",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "jss-kitakanto-mini-tenji-sokubai-2026-09",
+      "name": "JSS北関東支部 多肉植物ミニ展示＆即売会",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
+    },
+    {
+      "slug": "kachofugetsu-yukuhashi-2026-09",
+      "name": "鹿鳥風月（ゆくはし植物園 会場）",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20"
     },
     {
       "slug": "kumagaya-taniku-fes-2026",
@@ -1743,105 +1841,6 @@
   ],
   "upcoming_events": [
     {
-      "slug": "one-love-sano-2026",
-      "name": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "CARPE DIEM",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/tkc.2nd.life/"
-    },
-    {
-      "slug": "wi-wi-botanical-minokamo-2026-09",
-      "name": "Wi-Wi BOTANICAL Vol.2",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "リバーポートパーク美濃加茂",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/wi_wibotanical/"
-    },
-    {
-      "slug": "botanical-auction-3rd-hamamatsu-2026-09",
-      "name": "第3回 ボタニカルオークション＆即売会",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "浜松市総合産業展示館 北館 第一展示場（静岡県浜松市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/b.g_ozman/"
-    },
-    {
-      "slug": "santafe-gakko-vol21-2026-09",
-      "name": "サンタフェ 学校編 vol.21",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "豊明市共生交流プラザ カラット（愛知県豊明市二村台1-27）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/greensanta2020/"
-    },
-    {
-      "slug": "taniku-collection-sapporo-2026-09",
-      "name": "TANIKU collection（タニコレ）",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "ガーデニングショップマイン（北海道札幌市東区伏古14条3丁目13-10）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/ichikawazouen_mine/"
-    },
-    {
-      "slug": "otsujiya-popup-engeiya-tanaka-2026-09",
-      "name": "大辻屋さん 出張販売会",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "園芸屋たなか（兵庫県尼崎市額田町7-43）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/engeiyatanaka/"
-    },
-    {
-      "slug": "trillgreen-special-event-2026-09",
-      "name": "TRILLGREEN SPECIAL EVENT SILVER WEEKEND",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-22",
-      "location": "TRILLGREEN（山形県米沢市門東町2-8-28）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdA7qo5zBf8/"
-    },
-    {
-      "slug": "nagoriba-miyajimaguchi-2026-09",
-      "name": "ナゴリバ",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "宮島口しゃもじ広場（広島県廿日市市宮島口1丁目）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dc_K229E7Q3/"
-    },
-    {
-      "slug": "jss-kitakanto-mini-tenji-sokubai-2026-09",
-      "name": "JSS北関東支部 多肉植物ミニ展示＆即売会",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "とちぎ花センター フラワー館（栃木県栃木市岩舟町下津原1612）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.florence.jp/news/9-20%e3%80%80%e7%89%b9%e5%88%a5%e5%b1%95%e9%96%a2%e9%80%a3%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%83%9f%e3%83%8b%e5%b1%95%e7%a4%ba%ef%bc%86%e5%8d%b3/"
-    },
-    {
-      "slug": "shokubutsu-tengoku-hakusan-2026-09",
-      "name": "植物天国 in 白山市場（2026年秋）",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-21",
-      "location": "白山市場（新潟県新潟市中央区白山浦2-180-3）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdLmL5nI-6o/"
-    },
-    {
-      "slug": "kachofugetsu-yukuhashi-2026-09",
-      "name": "鹿鳥風月（ゆくはし植物園 会場）",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "ゆくはし植物園（福岡県行橋市上津熊221）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/"
-    },
-    {
       "slug": "jusai-ichinomiya-autumn-2026",
       "name": "樹祭 一宮 2026 Autumn",
       "date": "2026-09-21",
@@ -3221,24 +3220,6 @@
       "sourceUrl": "https://awaji-botanicalgarden.com/onokoro-green-festa/"
     },
     {
-      "slug": "miuraengei-aroid-protoleaf-futako-2026-09",
-      "name": "三浦園芸 アロイド販売会",
-      "date": "2026-09-04",
-      "dateEnd": "2026-09-20",
-      "location": "プロトリーフ二子玉川本店（東京都世田谷区）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.protoleaf.com/?p=24182"
-    },
-    {
-      "slug": "sakuya-green-jam-5-2026",
-      "name": "Sakuya Green Jam 5",
-      "date": "2026-09-05",
-      "dateEnd": "2026-09-20",
-      "location": "咲くやこの花館（大阪市鶴見区）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.sakuyakonohana.jp/event/22331/"
-    },
-    {
       "slug": "raflum-hankyu-mens-tokyo-2026-09",
       "name": "阪急メンズ東京 × RAFLUM POP-UP STORE",
       "date": "2026-09-16",
@@ -3246,15 +3227,6 @@
       "location": "有楽町阪急メンズ東京 1階 メインベース（東京都千代田区有楽町2-5-1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/raflum.tokyo/"
-    },
-    {
-      "slug": "kourep-2026-autumn",
-      "name": "コウレプ2026秋",
-      "date": "2026-09-16",
-      "dateEnd": "2026-09-20",
-      "location": "神戸サンボーホール",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://kourep.jp"
     },
     {
       "slug": "yamashiro-aisenen-autumn-2026-09",
@@ -3275,15 +3247,6 @@
       "sourceUrl": ""
     },
     {
-      "slug": "botanical-life-arita-2026-09",
-      "name": "BOTANICAL LIFE 2026",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-20",
-      "location": "アリタセラ（佐賀県西松浦郡有田町）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/waltzbase_saga/"
-    },
-    {
       "slug": "nova-cultura-tradmans-2026-09",
       "name": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
       "date": "2026-09-19",
@@ -3291,15 +3254,6 @@
       "location": "TRADMAN'S TOKYO -MARUNOUCHI BONSAI STORE-（東京都千代田区丸の内3-3-1 新東京ビル1F）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/kinoco__inc/"
-    },
-    {
-      "slug": "takanomiya-ichi-shokubutsu-2026-09",
-      "name": "高の宮市 〜植物のある暮らし〜",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-20",
-      "location": "高岡關野神社 境内（富山県高岡市末広町9-43）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DcbDS-oEz06/"
     },
     {
       "slug": "ore-no-plants-collection-2026-09",
@@ -3329,15 +3283,6 @@
       "sourceUrl": "https://www.instagram.com/p/Dc8HK8OCUdB/"
     },
     {
-      "slug": "jolie-nursery-vivahome-ibaraki-2026-09",
-      "name": "Jolie Nursery 即売会（スーパービバホーム茨木目垣店）",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-20",
-      "location": "スーパービバホーム 茨木目垣店（大阪府茨木市南目垣2-2-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://jolienursery.co.jp/blogs/events/vivahome-ibaraki-20260919"
-    },
-    {
       "slug": "premium-rock-garden-festa-2026",
       "name": "プレミアム ロックガーデン フェスタ2026",
       "date": "2026-09-09",
@@ -3345,60 +3290,6 @@
       "location": "Kayu style Botaniqa Atelier（群馬県邑楽郡千代田町福島190）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.kayu-style-botaniqa-atelier.com/information/%e7%a7%8b%e3%81%ae%e3%83%93%e3%83%83%e3%82%b0%e3%83%95%e3%82%a7%e3%82%b9%e3%82%bf%e3%80%8e%e3%83%97%e3%83%ac%e3%83%9f%e3%82%a2%e3%83%a0-%e3%83%ad%e3%83%83%e3%82%af%e3%82%ac%e3%83%bc%e3%83%87%e3%83%b3"
-    },
-    {
-      "slug": "one-love-sano-2026",
-      "name": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "CARPE DIEM",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/tkc.2nd.life/"
-    },
-    {
-      "slug": "wi-wi-botanical-minokamo-2026-09",
-      "name": "Wi-Wi BOTANICAL Vol.2",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "リバーポートパーク美濃加茂",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/wi_wibotanical/"
-    },
-    {
-      "slug": "botanical-auction-3rd-hamamatsu-2026-09",
-      "name": "第3回 ボタニカルオークション＆即売会",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "浜松市総合産業展示館 北館 第一展示場（静岡県浜松市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/b.g_ozman/"
-    },
-    {
-      "slug": "santafe-gakko-vol21-2026-09",
-      "name": "サンタフェ 学校編 vol.21",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "豊明市共生交流プラザ カラット（愛知県豊明市二村台1-27）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/greensanta2020/"
-    },
-    {
-      "slug": "taniku-collection-sapporo-2026-09",
-      "name": "TANIKU collection（タニコレ）",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "ガーデニングショップマイン（北海道札幌市東区伏古14条3丁目13-10）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/ichikawazouen_mine/"
-    },
-    {
-      "slug": "otsujiya-popup-engeiya-tanaka-2026-09",
-      "name": "大辻屋さん 出張販売会",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "園芸屋たなか（兵庫県尼崎市額田町7-43）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/engeiyatanaka/"
     },
     {
       "slug": "trillgreen-special-event-2026-09",
@@ -3410,24 +3301,6 @@
       "sourceUrl": "https://www.instagram.com/p/DdA7qo5zBf8/"
     },
     {
-      "slug": "nagoriba-miyajimaguchi-2026-09",
-      "name": "ナゴリバ",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "宮島口しゃもじ広場（広島県廿日市市宮島口1丁目）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dc_K229E7Q3/"
-    },
-    {
-      "slug": "jss-kitakanto-mini-tenji-sokubai-2026-09",
-      "name": "JSS北関東支部 多肉植物ミニ展示＆即売会",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "とちぎ花センター フラワー館（栃木県栃木市岩舟町下津原1612）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.florence.jp/news/9-20%e3%80%80%e7%89%b9%e5%88%a5%e5%b1%95%e9%96%a2%e9%80%a3%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%83%9f%e3%83%8b%e5%b1%95%e7%a4%ba%ef%bc%86%e5%8d%b3/"
-    },
-    {
       "slug": "shokubutsu-tengoku-hakusan-2026-09",
       "name": "植物天国 in 白山市場（2026年秋）",
       "date": "2026-09-20",
@@ -3437,13 +3310,58 @@
       "sourceUrl": "https://www.instagram.com/p/DdLmL5nI-6o/"
     },
     {
-      "slug": "kachofugetsu-yukuhashi-2026-09",
-      "name": "鹿鳥風月（ゆくはし植物園 会場）",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "location": "ゆくはし植物園（福岡県行橋市上津熊221）",
+      "slug": "jusai-ichinomiya-autumn-2026",
+      "name": "樹祭 一宮 2026 Autumn",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-22",
+      "location": "尾張一宮駅前ビル i-ビル（愛知県一宮市）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/"
+      "sourceUrl": "https://jusai.link/"
+    },
+    {
+      "slug": "engei-raku-2026-09",
+      "name": "園芸楽 2026",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-22",
+      "location": "木場潟公園 東園地 里山交流ハウス さとしるべ（石川県小松市三谷町タ120）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/engei_raku/"
+    },
+    {
+      "slug": "papan-vol5-2026-09",
+      "name": "第5回 パパ〜ん！ばにらとぼたんとユカいな仲間たち",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-21",
+      "location": "ハナミズキホール（大阪府大阪市鶴見区 鶴見緑地公園内）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/mini.vani/"
+    },
+    {
+      "slug": "deep-green-ono-2026-09",
+      "name": "DEEP GREEN 2026",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-21",
+      "location": "GRIZZLY COFFEE & SUPPLY（兵庫県小野市中町431-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/grizzlycoffee_and_supply/"
+    },
+    {
+      "slug": "tanikutta-popup-petit-marche-2026-09",
+      "name": "たにくった POPUP プチマルシェ",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-22",
+      "location": "南国ちゃたん たにくった（愛知県豊橋市東七根町字尻尾65-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dc40KKNzKm0/"
+    },
+    {
+      "slug": "taniku-the-hanbaikai-kibiji-2026-09",
+      "name": "多肉植物『The販売会』（農マル園芸吉備路農園）",
+      "date": "2026-09-21",
+      "dateEnd": "2026-09-21",
+      "location": "農マル園芸 吉備路農園 外エリア（岡山県総社市西郡411-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DdD9DA-zibL/"
     }
   ],
   "url_results": [
@@ -3612,8 +3530,8 @@
       "slug": "jurian-aki-taniku-cactus-2026-10",
       "name": "秋の多肉植物・サボテン展示会（樹里安）",
       "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "toyama-saboten-taniku-9th-2026-10",
