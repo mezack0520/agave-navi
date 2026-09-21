@@ -1,5 +1,5 @@
 {
-  "total": 507,
+  "total": 508,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 45,
+      "count": 46,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "american-and-plants-sano-2026-10",
@@ -312,8 +312,8 @@
         "plants-box-kofu-2026-10",
         "rojiura-botanical-2026-12",
         "shimane-cactus-succulent-ten-2026-10",
-        "souransai-koshigaya-2026-10",
-        "taniku-midori-marche-niitsu-2026-09"
+        "shoku-to-the-future-2026-10",
+        "souransai-koshigaya-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -530,8 +530,10 @@
     },
     "unknown_event_fields": {
       "title": "events.jsonにスキーマ外のキー(どのスクリプトも読まない)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "shoku-to-the-future-2026-10: plantSale = False"
+      ],
       "note": "既存キーに寄せるか、読む側のコードを書いて audit.py の KNOWN_EVENT_FIELDS に追加する",
       "severity": "urgent"
     },
@@ -840,7 +842,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 45,
+      "count": 46,
       "items": [
         "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
@@ -861,6 +863,7 @@
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
+        "2026-10-16 shoku-to-the-future-2026-10",
         "2026-10-17 plant-freaks-olinas-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
@@ -880,8 +883,7 @@
         "2026-12-20 rojiura-botanical-2026-12",
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2027-01-10 isij-big-bazaar-2027-01-10",
-        "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-24 aichin-shokusai-new-year-party-2027"
+        "2027-01-17 botanical-monsters-2027-okazaki"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1255,11 +1257,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 2,
-      "items": [
-        "golden-time-vol8-greenfeel-2026-09: 開催日 2026-09-20 を過ぎた（保留 2026-09-15）",
-        "wakasaya-park-2026-09-20: 開催日 2026-09-20 を過ぎた（保留 2026-09-01）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
@@ -1365,7 +1364,7 @@
       "title": "参考値が急に動いた(異常の可能性)",
       "count": 1,
       "items": [
-        "ongoing_events: 直近中央値 2 → 17（掲載454件で換算 2）（+15）"
+        "ongoing_events: 直近中央値 2 → 17（掲載455件で換算 2）（+15）"
       ],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
