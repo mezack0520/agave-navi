@@ -258,8 +258,16 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   さらにプロキシは**こちらが送る認証情報を捨てて、セッション自身のGitHub認証を差し込む。**
   検証: `api.github.com/user` を (a)正しいPAT (b)でたらめなトークン (c)認証ヘッダ無し
   の3通りで叩くと、**3つとも 200 で `login = YujiMezaki`**。
-  つまりコンテナから PAT を使う道は原理的に無い。直すにはセッションの sources に
-  リポジトリを追加するしかなく、それはこちらからは操作できない。
+  つまりコンテナから PAT を使う道は原理的に無い。
+  **エラー文面の「add the repository to the session's sources」は当てにしない。**
+  あれはセッション開始時にリポジトリを選ぶ Claude Code on the web 向けの汎用文で、
+  **Cowork にはリポジトリを選ぶ画面が無い。**Cowork がつなぐのはフォルダとコネクタだけ。
+  この一文を真に受けて「sources に追加すれば直る」と案内したが誤りだった(2026-09-21)。
+  **プロキシのエラー文面は、こちらの製品の操作手順を知らない。**
+  裏付け: `mezack0520` アカウントには GitHub App も OAuth App も1つも入っていない
+  (Settings → Applications で確認)。GitHub App の権限はインストール先アカウントが
+  所有するリポジトリに与わるもので、YujiMezaki が collaborator であることは効かない。
+  つまり Cowork から直す手段は無い。**行き止まりであって、残課題ではない。**
 - **YujiMezaki は mezack0520/agave-navi の Collaborator。**個人リポジトリの
   collaborator は権限が1段階しかない（= push 可）。Settings → Collaborators に
   役割の選択肢が出ないのがその証拠。**write が無いというのは誤りだった。**
@@ -277,6 +285,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   3. 生成物は上げない。push が `daily.yml` を発火させ、CIが作り直す。
   4. 送信後は `git fetch` で実際に入ったか確かめる。
      `ref` 指定のクリックが効かないことがあるので、スクリーンショットの座標で押す。
+  **当面この経路が本筋。**Cowork から agave-navi に書く道は、PC側シェル+PAT と
+  この Web UI の2つしかなく、前者は 2026-09-08 以降ふさがっている。
+
   **bundle を作ってユーザーのPCで押す旧手順は、PC側シェルが使えれば今も有効。**
   ただし 2026-09-08 の Windows 更新以降、Cowork のワークスペースが
   連携フォルダをマウントできず `device_bash` が起動しない日が続いている。
