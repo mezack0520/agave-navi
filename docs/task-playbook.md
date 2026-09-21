@@ -247,22 +247,39 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
 - `GITHUB_TOKEN` によるCI側のpushはワークフローを再起動しない仕様。だからループしない。
   PATでpushしたときだけ `on.push` が発火する
 - PATの値は出力・ログ・レポートに残さない。401ならPAT再発行が必要な旨をキューに積んで終了
-- **`gh` の認証は使わない。PATを使う（2026-09-10）。**
-  このPCの `gh auth status` は仕事用の `YujiMezaki` で、
-  repo の持ち主は個人の `mezack0520`。トークンに `repo` スコープはあるが
-  **別アカウントなので write が無く、push は 403 になる。**
-  Claude Code から押すときも同じ。使うのは
-  `mzplants\agave-navi\github.pat`。`gh auth login` で入り直す必要は無い。
-- **GitHubへの書き込み経路は PAT の `git push` だけ。** ブラウザからは一切書けない。
-  クラウドセッションはその `git push` 自体が 403 なので、bundle 経由で
-  ユーザーのPCから押す（§1.5 に実証済みの手順）。
-  Chromeは仕事用の `YujiMezaki` でログインしており `mezack0520` のリポジトリはWeb UIから編集できない。
-  以前は Edge が `mezack0520` でログイン済みで `switch_browser` の逃げ道があったが、
-  **Edge は2026-08-18に廃止した。代替のブラウザは無い。**
-  したがって Run workflow ボタンを押す・Web UIでファイルを直す・Actions を手動再実行する、は**できない**。
-  `workflow_dispatch` はPATでも403なので、ワークフローを動かしたいときは
-  対象ファイルを push して `on.push` を発火させるしかない。
-  読み取り（無認証の `api.github.com` GET・Actionsの実行結果閲覧）はブラウザから通る
+- PATを使う。`mzplants\agave-navi\github.pat`。PATの値は出力・ログ・レポートに残さない。
+- **以下は 2026-09-21 に実地で確かめ直した。それ以前の記述は誤りだったので置き換えた。**
+  古い記述は「YujiMezaki には write が無い」「ブラウザからは一切書けない」だったが、
+  **どちらも事実に反していた。**根拠にしていたのは `gh auth status` の出力と
+  push の 403 で、**403 の出どころを確かめずに GitHub の権限不足と決めつけていた。**
+
+- **クラウドセッションの `git push` が 403 になるのは GitHub ではなくエージェントプロキシ。**
+  文面は「mezack0520/agave-navi is not in this session's authorized repository set」。
+  さらにプロキシは**こちらが送る認証情報を捨てて、セッション自身のGitHub認証を差し込む。**
+  検証: `api.github.com/user` を (a)正しいPAT (b)でたらめなトークン (c)認証ヘッダ無し
+  の3通りで叩くと、**3つとも 200 で `login = YujiMezaki`**。
+  つまりコンテナから PAT を使う道は原理的に無い。直すにはセッションの sources に
+  リポジトリを追加するしかなく、それはこちらからは操作できない。
+- **YujiMezaki は mezack0520/agave-navi の Collaborator。**個人リポジトリの
+  collaborator は権限が1段階しかない（= push 可）。Settings → Collaborators に
+  役割の選択肢が出ないのがその証拠。**write が無いというのは誤りだった。**
+- **Chrome（Windows・Browser 2）は `mezack0520` でログインしている。**
+  Settings と Collaborators が開け、Actions に Run workflow ボタンも出る。
+  したがって **Web UI から書ける。**2026-09-21 に Upload files で3コミット実施済み。
+
+- **クラウドから押せないときの実証済みの経路（2026-09-21）:**
+  1. 生成物を除いたソースだけを `/mnt/user-data/uploads/` 配下にコピーする。
+     **`file_upload` はここしか受け付けない。**`/mnt/user-data/outputs/` も
+     PCのWindowsパスも「only files this session is allowed to read」で弾かれる。
+  2. `github.com/mezack0520/agave-navi/upload/main[/<dir>]` を開く。
+     Web UI の Upload files は**ディレクトリごとに1コミット**になるので、
+     ルート・`scripts`・`docs` のように分ける。
+  3. 生成物は上げない。push が `daily.yml` を発火させ、CIが作り直す。
+  4. 送信後は `git fetch` で実際に入ったか確かめる。
+     `ref` 指定のクリックが効かないことがあるので、スクリーンショットの座標で押す。
+  **bundle を作ってユーザーのPCで押す旧手順は、PC側シェルが使えれば今も有効。**
+  ただし 2026-09-08 の Windows 更新以降、Cowork のワークスペースが
+  連携フォルダをマウントできず `device_bash` が起動しない日が続いている。
 
 ## 3. 既知のハマりどころ
 
