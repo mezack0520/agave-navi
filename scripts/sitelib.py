@@ -1090,6 +1090,11 @@ def area_filter_html(events=None):
     return crumb_bar_html([region_nav, pref_nav], live=True)
 
 
+# sitelib はどのスクリプトからも import されるので、リポジトリの根は
+# 自分の位置から引く。呼び出し側の cwd に頼ると daily と手元で挙動が変わる。
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 def update_rows(picked, root=''):
     """更新のお知らせの行。1行1件。
 
@@ -1106,8 +1111,13 @@ def update_rows(picked, root=''):
         on_disp = on[5:].replace('-', '.') if len(on) == 10 else on
         pref = (it.get('prefecture') or '').strip()
         detail = (it.get('detail') or '').strip()
-        # 取り消した回は詳細ページが無いのでリンクしない
-        if kind == 'removed' or not slug:
+        # 取り消した回は詳細ページが無いのでリンクしない。
+        # **掲載後に基準違反で削除した回も同じ。**kind は 'listed' のまま
+        # 履歴に残るが、頁はもう無い。2026-09-21 に UndergrounD を削除して
+        # pref/saitama から死んだリンクが出た(audit.dead_internal_link)。
+        # 履歴の行そのものは残す。消すと「載っていた事実」まで消える。
+        if kind == 'removed' or not slug or not os.path.exists(
+                os.path.join(_REPO, 'events', f'{slug}.html')):
             title = html_escape(name)
         else:
             title = (f'<a href="{root}events/{_attr(slug)}.html">'
