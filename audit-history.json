@@ -764,15 +764,14 @@
   {
    "date": "2026-09-21",
    "urgent": {
-    "unknown_event_fields": 1,
     "metric_moved": 1
    },
    "info": {
     "coverage_gaps": 11,
     "cancel_suspects": 1,
     "inquiry_review_gap": 1,
-    "task_run_unrecorded_but_working": 1,
-    "task_run_gap": 3
+    "task_run_never_recorded": 1,
+    "task_run_gap": 2
    },
    "metric": {
     "thin_past_with_source": 33,
