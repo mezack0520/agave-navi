@@ -2939,6 +2939,47 @@ Instagram DMで依頼が来たが、載せたのは規則を変えたからで�
   主題は語では決まらないので、あれは候補を絞る粗い網でしかない。
   **あの網に当たったことを見送りの理由にしないこと。**落ちるのは発見であって判断ではない。
 
+### Instagram の本文は embed/captioned をページ内から叩く (2026-09-21)
+
+告知本文を読むのに、投稿を1件ずつブラウザで開いて目視する必要は無い。
+**ログイン済みの組み込みブラウザで instagram.com を開いた状態で、
+そのページの JavaScript から `/p/<code>/embed/captioned/` を fetch すると、
+本文が丸ごと取れる。**1回の呼び出しで何件でも回せる。
+
+```js
+const cap = async (code, n=600) => {
+  const r = await fetch('/p/'+code+'/embed/captioned/', {credentials:'include'});
+  const d = new DOMParser().parseFromString(await r.text(), 'text/html');
+  const c = d.querySelector('.Caption');
+  return c ? c.innerText.replace(/\s+/g,' ').slice(0, n) : '(none)';
+};
+```
+
+使い方の型。**短い抜粋で選別してから長く取る。**全件を長く取ると文脈が膨れる。
+
+```js
+const cs = [...new Set([...document.querySelectorAll('a[href*="/p/"],a[href*="/reel/"]')]
+  .map(a => (a.getAttribute('href').match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/)||[])[1])
+  .filter(Boolean))].slice(0, 8);
+const out = {};
+for (const c of cs) {
+  const t = await cap(c, 200);
+  if (/10月10|第4回|開催/.test(t)) out[c] = await cap(c, 900);   // 当たりだけ長く
+  await new Promise(r => setTimeout(r, 250));
+}
+```
+
+通らない道も確かめてある。
+
+- `web_profile_info` API は **429** を返す。ページ内から x-ig-app-id を付けても同じ。
+- **プロフィールHTMLを fetch しても投稿リンクは入っていない。**credentials 付きでも
+  shortcode が1件も出ない。プロフィールは navigate して DOM から拾うしかない。
+- コンテナから instagram.com を取るとログイン壁のHTMLで、本文は入っていない。
+- **だが CDN は別。**`scontent-*.cdninstagram.com` の署名付きURLは
+  **コンテナから curl で 200 が返る**(2MBの原寸JPEGを取得できた)。
+  つまり **URLだけブラウザで拾って、取得と加工はコンテナでやれる。**
+  画像のバイト列を文脈に通さずに済む。アイキャッチ作業はこの形が速い。
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。
