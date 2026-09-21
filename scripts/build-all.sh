@@ -31,6 +31,12 @@ fi
 # どちらのテストも見ていなかった。**生成前に落とす。
 python3 scripts/test-time-parity.py
 
+# imageSource に残った Instagram 投稿IDを instagramPostId に写す。
+# **生成より前。** 写さないと詳細頁の埋め込みが出ず、
+# audit.instagram_embed_missing は「IGの値がある回」しか見ないので、
+# 写していない回は監視下にすら入らない(2026-09-20 時点で95件あった)。
+python3 scripts/sync-instagram-ids.py
+
 python3 build-detail-pages.py
 python3 scripts/build-guides.py
 python3 scripts/build-static-html.py

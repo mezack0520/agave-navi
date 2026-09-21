@@ -52,6 +52,11 @@ KNOWN_EVENT_FIELDS = {
     # 自サイトに置いたアイキャッチの取得元(2026-09-08)。
     # 読むのは scripts/fetch-event-images.py と詳細ページの出所表示
     'imageSource',
+    # その回で植物そのものを売るか(2026-09-21)。false のときだけ書く。
+    # 読むのは build-detail-pages.make_affiliate_block で、
+    # 「株を持ち帰る前に揃えるもの」の枠を出さないために使う。
+    # artworkShows の改定で、植物を売らない作品展が載るようになった
+    'plantSale',
 }
 
 
@@ -4208,6 +4213,34 @@ def main():
         'make_instagram_section が投稿IDを取れずに空を返している。'
         'URLの形を増やしたら extractor の正規表現も足す。'
         '値だけ直して再生成しないと頁は変わらない')
+
+    # --- imageSource の投稿IDが instagramPostId に写っているか ----------------
+    # アイキャッチを取ると imageSource にその投稿URLが残る。だが
+    # instagramPostId は別経路でしか入らないので、同じ投稿を指す値が
+    # 片方にしか無い回が2026-09-20時点で95件あった。片方にしか無いと
+    # 埋め込みが出ないうえ、上の instagram_embed_missing は
+    # 「IGの値がある回」だけを見るので **その95件は監視下にすら入らない。**
+    # 見えていないものは壊れても鳴らない。
+    # sync-instagram-ids.py が build-all で写す。ここはその機能確認で、
+    # 写せていない回が残っていたらスクリプトが黙って落ちている。
+    # eyecatch-review.json の回は意図的な見送り(出所がその回の告知ではない)
+    # なので除く。除外の理由はスクリプト側の docstring にある。
+    try:
+        with open(rp('scripts', 'eyecatch-review.json'), encoding='utf-8') as f:
+            _ec_skip = {i.get('slug') for i in json.load(f).get('items', [])}
+    except (OSError, ValueError):
+        _ec_skip = set()
+    ig_unsynced = sorted(
+        f"{e.get('slug')}: imageSource {(e.get('imageSource') or '')[:60]}"
+        for e in events
+        if not (e.get('instagramPostId') or '').strip()
+        and e.get('slug') not in _ec_skip
+        and sitelib.IG_POST_RE.search(e.get('imageSource') or ''))
+    add('instagram_id_unsynced', 'imageSourceの投稿IDがinstagramPostIdに写っていない',
+        ig_unsynced,
+        'python3 scripts/sync-instagram-ids.py。'
+        'build-all.sh の生成より前で呼ぶ。写さないと埋め込みが出ず、'
+        'instagram_embed_missing の監視下にも入らない')
 
     # --- カレンダー・マップの埋め込み集合 -------------------------------------
     # build-static-html.py は既存HTMLへの挿入で作る。置換に失敗すると
