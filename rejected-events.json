@@ -712,6 +712,105 @@
    "revisit": false,
    "eventDate": "2026-10-03",
    "decided": "2026-09-22"
+  },
+  {
+   "key": "kohnan-kohokuinter-taniku-cactus-2026-09",
+   "name": "コーナン港北インター店 多肉植物・サボテン即売会 (2026-09-26/27 コーナン港北インター店ガーデンズ)",
+   "reason": "主催(店舗)の告知が見つからず、出ているのは出店者側の投稿(@cactusnishiofficial / @hardnuts1187 / @grancactus / @aisenen_togeya)だけで primarySource.vendorAnnouncementsOnly に当たる。コーナン公式の店舗お知らせにも当該回の掲載なし。コーナンの店舗形態は コーナン / コーナンPRO / キャンプデポ / gardens umekita の4つで、「◯◯店ガーデンズ」は通常店の園芸売場の呼称。gardens umekita の先例(専門業態店)は当てない",
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-09-26",
+   "decided": "2026-09-20"
+  },
+  {
+   "key": "orso-x-plants-okinawa-2026-09",
+   "name": "オルソ×プランツ 2026 (2026-09-26 炭焼きバル オルソ -Orso Campo-・沖縄市胡屋)",
+   "reason": "主催者が特定できない(primarySource.insufficient)。会場 @orso.campo は当該回を告知しておらず、見つかる告知は全て出店者側(@okinawa.tropical.plants ほか)で vendorAnnouncementsOnly に当たる。会場か主催名義のアカウントが告知したら植物出店4組と飲食・アパレルの比率で compositeEvents を当てて再評価",
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-09-26",
+   "decided": "2026-09-20"
+  },
+  {
+   "key": "kitamoro-hinpyokai-3rd-2026-09",
+   "name": "第三回 北諸品評会＆交流会 (2026-09-27 北諸三股店・宮崎県)",
+   "reason": "closedGatherings ＋ clubShowNoSale。主催 @kitamoro.caudex_club の告知が「自慢の一株を持ち寄って」「交流会は、みんなでご飯を食べながら」で、持ち込みと申込が参加条件。一般来場者が買える即売会ではない。2月・9月の年2回のシリーズで、seriesPrecedentRule どおり以後の回にも当てる",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-09-27",
+   "decided": "2026-09-20"
+  },
+  {
+   "key": "popup-alley-jam-roar-2026-11",
+   "name": "POPUP ALLEY JAM (2026-11-07/08 ROAR・徳島県吉野川市)",
+   "reason": "storeAnniversary.hostedMarche。主催 ROAR @roar.nk.products_official はアガベ専門店だが、当該回の告知は「ROARらしくユルいイベント ALLEY JAM」とだけ書き即売会とは言っていない。タグ先はコーヒー・アパレル。名称が中立で出店内訳も非公開なので undisclosedBreakdown.exclude。GOLDEN TIME vol.8 と同型。出店者一覧が公開されたら数える",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-11-07",
+   "decided": "2026-09-20"
+  },
+  {
+   "key": "savers-flea-market-vol1-susono-2026-10",
+   "name": "SAVERS FLEA MARKET Vol.1 (2026-10-04 SAVERS FIELD・静岡県裾野市須山679)",
+   "reason": "compositeEvents ＋ undisclosedBreakdown.exclude。主催は古着屋 SAVERS(@savers_events)で、惹句は「セイバーズプレゼンツのフリーマーケット」「古着は世界を救う」。名称は中立で植物を主題と言っていない。出店者は順次紹介中で全体の内訳は非公開。出店者一覧が公開されたら数える",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-10-04",
+   "decided": "2026-09-21"
+  },
+  {
+   "key": "kisetsu-no-shokubutsu-workshop-atelier-kiki-2026-10",
+   "name": "季節の植物を楽しむ小さなワークショップ (2026-10-19 atelier kiki・滋賀県長浜市)",
+   "reason": "workshopOnly.exclude ＋ outOfScopeGenres(ハーブ・薬草)。主催は伊吹山麓薬草研究会・伊吹志津香。お散歩会と手仕事体験の定員制受講回で即売は無い。主催が「はじめます」と書いた月例シリーズなので seriesPrecedentRule どおり以後の回にも当てる",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-19",
+   "decided": "2026-09-21"
+  },
+  {
+   "key": "niku-palette-festival-marugame-2026-11",
+   "name": "肉niku PALETTE FESTIVAL (2026-11-29 フジグラン丸亀 駐車場特設会場・香川県丸亀市)",
+   "reason": "compositeEvents.coTitledDescription ＋ undisclosedBreakdown.exclude。惹句が「肉と多肉と肉球が集まる一大イベント」で、肉料理・多肉植物・ペットの3テーマを対等に並べる。約60店舗の内訳は非公開。主催 @palette_market_kagawa は毎回テーマを替える汎用のイベント企画者(ハイライトに 丸亀ミュージックナイト / わんわんハロウィン / いちごぱれっと / PETS)。出店者一覧が公開されたら数える",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-11-29",
+   "decided": "2026-09-22"
+  },
+  {
+   "key": "olea-share-market-oyama-2026-11",
+   "name": "OLEA SHARE MARKET 2026 (2026-11-08 OLEA naturalbread のお庭・栃木県小山市粟宮684-1)",
+   "reason": "compositeEvents ＋ undisclosedBreakdown.exclude。主催はベーカリーカフェ @olea_naturalbread で自店の庭で開くマルシェ。惹句は「おいしいフードやスイーツなどが大集合」、名称も中立。約40店舗の内訳は非公開。#月2回開催 の反復シリーズ。出店者一覧が公開されたら数える",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-11-08",
+   "decided": "2026-09-22"
+  },
+  {
+   "key": "tajimi-hana-midori-zakkaichi-2026-11",
+   "name": "お花屋さん企画 多治見 花と緑と雑貨市 (2026-11-21 バロー文化ホール エントランス・岐阜県多治見市)",
+   "reason": "outOfScopeGenres(生花・花苗・ガーデニング)。主催 NPO法人シュシュマルシェ @chouchoumarche.event の告知が「お花屋さん企画」で、季節の花苗・花雑貨・グリーン雑貨の50ブースと花屋の在庫SALE。同日同会場で「ハンドメイドグランプリ2026」を併催。年複数回の定例なので seriesPrecedentRule どおり以後の回にも当てる",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-11-21",
+   "decided": "2026-09-22"
+  },
+  {
+   "key": "toufu-tokyo-popup-estnation-2026-12",
+   "name": "TOUFU TOKYO POP-UP EVENT / RE BONSAI™ Upcycle Works (2026-12-25〜2027-01-13 ESTNATION OSAKA・ESTNATION ROPPONGI)",
+   "reason": "artworkShows.exclude。RE BONSAI™ は盆栽を素材にしたアップサイクル作品のブランドで、会場はアパレルのセレクトショップ。生きた植物の即売会ではない。LEAFLA が12月のアガベ・塊根一覧にまで入れているので、以後も gaps に出たらこの記録で落とす",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-12-25",
+   "decided": "2026-09-22"
+  },
+  {
+   "key": "nihon-saboten-kyoujinkai-koukankai-2026-09",
+   "name": "日本サボテン狂人会 交換会 (2026-09-20 ワークヒルズ羽生・埼玉県羽生市)",
+   "reason": "clubShowNoSale / closedGatherings。告知に「発句3,000」「10点廻し」「歩金5%」「10点以上の荷主は無料」とあり、荷主として品物を出す側が前提の競りで一般向けの即売会ではない。同じ主催の「狂人会楽市」は一般向けなので掲載している(kyoujinkai-rakuichi-2026-06)。主催名ではなく催しの型で切る。「交換会」「例会」「荷主」「歩金」「発句」「◯点廻し」は会員向けの語彙",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-09-20",
+   "decided": "2026-09-22"
   }
  ],
  "_reasonTypes": {
@@ -720,6 +819,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-22",
+ "updated": "2026-09-23",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
