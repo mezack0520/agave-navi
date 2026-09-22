@@ -1033,27 +1033,42 @@ main {
    onerror で後から class が付く経路では中身が空になるため、
    そのときはグラデーションだけを見せる(:empty)。 */
 .event-no-image {
+    /* 文字が小さすぎて情報として読めていなかった(2026-09-22)。
+       枠の幅はカードの幅で変わる(実測 165〜300px)ので、rem で決めると
+       どこかの幅で必ず小さすぎるか溢れる。container query 単位にして
+       枠の幅に比例させる。container-type はここに置く。 */
+    container-type: inline-size;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    background: linear-gradient(160deg, #1a1a1a 0%, #252525 40%, #1e1e1e 100%);
+    /* ブランドの BLACK #0B0B0B に合わせる */
+    background: radial-gradient(120% 100% at 50% 0%, #1f1f1f 0%, #0b0b0b 72%);
     overflow: hidden;
     flex-direction: column;
-    gap: 2px;
-    color: #6f6f6f;
+    gap: 3.5cqw;
+    color: #F3EEE4;
 }
 .event-no-image .eni-pref {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #8a8a8a;
+  /* 2文字が既定。3文字以上は Python 側が l3 / l4 を付ける。
+     枠に収まる上限を実測して決めた値で、変えるなら両方を直す。 */
+  font-size: 26cqw;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #F3EEE4;
 }
+.event-no-image .eni-pref.l3 { font-size: 20cqw; }
+.event-no-image .eni-pref.l4 { font-size: 15cqw; }
 .event-no-image .eni-date {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: #6a6a6a;
+  font-size: 11cqw;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #0b0b0b;
+  background: #F3EEE4;
+  border-radius: 999px;
+  padding: 2.6cqw 5.2cqw;
 }
 
 .event-card.event-ended .event-thumb {
