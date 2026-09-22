@@ -144,6 +144,17 @@ def main():
                 html = html.replace('</head>', tag + '</head>', 1)
                 reasons.append('navjs')
 
+        # 外部リンクの送客計測。**nav.js と同じ条件で必ず読ませる。**
+        # 生成ページは sitelib.nav_overlay() 経由で入るが、手書きの13ページは
+        # script タグを自前で持っているので、ここで足さないとその13ページだけ
+        # 数が落ちる。nav.js が同じ穴を踏んでいる(2026-09-08)ので同じ形で防ぐ。
+        if 'class="header"' in html and 'src="/outbound.js' not in html:
+            tag = (f'    <script src="/outbound.js?v={sitelib.JS_VERSION}"'
+                   ' defer></script>\n')
+            if '</head>' in html:
+                html = html.replace('</head>', tag + '</head>', 1)
+                reasons.append('outboundjs')
+
         # JS版数を正規化
         want_js = f'?v={sitelib.JS_VERSION}'
         new_html, n = JSVER_RE.subn(lambda mo: mo.group(1) + want_js, html)

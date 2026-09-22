@@ -18,7 +18,7 @@ DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
 CSS_VERSION = '20260910b'
-JS_VERSION = '20260918a'
+JS_VERSION = '20260922a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -684,7 +684,10 @@ def site_nav():
         + IKITAI_HEART_SVG + ' 行きたいリスト</a>\n'
         '    </div>\n'
         '  </nav>\n'
-        '  <script src="/nav.js?v=' + JS_VERSION + '" defer></script>')
+        '  <script src="/nav.js?v=' + JS_VERSION + '" defer></script>\n'
+        # 外部リンクの送客計測。ナビと同じ場所で読むので全頁に乗る。
+        # 頁ごとに足す作りにすると、足し忘れた頁だけ黙って数が落ちる。
+        '  <script src="/outbound.js?v=' + JS_VERSION + '" defer></script>')
 
 
 def site_header(root=''):

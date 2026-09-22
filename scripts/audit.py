@@ -2345,7 +2345,10 @@ def main():
         # (2026-09-08、注釈だけ入って scriptタグが無い状態が本番に出た)
         _lack = [n for n, _t in (('menuToggle', 'id="menuToggle"'),
                                  ('navOverlay', 'id="navOverlay"'),
-                                 ('nav.js の読み込み', 'src="/nav.js'))
+                                 ('nav.js の読み込み', 'src="/nav.js'),
+                                 # 送客計測。読まない頁があるとその頁だけ
+                                 # 黙って数が落ちる(2026-09-22 追加)
+                                 ('outbound.js の読み込み', 'src="/outbound.js'))
                  if _t not in _h]
         if _lack:
             _nav_bad.append(f'{_rel}: {", ".join(_lack)} が無い')
