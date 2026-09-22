@@ -17,7 +17,7 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260922a'
+CSS_VERSION = '20260922b'
 JS_VERSION = '20260922a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -139,7 +139,10 @@ _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 スラッグ衝突の解消で消えた旧URL
     'v-0992a535': 'フィールド妙高',
     '4':          '町田パリオ 4階',
-    '1028-2':     'リサイクルショップ虹風船 館林店 駐車場',
+    # 2026-09-22: 多肉ワンダーランド第2回の会場を主催告知どおり埼玉・ウニクス上里に
+    # 直した結果、館林の会場は開催1件になり、会場ページ(2件以上で生成)が消えた。
+    # 宛先が無くなったので None にする。中継先を残すと /venue/ の404を指す。
+    '1028-2':     None,
     # 曖昧な会場名で立っていた頁(宛先なし)
     'v-4f33267b': None,
     'v-5abbdd6f': None,
@@ -694,13 +697,21 @@ def site_nav():
         '  <script src="/outbound.js?v=' + JS_VERSION + '" defer></script>')
 
 
+# ヘッダーのロゴ。**ここが唯一の定義。**
+# sync-footers.py も手書き頁の正規化にこれを読む。以前は向こうが同じ文字列を
+# 直書きしていて、ここだけ直しても build-all の最後で元に戻っていた(2026-09-22)。
+LOGO_HTML = ('<a href="/" class="logo">'
+             '<img class="logo-img" src="/images/brand/logo-header.png"'
+             ' alt="AGA NAVI" width="118" height="26">'
+             '<span class="logo-jp">アガベイベントナビ</span></a>')
+
+
 def site_header(root=''):
     """共通ヘッダー。リンクは絶対パスなので root は使わない(互換で残す)。"""
     return (
         '  <header class="header">\n'
         '    <div class="header-inner">\n'
-        '      <a href="/" class="logo"><span class="logo-en">AGA NAVI</span>'
-        '<span class="logo-jp">アガベイベントナビ</span></a>\n'
+        '      ' + LOGO_HTML + '\n'
         '      <div class="header-actions">\n'
         '        <a href="/ikitai.html" class="ikitai-blob-btn">'
         '<span class="blob-bg"></span>\n'

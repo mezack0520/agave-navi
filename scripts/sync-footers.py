@@ -69,9 +69,7 @@ def main():
             reasons.append('adsense')
 
         # ヘッダーのロゴを正規化
-        canon_logo = ('<a href="/" class="logo">'
-                      '<span class="logo-en">AGA NAVI</span>'
-                      '<span class="logo-jp">アガベイベントナビ</span></a>')
+        canon_logo = sitelib.LOGO_HTML
         new_html, n = LOGO_RE.subn(lambda _m: canon_logo, html)
         if n and new_html != html:
             html = new_html
