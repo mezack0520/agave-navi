@@ -121,6 +121,17 @@ body.no-scroll {
     cursor: pointer;
 }
 
+.logo-img {
+    /* ヘッダーのロゴ。294x64 の実寸を 26px 高で出す。
+       高さだけ指定して width:auto にすると、画像が届く前に幅が0になって
+       右の要素がずれる。HTML側に width/height を書いて比率を固定する。 */
+    display: block;
+    height: 26px;
+    width: auto;
+}
+@media (max-width: 480px) {
+  .logo-img { height: 22px; }
+}
 .logo-en {
     display: block;
     color: var(--white);
