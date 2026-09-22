@@ -1,5 +1,5 @@
 {
-  "total": 500,
+  "total": 509,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -635,9 +635,20 @@
     },
     "ci_generated_paths_drift": {
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
-      "count": 0,
-      "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "count": 10,
+      "items": [
+        "404.html (9f396e4f0 が変更)",
+        "about.html (9f396e4f0 が変更)",
+        "contact.html (9f396e4f0 が変更)",
+        "dashboard.html (9f396e4f0 が変更)",
+        "disclaimer.html (9f396e4f0 が変更)",
+        "ikitai.html (9f396e4f0 が変更)",
+        "listing.html (9f396e4f0 が変更)",
+        "operator.html (9f396e4f0 が変更)",
+        "privacy.html (9f396e4f0 が変更)",
+        "terms.html (9f396e4f0 が変更)"
+      ],
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1162,10 +1173,8 @@
     },
     "dead_internal_link": {
       "title": "サイト内リンクの参照先が存在しない",
-      "count": 1,
-      "items": [
-        "/outbound.js ← 641頁 (例 404.html)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "生成物の消し忘れか、リンク側がスラッグの変更に追随していない",
       "severity": "urgent"
     },
