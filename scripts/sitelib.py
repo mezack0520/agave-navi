@@ -678,7 +678,11 @@ def site_nav():
     return (
         '  <nav class="nav-overlay" id="navOverlay">\n'
         '    <div class="nav-overlay-inner">' + links + '\n'
-        '      <a href="https://www.instagram.com/m.z.plants/" target="_blank"'
+        # サイト公式のIG。2026-09-22 まで運営者の個人アカウント
+        # @m.z.plants を指していた。公式 @agave_navi の開設にあわせて
+        # 張り替えた。**個人アカウントは運営者情報ページにだけ残す。**
+        # メニューの INSTAGRAM は「このサイトの発信」を期待して押される
+        '      <a href="https://www.instagram.com/agave_navi/" target="_blank"'
         ' rel="noopener">INSTAGRAM</a>\n'
         '      <a href="/ikitai.html" class="nav-ikitai-link">'
         + IKITAI_HEART_SVG + ' 行きたいリスト</a>\n'
@@ -1692,13 +1696,18 @@ def head_open(og_type='website'):
         '  <meta property="og:description" content="{description}">\n'
         '  <meta property="og:type" content="' + og_type + '">\n'
         '  <meta property="og:url" content="{canonical}">\n'
-        '  <meta property="og:image" content="' + DOMAIN + '/og-image.png">\n'
+        # 既定のOG画像。**1200x630 でなければならない。**
+        # 2026-09-22 まで og-image.png(512x512) を指しており、
+        # イベント画像を持たない162頁が正方形のカードで共有されていた。
+        # twitter:card は summary_large_image のままなので、
+        # 「大きいカードを宣言して正方形の絵を渡す」食い違いになっていた。
+        '  <meta property="og:image" content="' + DOMAIN + '/images/ogp-default.jpg">\n'
         '  <meta name="twitter:card" content="summary_large_image">\n'
-        '  <link rel="icon" type="image/svg+xml" href="{root}favicon.svg?v=2">\n'
-        '  <link rel="icon" type="image/x-icon" href="{root}favicon.ico?v=2">\n'
-        '  <link rel="apple-touch-icon" sizes="180x180" href="{root}apple-touch-icon.png?v=2">\n'
-        '  <link rel="manifest" href="{root}manifest.webmanifest?v=2">\n'
-        '  <meta name="theme-color" content="#111">\n'
+        '  <link rel="icon" type="image/svg+xml" href="{root}favicon.svg?v=3">\n'
+        '  <link rel="icon" type="image/x-icon" href="{root}favicon.ico?v=3">\n'
+        '  <link rel="apple-touch-icon" sizes="180x180" href="{root}apple-touch-icon.png?v=3">\n'
+        '  <link rel="manifest" href="{root}manifest.webmanifest?v=3">\n'
+        '  <meta name="theme-color" content="#0b0b0b">\n'
         '  <link rel="alternate" type="application/rss+xml" '
         'title="アガベイベントナビ" href="{root}rss.xml">\n'
         '  <link rel="stylesheet" href="{root}style.css?v=' + CSS_VERSION + '">\n')

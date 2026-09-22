@@ -122,7 +122,21 @@ def write_ico(path, svg_text, sizes=(16, 32, 48)):
         f.write(header + dirs + blobs)
 
 
+# 2026-09-22: **このスクリプトは退役した。**
+# アイコンとロゴはブランドキット(v11 / images/brand/)の成果物に差し替えた。
+# ここはPoppinsの文字だけで組む作りで、アガベのマークを持っていない。
+# 走らせると v11 を上書きして旧デザインに戻すので、既定では止める。
+# 旧版の考え方(サイズごとの出し分け・角丸の使い分け)は上の説明に残してある。
+RETIRED = (
+    'build-icons.py は退役しました(2026-09-22)。\n'
+    'アイコンとロゴは images/brand/ のブランドキット由来の成果物です。\n'
+    'これを走らせると v11 を上書きして旧デザインに戻ります。\n'
+    '意図して旧版を作り直すときだけ --force を付けてください。')
+
+
 def main():
+    if '--force' not in sys.argv:
+        sys.exit(RETIRED)
     try:
         import cairosvg
     except ImportError:

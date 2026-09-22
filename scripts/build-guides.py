@@ -18,7 +18,7 @@ OUT_DIR = os.path.join(REPO_ROOT, 'guides')
 # <head> の冒頭は sitelib.head_open が唯一の持ち主。ここは続きだけ持つ。
 # ガイドは /guides/ 直下なので root は常に '../'。format 時に渡す
 HEAD = sitelib.head_open('article') + '''  <script type="application/ld+json">
-  {{"@context":"https://schema.org","@type":"Article","headline":"{title}","description":"{description}","datePublished":"{date_iso}","dateModified":"{date_iso}","author":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/"}},"publisher":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/","logo":{{"@type":"ImageObject","url":"https://agave-navi.com/android-chrome-512x512.png"}}}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{canonical}"}},"image":"https://agave-navi.com/og-image.png"}}
+  {{"@context":"https://schema.org","@type":"Article","headline":"{title}","description":"{description}","datePublished":"{date_iso}","dateModified":"{date_iso}","author":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/"}},"publisher":{{"@type":"Organization","name":"アガベイベントナビ","url":"https://agave-navi.com/","logo":{{"@type":"ImageObject","url":"https://agave-navi.com/android-chrome-512x512.png"}}}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{canonical}"}},"image":"https://agave-navi.com/images/ogp-default.jpg"}}
   </script>
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{{"@type":"ListItem","position":1,"name":"ホーム","item":"https://agave-navi.com/"}},{{"@type":"ListItem","position":2,"name":"植物ガイド","item":"https://agave-navi.com/guides/"}},{{"@type":"ListItem","position":3,"name":"{title}"}}]}}
