@@ -817,7 +817,6 @@
    "date": "2026-09-23",
    "urgent": {
     "desc_scraped_junk": 1,
-    "new_events_unmerged": 1,
     "inquiry_check_stale": 1
    },
    "info": {
@@ -825,21 +824,21 @@
     "cancel_suspects": 1,
     "cancel_watch_unreachable": 1,
     "inquiry_review_gap": 1,
-    "task_run_never_recorded": 1,
-    "task_run_gap": 1
+    "task_run_unrecorded_but_working": 1,
+    "task_run_gap": 2
    },
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 48,
-    "upcoming_with_image": 104,
-    "events_with_image": 182,
+    "upcoming_with_image": 105,
+    "events_with_image": 183,
     "upcoming_no_image": 53,
     "ongoing_events": 9,
     "workflow_secrets": 6,
     "eyecatch_backlog": 53
    },
-   "events": 463,
-   "upcoming": 157
+   "events": 464,
+   "upcoming": 158
   }
  ]
 }
