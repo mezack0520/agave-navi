@@ -1,5 +1,5 @@
 {
-  "total": 480,
+  "total": 502,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -272,14 +272,18 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 42,
+      "count": 53,
       "items": [
+        "agave-shokudo-2026-autumn-uchidanouen",
         "aichin-shokusai-new-year-party-2027",
+        "aki-no-taniku-picnic-ibusuki-2026-11",
         "american-and-plants-sano-2026-10",
         "asamiya-tanikusai-7th-2026-10",
+        "atilab-magari-hanbaikai-fangit-2026-09",
         "awajishima-taniku-smile-marche-3rd-2026",
         "botanic-collection2-ube-2026-10",
         "botanical-botanical-okinawa-2026-11",
+        "botanical-journey-onomichi-2026-11",
         "botanical-life-kasama-2026-11",
         "botanical-link-popup-kasugai-2026-10",
         "botanical-monsters-2027-okazaki",
@@ -300,20 +304,16 @@
         "isij-big-bazaar-2027-11-28",
         "jurian-aki-taniku-cactus-2026-10",
         "kadan-fes-2026-autumn",
+        "kusa-paradise-vol10-okazaki-2026-10",
         "kyoto-midorino-marche-bangaihen-vol10-2026",
+        "love-green-market-vol3-ichihara-2026-12",
+        "marutto-shokubutsu-fes-2026-11",
         "midorigakuen-himeji-2026-11",
         "nihon-shaboten-taikai-51st-2026-10",
         "on-the-plants-vol9-fukuoka-2026-10",
         "onokoro-green-festa-2026-09",
-        "plant-freaks-olinas-2026-10",
-        "plant-freaks-olinas-2026-11",
-        "plants-box-kofu-2026-10",
-        "rojiura-botanical-2026-12",
-        "shimane-cactus-succulent-ten-2026-10",
-        "souransai-koshigaya-2026-10",
-        "taniku-midori-marche-niitsu-2026-09",
-        "tokimeki-marche-gunma-kenchomae-2026-11",
-        "tokimeki-marche-kodaihasu-2026-11"
+        "orais-party-2026-garden-messe-hachioji",
+        "plant-addict-festa-ishiuchi-pennon-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -425,8 +425,10 @@
     },
     "desc_scraped_junk": {
       "title": "説明文にスクレイプ由来の混入(URL・出典表記・リンク残骸)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "atilab-magari-hanbaikai-fangit-2026-09: 本文にリンクテキストの残骸 [Mucro]"
+      ],
       "note": "本文はイベント説明だけにする。URLは url / sourceUrl に置く",
       "severity": "urgent"
     },
@@ -637,7 +639,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -833,12 +835,13 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 42,
+      "count": 53,
       "items": [
         "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
+        "2026-09-27 atilab-magari-hanbaikai-fangit-2026-09",
         "2026-09-27 exploring-unpredictable-plants-2026-09",
         "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
@@ -848,6 +851,7 @@
         "2026-10-04 souransai-koshigaya-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
         "2026-10-10 kadan-fes-2026-autumn",
+        "2026-10-10 kusa-paradise-vol10-okazaki-2026-10",
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
@@ -856,25 +860,23 @@
         "2026-10-24 plants-box-kofu-2026-10",
         "2026-10-25 american-and-plants-sano-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
+        "2026-11-07 agave-shokudo-2026-autumn-uchidanouen",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 chuushokushobutsusai-2026",
+        "2026-11-07 plants-panic-11th-hirata-nursery-kurume-2026-11",
         "2026-11-14 botanical-botanical-okinawa-2026-11",
+        "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
+        "2026-11-21 marutto-shokubutsu-fes-2026-11",
+        "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
+        "2026-11-22 aki-no-taniku-picnic-ibusuki-2026-11",
         "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
         "2026-11-22 isij-big-bazaar-2026-11-22",
         "2026-11-22 midorigakuen-himeji-2026-11",
         "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
+        "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
         "2026-11-28 plant-freaks-olinas-2026-11",
-        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11",
-        "2026-12-05 botanical-tamba-2026",
-        "2026-12-20 rojiura-botanical-2026-12",
-        "2026-12-26 enjoy-place-bangaihen-2026-12",
-        "2027-01-10 isij-big-bazaar-2027-01-10",
-        "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-24 aichin-shokusai-new-year-party-2027",
-        "2027-03-14 isij-big-bazaar-2027-03-14",
-        "2027-05-23 isij-big-bazaar-2027-05-23",
-        "2027-07-11 isij-big-bazaar-2027-07-11"
+        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1071,27 +1073,26 @@
     },
     "task_run_never_recorded": {
       "title": "台帳に登録したが一度も自分で書いていないタスク",
-      "count": 1,
-      "items": [
-        "agave-navi-eyecatch: since=2026-09-10 以降の記録が1件も無い（台帳の最終記録 2026-09-09）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのタスクのプロンプトに「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」と「レポートを task-reports/<taskId>_<日付>.md に保存する」を入れる(プレイブック §1 の 5)。**編集するのは Cowork デスクトップのタスク画面の「手順」**(鉛筆アイコン)。Claude\\Scheduled\\<task>\\SKILL.md は Claude 内部領域で、Cowork セッションからは読み書きできない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。フォルダ接続を頼む提案はしないこと。**動いている処理には触らない。**この検査が言っているのは「記録していない」だけで、「動いていない」ではない。2026-09-15〜16 に agave-navi-eyecatch をそう誤診して2日使った。実際は毎日走って画像を取って push までしていて、記録の2手順だけが抜けていた。**動いているかどうかは成果物のコミットで見る**(例: git log --since=... -- images/events/)。**空の結果を「無い」と読まないこと。**そのとき使ったコマンドが壊れていただけ、ということがある(実際そうだった)。既知の真なケースで問い合わせ自体を検証してから結論にする",
       "severity": "info"
     },
     "task_run_unrecorded_but_working": {
       "title": "台帳に書いていないが成果物から動いているタスク",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "agave-navi-eyecatch: 台帳は since=2026-09-10 以降も空だが、成果物から 8日ぶんの起動が分かる（2026-09-12〜2026-09-21）"
+      ],
       "note": "**死んでいない。記録だけが落ちている。**この形を task_run_never_recorded として出していたので、2026-09-10〜18 に同じ指摘が9日出続け、そのうち5回が目崎に転送され、5回とも「SKILL.md に2行入れて」と返した。直せない指摘を出し続けるのは検出していないのと同じ。記録を入れたいなら、Cowork デスクトップのタスク画面の「手順」(鉛筆アイコン)に record-run.py とレポート保存の2行を足す。**目崎しか触れない**(Claude\\Scheduled は内部領域)ので、repo 側からは直せない。入れなくても稼働は成果物で追える",
       "severity": "info"
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 3,
+      "count": 2,
       "items": [
-        "agave-event-update(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22（直近7日で4日）",
-        "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22（直近7日で4日）",
-        "site-health-check(weekly) の実行が無かった週: 2026-09-16〜2026-09-22（直近4週で1週）"
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-22（直近7日で3日）",
+        "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22（直近7日で4日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"

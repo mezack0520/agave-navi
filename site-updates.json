@@ -1,7 +1,117 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-22",
+  "updated": "2026-09-23",
   "items": [
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "atilab-magari-hanbaikai-fangit-2026-09",
+      "name": "atilab 間借り販売会",
+      "date": "2026-09-27",
+      "dateEnd": "2026-09-27",
+      "prefecture": "神奈川",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "kusa-paradise-vol10-okazaki-2026-10",
+      "name": "草パラダイス vol.10",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-11",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "agave-shokudo-2026-autumn-uchidanouen",
+      "name": "秋のアガベ食堂",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "prefecture": "山梨",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "plants-panic-11th-hirata-nursery-kurume-2026-11",
+      "name": "第11回 PLANTS PANIC!!",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "taniku-mobure-vol13-marugame-2026-11",
+      "name": "多肉もぶれ vol.13",
+      "date": "2026-11-15",
+      "dateEnd": "2026-11-15",
+      "prefecture": "香川",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "marutto-shokubutsu-fes-2026-11",
+      "name": "まるっと植物fes!!",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "prefecture": "神奈川",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "plant-addict-festa-ishiuchi-pennon-2026-11",
+      "name": "P•A•F 〜Plant addict Festa",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-21",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "aki-no-taniku-picnic-ibusuki-2026-11",
+      "name": "秋の多肉ピクニック",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "鹿児島",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "botanical-journey-onomichi-2026-11",
+      "name": "BOTANICAL JOURNEY",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-28",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "orais-party-2026-garden-messe-hachioji",
+      "name": "Orai's party 2026",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-05",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-23",
+      "kind": "listed",
+      "slug": "love-green-market-vol3-ichihara-2026-12",
+      "name": "LOVE GReeN MARKeT Vol.3",
+      "date": "2026-12-12",
+      "dateEnd": "2026-12-12",
+      "prefecture": "千葉",
+      "detail": ""
+    },
     {
       "on": "2026-09-22",
       "kind": "removed",
@@ -1090,106 +1200,6 @@
       "date": "2026-09-13",
       "dateEnd": "2026-09-13",
       "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "succulent1987-kumamoto-2026-09",
-      "name": "Succulent1987 in Country Park KUMAMOTO 2026",
-      "date": "2026-09-12",
-      "dateEnd": "2026-09-12",
-      "prefecture": "熊本",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "soen-espulse-dream-plaza-2026-09",
-      "name": "叢宴 in エスパルスドリームプラザ",
-      "date": "2026-09-12",
-      "dateEnd": "2026-09-13",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "sapporo-bikaku-expo-lv3-2026-10",
-      "name": "サッポロビカクエキスポ Lv.3",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "北海道",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "santafe-gakko-vol21-2026-09",
-      "name": "サンタフェ 学校編 vol.21",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-20",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "robin-bizarre-garden-6th-2026-09",
-      "name": "第6回 ロビン ビザールガーデン",
-      "date": "2026-09-26",
-      "dateEnd": "2026-09-27",
-      "prefecture": "京都",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "riverlabo-2nd-open-2026-09",
-      "name": "River. Labo 2号店 グランドオープンイベント",
-      "date": "2026-09-06",
-      "dateEnd": "2026-09-06",
-      "prefecture": "沖縄",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "rare-plants-dry-garden-festa-2026",
-      "name": "Rare Plants & Dry Garden Festa 2026",
-      "date": "2026-08-22",
-      "dateEnd": "2026-08-30",
-      "prefecture": "群馬",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "rare-foliage-sale-protoleaf-futako-2026",
-      "name": "レア観葉植物販売会（Jolie Nursery）",
-      "date": "2026-08-15",
-      "dateEnd": "2026-08-30",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "raflum-hankyu-mens-tokyo-2026-09",
-      "name": "阪急メンズ東京 × RAFLUM POP-UP STORE",
-      "date": "2026-09-16",
-      "dateEnd": "2026-09-22",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "plants-show-kiryu-2026-autumn",
-      "name": "PLANTS SHOW 2026秋",
-      "date": "2026-09-27",
-      "dateEnd": "2026-09-27",
-      "prefecture": "群馬",
       "detail": ""
     }
   ]
