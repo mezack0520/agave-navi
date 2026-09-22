@@ -292,6 +292,33 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   ただし 2026-09-08 の Windows 更新以降、Cowork のワークスペースが
   連携フォルダをマウントできず `device_bash` が起動しない日が続いている。
 
+- **3つめの経路: PC側の `push/` 置き場に `device_commit_files` で置く（2026-09-22 実証）。**
+  Chrome拡張が落ちていて `file_upload` が使えず、`device_bash` も死んでいる日は
+  これが唯一の道。**バイナリを渡せるのはこの経路だけ**（Web UI の Upload files は
+  拡張の `file_upload` 前提、内蔵ブラウザにファイル選択の手段が無い）。
+
+      C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants\agave-navi\push\
+        root/      -> リポジトリ直下
+        scripts/   -> scripts/
+        docs/      -> docs/
+        images/    -> images/      （必要なら掘る。templates/ も同じ）
+
+  1. `/mnt/user-data/outputs/push/...` に同じ形で並べる。
+     **`device_commit_files` の `stagedPath` は `/mnt/user-data/outputs/` 配下しか受けない。**
+  2. `device_commit_files` で上の Windows パスへ書く。1回50ファイル・計100MBまで。
+  3. **生成物は入れない。**`ci-generated-paths.txt` にあるものは sitelib.py さえ
+     入れば次の daily で全頁に伝播する。入れると衝突の種にしかならない。
+  4. 何をどこへ置くかを書いた `.md` を1枚同梱する。人が手で置くので、
+     置き場の対応表が無いと迷う。
+  実績: 2026-09-22 の IG同期・掲載基準ぶんはこの経路で origin/main に入っている。
+
+- **拡張が「つながらない」ときは、Chromeの再起動では足りないことがある（2026-09-22）。**
+  Chrome だけ再起動しても `list_connected_browsers` は空のままだった。
+  `switch_browser`（全Chromeに確認画面を投げる）も「接続可能なブラウザが無い」。
+  **PCごと再起動したら復帰した。**復帰後は `Browser 1` という別名で出てくる。
+  拡張の再インストールや再ログインを案内する前に、まずPCの再起動を勧める。
+  同日、復帰した拡張の Web UI 経路でブランドキットを5コミットに分けて投入済み。
+
 ## 3. 既知のハマりどころ
 
 - **取りこぼしは `coverage-gaps.json` に毎日出る。ここを見て動く。**
