@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-22 19:19 JST",
+ "generated": "2026-09-23 00:58 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 251,
-  "awaitingNextEdition": 257,
+  "awaitingNextEdition": 263,
   "officialSiteCandidates": 70,
   "unresolvedIgHandles": 0
  },
@@ -378,15 +378,6 @@
    "priority": 1
   },
   {
-   "handle": "raflum.tokyo",
-   "url": "https://www.instagram.com/raflum.tokyo/",
-   "eventCount": 1,
-   "lastEventName": "阪急メンズ東京 × RAFLUM POP-UP STORE",
-   "lastEventDate": "2026-09-16",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "kinoco__inc",
    "url": "https://www.instagram.com/kinoco__inc/",
    "eventCount": 1,
@@ -405,42 +396,6 @@
    "priority": 1
   },
   {
-   "handle": "trillgreen_aburaya",
-   "url": "https://www.instagram.com/trillgreen_aburaya/",
-   "eventCount": 1,
-   "lastEventName": "TRILLGREEN SPECIAL EVENT SILVER WEEKEND",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "jusai_japan",
-   "url": "https://www.instagram.com/jusai_japan/",
-   "eventCount": 1,
-   "lastEventName": "樹祭 一宮 2026 Autumn",
-   "lastEventDate": "2026-09-21",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "engei_raku",
-   "url": "https://www.instagram.com/engei_raku/",
-   "eventCount": 1,
-   "lastEventName": "園芸楽 2026",
-   "lastEventDate": "2026-09-21",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "en_joy_unite_69",
-   "url": "https://www.instagram.com/en_joy_unite_69/",
-   "eventCount": 1,
-   "lastEventName": "たにくった POPUP プチマルシェ",
-   "lastEventDate": "2026-09-21",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "collect_plants_official",
    "url": "https://www.instagram.com/collect_plants_official/",
    "eventCount": 1,
@@ -450,28 +405,10 @@
    "priority": 1
   },
   {
-   "handle": "kisarazu_c_and_s",
-   "url": "https://www.instagram.com/kisarazu_c_and_s/",
-   "eventCount": 1,
-   "lastEventName": "KISARAZU C&S AUCTION",
-   "lastEventDate": "2026-09-22",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
    "handle": "syokunoutage",
    "url": "https://www.instagram.com/syokunoutage/",
    "eventCount": 1,
    "lastEventName": "植ノ宴 -4- in 熊本",
-   "lastEventDate": "2026-09-22",
-   "hasUpcoming": true,
-   "priority": 1
-  },
-  {
-   "handle": "katsumaru9",
-   "url": "https://www.instagram.com/katsumaru9/",
-   "eventCount": 1,
-   "lastEventName": "Tick-Tick（チクチク）ディッキアPOPUP",
    "lastEventDate": "2026-09-22",
    "hasUpcoming": true,
    "priority": 1
@@ -2173,6 +2110,15 @@
    "priority": 2
   },
   {
+   "handle": "raflum.tokyo",
+   "url": "https://www.instagram.com/raflum.tokyo/",
+   "eventCount": 1,
+   "lastEventName": "阪急メンズ東京 × RAFLUM POP-UP STORE",
+   "lastEventDate": "2026-09-16",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "waltzbase_saga",
    "url": "https://www.instagram.com/waltzbase_saga/",
    "eventCount": 1,
@@ -2245,11 +2191,38 @@
    "priority": 2
   },
   {
+   "handle": "trillgreen_aburaya",
+   "url": "https://www.instagram.com/trillgreen_aburaya/",
+   "eventCount": 1,
+   "lastEventName": "TRILLGREEN SPECIAL EVENT SILVER WEEKEND",
+   "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
    "handle": "apartment_niigata",
    "url": "https://www.instagram.com/apartment_niigata/",
    "eventCount": 1,
    "lastEventName": "植物天国 in 白山市場（2026年秋）",
    "lastEventDate": "2026-09-20",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "jusai_japan",
+   "url": "https://www.instagram.com/jusai_japan/",
+   "eventCount": 1,
+   "lastEventName": "樹祭 一宮 2026 Autumn",
+   "lastEventDate": "2026-09-21",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "engei_raku",
+   "url": "https://www.instagram.com/engei_raku/",
+   "eventCount": 1,
+   "lastEventName": "園芸楽 2026",
+   "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
    "priority": 2
   },
@@ -2268,6 +2241,33 @@
    "eventCount": 1,
    "lastEventName": "DEEP GREEN 2026",
    "lastEventDate": "2026-09-21",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "en_joy_unite_69",
+   "url": "https://www.instagram.com/en_joy_unite_69/",
+   "eventCount": 1,
+   "lastEventName": "たにくった POPUP プチマルシェ",
+   "lastEventDate": "2026-09-21",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "kisarazu_c_and_s",
+   "url": "https://www.instagram.com/kisarazu_c_and_s/",
+   "eventCount": 1,
+   "lastEventName": "KISARAZU C&S AUCTION",
+   "lastEventDate": "2026-09-22",
+   "hasUpcoming": false,
+   "priority": 2
+  },
+  {
+   "handle": "katsumaru9",
+   "url": "https://www.instagram.com/katsumaru9/",
+   "eventCount": 1,
+   "lastEventName": "Tick-Tick（チクチク）ディッキアPOPUP",
+   "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
    "priority": 2
   }

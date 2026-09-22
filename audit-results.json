@@ -1,5 +1,5 @@
 {
-  "total": 497,
+  "total": 481,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 112,
+      "count": 104,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -192,14 +192,12 @@
         "botanical-marche-niigata-2026-10",
         "botanical-marche-toyama-2026-10",
         "botanical-style-beppu-2026-10",
-        "botanical-yokocho-senju-2026-09",
         "botanical-yokocho-senju-2026-10",
         "botanical-yokocho-senju-2026-11",
         "botanicbomb-vol11-fukuchiyama-2026-10",
         "ceramall-hanbaikai-2026-09",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "edamame-bikaku-itazuke-2026-09",
-        "engei-raku-2026-09",
         "engei-yarouzei-12th-2026-10",
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
@@ -217,7 +215,9 @@
         "greensnap-marche-toyosu-2026-autumn",
         "greensnap-marche-yokohama-2026-autumn",
         "hanatomofesta-2026",
-        "hanauchu-dream-garden-28th-2026-10"
+        "hanauchu-dream-garden-28th-2026-10",
+        "happy-smile-2nd-odawara-2026-09",
+        "ibatama-vol9-2026-10"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -663,24 +663,16 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 17,
+      "count": 9,
       "items": [
         "botalife-4th-anniversary-popup-2026-09(2026-09-19〜2026-09-23/5日/長期)",
-        "botanical-yokocho-senju-2026-09(2026-09-22〜2026-09-22/1日)",
         "ceramall-hanbaikai-2026-09(2026-09-22〜2026-09-23/2日)",
         "collect-plants-2026-09(2026-09-22〜2026-09-23/2日)",
-        "engei-raku-2026-09(2026-09-21〜2026-09-22/2日)",
-        "jusai-ichinomiya-autumn-2026(2026-09-21〜2026-09-22/2日)",
         "kimtaro-sakura-open-sale-2026-09(2026-09-19〜2026-09-23/5日/長期)",
-        "kisarazu-cs-auction-2026-09(2026-09-22〜2026-09-22/1日)",
         "nova-cultura-tradmans-2026-09(2026-09-19〜2026-09-27/9日/長期)",
         "onokoro-green-festa-2026-09(2026-09-01〜2026-09-27/27日/長期)",
         "premium-rock-garden-festa-2026(2026-09-09〜2026-09-27/19日/長期)",
-        "raflum-hankyu-mens-tokyo-2026-09(2026-09-16〜2026-09-22/7日/長期)",
         "shokunoutage-4-kumamoto-2026-09(2026-09-22〜2026-09-23/2日)",
-        "tanikutta-popup-petit-marche-2026-09(2026-09-21〜2026-09-22/2日)",
-        "tick-tick-dyckia-popup-shikokuzouen-2026-09(2026-09-22〜2026-09-22/1日)",
-        "trillgreen-special-event-2026-09(2026-09-20〜2026-09-22/3日)",
         "yamashiro-aisenen-autumn-2026-09(2026-09-18〜2026-09-27/10日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -1035,7 +1027,7 @@
       "title": "掲載申請フォームの処理が止まっている",
       "count": 1,
       "items": [
-        "reviewedOn=2026-09-18 / 4日前。event-listing-review が動いていない"
+        "reviewedOn=2026-09-18 / 5日前。event-listing-review が動いていない"
       ],
       "note": "reviewedOn は event-listing-review が毎回書く（タスクが動いた証拠）。lastChecked はGASが書く（フォーム送信を受けた日）ので、古くても異常ではない。items が残り続けている場合は届いた問い合わせが未処理",
       "severity": "urgent"
@@ -1072,34 +1064,35 @@
       "title": "event-listing-review の実行が抜けた日",
       "count": 1,
       "items": [
-        "event-listing-review が動かなかった日: 2026-09-19 2026-09-20 2026-09-21（直近7日で3日）"
+        "event-listing-review が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22（直近7日で4日）"
       ],
       "note": "reviewedHistory は起動日の記録で、scripts/record-run.py が起動直後に書く。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。ただし 2026-09-02 までの空白は「走らなかった」ではなく「走ったが記録できていなかった」で、reviewedSince より前は判定しない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
     },
     "task_run_never_recorded": {
       "title": "台帳に登録したが一度も自分で書いていないタスク",
-      "count": 1,
-      "items": [
-        "agave-navi-eyecatch: since=2026-09-10 以降の記録が1件も無い（台帳の最終記録 2026-09-09）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのタスクのプロンプトに「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」と「レポートを task-reports/<taskId>_<日付>.md に保存する」を入れる(プレイブック §1 の 5)。**編集するのは Cowork デスクトップのタスク画面の「手順」**(鉛筆アイコン)。Claude\\Scheduled\\<task>\\SKILL.md は Claude 内部領域で、Cowork セッションからは読み書きできない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。フォルダ接続を頼む提案はしないこと。**動いている処理には触らない。**この検査が言っているのは「記録していない」だけで、「動いていない」ではない。2026-09-15〜16 に agave-navi-eyecatch をそう誤診して2日使った。実際は毎日走って画像を取って push までしていて、記録の2手順だけが抜けていた。**動いているかどうかは成果物のコミットで見る**(例: git log --since=... -- images/events/)。**空の結果を「無い」と読まないこと。**そのとき使ったコマンドが壊れていただけ、ということがある(実際そうだった)。既知の真なケースで問い合わせ自体を検証してから結論にする",
       "severity": "info"
     },
     "task_run_unrecorded_but_working": {
       "title": "台帳に書いていないが成果物から動いているタスク",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "agave-navi-eyecatch: 台帳は since=2026-09-10 以降も空だが、成果物から 1日ぶんの起動が分かる（2026-09-22〜2026-09-22）"
+      ],
       "note": "**死んでいない。記録だけが落ちている。**この形を task_run_never_recorded として出していたので、2026-09-10〜18 に同じ指摘が9日出続け、そのうち5回が目崎に転送され、5回とも「SKILL.md に2行入れて」と返した。直せない指摘を出し続けるのは検出していないのと同じ。記録を入れたいなら、Cowork デスクトップのタスク画面の「手順」(鉛筆アイコン)に record-run.py とレポート保存の2行を足す。**目崎しか触れない**(Claude\\Scheduled は内部領域)ので、repo 側からは直せない。入れなくても稼働は成果物で追える",
       "severity": "info"
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 3,
+      "count": 4,
       "items": [
-        "agave-event-update(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21（直近7日で3日）",
-        "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21（直近7日で3日）",
-        "site-health-check(weekly) の実行が無かった週: 2026-09-15〜2026-09-21（直近4週で1週）"
+        "agave-event-update(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22（直近7日で4日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-16 2026-09-17 2026-09-18 2026-09-19 2026-09-20 2026-09-21（直近7日で6日）",
+        "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22（直近7日で4日）",
+        "site-health-check(weekly) の実行が無かった週: 2026-09-16〜2026-09-22（直近4週で1週）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
@@ -1372,10 +1365,8 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 1,
-      "items": [
-        "ongoing_events: 直近中央値 2 → 17（掲載452件で換算 2）（+15）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },
