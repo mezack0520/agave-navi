@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-22",
+  "sweptOn": "2026-09-23",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,33 +16,30 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 950,
-    "in_scope": 264,
-    "covered": 187,
-    "known_rejected": 63,
-    "truncated_resolved": 180,
-    "truncated_unresolved": 1,
+    "candidates": 935,
+    "in_scope": 255,
+    "covered": 179,
+    "known_rejected": 71,
+    "truncated_resolved": 135,
+    "truncated_unresolved": 2,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 156,
-    "truncated_unresolved_hits": 45,
-    "in_scope_nextmeet": 108,
-    "gaps_raw": 14
+    "in_scope_leafla": 149,
+    "truncated_unresolved_hits": 90,
+    "in_scope_nextmeet": 106,
+    "gaps_raw": 5
   },
   "errors": [],
   "truncatedUnresolved": [
+    "09/18 追加 藤樹園が第6回藤樹園盆栽フェスThe Fina...",
     "09/18 追加 日本サボテン狂人会が交換会2026を開催、仙人..."
   ],
   "gaps": [
     {
-      "date": "2026-09-22",
-      "lastSeen": "2026-09-23",
-      "days": 2,
+      "date": "2026-09-23",
       "title": "TaiShoDoがシルバーウィークSALE2026を開催、塊根植物とアガベの在庫商品が10%OFF"
     },
     {
-      "date": "2026-09-22",
-      "lastSeen": "2026-09-23",
-      "days": 2,
+      "date": "2026-09-23",
       "title": "咲くやこの花館が虫を食べる植物展2026を開催、世界の食虫植物約100種類とパルダリウム教室を大阪で展開"
     },
     {
@@ -51,39 +48,11 @@
     },
     {
       "date": "2026-09-26",
-      "title": "オルソ×プランツ2026を串焼きバルOrso Campoで開催、4つの植物アカウントが夜のイベントに出店"
+      "title": "POPUP 旅する植物展 Final"
     },
     {
-      "date": "2026-09-26",
-      "title": "コーナン港北インター店 多肉植物・サボテン即売会"
-    },
-    {
-      "date": "2026-09-27",
-      "title": "atilabが間借り販売会2026をFANGITで開催、DyckiaやAgaveなどの植物とMucroを販売予定"
-    },
-    {
-      "date": "2026-09-27",
-      "title": "第三回北諸品評会＆交流会が2026年9月27日に開催、参加者投票で自慢の植物を審査"
-    },
-    {
-      "date": "2026-10-04",
-      "title": "セイバーズがSAVERS FLEA MARKET2026を初開催、south peak plantsが塊根植物や古着を販売"
-    },
-    {
-      "date": "2026-10-10",
-      "title": "草パラダイス vol.10"
-    },
-    {
-      "date": "2026-10-19",
-      "title": "季節の植物を楽しむ小さなワークショップ2026が10月19日に開催、お散歩会と季節の植物を使った手仕事体験を実施"
-    },
-    {
-      "date": "2026-11-07",
-      "title": "POPUP ALLEY JAM"
-    },
-    {
-      "date": "2026-11-28",
-      "title": "BOTANICAL JOURNEY"
+      "date": "2026-11-01",
+      "title": "SOUPer MARKET 2026"
     }
   ]
 }
