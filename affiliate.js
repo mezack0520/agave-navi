@@ -369,8 +369,19 @@
     });
 
     // タグ由来を優先し、足りない分を common で埋める。
-    // 主役枠が毎回ラベルや図鑑になるのを避けるため rank 順に整える。
-    return narrow(catItems.concat(data.common || []), DISPLAY_COUNT);
+    // **先頭の1枠はタグ由来から必ず取る。** 連結してから rank で並べると、
+    // season の加点を受けた common が上位を独占して、そのページの
+    // カテゴリに結びついた品(即売会なら鉢・用土)が1つも出ない月がある。
+    // 2026-09-22、9月の即売会ページが越冬用品3点になっていた。
+    // 枠の見出しは「株を持ち帰る前に揃えるもの」なので、
+    // 持ち帰りに要る物が消えると見出しと中身が食い違う。
+    var lead = narrow(catItems, 1);
+    var used = {};
+    lead.forEach(function (it) { used[it.group || it.keyword] = true; });
+    var rest = catItems.concat(data.common || []).filter(function (it) {
+      return !used[it.group || it.keyword];
+    });
+    return lead.concat(narrow(rest, DISPLAY_COUNT - lead.length));
   }
 
   /**
