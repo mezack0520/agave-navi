@@ -703,6 +703,15 @@
    "revisit": false,
    "eventDate": "2026-10-10",
    "decided": "2026-09-21"
+  },
+  {
+   "key": "tochigi-tanippe-2026-10",
+   "name": "栃木★多肉フェス タニッペ (2026-10-03 栃木県下野市ゆうがおパーク として掲載していた回)",
+   "reason": "**実在しない回だった。**出典URLの @rinrin_rinarina は既に消えており(『このページはご利用いただけません』)、venue・sourceUrl・addedDate も空のまま残っていた。主催 RINA★RINA の一次情報(@tanippe2026 / @rinarina__3)では、2026年の回は 10月11日(日) 10:00〜15:00・深谷グリーンパーク(埼玉県深谷市樫合763)の『タニッペ Final』1回だけで、10月3日・栃木県下野市ゆうがおパークの回は存在しない。正しい回は tochigi-tanippe-fukaya-final-2026-10 として別に掲載済みで、こちらは日付・会場・県すべてが誤った二重掲載だった。contradictoryData により削除",
+   "reasonType": "unverified",
+   "revisit": false,
+   "eventDate": "2026-10-03",
+   "decided": "2026-09-22"
   }
  ],
  "_reasonTypes": {
@@ -711,6 +720,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-21",
+ "updated": "2026-09-22",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
