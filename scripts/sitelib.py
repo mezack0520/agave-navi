@@ -17,7 +17,7 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260910b'
+CSS_VERSION = '20260922a'
 JS_VERSION = '20260922a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -1840,7 +1840,15 @@ def no_image_thumb(e):
         label = f'{int(d[5:7])}.{int(d[8:10])}'
     parts = []
     if pref:
-        parts.append(f'<span class="eni-pref">{html_escape(pref)}</span>')
+        # 文字数で級数を落とす。CSS は 2文字を既定にしていて、
+        # 3文字(神奈川・和歌山・鹿児島・北海道)以上はそのままだと枠を割る。
+        # クラス名と級数は style.css の .eni-pref.l3 / .l4 と対。
+        cls = 'eni-pref'
+        if len(pref) == 3:
+            cls += ' l3'
+        elif len(pref) >= 4:
+            cls += ' l4'
+        parts.append(f'<span class="{cls}">{html_escape(pref)}</span>')
     if label:
         parts.append(f'<span class="eni-date">{label}</span>')
     return f'<div class="event-thumb event-no-image">{"".join(parts)}</div>'
