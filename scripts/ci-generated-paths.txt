@@ -63,3 +63,20 @@ coverage-gaps.json
 # 同時に走った回の数だけ衝突する。**
 site-updates.json
 site-updates-scopes.json
+
+# 手書きの13ページ。中身は人が書くが、フッター・パンくず・nav.js /
+# outbound.js の読み込み・CSS/JSの版数は sync-footers.py が毎回入れ直す。
+# **remote の版に乗せて build-all.sh を回すとCI側の変更は同じ形で戻る**
+# ので判定は生成物側(2026-09-22 に about.html で実測して確認した)。
+# ここに無いと、版数を上げた日に ci_generated_paths_drift が
+# 13件まとめて鳴る。実際 2026-09-22 の outbound.js 導入で鳴った。
+404.html
+about.html
+contact.html
+dashboard.html
+disclaimer.html
+ikitai.html
+listing.html
+operator.html
+privacy.html
+terms.html
