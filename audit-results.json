@@ -1,5 +1,5 @@
 {
-  "total": 501,
+  "total": 521,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -975,10 +975,15 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 2,
+      "count": 7,
       "items": [
-        "@anrigarden 2026-10-16: 2026年沖縄市 秋の大植木市 開催決意! 会場・沖縄市農民研修センター 日程・2026年10月16日(金曜日)〜25日 https://www.instagram.com/p/DdDGQy9yd9S/",
-        "@kagoen_nursery 2026-09-26: 第13回 花郷園秋の芸術植物祭り】 🪴102周年記念スペシャル🪴 日時:2026年10/10(土)11(日) 10:00 https://www.instagram.com/reel/DdJQ3yZRAHx/"
+        "@_and_plants 2026-10-24,2026-10-25: 【大阪】10/24(土)・25(日)ポップアップ『PLANT & POT Vol.16』を開催します。 大阪・阿波座にて https://www.instagram.com/p/DdUkzhfzENs/",
+        "@_code.official_ 2026-10-31,2026-11-01: 【出店告知】 初大阪出店 botanical.botanical !!︎ CODE初大阪POPUP🐙 日頃、LIVE販売 https://www.instagram.com/p/DdjGuUGCRbh/",
+        "@aobouzu_caudex 2026-09-25,2026-09-26,2026-09-27: WILD MARKET コラボアイテムを発表します👏 今回はアパレルと鉢を作りました! マグナムウェイトのタフボディと古 https://www.instagram.com/p/DdD0Y7tEx4y/",
+        "@bwoocraftplants 2026-09-26: 🌿✨ Plant to New Home 2026 ✨🌿 愛珍植祭 Presents aichinn_syokusai  https://www.instagram.com/p/DdFyi1zFM7E/",
+        "@en_joy_unite_69 2026-10-03: こんばんは🌑 en’joyです🤘😎🎸 叢宴(そうえん) in静岡エスパルスドリームプラザ 2日間たくさんのご来場ご来店い https://www.instagram.com/p/DdOgFG_k7jB/",
+        "@felicita_plants 2026-10-03: PLNTS RIDE 10.3 SAT. 植物を愛する人も。 バイクを愛する人も。 まだ、その面白さを知らない人も。 こ https://www.instagram.com/p/DdfIk7BksdU/",
+        "@fukuoka_effect 2026-09-27: イベントのお知らせです♪ ⁡ 🌸🌸🌸🌸🌸 🌸🌸🌸🌸🌸 花と緑のフラワーオークション 開催のお知らせ📢✨ 🌸🌸🌸🌸🌸 🌸🌸 https://www.instagram.com/p/DdkjNrnBfuH/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -989,6 +994,25 @@
       "items": [],
       "note": "IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない",
       "severity": "urgent"
+    },
+    "eyecatch_candidates_pending": {
+      "title": "アイキャッチ候補が採否待ち",
+      "count": 11,
+      "items": [
+        "2026-09-01 onokoro-green-festa-2026-09: https://www.instagram.com/reel/DdUvFp6Tmc2/（caption）",
+        "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09: https://www.instagram.com/reel/Ddm-SCbCdQq/（caption）",
+        "2026-09-27 exploring-unpredictable-plants-2026-09: https://www.instagram.com/reel/DdgpYrvT-dY/（caption）",
+        "2026-10-11 botanical-link-popup-kasugai-2026-10: https://www.instagram.com/p/DdOQWVaEvLb/（caption）",
+        "2026-10-16 okinawa-shi-aki-no-dai-uekiichi-2026: https://www.instagram.com/p/DdDGQy9yd9S/（sourcePost）",
+        "2026-10-17 plant-freaks-olinas-2026-10: https://www.instagram.com/p/DdV-1BMmhC9/（caption）",
+        "2026-10-25 american-and-plants-sano-2026-10: https://www.instagram.com/p/DcfWyKgSfM1/（caption）",
+        "2026-11-21 marutto-shokubutsu-fes-2026-11: https://www.instagram.com/p/Dcvqu4hzPDo/（sourcePost）",
+        "2026-11-22 aki-no-taniku-picnic-ibusuki-2026-11: https://www.instagram.com/p/DbeEndFEwBe/（sourcePost）",
+        "2026-12-12 love-green-market-vol3-ichihara-2026-12: https://www.instagram.com/p/Dc8UCQ_KQXK/（caption）",
+        "2026-12-26 enjoy-place-bangaihen-2026-12: https://www.instagram.com/p/DdiXAu-EXiU/（caption）"
+      ],
+      "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
+      "severity": "info"
     },
     "jsonld_invalid": {
       "title": "JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)",
@@ -1140,13 +1164,17 @@
     },
     "cross_script_duplicate": {
       "title": "同じ名前が2つ以上のスクリプトにある",
-      "count": 5,
+      "count": 9,
       "items": [
         "HORIZON_DAYS: check-cancelled.py, ig-organizer-watch.py",
+        "MAX_BYTES: eyecatchlib.py, fetch-event-images.py",
         "RATE_CODES: ig-organizer-watch.py, iglib.py",
+        "SITE: eyecatchlib.py, fetch-event-images.py",
         "analyze: check-cancelled.py, ig-organizer-watch.py",
         "load_events: enrich_events.py, ig-weekly.py",
-        "targets: fetch-event-images.py, ig-organizer-watch.py"
+        "plan: ig-organizer-watch.py, sync-instagram-ids.py",
+        "targets: fetch-event-images.py, ig-organizer-watch.py",
+        "tokens: coverage-sweep.py, eyecatchlib.py"
       ],
       "note": "sitelib へ寄せるか、役割が違うなら名前を分ける。規則が2か所にあると、足した日にどちらか片方だけが更新される。揃える意味の無い汎用名は audit.py の _DUP_OK に理由付きで足す",
       "severity": "info"

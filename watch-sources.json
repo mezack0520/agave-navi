@@ -1,11 +1,12 @@
 {
- "generated": "2026-09-23 18:07 JST",
+ "generated": "2026-09-23 18:29 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 262,
   "awaitingNextEdition": 262,
   "officialSiteCandidates": 71,
-  "unresolvedIgHandles": 0
+  "unresolvedIgHandles": 0,
+  "igNeedsBrowser": 124
  },
  "igAccounts": [
   {
@@ -15,7 +16,8 @@
    "lastEventName": "妙高多肉大市 2026",
    "lastEventDate": "2026-10-31",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "gamagori_taniku_festa",
@@ -24,7 +26,8 @@
    "lastEventName": "第6回 蒲郡多肉フェスタ",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "botayoko",
@@ -33,7 +36,8 @@
    "lastEventName": "ボタニカル横丁（2026年11月）",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "midorino_marche",
@@ -42,7 +46,8 @@
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "sapporo.cactus.club",
@@ -51,7 +56,8 @@
    "lastEventName": "秋のサボテン多肉植物展（札幌カクタスクラブ）",
    "lastEventDate": "2026-09-25",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "fuji_taniku",
@@ -60,7 +66,8 @@
    "lastEventName": "フジサンフェスタ 2026秋",
    "lastEventDate": "2026-11-03",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "botanical.botanical",
@@ -69,7 +76,8 @@
    "lastEventName": "BOTANICAL BOTANICAL OKINAWA",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "plant_fks",
@@ -78,7 +86,8 @@
    "lastEventName": "Plant Freaks in オリナス錦糸町 2026（11月）",
    "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "j_n_ishikawa",
@@ -87,7 +96,8 @@
    "lastEventName": "インドアプランツ即売会（Jolie Nursery・ムサシ新潟店）",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "rojiuranogibousi",
@@ -96,7 +106,8 @@
    "lastEventName": "路地裏ボタニカル（2026年12月）",
    "lastEventDate": "2026-12-20",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "taniten_kengo202",
@@ -105,7 +116,8 @@
    "lastEventName": "enjoy place 番外編",
    "lastEventDate": "2026-12-26",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "kayustyle_botaniqa_atelier",
@@ -114,7 +126,8 @@
    "lastEventName": "プレミアム ロックガーデン フェスタ2026",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "chanchanchikachanchan",
@@ -123,7 +136,8 @@
    "lastEventName": "第二回 アガベース",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "bizarre_farm",
@@ -132,7 +146,8 @@
    "lastEventName": "bizarre farm AUTUMN FES 9th",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "fukuoka_green_party",
@@ -141,7 +156,8 @@
    "lastEventName": "第7回 福岡グリーンパーティー",
    "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "bocchi_syokudou",
@@ -150,7 +166,8 @@
    "lastEventName": "愿×ぼっち植堂 秋のボタニカルマーケット",
    "lastEventDate": "2026-10-03",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "unique_plants.community",
@@ -159,7 +176,8 @@
    "lastEventName": "第10回 珍奇植物フリーマーケット",
    "lastEventDate": "2026-10-04",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "earthwalk_plants",
@@ -168,7 +186,8 @@
    "lastEventName": "BOTANICAL STYLE -Beppu Oita-",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "minicar_ya_san",
@@ -177,7 +196,8 @@
    "lastEventName": "空のえき「そ・ら・ら」in 多肉祭",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "anrigarden",
@@ -186,7 +206,8 @@
    "lastEventName": "2026年 沖縄市 秋の大植木市",
    "lastEventDate": "2026-10-16",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "hokuriku.saboten.club",
@@ -195,7 +216,8 @@
    "lastEventName": "ボタニカルマルシェ富山2026",
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "botanicbomb",
@@ -204,7 +226,8 @@
    "lastEventName": "BOTANICBOMB vol.11",
    "lastEventDate": "2026-10-31",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "jss_event_info",
@@ -213,7 +236,8 @@
    "lastEventName": "JSS秋の多肉市",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "botapara_botanical_paradise",
@@ -222,7 +246,8 @@
    "lastEventName": "Bota Para Vol.4",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "maruttomarche_chihika",
@@ -231,7 +256,8 @@
    "lastEventName": "まるっと植物fes!!",
    "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "global_botanical_jam",
@@ -240,7 +266,8 @@
    "lastEventName": "植祭 植物で暮らしを楽しくする（2026年11月）",
    "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "shikokuzouen",
@@ -249,7 +276,8 @@
    "lastEventName": "ボタニックフロントフェス",
    "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "tokimeki_marche",
@@ -258,7 +286,8 @@
    "lastEventName": "多肉と雑貨のときめきマルシェ（群馬県庁前）",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "d.plants.s",
@@ -267,7 +296,8 @@
    "lastEventName": "多肉のまつり in 万葉公園",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "succulent_wonderland__",
@@ -276,7 +306,8 @@
    "lastEventName": "多肉ワンダーランド 第2回",
    "lastEventDate": "2026-12-06",
    "hasUpcoming": true,
-   "priority": 0
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "picnic.king.plants",
@@ -285,7 +316,8 @@
    "lastEventName": "PICNIC GARDEN vol.25 in 鶴岡公園",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomitaniku",
@@ -294,7 +326,8 @@
    "lastEventName": "多肉植物『The販売会』（農マル園芸吉備路農園）",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "sakura_shokubutsuen",
@@ -303,7 +336,8 @@
    "lastEventName": "ナイトマルシェ（さくら植物園）8月8日",
    "lastEventDate": "2026-08-08",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "fukuoka_effect",
@@ -312,7 +346,8 @@
    "lastEventName": "BOTANICAL AJITO",
    "lastEventDate": "2026-07-20",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "minori_kaboku_interpark",
@@ -321,7 +356,8 @@
    "lastEventName": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
    "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "chiba_c_and_s_association",
@@ -330,7 +366,8 @@
    "lastEventName": "木更津園芸市（2026年8月）",
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "felicita_plants",
@@ -339,7 +376,8 @@
    "lastEventName": "ビザールプランツ 夏ノ陣【上野】",
    "lastEventDate": "2026-08-30",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "aobouzu_caudex",
@@ -348,7 +386,8 @@
    "lastEventName": "青坊主 鹿児島ポップアップ",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "green_summit_touhoku",
@@ -357,7 +396,8 @@
    "lastEventName": "Green Summit vol.22 in Yamagata",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "king.plants.slugger",
@@ -366,7 +406,8 @@
    "lastEventName": "Botanical in はら笑楽交",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "wi_wibotanical",
@@ -375,7 +416,8 @@
    "lastEventName": "Wi-Wi BOTANICAL Vol.2",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "ta29.wind.sun",
@@ -384,7 +426,8 @@
    "lastEventName": "鹿鳥風月（ゆくはし植物園 会場）",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mononoke_botanical_garden",
@@ -393,7 +436,8 @@
    "lastEventName": "Onokoro Green Festa",
    "lastEventDate": "2026-09-01",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "kinoco__inc",
@@ -402,7 +446,8 @@
    "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "botalife_pachy",
@@ -411,7 +456,8 @@
    "lastEventName": "ボタらいふ 4周年祭POPUP",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "collect_plants_official",
@@ -420,7 +466,8 @@
    "lastEventName": "Collect Plants Vol.3（コレクトプランツ）",
    "lastEventDate": "2026-09-22",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "syokunoutage",
@@ -429,7 +476,8 @@
    "lastEventName": "植ノ宴 -4- in 熊本",
    "lastEventDate": "2026-09-22",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "greendays_emi_8783",
@@ -438,7 +486,8 @@
    "lastEventName": "セラモール販売会（2026年9月）",
    "lastEventDate": "2026-09-22",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bwoocraftplants",
@@ -447,7 +496,8 @@
    "lastEventName": "plant to new home",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "gifumdrnmarche",
@@ -456,7 +506,8 @@
    "lastEventName": "第2回 岐阜みどりのマルシェ",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "ayahadio.co.jp",
@@ -465,7 +516,8 @@
    "lastEventName": "DIO PLANTS FES vol.1",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "siesta0890",
@@ -474,7 +526,8 @@
    "lastEventName": "LITTLE GREEN MARCHE",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bba_e.w",
@@ -483,7 +536,8 @@
    "lastEventName": "Botanical Beauty Attractive vol.5",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "robingarden02",
@@ -492,7 +546,8 @@
    "lastEventName": "第6回 ロビン ビザールガーデン",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "tompots_501",
@@ -501,7 +556,8 @@
    "lastEventName": "麋角植物作業室",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "nakayama.engei",
@@ -510,7 +566,8 @@
    "lastEventName": "中山園芸 Instagram5周年感謝祭",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "our_plants_commune",
@@ -519,7 +576,8 @@
    "lastEventName": "Our Plants ver. 2.04",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "toky.jp",
@@ -528,7 +586,8 @@
    "lastEventName": "旅する植物展 Final",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "acupom219",
@@ -537,7 +596,8 @@
    "lastEventName": "Exploring Unpredictable Plants 2026",
    "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "engei_edamame",
@@ -546,7 +606,8 @@
    "lastEventName": "ビカクシダ板付け相談会 & 即売会",
    "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "yu_taniku_",
@@ -555,7 +616,8 @@
    "lastEventName": "第2回 HAPPY SMILE",
    "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "atilab_dyc",
@@ -564,7 +626,8 @@
    "lastEventName": "atilab 間借り販売会",
    "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "taniku.no.shizuku",
@@ -573,7 +636,8 @@
    "lastEventName": "第1回 ゆるっと多肉マルシェ ONE DAY BOTANICAL ESCAPE",
    "lastEventDate": "2026-10-03",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "souransai",
@@ -582,7 +646,8 @@
    "lastEventName": "草乱祭with月刊チューズデイ - World Plant Market -",
    "lastEventDate": "2026-10-04",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "botanic_collection",
@@ -591,7 +656,8 @@
    "lastEventName": "ぼたにっくcollection2",
    "lastEventDate": "2026-10-04",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "hanauchustaff",
@@ -600,7 +666,8 @@
    "lastEventName": "第28回 花宇宙ドリームガーデン",
    "lastEventDate": "2026-10-09",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "taniku_to_midori_no_marche",
@@ -609,7 +676,8 @@
    "lastEventName": "多肉とみどりのマルシェ in フラリエ 秋",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "the_botanical_world_fukuoka",
@@ -618,7 +686,8 @@
    "lastEventName": "THE BOTANICAL WORLD Vol.3",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "kyoshoku_sai",
@@ -627,7 +696,8 @@
    "lastEventName": "狂植祭 Vol.7",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "sun_in_succulents",
@@ -636,7 +706,8 @@
    "lastEventName": "サボテン・多肉植物展",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "kagoen_nursery",
@@ -645,7 +716,8 @@
    "lastEventName": "第13回 花郷園 秋の芸術植物祭り",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "hatazao_engei",
@@ -654,7 +726,8 @@
    "lastEventName": "植物と(パン) vol.1",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "kusabi_official",
@@ -663,7 +736,8 @@
    "lastEventName": "ROOTS & SUN",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "plants.baka",
@@ -672,7 +746,8 @@
    "lastEventName": "Plants Baka 4周年祭",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "kusa_paradise",
@@ -681,7 +756,8 @@
    "lastEventName": "草パラダイス vol.10",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "ibatama.ta29",
@@ -690,7 +766,8 @@
    "lastEventName": "いばたま vol.9",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "tanippe2026",
@@ -699,7 +776,8 @@
    "lastEventName": "栃木★多肉フェス in 深谷グリーンパーク（タニッペ Final）",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "surf_plants",
@@ -708,7 +786,8 @@
    "lastEventName": "BOTANICAL LINK POP UP EVENT",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bauhaus_plus",
@@ -717,7 +796,8 @@
    "lastEventName": "PLANTS & DRY GARDEN MARKET",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "souryokusai",
@@ -726,7 +806,8 @@
    "lastEventName": "第肆回 草力祭 in 奥州市江刺",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "botany_wakayama",
@@ -735,7 +816,8 @@
    "lastEventName": "ONE",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "tunpuku",
@@ -744,7 +826,8 @@
    "lastEventName": "ツンツンぷくぷくワンダーランド mini！",
    "lastEventDate": "2026-10-11",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "nara.bikakufes",
@@ -753,7 +836,8 @@
    "lastEventName": "ナラビカクフェス Vol.2",
    "lastEventDate": "2026-10-12",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "green_prickle",
@@ -762,7 +846,8 @@
    "lastEventName": "植トゥザ・フューチャー2026",
    "lastEventDate": "2026-10-16",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "sol_green.ryuchan",
@@ -771,7 +856,8 @@
    "lastEventName": "空と太陽のマルシェ ぷちvol.2",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "fujisan_gardenmarche",
@@ -780,7 +866,8 @@
    "lastEventName": "富士山Garden marche",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bhms_garden",
@@ -789,7 +876,8 @@
    "lastEventName": "Plants Plants Plants（BHMS GARDEN 秋）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "engei_yarouzei",
@@ -798,7 +886,8 @@
    "lastEventName": "園藝野郎勢 第十二回大会 〜2026 秋の陣〜",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "kikien.succulent0222",
@@ -807,7 +896,8 @@
    "lastEventName": "GREEN BASE MARKET vol.1",
    "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "tigerplants44",
@@ -816,7 +906,8 @@
    "lastEventName": "TIGER PLANTS HUNTERS",
    "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bo_plants",
@@ -825,7 +916,8 @@
    "lastEventName": "金鯱祭 VOL.6",
    "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "plant8shrine",
@@ -834,7 +926,8 @@
    "lastEventName": "神結び 第一章",
    "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "nagashima_marche",
@@ -843,7 +936,8 @@
    "lastEventName": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
    "lastEventDate": "2026-10-23",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "garden_link_festa",
@@ -852,7 +946,8 @@
    "lastEventName": "Garden Link Festa",
    "lastEventDate": "2026-10-24",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "kumakiri55",
@@ -861,7 +956,8 @@
    "lastEventName": "プランツボックス 甲府",
    "lastEventDate": "2026-10-24",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "minefarm_okinawa",
@@ -870,7 +966,8 @@
    "lastEventName": "MINE FARM POP UP in 沖縄",
    "lastEventDate": "2026-10-24",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "plus__plants",
@@ -879,7 +976,8 @@
    "lastEventName": "PLANTS DIVE vol.5 in NARA",
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bizarreplants_days",
@@ -888,7 +986,8 @@
    "lastEventName": "Plants marché",
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "amepla_official",
@@ -897,7 +996,8 @@
    "lastEventName": "American and Plants（アメプラ）",
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "driftwood.smokeywood",
@@ -906,7 +1006,8 @@
    "lastEventName": "NIGHTWALKER",
    "lastEventDate": "2026-10-31",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "burari_plants",
@@ -915,7 +1016,8 @@
    "lastEventName": "ぶらりぷらんつ vol.3 × feel 15th Anniversary",
    "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "shizuoka.botanical",
@@ -924,7 +1026,8 @@
    "lastEventName": "週末ボタニカル in 御殿場展示場",
    "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "plants_fes_ehime",
@@ -933,7 +1036,8 @@
    "lastEventName": "PLANTS FES vol.4",
    "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "santaanagarden",
@@ -942,7 +1046,8 @@
    "lastEventName": "さんたあな植物園 vol.11",
    "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "botajam2026",
@@ -951,7 +1056,8 @@
    "lastEventName": "BOTAJAM 2026 -岐の宴-",
    "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "uchidanouen",
@@ -960,7 +1066,8 @@
    "lastEventName": "秋のアガベ食堂",
    "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "plantspanic",
@@ -969,7 +1076,8 @@
    "lastEventName": "第11回 PLANTS PANIC!!",
    "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "_wonder_market_",
@@ -978,7 +1086,8 @@
    "lastEventName": "Wonder Market（2026年11月）",
    "lastEventDate": "2026-11-08",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "the_botanical_show",
@@ -987,7 +1096,8 @@
    "lastEventName": "THE BOTANICAL SHOW 6TH",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -996,7 +1106,8 @@
    "lastEventName": "和 -NAGOMI- 多肉と雑貨のガーデンマルシェ",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "windplants_shop",
@@ -1005,7 +1116,8 @@
    "lastEventName": "植友広場 〜秋の陣〜 2026",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "roots_plus_livingwithstyle",
@@ -1014,7 +1126,8 @@
    "lastEventName": "Roots plus vol.1",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "temo2929",
@@ -1023,7 +1136,8 @@
    "lastEventName": "多肉もぶれ vol.13",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "moro2_plants",
@@ -1032,7 +1146,8 @@
    "lastEventName": "モロモロプランツ 19th",
    "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "plants.addict.festival",
@@ -1041,7 +1156,8 @@
    "lastEventName": "P•A•F 〜Plant addict Festa",
    "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "mahota029",
@@ -1050,7 +1166,8 @@
    "lastEventName": "第3回 淡路島多肉DEすまいるマルシェ",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "ta29_handmade.marche",
@@ -1059,7 +1176,8 @@
    "lastEventName": "第2回 多肉とHandmade雑貨のマルシェ in 串木野",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "ta29picnic_kagoshima",
@@ -1068,7 +1186,8 @@
    "lastEventName": "秋の多肉ピクニック",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "bingo_botanical_base_official",
@@ -1077,7 +1196,8 @@
    "lastEventName": "BOTANICAL JOURNEY",
    "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "chinki_syokubutu_5",
@@ -1086,7 +1206,8 @@
    "lastEventName": "第四回 珍奇植物フェア",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "kktsucculentfes",
@@ -1095,7 +1216,8 @@
    "lastEventName": "KKT多肉FES vol.6",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "goodthings.jp",
@@ -1104,7 +1226,8 @@
    "lastEventName": "ビザールプランツナイト(&デイ)",
    "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "botanical.tamba",
@@ -1113,7 +1236,8 @@
    "lastEventName": "BOTANICAL TAMBA 2026",
    "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "garden_messe",
@@ -1122,7 +1246,8 @@
    "lastEventName": "Orai's party 2026",
    "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "tanikurevolution",
@@ -1131,7 +1256,8 @@
    "lastEventName": "第3回 多肉レボリューション",
    "lastEventDate": "2026-12-12",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "love_greenmarket",
@@ -1140,7 +1266,8 @@
    "lastEventName": "LOVE GReeN MARKeT Vol.3",
    "lastEventDate": "2026-12-12",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "aichinn_syokusai",
@@ -1149,7 +1276,8 @@
    "lastEventName": "愛珍植祭 New Year Party 2027",
    "lastEventDate": "2027-01-24",
    "hasUpcoming": true,
-   "priority": 1
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "monster_house_nagoya",
@@ -1160,7 +1288,8 @@
    "hasUpcoming": false,
    "priority": 1,
    "source": "seed",
-   "seedWhy": "2026-09-12〜15 に2店舗同時で NAMED AGAVE PARTY / BLUE AGAVE PARTY を開いたが当サイトは1件も掲載していない。6月にOPENイベント、3月にハンズ名古屋出展と、数か月おきに店舗イベントを開く。告知は開催の数日前にしか出ない"
+   "seedWhy": "2026-09-12〜15 に2店舗同時で NAMED AGAVE PARTY / BLUE AGAVE PARTY を開いたが当サイトは1件も掲載していない。6月にOPENイベント、3月にハンズ名古屋出展と、数か月おきに店舗イベントを開く。告知は開催の数日前にしか出ない",
+   "apiStatus": "unchecked"
   },
   {
    "handle": "monsters_house_minato",
@@ -1171,7 +1300,8 @@
    "hasUpcoming": false,
    "priority": 1,
    "source": "seed",
-   "seedWhy": "上と同じ主催の店舗別アカウント。回ごとに港店・緑店で内容が違うので両方見る"
+   "seedWhy": "上と同じ主催の店舗別アカウント。回ごとに港店・緑店で内容が違うので両方見る",
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kumagaya_taniku_fes",
@@ -1180,7 +1310,8 @@
    "lastEventName": "第2回 熊谷多肉フェス",
    "lastEventDate": "2026-02-14",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "miyashita_park_popup",
@@ -1189,7 +1320,8 @@
    "lastEventName": "MIYASHITA PARK Pop-Up Store",
    "lastEventDate": "2026-02-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "sky_palette_ibaraki",
@@ -1198,7 +1330,8 @@
    "lastEventName": "いばらきスカイパレット 植物マルシェ",
    "lastEventDate": "2026-02-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "plant_freaks_official",
@@ -1207,7 +1340,8 @@
    "lastEventName": "PLANT FREAKS 4th",
    "lastEventDate": "2026-02-28",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botanical_botanical__",
@@ -1216,7 +1350,8 @@
    "lastEventName": "BOTANICAL BOTANICAL OSAKA",
    "lastEventDate": "2026-03-28",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "nara.botanical_garden",
@@ -1225,7 +1360,8 @@
    "lastEventName": "ならの植物園2026",
    "lastEventDate": "2026-03-28",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bota_magic",
@@ -1234,7 +1370,8 @@
    "lastEventName": "BOTA☆MAGIC",
    "lastEventDate": "2026-03-29",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "wakayama_green_marche",
@@ -1243,7 +1380,8 @@
    "lastEventName": "和歌山グリーンマルシェ",
    "lastEventDate": "2026-03-29",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "joyfulhonda_official",
@@ -1252,7 +1390,8 @@
    "lastEventName": "JOYFUL FESTIVAL",
    "lastEventDate": "2026-04-04",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "plants_junkee",
@@ -1261,7 +1400,8 @@
    "lastEventName": "プランツジャンキー 12th",
    "lastEventDate": "2026-04-05",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "imama.jp",
@@ -1270,7 +1410,8 @@
    "lastEventName": "芽吹祭",
    "lastEventDate": "2026-04-11",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "botanical_circus",
@@ -1279,7 +1420,8 @@
    "lastEventName": "Botanical Circus 7",
    "lastEventDate": "2026-04-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "fujiyama_days",
@@ -1288,7 +1430,8 @@
    "lastEventName": "FUJIYAMA DAYS LITTLE GREEN PARK",
    "lastEventDate": "2026-04-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "plants2306.fe",
@@ -1297,7 +1440,8 @@
    "lastEventName": "PLANTS 2306 3rd ANNIVERSARY FESTIVAL",
    "lastEventDate": "2026-04-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "yamaguchi.plants.market",
@@ -1306,7 +1450,8 @@
    "lastEventName": "YAMAGUCHI PLANTS MARKET 2026",
    "lastEventDate": "2026-04-25",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "takibi_roasters",
@@ -1315,7 +1460,8 @@
    "lastEventName": "植祭 vol.9",
    "lastEventDate": "2026-05-05",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "cocoetnico_aya",
@@ -1324,7 +1470,8 @@
    "lastEventName": "COCO ET NICO presents Bond PROJECT",
    "lastEventDate": "2026-05-09",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "luckplantsokinawa",
@@ -1333,7 +1480,8 @@
    "lastEventName": "MUST BUY MARKET!",
    "lastEventDate": "2026-05-09",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "enjoy_place_outside",
@@ -1342,7 +1490,8 @@
    "lastEventName": "enjoy place outside",
    "lastEventDate": "2026-05-16",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "kokobanaankoh1",
@@ -1351,7 +1500,8 @@
    "lastEventName": "スモリ祭 vol.36",
    "lastEventDate": "2026-05-23",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tanikudayo.zeninsyuugou",
@@ -1360,7 +1510,8 @@
    "lastEventName": "第15回 多肉だヨ！全員集合 in 金沢",
    "lastEventDate": "2026-05-29",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "iku_matsuri",
@@ -1369,7 +1520,8 @@
    "lastEventName": "樹祭 in 宇都宮 2026",
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "plants.garage.market",
@@ -1378,7 +1530,8 @@
    "lastEventName": "Plants garage market 2026 -SPRING & SUMMER-",
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "koron_shop",
@@ -1387,7 +1540,8 @@
    "lastEventName": "いっちゃんの多肉ガーデン",
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kusa_bito",
@@ -1396,7 +1550,8 @@
    "lastEventName": "Kusa Paradise vol.9",
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "green_breeze_fes",
@@ -1405,7 +1560,8 @@
    "lastEventName": "GREEN BREEZE FES vol.3",
    "lastEventDate": "2026-05-31",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "gunma.parryi_freaks",
@@ -1414,7 +1570,8 @@
    "lastEventName": "ETERNAL PLANTS BUILT TO SURVIVE",
    "lastEventDate": "2026-05-31",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "botanoichi",
@@ -1423,7 +1580,8 @@
    "lastEventName": "ボタの市 (千住本氷川神社)",
    "lastEventDate": "2026-05-31",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "greendays_matsuyama",
@@ -1432,7 +1590,8 @@
    "lastEventName": "GREEN DAYS まつやま vol.3",
    "lastEventDate": "2026-06-06",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "botariba.event",
@@ -1441,7 +1600,8 @@
    "lastEventName": "ボタり場 2026 初夏",
    "lastEventDate": "2026-06-07",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "plants_jamboree",
@@ -1450,7 +1610,8 @@
    "lastEventName": "PLANTS JAMBOREE 2026",
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "maebashi_park",
@@ -1459,7 +1620,8 @@
    "lastEventName": "多肉植物サボテン展示即売会 in 敷島公園バラ園 2026",
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "sprout_2010817",
@@ -1468,7 +1630,8 @@
    "lastEventName": "第4回 蝙蝠蘭の市",
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kominkasaboten",
@@ -1477,7 +1640,8 @@
    "lastEventName": "古民家さぼてんオープンハウス",
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "spine_note_official",
@@ -1486,7 +1650,8 @@
    "lastEventName": "SPINE NOTE",
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "sogawa_street_spine",
@@ -1495,7 +1660,8 @@
    "lastEventName": "SOGAWA STREET SPINE",
    "lastEventDate": "2026-06-14",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "amuplants",
@@ -1504,7 +1670,8 @@
    "lastEventName": "ぷらんちゅマルシェ vol.1",
    "lastEventDate": "2026-06-14",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "hachimonplantingmarket",
@@ -1513,7 +1680,8 @@
    "lastEventName": "第5回 鉢もん植物フェスタ & frillマルシェ",
    "lastEventDate": "2026-06-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "ohana._.garden",
@@ -1522,7 +1690,8 @@
    "lastEventName": "オハナdeマルシェ",
    "lastEventDate": "2026-06-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "asamiya.hiromi",
@@ -1531,7 +1700,8 @@
    "lastEventName": "あさみやin「多肉祭」",
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "mr.plants.market",
@@ -1540,7 +1710,8 @@
    "lastEventName": "Mr. Plants Market 2026",
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_sunnydrop_",
@@ -1549,7 +1720,8 @@
    "lastEventName": "On The Deck 3rd",
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "ta29sukijaken_ichi",
@@ -1558,7 +1730,8 @@
    "lastEventName": "第3回 多肉すきじゃけん市",
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kyoujinkai",
@@ -1567,7 +1740,8 @@
    "lastEventName": "狂人会楽市",
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagasaki.plants.classic",
@@ -1576,7 +1750,8 @@
    "lastEventName": "NAGASAKI PLANTS CLASSIC",
    "lastEventDate": "2026-06-27",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tsuboikenjuen",
@@ -1585,7 +1760,8 @@
    "lastEventName": "B.O.P with NEEDLES",
    "lastEventDate": "2026-06-27",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "westsaboten.misyonokai",
@@ -1594,7 +1770,8 @@
    "lastEventName": "園日 外伝",
    "lastEventDate": "2026-06-28",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "hikarudo.___",
@@ -1603,7 +1780,8 @@
    "lastEventName": "ORDINARY『GARDEN』",
    "lastEventDate": "2026-07-03",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "hakuhoen_enchou",
@@ -1612,7 +1790,8 @@
    "lastEventName": "多肉植物まつり2026（夜越山）",
    "lastEventDate": "2026-07-04",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "hashisiruku",
@@ -1621,7 +1800,8 @@
    "lastEventName": "オホーツク多肉Festival 2026 vol.2",
    "lastEventDate": "2026-07-05",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "yugo.black",
@@ -1630,7 +1810,8 @@
    "lastEventName": "自由草市 connecting smiles VOL.1 滋賀",
    "lastEventDate": "2026-07-11",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "green_days2026",
@@ -1639,7 +1820,8 @@
    "lastEventName": "GREEN DAY'Z in HIGASHIKAWA",
    "lastEventDate": "2026-07-11",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "niigata_sabotenclub",
@@ -1648,7 +1830,8 @@
    "lastEventName": "Plants Hobbyist",
    "lastEventDate": "2026-07-12",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "joy_grove_0501",
@@ -1657,7 +1840,8 @@
    "lastEventName": "WILD GREEN JAM VOL.3",
    "lastEventDate": "2026-07-12",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "botanical.market.mie",
@@ -1666,7 +1850,8 @@
    "lastEventName": "BOTANICAL MARKET MIE vol.last",
    "lastEventDate": "2026-07-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "yamada_ishigaki",
@@ -1675,7 +1860,8 @@
    "lastEventName": "珍奇植物イベント「本屋はもっと、楽しくなる」",
    "lastEventDate": "2026-07-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "greenfarmkanazawa",
@@ -1684,7 +1870,8 @@
    "lastEventName": "トロピカルフェス 2026",
    "lastEventDate": "2026-07-18",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "iwabaegarden",
@@ -1693,7 +1880,8 @@
    "lastEventName": "NAGASAKI BIZARRE MEET UP THE 6TH TIME",
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "mirai_engei",
@@ -1702,7 +1890,8 @@
    "lastEventName": "ミライ園芸 辺境の植物展",
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "yukuhashisyokubutsuen",
@@ -1711,7 +1900,8 @@
    "lastEventName": "BOTANICAL AJITO（ゆくはし植物園）",
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "plants.revel",
@@ -1720,7 +1910,8 @@
    "lastEventName": "プチ植物フリマ in 二和園",
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "501plants",
@@ -1729,7 +1920,8 @@
    "lastEventName": "しょくぶつちゅうどく vol.2",
    "lastEventDate": "2026-07-25",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "botanical_gathering_fukuoka",
@@ -1738,7 +1930,8 @@
    "lastEventName": "BOTANICAL GATHERING FUKUOKA Vol.2.0",
    "lastEventDate": "2026-07-25",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "lucky_gardening",
@@ -1747,7 +1940,8 @@
    "lastEventName": "SUMORI Open garden 〜漢祭〜",
    "lastEventDate": "2026-07-25",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "cool.cactus_",
@@ -1756,7 +1950,8 @@
    "lastEventName": "PLANT & POTTERY EXHIBITION \"Meet\" vol.07 in HARAJUKU",
    "lastEventDate": "2026-07-25",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "bukkou.109",
@@ -1765,7 +1960,8 @@
    "lastEventName": "パキポの園",
    "lastEventDate": "2026-07-25",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "hanatsumugigreen",
@@ -1774,7 +1970,8 @@
    "lastEventName": "第三回 大阪植物宴",
    "lastEventDate": "2026-07-26",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "yell_green",
@@ -1783,7 +1980,8 @@
    "lastEventName": "yell market 2026",
    "lastEventDate": "2026-07-26",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_plantsheaven_",
@@ -1792,7 +1990,8 @@
    "lastEventName": "PLANTS UNITED 2026",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "kaikon_ningen",
@@ -1801,7 +2000,8 @@
    "lastEventName": "bizarreplants Outlet vol.5",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "_code.official_",
@@ -1810,7 +2010,8 @@
    "lastEventName": "CODE 単独東京POP UP",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "yuya0860",
@@ -1819,7 +2020,8 @@
    "lastEventName": "群パリ GPF感謝祭 2026",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kanzen.event",
@@ -1828,7 +2030,8 @@
    "lastEventName": "間然（KAN-ZEN）",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "tomoyafarm",
@@ -1837,7 +2040,8 @@
    "lastEventName": "Paradise Garage in TOMOYA FARM",
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "saitamasabotenclub",
@@ -1846,7 +2050,8 @@
    "lastEventName": "埼玉サボテンクラブ 夏の大即売会",
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "green_base_awaji",
@@ -1855,7 +2060,8 @@
    "lastEventName": "GREEN BASE AWAJI 2026",
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "life_circle_world",
@@ -1864,7 +2070,8 @@
    "lastEventName": "LIFE CIRCLE WORLD 2026",
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kyotoshabotenclub",
@@ -1873,7 +2080,8 @@
    "lastEventName": "京都シャボテンクラブ 真夏の納涼即売会",
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bj_plants",
@@ -1882,7 +2090,8 @@
    "lastEventName": "灼熱の植熱祭 2026 2nd",
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "yokoen_tk",
@@ -1891,7 +2100,8 @@
    "lastEventName": "金岡みどりのマルシェ（2026年8月）",
    "lastEventDate": "2026-08-05",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "gooddays_plants",
@@ -1900,7 +2110,8 @@
    "lastEventName": "GOOD DAYS POP UP（ホームシック スタイルショップ水戸店）",
    "lastEventDate": "2026-08-08",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "gunmacactusclub",
@@ -1909,7 +2120,8 @@
    "lastEventName": "GUNMA CACTUS CLUB SUCCULENT FAIR 2026",
    "lastEventDate": "2026-08-08",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "menosyama_official",
@@ -1918,7 +2130,8 @@
    "lastEventName": "YAMAYAMA｜山山",
    "lastEventDate": "2026-08-08",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kagoshima_volcano_market",
@@ -1927,7 +2140,8 @@
    "lastEventName": "KAGOSHIMA VOLCANO MARKET ボルマ vol.3",
    "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "kumagaya_fes",
@@ -1936,7 +2150,8 @@
    "lastEventName": "熊谷多肉フェス（2026年8月）",
    "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "banksia.111",
@@ -1945,7 +2160,8 @@
    "lastEventName": "園日 Vol.17",
    "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "kobe_agave_shop",
@@ -1954,7 +2170,8 @@
    "lastEventName": "PLANTS UP SATSUMA",
    "lastEventDate": "2026-08-11",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "27_gallery_tokyo",
@@ -1963,7 +2180,8 @@
    "lastEventName": "Botanical Art Exhibition「ITAKERU2」",
    "lastEventDate": "2026-08-14",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "f.r.w.plants123",
@@ -1972,7 +2190,8 @@
    "lastEventName": "アクア＆グリーンフェス 縁日",
    "lastEventDate": "2026-08-15",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "urinchi2026",
@@ -1981,7 +2200,8 @@
    "lastEventName": "雨林ノ市 第貳陣",
    "lastEventDate": "2026-08-15",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "cosmicoplants",
@@ -1990,7 +2210,8 @@
    "lastEventName": "From seed to landscape",
    "lastEventDate": "2026-08-16",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "botanical_yoichi",
@@ -1999,7 +2220,8 @@
    "lastEventName": "ボタニカル夜市 3rd",
    "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "ario_kurashiki",
@@ -2008,7 +2230,8 @@
    "lastEventName": "BOTANICAL NIGHT MARKET 2026",
    "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "gardenplazahana",
@@ -2017,7 +2240,8 @@
    "lastEventName": "BOTANICAL（ガーデンプラザ華 福島店）",
    "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "miyaki0415",
@@ -2026,7 +2250,8 @@
    "lastEventName": "GROW JAM PRESENTS 01",
    "lastEventDate": "2026-08-23",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nangokuchatan_tanikutta",
@@ -2035,7 +2260,8 @@
    "lastEventName": "第2回 南国deナイト！",
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tanikunchu",
@@ -2044,7 +2270,8 @@
    "lastEventName": "珍奇植物市場 Vol.9 BOTANI CARNIVAL",
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "ajisai.13",
@@ -2053,7 +2280,8 @@
    "lastEventName": "多肉屋豆屋 〜ピンクに恋する夢空間〜",
    "lastEventDate": "2026-08-30",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "notreatelier.29",
@@ -2062,7 +2290,8 @@
    "lastEventName": "notre atelier POP UP STORE AT TOKYO",
    "lastEventDate": "2026-09-02",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "6_raccoon_",
@@ -2071,7 +2300,8 @@
    "lastEventName": "aobouzu × 6 RACCOON コラボPOP UP",
    "lastEventDate": "2026-09-04",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "null_kanazawa",
@@ -2080,7 +2310,8 @@
    "lastEventName": "PLANTS BAZAAR なんせ植物が好きなもんで。",
    "lastEventDate": "2026-09-05",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "seven.seedlings2",
@@ -2089,7 +2320,8 @@
    "lastEventName": "TOTTORI BOTANICA 〜Plants to remember〜",
    "lastEventDate": "2026-09-05",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "hawo_fes",
@@ -2098,7 +2330,8 @@
    "lastEventName": "ボタニカルフェスタ（ハオルチア界隈）",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "greenholic_nagoya",
@@ -2107,7 +2340,8 @@
    "lastEventName": "GREEN HOLIC in KARIYA 2026",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "danjo_kyohsenkai",
@@ -2116,7 +2350,8 @@
    "lastEventName": "狂仙会 2026",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "river.labo",
@@ -2125,7 +2360,8 @@
    "lastEventName": "River. Labo 2号店 グランドオープンイベント",
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kato_engei_tokyo",
@@ -2134,7 +2370,8 @@
    "lastEventName": "TEAM ABC+C+O+(M) POPUP",
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_and_plants",
@@ -2143,7 +2380,8 @@
    "lastEventName": "PLANT & POT Vol.15",
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "kawashimasyubyou",
@@ -2152,7 +2390,8 @@
    "lastEventName": "プランツフェスタ2026",
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "the_factory_otto",
@@ -2161,7 +2400,8 @@
    "lastEventName": "Succulent1987 in Country Park KUMAMOTO 2026",
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "greennuts_yokohama",
@@ -2170,7 +2410,8 @@
    "lastEventName": "Green Nuts Rumble Vol.2",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "homwaka_pappa",
@@ -2179,7 +2420,8 @@
    "lastEventName": "ホンワカパッパ 第3回",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "1012katsuyuki7",
@@ -2188,7 +2430,8 @@
    "lastEventName": "第二回 駿州蓬莱祭",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "north_east_caudex_club",
@@ -2197,7 +2440,8 @@
    "lastEventName": "東北塊根祭",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "taniku_moromoro_ichiba",
@@ -2206,7 +2450,8 @@
    "lastEventName": "はみもろ（2026年9月）",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "raflum.tokyo",
@@ -2215,7 +2460,8 @@
    "lastEventName": "阪急メンズ東京 × RAFLUM POP-UP STORE",
    "lastEventDate": "2026-09-16",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "waltzbase_saga",
@@ -2224,7 +2470,8 @@
    "lastEventName": "BOTANICAL LIFE 2026",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "protoleaf.shop_yumegaoka",
@@ -2233,7 +2480,8 @@
    "lastEventName": "FELICITA × はちとあり 2社合同販売会",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "ichigoichie_antique",
@@ -2242,7 +2490,8 @@
    "lastEventName": "高の宮市 〜植物のある暮らし〜",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "personal"
   },
   {
    "handle": "tkc.2nd.life",
@@ -2251,7 +2500,8 @@
    "lastEventName": "ONE LOVE 〜その優しさが未来を繋ぐ〜",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "b.g_ozman",
@@ -2260,7 +2510,8 @@
    "lastEventName": "第3回 ボタニカルオークション＆即売会",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "greensanta2020",
@@ -2269,7 +2520,8 @@
    "lastEventName": "サンタフェ 学校編 vol.21",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "ichikawazouen_mine",
@@ -2278,7 +2530,8 @@
    "lastEventName": "TANIKU collection（タニコレ）",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "engeiyatanaka",
@@ -2287,7 +2540,8 @@
    "lastEventName": "大辻屋さん 出張販売会",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "trillgreen_aburaya",
@@ -2296,7 +2550,8 @@
    "lastEventName": "TRILLGREEN SPECIAL EVENT SILVER WEEKEND",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "apartment_niigata",
@@ -2305,7 +2560,8 @@
    "lastEventName": "植物天国 in 白山市場（2026年秋）",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "jusai_japan",
@@ -2314,7 +2570,8 @@
    "lastEventName": "樹祭 一宮 2026 Autumn",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "engei_raku",
@@ -2323,7 +2580,8 @@
    "lastEventName": "園芸楽 2026",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "mini.vani",
@@ -2332,7 +2590,8 @@
    "lastEventName": "第5回 パパ〜ん！ばにらとぼたんとユカいな仲間たち",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "grizzlycoffee_and_supply",
@@ -2341,7 +2600,8 @@
    "lastEventName": "DEEP GREEN 2026",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "en_joy_unite_69",
@@ -2350,7 +2610,8 @@
    "lastEventName": "たにくった POPUP プチマルシェ",
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "kisarazu_c_and_s",
@@ -2359,7 +2620,8 @@
    "lastEventName": "KISARAZU C&S AUCTION",
    "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "katsumaru9",
@@ -2368,7 +2630,8 @@
    "lastEventName": "Tick-Tick（チクチク）ディッキアPOPUP",
    "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
-   "priority": 2
+   "priority": 2,
+   "apiStatus": "unchecked"
   }
  ],
  "awaitingNextEdition": [
@@ -2380,7 +2643,8 @@
    "monthsSinceLast": 0,
    "igHandle": "picnic.king.plants",
    "officialUrl": "https://www.instagram.com/picnic.king.plants/",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "unchecked"
   },
   {
    "series": "PICNIC GARDEN vol.25 in 鶴岡公園",
@@ -2390,7 +2654,8 @@
    "monthsSinceLast": 0,
    "igHandle": "picnic.king.plants",
    "officialUrl": "https://www.instagram.com/picnic.king.plants/",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "unchecked"
   },
   {
    "series": "Wi-Wi BOTANICAL Vol.2",
@@ -2400,7 +2665,8 @@
    "monthsSinceLast": 0,
    "igHandle": "wi_wibotanical",
    "officialUrl": null,
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "unchecked"
   },
   {
    "series": "ナイトマルシェ（さくら植物園）8月8日",
@@ -2410,7 +2676,8 @@
    "monthsSinceLast": 1,
    "igHandle": "sakura_shokubutsuen",
    "officialUrl": "https://www.instagram.com/sakura_shokubutsuen/",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "unchecked"
   },
   {
    "series": "PLANT FREAKS vol.6",
@@ -2420,7 +2687,8 @@
    "monthsSinceLast": 2,
    "igHandle": "plant_fks",
    "officialUrl": "https://www.instagram.com/plant_fks/",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "api"
   },
   {
    "series": "富士多肉プランツマルシェ",
@@ -2430,7 +2698,8 @@
    "monthsSinceLast": 3,
    "igHandle": "fuji_taniku",
    "officialUrl": "https://www.instagram.com/fuji_taniku/",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "api"
   },
   {
    "series": "隅の園藝",
@@ -2440,7 +2709,8 @@
    "monthsSinceLast": 4,
    "igHandle": null,
    "officialUrl": null,
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "none"
   },
   {
    "series": "ボタニカルマーケットVol.6",
@@ -2450,7 +2720,8 @@
    "monthsSinceLast": 4,
    "igHandle": null,
    "officialUrl": "https://makeman.co.jp/event/event-10904/",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "none"
   },
   {
    "series": "Plants garage market 2026 -SPRING & SUMMER-",
@@ -2460,7 +2731,8 @@
    "monthsSinceLast": 4,
    "igHandle": "plants.garage.market",
    "officialUrl": "https://ilinobeclub.jp/archives/475",
-   "recurring": true
+   "recurring": true,
+   "apiStatus": "unchecked"
   },
   {
    "series": "aobouzu × 6 RACCOON コラボPOP UP",
@@ -2470,7 +2742,8 @@
    "monthsSinceLast": 0,
    "igHandle": "6_raccoon_",
    "officialUrl": "https://www.instagram.com/6_raccoon_/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "api"
   },
   {
    "series": "TOTTORI BOTANICA 〜Plants to remember〜",
@@ -2480,7 +2753,8 @@
    "monthsSinceLast": 0,
    "igHandle": "seven.seedlings2",
    "officialUrl": "https://www.instagram.com/seven.seedlings2/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "gardens umekita 2周年記念イベント 店頭即売会",
@@ -2490,7 +2764,8 @@
    "monthsSinceLast": 0,
    "igHandle": null,
    "officialUrl": "https://gardens.hc-kohnan.com/9-5%ef%bc%88%e5%9c%9f%ef%bc%896%ef%bc%88%e6%97%a5%ef%bc%89gardens-umekita-2%e5%91%a8%e5%b9%b4%e8%a8%98%e5%bf%b5%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%ba%97%e9%a0%ad%e5%8d%b3%e5%a3%b2/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "none"
   },
   {
    "series": "PLANTS BAZAAR なんせ植物が好きなもんで。",
@@ -2500,7 +2775,8 @@
    "monthsSinceLast": 0,
    "igHandle": "null_kanazawa",
    "officialUrl": "https://www.instagram.com/reel/DcqpmRoI6Wb/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "ボタニカルフェスタ（ハオルチア界隈）",
@@ -2510,7 +2786,8 @@
    "monthsSinceLast": 0,
    "igHandle": "hawo_fes",
    "officialUrl": "https://www.instagram.com/hawo_fes/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "personal"
   },
   {
    "series": "第1回 ボタニカルX",
@@ -2520,7 +2797,8 @@
    "monthsSinceLast": 0,
    "igHandle": "rojiuranogibousi",
    "officialUrl": null,
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "personal"
   },
   {
    "series": "GREEN HOLIC in KARIYA 2026",
@@ -2530,7 +2808,8 @@
    "monthsSinceLast": 0,
    "igHandle": "greenholic_nagoya",
    "officialUrl": "https://kariya-urbanfes.com/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "api"
   },
   {
    "series": "Green Summit vol.22 in Yamagata",
@@ -2540,7 +2819,8 @@
    "monthsSinceLast": 0,
    "igHandle": "green_summit_touhoku",
    "officialUrl": "https://www.instagram.com/green_summit_touhoku/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "api"
   },
   {
    "series": "多肉渡来記 近江・竜王の章",
@@ -2550,7 +2830,8 @@
    "monthsSinceLast": 0,
    "igHandle": "nagomitaniku",
    "officialUrl": "https://www.instagram.com/nagomitaniku/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "River. Labo 2号店 グランドオープンイベント",
@@ -2560,7 +2841,8 @@
    "monthsSinceLast": 0,
    "igHandle": "river.labo",
    "officialUrl": "https://www.instagram.com/river.labo/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "青坊主 鹿児島ポップアップ",
@@ -2570,7 +2852,8 @@
    "monthsSinceLast": 0,
    "igHandle": "aobouzu_caudex",
    "officialUrl": "https://www.instagram.com/p/DciYWphTGhe/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "api"
   },
   {
    "series": "notre atelier POP UP STORE AT TOKYO",
@@ -2580,7 +2863,8 @@
    "monthsSinceLast": 0,
    "igHandle": "notreatelier.29",
    "officialUrl": "https://www.instagram.com/notreatelier.29/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "プランツフェスタ2026",
@@ -2590,7 +2874,8 @@
    "monthsSinceLast": 0,
    "igHandle": "kawashimasyubyou",
    "officialUrl": "https://www.instagram.com/kawashimasyubyou/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "Succulent1987 in Country Park KUMAMOTO 2026",
@@ -2600,7 +2885,8 @@
    "monthsSinceLast": 0,
    "igHandle": "the_factory_otto",
    "officialUrl": "https://www.instagram.com/the_factory_otto/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "TEAM ABC+C+O+(M) POPUP",
@@ -2610,7 +2896,8 @@
    "monthsSinceLast": 0,
    "igHandle": "kato_engei_tokyo",
    "officialUrl": "https://www.instagram.com/kato_engei_tokyo/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "PLANT & POT Vol.15",
@@ -2620,7 +2907,8 @@
    "monthsSinceLast": 0,
    "igHandle": "_and_plants",
    "officialUrl": "https://www.instagram.com/_and_plants/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "api"
   },
   {
    "series": "Green Nuts Rumble Vol.2",
@@ -2630,7 +2918,8 @@
    "monthsSinceLast": 0,
    "igHandle": "greennuts_yokohama",
    "officialUrl": "https://www.instagram.com/greennuts_yokohama/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "api"
   },
   {
    "series": "ホンワカパッパ 第3回",
@@ -2640,7 +2929,8 @@
    "monthsSinceLast": 0,
    "igHandle": "homwaka_pappa",
    "officialUrl": "https://www.instagram.com/homwaka_pappa/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "personal"
   },
   {
    "series": "第二回 駿州蓬莱祭",
@@ -2650,7 +2940,8 @@
    "monthsSinceLast": 0,
    "igHandle": "1012katsuyuki7",
    "officialUrl": "https://www.instagram.com/1012katsuyuki7/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "personal"
   },
   {
    "series": "東北塊根祭",
@@ -2660,7 +2951,8 @@
    "monthsSinceLast": 0,
    "igHandle": "north_east_caudex_club",
    "officialUrl": "https://www.instagram.com/north_east_caudex_club/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "Botanical in はら笑楽交",
@@ -2670,7 +2962,8 @@
    "monthsSinceLast": 0,
    "igHandle": "king.plants.slugger",
    "officialUrl": "https://www.instagram.com/king.plants.slugger/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "はみもろ（2026年9月）",
@@ -2680,7 +2973,8 @@
    "monthsSinceLast": 0,
    "igHandle": "taniku_moromoro_ichiba",
    "officialUrl": null,
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "KYOTO MIDORI NO MARCHE IN 茨木",
@@ -2690,7 +2984,8 @@
    "monthsSinceLast": 0,
    "igHandle": "midorino_marche",
    "officialUrl": "https://www.instagram.com/midorino_marche/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "第1回 緑と多肉を楽しむマルシェ",
@@ -2700,7 +2995,8 @@
    "monthsSinceLast": 0,
    "igHandle": null,
    "officialUrl": "https://www.nihonosato.com/post/succulentmarket",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "none"
   },
   {
    "series": "FELICITA × はちとあり 2社合同販売会",
@@ -2710,7 +3006,8 @@
    "monthsSinceLast": 0,
    "igHandle": "protoleaf.shop_yumegaoka",
    "officialUrl": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "鹿鳥風月（FUKUOKA EFFECT 会場）",
@@ -2720,7 +3017,8 @@
    "monthsSinceLast": 0,
    "igHandle": "ta29.wind.sun",
    "officialUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "三浦園芸 アロイド販売会",
@@ -2730,7 +3028,8 @@
    "monthsSinceLast": 0,
    "igHandle": null,
    "officialUrl": "https://www.protoleaf.com/?p=24182",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "none"
   },
   {
    "series": "Sakuya Green Jam 5",
@@ -2740,7 +3039,8 @@
    "monthsSinceLast": 0,
    "igHandle": null,
    "officialUrl": "https://www.sakuyakonohana.jp/event/22331/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "none"
   },
   {
    "series": "コウレプ2026秋",
@@ -2750,7 +3050,8 @@
    "monthsSinceLast": 0,
    "igHandle": null,
    "officialUrl": "https://kourep.jp",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "none"
   },
   {
    "series": "BOTANICAL LIFE 2026",
@@ -2760,7 +3061,8 @@
    "monthsSinceLast": 0,
    "igHandle": "waltzbase_saga",
    "officialUrl": "https://www.instagram.com/waltzbase_saga/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "unchecked"
   },
   {
    "series": "高の宮市 〜植物のある暮らし〜",
@@ -2770,7 +3072,8 @@
    "monthsSinceLast": 0,
    "igHandle": "ichigoichie_antique",
    "officialUrl": "https://www.instagram.com/p/DcbDS-oEz06/",
-   "recurring": false
+   "recurring": false,
+   "apiStatus": "personal"
   }
  ],
  "officialSiteCandidates": [
