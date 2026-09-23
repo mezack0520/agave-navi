@@ -54,7 +54,7 @@ _GENERIC = {'vol', '2026', '2027', 'the', 'and', 'plants', 'plant', 'popup', 'po
             'マルシェ', 'フェス', 'フェスタ', 'イベント', '会場', '出店', '植物',
             'botanical', 'green', 'garden', 'festa', 'ボタニカル', 'グリーン', 'ガーデン'}
 # 来場者向けの告知ではない投稿。点数が高くても採らない
-_NOT_FLYER = ('出店者募集', '出展者募集', '出店者様募集', '出店者紹介', '出店者様紹介',
+_NOT_FLYER = ('募集', '出店者紹介', '出店者様紹介',
               '出展者紹介', '出店者さま', '出店者様発表', '出店者発表', 'ご来場ありがとう', 'ありがとうございました', '御礼',
               '暑中見舞い', '残暑見舞い', '中止', '延期', '会場図', '配置図',
               'イベント終了', '無事終了', '終了しました', '募集終了', 'オンラインショップ')
@@ -237,6 +237,14 @@ def stage_candidates(events, fresh_posts, today):
                 os.remove(os.path.join(STAGE_DIR, f'{sl}.jpg'))
             except OSError:
                 pass
+    # 採否を書いた候補の画像は apply-eyecatch.py が消すが、Web UI から採否を
+    # 押した回などで画像だけ残ることがある。一覧に無い画像は捨てる
+    try:
+        for fn in os.listdir(STAGE_DIR):
+            if fn.endswith('.jpg') and fn[:-4] not in items:
+                os.remove(os.path.join(STAGE_DIR, fn))
+    except OSError:
+        pass
     added = 0
     for e in sorted(events, key=lambda x: sitelib.list_sort_key(x, today)):
         if len(items) >= MAX_PENDING:
