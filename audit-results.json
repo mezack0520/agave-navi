@@ -1,5 +1,5 @@
 {
-  "total": 497,
+  "total": 495,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -52,10 +52,8 @@
     },
     "rejected_but_listed": {
       "title": "見送り記録があるのに掲載されているイベント",
-      "count": 1,
-      "items": [
-        "2026-09-26: 見送り kohnan-kohokuinter-taniku-cactus-2026-09 と掲載 robin-bizarre-garden-6th-2026-09 が名称「第6回 ロビン ビザールガーデン」と会場「ロビンガーデン」で一致"
-      ],
+      "count": 0,
+      "items": [],
       "note": "同じ回なら見送り記録のほうを消す(掲載が正しいと判断し直した結果なので、見送りを残すと revisit の期限切れが誤って鳴り、判断の履歴も二重になる)。同じ会期・会場で併催される別イベントなら、見送り側に coexistsWith=<掲載slug> を書いて除外する",
       "severity": "urgent"
     },
@@ -178,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 105,
+      "count": 104,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -226,7 +224,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 183,
+      "count": 181,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aobouzu-6raccoon-popup-2026-09",
@@ -258,7 +256,6 @@
         "ceramall-hanbaikai-2026-09",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "code-tokyo-popup-2026-08",
-        "collect-plants-2026-09",
         "collection-plants-miuraengei-yukuhashi-2026-06",
         "deep-green-ono-2026-09",
         "edamame-bikaku-itazuke-2026-09",
@@ -267,14 +264,15 @@
         "enjoy-place-5th-2026-10",
         "enjoy-place-outside-2nd-2026-11",
         "felicita-hachitoari-yumegaoka-2026-09",
-        "fuji-taniku-plants-marche-2026-09"
+        "fuji-taniku-plants-marche-2026-09",
+        "fujisan-festa-2026-autumn"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 53,
+      "count": 54,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "aichin-shokusai-new-year-party-2027",
@@ -641,7 +639,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -830,7 +828,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 53,
+      "count": 54,
       "items": [
         "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
@@ -854,6 +852,7 @@
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
         "2026-10-25 american-and-plants-sano-2026-10",
+        "2026-10-25 roots-market-inage-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
         "2026-11-07 agave-shokudo-2026-autumn-uchidanouen",
         "2026-11-07 botanical-life-kasama-2026-11",
@@ -870,8 +869,7 @@
         "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 kyoto-midorino-marche-bangaihen-vol10-2026",
-        "2026-11-28 plant-freaks-olinas-2026-11",
-        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11"
+        "2026-11-28 plant-freaks-olinas-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
