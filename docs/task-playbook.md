@@ -136,6 +136,7 @@
 | `api.github.com` | 通る（§2 の記述はこちら） | **不通**（"GitHub access ... not enabled"） |
 | `agave-navi.com` への curl | 通る | 通る |
 | Instagram | 届かない | 届かない（ログイン壁）。**組み込みブラウザなら読める** |
+| Instagram（Graph API） | CI が毎日読む（§「Instagram は API で読める」） | 同左。結果は `organizer-posts.json` |
 | ユーザーのPC上のファイル | 直接 | `mcp__remote-devices__*` 経由 |
 
 判別のしかた: `git push` を試す前に、`curl -s https://api.github.com/` が
@@ -215,6 +216,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
 
 - **Instagram が読める**（組み込みブラウザ = デスクトップアプリ内のブラウザペイン）。
   出典の裏取り・告知投稿のURL取得はここでしかできない。
+  **ただしプロアカウントの最新12件は CI が毎日読んでいる**(`organizer-posts.json`、
+  §「Instagram は API で読める」)。まずそちらを見る。ブラウザが要るのは
+  個人アカウントと、最新12件より古い投稿だけ。
   プロフィールを開いて `document.querySelectorAll('a[href*="/p/"]')` の
   `img.alt` を読むと、チラシの文字がOCR済みで返る。**開いて回るより速い。**
 
@@ -2036,6 +2040,12 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
 定期タスク `agave-navi-eyecatch`（毎日14:50、1回6件まで）が担当する。
 タスクのSKILL.mdは環境移行で消えることがあるので、経路はここに残す。
 
+> **2026-09-23 から、まず CI の候補を片づける。**主催がプロアカウントなら
+> CI が原寸画像の候補を `staging/eyecatch/` に置いている
+> （§「Instagram は API で読める」）。ブラウザで取りに行くのは、
+> 候補が出ない回（個人アカウント・出典が投稿でもプロフィールでもない回）だけ。
+> 以下の「組み込みブラウザからしか届かない」はブラウザ経路の話として読む。
+
 - **Instagram には組み込みブラウザからしか届かない。**
   GitHub Actions のIPは30件すべてタイムアウトして取得0件、実行時間だけ
   5分→11分に伸びた。Coworkのサンドボックスも403。CIの段は外してある。
@@ -3030,6 +3040,40 @@ for (const c of cs) {
   **コンテナから curl で 200 が返る**(2MBの原寸JPEGを取得できた)。
   つまり **URLだけブラウザで拾って、取得と加工はコンテナでやれる。**
   画像のバイト列を文脈に通さずに済む。アイキャッチ作業はこの形が速い。
+
+### Instagram は API で読める (2026-09-23)
+
+**「Instagram には組み込みブラウザからしか届かない」は、相手がプロアカウントなら
+もう成り立たない。**@agave_navi(プロアカウント)のページトークンで
+Graph API の Business Discovery を叩くと、相手のユーザー名だけで最新投稿の
+本文・日時・URL・**原寸画像**が返る。フォロー不要。GitHub Actions から届く。
+
+- 仕組み: `scripts/ig-organizer-watch.py`(daily)。接続は `scripts/iglib.py`、
+  Secret `IG_PAGE_TOKEN`。結果は `organizer-posts.json`。
+- 見張る相手: 開催予定の回の主催と `watch-sources.json` の全IGアカウント。
+  呼び出し上限(ほぼ200回/時)に収めるため、開催予定の主催は毎日、
+  他は2日に1回、読めない相手は7日に1回取る(`plan()`)。
+- 出るもの: 中止の兆候(`organizer_cancel_signal` urgent)、
+  当サイトに無い先の日付(`organizer_unlisted_dates`。次回開催の告知待ちも
+  ここに出る)、アイキャッチ候補(`eyecatch_candidates_pending`)。
+- **読めない相手**: 個人アカウント・非公開・名前違い。開始時点で102中22。
+  `watch-sources.json` の各アカウントに `apiStatus`(`api` / `personal` /
+  `unchecked`)が付く。**ブラウザで回るのは `api` 以外だけでよい。**
+  `api` のアカウントをブラウザで開き直すのは同じ仕事の二度手間。
+- アイキャッチ: 候補は `staging/eyecatch/<slug>.jpg` と `candidates.json`。
+  **採否は画像を1枚ずつ見て決める**(機械の照合は根拠にならない。
+  2026-09-08 の12件の誤り)。
+  `python3 scripts/apply-eyecatch.py --list` で並べ、
+  `--approve <slug>` で採用(images/events/ へ移して imageUrl / imageSource を書く)、
+  `--reject "<slug>=理由"` で不採用(`scripts/eyecatch-rejected.json` に残り、
+  同じ投稿は二度と候補に出ない)。
+- API の media_url は切り出しの無い原寸なので、og:image の
+  `stp=c180.0.540.540a` 問題は起きない。
+- 候補の照合規則(`eyecatchlib.pick_post`): 名前の特徴語と開催日の両方、
+  または特徴語2つ以上。本文の日付が会期と合わない投稿・会期後の投稿・
+  開催の150日より前の投稿・募集/出店者紹介/御礼/中止の投稿は採らない。
+  試走で当たりかけた誤り: 別会場の同シリーズ(botanical botanical 福岡)、
+  青山のスナップ投稿、前回の「無事終了」投稿、出典の投稿が「募集終了」のお知らせ。
 
 ## 4. 自己改善のやり方
 
