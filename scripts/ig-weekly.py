@@ -426,7 +426,7 @@ def publish(out, base_url):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('mode', choices=['build', 'publish', 'outdir'])
+    ap.add_argument('mode', choices=['build', 'publish', 'outdir', 'check'])
     ap.add_argument('--out', default=None)
     ap.add_argument('--date', default=None, help='今日として扱う日(JST)')
     ap.add_argument('--base-url', default=None)
@@ -435,6 +435,19 @@ def main():
              else datetime.strptime(sitelib.today_jst(), '%Y-%m-%d'))
     sat, _ = weekend_of(today)
     out = a.out or os.path.join(REPO, 'images', 'ig', sat.strftime('%Y-%m-%d'))
+    if a.mode == 'check':
+        # 投稿しない回でもトークンと連携の生死だけは毎回確かめる。
+        # 木曜の本番で初めて失効に気づくのを避ける。トークン自体は出さない。
+        token = os.environ.get('IG_PAGE_TOKEN', '').strip()
+        if not token:
+            raise SystemExit('IG_PAGE_TOKEN が無い')
+        me = _api('GET', 'me', token, fields='id,name,instagram_business_account{username}')
+        igu = (me.get('instagram_business_account') or {}).get('username')
+        print(f'ページ: {me.get("name")} / Instagram: @{igu}' if igu
+              else f'ページ: {me.get("name")} / Instagram が紐付いていない')
+        if not igu:
+            raise SystemExit(1)
+        return
     if a.mode == 'outdir':
         # ワークフローが「今回作った頁」を取り違えないための問い合わせ。
         # images/ig/ の最新ディレクトリを拾う作りだと、今週が0件のとき
