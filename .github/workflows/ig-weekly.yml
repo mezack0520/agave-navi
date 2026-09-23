@@ -70,6 +70,8 @@ jobs:
       - name: Build images and caption
         id: build
         run: |
+          # tee で繋ぐと build の失敗が握り潰される(初回はこれで空振りが成功扱いになった)
+          set -o pipefail
           python3 scripts/ig-weekly.py build ${{ steps.mode.outputs.date_arg }} | tee "$RUNNER_TEMP/build.log"
           DIR=$(python3 scripts/ig-weekly.py outdir ${{ steps.mode.outputs.date_arg }})
           echo "dir=$DIR" >> $GITHUB_OUTPUT
