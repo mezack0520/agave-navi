@@ -24,6 +24,7 @@ on:
       - 'scripts/coverage-sweep.py'
       - 'scripts/check-cancelled.py'
       - 'scripts/ig-organizer-watch.py'
+      - 'scripts/iglib.py'
       # sitelib は生成物すべての単一情報源(会場スラッグ・CSS/JS版数・
       # 日付整形)。ここを直しても再生成が走らないので、翌朝まで本番は
       # 旧版のままだった。2026-09-17、会場ローマ字URLを2件足した直後に
@@ -77,7 +78,7 @@ jobs:
         run: |
           FILES=$(git diff --name-only HEAD^ HEAD || true)
           echo "$FILES"
-          if echo "$FILES" | grep -qE '^scripts/(coverage-sweep|check-cancelled|ig-organizer-watch)\.py$'; then
+          if echo "$FILES" | grep -qE '^scripts/(coverage-sweep|check-cancelled|ig-organizer-watch|iglib)\.py$'; then
             echo "crawl=true" >> $GITHUB_OUTPUT
           else
             echo "crawl=false" >> $GITHUB_OUTPUT
