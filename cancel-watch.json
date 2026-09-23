@@ -3,28 +3,11 @@
   "sweptOn": "2026-09-23",
   "stats": {
     "targets": 26,
-    "fetched": 22
+    "fetched": 26
   },
-  "errors": [
-    "isij-big-bazaar-2026-09-27: URLError http://isij.net/",
-    "on-the-plants-vol9-fukuoka-2026-10: URLError https://ontheplants.com/",
-    "botanical-life-kasama-2026-11: URLError https://bookkasama.com/bot2611.html",
-    "isij-big-bazaar-2026-11-22: URLError http://isij.net/"
-  ],
+  "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "roots-market-inage-2026-10",
-      "name": "ROOTS MARKET",
-      "date": "2026-10-25",
-      "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-      "why": "弱い語(中止)＋ページが変わった",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "mushi-wo-taberu-shokubutsuten-2026": {
       "url": "https://www.sakuyakonohana.jp/event/22168/",
@@ -152,6 +135,24 @@
       "firstSeenOn": "2026-09-16",
       "textOnlyChanges": 1
     },
+    "isij-big-bazaar-2026-09-27": {
+      "url": "http://isij.net/",
+      "checkedOn": "2026-09-23",
+      "signature": {
+        "text": "8d4a1f081bfc1815",
+        "images": "a43a8b04c4332199",
+        "textLen": 6869,
+        "imageCount": 9
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
+    },
     "plants-show-kiryu-2026-autumn": {
       "url": "https://note.com/purveyors/n/nccecb7bfd245",
       "checkedOn": "2026-09-23",
@@ -169,6 +170,24 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 3
+    },
+    "on-the-plants-vol9-fukuoka-2026-10": {
+      "url": "https://ontheplants.com/",
+      "checkedOn": "2026-09-23",
+      "signature": {
+        "text": "d1810f1e7075cccd",
+        "images": "1ac04d43b10efda9",
+        "textLen": 2238,
+        "imageCount": 22
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": false,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
     },
     "wako-jurin-unique-plants-2026-10": {
       "url": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
@@ -341,7 +360,7 @@
         "textLen": 5583,
         "imageCount": 43
       },
-      "prevTextLen": 5524,
+      "prevTextLen": 5583,
       "strong": [],
       "weak": [
         "中止"
@@ -405,6 +424,42 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 3
+    },
+    "botanical-life-kasama-2026-11": {
+      "url": "https://bookkasama.com/bot2611.html",
+      "checkedOn": "2026-09-23",
+      "signature": {
+        "text": "4577a10f8338a0d7",
+        "images": "372c61ca743c69b7",
+        "textLen": 15721,
+        "imageCount": 600
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
+    },
+    "isij-big-bazaar-2026-11-22": {
+      "url": "http://isij.net/",
+      "checkedOn": "2026-09-23",
+      "signature": {
+        "text": "8d4a1f081bfc1815",
+        "images": "a43a8b04c4332199",
+        "textLen": 6869,
+        "imageCount": 9
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": false,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
     },
     "midorigakuen-himeji-2026-11": {
       "url": "https://www.threads.com/@honoka.kakogawa",

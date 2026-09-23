@@ -1,5 +1,5 @@
 {
-  "total": 544,
+  "total": 500,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -905,10 +905,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-10-25 roots-market-inage-2026-10: 弱い語(中止)＋ページが変わった"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -949,13 +947,8 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 4,
-      "items": [
-        "取得できなかった: botanical-life-kasama-2026-11: URLError https://bookkasama.com/bot2611.html",
-        "取得できなかった: isij-big-bazaar-2026-09-27: URLError http://isij.net/",
-        "取得できなかった: isij-big-bazaar-2026-11-22: URLError http://isij.net/",
-        "取得できなかった: on-the-plants-vol9-fukuoka-2026-10: URLError https://ontheplants.com/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },
@@ -975,57 +968,17 @@
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
-      "count": 1,
-      "items": [
-        "2026-09-27 fukuoka-green-party-7th-2026: @fukuoka_green_party の 2026-09-16 の投稿に「中止のお知らせ」 https://www.instagram.com/p/DdV7G_1oGyY/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
       "severity": "urgent"
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 40,
+      "count": 2,
       "items": [
         "@anrigarden 2026-10-16: 2026年沖縄市 秋の大植木市 開催決意! 会場・沖縄市農民研修センター 日程・2026年10月16日(金曜日)〜25日 https://www.instagram.com/p/DdDGQy9yd9S/",
-        "@ayahadio.co.jp 2026-10-03,2026-10-04,2026-10-10,2026-10-11: \\豪華講師陣がやってくる!参加無料!/ 🍎果樹の育て方なら 三輪正幸先生 10月3日(土)111:00~ 214:30~ https://www.instagram.com/reel/DdbBy5AD2wB/",
-        "@bauhaus_plus 2026-09-27: . 【 はじめてのショールーム 】開催📣 ⁡ 💭“どこで家を建てたらいいか”わからない?! 💭⁡ショールームは”いつ見に https://www.instagram.com/p/Ddi0SxIEv0B/",
-        "@bauhaus_plus 2026-11-30: . 【 期間限定モデルハウス 】📍松阪市 「リアルなハワイ」に徹底的にこだわった ガレージ付きのハワイアンスタイル平屋  https://www.instagram.com/p/DdbR2apkkpz/",
-        "@bhms_garden 2026-09-27: イベント出店のお知らせ📢 🌿 かんきょうフェアせき🌿 毎年開催されているこちらのイベント、 バムズ、初参加します。(キリ https://www.instagram.com/p/DdagGR1mNvX/",
-        "@bocchi_syokudou 2026-09-26: 皆さんこんにちは♪ 今日はめちゃくちゃ暑い🫠 植物達も喜んです🪴🪻 さて👇 🌿🔥 今週末は名古屋へ! 🔥🌿 9月26日( https://www.instagram.com/p/Ddk70qZiQ4E/",
-        "@botalife_pachy 2027-01-03: 【育成コンテスト エントリー受付のお知らせ】 1/3~開始しておりました「スナップドラゴン×Fo-222」での育成コンテ https://www.instagram.com/p/DdD6VRLlMqW/",
-        "@d.plants.s 2026-10-04: 10月4日(日)は alive_masuda ALIVEへ集合!!️ アーティスト揃いの恒例イベントです!!️ Stun https://www.instagram.com/p/Ddh3wDrouNs/",
-        "@earthwalk_plants 2026-09-23: . 流しの植物屋EARTHWALK PLANTS です🌏 イベント出店告知 めちゃくちゃ直前になりましたが、こちらのイベ https://www.instagram.com/p/DdeGCH4AZ8P/",
-        "@engei_edamame 2026-10-02: 2026/10/02(金) やさしいおまめ自家焙煎珈琲 coffee_emiko 10:00〜13:30 店頭での珈琲の https://www.instagram.com/p/DddcfxpzNkc/",
-        "@engei_edamame 2026-10-02: 2026/10/02(金) 耳ツボジュエリースケジュール 110:30❌ 211:00❌ 311:30❌ 412:00❌ https://www.instagram.com/p/DdF1e9Fk9Ag/",
-        "@gamagori_taniku_festa 2026-09-30: こんにちは😊 第7回蒲郡多肉フェスタ出店者様募集 9/30(水)締め切りです 多肉植物、それに関する雑貨の店舗様 大募集 https://www.instagram.com/p/DdnLS_9SlX-/",
-        "@garden_messe 2026-09-26: ❁⃘*.゚ こんにちは! 台風一過でとても久しぶりのお日様です☀️😭 ⁡ シルバーウィークになってから、 やっとの貴重な https://www.instagram.com/p/DdkivlVTIvP/",
-        "@garden_messe 2026-09-23,2026-09-30: ❁⃘*.゚ こんにちは🌸 ⁡ 先週末もたくさんのお客様にご来店頂き ありがとうございました🙏☺ ⁡ 今週末からは 5連休 https://www.instagram.com/p/DdSuz0nz-zG/",
-        "@kagoen_nursery 2026-09-26: #Repost g.g.gardens with use.repost ・・・ ✈️ ✈️イベント情報✈️ 2026年9 https://www.instagram.com/p/DdbIwE3n5Zk/",
-        "@kagoen_nursery 2026-09-26: 第13回 花郷園秋の芸術植物祭り】 🪴102周年記念スペシャル🪴 日時:2026年10/10(土)11(日) 10:00 https://www.instagram.com/reel/DdJQ3yZRAHx/",
-        "@minicar_ya_san 2026-11-15: ミニカー屋さんの出店イベント 🎉第36回 筑紫会学園祭🎉 「地域と笑顔でつながる つくしの輪2026」 赤い羽根共同募金 https://www.instagram.com/p/DdfEx-vTPz2/",
-        "@minicar_ya_san 2026-11-03: ミニカー屋さんの出店イベント 🌸桜川大作戦🌸 第5回 秋の縁日祭 今年もさらにパワーアップして開催決定✨ お子さまも大人 https://www.instagram.com/p/DdfEjCdzjWm/",
-        "@minicar_ya_san 2026-10-10: ミニカー屋さんの出店イベント🚗 令和8年10月10日(土)10時〜 🎉マカパン14周年祭🎉 いつもマカパンをご愛顧いただ https://www.instagram.com/p/DdOoBv2vEiY/",
-        "@mononoke_botanical_garden 2026-10-09,2026-11-21: 白くて肉厚、短い葉をワサワサ生やす可愛い子。 かなり初期の胞子培養からの選抜個体です。 3年以上経ってこのサイズならかな https://www.instagram.com/reel/Ddm-u36veWP/",
-        "@mononoke_botanical_garden 2026-10-09,2026-11-21: 尖りまで少し長めなので、流行りの王道スタイルではないけど、なかなか面白くなってくれそう。 全然ミズゴケつけてないから成長 https://www.instagram.com/reel/DdaATJjT4Tb/",
-        "@mononoke_botanical_garden 2026-10-09,2026-11-21: 白い胞子葉をシャランと枝垂れるP.willinckii moonlight。 The willinckiiといった姿に育 https://www.instagram.com/reel/DdPjuFnTQAQ/",
-        "@mononoke_botanical_garden 2026-10-09,2026-11-21: 石化とまではいきませんが胞子葉は肉厚、貯水葉もなぞの折れ線?が入る癖強めの一株。 FFP(FSQ×Flame×Phoen https://www.instagram.com/p/DdNBv1XE4eE/",
-        "@mononoke_botanical_garden 2026-10-09,2026-11-21: 細くて小さい、めんこいドワーフ。 2024年5月に輸入したときはドワーフセレクトではありませんでした。 その時一緒に来た https://www.instagram.com/reel/DdKmcF0zEbF/",
-        "@mononoke_botanical_garden 2026-10-09,2026-11-21: 胞子葉も貯水葉も癖だらけ... 石化veitchiiです。 去年ネームドされP.veitchii \"Stonehenge https://www.instagram.com/reel/DdH3i7zT4nD/",
-        "@robingarden02 2026-10-21: 10月21日(水) ギャザリング&寄せ植えのフリーレッスンを開催します! サンプル画像は現在のものになりますが、当日は秋 https://www.instagram.com/p/DdQA7XbE-6w/",
-        "@shikokuzouen 2026-09-27,2026-10-27: おはようございます! 昨日はディッキアイベント\"Tick-Tick\" ディッキアのほうたくさんお迎えいただきまことにあり https://www.instagram.com/p/DdnEQnJhoJB/",
-        "@shikokuzouen 2026-09-24,2026-10-27: 創作の秋🍂ー! 秋の夜長に創作なんてなんか憧れちゃいますね😊 多肉植物ファンにとってー ここ最近大人気の\"モルタル造形\" https://www.instagram.com/p/DdfJbHfgYno/",
-        "@siesta0890 2026-10-01,2026-10-17: * \\ワークショップのお知らせ🎃🌿/ 少しずつ秋らしさを感じる季節になってきました🍂 10月のワークショップは、ハロウィ https://www.instagram.com/p/DdnUIM7T4Dg/",
-        "@taniku.no.shizuku 2026-09-23: 本日は サンタフェ学校編ありがとうございました🤍 ⁡ 今日は 「これ欲しかった!」と言ってもらえる苗を 持っていけたこと https://www.instagram.com/p/Ddgm1gHnw44/",
-        "@taniku.no.shizuku 2026-09-23,2026-09-26,2026-09-27,2026-10-24,2026-11-01,2026-11-08,2026-11-28,2026-11-29,2026-12-12,2026-12-19,2026-12-27: 大好きで沢山作ってますが 年中花芽あげるので不思議でたまりません😗 ⁡ 春以外は使わないので いらない花芽はどんどんカッ https://www.instagram.com/p/DdJZXqhH49A/",
-        "@taniten_kengo202 2026-09-26: ☆ こんにちは♪ 車に積み込まれたままの商品の一部😊 🌊海系🏖️ 次の出店は、今週末土曜日!!️ 9月26日です 色々あ https://www.instagram.com/p/DdnhEl0EcmK/",
-        "@taniten_kengo202 2026-09-26: ☆ こんにちは♪ 今日は暑くて良い天気です 次の出店イベントは 🎈9月26日 土曜日 『狭山蚤の市』 です 台風の影響で https://www.instagram.com/p/DdlPhWmiWIY/",
-        "@taniten_kengo202 2026-09-30: ☆ こんにちは♪ 〜暮らしをつくる人募集〜 12月26.27日開催予定 『enjoy place』 特別編 古道具と植物 https://www.instagram.com/p/DdiXAu-EXiU/",
-        "@taniten_kengo202 2026-10-03,2026-10-11,2026-10-17,2026-10-24,2026-10-31,2026-11-01,2026-11-07,2026-11-14,2026-11-28: ☆ . . お世話になります 今年も残すは3ヶ月! \"古道具 TANITEN\" 10月・11月出店イベントのお知らせです https://www.instagram.com/p/DdfRGBwT9wo/",
-        "@temo2929 2026-09-26: いとうぐりーんさんから多肉が到着しました! 夏を越したと思えない可愛いらしい多肉たち 今回も熊童子が3種類に子猫の爪とも https://www.instagram.com/p/DdbNRsdCZQX/",
-        "@temo2929 2026-09-26: 寄せ植えのパープルヘイズが可愛いすぎる💕 モリモリはみ出る勢い! 売らずにここから寄せ植えに拝借する予感笑 セダムってカ https://www.instagram.com/p/DdYZ9BviYa7/",
-        "@temo2929 2026-09-26: つぶつぶ多肉はまだ流行ってますか😆🤔 あ、昔から可愛くて人気ですけどね☺️ 増やしやすいけど夏に激減します。 今年はコツ https://www.instagram.com/p/DdWBrpmp7_P/",
-        "@temo2929 2026-09-26: アエオたち、おはよう☀ 雨ざらしにして強制?お目覚め? (2枚目は水やり前) 9月26日のイベントにも状態良いのは持って https://www.instagram.com/p/DdKovqSAdkj/",
-        "@toky.jp 2026-09-23: . いつもTOKYのオンラインショップをご利用いただきありがとうございます。 移転作業の為、現在オンラインショップは一時 https://www.instagram.com/p/DdVaUe_TqEu/"
+        "@kagoen_nursery 2026-09-26: 第13回 花郷園秋の芸術植物祭り】 🪴102周年記念スペシャル🪴 日時:2026年10/10(土)11(日) 10:00 https://www.instagram.com/reel/DdJQ3yZRAHx/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
