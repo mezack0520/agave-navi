@@ -34,17 +34,14 @@ import re
 import sys
 import time
 import unicodedata
-import urllib.error
-import urllib.parse
-import urllib.request
 from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sitelib  # noqa: E402
+import iglib  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, 'organizer-posts.json')
-GRAPH = 'https://graph.facebook.com/v23.0'
 
 HORIZON_DAYS = 120      # これより先の回の主催は見ない
 POSTS_PER_USER = 12
@@ -52,7 +49,7 @@ CANCEL_LOOKBACK = 45    # 中止の言い切りを探す投稿の古さ
 UNLISTED_LOOKBACK = 14  # 取りこぼし候補を探す投稿の古さ
 UNLISTED_AHEAD = 150    # 投稿に出た日付が今日から何日先までなら候補にするか
 # レート制限の兆候。これが出たら残りを取らずに打ち切る(翌日また回る)
-RATE_CODES = {4, 17, 32, 613, 80002}
+RATE_CODES = iglib.RATE_CODES
 
 
 def _load_cancel_rules():
@@ -227,29 +224,15 @@ def _looks_like_own_announcement(cap):
     return sum(1 for w in _OWN_EVENT if w in cap) >= 2
 
 
-def _api(path, token, **params):
-    params['access_token'] = token
-    url = f'{GRAPH}/{path}?' + urllib.parse.urlencode(params)
-    try:
-        with urllib.request.urlopen(url, timeout=40) as r:
-            return json.load(r), None
-    except urllib.error.HTTPError as ex:
-        try:
-            err = json.loads(ex.read().decode('utf-8', 'replace')).get('error') or {}
-        except Exception:
-            err = {'message': f'HTTP {ex.code}'}
-        return None, err
-    except Exception as ex:  # 接続系
-        return None, {'message': str(ex)}
 
 
 def fetch_posts(ig_id, username, token):
-    fields = (f'business_discovery.username({username})'
-              f'{{username,media.limit({POSTS_PER_USER}){{caption,timestamp,permalink}}}}')
-    data, err = _api(ig_id, token, fields=fields)
+    bd, err = iglib.business_discovery(
+        ig_id, username, token,
+        f'username,media.limit({POSTS_PER_USER}){{caption,timestamp,permalink}}')
     if err:
         return None, err
-    media = ((data.get('business_discovery') or {}).get('media') or {}).get('data') or []
+    media = (bd.get('media') or {}).get('data') or []
     posts = [{'timestamp': m.get('timestamp'), 'permalink': m.get('permalink'),
               'caption': (m.get('caption') or '')[:800]} for m in media]
     return posts, None
@@ -275,7 +258,7 @@ def main():
     if a.limit:
         names = names[:a.limit]
 
-    me, err = _api('me', token, fields='instagram_business_account')
+    me, err = iglib.call('GET', 'me', token, fields='instagram_business_account')
     ig_id = ((me or {}).get('instagram_business_account') or {}).get('id')
     out = {'_note': ('主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日'
                      'まるごと書き換える。signals.cancel は urgent、signals.unlisted は'

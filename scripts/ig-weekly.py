@@ -26,16 +26,15 @@ import json
 import os
 import sys
 import time
-import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sitelib  # noqa: E402
+import iglib  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE = os.path.join(REPO, 'ig-posts.json')
-GRAPH = 'https://graph.facebook.com/v23.0'
 
 W, H = 1080, 1350
 BLACK = (11, 11, 11)
@@ -353,20 +352,7 @@ def build(out, today):
     return manifest
 
 
-def _api(method, path, token, **params):
-    params['access_token'] = token
-    data = urllib.parse.urlencode(params).encode()
-    url = f'{GRAPH}/{path}'
-    if method == 'GET':
-        req = urllib.request.Request(url + '?' + data.decode())
-    else:
-        req = urllib.request.Request(url, data=data, method='POST')
-    try:
-        with urllib.request.urlopen(req, timeout=60) as r:
-            return json.load(r)
-    except urllib.error.HTTPError as ex:
-        body = ex.read().decode('utf-8', 'replace')
-        raise RuntimeError(f'{method} {path}: HTTP {ex.code} {body}') from None
+_api = iglib.req
 
 
 def _wait_public(url, limit=900):
@@ -459,21 +445,15 @@ def main():
         token = os.environ.get('IG_PAGE_TOKEN', '').strip()
         if not token:
             raise SystemExit('IG_PAGE_TOKEN が無い')
-        me = _api('GET', 'me', token, fields='id,name,instagram_business_account{id,username}')
-        iga = me.get('instagram_business_account') or {}
-        igu = iga.get('username')
-        lines = [f'ページ: {me.get("name")} / Instagram: @{igu}' if igu
-                 else f'ページ: {me.get("name")} / Instagram が紐付いていない']
+        ig_id, igu, page = iglib.own_account(token)
+        lines = [f'ページ: {page} / Instagram: @{igu}' if igu
+                 else f'ページ: {page} / Instagram が紐付いていない']
         # 主催者の見張り(ig-organizer-watch.py)が使う Business Discovery も確かめる。
         # 投稿とは要る権限が違う(instagram_manage_insights)ので、片方だけ通ることがある
         if igu:
-            try:
-                r = _api('GET', iga['id'], token,
-                         fields='business_discovery.username(instagram){username,media_count}')
-                bd = r.get('business_discovery') or {}
-                lines.append(f'Business Discovery: OK (@{bd.get("username")} {bd.get("media_count")}件)')
-            except RuntimeError as ex:
-                lines.append(f'Business Discovery: NG {str(ex)[:200]}')
+            bd, err = iglib.business_discovery(ig_id, 'instagram', token, 'username,media_count')
+            lines.append(f'Business Discovery: NG {err.get("message", "")[:200]}' if err
+                         else f'Business Discovery: OK (@{bd.get("username")} {bd.get("media_count")}件)')
         print('\n'.join(lines))
         summ = os.environ.get('GITHUB_STEP_SUMMARY')
         if summ:
