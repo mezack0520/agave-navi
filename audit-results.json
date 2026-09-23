@@ -1,5 +1,5 @@
 {
-  "total": 522,
+  "total": 512,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -990,27 +990,17 @@
     },
     "organizer_watch_broken": {
       "title": "主催者のInstagramの見張りが機能していない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "主催 82 件のうち1件も取得できていない"
+      ],
       "note": "IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない",
       "severity": "urgent"
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 11,
-      "items": [
-        "2026-09-01 onokoro-green-festa-2026-09: https://www.instagram.com/reel/DdUvFp6Tmc2/（caption）",
-        "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09: https://www.instagram.com/reel/Ddm-SCbCdQq/（caption）",
-        "2026-09-27 exploring-unpredictable-plants-2026-09: https://www.instagram.com/reel/DdgpYrvT-dY/（caption）",
-        "2026-10-11 botanical-link-popup-kasugai-2026-10: https://www.instagram.com/p/DdOQWVaEvLb/（caption）",
-        "2026-10-16 okinawa-shi-aki-no-dai-uekiichi-2026: https://www.instagram.com/p/DdDGQy9yd9S/（sourcePost）",
-        "2026-10-17 plant-freaks-olinas-2026-10: https://www.instagram.com/p/DdV-1BMmhC9/（caption）",
-        "2026-10-25 american-and-plants-sano-2026-10: https://www.instagram.com/p/DcfWyKgSfM1/（caption）",
-        "2026-11-21 marutto-shokubutsu-fes-2026-11: https://www.instagram.com/p/Dcvqu4hzPDo/（sourcePost）",
-        "2026-11-22 aki-no-taniku-picnic-ibusuki-2026-11: https://www.instagram.com/p/DbeEndFEwBe/（sourcePost）",
-        "2026-12-12 love-green-market-vol3-ichihara-2026-12: https://www.instagram.com/p/Dc8UCQ_KQXK/（caption）",
-        "2026-12-26 enjoy-place-bangaihen-2026-12: https://www.instagram.com/p/DdiXAu-EXiU/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
