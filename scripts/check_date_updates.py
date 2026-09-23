@@ -30,6 +30,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sitelib import (compact_date, is_aggregator_url, meta_dates,
+                     stated_period_dates,
                      page_is_wrong_place)  # 判定の単一情報源
 
 # 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
@@ -297,6 +298,19 @@ def main():
         # daily が頁の「更新日：9月2日」で 09-19 → 09-02 に書き戻した。**
         # 検査 event_start_is_page_meta(2026-09-12 追加)は鳴っていたが、
         # 鳴らす側にしか判定が無く、書く側は素通しだった。
+        # 肩書付きで「開催期間」を名乗っている頁なら、そこに出た日だけを候補にする。
+        # 肩書の無い投稿日が題のそばに出る作りだと、名前との近さで並べた
+        # extract_dates がそちらを先頭にする(2026-09-23 のプレミアム ロック
+        # ガーデン フェスタ2026)。meta_dates は肩書を見るのでこの型では効かない。
+        stated = stated_period_dates(html)
+        if stated:
+            kept = [c for c in dates
+                    if (lambda d: (d.month, d.day) in stated)(
+                        datetime.strptime(c["date"], "%Y-%m-%d"))]
+            if kept and len(kept) != len(dates):
+                print(f"  開催期間の名乗りに限定: {len(dates)}件 → {len(kept)}件")
+                dates = kept
+
         meta = meta_dates(html)
         if meta:
             kept = [c for c in dates
