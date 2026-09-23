@@ -151,11 +151,20 @@ def plan_slides(evs, one_line=False):
 # ---------------------------------------------------------------- 画像
 
 def _font(size, weight='Bold'):
+    """Noto Sans CJK JP。無い太さは近い太さに落とす。
+
+    Actions の ubuntu に apt で入る fonts-noto-cjk は Regular と Bold しか無い
+    (Black / Medium は fonts-noto-cjk-extra)。太さを決め打ちすると CI だけで
+    落ちる(2026-09-23 の初回実行で Black が無く build が空振りした)。
+    """
     from PIL import ImageFont
-    for p in (f'/usr/share/fonts/opentype/noto/NotoSansCJK-{weight}.ttc',
-              f'/usr/share/fonts/noto-cjk/NotoSansCJK-{weight}.ttc'):
-        if os.path.exists(p):
-            return ImageFont.truetype(p, size, index=0)  # index 0 = JP
+    fallback = {'Black': ['Black', 'Bold'], 'Medium': ['Medium', 'Regular'],
+                'Bold': ['Bold'], 'Regular': ['Regular']}
+    for w in fallback.get(weight, [weight]) + ['Bold', 'Regular']:
+        for p in (f'/usr/share/fonts/opentype/noto/NotoSansCJK-{w}.ttc',
+                  f'/usr/share/fonts/noto-cjk/NotoSansCJK-{w}.ttc'):
+            if os.path.exists(p):
+                return ImageFont.truetype(p, size, index=0)  # index 0 = JP
     raise SystemExit('Noto Sans CJK が無い。fonts-noto-cjk を入れる')
 
 
