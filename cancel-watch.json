@@ -2,20 +2,18 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-23",
   "stats": {
-    "targets": 25,
-    "fetched": 24
+    "targets": 26,
+    "fetched": 26
   },
-  "errors": [
-    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
-  ],
+  "errors": [],
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "premium-rock-garden-festa-2026",
-      "name": "プレミアム ロックガーデン フェスタ2026",
-      "date": "2026-09-09",
-      "url": "https://www.kayu-style-botaniqa-atelier.com/information/%e7%a7%8b%e3%81%ae%e3%83%93%e3%83%83%e3%82%b0%e3%83%95%e3%82%a7%e3%82%b9%e3%82%bf%e3%80%8e%e3%83%97%e3%83%ac%e3%83%9f%e3%82%a2%e3%83%a0-%e3%83%ad%e3%83%83%e3%82%af%e3%82%ac%e3%83%bc%e3%83%87%e3%83%b3",
-      "why": "公式ページが変わった(本文・画像)",
+      "slug": "roots-market-inage-2026-10",
+      "name": "ROOTS MARKET",
+      "date": "2026-10-25",
+      "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
+      "why": "弱い語(中止)＋ページが変わった",
       "changed": [
         "本文",
         "画像"
@@ -23,6 +21,24 @@
     }
   ],
   "pages": {
+    "mushi-wo-taberu-shokubutsuten-2026": {
+      "url": "https://www.sakuyakonohana.jp/event/22168/",
+      "checkedOn": "2026-09-23",
+      "signature": {
+        "text": "14e7109db471d66e",
+        "images": "4996b58247d61a08",
+        "textLen": 12167,
+        "imageCount": 77
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 20,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
+    },
     "onokoro-green-festa-2026-09": {
       "url": "https://awaji-botanicalgarden.com/onokoro-green-festa/",
       "checkedOn": "2026-09-23",
@@ -50,7 +66,7 @@
         "textLen": 2028,
         "imageCount": 8
       },
-      "prevTextLen": 1999,
+      "prevTextLen": 2028,
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -212,7 +228,7 @@
         "textLen": 342,
         "imageCount": 10
       },
-      "prevTextLen": null,
+      "prevTextLen": 342,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -329,21 +345,39 @@
       "firstSeenOn": "2026-09-08",
       "textOnlyChanges": 0
     },
+    "jurian-aki-taniku-cactus-2026-10": {
+      "url": "https://www.jurian.or.jp/event/article/?id=1475",
+      "checkedOn": "2026-09-23",
+      "signature": {
+        "text": "bf7de8e13bbf97cd",
+        "images": "8859875c86a5399f",
+        "textLen": 1287,
+        "imageCount": 20
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
+    },
     "roots-market-inage-2026-10": {
       "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
       "checkedOn": "2026-09-23",
       "signature": {
-        "text": "6aa1187460dca088",
-        "images": "516a081e940c3013",
-        "textLen": 5493,
-        "imageCount": 43
+        "text": "464cdfe3d57a95c2",
+        "images": "8af8033d14e0b6aa",
+        "textLen": 5524,
+        "imageCount": 44
       },
-      "prevTextLen": null,
+      "prevTextLen": 5493,
       "strong": [],
       "weak": [
         "中止"
       ],
-      "datesNamed": 8,
+      "datesNamed": 9,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-23",
@@ -430,7 +464,7 @@
         "textLen": 6869,
         "imageCount": 9
       },
-      "prevTextLen": null,
+      "prevTextLen": 6869,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -448,7 +482,7 @@
         "textLen": 7,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 7,
       "strong": [],
       "weak": [],
       "datesNamed": 0,

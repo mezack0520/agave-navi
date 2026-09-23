@@ -1,5 +1,5 @@
 {
-  "total": 499,
+  "total": 500,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。**CIコミットが1件も見えない(shallow clone か履歴不足)。この検査は効いていない**",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -744,14 +744,15 @@
     },
     "workflow_secrets": {
       "title": "workflowが参照しているsecret",
-      "count": 6,
+      "count": 7,
       "items": [
         "BRAVE_API_KEY",
         "GITHUB_TOKEN",
         "GMAIL_APP_PASSWORD",
         "GMAIL_USER",
         "GOOGLE_API_KEY",
-        "GOOGLE_CSE_ID"
+        "GOOGLE_CSE_ID",
+        "IG_PAGE_TOKEN"
       ],
       "note": "未設定でも多くのstepは失敗せず黙って空値で動く。これは使用中のsecretの棚卸しで、減らす対象ではない",
       "severity": "metric"
@@ -793,14 +794,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 5,
-      "items": [
-        "2026-09-23 TaiShoDoがシルバーウィークSALE2026を開催、塊根植物とアガベの在庫商品が10%OFF",
-        "2026-09-23 咲くやこの花館が虫を食べる植物展2026を開催、世界の食虫植物約100種類とパルダリウム教室を大阪で展開",
-        "2026-09-25 道の駅花の駅千曲川が花の駅ガーデンツアー2026を開催、樹木医山本裕美さんが植物の育て方を紹介",
-        "2026-09-26 POPUP 旅する植物展 Final",
-        "2026-11-01 SOUPer MARKET 2026"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -912,7 +907,7 @@
       "title": "載せた回に中止・延期の兆候がある",
       "count": 1,
       "items": [
-        "2026-09-09 premium-rock-garden-festa-2026: 公式ページが変わった(本文・画像)"
+        "2026-10-25 roots-market-inage-2026-10: 弱い語(中止)＋ページが変わった"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -954,10 +949,8 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 1,
-      "items": [
-        "取得できなかった: jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },
@@ -974,6 +967,29 @@
       "items": [],
       "note": "中止・延期の語は出ていないが、頁から中身が消えている。案内の取り下げ・別ページへの差し替え・出典の破損のどれか。JS で描く頁(Notion系など)は取得のたびに描画量が変わるので、それだけのこともある。一次情報を開いて scripts/cancel-reviewed.json に判断を書けば黙る（cancel_suspects と同じ規則）",
       "severity": "info"
+    },
+    "organizer_cancel_signal": {
+      "title": "主催者のInstagramに中止・延期の告知が出ている",
+      "count": 0,
+      "items": [],
+      "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
+      "severity": "urgent"
+    },
+    "organizer_unlisted_dates": {
+      "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
+      "count": 0,
+      "items": [],
+      "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
+      "severity": "info"
+    },
+    "organizer_watch_broken": {
+      "title": "主催者のInstagramの見張りが機能していない",
+      "count": 1,
+      "items": [
+        "主催 102 件のうち1件も取得できていない"
+      ],
+      "note": "IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない",
+      "severity": "urgent"
     },
     "jsonld_invalid": {
       "title": "JSON-LDがJSONとして壊れているページ(リッチリザルトが落ちる)",
@@ -1125,8 +1141,15 @@
     },
     "cross_script_duplicate": {
       "title": "同じ名前が2つ以上のスクリプトにある",
-      "count": 0,
-      "items": [],
+      "count": 6,
+      "items": [
+        "GRAPH: ig-organizer-watch.py, ig-weekly.py",
+        "HORIZON_DAYS: check-cancelled.py, ig-organizer-watch.py",
+        "_api: ig-organizer-watch.py, ig-weekly.py",
+        "analyze: check-cancelled.py, ig-organizer-watch.py",
+        "load_events: enrich_events.py, ig-weekly.py",
+        "targets: fetch-event-images.py, ig-organizer-watch.py"
+      ],
       "note": "sitelib へ寄せるか、役割が違うなら名前を分ける。規則が2か所にあると、足した日にどちらか片方だけが更新される。揃える意味の無い汎用名は audit.py の _DUP_OK に理由付きで足す",
       "severity": "info"
     },
