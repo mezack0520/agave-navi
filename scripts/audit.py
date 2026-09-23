@@ -2797,6 +2797,60 @@ def main():
         '（cancel_suspects と同じ規則）',
         severity='info')
 
+    # 16z. 主催者の Instagram(2026-09-23)。
+    #      check-cancelled.py は Instagram を SKIP_DOMAINS で見ていないので、
+    #      出典が Instagram の回は中止されても気づけなかった。
+    #      scripts/ig-organizer-watch.py が Business Discovery で主催の最新投稿を
+    #      取り、中止の言い切りがその回を指していれば signals.cancel に出す。
+    #      一次情報を見て記録した回(cancel-reviewed.json)は同じ規則で黙る。
+    _ow = load_json('organizer-posts.json', {}) or {}
+    _ow_on = str(_ow.get('checkedOn') or '')
+    _ow_cancel = []
+    for _c in ((_ow.get('signals') or {}).get('cancel') or []):
+        _sl = _c.get('slug', '')
+        if _ow_on and _reviewed.get(_sl, '') >= _ow_on:
+            continue
+        _ow_cancel.append(
+            f"{_c.get('date','')} {_sl}: @{_c.get('username','')} の "
+            f"{_c.get('postedOn','')} の投稿に「{'・'.join(_c.get('words') or [])}」 "
+            f"{_c.get('permalink','')}")
+    add('organizer_cancel_signal', '主催者のInstagramに中止・延期の告知が出ている',
+        sorted(set(_ow_cancel)),
+        '投稿を開いて確認する。中止なら events.json の eventStatus を cancelled に'
+        'して cancelledOn / cancelReason を入れる(削除しない)。空振りなら '
+        'scripts/cancel-reviewed.json に判断を書けば黙る')
+    _ow_unl = [f"@{_u.get('username','')} {','.join(_u.get('dates') or [])}: "
+               f"{_u.get('excerpt','')[:60]} {_u.get('permalink','')}"
+               for _u in ((_ow.get('signals') or {}).get('unlisted') or [])]
+    add('organizer_unlisted_dates', '主催者の最近の投稿に、当サイトに無い先の日付が出ている',
+        _ow_unl,
+        '次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。'
+        '主催の新しい回なら掲載し、出店告知なら何もしない',
+        severity='info')
+    _ow_broken = []
+    if not _ow_on:
+        # 初回の巡回より前。ci-generated-paths は実在するパスしか受け付けないので
+        # 空の器だけ先に置いてある
+        _ow_broken.append('まだ一度も取得していない(ig-organizer-watch.py が走っていない)')
+    else:
+        if _ow.get('fatal'):
+            _ow_broken.append(str(_ow['fatal']))
+        _ow_t = int((_ow.get('stats') or {}).get('targets') or 0)
+        _ow_f = int((_ow.get('stats') or {}).get('fetched') or 0)
+        if _ow_t and _ow_f == 0:
+            _ow_broken.append(f'主催 {_ow_t} 件のうち1件も取得できていない')
+        if _ow_on and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _ow_on):
+            import datetime as _dtow
+            _ow_age = (_dtow.date.fromisoformat(today_s)
+                       - _dtow.date.fromisoformat(_ow_on)).days
+            if _ow_age >= 3:
+                _ow_broken.append(f'最後の取得が {_ow_on}（{_ow_age}日前）')
+    add('organizer_watch_broken', '主催者のInstagramの見張りが機能していない',
+        _ow_broken,
+        'IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。'
+        'この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない',
+        severity='info' if not _ow_on else 'urgent')
+
     # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
     #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
     #     さらに Event の日付・名称が events.json と一致するかを見る。
