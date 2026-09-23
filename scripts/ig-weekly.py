@@ -293,11 +293,17 @@ def caption(sat, sun, pages, n):
     head = (f'今週末 {sat.month}/{sat.day}(土)・{sun.month}/{sun.day}(日) の'
             f'アガベ・塊根・多肉・サボテンのイベント {n}件\n\n')
     body = []
+    prev = None
     for region, rows in pages:
-        body.append(f'【{region}】')
+        # 画像は高さで頁を割るので同じ地域が続くことがある。本文では見出しを1回にする
+        if region != prev:
+            if prev is not None:
+                body.append('')
+            body.append(f'【{region}】')
+        prev = region
         for e in rows:
             body.append(f'{date_label(e, sat, sun)} {e.get("name")}（{e.get("prefecture")}）')
-        body.append('')
+    body.append('')
     tail = ('各イベントの詳細・会場・出典はプロフィールのリンク agave-navi.com から。\n'
             '主催者の公式発信を確認して掲載しています。お出かけ前に主催者の最新情報もご確認ください。\n\n'
             + HASHTAGS)
