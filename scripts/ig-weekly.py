@@ -459,10 +459,26 @@ def main():
         token = os.environ.get('IG_PAGE_TOKEN', '').strip()
         if not token:
             raise SystemExit('IG_PAGE_TOKEN が無い')
-        me = _api('GET', 'me', token, fields='id,name,instagram_business_account{username}')
-        igu = (me.get('instagram_business_account') or {}).get('username')
-        print(f'ページ: {me.get("name")} / Instagram: @{igu}' if igu
-              else f'ページ: {me.get("name")} / Instagram が紐付いていない')
+        me = _api('GET', 'me', token, fields='id,name,instagram_business_account{id,username}')
+        iga = me.get('instagram_business_account') or {}
+        igu = iga.get('username')
+        lines = [f'ページ: {me.get("name")} / Instagram: @{igu}' if igu
+                 else f'ページ: {me.get("name")} / Instagram が紐付いていない']
+        # 主催者の見張り(ig-organizer-watch.py)が使う Business Discovery も確かめる。
+        # 投稿とは要る権限が違う(instagram_manage_insights)ので、片方だけ通ることがある
+        if igu:
+            try:
+                r = _api('GET', iga['id'], token,
+                         fields='business_discovery.username(instagram){username,media_count}')
+                bd = r.get('business_discovery') or {}
+                lines.append(f'Business Discovery: OK (@{bd.get("username")} {bd.get("media_count")}件)')
+            except RuntimeError as ex:
+                lines.append(f'Business Discovery: NG {str(ex)[:200]}')
+        print('\n'.join(lines))
+        summ = os.environ.get('GITHUB_STEP_SUMMARY')
+        if summ:
+            with open(summ, 'a', encoding='utf-8') as f:
+                f.write('### トークンの確認\n\n' + '\n'.join(f'- {x}' for x in lines) + '\n\n')
         if not igu:
             raise SystemExit(1)
         return

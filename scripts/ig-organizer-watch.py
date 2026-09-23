@@ -264,6 +264,19 @@ def main():
             if code in RATE_CODES:
                 stopped = f'{u} でレート制限({code})。残り {len(names) - i} 件は翌日'
                 break
+            # 権限不足(#10)は相手によらず全件で同じ結果になる。最初の3件が
+            # そろって #10 なら打ち切って fatal にする。2026-09-23 の初回は
+            # instagram_manage_insights が無く、102件すべて #10 で回り切っていた
+            if code == 10 and i < 3 and all(
+                    (r.get('error') or '').startswith('(#10)')
+                    for r in out['results'].values()):
+                out['results'][u] = {'ok': False, 'error': msg}
+                if i == 2:
+                    out['fatal'] = ('権限不足(#10)。Business Discovery には '
+                                    'instagram_basic / instagram_manage_insights / '
+                                    'pages_read_engagement を付けたトークンが要る: ' + msg)
+                    break
+                continue
             out['results'][u] = {'ok': False, 'error': msg}
             out['errors'].append(f'@{u}: {msg}')
         else:
