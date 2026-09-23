@@ -296,14 +296,17 @@ def caption(sat, sun, pages, n):
             f'アガベ・塊根・多肉・サボテンのイベント {n}件\n\n')
     body = []
     prev = None
-    for region, rows in pages:
-        # 画像は高さで頁を割るので同じ地域が続くことがある。本文では見出しを1回にする
-        if region != prev:
-            if prev is not None:
-                body.append('')
-            body.append(f'【{region}】')
-        prev = region
+    # 見出しは頁の名前ではなく各回の地域で立てる。画像は高さで頁を割り、
+    # 10枚に収めるため隣の地域を1枚に詰めることがある(頁名「関西・四国」)。
+    # 頁名で見出しを立てると、大阪の回が「関西・四国」の下に並んだ(2026-09-23)
+    for _, rows in pages:
         for e in rows:
+            region = region_of(e)
+            if region != prev:
+                if prev is not None:
+                    body.append('')
+                body.append(f'【{region}】')
+            prev = region
             body.append(f'{date_label(e, sat, sun)} {e.get("name")}（{e.get("prefecture")}）')
     body.append('')
     tail = ('各イベントの詳細・会場・出典はプロフィールのリンク agave-navi.com から。\n'
