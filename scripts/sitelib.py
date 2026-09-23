@@ -18,7 +18,7 @@ DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
 CSS_VERSION = '20260922b'
-JS_VERSION = '20260922b'
+JS_VERSION = '20260923a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 

@@ -127,17 +127,36 @@ def _asp_config():
     return _ASP
 
 
+def aff_url(keyword):
+    """文中リンクの行き先。使えるASPを上から1つ選ぶ。
+
+    以前は Amazon 固定だった。2026-09-23 にアソシエイトが終了し(180日以内に
+    3件の販売に届かず)、固定のままだと成果の付かないリンクを本文に並べ続ける。
+    tag / affiliateId が空のASPは使わない。affiliate.js の buildAspLinks と同じ規則。
+    """
+    from urllib.parse import quote
+    asp = _asp_config()
+    amz = asp.get('amazon') or {}
+    if amz.get('tag'):
+        url = amz.get('searchUrl') or 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}'
+        return url.replace('{keyword}', quote(keyword)).replace('{tag}', amz['tag'])
+    rk = asp.get('rakuten') or {}
+    if rk.get('affiliateId'):
+        target = f'https://search.rakuten.co.jp/search/mall/{keyword}/'
+        return (f'https://hb.afl.rakuten.co.jp/hgc/{rk["affiliateId"]}/?pc='
+                + quote(target, safe=''))
+    return ''
+
+
 def expand_aff(s):
     """{{aff:検索語|リンク文}} → 文中アフィリエイトリンク。
     ステマ規制対応として各リンクに PR 表示を付ける。"""
-    from urllib.parse import quote
 
     def repl(m):
         keyword, label = m.group(1), m.group(2)
-        amz = _asp_config().get('amazon') or {}
-        tag = amz.get('tag', '')
-        url = (amz.get('searchUrl') or 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}')
-        url = url.replace('{keyword}', quote(keyword)).replace('{tag}', tag)
+        url = aff_url(keyword)
+        if not url:
+            return label  # 使えるASPが1つも無いときはリンクにしない
         return (f'<a class="aff-inline" href="{url}" target="_blank" rel="noopener sponsored">'
                 f'{label}<span class="aff-inline-pr">PR</span></a>')
 

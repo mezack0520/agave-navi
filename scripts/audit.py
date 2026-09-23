@@ -2972,6 +2972,29 @@ def main():
     add('rakuten_config_missing', '楽天API設定の欠落(欠けると商品画像が出ずテキスト表示になる)',
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
 
+    # 使えないトラッキングIDのリンクが頁に残っていないか(2026-09-23 追加)。
+    # Amazon アソシエイトが終了して amazon-links.json の tag を空にしても、
+    # 生成し直していない頁や手書きの頁に旧ID agavenavi-22 のリンクが残ると、
+    # 成果の付かない送客を続ける。設定と違う tag= を持つ Amazon リンクを全頁で探す
+    _amz_tag = ((links.get('asp') or {}).get('amazon') or {}).get('tag') or ''
+    _amz_dead = []
+    _AMZ_TAG_RE = re.compile(r'amazon\.co\.jp/[^"\'\s>]*[?&]tag=([A-Za-z0-9_-]+)')
+    for f in sorted(glob.glob(rp('**', '*.html'), recursive=True)):
+        rel = os.path.relpath(f, REPO).replace(os.sep, '/')
+        if rel.startswith(('archive/', 'staging/', 'templates/')):
+            continue
+        try:
+            _txt = open(f, encoding='utf-8').read()
+        except OSError:
+            continue
+        _bad = sorted({t for t in _AMZ_TAG_RE.findall(_txt) if t != _amz_tag})
+        if _bad:
+            _amz_dead.append(f"{rel}: tag={','.join(_bad)}")
+    add('affiliate_dead_tag', '設定に無いトラッキングIDのAmazonリンクが頁に残っている',
+        _amz_dead,
+        'amazon-links.json の asp.amazon.tag と違う ID。成果が付かない。'
+        'ガイドは build-guides.py で作り直す。手書き頁なら直接直す')
+
     # 商品枠の説明文が、その品目を出す月と食い違っていないか(2026-09-14 追加)。
     # affiliate.js は amazon-links.json の season(旬の月の配列)を見て順位を上げるが、
     # label(利用者が読む1行)は季節の語を直に書いている。season の窓と label の語が
