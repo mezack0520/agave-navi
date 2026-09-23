@@ -1,5 +1,5 @@
 {
-  "total": 500,
+  "total": 501,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 56,
+      "count": 57,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "aichin-shokusai-new-year-party-2027",
@@ -311,9 +311,9 @@
         "midorigakuen-himeji-2026-11",
         "mushi-wo-taberu-shokubutsuten-2026",
         "nihon-shaboten-taikai-51st-2026-10",
+        "okinawa-shi-aki-no-dai-uekiichi-2026",
         "on-the-plants-vol9-fukuoka-2026-10",
-        "onokoro-green-festa-2026-09",
-        "orais-party-2026-garden-messe-hachioji"
+        "onokoro-green-festa-2026-09"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -822,7 +822,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 56,
+      "count": 57,
       "items": [
         "2026-07-18 mushi-wo-taberu-shokubutsuten-2026",
         "2026-09-01 onokoro-green-festa-2026-09",
@@ -844,6 +844,7 @@
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
+        "2026-10-16 okinawa-shi-aki-no-dai-uekiichi-2026",
         "2026-10-17 plant-freaks-olinas-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
@@ -862,8 +863,7 @@
         "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
         "2026-11-22 isij-big-bazaar-2026-11-22",
         "2026-11-22 midorigakuen-himeji-2026-11",
-        "2026-11-22 tokimeki-marche-kodaihasu-2026-11",
-        "2026-11-28 botanical-journey-onomichi-2026-11"
+        "2026-11-22 tokimeki-marche-kodaihasu-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1140,11 +1140,10 @@
     },
     "cross_script_duplicate": {
       "title": "同じ名前が2つ以上のスクリプトにある",
-      "count": 6,
+      "count": 5,
       "items": [
-        "GRAPH: ig-organizer-watch.py, ig-weekly.py",
         "HORIZON_DAYS: check-cancelled.py, ig-organizer-watch.py",
-        "_api: ig-organizer-watch.py, ig-weekly.py",
+        "RATE_CODES: ig-organizer-watch.py, iglib.py",
         "analyze: check-cancelled.py, ig-organizer-watch.py",
         "load_events: enrich_events.py, ig-weekly.py",
         "targets: fetch-event-images.py, ig-organizer-watch.py"
