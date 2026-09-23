@@ -23,6 +23,7 @@ on:
       # 手で直したときに確認する経路が無いと、動くかどうかを翌朝まで待つことになる。
       - 'scripts/coverage-sweep.py'
       - 'scripts/check-cancelled.py'
+      - 'scripts/ig-organizer-watch.py'
       # sitelib は生成物すべての単一情報源(会場スラッグ・CSS/JS版数・
       # 日付整形)。ここを直しても再生成が走らないので、翌朝まで本番は
       # 旧版のままだった。2026-09-17、会場ローマ字URLを2件足した直後に
@@ -76,7 +77,7 @@ jobs:
         run: |
           FILES=$(git diff --name-only HEAD^ HEAD || true)
           echo "$FILES"
-          if echo "$FILES" | grep -qE '^scripts/(coverage-sweep|check-cancelled)\.py$'; then
+          if echo "$FILES" | grep -qE '^scripts/(coverage-sweep|check-cancelled|ig-organizer-watch)\.py$'; then
             echo "crawl=true" >> $GITHUB_OUTPUT
           else
             echo "crawl=false" >> $GITHUB_OUTPUT
@@ -116,6 +117,16 @@ jobs:
       - name: Watch for cancellations (載せた回が中止・延期になっていないか)
         if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
         run: python3 scripts/check-cancelled.py || true
+
+      # 主催者の Instagram を Business Discovery で見る(2026-09-23)。
+      # check-cancelled.py は Instagram を見られないので、出典が Instagram の回は
+      # こちらが中止の見張りになる。結果は organizer-posts.json に出て、
+      # audit の organizer_cancel_signal(urgent) / organizer_unlisted_dates が読む。
+      - name: Watch organizers on Instagram (主催者の最新投稿)
+        if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
+        env:
+          IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+        run: python3 scripts/ig-organizer-watch.py || true
 
       - name: Regenerate all static files
         run: bash scripts/build-all.sh
