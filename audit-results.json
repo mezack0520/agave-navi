@@ -1,5 +1,5 @@
 {
-  "total": 512,
+  "total": 511,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -571,7 +571,7 @@
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260922b)と違う/付いていないページ",
+      "title": "JS版数が正規値(20260923a)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -990,10 +990,8 @@
     },
     "organizer_watch_broken": {
       "title": "主催者のInstagramの見張りが機能していない",
-      "count": 1,
-      "items": [
-        "主催 82 件のうち1件も取得できていない"
-      ],
+      "count": 0,
+      "items": [],
       "note": "IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない",
       "severity": "urgent"
     },
@@ -1038,6 +1036,13 @@
       "items": [],
       "note": "検索語 40 件がこの設定に依存する",
       "severity": "info"
+    },
+    "affiliate_dead_tag": {
+      "title": "設定に無いトラッキングIDのAmazonリンクが頁に残っている",
+      "count": 0,
+      "items": [],
+      "note": "amazon-links.json の asp.amazon.tag と違う ID。成果が付かない。ガイドは build-guides.py で作り直す。手書き頁なら直接直す",
+      "severity": "urgent"
     },
     "affiliate_label_season_mismatch": {
       "title": "商品枠の説明文が、その品目を出す月と食い違っている",
