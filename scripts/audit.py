@@ -2838,9 +2838,18 @@ def main():
     else:
         if _ow.get('fatal'):
             _ow_broken.append(str(_ow['fatal']))
-        _ow_t = int((_ow.get('stats') or {}).get('targets') or 0)
-        _ow_f = int((_ow.get('stats') or {}).get('fetched') or 0)
-        if _ow_t and _ow_f == 0:
+        _ow_st = _ow.get('stats') or {}
+        _ow_t = int(_ow_st.get('targets') or 0)
+        _ow_f = int(_ow_st.get('fetched') or 0)
+        # 周期取得(2026-09-23)にしてからは、今回0件でも直近3日の結果が残っていれば
+        # 見張りは生きている。同じ時間に何度も回すとアプリの呼び出し上限(#4)で
+        # 1件目から止まるが、次の回に持ち越されるだけで壊れてはいない
+        _ow_r = _ow_st.get('readable')
+        if _ow_r is not None:
+            if int(_ow_r) == 0:
+                _ow_broken.append('直近3日に取得できた主催が1件も無い'
+                                  + (f"（{_ow['stopped']}）" if _ow.get('stopped') else ''))
+        elif _ow_t and _ow_f == 0:
             _ow_broken.append(f'主催 {_ow_t} 件のうち1件も取得できていない')
         if _ow_on and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _ow_on):
             import datetime as _dtow
