@@ -213,11 +213,14 @@ def render_cover(sat, sun, n, path):
         mw = 360
         m = m.resize((mw, round(m.height * mw / m.width)))
         img.paste(m, ((W - mw) // 2, 190), m)
-    y = 640
-    for text, size, col in (('今週末の', 64, DIM), ('植物イベント', 112, IVORY)):
+    # 「植物イベント」だけだと観葉・花の催しにも読める。対象ジャンルを表紙で名乗る
+    y = 600
+    for text, size, col in (('今週末の', 56, DIM),
+                            ('アガベ・塊根・多肉・サボテン', 58, IVORY),
+                            ('植物イベント', 112, IVORY)):
         f = _font(size, 'Black' if size > 100 else 'Bold')
         d.text(((W - d.textlength(text, font=f)) / 2, y), text, font=f, fill=col)
-        y += size + 34
+        y += size + 30
     f = _font(52, 'Bold')
     t = f'{sat.month}.{sat.day} SAT — {sun.month}.{sun.day} SUN'
     d.text(((W - d.textlength(t, font=f)) / 2, y + 30), t, font=f, fill=IVORY)
