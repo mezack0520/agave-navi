@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。**CIコミットが1件も見えない(shallow clone か履歴不足)。この検査は効いていない**",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -905,10 +905,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-10-25 roots-market-inage-2026-10: 弱い語(中止)＋ページが変わった"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -984,8 +982,9 @@
     },
     "organizer_watch_broken": {
       "title": "主催者のInstagramの見張りが機能していない",
-      "count": 1,
+      "count": 2,
       "items": [
+        "権限不足(#10)。Business Discovery には instagram_basic / instagram_manage_insights / pages_read_engagement を付けたトークンが要る: (#10) Application does not have permission for this action",
         "主催 102 件のうち1件も取得できていない"
       ],
       "note": "IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない",
