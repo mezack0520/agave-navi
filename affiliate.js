@@ -392,7 +392,7 @@
     var links = [];
     var kw = encodeURIComponent(keyword);
 
-    // Amazon (always active — tag is already set)
+    // Amazon (tag が空なら出さない。2026-09-23 にアソシエイト終了)
     var amz = aspConfig.amazon;
     if (amz && amz.tag) {
       links.push({
@@ -451,7 +451,8 @@
   function render(data, tags, el, guideSlug, heading, presetItems) {
     var items = presetItems || pickItems(data, tags, guideSlug);
     if (!items.length) return;
-    var aspConfig = data.asp || { amazon: { tag: data.tag || 'agavenavi-22', searchUrl: 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}', label: 'Amazon' } };
+    // 既定のトラッキングIDは持たない。旧ID agavenavi-22 は2026-09-23にアカウント終了で無効
+    var aspConfig = data.asp || {};
 
     var title = heading || (guideSlug ? 'この記事で使う道具・資材' : '株を持ち帰る前に揃えるもの');
     var desc = guideSlug

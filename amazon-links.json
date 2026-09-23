@@ -1,9 +1,10 @@
 {
   "asp": {
     "amazon": {
-      "tag": "agavenavi-22",
+      "tag": "",
       "searchUrl": "https://www.amazon.co.jp/s?k={keyword}&tag={tag}",
-      "label": "Amazon"
+      "label": "Amazon",
+      "_note": "2026-09-23 アソシエイトのアカウントが終了した(登録から180日以内に適格販売3件に届かなかった)。旧トラッキングID agavenavi-22 は成果が付かないので外した。tag が空のあいだ affiliate.js はAmazonのボタンを出さず、ガイド本文の文中リンクは build-guides.py が楽天に切り替える。Amazon 公式ヘルプは却下された申請の再審査はできないとしている。再開するときは使えるIDを入れる"
     },
     "rakuten": {
       "affiliateId": "5251fbf3.21164c54.5251fbf4.7818a8f3",
