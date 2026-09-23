@@ -73,10 +73,16 @@ def norm(s):
 _MD = re.compile(r'(?<!\d)(\d{1,2})\s*(?:月\s*(\d{1,2})\s*日?|/\s*(\d{1,2})(?!\d))')
 
 
+_DEADLINE = re.compile(r'締め?切|〆切|まで(?:募集|受付|応募)|応募')
+
+
 def month_days(text):
     """本文に出る (月, 日)。『9月26日』『9/26』。年やURLの数字は拾わない"""
     out = set()
     for m in _MD.finditer(text):
+        # 「募集は9月30日で締め切ります」のような締切日は開催日ではない
+        if _DEADLINE.search(text[m.end():m.end() + 12]):
+            continue
         mo = int(m.group(1))
         d = int(m.group(2) or m.group(3))
         if 1 <= mo <= 12 and 1 <= d <= 31:
@@ -169,7 +175,7 @@ def analyze(username, posts, org_events, all_org_events, today):
                                        'permalink': p.get('permalink'),
                                        'postedOn': ts[:10],
                                        'by': 'date' if hit_date else 'name'})
-        if age <= UNLISTED_LOOKBACK:
+        if age <= UNLISTED_LOOKBACK and _looks_like_own_announcement(cap):
             fut = []
             for (mo, d) in sorted(mds - known_md):
                 y = today.year if (mo, d) >= (today.month, today.day) else today.year + 1
@@ -184,6 +190,13 @@ def analyze(username, posts, org_events, all_org_events, today):
                                  'permalink': p.get('permalink'),
                                  'postedOn': ts[:10],
                                  'excerpt': cap[:120]})
+    # 取りこぼし候補は主催ごとに1件へ畳む(同じ日付を何投稿も繰り返すため)
+    if unlisted:
+        dates = sorted({d for u in unlisted for d in u['dates']})
+        first = unlisted[0]
+        unlisted = [{'username': username, 'dates': dates,
+                     'permalink': first['permalink'], 'postedOn': first['postedOn'],
+                     'excerpt': first['excerpt']}]
     # 同じ回に同じ投稿で複数回鳴らさない
     seen, uniq = set(), []
     for c in cancel:
@@ -192,6 +205,26 @@ def analyze(username, posts, org_events, all_org_events, today):
             seen.add(k)
             uniq.append(c)
     return uniq, unlisted
+
+
+# 取りこぼし候補は「主催が自分の催しを告知している投稿」に限る。
+# 初回(2026-09-23)は40件出て、大半が別イベントへの出店告知・ワークショップ・
+# 株の紹介文・リポストだった。出店側の言い回しを先に落とし、開催の名乗りを要る
+_VENDOR_SIDE = ('出店のお知らせ', 'に出店', '出店します', '出店させて', '出店致します',
+                '出店いたします', '参加させて', '参加します', '出店イベント', '出展します',
+                '次の出店', '出店は', 'Repost', 'repost', 'リポスト', '出店者様募集', '出店者募集', '出展者募集')
+_OWN_EVENT = ('開催', '日時', '日程', '会場')
+# 主催が工務店や商業施設だと植物と無関係の催し(住宅展示会など)も拾うため
+_PLANT_WORDS = ('植物', 'アガベ', '塊根', '多肉', 'サボテン', '園芸', '植木', 'グリーン',
+                'ボタニカル', 'プランツ', 'plant', 'Plant', 'PLANT', '観葉', '盆栽', '苗')
+
+
+def _looks_like_own_announcement(cap):
+    if any(w in cap for w in _VENDOR_SIDE):
+        return False
+    if not any(w in cap for w in _PLANT_WORDS):
+        return False
+    return sum(1 for w in _OWN_EVENT if w in cap) >= 2
 
 
 def _api(path, token, **params):
@@ -333,14 +366,25 @@ def self_test():
           'caption': '11月3日のマルシェは中止となりました'}]
     c, _ = analyze('org', p, [ev], [ev], today)
     chk('別の回の中止', c, [])
+    # 荒天時の連絡手段を述べた注意書きは鳴らない(福岡グリーンパーティー第7回)
+    p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u2b',
+          'caption': '10月18日。雨天でも開催致します。(荒天の場合はインスタグラムにて中止のお知らせを致します)'}]
+    c, _ = analyze('org', p, [ev], [ev], today)
+    chk('荒天時の予告は鳴らない', c, [])
+    chk('締切日は日付に数えない', month_days('募集は9月30日で締め切ります。12/26開催'), {(12, 26)})
+    # 別イベントへの出店告知は取りこぼし候補にしない
+    p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4b',
+          'caption': 'イベント出店のお知らせ 11/22 開催 会場はどこそこ'}]
+    _, n = analyze('org', p, [ev], [ev], today)
+    chk('出店告知は候補にしない', n, [])
     # 掲載済みの日付は取りこぼし候補にしない。未掲載の先の日付は候補
     p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4',
-          'caption': '10/18と11/22に開催します'}]
+          'caption': '【植物市 開催決定】日程 10/18と11/22 会場 市民ホール'}]
     _, n = analyze('org', p, [ev], [ev], today)
     chk('未掲載の日付', [x['dates'] for x in n], [['2026-11-22']])
     # 古い投稿は取りこぼし候補にしない
     p = [{'timestamp': '2026-08-01T01:00:00+0000', 'permalink': 'u5',
-          'caption': '11/22に開催します'}]
+          'caption': '【植物市 開催決定】日程 11/22 会場 市民ホール'}]
     _, n = analyze('org', p, [ev], [ev], today)
     chk('古い投稿', n, [])
     print('self-test', 'OK' if ok else 'NG')
