@@ -1,0 +1,108 @@
+name: Instagram Weekly
+
+# 今週末のイベントを @agave_navi にカルーセルで投稿する(2026-09-23)。
+# 毎週木曜 18:00 JST (09:00 UTC)。
+#
+# 投稿は二重の鍵で止めてある。
+#   - 定時実行は repository variable IG_PUBLISH が '1' のときだけ投稿する。
+#     それ以外は画像とキャプションを作って Artifact と実行サマリに出すだけ。
+#   - 手動実行は publish を明示的に true にしたときだけ投稿する。
+# 最初の数回は手動で中身を見てから IG_PUBLISH=1 にする運用を想定している。
+#
+# 必要な Secret: IG_PAGE_TOKEN(Facebookページ「アガナビ」の期限なしページトークン)
+
+on:
+  schedule:
+    - cron: '0 9 * * 4'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: '実際に投稿する(false なら画像とキャプションを作るだけ)'
+        type: boolean
+        default: false
+      date:
+        description: '今日として扱う日 YYYY-MM-DD(空なら今日)'
+        type: string
+        default: ''
+
+concurrency:
+  group: events-write
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
+          pip install -q pillow
+
+      - name: Decide mode
+        id: mode
+        run: |
+          PUB=false
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ vars.IG_PUBLISH }}" = "1" ]; then PUB=true; fi
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.publish }}" = "true" ]; then PUB=true; fi
+          echo "publish=$PUB" >> $GITHUB_OUTPUT
+          DATE_ARG=""
+          if [ -n "${{ inputs.date }}" ]; then DATE_ARG="--date ${{ inputs.date }}"; fi
+          echo "date_arg=$DATE_ARG" >> $GITHUB_OUTPUT
+          echo "投稿するか: $PUB"
+
+      - name: Build images and caption
+        id: build
+        run: |
+          python3 scripts/ig-weekly.py build ${{ steps.mode.outputs.date_arg }} | tee "$RUNNER_TEMP/build.log"
+          DIR=$(python3 scripts/ig-weekly.py outdir ${{ steps.mode.outputs.date_arg }})
+          echo "dir=$DIR" >> $GITHUB_OUTPUT
+          {
+            echo "## Instagram 週末投稿 (${DIR:-今週ぶん無し})"
+            echo
+            echo "投稿: ${{ steps.mode.outputs.publish }}"
+            echo
+            echo '```'
+            cat "${DIR}/caption.txt" 2>/dev/null || echo "(今週末の回が0件)"
+            echo '```'
+          } >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload preview
+        if: steps.build.outputs.dir != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ig-weekly-preview
+          path: ${{ steps.build.outputs.dir }}
+
+      # 画像は公開URLでしか Graph API に渡せない。サイトと同じ GitHub Pages に置く。
+      - name: Commit images (公開URLにする)
+        if: steps.mode.outputs.publish == 'true' && steps.build.outputs.dir != ''
+        run: |
+          git add "${{ steps.build.outputs.dir }}"
+          bash scripts/ci-push.sh "chore(ig): 今週末の投稿画像 ${{ steps.build.outputs.dir }}"
+
+      - name: Publish
+        if: steps.mode.outputs.publish == 'true' && steps.build.outputs.dir != ''
+        env:
+          IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+        run: |
+          python3 scripts/ig-weekly.py publish ${{ steps.mode.outputs.date_arg }} \
+            --out "${{ steps.build.outputs.dir }}" \
+            --base-url "https://agave-navi.com/${{ steps.build.outputs.dir }}"
+
+      - name: Record
+        if: steps.mode.outputs.publish == 'true' && steps.build.outputs.dir != ''
+        run: |
+          git add ig-posts.json
+          bash scripts/ci-push.sh "chore(ig): 投稿を記録"
