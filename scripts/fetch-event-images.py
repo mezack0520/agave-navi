@@ -41,10 +41,8 @@ images/events/ に置いてから events.json を更新する。
     python3 scripts/fetch-event-images.py --self-test   # 通信なし
 """
 import argparse
-import io as _io
 import json
 import os
-import re
 import sys
 import time
 
@@ -53,6 +51,7 @@ REPO = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
 import sitelib
 from sitelib import today_jst, is_cancelled, event_span   # noqa: E402
+import eyecatchlib   # noqa: E402
 
 EVENTS_JSON = os.path.join(REPO, 'events.json')
 IMG_DIR = os.path.join(REPO, 'images', 'events')
@@ -60,10 +59,7 @@ SITE = 'https://agave-navi.com'
 
 UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
       '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
-MAX_EDGE = 800
-JPEG_QUALITY = 82
-# 1枚あたりの上限。これを超えるものは縮小しても大きすぎるので採らない
-MAX_BYTES = 400 * 1024
+MAX_BYTES = eyecatchlib.MAX_BYTES
 
 
 
@@ -117,52 +113,8 @@ def targets(events, today, slug=None):
     return out
 
 
-def _edge_color(im):
-    """余白に敷く色。長辺側のふちの平均を採る。
-
-    白で埋めると濃い地のフライヤーで枠が浮く。ふちの色を拾えば、
-    単色の余白があるフライヤーではそのまま繋がって見える。
-    """
-    from PIL import ImageStat
-    w, h = im.size
-    if h > w:
-        band = max(1, w // 12)
-        a, b = im.crop((0, 0, band, h)), im.crop((w - band, 0, w, h))
-    else:
-        band = max(1, h // 12)
-        a, b = im.crop((0, 0, w, band)), im.crop((0, h - band, w, h))
-    m = [ImageStat.Stat(x).mean for x in (a, b)]
-    return tuple(int(round((m[0][i] + m[1][i]) / 2)) for i in range(3))
-
-
-def save_image(raw, dest):
-    """縮小し、**正方形にパディングして**JPEGで保存する。
-
-    カードのサムネは 1:1(style.css の .event-thumb)。
-    Instagram の告知フライヤーはほぼ正方形なので大半はそのまま収まるが、
-    ストーリー比(9:16)の告知も混ざる。1:1 で cover すると左右が44%落ちて
-    タイトルが消えるので、切るのではなく余白を足して正方形にする。
-    切ると情報が減る。余白は減らない。
-
-    戻り値は (幅, 高さ, バイト数)
-    """
-    from PIL import Image
-    im = Image.open(_io.BytesIO(raw)).convert('RGB')
-    w, h = im.size
-    if max(w, h) > MAX_EDGE:
-        if w >= h:
-            im = im.resize((MAX_EDGE, round(h * MAX_EDGE / w)), Image.LANCZOS)
-        else:
-            im = im.resize((round(w * MAX_EDGE / h), MAX_EDGE), Image.LANCZOS)
-    w, h = im.size
-    if w != h:
-        n = max(w, h)
-        canvas = Image.new('RGB', (n, n), _edge_color(im))
-        canvas.paste(im, ((n - w) // 2, (n - h) // 2))
-        im = canvas
-    os.makedirs(os.path.dirname(dest), exist_ok=True)
-    im.save(dest, 'JPEG', quality=JPEG_QUALITY, optimize=True)
-    return im.size[0], im.size[1], os.path.getsize(dest)
+# 縮小・余白・保存は eyecatchlib が持つ(CI の候補作りと同じ処理を1か所に)
+save_image = eyecatchlib.save_image
 
 
 def main():

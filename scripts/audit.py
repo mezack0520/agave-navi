@@ -2851,6 +2851,22 @@ def main():
         'この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない',
         severity='info' if not _ow_on else 'urgent')
 
+    # 16z2. アイキャッチ候補(2026-09-23)。ig-organizer-watch.py が主催の最新投稿の
+    #       原寸画像から staging/eyecatch/ に置く。採否は人が画像を見て決める
+    #       (機械の照合は根拠にならない)。置いたまま誰も見ないと候補が腐る
+    _ec = load_json(os.path.join('staging', 'eyecatch', 'candidates.json'), {}) or {}
+    _ec_items = [f"{_v.get('date','')} {_k}: {_v.get('post','')}（{(_v.get('why') or {}).get('by','')}）"
+                 for _k, _v in sorted((_ec.get('items') or {}).items(),
+                                      key=lambda x: x[1].get('date') or '')]
+    if _ow.get('eyecatchError'):
+        _ec_items.insert(0, f"候補作りが失敗している: {_ow['eyecatchError']}")
+    add('eyecatch_candidates_pending', 'アイキャッチ候補が採否待ち',
+        _ec_items,
+        'staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら '
+        'python3 scripts/apply-eyecatch.py --approve <slug>、違えば '
+        '--reject "<slug>=理由"。迷ったら捨てる',
+        severity='info')
+
     # 17. 構造化データ。JSON-LDが壊れても画面は何も変わらないため、
     #     リッチリザルトだけが黙って落ちる。全ページのブロックをパースして、
     #     さらに Event の日付・名称が events.json と一致するかを見る。

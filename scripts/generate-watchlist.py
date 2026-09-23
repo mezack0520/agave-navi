@@ -79,6 +79,33 @@ def load_seeds():
         return []
 
 
+def api_status_map(today, fresh_days=3):
+    """organizer-posts.json から handle → api / personal を作る"""
+    try:
+        with open(os.path.join(REPO_ROOT, 'organizer-posts.json'), encoding='utf-8') as f:
+            doc = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    res = doc.get('results') or {}
+    out = {}
+    for h, r in res.items():
+        # 2026-09-23 より前の形式は結果ごとの checkedOn を持たない
+        on = r.get('checkedOn') or doc.get('checkedOn') or ''
+        if r.get('ok'):
+            try:
+                from datetime import date
+                age = (date.fromisoformat(today) - date.fromisoformat(on)).days
+            except ValueError:
+                age = 10 ** 6
+            if age <= fresh_days:
+                out[h.lower()] = 'api'
+        else:
+            msg = r.get('error') or ''
+            if r.get('code') == 110 or '見つかりません' in msg or 'Cannot find User' in msg:
+                out[h.lower()] = 'personal'
+    return out
+
+
 def main():
     with open(EVENTS_JSON, encoding='utf-8') as f:
         events = json.load(f)
@@ -193,6 +220,18 @@ def main():
                                'igUrl': next((e.get(k) for k in ('instagramUrl', 'sourceUrl', 'url')
                                               if 'instagram.com' in (e.get(k) or '')), '')})
 
+    # Instagram の自動取得(ig-organizer-watch.py / Business Discovery)で読めているか。
+    # 読めているアカウントの投稿は毎日〜隔日に CI が見て、次回開催・中止・
+    # アイキャッチ候補を出す。**ブラウザで回る必要があるのは api 以外だけ。**
+    #   api       直近に取得できた(プロアカウント)
+    #   personal  個人アカウントなどで API では読めない
+    #   unchecked まだ一度も取得していない
+    api = api_status_map(today)
+    for a in ig_accounts:
+        a['apiStatus'] = api.get(a['handle'], 'unchecked')
+    for w in awaiting:
+        w['apiStatus'] = api.get((w.get('igHandle') or '').lower(), 'unchecked') if w.get('igHandle') else 'none'
+
     out = {
         'generated': now_jst().strftime('%Y-%m-%d %H:%M JST'),
         'description': 'events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。',
@@ -201,6 +240,7 @@ def main():
             'awaitingNextEdition': len(awaiting),
             'officialSiteCandidates': len(site_candidates),
             'unresolvedIgHandles': len(unresolved),
+            'igNeedsBrowser': sum(1 for a in ig_accounts if a['apiStatus'] != 'api'),
         },
         'igAccounts': ig_accounts,
         'awaitingNextEdition': awaiting[:40],
@@ -209,7 +249,7 @@ def main():
     }
     with open(OUT, 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print(f"watch-sources.json: IG {len(ig_accounts)}件 / 次回待ちシリーズ {len(awaiting)}件 / サイト候補 {len(site_candidates)}件")
+    print(f"watch-sources.json: IG {len(ig_accounts)}件(ブラウザが要る {out['stats']['igNeedsBrowser']}件) / 次回待ちシリーズ {len(awaiting)}件 / サイト候補 {len(site_candidates)}件")
     if unresolved:
         print(f"  ⚠ IGハンドル未解決 {len(unresolved)}件 — organizerIg を入れるまでウォッチ対象外: "
               + ', '.join(u['slug'] for u in unresolved[:5])

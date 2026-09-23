@@ -14,13 +14,21 @@
   Business Discovery は @agave_navi(プロアカウント)の権限で、相手がプロ
   アカウントならユーザー名だけで最新投稿の本文・日時・URLを返す。フォロー不要。
 
-出すもの: organizer-posts.json(毎回まるごと書き換える巡回結果)
-  results[username] = {ok, error, posts:[{timestamp, permalink, caption}]}
+見張る主催(2026-09-23 に拡大):
+  開催予定の回の主催と watch-sources.json の全IGアカウント(次回待ちのシリーズ・
+  watch-seeds)。呼び出し上限に収めるため plan() の周期で分けて取る。
+  以前は agave-event-update タスクが組み込みブラウザで同じアカウントを回っていた。
+
+出すもの: organizer-posts.json
+  results[username] = {ok, error, code, checkedOn, posts:[{timestamp, permalink, caption}]}
+                      今回取らなかった主催は前回の結果を持ち越す
   signals.cancel    = 開催予定の回に対して、その主催の最近の投稿に中止・延期の
                       言い切りがあり、かつ投稿がその回を指している(日付か名前)もの
   signals.unlisted  = 主催の最近の投稿に先の日付が出ているのに、その主催の
                       掲載済みの回のどれとも日付が合わないもの(取りこぼし候補)
   errors            = 取れなかった主催(個人アカウント・非公開・名前違い)
+  同じ呼び出しの原寸画像から、アイキャッチの候補を staging/eyecatch/ に置く
+  (eyecatchlib.py。採否は人が apply-eyecatch.py で書く)
 
 判定の語彙は check-cancelled.py と共有する(CANCEL_WORDS / drop_conditional)。
 写しを置かない。雨天中止の条件文や出展者1組の取り止めで鳴らないための
@@ -50,6 +58,10 @@ UNLISTED_LOOKBACK = 14  # 取りこぼし候補を探す投稿の古さ
 UNLISTED_AHEAD = 150    # 投稿に出た日付が今日から何日先までなら候補にするか
 # レート制限の兆候。これが出たら残りを取らずに打ち切る(翌日また回る)
 RATE_CODES = iglib.RATE_CODES
+# 1回の実行で叩く上限。アプリの呼び出し上限(ほぼ200回/時)の内側に置く
+BUDGET = 180
+# これより古い持ち越し結果からは信号を出さない
+FRESH_DAYS = 3
 
 
 def _load_cancel_rules():
@@ -227,20 +239,60 @@ def _looks_like_own_announcement(cap):
 
 
 def fetch_posts(ig_id, username, token):
+    """最新投稿。image は原寸画像のURL(署名付きで期限があるので保存しない)"""
     bd, err = iglib.business_discovery(
         ig_id, username, token,
-        f'username,media.limit({POSTS_PER_USER}){{caption,timestamp,permalink}}')
+        f'username,media.limit({POSTS_PER_USER})'
+        '{caption,timestamp,permalink,media_type,media_url,thumbnail_url}')
     if err:
         return None, err
     media = (bd.get('media') or {}).get('data') or []
     posts = [{'timestamp': m.get('timestamp'), 'permalink': m.get('permalink'),
-              'caption': (m.get('caption') or '')[:800]} for m in media]
+              'caption': (m.get('caption') or '')[:800],
+              'image': (m.get('thumbnail_url') if m.get('media_type') == 'VIDEO'
+                        else m.get('media_url'))} for m in media]
     return posts, None
+
+
+def _days(a, b):
+    try:
+        return (datetime.strptime(a, '%Y-%m-%d') - datetime.strptime(b, '%Y-%m-%d')).days
+    except (TypeError, ValueError):
+        return 10 ** 6
+
+
+def is_personal(r):
+    """Business Discovery で読めない相手(個人アカウント・名前違い)。毎日叩いても変わらない"""
+    if not r or r.get('ok'):
+        return False
+    msg = r.get('error') or ''
+    return r.get('code') == 110 or '見つかりません' in msg or 'Cannot find User' in msg
+
+
+def plan(tg, watch_handles, prev, today_s, budget):
+    """今回取る主催を決める。(今回取る, 見張り対象の全体)。
+
+    見張り対象は開催予定の回の主催(tg)と watch-sources.json の全IGアカウント。
+    1回の呼び出し上限(ほぼ200回/時)に収めるため、全部を毎日は取らない。
+      開催予定の回の主催  毎日(中止の見張り)
+      それ以外            2日に1回(次回開催の告知待ち)
+      読めない相手        7日に1回(プロアカウントに切り替わることがある)
+    """
+    accounts = set(tg) | set(watch_handles)
+    due = []
+    for u in accounts:
+        r = prev.get(u)
+        age = _days(today_s, (r or {}).get('checkedOn'))
+        need = 7 if is_personal(r) else (1 if u in tg else 2)
+        if age >= need:
+            due.append((0 if u in tg else 1, -min(age, 999), u))
+    due.sort()
+    return [u for _, _, u in due][:budget], accounts
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--limit', type=int, default=0, help='主催の数を絞る(試験用)')
+    ap.add_argument('--limit', type=int, default=0, help='今回取る主催の数を絞る(試験用)')
     ap.add_argument('--self-test', action='store_true')
     a = ap.parse_args()
     if a.self_test:
@@ -250,65 +302,101 @@ def main():
     if not token:
         sys.exit('IG_PAGE_TOKEN が無い')
     today = datetime.strptime(sitelib.today_jst(), '%Y-%m-%d')
+    today_s = today.strftime('%Y-%m-%d')
     with open(os.path.join(REPO, 'events.json'), encoding='utf-8') as f:
         events = json.load(f)
     tg = targets(events, today)
     allorg = all_by_org(events)
-    names = sorted(tg)
-    if a.limit:
-        names = names[:a.limit]
+    try:
+        with open(os.path.join(REPO, 'watch-sources.json'), encoding='utf-8') as f:
+            watch = [x['handle'] for x in json.load(f).get('igAccounts') or [] if x.get('handle')]
+    except (OSError, ValueError, KeyError):
+        watch = []
+    try:
+        with open(OUT, encoding='utf-8') as f:
+            prev = json.load(f).get('results') or {}
+    except (OSError, ValueError):
+        prev = {}
+    names, accounts = plan(tg, watch, prev, today_s, a.limit or BUDGET)
+
+    out = {'_note': ('主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日書く。'
+                     '全アカウントを毎日は取らない(plan() の周期)。今回取らなかった主催は'
+                     '前回の結果を checkedOn つきで持ち越す。signals は取得から'
+                     f'{FRESH_DAYS}日以内の結果で出す。errors の多くは相手が個人アカウントで、異常ではない'),
+           'checkedOn': today_s,
+           'stats': {'accounts': len(accounts), 'targets': len(names), 'fetched': 0},
+           'results': {u: r for u, r in prev.items() if u in accounts},
+           'signals': {'cancel': [], 'unlisted': []}, 'errors': []}
 
     me, err = iglib.call('GET', 'me', token, fields='instagram_business_account')
     ig_id = ((me or {}).get('instagram_business_account') or {}).get('id')
-    out = {'_note': ('主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日'
-                     'まるごと書き換える。signals.cancel は urgent、signals.unlisted は'
-                     '取りこぼし候補。errors の多くは相手が個人アカウントで、異常ではない'),
-           'checkedOn': today.strftime('%Y-%m-%d'),
-           'stats': {'targets': len(names), 'fetched': 0},
-           'results': {}, 'signals': {'cancel': [], 'unlisted': []}, 'errors': []}
     if not ig_id:
         out['fatal'] = f'Instagram アカウントを解決できない: {err}'
         _write(out)
         sys.exit(out['fatal'])
 
     stopped = None
+    fresh = {}
+    fresh_err10 = 0
     for i, u in enumerate(names):
         posts, err = fetch_posts(ig_id, u, token)
         if err:
             code = err.get('code')
             msg = (err.get('error_user_msg') or err.get('message') or '')[:160]
             if code in RATE_CODES:
-                stopped = f'{u} でレート制限({code})。残り {len(names) - i} 件は翌日'
+                stopped = f'{u} でレート制限({code})。残り {len(names) - i} 件は次回'
                 break
             # 権限不足(#10)は相手によらず全件で同じ結果になる。最初の3件が
             # そろって #10 なら打ち切って fatal にする。2026-09-23 の初回は
             # instagram_manage_insights が無く、102件すべて #10 で回り切っていた
-            if code == 10 and i < 3 and all(
-                    (r.get('error') or '').startswith('(#10)')
-                    for r in out['results'].values()):
-                out['results'][u] = {'ok': False, 'error': msg}
-                if i == 2:
+            if code == 10:
+                fresh_err10 += 1
+                if i == 2 and fresh_err10 == 3:
                     out['fatal'] = ('権限不足(#10)。Business Discovery には '
                                     'instagram_basic / instagram_manage_insights / '
                                     'pages_read_engagement を付けたトークンが要る: ' + msg)
                     break
-                continue
-            out['results'][u] = {'ok': False, 'error': msg}
-            out['errors'].append(f'@{u}: {msg}')
+            out['results'][u] = {'ok': False, 'error': msg, 'code': code, 'checkedOn': today_s}
         else:
-            out['results'][u] = {'ok': True, 'posts': posts}
+            fresh[u] = posts
+            out['results'][u] = {'ok': True, 'checkedOn': today_s,
+                                 'posts': [{k: p[k] for k in ('timestamp', 'permalink', 'caption')}
+                                           for p in posts]}
             out['stats']['fetched'] += 1
-            c, n = analyze(u, posts, tg[u], allorg.get(u, []), today)
-            out['signals']['cancel'] += c
-            out['signals']['unlisted'] += n
         time.sleep(1.0)
     if stopped:
         out['stopped'] = stopped
+
+    ok_recent = 0
+    for u, r in sorted(out['results'].items()):
+        if not r.get('ok'):
+            if not is_personal(r) or r.get('checkedOn') == today_s:
+                out['errors'].append(f'@{u}: {r.get("error")}')
+            continue
+        if _days(today_s, r.get('checkedOn')) > FRESH_DAYS:
+            continue
+        ok_recent += 1
+        c, n = analyze(u, r['posts'], tg.get(u, []), allorg.get(u, []), today)
+        out['signals']['cancel'] += c
+        out['signals']['unlisted'] += n
+    out['stats']['readable'] = ok_recent
+    out['stats']['personal'] = sum(1 for r in out['results'].values() if is_personal(r))
+    out['stats']['neverChecked'] = len(accounts - set(out['results']))
+
+    # 同じ呼び出しで取れた原寸画像から、アイキャッチの候補を staging に置く
+    try:
+        import eyecatchlib
+        out['stats']['eyecatchStaged'] = eyecatchlib.stage_candidates(events, fresh, today_s)
+    except Exception as ex:  # noqa: BLE001  候補作りの失敗で見張りを止めない
+        out['eyecatchError'] = f'{type(ex).__name__}: {ex}'[:200]
+
     _write(out)
     s = out['stats']
-    print(f'主催 {s["targets"]} 件中 {s["fetched"]} 件取得 / '
+    print(f'見張り {s["accounts"]} 件 / 今回 {s["targets"]} 件中 {s["fetched"]} 件取得 / '
+          f'読める {s["readable"]} / 個人 {s["personal"]} / 未取得 {s["neverChecked"]} / '
           f'中止の兆候 {len(out["signals"]["cancel"])} / '
-          f'未掲載の日付 {len(out["signals"]["unlisted"])} / 取得不可 {len(out["errors"])}'
+          f'未掲載の日付 {len(out["signals"]["unlisted"])} / '
+          f'アイキャッチ候補 +{s.get("eyecatchStaged", 0)}'
           + (f' / {stopped}' if stopped else ''))
 
 
@@ -370,6 +458,38 @@ def self_test():
           'caption': '【植物市 開催決定】日程 11/22 会場 市民ホール'}]
     _, n = analyze('org', p, [ev], [ev], today)
     chk('古い投稿', n, [])
+
+    # 周期: 開催予定の主催は毎日、他は2日、読めない相手は7日
+    prev = {'up': {'ok': True, 'checkedOn': '2026-09-22'},
+            'other1': {'ok': True, 'checkedOn': '2026-09-22'},
+            'other2': {'ok': True, 'checkedOn': '2026-09-21'},
+            'priv': {'ok': False, 'error': 'ユーザーネームがprivのユーザーが見つかりません',
+                     'checkedOn': '2026-09-20'},
+            'gone': {'ok': True, 'checkedOn': '2026-09-01'}}
+    names, accts = plan({'up': [ev]}, ['other1', 'other2', 'priv', 'new'], prev, '2026-09-23', 50)
+    chk('今回取る主催', names, ['up', 'new', 'other2'])
+    chk('見張り対象から外れた主催は持たない', 'gone' in accts, False)
+    names, _ = plan({'up': [ev]}, ['other1', 'new'], prev, '2026-09-23', 1)
+    chk('上限では開催予定の主催が先', names, ['up'])
+
+    # アイキャッチ候補の投稿選び
+    import eyecatchlib as ec
+    e2 = {'slug': 's', 'name': '第3回 テストプランツ市', 'date': '2026-10-18'}
+    posts = [{'permalink': 'https://www.instagram.com/p/A1/', 'timestamp': '2026-09-20',
+              'caption': '出店者募集 テストプランツ市 10/18', 'image': 'x'},
+             {'permalink': 'https://www.instagram.com/p/B2/', 'timestamp': '2026-09-19',
+              'caption': '今日の植物', 'image': 'x'},
+             {'permalink': 'https://www.instagram.com/p/C3/', 'timestamp': '2026-09-18',
+              'caption': 'テストプランツ市 10月18日 開催', 'image': 'x'}]
+    got, why = ec.pick_post(e2, posts)
+    chk('募集投稿を避けて告知を採る', (got or {}).get('permalink'), 'https://www.instagram.com/p/C3/')
+    got, _ = ec.pick_post(e2, posts, ['https://www.instagram.com/p/C3/'])
+    chk('不採用にした投稿は出さない', got, None)
+    got, why = ec.pick_post(dict(e2, url='https://www.instagram.com/p/B2/'), posts)
+    chk('出典の投稿があればそれ', ((got or {}).get('permalink'), (why or {}).get('by')),
+        ('https://www.instagram.com/p/B2/', 'sourcePost'))
+    got, _ = ec.pick_post(dict(e2, date='2026-09-01'), posts)
+    chk('会期後の投稿は採らない', got, None)
     print('self-test', 'OK' if ok else 'NG')
     return ok
 
