@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-23 22:12 JST",
+ "generated": "2026-09-24 08:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 262,
-  "awaitingNextEdition": 262,
+  "igAccounts": 265,
+  "awaitingNextEdition": 265,
   "officialSiteCandidates": 71,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 124
+  "igNeedsBrowser": 127
  },
  "igAccounts": [
   {
@@ -18,6 +18,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "nagomitaniku",
+   "url": "https://www.instagram.com/nagomitaniku/",
+   "eventCount": 5,
+   "lastEventName": "第8回 福山deマルシェ",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "gamagori_taniku_festa",
@@ -210,6 +220,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "_and_plants",
+   "url": "https://www.instagram.com/_and_plants/",
+   "eventCount": 2,
+   "lastEventName": "PLANT & POT Vol.16",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "hokuriku.saboten.club",
    "url": "https://www.instagram.com/hokuriku.saboten.club/",
    "eventCount": 2,
@@ -228,6 +248,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "botariba.event",
+   "url": "https://www.instagram.com/botariba.event/",
+   "eventCount": 2,
+   "lastEventName": "ボタり場 2026 Autumn",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "jss_event_info",
@@ -315,16 +345,6 @@
    "eventCount": 4,
    "lastEventName": "PICNIC GARDEN vol.25 in 鶴岡公園",
    "lastEventDate": "2026-09-19",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "unchecked"
-  },
-  {
-   "handle": "nagomitaniku",
-   "url": "https://www.instagram.com/nagomitaniku/",
-   "eventCount": 4,
-   "lastEventName": "多肉植物『The販売会』（農マル園芸吉備路農園）",
-   "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "unchecked"
@@ -445,46 +465,6 @@
    "eventCount": 1,
    "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
    "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "botalife_pachy",
-   "url": "https://www.instagram.com/botalife_pachy/",
-   "eventCount": 1,
-   "lastEventName": "ボタらいふ 4周年祭POPUP",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "collect_plants_official",
-   "url": "https://www.instagram.com/collect_plants_official/",
-   "eventCount": 1,
-   "lastEventName": "Collect Plants Vol.3（コレクトプランツ）",
-   "lastEventDate": "2026-09-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "syokunoutage",
-   "url": "https://www.instagram.com/syokunoutage/",
-   "eventCount": 1,
-   "lastEventName": "植ノ宴 -4- in 熊本",
-   "lastEventDate": "2026-09-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "greendays_emi_8783",
-   "url": "https://www.instagram.com/greendays_emi_8783/",
-   "eventCount": 1,
-   "lastEventName": "セラモール販売会（2026年9月）",
-   "lastEventDate": "2026-09-22",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
@@ -638,6 +618,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "nagoya_saboten",
+   "url": "https://www.instagram.com/nagoya_saboten/",
+   "eventCount": 1,
+   "lastEventName": "サボテン&多肉植物 秋の展示即売会（名古屋サボテンクラブ）",
+   "lastEventDate": "2026-10-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "souransai",
@@ -928,6 +918,26 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "seven.seedlings.shop",
+   "url": "https://www.instagram.com/seven.seedlings.shop/",
+   "eventCount": 1,
+   "lastEventName": "Bizarre Plants Maniax⇄",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "jj.raider",
+   "url": "https://www.instagram.com/jj.raider/",
+   "eventCount": 1,
+   "lastEventName": "おかやまグリーントレジャー 5th",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagashima_marche",
@@ -1592,16 +1602,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
-  },
-  {
-   "handle": "botariba.event",
-   "url": "https://www.instagram.com/botariba.event/",
-   "eventCount": 1,
-   "lastEventName": "ボタり場 2026 初夏",
-   "lastEventDate": "2026-06-07",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
   },
   {
    "handle": "plants_jamboree",
@@ -2374,16 +2374,6 @@
    "apiStatus": "unchecked"
   },
   {
-   "handle": "_and_plants",
-   "url": "https://www.instagram.com/_and_plants/",
-   "eventCount": 1,
-   "lastEventName": "PLANT & POT Vol.15",
-   "lastEventDate": "2026-09-12",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "kawashimasyubyou",
    "url": "https://www.instagram.com/kawashimasyubyou/",
    "eventCount": 1,
@@ -2462,6 +2452,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "unchecked"
+  },
+  {
+   "handle": "botalife_pachy",
+   "url": "https://www.instagram.com/botalife_pachy/",
+   "eventCount": 1,
+   "lastEventName": "ボタらいふ 4周年祭POPUP",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "waltzbase_saga",
@@ -2609,6 +2609,36 @@
    "eventCount": 1,
    "lastEventName": "たにくった POPUP プチマルシェ",
    "lastEventDate": "2026-09-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "collect_plants_official",
+   "url": "https://www.instagram.com/collect_plants_official/",
+   "eventCount": 1,
+   "lastEventName": "Collect Plants Vol.3（コレクトプランツ）",
+   "lastEventDate": "2026-09-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "syokunoutage",
+   "url": "https://www.instagram.com/syokunoutage/",
+   "eventCount": 1,
+   "lastEventName": "植ノ宴 -4- in 熊本",
+   "lastEventDate": "2026-09-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "greendays_emi_8783",
+   "url": "https://www.instagram.com/greendays_emi_8783/",
+   "eventCount": 1,
+   "lastEventName": "セラモール販売会（2026年9月）",
+   "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
@@ -2900,17 +2930,6 @@
    "apiStatus": "unchecked"
   },
   {
-   "series": "PLANT & POT Vol.15",
-   "lastSlug": "plant-and-pot-vol15-2026-09",
-   "lastDate": "2026-09-12",
-   "lastEnd": "2026-09-13",
-   "monthsSinceLast": 0,
-   "igHandle": "_and_plants",
-   "officialUrl": "https://www.instagram.com/_and_plants/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
    "series": "Green Nuts Rumble Vol.2",
    "lastSlug": "green-nuts-rumble-vol2-2026-09",
    "lastDate": "2026-09-13",
@@ -3074,6 +3093,17 @@
    "officialUrl": "https://www.instagram.com/p/DcbDS-oEz06/",
    "recurring": false,
    "apiStatus": "personal"
+  },
+  {
+   "series": "Jolie Nursery 即売会（スーパービバホーム茨木目垣店）",
+   "lastSlug": "jolie-nursery-vivahome-ibaraki-2026-09",
+   "lastDate": "2026-09-19",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 0,
+   "igHandle": "j_n_ishikawa",
+   "officialUrl": "https://jolienursery.co.jp/blogs/events/vivahome-ibaraki-20260919",
+   "recurring": false,
+   "apiStatus": "personal"
   }
  ],
  "officialSiteCandidates": [
@@ -3168,6 +3198,12 @@
    "eventDate": "2026-10-11"
   },
   {
+   "domain": "uomachi-mirai.com",
+   "url": "https://uomachi-mirai.com/news/2026-10-17/",
+   "eventName": "魚町ボダニカルナイトマーケット",
+   "eventDate": "2026-10-17"
+  },
+  {
    "domain": "jurian.or.jp",
    "url": "https://www.jurian.or.jp/event/article/?id=1475",
    "eventName": "秋の多肉植物・サボテン展示会（樹里安）",
@@ -3250,12 +3286,6 @@
    "url": "https://yfg-fes.jp/",
    "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
    "eventDate": "2026-05-02"
-  },
-  {
-   "domain": "visit-oita.jp",
-   "url": "https://www.visit-oita.jp/events/detail/13493",
-   "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
   }
  ],
  "unresolvedIgHandles": []
