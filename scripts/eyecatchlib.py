@@ -230,8 +230,11 @@ def stage_candidates(events, fresh_posts, today):
     for sl in list(items):
         e = by_slug.get(sl)
         d, de = sitelib.event_span(e) if e else ('', '')
+        done = {post_code(r.get('post')) for r in rejected.get(sl, [])}
+        # 採否を書いた後に、それより前から走っていた巡回が古い一覧を書き戻すことがある
         if (not e or e.get('imageUrl') or sitelib.is_cancelled(e)
-                or not d or (de or d) < today):
+                or not d or (de or d) < today
+                or post_code(items[sl].get('post')) in done):
             items.pop(sl)
             try:
                 os.remove(os.path.join(STAGE_DIR, f'{sl}.jpg'))
