@@ -50,6 +50,11 @@ jobs:
           sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
           pip install -q pillow
 
+      - name: Check token (投稿しない回も毎回)
+        env:
+          IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+        run: python3 scripts/ig-weekly.py check
+
       - name: Decide mode
         id: mode
         run: |
