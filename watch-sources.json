@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-24 08:17 JST",
+ "generated": "2026-09-24 08:33 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 265,
   "awaitingNextEdition": 265,
   "officialSiteCandidates": 71,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 127
+  "igNeedsBrowser": 70
  },
  "igAccounts": [
   {
@@ -27,7 +27,7 @@
    "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "gamagori_taniku_festa",
@@ -57,7 +57,7 @@
    "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "sapporo.cactus.club",
@@ -347,7 +347,7 @@
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "sakura_shokubutsuen",
@@ -357,7 +357,7 @@
    "lastEventDate": "2026-08-08",
    "hasUpcoming": false,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "fukuoka_effect",
@@ -377,7 +377,7 @@
    "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "chiba_c_and_s_association",
@@ -427,7 +427,7 @@
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "wi_wibotanical",
@@ -437,7 +437,7 @@
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "ta29.wind.sun",
@@ -447,7 +447,7 @@
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "mononoke_botanical_garden",
@@ -627,7 +627,7 @@
    "lastEventDate": "2026-10-03",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "souransai",
@@ -667,7 +667,7 @@
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "the_botanical_world_fukuoka",
@@ -927,7 +927,7 @@
    "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "jj.raider",
@@ -937,7 +937,7 @@
    "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "nagashima_marche",
@@ -947,7 +947,7 @@
    "lastEventDate": "2026-10-23",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "garden_link_festa",
@@ -1107,7 +1107,7 @@
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -1117,7 +1117,7 @@
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "windplants_shop",
@@ -1177,7 +1177,7 @@
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "ta29_handmade.marche",
@@ -1299,7 +1299,7 @@
    "priority": 1,
    "source": "seed",
    "seedWhy": "2026-09-12〜15 に2店舗同時で NAMED AGAVE PARTY / BLUE AGAVE PARTY を開いたが当サイトは1件も掲載していない。6月にOPENイベント、3月にハンズ名古屋出展と、数か月おきに店舗イベントを開く。告知は開催の数日前にしか出ない",
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "monsters_house_minato",
@@ -1311,7 +1311,7 @@
    "priority": 1,
    "source": "seed",
    "seedWhy": "上と同じ主催の店舗別アカウント。回ごとに港店・緑店で内容が違うので両方見る",
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kumagaya_taniku_fes",
@@ -1321,7 +1321,7 @@
    "lastEventDate": "2026-02-14",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "miyashita_park_popup",
@@ -1331,7 +1331,7 @@
    "lastEventDate": "2026-02-18",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "sky_palette_ibaraki",
@@ -1341,7 +1341,7 @@
    "lastEventDate": "2026-02-21",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "plant_freaks_official",
@@ -1351,7 +1351,7 @@
    "lastEventDate": "2026-02-28",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "botanical_botanical__",
@@ -1371,7 +1371,7 @@
    "lastEventDate": "2026-03-28",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "bota_magic",
@@ -1391,7 +1391,7 @@
    "lastEventDate": "2026-03-29",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "joyfulhonda_official",
@@ -1411,7 +1411,7 @@
    "lastEventDate": "2026-04-05",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "imama.jp",
@@ -1451,7 +1451,7 @@
    "lastEventDate": "2026-04-18",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "yamaguchi.plants.market",
@@ -1461,7 +1461,7 @@
    "lastEventDate": "2026-04-25",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "takibi_roasters",
@@ -1471,7 +1471,7 @@
    "lastEventDate": "2026-05-05",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "cocoetnico_aya",
@@ -1491,7 +1491,7 @@
    "lastEventDate": "2026-05-09",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "enjoy_place_outside",
@@ -1511,7 +1511,7 @@
    "lastEventDate": "2026-05-23",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "tanikudayo.zeninsyuugou",
@@ -1521,7 +1521,7 @@
    "lastEventDate": "2026-05-29",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "iku_matsuri",
@@ -1541,7 +1541,7 @@
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "koron_shop",
@@ -1551,7 +1551,7 @@
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kusa_bito",
@@ -1561,7 +1561,7 @@
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "green_breeze_fes",
@@ -1611,7 +1611,7 @@
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "maebashi_park",
@@ -1621,7 +1621,7 @@
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "sprout_2010817",
@@ -1631,7 +1631,7 @@
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kominkasaboten",
@@ -1641,7 +1641,7 @@
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "spine_note_official",
@@ -1651,7 +1651,7 @@
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "sogawa_street_spine",
@@ -1661,7 +1661,7 @@
    "lastEventDate": "2026-06-14",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "amuplants",
@@ -1691,7 +1691,7 @@
    "lastEventDate": "2026-06-20",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "asamiya.hiromi",
@@ -1711,7 +1711,7 @@
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "_sunnydrop_",
@@ -1731,7 +1731,7 @@
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "kyoujinkai",
@@ -1741,7 +1741,7 @@
    "lastEventDate": "2026-06-21",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nagasaki.plants.classic",
@@ -1751,7 +1751,7 @@
    "lastEventDate": "2026-06-27",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "tsuboikenjuen",
@@ -1761,7 +1761,7 @@
    "lastEventDate": "2026-06-27",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "westsaboten.misyonokai",
@@ -1771,7 +1771,7 @@
    "lastEventDate": "2026-06-28",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "hikarudo.___",
@@ -1811,7 +1811,7 @@
    "lastEventDate": "2026-07-11",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "green_days2026",
@@ -1831,7 +1831,7 @@
    "lastEventDate": "2026-07-12",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "joy_grove_0501",
@@ -1861,7 +1861,7 @@
    "lastEventDate": "2026-07-18",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "greenfarmkanazawa",
@@ -1891,7 +1891,7 @@
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "yukuhashisyokubutsuen",
@@ -1901,7 +1901,7 @@
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "plants.revel",
@@ -1911,7 +1911,7 @@
    "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "501plants",
@@ -1941,7 +1941,7 @@
    "lastEventDate": "2026-07-25",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "cool.cactus_",
@@ -1981,7 +1981,7 @@
    "lastEventDate": "2026-07-26",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "_plantsheaven_",
@@ -2021,7 +2021,7 @@
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "kanzen.event",
@@ -2041,7 +2041,7 @@
    "lastEventDate": "2026-08-01",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "saitamasabotenclub",
@@ -2051,7 +2051,7 @@
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "green_base_awaji",
@@ -2071,7 +2071,7 @@
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kyotoshabotenclub",
@@ -2081,7 +2081,7 @@
    "lastEventDate": "2026-08-02",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "bj_plants",
@@ -2101,7 +2101,7 @@
    "lastEventDate": "2026-08-05",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "gooddays_plants",
@@ -2131,7 +2131,7 @@
    "lastEventDate": "2026-08-08",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kagoshima_volcano_market",
@@ -2151,7 +2151,7 @@
    "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "banksia.111",
@@ -2171,7 +2171,7 @@
    "lastEventDate": "2026-08-11",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "27_gallery_tokyo",
@@ -2201,7 +2201,7 @@
    "lastEventDate": "2026-08-15",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "cosmicoplants",
@@ -2251,7 +2251,7 @@
    "lastEventDate": "2026-08-23",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nangokuchatan_tanikutta",
@@ -2261,7 +2261,7 @@
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "tanikunchu",
@@ -2271,7 +2271,7 @@
    "lastEventDate": "2026-08-29",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "ajisai.13",
@@ -2291,7 +2291,7 @@
    "lastEventDate": "2026-09-02",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "6_raccoon_",
@@ -2311,7 +2311,7 @@
    "lastEventDate": "2026-09-05",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "seven.seedlings2",
@@ -2321,7 +2321,7 @@
    "lastEventDate": "2026-09-05",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "hawo_fes",
@@ -2361,7 +2361,7 @@
    "lastEventDate": "2026-09-06",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kato_engei_tokyo",
@@ -2371,7 +2371,7 @@
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kawashimasyubyou",
@@ -2381,7 +2381,7 @@
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "the_factory_otto",
@@ -2391,7 +2391,7 @@
    "lastEventDate": "2026-09-12",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "greennuts_yokohama",
@@ -2431,7 +2431,7 @@
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "taniku_moromoro_ichiba",
@@ -2441,7 +2441,7 @@
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "raflum.tokyo",
@@ -2451,7 +2451,7 @@
    "lastEventDate": "2026-09-16",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "botalife_pachy",
@@ -2471,7 +2471,7 @@
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "protoleaf.shop_yumegaoka",
@@ -2481,7 +2481,7 @@
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "ichigoichie_antique",
@@ -2501,7 +2501,7 @@
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "b.g_ozman",
@@ -2551,7 +2551,7 @@
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "apartment_niigata",
@@ -2591,7 +2591,7 @@
    "lastEventDate": "2026-09-21",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "grizzlycoffee_and_supply",
@@ -2651,7 +2651,7 @@
    "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "katsumaru9",
@@ -2661,7 +2661,7 @@
    "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   }
  ],
  "awaitingNextEdition": [
@@ -2674,7 +2674,7 @@
    "igHandle": "picnic.king.plants",
    "officialUrl": "https://www.instagram.com/picnic.king.plants/",
    "recurring": true,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "PICNIC GARDEN vol.25 in 鶴岡公園",
@@ -2685,7 +2685,7 @@
    "igHandle": "picnic.king.plants",
    "officialUrl": "https://www.instagram.com/picnic.king.plants/",
    "recurring": true,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "Wi-Wi BOTANICAL Vol.2",
@@ -2696,7 +2696,7 @@
    "igHandle": "wi_wibotanical",
    "officialUrl": null,
    "recurring": true,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "series": "ナイトマルシェ（さくら植物園）8月8日",
@@ -2707,7 +2707,7 @@
    "igHandle": "sakura_shokubutsuen",
    "officialUrl": "https://www.instagram.com/sakura_shokubutsuen/",
    "recurring": true,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "PLANT FREAKS vol.6",
@@ -2762,7 +2762,7 @@
    "igHandle": "plants.garage.market",
    "officialUrl": "https://ilinobeclub.jp/archives/475",
    "recurring": true,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "aobouzu × 6 RACCOON コラボPOP UP",
@@ -2784,7 +2784,7 @@
    "igHandle": "seven.seedlings2",
    "officialUrl": "https://www.instagram.com/seven.seedlings2/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "gardens umekita 2周年記念イベント 店頭即売会",
@@ -2806,7 +2806,7 @@
    "igHandle": "null_kanazawa",
    "officialUrl": "https://www.instagram.com/reel/DcqpmRoI6Wb/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "ボタニカルフェスタ（ハオルチア界隈）",
@@ -2861,7 +2861,7 @@
    "igHandle": "nagomitaniku",
    "officialUrl": "https://www.instagram.com/nagomitaniku/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "River. Labo 2号店 グランドオープンイベント",
@@ -2872,7 +2872,7 @@
    "igHandle": "river.labo",
    "officialUrl": "https://www.instagram.com/river.labo/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "青坊主 鹿児島ポップアップ",
@@ -2894,7 +2894,7 @@
    "igHandle": "notreatelier.29",
    "officialUrl": "https://www.instagram.com/notreatelier.29/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "プランツフェスタ2026",
@@ -2905,7 +2905,7 @@
    "igHandle": "kawashimasyubyou",
    "officialUrl": "https://www.instagram.com/kawashimasyubyou/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "Succulent1987 in Country Park KUMAMOTO 2026",
@@ -2916,7 +2916,7 @@
    "igHandle": "the_factory_otto",
    "officialUrl": "https://www.instagram.com/the_factory_otto/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "TEAM ABC+C+O+(M) POPUP",
@@ -2927,7 +2927,7 @@
    "igHandle": "kato_engei_tokyo",
    "officialUrl": "https://www.instagram.com/kato_engei_tokyo/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "Green Nuts Rumble Vol.2",
@@ -2971,7 +2971,7 @@
    "igHandle": "north_east_caudex_club",
    "officialUrl": "https://www.instagram.com/north_east_caudex_club/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "series": "Botanical in はら笑楽交",
@@ -2982,7 +2982,7 @@
    "igHandle": "king.plants.slugger",
    "officialUrl": "https://www.instagram.com/king.plants.slugger/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "はみもろ（2026年9月）",
@@ -2993,7 +2993,7 @@
    "igHandle": "taniku_moromoro_ichiba",
    "officialUrl": null,
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "KYOTO MIDORI NO MARCHE IN 茨木",
@@ -3004,7 +3004,7 @@
    "igHandle": "midorino_marche",
    "officialUrl": "https://www.instagram.com/midorino_marche/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "series": "第1回 緑と多肉を楽しむマルシェ",
@@ -3026,7 +3026,7 @@
    "igHandle": "protoleaf.shop_yumegaoka",
    "officialUrl": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "鹿鳥風月（FUKUOKA EFFECT 会場）",
@@ -3037,7 +3037,7 @@
    "igHandle": "ta29.wind.sun",
    "officialUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "三浦園芸 アロイド販売会",
@@ -3081,7 +3081,7 @@
    "igHandle": "waltzbase_saga",
    "officialUrl": "https://www.instagram.com/waltzbase_saga/",
    "recurring": false,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "series": "高の宮市 〜植物のある暮らし〜",

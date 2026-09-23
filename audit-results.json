@@ -1,5 +1,5 @@
 {
-  "total": 514,
+  "total": 531,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -639,7 +639,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -790,8 +790,23 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 14,
+      "items": [
+        "2026-09-24 観葉植物専門店funny plantsが決算セール final2026を開催、植物や植木鉢などを20%OFFで販売",
+        "2026-09-26 スモリオープンガーデン",
+        "2026-09-27 Brotherhood Market vol.2.0が2026年に島田市で開催、植物販売と落語会やスタンプラリーを実施",
+        "2026-09-27 群馬第4交換会2026年9月場所を9月27日に開催、植物の購入や出品と見学に対応",
+        "2026-09-29 Gallery Me Japan Jungle展2026が府中で開催、生きた植物とアート雑貨をUN CHARME CAFEで展示販売",
+        "2026-10-03 Plants Ride 2026が上越市で開催、塊根植物や鉢とバイクがWESTERN RIVER駐車場内に集結",
+        "2026-10-03 オトギノマルシェ2026が氷見市海浜植物園で開催、フードやワークショップなど多彩な出店者が参加",
+        "2026-10-10 風の森マーケット2026が10月10日に開催、風の森で植物や雑貨の販売イベントを実施予定",
+        "2026-10-11 SPICY GEM feat. KAKUSEN-EN 2026がFIGURE HANAREで開催、鶴仙園と植物やグッズを販売",
+        "2026-10-12 木更津園芸市",
+        "2026-10-18 Anthurium Festival 2026 Tokyo",
+        "2026-10-18 niwanosoが秋のニワノソマルシェ2026を開催、植物販売や木の時計づくりと飲食店4店舗が登場",
+        "2026-10-31 松村農園が第2回観葉植物販売会＆相談会2026を開催、定番植物と少し珍しいレア品種を取り扱い",
+        "2026-11-07 内田農園がアガベ食堂2026を開催、実生株と輸入株の特別価格販売やアガベ企画を実施"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -901,8 +916,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-10-25 roots-market-inage-2026-10: 弱い語(中止)＋ページが変わった"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -971,15 +988,14 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 7,
+      "count": 6,
       "items": [
-        "@_and_plants 2026-10-24,2026-10-25: 【大阪】10/24(土)・25(日)ポップアップ『PLANT & POT Vol.16』を開催します。 大阪・阿波座にて https://www.instagram.com/p/DdUkzhfzENs/",
         "@_code.official_ 2026-10-31,2026-11-01: 【出店告知】 初大阪出店 botanical.botanical !!︎ CODE初大阪POPUP🐙 日頃、LIVE販売 https://www.instagram.com/p/DdjGuUGCRbh/",
-        "@aobouzu_caudex 2026-09-25,2026-09-26,2026-09-27: WILD MARKET コラボアイテムを発表します👏 今回はアパレルと鉢を作りました! マグナムウェイトのタフボディと古 https://www.instagram.com/p/DdD0Y7tEx4y/",
         "@bwoocraftplants 2026-09-26: 🌿✨ Plant to New Home 2026 ✨🌿 愛珍植祭 Presents aichinn_syokusai  https://www.instagram.com/p/DdFyi1zFM7E/",
         "@en_joy_unite_69 2026-10-03: こんばんは🌑 en’joyです🤘😎🎸 叢宴(そうえん) in静岡エスパルスドリームプラザ 2日間たくさんのご来場ご来店い https://www.instagram.com/p/DdOgFG_k7jB/",
         "@felicita_plants 2026-10-03: PLNTS RIDE 10.3 SAT. 植物を愛する人も。 バイクを愛する人も。 まだ、その面白さを知らない人も。 こ https://www.instagram.com/p/DdfIk7BksdU/",
-        "@fukuoka_effect 2026-09-27: イベントのお知らせです♪ ⁡ 🌸🌸🌸🌸🌸 🌸🌸🌸🌸🌸 花と緑のフラワーオークション 開催のお知らせ📢✨ 🌸🌸🌸🌸🌸 🌸🌸 https://www.instagram.com/p/DdkjNrnBfuH/"
+        "@fukuoka_effect 2026-09-27: イベントのお知らせです♪ ⁡ 🌸🌸🌸🌸🌸 🌸🌸🌸🌸🌸 花と緑のフラワーオークション 開催のお知らせ📢✨ 🌸🌸🌸🌸🌸 🌸🌸 https://www.instagram.com/p/DdkjNrnBfuH/",
+        "@taniku_moromoro_ichiba 2026-11-15: 【多肉もろもろ市場併催イベントのご紹介】 11/15の方のみの開催。 前回5月も併催イベントがありましたが 今回も11/ https://www.instagram.com/p/Ddi69TDkiUB/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -993,8 +1009,13 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09: https://www.instagram.com/reel/Ddh0tnoo1t1/（caption）",
+        "2026-10-18 bizarre-plants-maniax-tottori-2026-10: https://www.instagram.com/p/DdNn0MOzdCA/（sourcePost）",
+        "2026-10-24 plant-and-pot-vol16-2026-10: https://www.instagram.com/p/DdUkzhfzENs/（sourcePost）",
+        "2026-11-01 fukuyama-de-marche-8th-2026-11: https://www.instagram.com/p/Ddl3BjhEwRG/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1095,25 +1116,24 @@
     },
     "task_run_never_recorded": {
       "title": "台帳に登録したが一度も自分で書いていないタスク",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "agave-navi-eyecatch: since=2026-09-10 以降の記録が1件も無い（台帳の最終記録 2026-09-09）"
+      ],
       "note": "そのタスクのプロンプトに「起動直後に python3 scripts/record-run.py <taskId> を実行して push する」と「レポートを task-reports/<taskId>_<日付>.md に保存する」を入れる(プレイブック §1 の 5)。**編集するのは Cowork デスクトップのタスク画面の「手順」**(鉛筆アイコン)。Claude\\Scheduled\\<task>\\SKILL.md は Claude 内部領域で、Cowork セッションからは読み書きできない(2026-09-14 実測。親フォルダを接続しても protected location として拒否される)。フォルダ接続を頼む提案はしないこと。**動いている処理には触らない。**この検査が言っているのは「記録していない」だけで、「動いていない」ではない。2026-09-15〜16 に agave-navi-eyecatch をそう誤診して2日使った。実際は毎日走って画像を取って push までしていて、記録の2手順だけが抜けていた。**動いているかどうかは成果物のコミットで見る**(例: git log --since=... -- images/events/)。**空の結果を「無い」と読まないこと。**そのとき使ったコマンドが壊れていただけ、ということがある(実際そうだった)。既知の真なケースで問い合わせ自体を検証してから結論にする",
       "severity": "info"
     },
     "task_run_unrecorded_but_working": {
       "title": "台帳に書いていないが成果物から動いているタスク",
-      "count": 1,
-      "items": [
-        "agave-navi-eyecatch: 台帳は since=2026-09-10 以降も空だが、成果物から 9日ぶんの起動が分かる（2026-09-12〜2026-09-23）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "**死んでいない。記録だけが落ちている。**この形を task_run_never_recorded として出していたので、2026-09-10〜18 に同じ指摘が9日出続け、そのうち5回が目崎に転送され、5回とも「SKILL.md に2行入れて」と返した。直せない指摘を出し続けるのは検出していないのと同じ。記録を入れたいなら、Cowork デスクトップのタスク画面の「手順」(鉛筆アイコン)に record-run.py とレポート保存の2行を足す。**目崎しか触れない**(Claude\\Scheduled は内部領域)ので、repo 側からは直せない。入れなくても稼働は成果物で追える",
       "severity": "info"
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 2,
+      "count": 1,
       "items": [
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-22（直近7日で3日）",
         "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22 2026-09-23（直近7日で5日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
