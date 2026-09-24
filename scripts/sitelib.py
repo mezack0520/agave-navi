@@ -1886,3 +1886,11 @@ def no_image_thumb(e):
     if label:
         parts.append(f'<span class="eni-date">{label}</span>')
     return f'<div class="event-thumb event-no-image">{"".join(parts)}</div>'
+
+
+def load_events(path=None):
+    """events.json を読む。読む場所を各スクリプトが別々に書いていた
+    (ig-weekly.py と enrich_events.py に同じ名前の関数があった。2026-09-24)"""
+    p = path or os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'events.json')
+    with open(p, encoding='utf-8') as f:
+        return json.load(f)

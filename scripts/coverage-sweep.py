@@ -191,7 +191,21 @@ def _raw_tokens(n):
     for t in _TOKEN_MIXED_RE.findall(n):
         if t not in out:
             out.append(t)
+    # 助詞で区切った語も足す。混在の連なりは助詞ごと1語に取り込むので、
+    # 「秋のアガベ食堂」が「のアガベ」「秋のアガベ食堂」になり、LEAFLA の
+    # 「内田農園がアガベ食堂2026を開催」(こちらは「がアガベ」)と噛み合わず、
+    # 掲載済みの回が取りこぼし候補に出た(2026-09-24)。
+    # 前後が仮名以外の1文字の助詞だけを切る。「まるっと」のような
+    # ひらがなの固有名の中の「と」は、前後がひらがななので切らない。
+    split = _PARTICLE_RE.sub(' ', n)
+    if split != n:
+        for t in _TOKEN_RE.findall(split) + _TOKEN_MIXED_RE.findall(split):
+            if t not in out:
+                out.append(t)
     return out
+
+
+_PARTICLE_RE = re.compile(r'(?<=[㐀-鿿゠-ヿA-Za-z0-9])[のがをでとやにへ](?=[㐀-鿿゠-ヿA-Za-z0-9])')
 
 
 def tokens(name):
@@ -388,7 +402,12 @@ def build_index():
             cur += timedelta(days=1)
 
     rej = load_json('rejected-events.json', {})
-    rejected = [(i.get('name') or '') for i in (rej.get('items') or [])]
+    # 見送りの記録は名前に加えて aliases も照合に使う。英語名で記録した回が
+    # 日本語の見出しで出ると一致しない(sumori open garden 対 スモリオープンガーデン)
+    rejected = []
+    for i in (rej.get('items') or []):
+        rejected.append(i.get('name') or '')
+        rejected.extend(a for a in (i.get('aliases') or []) if a)
     return by_day, rejected
 
 
@@ -672,9 +691,12 @@ def sweep(days, sleep=0.7):
             if ADDED_PREFIX.match(unicodedata.normalize('NFKC', t)):
                 cand = [e for v in by_day.values() for e in v]
             bare = (source == 'nextmeet')
+            # aliases は他所での呼び名。主催の表記(PLNTS RIDE)とアグリゲータの
+            # 表記(Plants Ride)が違う回がある(2026-09-24)
             if any(matches(t, e.get('name', ''), bare=bare) or
                    matches(t, e.get('venue') or e.get('location') or '',
-                           bare=bare)
+                           bare=bare) or
+                   any(matches(t, a, bare=bare) for a in (e.get('aliases') or []))
                    for e in cand):
                 stats['covered'] += 1
                 continue
@@ -856,6 +878,13 @@ def self_test(verbose=True):
         # 足しているので包含にならず、照合語も「仁保」しか当たらなかった
         ('植物販売会(仮) in仁保の郷が道の駅仁保の郷で開催、植物関連商品を扱う販売会を実施予定',
          '道の駅 仁保の郷 屋外 青空デッキ', True),
+        # 2026-09-24。混在の連なりが助詞ごと1語になり「のアガベ」「がアガベ」で
+        # 噛み合わず、掲載済みの「秋のアガベ食堂」が取りこぼし候補に出た
+        ('内田農園がアガベ食堂2026を開催、実生株と輸入株の特別価格販売やアガベ企画を実施',
+         '秋のアガベ食堂', True),
+        # 助詞で切っても、別の回を巻き込まないこと
+        ('内田農園がアガベ食堂2026を開催、実生株と輸入株の特別価格販売やアガベ企画を実施',
+         '秋のアガベ祭り', False),
     ]
     for title, name, want in cases:
         got = matches(title, name)

@@ -16,7 +16,7 @@
 
 見張る主催(2026-09-23 に拡大):
   開催予定の回の主催と watch-sources.json の全IGアカウント(次回待ちのシリーズ・
-  watch-seeds)。呼び出し上限に収めるため plan() の周期で分けて取る。
+  watch-seeds)。呼び出し上限に収めるため plan_fetch() の周期で分けて取る。
   以前は agave-event-update タスクが組み込みブラウザで同じアカウントを回っていた。
 
 出すもの: organizer-posts.json
@@ -51,13 +51,11 @@ import iglib  # noqa: E402
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, 'organizer-posts.json')
 
-HORIZON_DAYS = 120      # これより先の回の主催は見ない
+WATCH_HORIZON_DAYS = 120      # これより先の回の主催は見ない
 POSTS_PER_USER = 12
 CANCEL_LOOKBACK = 45    # 中止の言い切りを探す投稿の古さ
 UNLISTED_LOOKBACK = 14  # 取りこぼし候補を探す投稿の古さ
 UNLISTED_AHEAD = 150    # 投稿に出た日付が今日から何日先までなら候補にするか
-# レート制限の兆候。これが出たら残りを取らずに打ち切る(翌日また回る)
-RATE_CODES = iglib.RATE_CODES
 # 1回の実行で叩く上限。アプリの呼び出し上限(ほぼ200回/時)の内側に置く
 BUDGET = 180
 # これより古い持ち越し結果からは信号を出さない
@@ -115,9 +113,9 @@ def name_key(e):
     return n[:6]
 
 
-def targets(events, today):
+def upcoming_by_org(events, today):
     """開催予定の回を主催ごとに束ねる"""
-    lim = (today + timedelta(days=HORIZON_DAYS)).strftime('%Y-%m-%d')
+    lim = (today + timedelta(days=WATCH_HORIZON_DAYS)).strftime('%Y-%m-%d')
     t = today.strftime('%Y-%m-%d')
     by = {}
     for e in events:
@@ -131,16 +129,78 @@ def targets(events, today):
     return by
 
 
+_IG_HANDLE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?(?:$|[?#])')
+
+
 def all_by_org(events):
+    """主催ごとの回。organizerIg に加えて、出典URLがその人のプロフィールの回も含める。
+
+    organizerIg が空で url だけがプロフィールを指す回が多い
+    (plant to new home は url=@bwoocraftplants / organizerIg 無し)。
+    organizerIg だけで束ねると、その人の投稿に出る掲載済みの日付が
+    「当サイトに無い日付」として出た(2026-09-24)。
+    """
     by = {}
     for e in events:
-        u = (e.get('organizerIg') or '').strip().lstrip('@')
+        hs = set()
+        u = (e.get('organizerIg') or '').strip().lstrip('@').lower()
         if u:
-            by.setdefault(u, []).append(e)
+            hs.add(u)
+        for k in ('url', 'sourceUrl'):
+            m = _IG_HANDLE.search(e.get(k) or '')
+            if m and m.group(1).lower() not in ('p', 'reel', 'tv', 'explore', 'stories'):
+                hs.add(m.group(1).lower())
+        for h in hs:
+            by.setdefault(h, []).append(e)
     return by
 
 
-def analyze(username, posts, org_events, all_org_events, today):
+def known_elsewhere(cap, iso, day_index, rejected_by_day):
+    """その日付の話が、別の主催で掲載済みの回か、見送り済みの回を指しているか。
+
+    出店者やコラボ相手の投稿には、主催が別の回の日付が出る(叢宴の出店者が
+    書いた10/3は、ぼっち植堂主催の回として掲載済みだった)。
+    その日の回の名前か会場が本文に出ていれば既知とみなす。
+    """
+    c = norm(cap).replace(' ', '').lower()
+    for e in day_index.get(iso, []):
+        k = name_key(e).lower()
+        v = norm(e.get('venue') or '').replace(' ', '').lower()
+        if (k and len(k) >= 3 and k in c) or (v and len(v) >= 4 and v[:8] in c):
+            return True
+        # 主催のアカウントに触れていれば、その主催の回の話(叢宴の出店者は
+        # 「主催のぼっちさん @bocchi_syokudou」と書き、会場名は表記が揺れていた)
+        org = (e.get('organizerIg') or '').strip().lstrip('@').lower()
+        if org and '@' + org in c:
+            return True
+    for r in rejected_by_day.get(iso, []):
+        for nm in [r.get('name') or ''] + list(r.get('aliases') or []):
+            k = norm(re.sub(r'\s*\(.*$', '', nm)).replace(' ', '').lower()[:6]
+            if k and len(k) >= 3 and k in c:
+                return True
+    return False
+
+
+def day_indexes(events, rejected_items):
+    """日付 → その日にかかる回 / 見送り"""
+    di, ri = {}, {}
+    for e in events:
+        try:
+            a = datetime.strptime(e['date'], '%Y-%m-%d')
+            b = datetime.strptime(e.get('dateEnd') or e['date'], '%Y-%m-%d')
+        except (KeyError, ValueError):
+            continue
+        d = a
+        while d <= b and (d - a).days <= 62:
+            di.setdefault(d.strftime('%Y-%m-%d'), []).append(e)
+            d += timedelta(days=1)
+    for r in rejected_items:
+        if r.get('eventDate'):
+            ri.setdefault(r['eventDate'], []).append(r)
+    return di, ri
+
+
+def analyze_posts(username, posts, org_events, all_org_events, today, day_index=None, rejected_by_day=None):
     """(cancel信号, unlisted候補) を返す"""
     cancel, unlisted = [], []
     known_md = set()
@@ -193,7 +253,10 @@ def analyze(username, posts, org_events, all_org_events, today):
                 except ValueError:
                     continue
                 if 0 <= (cand - today).days <= UNLISTED_AHEAD:
-                    fut.append(cand.strftime('%Y-%m-%d'))
+                    iso = cand.strftime('%Y-%m-%d')
+                    if known_elsewhere(cap, iso, day_index or {}, rejected_by_day or {}):
+                        continue
+                    fut.append(iso)
             if fut:
                 unlisted.append({'username': username, 'dates': fut,
                                  'permalink': p.get('permalink'),
@@ -269,7 +332,7 @@ def is_personal(r):
     return r.get('code') == 110 or '見つかりません' in msg or 'Cannot find User' in msg
 
 
-def plan(tg, watch_handles, prev, today_s, budget):
+def plan_fetch(tg, watch_handles, prev, today_s, budget):
     """今回取る主催を決める。(今回取る, 見張り対象の全体)。
 
     見張り対象は開催予定の回の主催(tg)と watch-sources.json の全IGアカウント。
@@ -305,8 +368,14 @@ def main():
     today_s = today.strftime('%Y-%m-%d')
     with open(os.path.join(REPO, 'events.json'), encoding='utf-8') as f:
         events = json.load(f)
-    tg = targets(events, today)
+    tg = upcoming_by_org(events, today)
     allorg = all_by_org(events)
+    try:
+        with open(os.path.join(REPO, 'rejected-events.json'), encoding='utf-8') as f:
+            _rej = json.load(f).get('items') or []
+    except (OSError, ValueError):
+        _rej = []
+    day_index, rejected_by_day = day_indexes(events, _rej)
     try:
         with open(os.path.join(REPO, 'watch-sources.json'), encoding='utf-8') as f:
             watch = [x['handle'] for x in json.load(f).get('igAccounts') or [] if x.get('handle')]
@@ -317,10 +386,10 @@ def main():
             prev = json.load(f).get('results') or {}
     except (OSError, ValueError):
         prev = {}
-    names, accounts = plan(tg, watch, prev, today_s, a.limit or BUDGET)
+    names, accounts = plan_fetch(tg, watch, prev, today_s, a.limit or BUDGET)
 
     out = {'_note': ('主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日書く。'
-                     '全アカウントを毎日は取らない(plan() の周期)。今回取らなかった主催は'
+                     '全アカウントを毎日は取らない(plan_fetch() の周期)。今回取らなかった主催は'
                      '前回の結果を checkedOn つきで持ち越す。signals は取得から'
                      f'{FRESH_DAYS}日以内の結果で出す。errors の多くは相手が個人アカウントで、異常ではない'),
            'checkedOn': today_s,
@@ -343,7 +412,7 @@ def main():
         if err:
             code = err.get('code')
             msg = (err.get('error_user_msg') or err.get('message') or '')[:160]
-            if code in RATE_CODES:
+            if code in iglib.RATE_CODES:
                 stopped = f'{u} でレート制限({code})。残り {len(names) - i} 件は次回'
                 break
             # 権限不足(#10)は相手によらず全件で同じ結果になる。最初の3件が
@@ -376,7 +445,8 @@ def main():
         if _days(today_s, r.get('checkedOn')) > FRESH_DAYS:
             continue
         ok_recent += 1
-        c, n = analyze(u, r['posts'], tg.get(u, []), allorg.get(u, []), today)
+        c, n = analyze_posts(u, r['posts'], tg.get(u, []), allorg.get(u.lower(), []), today,
+                       day_index, rejected_by_day)
         out['signals']['cancel'] += c
         out['signals']['unlisted'] += n
     out['stats']['readable'] = ok_recent
@@ -425,40 +495,47 @@ def self_test():
     # 日付で指した中止は鳴る
     p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u1',
           'caption': '10月18日のテストプランツ市は台風のため開催中止となりました'}]
-    c, _ = analyze('org', p, [ev, other], [ev, other], today)
+    c, _ = analyze_posts('org', p, [ev, other], [ev, other], today)
     chk('日付で指した中止', [x['slug'] for x in c], ['x-2026-10'])
     # 雨天中止の条件文は鳴らない
     p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u2',
           'caption': '10/18開催。雨天中止となる場合があります'}]
-    c, _ = analyze('org', p, [ev], [ev], today)
+    c, _ = analyze_posts('org', p, [ev], [ev], today)
     chk('条件文は鳴らない', c, [])
     # 別の回を指した中止は、この回では鳴らない
     p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u3',
           'caption': '11月3日のマルシェは中止となりました'}]
-    c, _ = analyze('org', p, [ev], [ev], today)
+    c, _ = analyze_posts('org', p, [ev], [ev], today)
     chk('別の回の中止', c, [])
     # 荒天時の連絡手段を述べた注意書きは鳴らない(福岡グリーンパーティー第7回)
     p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u2b',
           'caption': '10月18日。雨天でも開催致します。(荒天の場合はインスタグラムにて中止のお知らせを致します)'}]
-    c, _ = analyze('org', p, [ev], [ev], today)
+    c, _ = analyze_posts('org', p, [ev], [ev], today)
     chk('荒天時の予告は鳴らない', c, [])
     chk('締切日は日付に数えない', month_days('募集は9月30日で締め切ります。12/26開催'), {(12, 26)})
     # 別イベントへの出店告知は取りこぼし候補にしない
     p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4b',
           'caption': 'イベント出店のお知らせ 11/22 開催 会場はどこそこ'}]
-    _, n = analyze('org', p, [ev], [ev], today)
+    _, n = analyze_posts('org', p, [ev], [ev], today)
     chk('出店告知は候補にしない', n, [])
     # 掲載済みの日付は取りこぼし候補にしない。未掲載の先の日付は候補
     p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4',
           'caption': '【植物市 開催決定】日程 10/18と11/22 会場 市民ホール'}]
-    _, n = analyze('org', p, [ev], [ev], today)
+    _, n = analyze_posts('org', p, [ev], [ev], today)
     chk('未掲載の日付', [x['dates'] for x in n], [['2026-11-22']])
     # 古い投稿は取りこぼし候補にしない
     p = [{'timestamp': '2026-08-01T01:00:00+0000', 'permalink': 'u5',
           'caption': '【植物市 開催決定】日程 11/22 会場 市民ホール'}]
-    _, n = analyze('org', p, [ev], [ev], today)
+    _, n = analyze_posts('org', p, [ev], [ev], today)
     chk('古い投稿', n, [])
 
+    # 別の主催で掲載済みの回の日付は、名前か会場か主催アカウントが出ていれば候補にしない
+    di = {'2026-10-03': [{'slug': 'b', 'name': '秋のボタニカルマーケット', 'venue': '富士中央公園 芝生広場',
+                          'organizerIg': 'bocchi_syokudou', 'date': '2026-10-03'}]}
+    chk('主催アカウントで既知', known_elsewhere('来月10/3に開催 主催のぼっちさん @bocchi_syokudou', '2026-10-03', di, {}), True)
+    chk('無関係なら未知', known_elsewhere('10/3に別の催し', '2026-10-03', di, {}), False)
+    chk('見送り済みは既知', known_elsewhere('花と緑のフラワーオークション 9/27', '2026-09-27', {},
+                                     {'2026-09-27': [{'name': '花と緑のフラワーオークション (2026-09-27・福岡)'}]}), True)
     # 周期: 開催予定の主催は毎日、他は2日、読めない相手は7日
     prev = {'up': {'ok': True, 'checkedOn': '2026-09-22'},
             'other1': {'ok': True, 'checkedOn': '2026-09-22'},
@@ -466,10 +543,10 @@ def self_test():
             'priv': {'ok': False, 'error': 'ユーザーネームがprivのユーザーが見つかりません',
                      'checkedOn': '2026-09-20'},
             'gone': {'ok': True, 'checkedOn': '2026-09-01'}}
-    names, accts = plan({'up': [ev]}, ['other1', 'other2', 'priv', 'new'], prev, '2026-09-23', 50)
+    names, accts = plan_fetch({'up': [ev]}, ['other1', 'other2', 'priv', 'new'], prev, '2026-09-23', 50)
     chk('今回取る主催', names, ['up', 'new', 'other2'])
     chk('見張り対象から外れた主催は持たない', 'gone' in accts, False)
-    names, _ = plan({'up': [ev]}, ['other1', 'new'], prev, '2026-09-23', 1)
+    names, _ = plan_fetch({'up': [ev]}, ['other1', 'new'], prev, '2026-09-23', 1)
     chk('上限では開催予定の主催が先', names, ['up'])
 
     # アイキャッチ候補の投稿選び

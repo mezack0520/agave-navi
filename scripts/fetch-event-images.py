@@ -55,11 +55,9 @@ import eyecatchlib   # noqa: E402
 
 EVENTS_JSON = os.path.join(REPO, 'events.json')
 IMG_DIR = os.path.join(REPO, 'images', 'events')
-SITE = 'https://agave-navi.com'
 
 UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
       '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
-MAX_BYTES = eyecatchlib.MAX_BYTES
 
 
 
@@ -164,12 +162,12 @@ def main():
                 continue
             dest = os.path.join(IMG_DIR, f'{slug}.jpg')
             w, h, size = save_image(ir.content, dest)
-            if size > MAX_BYTES:
+            if size > eyecatchlib.MAX_BYTES:
                 os.remove(dest)
                 print(f'  ✗ {slug}: 縮小後も {size}バイトで大きすぎる')
                 fail += 1
                 continue
-            ev['imageUrl'] = f'{SITE}/images/events/{slug}.jpg'
+            ev['imageUrl'] = f'{sitelib.DOMAIN}/images/events/{slug}.jpg'
             ev['imageSource'] = post
             ev['updatedAt'] = today
             print(f'  ✓ {slug}: {w}x{h} {size//1024}KB')

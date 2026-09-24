@@ -321,14 +321,9 @@ def caption(sat, sun, pages, n):
 
 # ---------------------------------------------------------------- build / publish
 
-def load_events():
-    with open(os.path.join(REPO, 'events.json'), encoding='utf-8') as f:
-        return json.load(f)
-
-
 def build(out, today):
     sat, sun = weekend_of(today)
-    evs = weekend_events(load_events(), sat, sun)
+    evs = weekend_events(sitelib.load_events(), sat, sun)
     if not evs:
         print('今週末の回が0件。作らない')
         return None

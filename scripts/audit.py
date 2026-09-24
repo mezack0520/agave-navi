@@ -57,6 +57,9 @@ KNOWN_EVENT_FIELDS = {
     # 「株を持ち帰る前に揃えるもの」の枠を出さないために使う。
     # artworkShows の改定で、植物を売らない作品展が載るようになった
     'plantSale',
+    # 他所での呼び名(2026-09-24)。読むのは coverage-sweep.py の照合で、
+    # 主催の表記(PLNTS RIDE)とアグリゲータの表記(Plants Ride)が違う回を掲載済みと判定する
+    'aliases',
 }
 
 

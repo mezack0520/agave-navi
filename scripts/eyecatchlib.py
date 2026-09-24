@@ -36,7 +36,6 @@ import urllib.request
 from datetime import datetime, timedelta
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = 'https://agave-navi.com'
 IMG_DIR = os.path.join(REPO, 'images', 'events')
 STAGE_DIR = os.path.join(REPO, 'staging', 'eyecatch')
 STAGE_JSON = os.path.join(STAGE_DIR, 'candidates.json')
@@ -68,7 +67,7 @@ def _n(s):
     return unicodedata.normalize('NFKC', s or '').lower()
 
 
-def tokens(name):
+def name_tokens(name):
     n = re.sub(r'[（）()【】\[\]・,、.。!！?？~〜_/&\-]', ' ', _n(name))
     raw = re.findall(r'[぀-ヿ]{2,}|[一-鿿]{2,}|[a-z0-9]{3,}', n)
     return sorted({t for t in raw if t not in _GENERIC and not t.isdigit()})
@@ -114,7 +113,7 @@ def pick_post(ev, posts, rejected_posts=()):
         for p in usable:
             if post_code(p.get('permalink')) == want_code:
                 return p, {'by': 'sourcePost'}
-    want = tokens(ev.get('name'))
+    want = name_tokens(ev.get('name'))
     start = ev.get('date') or ''
     end = ev.get('dateEnd') or start
     ev_md = set()

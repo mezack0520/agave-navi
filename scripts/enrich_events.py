@@ -78,10 +78,7 @@ def _is_empty(v):
 
 
 
-def load_events():
-    """Load events from events.json"""
-    with open(EVENTS_PATH, 'r', encoding='utf-8') as f:
-        return json.load(f)
+load_events = sitelib.load_events
 
 
 def check_detail_page(slug):

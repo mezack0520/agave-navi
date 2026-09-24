@@ -57,7 +57,7 @@ def main():
         os.makedirs(ec.IMG_DIR, exist_ok=True)
         shutil.move(src, os.path.join(ec.IMG_DIR, f'{sl}.jpg'))
         e = by_slug[sl]
-        e['imageUrl'] = f'{ec.SITE}/images/events/{sl}.jpg'
+        e['imageUrl'] = f'{sitelib.DOMAIN}/images/events/{sl}.jpg'
         e['imageSource'] = it['post']
         e['updatedAt'] = today
         items.pop(sl)
