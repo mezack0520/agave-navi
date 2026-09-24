@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-24",
+  "updated": "2026-09-25",
   "items": [
+    {
+      "on": "2026-09-25",
+      "kind": "date",
+      "slug": "ore-no-plants-collection-2026-09",
+      "name": "俺の！プランツ・コレクション！！",
+      "date": "2026-09-14",
+      "dateEnd": "2026-09-21",
+      "prefecture": "島根",
+      "detail": "2026.09.19-21 → 2026.09.14-21"
+    },
     {
       "on": "2026-09-24",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2026-09-06",
       "dateEnd": "2026-09-07",
       "prefecture": "鹿児島",
-      "detail": ""
-    },
-    {
-      "on": "2026-08-27",
-      "kind": "listed",
-      "slug": "yamashiro-aisenen-autumn-2026-09",
-      "name": "山城愛仙園 秋季展示即売会（9月売出）",
-      "date": "2026-09-18",
-      "dateEnd": "2026-09-27",
-      "prefecture": "大阪",
       "detail": ""
     }
   ]

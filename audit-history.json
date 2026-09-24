@@ -858,6 +858,29 @@
    },
    "events": 480,
    "upcoming": 169
+  },
+  {
+   "date": "2026-09-25",
+   "urgent": {},
+   "info": {
+    "coverage_gaps": 1,
+    "cancel_suspects": 5,
+    "eyecatch_candidates_pending": 1,
+    "task_run_unrecorded_but_working": 1,
+    "task_run_gap": 2
+   },
+   "metric": {
+    "thin_past_with_source": 33,
+    "thin_archived": 48,
+    "upcoming_with_image": 112,
+    "events_with_image": 193,
+    "upcoming_no_image": 57,
+    "ongoing_events": 5,
+    "workflow_secrets": 7,
+    "eyecatch_backlog": 57
+   },
+   "events": 480,
+   "upcoming": 169
   }
  ]
 }

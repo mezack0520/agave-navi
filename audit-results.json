@@ -1,5 +1,5 @@
 {
-  "total": 510,
+  "total": 515,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -663,11 +663,12 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 4,
+      "count": 5,
       "items": [
         "nova-cultura-tradmans-2026-09(2026-09-19〜2026-09-27/9日/長期)",
         "onokoro-green-festa-2026-09(2026-09-01〜2026-09-27/27日/長期)",
         "premium-rock-garden-festa-2026(2026-09-19〜2026-09-27/9日/長期)",
+        "sapporo-cactus-club-aki-2026(2026-09-25〜2026-09-27/3日)",
         "yamashiro-aisenen-autumn-2026-09(2026-09-18〜2026-09-27/10日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -788,8 +789,10 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-08 三国屋本店がヤッチロプランツ2026を開催、多肉植物やパンとスイーツがくまモンポート八代に集まる"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -899,8 +902,14 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 5,
+      "items": [
+        "2026-09-27 isij-big-bazaar-2026-09-27: 公式ページが変わった(本文: 6869→6940字 +1%)",
+        "2026-10-10 kagoen-aki-geijutsu-shokubutsu-matsuri-13th-2026: 公式ページが変わった(本文: 1499→1353字 -10%)",
+        "2026-10-11 spicy-gem-kakusen-en-figure-hanare-2026-10: 弱い語(キャンセル)＋ページが変わった",
+        "2026-10-25 roots-market-inage-2026-10: 弱い語(中止)＋ページが変わった",
+        "2026-11-22 isij-big-bazaar-2026-11-22: 公式ページが変わった(本文: 6869→6940字 +1%)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -983,11 +992,9 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 3,
+      "count": 1,
       "items": [
-        "2026-10-03 plnts-ride-joetsu-2026-10: https://www.instagram.com/p/DdfIk7BksdU/（sourcePost）",
-        "2026-10-11 spicy-gem-kakusen-en-figure-hanare-2026-10: https://www.instagram.com/p/Ddaahg-E-g3/（caption）",
-        "2026-10-18 anthurium-festival-tokyo-2026-10: https://www.instagram.com/p/Ddlrxa1tVM5/（sourcePost）"
+        "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09: https://www.instagram.com/reel/DdcrVWvCN2I/（caption）"
       ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
@@ -1103,8 +1110,8 @@
       "title": "スケジュールタスクの実行が抜けた日",
       "count": 2,
       "items": [
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-17 2026-09-18 2026-09-19 2026-09-20 2026-09-21 2026-09-22 2026-09-23（直近7日で7日）",
-        "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22 2026-09-23（直近7日で5日）"
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-18 2026-09-19 2026-09-20 2026-09-21 2026-09-22 2026-09-23（直近7日で6日）",
+        "event-monitor(daily) が動かなかった日: 2026-09-19 2026-09-20 2026-09-21 2026-09-22 2026-09-23 2026-09-24（直近7日で6日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
