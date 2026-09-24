@@ -170,8 +170,11 @@ def known_elsewhere(cap, iso, day_index, rejected_by_day):
             return True
         # 主催のアカウントに触れていれば、その主催の回の話(叢宴の出店者は
         # 「主催のぼっちさん @bocchi_syokudou」と書き、会場名は表記が揺れていた)
+        # Graph API の本文はメンションの @ が落ちて届く(「主催のぼっちさん bocchi_syokudou」)。
+        # @ を要求せず、ハンドルが語として出ているかで見る
         org = (e.get('organizerIg') or '').strip().lstrip('@').lower()
-        if org and '@' + org in c:
+        if org and len(org) >= 4 and re.search(r'(?<![a-z0-9_.])' + re.escape(org) + r'(?![a-z0-9_])',
+                                               norm(cap).lower()):
             return True
     for r in rejected_by_day.get(iso, []):
         for nm in [r.get('name') or ''] + list(r.get('aliases') or []):
@@ -533,6 +536,7 @@ def self_test():
     di = {'2026-10-03': [{'slug': 'b', 'name': '秋のボタニカルマーケット', 'venue': '富士中央公園 芝生広場',
                           'organizerIg': 'bocchi_syokudou', 'date': '2026-10-03'}]}
     chk('主催アカウントで既知', known_elsewhere('来月10/3に開催 主催のぼっちさん @bocchi_syokudou', '2026-10-03', di, {}), True)
+    chk('@の落ちたメンションでも既知', known_elsewhere('主催のぼっちさん bocchi_syokudou 10/3', '2026-10-03', di, {}), True)
     chk('無関係なら未知', known_elsewhere('10/3に別の催し', '2026-10-03', di, {}), False)
     chk('見送り済みは既知', known_elsewhere('花と緑のフラワーオークション 9/27', '2026-09-27', {},
                                      {'2026-09-27': [{'name': '花と緑のフラワーオークション (2026-09-27・福岡)'}]}), True)
