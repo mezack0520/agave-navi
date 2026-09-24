@@ -2295,7 +2295,10 @@ def main():
                     - _dtu.timedelta(days=UPDATE_IMPORTANT_DAYS)).isoformat()
         except ValueError:
             _cut = ''
-        _want_imp = [i for i in _upd
+        # 期待値は表示側と同じ絞り方(sitelib.pick_updates)で出す。
+        # ファイル順の先頭10件と比べていたため、重要な知らせが10件を超えた日に
+        # 表示側が正しく落とした11件目を「無い」と鳴らした(2026-09-24)
+        _want_imp = [i for i in sitelib.pick_updates(_upd, 10, today_s)
                      if str(i.get('kind') or '') in UPDATE_IMPORTANT
                      and (i.get('on') or '')[:10] >= _cut]
         try:
