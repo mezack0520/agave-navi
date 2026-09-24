@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-24 08:33 JST",
+ "generated": "2026-09-24 11:36 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 265,
-  "awaitingNextEdition": 265,
-  "officialSiteCandidates": 71,
+  "igAccounts": 266,
+  "awaitingNextEdition": 264,
+  "officialSiteCandidates": 72,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 70
+  "igNeedsBrowser": 71
  },
  "igAccounts": [
   {
@@ -100,6 +100,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "felicita_plants",
+   "url": "https://www.instagram.com/felicita_plants/",
+   "eventCount": 3,
+   "lastEventName": "PLNTS RIDE",
+   "lastEventDate": "2026-10-03",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "j_n_ishikawa",
    "url": "https://www.instagram.com/j_n_ishikawa/",
    "eventCount": 3,
@@ -108,6 +118,26 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "eventCount": 3,
+   "lastEventName": "木更津園芸市（2026年10月）",
+   "lastEventDate": "2026-10-12",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "taniku_moromoro_ichiba",
+   "url": "https://www.instagram.com/taniku_moromoro_ichiba/",
+   "eventCount": 3,
+   "lastEventName": "多肉もろもろ市場 vol.16（11月）",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "rojiuranogibousi",
@@ -215,6 +245,16 @@
    "eventCount": 2,
    "lastEventName": "2026年 沖縄市 秋の大植木市",
    "lastEventDate": "2026-10-16",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "imama.jp",
+   "url": "https://www.instagram.com/imama.jp/",
+   "eventCount": 2,
+   "lastEventName": "Anthurium Festival 2026 Tokyo",
+   "lastEventDate": "2026-10-18",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -375,26 +415,6 @@
    "eventCount": 2,
    "lastEventName": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
    "lastEventDate": "2026-08-22",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
-   "eventCount": 2,
-   "lastEventName": "木更津園芸市（2026年8月）",
-   "lastEventDate": "2026-08-29",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "felicita_plants",
-   "url": "https://www.instagram.com/felicita_plants/",
-   "eventCount": 2,
-   "lastEventName": "ビザールプランツ 夏ノ陣【上野】",
-   "lastEventDate": "2026-08-30",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -818,6 +838,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "figure_shizuoka",
+   "url": "https://www.instagram.com/figure_shizuoka/",
+   "eventCount": 1,
+   "lastEventName": "SPICY GEM feat. KAKUSEN-EN at FIGURE HANARE",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nara.bikakufes",
@@ -1412,16 +1442,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "imama.jp",
-   "url": "https://www.instagram.com/imama.jp/",
-   "eventCount": 1,
-   "lastEventName": "芽吹祭",
-   "lastEventDate": "2026-04-11",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
   },
   {
    "handle": "botanical_circus",
@@ -2434,16 +2454,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "taniku_moromoro_ichiba",
-   "url": "https://www.instagram.com/taniku_moromoro_ichiba/",
-   "eventCount": 1,
-   "lastEventName": "はみもろ（2026年9月）",
-   "lastEventDate": "2026-09-13",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "raflum.tokyo",
    "url": "https://www.instagram.com/raflum.tokyo/",
    "eventCount": 1,
@@ -2793,7 +2803,7 @@
    "lastEnd": "2026-09-06",
    "monthsSinceLast": 0,
    "igHandle": null,
-   "officialUrl": "https://gardens.hc-kohnan.com/9-5%ef%bc%88%e5%9c%9f%ef%bc%896%ef%bc%88%e6%97%a5%ef%bc%89gardens-umekita-2%e5%91%a8%e5%b9%b4%e8%a8%98%e5%bf%b5%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80%e5%ba%97%e9%a0%ad%e5%8d%b3%e5%a3%b2/",
+   "officialUrl": "https://gardens.hc-kohnan.com/news/second_anniversary/",
    "recurring": false,
    "apiStatus": "none"
   },

@@ -840,32 +840,26 @@
   },
   {
    "date": "2026-09-24",
-   "urgent": {
-    "inquiry_check_stale": 1
-   },
+   "urgent": {},
    "info": {
-    "short_descriptions": 1,
     "coverage_gaps": 14,
-    "cancel_suspects": 1,
-    "organizer_unlisted_dates": 6,
-    "eyecatch_candidates_pending": 4,
-    "inquiry_review_gap": 1,
-    "task_run_never_recorded": 1,
-    "task_run_gap": 1,
-    "cross_script_duplicate": 9
+    "organizer_unlisted_dates": 3,
+    "eyecatch_candidates_pending": 3,
+    "task_run_unrecorded_but_working": 1,
+    "task_run_gap": 2
    },
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 48,
-    "upcoming_with_image": 106,
-    "events_with_image": 187,
-    "upcoming_no_image": 57,
+    "upcoming_with_image": 109,
+    "events_with_image": 190,
+    "upcoming_no_image": 60,
     "ongoing_events": 4,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 57
+    "eyecatch_backlog": 60
    },
-   "events": 474,
-   "upcoming": 163
+   "events": 480,
+   "upcoming": 169
   }
  ]
 }

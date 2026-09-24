@@ -1,14 +1,14 @@
 {
- "_note": "主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日書く。全アカウントを毎日は取らない(plan() の周期)。今回取らなかった主催は前回の結果を checkedOn つきで持ち越す。signals は取得から3日以内の結果で出す。errors の多くは相手が個人アカウントで、異常ではない",
+ "_note": "主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日書く。全アカウントを毎日は取らない(plan_fetch() の周期)。今回取らなかった主催は前回の結果を checkedOn つきで持ち越す。signals は取得から3日以内の結果で出す。errors の多くは相手が個人アカウントで、異常ではない",
  "checkedOn": "2026-09-24",
  "stats": {
   "accounts": 265,
-  "targets": 163,
-  "fetched": 135,
+  "targets": 0,
+  "fetched": 0,
   "readable": 195,
   "personal": 70,
   "neverChecked": 0,
-  "eyecatchStaged": 4
+  "eyecatchStaged": 0
  },
  "results": {
   "_myoko_plants_market_": {
@@ -13241,25 +13241,6 @@
   "cancel": [],
   "unlisted": [
    {
-    "username": "_code.official_",
-    "dates": [
-     "2026-10-31",
-     "2026-11-01"
-    ],
-    "permalink": "https://www.instagram.com/p/DdjGuUGCRbh/",
-    "postedOn": "2026-09-21",
-    "excerpt": "【出店告知】 初大阪出店 botanical.botanical !!︎ CODE初大阪POPUP🐙 日頃、LIVE販売やONLINESHOPでも 関西圏のお客様も多くご利用いただいており、なかなか直接お会いできる機会を作れてなかったので大"
-   },
-   {
-    "username": "bwoocraftplants",
-    "dates": [
-     "2026-09-26"
-    ],
-    "permalink": "https://www.instagram.com/p/DdFyi1zFM7E/",
-    "postedOn": "2026-09-10",
-    "excerpt": "🌿✨ Plant to New Home 2026 ✨🌿 愛珍植祭 Presents aichinn_syokusai 📅 2026年9月26日(土)・27日(日) 🎫 入場無料 ⏰ 9:00〜16:00 📍 久屋大通庭園フラリエ(名古屋)"
-   },
-   {
     "username": "en_joy_unite_69",
     "dates": [
      "2026-10-03"
@@ -13267,15 +13248,6 @@
     "permalink": "https://www.instagram.com/p/DdOgFG_k7jB/",
     "postedOn": "2026-09-13",
     "excerpt": "こんばんは🌑 en’joyです🤘😎🎸 叢宴(そうえん) in静岡エスパルスドリームプラザ 2日間たくさんのご来場ご来店いただき ARIGATOございました✨ 2日目は朝から雨でテントが潰れて大破するトラブルから... 不幸中の幸いで植物はノ"
-   },
-   {
-    "username": "felicita_plants",
-    "dates": [
-     "2026-10-03"
-    ],
-    "permalink": "https://www.instagram.com/p/DdfIk7BksdU/",
-    "postedOn": "2026-09-19",
-    "excerpt": "PLNTS RIDE 10.3 SAT. 植物を愛する人も。 バイクを愛する人も。 まだ、その面白さを知らない人も。 この日は、PLNTS RIDEへ。 無骨な肌。 クセのあるフォルム。 ひとつとして同じもののない姿。 塊根植物をはじめ、 "
    },
    {
     "username": "fukuoka_effect",
