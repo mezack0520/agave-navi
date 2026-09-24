@@ -176,11 +176,12 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 109,
+      "count": 112,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aki-no-taniku-picnic-ibusuki-2026-11",
         "american-and-plants-sano-2026-10",
+        "anthurium-festival-tokyo-2026-10",
         "bba-vol5-carpediem-2026-09",
         "bikaku-shokubutsu-sagyoshitsu-2026-09",
         "bizarre-farm-autumn-fes-9th-2026-09",
@@ -216,19 +217,19 @@
         "green-champuroo-vol2-2026-10",
         "greensnap-marche-odaiba-2026",
         "greensnap-marche-toyosu-2026-autumn",
-        "greensnap-marche-yokohama-2026-autumn",
-        "hanatomofesta-2026"
+        "greensnap-marche-yokohama-2026-autumn"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 190,
+      "count": 193,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aki-no-taniku-picnic-ibusuki-2026-11",
         "american-and-plants-sano-2026-10",
+        "anthurium-festival-tokyo-2026-10",
         "aobouzu-6raccoon-popup-2026-09",
         "aobouzu-kagoshima-popup-2026-09",
         "bba-vol5-carpediem-2026-09",
@@ -264,19 +265,17 @@
         "edamame-bikaku-itazuke-2026-09",
         "engei-raku-2026-09",
         "engei-yarouzei-12th-2026-10",
-        "enjoy-place-5th-2026-10",
-        "enjoy-place-outside-2nd-2026-11"
+        "enjoy-place-5th-2026-10"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 60,
+      "count": 57,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "aichin-shokusai-new-year-party-2027",
-        "anthurium-festival-tokyo-2026-10",
         "asamiya-tanikusai-7th-2026-10",
         "atilab-magari-hanbaikai-fangit-2026-09",
         "awajishima-taniku-smile-marche-3rd-2026",
@@ -313,7 +312,8 @@
         "nihon-shaboten-taikai-51st-2026-10",
         "on-the-plants-vol9-fukuoka-2026-10",
         "onokoro-green-festa-2026-09",
-        "orais-party-2026-garden-messe-hachioji"
+        "orais-party-2026-garden-messe-hachioji",
+        "plant-addict-festa-ishiuchi-pennon-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -637,7 +637,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -816,7 +816,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 60,
+      "count": 57,
       "items": [
         "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
@@ -827,7 +827,6 @@
         "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
         "2026-10-03 nagoya-cactus-club-aki-2026-10",
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
-        "2026-10-03 plnts-ride-joetsu-2026-10",
         "2026-10-04 asamiya-tanikusai-7th-2026-10",
         "2026-10-04 botanic-collection2-ube-2026-10",
         "2026-10-04 chinki-plants-flea-market-2026-10",
@@ -838,10 +837,8 @@
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
-        "2026-10-11 spicy-gem-kakusen-en-figure-hanare-2026-10",
         "2026-10-12 kisarazu-engei-ichi-2026-10",
         "2026-10-17 uomachi-botanical-night-market-2026-10",
-        "2026-10-18 anthurium-festival-tokyo-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
         "2026-10-25 roots-market-inage-2026-10",
@@ -857,7 +854,10 @@
         "2026-11-15 taniku-moromoro-vol16-2026-11",
         "2026-11-21 marutto-shokubutsu-fes-2026-11",
         "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
-        "2026-11-22 awajishima-taniku-smile-marche-3rd-2026"
+        "2026-11-22 awajishima-taniku-smile-marche-3rd-2026",
+        "2026-11-22 isij-big-bazaar-2026-11-22",
+        "2026-11-22 midorigakuen-himeji-2026-11",
+        "2026-11-22 tokimeki-marche-kodaihasu-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
