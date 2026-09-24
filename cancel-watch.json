@@ -2,8 +2,8 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-09-24",
   "stats": {
-    "targets": 26,
-    "fetched": 26
+    "targets": 27,
+    "fetched": 27
   },
   "errors": [],
   "logicErrors": [],
@@ -15,7 +15,6 @@
       "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
       "why": "弱い語(中止)＋ページが変わった",
       "changed": [
-        "本文",
         "画像"
       ]
     }
@@ -336,7 +335,7 @@
         "textLen": 963,
         "imageCount": 2
       },
-      "prevTextLen": null,
+      "prevTextLen": 963,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -368,11 +367,11 @@
       "checkedOn": "2026-09-24",
       "signature": {
         "text": "360de950bc91f287",
-        "images": "974c9689191b6378",
+        "images": "e711a1af8a32313a",
         "textLen": 5580,
         "imageCount": 43
       },
-      "prevTextLen": 5583,
+      "prevTextLen": 5580,
       "strong": [],
       "weak": [
         "中止"
@@ -489,6 +488,26 @@
       "eventDateSeen": false,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-23",
+      "textOnlyChanges": 0
+    },
+    "spicy-gem-kakusen-en-figure-hanare-2026-10": {
+      "url": "https://figure-online.net/blogs/news/spicy-gem-feat-kakusen-en-at-figure-hanare-entry",
+      "checkedOn": "2026-09-24",
+      "signature": {
+        "text": "abaa7eb25a932c38",
+        "images": "aa0658348aa0edd8",
+        "textLen": 3272,
+        "imageCount": 8
+      },
+      "prevTextLen": null,
+      "strong": [],
+      "weak": [
+        "キャンセル"
+      ],
+      "datesNamed": 4,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-09-24",
       "textOnlyChanges": 0
     }
   }
