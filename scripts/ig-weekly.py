@@ -291,9 +291,16 @@ def render_region(region, rows, sat, sun, page, pages, path, one_line=False):
 
 # ---------------------------------------------------------------- キャプション
 
+WEEKEND_URL = f'{sitelib.DOMAIN}/this-weekend/'
+
+
 def caption(sat, sun, pages, n):
+    # サイトのURLは冒頭の2行目に置く。Instagram は本文を「続きを読む」で
+    # 畳むので、末尾に置くと開かないと見えない。本文のURLはタップできないが、
+    # 長押しでコピーできる。タップできる経路はプロフィールのリンクだけ(2026-09-25)
     head = (f'今週末 {sat.month}/{sat.day}(土)・{sun.month}/{sun.day}(日) の'
-            f'アガベ・塊根・多肉・サボテンのイベント {n}件\n\n')
+            f'アガベ・塊根・多肉・サボテンのイベント {n}件\n'
+            f'一覧と各回の詳細 → {WEEKEND_URL}\n\n')
     body = []
     prev = None
     # 見出しは頁の名前ではなく各回の地域で立てる。画像は高さで頁を割り、
@@ -309,7 +316,7 @@ def caption(sat, sun, pages, n):
             prev = region
             body.append(f'{date_label(e, sat, sun)} {e.get("name")}（{e.get("prefecture")}）')
     body.append('')
-    tail = ('各イベントの詳細・会場・出典はプロフィールのリンク agave-navi.com から。\n'
+    tail = ('会場・時間・出典は上のURLかプロフィールのリンクから。\n'
             '主催者の公式発信を確認して掲載しています。お出かけ前に主催者の最新情報もご確認ください。\n\n'
             + HASHTAGS)
     text = head + '\n'.join(body) + '\n' + tail
