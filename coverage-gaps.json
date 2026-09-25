@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-25",
+  "sweptOn": "2026-09-26",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,24 +16,30 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1073,
-    "in_scope": 321,
-    "covered": 202,
-    "known_rejected": 118,
-    "truncated_resolved": 180,
-    "truncated_unresolved": 2,
+    "candidates": 1049,
+    "in_scope": 316,
+    "covered": 201,
+    "known_rejected": 113,
+    "truncated_resolved": 90,
+    "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 210,
-    "truncated_unresolved_hits": 90,
+    "in_scope_leafla": 205,
+    "truncated_unresolved_hits": 180,
     "in_scope_nextmeet": 111,
-    "gaps_raw": 1
+    "gaps_raw": 2
   },
   "errors": [],
   "truncatedUnresolved": [
-    "09/23 追加 FLOWER POPUP SHOP 2026を...",
-    "09/23 追加 第15回高架下マーケット2026を亀有で開催、..."
+    "09/25 追加 有吉園芸店GRANDOPEN2026を開催、番...",
+    "09/25 追加 Nakayama Plantsが2026年に店...",
+    "09/25 追加 タニクライダーがおかやまグリーントレジャー5t...",
+    "09/25 追加 第13回花郷園秋の芸術植物祭り2026を開催、..."
   ],
   "gaps": [
+    {
+      "date": "2026-10-25",
+      "title": "ボタの市meetsビカク横丁"
+    },
     {
       "date": "2026-11-08",
       "title": "三国屋本店がヤッチロプランツ2026を開催、多肉植物やパンとスイーツがくまモンポート八代に集まる"

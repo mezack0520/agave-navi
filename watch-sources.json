@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-25 08:52 JST",
+ "generated": "2026-09-26 08:59 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 266,
   "awaitingNextEdition": 264,
   "officialSiteCandidates": 72,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 70
+  "igNeedsBrowser": 71
  },
  "igAccounts": [
   {
@@ -157,7 +157,7 @@
    "lastEventDate": "2026-12-26",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "api"
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kayustyle_botaniqa_atelier",
