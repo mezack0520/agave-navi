@@ -20,6 +20,10 @@ on:
         description: '実際に投稿する(false なら画像とキャプションを作るだけ)'
         type: boolean
         default: false
+      repost:
+        description: '投稿済みの週末でも作り直して投稿する(前の投稿はアプリから手で消す)'
+        type: boolean
+        default: false
       date:
         description: '今日として扱う日 YYYY-MM-DD(空なら今日)'
         type: string
@@ -106,7 +110,8 @@ jobs:
         run: |
           python3 scripts/ig-weekly.py publish ${{ steps.mode.outputs.date_arg }} \
             --out "${{ steps.build.outputs.dir }}" \
-            --base-url "https://agave-navi.com/${{ steps.build.outputs.dir }}"
+            --base-url "https://agave-navi.com/${{ steps.build.outputs.dir }}" \
+            ${{ inputs.repost == true && '--repost' || '' }}
 
       - name: Record
         if: steps.mode.outputs.publish == 'true' && steps.build.outputs.dir != ''
