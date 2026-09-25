@@ -7,7 +7,7 @@ name: Health Check
 # 3. 画像生死監視 + dead URL クリア (image-health-check.py)
 # 4. SSL/ドメイン残日数
 # 5. 各イベント詳細の生死 (check_events.py)
-# 問題発見時のみ1件のIssueにまとめて通知
+# 結果は毎日メールで送る(異常は件名に【異常N件】)。Issue は 2026-09-25 に廃止
 
 on:
   schedule:
@@ -25,7 +25,6 @@ concurrency:
 
 permissions:
   contents: write
-  issues: write
 
 jobs:
   health:
@@ -104,6 +103,11 @@ jobs:
 
       - name: Build daily email body
         id: emailbody
+        env:
+          INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
+          LINKS_BROKEN: ${{ steps.linkcheck.outputs.broken || 0 }}
+          IMAGES_DEAD: ${{ steps.imghealth.outputs.dead || 0 }}
+          SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
         run: |
           if [ -f check-results.json ]; then
             echo "results_exist=true" >> $GITHUB_OUTPUT
@@ -135,13 +139,3 @@ jobs:
           # rebase を使うと必ず衝突し、`|| true` が握り潰して detached HEAD に残り、
           # 以後の再試行が全て失敗していた(daily #160)。詳細はスクリプト冒頭。
           bash scripts/ci-push.sh "chore(health): auto cleanup [skip ci]"
-
-      - name: Aggregate report → single Issue (only if problems)
-        if: github.event_name != 'push'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
-          LINKS_BROKEN: ${{ steps.linkcheck.outputs.broken || 0 }}
-          IMAGES_DEAD: ${{ steps.imghealth.outputs.dead || 0 }}
-          SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
-        run: bash scripts/health-issue.sh

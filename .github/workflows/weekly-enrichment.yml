@@ -41,7 +41,6 @@ concurrency:
 
 permissions:
   contents: write
-  issues: write
 
 jobs:
   enrich:
@@ -107,18 +106,33 @@ jobs:
           # 以後の再試行が全て失敗していた(daily #160)。詳細はスクリプト冒頭。
           bash scripts/ci-push.sh "chore(weekly-enrichment): backfill imageUrl/url/venue + regen all" "bash scripts/build-all.sh"
 
-      - name: Create issue with enrichment report
+      # レポートはメールで送る。2026-09-25 まで Issue に出していたが、
+      # 誰も読まず閉じもしない置き場だった。
+      - name: Prepare enrichment mail
+        id: mail
         if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -f /tmp/enrich-report.md ]; then
-            gh label create "auto-enrich" --description "自動エンリッチメントレポート" --color "0E8A16" 2>/dev/null || true
-            gh issue create \
-              --title "[エンリッチメント週次] $(date +%Y-%m-%d)" \
-              --body-file /tmp/enrich-report.md \
-              --label "enhancement,auto-enrich" || true
+            cp /tmp/enrich-report.md enrich-mail.txt
+            echo "exists=true" >> "$GITHUB_OUTPUT"
           fi
+          echo "today=$(TZ=Asia/Tokyo date +'%Y/%m/%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Send enrichment mail
+        if: always() && steps.mail.outputs.exists == 'true'
+        continue-on-error: true
+        # health.yml と同じ SHA 固定(v3.11.0)
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "【アガベイベント】週次補完レポート agave-navi ${{ steps.mail.outputs.today }}"
+          to: yuji.mezaki@gmail.com
+          from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
+          body: file://enrich-mail.txt
 
       - name: Upload enrichment data artifact
         if: always()
