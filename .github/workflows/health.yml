@@ -61,8 +61,9 @@ jobs:
         if: github.event_name != 'push'
         run: |
           bash scripts/check-links.sh 2>&1 | tee /tmp/links.log || true
-          BROKEN=$(grep -c "BROKEN\|404\|FAIL" /tmp/links.log || true)
-          echo "broken=$BROKEN" >> $GITHUB_OUTPUT
+          # 件数は check-links.sh 自身の集計を読む。ログを grep で数えると
+          # 本文中の "404" 等も拾って水増しになる
+          echo "broken=$(cat /tmp/broken-count 2>/dev/null || echo 0)" >> $GITHUB_OUTPUT
 
       - name: 3. Image health (clear dead imageUrls)
         id: imghealth
@@ -97,9 +98,10 @@ jobs:
           fi
 
       - name: 5. Event detail page checks
-        id: eventcheck
         if: github.event_name != 'push'
-        run: python3 scripts/check_events.py 2>&1 | tee /tmp/events.log || true
+        # 結果は check-results.json に出て build-health-mail.py が読む。
+        # リンク切れがあると exit 1 なので || true は要る
+        run: python3 scripts/check_events.py || true
 
       - name: Build daily email body
         id: emailbody

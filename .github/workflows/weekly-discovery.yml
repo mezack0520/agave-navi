@@ -1,10 +1,14 @@
 name: Weekly Discovery
 
-# 統合元: crawl-events.yml + discover-sources.yml + issue-to-candidates.yml
 # 毎週水曜 09:00 JST (00:00 UTC) に実行
-# 1. 既存ソース巡回 (crawl_events.py) → staging に流す
-# 2. 新規ソース発見 (discover_sources.py) → Issue化
-# 3. Issue 由来の候補集約 (issue-to-candidates.py) → staging
+# 1. 既存ソース巡回 (crawl_events.py) → /tmp/crawl-report.md
+# 2. 新規ソース発見 (discover_sources.py) → /tmp/discover-report.md
+# 3. 1と2をまとめて週次メールで送る
+#
+# 2026-08-10 の統合で Issue 化の手順が落ち、以後6週間どちらのレポートも
+# 誰にも届いていなかった。Issue を読む issue-to-candidates.py と、
+# Issue Form から店を取り込む issue-to-shops.py の手順は 2026-09-25 に外した
+# (前者の出力は誰も読まず、後者は一度も取り込んだことがなかった)。
 
 on:
   schedule:
@@ -19,7 +23,6 @@ concurrency:
 
 permissions:
   contents: write
-  issues: write
 
 jobs:
   discover:
@@ -35,31 +38,41 @@ jobs:
         run: pip install requests beautifulsoup4 lxml
 
       - name: Crawl existing aggregator sources
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/crawl_events.py || true
 
       - name: Discover new aggregator sources
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
         run: python3 scripts/discover_sources.py || true
 
-      - name: Aggregate issue → candidates.json
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/issue-to-candidates.py || true
-
-      - name: Import shop additions from Issues
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/issue-to-shops.py || true
-
-      - name: Commit candidate updates
+      - name: Commit source updates
         run: |
           # push は scripts/ci-push.sh に集約(2026-09-07)。生成物を含むコミットで
           # rebase を使うと必ず衝突し、`|| true` が握り潰して detached HEAD に残り、
           # 以後の再試行が全て失敗していた(daily #160)。詳細はスクリプト冒頭。
-          bash scripts/ci-push.sh "chore(weekly-discovery): refresh staging/candidates + sources"
+          bash scripts/ci-push.sh "chore(weekly-discovery): refresh sources"
+
+      - name: Prepare discovery mail
+        id: mail
+        if: always()
+        run: |
+          : > discovery-mail.txt
+          for f in /tmp/crawl-report.md /tmp/discover-report.md; do
+            [ -f "$f" ] && { cat "$f"; echo; echo; } >> discovery-mail.txt
+          done
+          [ -s discovery-mail.txt ] && echo "exists=true" >> "$GITHUB_OUTPUT"
+          echo "today=$(TZ=Asia/Tokyo date +'%Y/%m/%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Send discovery mail
+        if: always() && steps.mail.outputs.exists == 'true'
+        continue-on-error: true
+        # health.yml と同じ SHA 固定(v3.11.0)
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "【アガベイベント】週次巡回レポート agave-navi ${{ steps.mail.outputs.today }}"
+          to: yuji.mezaki@gmail.com
+          from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
+          body: file://discovery-mail.txt

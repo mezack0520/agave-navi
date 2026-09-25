@@ -133,12 +133,3 @@ jobs:
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: file://enrich-mail.txt
-
-      - name: Upload enrichment data artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: enrich-data
-          path: /tmp/enrich-data.json
-          if-no-files-found: ignore
-          retention-days: 30
