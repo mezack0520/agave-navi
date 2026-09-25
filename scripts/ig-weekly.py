@@ -22,6 +22,7 @@
 - 中止の回は載せない(sitelib.is_cancelled)。
 """
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -104,12 +105,20 @@ def region_of(e):
     return sitelib.pref_to_region(e.get('prefecture') or '') or 'その他'
 
 
-def plan_slides(evs, one_line=False):
-    """[(地域名, [event,...]), ...]。表紙込みで10枚に収める。
+MODES = ('normal', 'one_line', 'dense')
+SEC_H = 104  # 頁の途中で地域が変わるときの見出しの高さ
 
-    件数ではなく**描いたときの高さ**で頁を割る。件数で割ると、名前が2行に
-    折り返す回が続いた頁だけ下の行と重なる(2026-09-23 の試作で NOVA CULTURA
-    の2行目が次の日付と重なった)。10枚を超えるときは名前を1行に詰めて割り直す。
+
+def plan_slides(evs, mode='normal'):
+    """頁の並び [[(地域, [回,...]), ...], ...] と描き方を返す。表紙込みで10枚に収める。
+
+    1頁は1つ以上の「地域の区切り」を持つ。区切りごとに地域の見出しを描くので、
+    **1つの見出しに2つの地域名を並べることはしない**。以前は枚数を収めるために
+    隣の頁を詰めて「北海道・四国」のような見出しを作っていた(2026-09-25 に指摘)。
+
+    件数ではなく描いたときの高さで頁を割る。収まらなければ、
+    名前を1行に詰める(one_line) → 日付と名前を同じ行に置く(dense) の順で
+    1行を低くし、それでも超えるときだけ、回の少ない地域を1頁に区切って同居させる。
     """
     by = {}
     for e in evs:
@@ -123,31 +132,38 @@ def plan_slides(evs, one_line=False):
         rows = sorted(by[r], key=lambda e: (e['date'], e.get('name') or ''))
         cur, used = [], 0
         for e in rows:
-            h = row_height(e, one_line)
+            h = row_height(e, mode)
             if cur and used + h > BODY_H:
-                pages.append((r, cur))
+                pages.append([(r, cur)])
                 cur, used = [], 0
             cur.append(e)
             used += h
         if cur:
-            pages.append((r, cur))
-    if len(pages) + 1 > MAX_SLIDES and not one_line:
-        return plan_slides(evs, one_line=True)
-    # それでも多ければ、同じ地域の続き頁や隣の少ない地域を詰める
+            pages.append([(r, cur)])
+    if len(pages) + 1 > MAX_SLIDES and mode != MODES[-1]:
+        return plan_slides(evs, MODES[MODES.index(mode) + 1])
+
+    def page_h(pg):
+        return (sum(row_height(e, mode) for _, rows in pg for e in rows)
+                + SEC_H * (len(pg) - 1))
+
+    # それでも多ければ、末尾(回の少ない地域)どうしを区切りつきで1頁に同居させる
     while len(pages) + 1 > MAX_SLIDES:
         best = None
         for i in range(len(pages) - 1):
-            h = sum(row_height(e, one_line) for e in pages[i][1] + pages[i + 1][1])
+            # 同じ地域の続き頁は1つの区切りにまとめられる
+            if pages[i][-1][0] == pages[i + 1][0][0]:
+                merged = pages[i][:-1] + [(pages[i][-1][0], pages[i][-1][1] + pages[i + 1][0][1])] + pages[i + 1][1:]
+            else:
+                merged = pages[i] + pages[i + 1]
+            h = page_h(merged)
             if h <= BODY_H and (best is None or h < best[0]):
-                best = (h, i)
+                best = (h, i, merged)
         if best is None:
             pages = pages[:MAX_SLIDES - 1]
             break
-        i = best[1]
-        a, b = pages[i], pages[i + 1]
-        name = a[0] if a[0] == b[0] else f'{a[0]}・{b[0]}'
-        pages[i:i + 2] = [(name, a[1] + b[1])]
-    return pages, one_line
+        pages[best[1]:best[1] + 2] = [best[2]]
+    return pages, mode
 
 
 # ---------------------------------------------------------------- 画像
@@ -238,27 +254,43 @@ def _meta(e):
                                  (e.get('venue') or '').strip()) if x)
 
 
-def _name_lines(e, one_line):
+def _pill_w(label):
+    from PIL import Image, ImageDraw
+    d = ImageDraw.Draw(Image.new('RGB', (1, 1)))
+    return d.textlength(label, font=_font(32, 'Bold')) + 40
+
+
+def _name_lines(e, mode, pill_w=0):
     from PIL import Image, ImageDraw
     d = ImageDraw.Draw(Image.new('RGB', (1, 1)))
     f = _font(NAME_PX, 'Bold')
     name = e.get('name') or ''
-    if one_line:
+    if mode == 'dense':
+        return [_fit(d, name, f, W - 144 - pill_w - 20)]
+    if mode == 'one_line':
         return [_fit(d, name, f, W - 144)]
     return _wrap2(d, name, f, W - 144)
 
 
-def row_height(e, one_line=False):
-    return PILL_H + 14 + NAME_LH * len(_name_lines(e, one_line)) + META_H + ROW_GAP
+DENSE_GAP = 24
 
 
-def render_region(region, rows, sat, sun, page, pages, path, one_line=False):
-    """地域の頁。user_tags に使う各行の中心座標(0..1)を返す。"""
+def row_height(e, mode='normal'):
+    if mode == 'dense':
+        # 日付の札と名前を同じ行に置く
+        return max(PILL_H, NAME_LH) + 6 + META_H + DENSE_GAP
+    return PILL_H + 14 + NAME_LH * len(_name_lines(e, mode)) + META_H + ROW_GAP
+
+
+def render_page(segments, sat, sun, page, pages, path, mode='normal'):
+    """地域の頁。segments は [(地域, [回,...]), ...]。
+    先頭の地域は頁の見出しに、2つ目以降は頁の途中に見出しを立てる。
+    user_tags に使う各行の中心座標(0..1)を、回の並び順で返す。"""
     from PIL import Image, ImageDraw
     img = Image.new('RGB', (W, H), BLACK)
     d = ImageDraw.Draw(img)
     f = _font(64, 'Black')
-    d.text((72, 80), region, font=f, fill=IVORY)
+    d.text((72, 80), segments[0][0], font=f, fill=IVORY)
     f2 = _font(30, 'Medium')
     t = f'{page}/{pages}'
     d.text((W - 72 - d.textlength(t, font=f2), 108), t, font=f2, fill=DIM)
@@ -267,26 +299,40 @@ def render_region(region, rows, sat, sun, page, pages, path, one_line=False):
     f_date = _font(32, 'Bold')
     f_name = _font(NAME_PX, 'Bold')
     f_meta = _font(30, 'Regular')
+    f_sec = _font(48, 'Black')
     y = BODY_TOP
     centers = []
-    for i, e in enumerate(rows):
-        y0 = y
-        lab = date_label(e, sat, sun)
-        pw = d.textlength(lab, font=f_date) + 40
-        d.rounded_rectangle((72, y, 72 + pw, y + PILL_H), radius=PILL_H // 2, fill=IVORY)
-        d.text((72 + 20, y + 5), lab, font=f_date, fill=BLACK)
-        y += PILL_H + 14
-        for ln in _name_lines(e, one_line):
-            d.text((72, y), ln, font=f_name, fill=IVORY)
-            y += NAME_LH
-        meta = _meta(e)
-        if meta:
-            d.text((72, y + 2), _fit(d, meta, f_meta, W - 144), font=f_meta, fill=DIM)
-        y += META_H
-        if i < len(rows) - 1:
-            d.line((72, y + ROW_GAP // 2 - 1, W - 72, y + ROW_GAP // 2 - 1), fill=LINE, width=1)
-        y += ROW_GAP
-        centers.append((0.5, round(min(0.95, ((y0 + y) / 2) / H), 3)))
+    gap = DENSE_GAP if mode == 'dense' else ROW_GAP
+    for si, (region, rows) in enumerate(segments):
+        if si > 0:
+            y += 16
+            d.text((72, y), region, font=f_sec, fill=IVORY)
+            y += 70
+            d.line((72, y, W - 72, y), fill=LINE, width=2)
+            y += SEC_H - 86
+        for i, e in enumerate(rows):
+            y0 = y
+            lab = date_label(e, sat, sun)
+            pw = d.textlength(lab, font=f_date) + 40
+            d.rounded_rectangle((72, y, 72 + pw, y + PILL_H), radius=PILL_H // 2, fill=IVORY)
+            d.text((72 + 20, y + 5), lab, font=f_date, fill=BLACK)
+            if mode == 'dense':
+                ln = _name_lines(e, mode, pw)[0]
+                d.text((72 + pw + 20, y - 2), ln, font=f_name, fill=IVORY)
+                y += max(PILL_H, NAME_LH) + 6
+            else:
+                y += PILL_H + 14
+                for ln in _name_lines(e, mode):
+                    d.text((72, y), ln, font=f_name, fill=IVORY)
+                    y += NAME_LH
+            meta = _meta(e)
+            if meta:
+                d.text((72, y + 2), _fit(d, meta, f_meta, W - 144), font=f_meta, fill=DIM)
+            y += META_H
+            if i < len(rows) - 1:
+                d.line((72, y + gap // 2 - 1, W - 72, y + gap // 2 - 1), fill=LINE, width=1)
+            y += gap
+            centers.append((0.5, round(min(0.95, ((y0 + y) / 2) / H), 3)))
     _footer(img, d)
     img.save(path, 'JPEG', quality=92)
     return centers
@@ -309,8 +355,8 @@ def caption(sat, sun, pages, n):
     # 見出しは頁の名前ではなく各回の地域で立てる。画像は高さで頁を割り、
     # 10枚に収めるため隣の地域を1枚に詰めることがある(頁名「関西・四国」)。
     # 頁名で見出しを立てると、大阪の回が「関西・四国」の下に並んだ(2026-09-23)
-    for _, rows in pages:
-        for e in rows:
+    for pg in pages:
+        for e in (e for _, rows in pg for e in rows):
             region = region_of(e)
             if region != prev:
                 if prev is not None:
@@ -337,23 +383,32 @@ def build(out, today):
     if not evs:
         print('今週末の回が0件。作らない')
         return None
-    pages, one_line = plan_slides(evs)
+    pages, mode = plan_slides(evs)
     os.makedirs(out, exist_ok=True)
+    # ファイル名に版を入れる。同じ週末を作り直すと同じ名前になり、公開側の
+    # 差し替え(GitHub Pages のデプロイ)が終わる前に Instagram が**前の画像**を
+    # 取っていった(2026-09-25 の再投稿で、2枚目に古い北海道の頁が載った)。
+    # 名前が変われば、新しい画像が公開されるまで 404 なので待てる
+    ver = datetime.now(sitelib.JST).strftime('%Y%m%d%H%M%S')
+    for fn in os.listdir(out):
+        if fn.endswith('.jpg'):
+            os.remove(os.path.join(out, fn))
     manifest = {'weekend': sat.strftime('%Y-%m-%d'), 'count': len(evs), 'slides': [],
-                # 画像URLに付ける版。同じ週末を作り直すとファイル名が同じになり、
-                # 配信側のキャッシュが古い画像を Instagram に渡しうる
-                'version': datetime.now(sitelib.JST).strftime('%Y%m%d%H%M%S')}
-    render_cover(sat, sun, len(evs), os.path.join(out, '01.jpg'))
-    manifest['slides'].append({'file': '01.jpg', 'tags': []})
-    for i, (region, rows) in enumerate(pages, start=1):
-        fn = f'{i + 1:02d}.jpg'
-        centers = render_region(region, rows, sat, sun, i, len(pages), os.path.join(out, fn), one_line)
+                'version': ver, 'mode': mode}
+    cover = f'{ver}-01.jpg'
+    render_cover(sat, sun, len(evs), os.path.join(out, cover))
+    manifest['slides'].append({'file': cover, 'tags': []})
+    for i, pg in enumerate(pages, start=1):
+        fn = f'{ver}-{i + 1:02d}.jpg'
+        rows = [e for _, rs in pg for e in rs]
+        centers = render_page(pg, sat, sun, i, len(pages), os.path.join(out, fn), mode)
         tags = []
         for e, (x, y) in zip(rows, centers):
             u = (e.get('organizerIg') or '').strip().lstrip('@')
             if u and all(t['username'] != u for t in tags):
                 tags.append({'username': u, 'x': x, 'y': y})
-        manifest['slides'].append({'file': fn, 'tags': tags[:20]})
+        manifest['slides'].append({'file': fn, 'tags': tags[:20],
+                                   'regions': [r for r, _ in pg]})
     manifest['caption'] = caption(sat, sun, pages, len(evs))
     with open(os.path.join(out, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifest, f, ensure_ascii=False, indent=1)
@@ -366,13 +421,25 @@ def build(out, today):
 _api = iglib.req
 
 
-def _wait_public(url, limit=900):
+def _wait_public(url, local=None, limit=900):
+    """公開URLが、手元の画像と同じ中身を返すまで待つ。
+
+    200 だけを見ていると、同じ名前の古い画像が残っているあいだに通ってしまう
+    (2026-09-25 の再投稿で実際に古い頁が載った)。ファイル名に版を入れたので
+    普通は 404 → 200 で済むが、中身まで照合しておく。
+    """
+    want = None
+    if local and os.path.exists(local):
+        with open(local, 'rb') as f:
+            want = hashlib.sha256(f.read()).hexdigest()
     t0 = time.time()
     while time.time() - t0 < limit:
         try:
             with urllib.request.urlopen(url, timeout=20) as r:
                 if r.status == 200:
-                    return True
+                    body = r.read()
+                    if want is None or hashlib.sha256(body).hexdigest() == want:
+                        return True
         except Exception:
             pass
         time.sleep(20)
@@ -401,15 +468,15 @@ def publish(out, base_url, repost=False):
         raise SystemExit(f'ページ {me.get("name")} に Instagram が紐付いていない')
 
     base = base_url.rstrip('/')
-    ver = f'?v={m["version"]}' if m.get('version') else ''
-    first = f'{base}/{m["slides"][0]["file"]}{ver}'
-    if not _wait_public(first):
+    first = f'{base}/{m["slides"][0]["file"]}'
+    if not _wait_public(first, os.path.join(out, m['slides'][0]['file'])):
         raise SystemExit(f'画像が公開されない: {first}')
 
     children = []
     for s in m['slides']:
-        url = f'{base}/{s["file"]}{ver}'
-        _wait_public(url, limit=300)
+        url = f'{base}/{s["file"]}'
+        if not _wait_public(url, os.path.join(out, s['file']), limit=300):
+            raise SystemExit(f'画像が公開されない(または古い): {url}')
         params = {'image_url': url, 'is_carousel_item': 'true'}
         if s['tags']:
             params['user_tags'] = json.dumps(s['tags'])
