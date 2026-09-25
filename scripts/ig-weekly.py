@@ -114,7 +114,10 @@ def plan_slides(evs, one_line=False):
     by = {}
     for e in evs:
         by.setdefault(region_of(e), []).append(e)
-    order = [r for r in REGION_ORDER if r in by] + [r for r in by if r not in REGION_ORDER]
+    # 回数の多い地域から並べる(2026-09-25)。見る人が最初の数枚で閉じても、
+    # 回の多い地域ほど目に入る。同数なら北から南の順
+    rank = {r: i for i, r in enumerate(REGION_ORDER)}
+    order = sorted(by, key=lambda r: (-len(by[r]), rank.get(r, len(REGION_ORDER))))
     pages = []
     for r in order:
         rows = sorted(by[r], key=lambda e: (e['date'], e.get('name') or ''))
@@ -336,7 +339,10 @@ def build(out, today):
         return None
     pages, one_line = plan_slides(evs)
     os.makedirs(out, exist_ok=True)
-    manifest = {'weekend': sat.strftime('%Y-%m-%d'), 'count': len(evs), 'slides': []}
+    manifest = {'weekend': sat.strftime('%Y-%m-%d'), 'count': len(evs), 'slides': [],
+                # 画像URLに付ける版。同じ週末を作り直すとファイル名が同じになり、
+                # 配信側のキャッシュが古い画像を Instagram に渡しうる
+                'version': datetime.now(sitelib.JST).strftime('%Y%m%d%H%M%S')}
     render_cover(sat, sun, len(evs), os.path.join(out, '01.jpg'))
     manifest['slides'].append({'file': '01.jpg', 'tags': []})
     for i, (region, rows) in enumerate(pages, start=1):
@@ -373,7 +379,7 @@ def _wait_public(url, limit=900):
     return False
 
 
-def publish(out, base_url):
+def publish(out, base_url, repost=False):
     token = os.environ.get('IG_PAGE_TOKEN', '').strip()
     if not token:
         raise SystemExit('IG_PAGE_TOKEN が無い')
@@ -383,22 +389,26 @@ def publish(out, base_url):
     if os.path.exists(STATE):
         with open(STATE, encoding='utf-8') as f:
             state = json.load(f)
-    if m['weekend'] in state:
+    if m['weekend'] in state and not repost:
         print(f'{m["weekend"]} は投稿済み({state[m["weekend"]].get("media_id")})。何もしない')
         return
+    # 作り直し。Graph API は投稿の削除も本文の編集もできないので、前の投稿は
+    # アプリから手で消す。記録には置き換えた投稿を残す
+    replaced = state.get(m['weekend']) if repost else None
     me = _api('GET', 'me', token, fields='id,name,instagram_business_account')
     ig = (me.get('instagram_business_account') or {}).get('id')
     if not ig:
         raise SystemExit(f'ページ {me.get("name")} に Instagram が紐付いていない')
 
     base = base_url.rstrip('/')
-    first = f'{base}/{m["slides"][0]["file"]}'
+    ver = f'?v={m["version"]}' if m.get('version') else ''
+    first = f'{base}/{m["slides"][0]["file"]}{ver}'
     if not _wait_public(first):
         raise SystemExit(f'画像が公開されない: {first}')
 
     children = []
     for s in m['slides']:
-        url = f'{base}/{s["file"]}'
+        url = f'{base}/{s["file"]}{ver}'
         _wait_public(url, limit=300)
         params = {'image_url': url, 'is_carousel_item': 'true'}
         if s['tags']:
@@ -428,6 +438,8 @@ def publish(out, base_url):
     state[m['weekend']] = {'media_id': pub['id'], 'permalink': link,
                            'count': m['count'], 'slides': len(children),
                            'postedAt': datetime.now(sitelib.JST).isoformat(timespec='seconds')}
+    if replaced:
+        state[m['weekend']]['replaced'] = replaced
     with open(STATE, 'w', encoding='utf-8') as f:
         json.dump(state, f, ensure_ascii=False, indent=1)
     print(f'投稿した: {link}')
@@ -439,6 +451,7 @@ def main():
     ap.add_argument('--out', default=None)
     ap.add_argument('--date', default=None, help='今日として扱う日(JST)')
     ap.add_argument('--base-url', default=None)
+    ap.add_argument('--repost', action='store_true', help='投稿済みの週末でも作り直して投稿する')
     a = ap.parse_args()
     today = (datetime.strptime(a.date, '%Y-%m-%d') if a.date
              else datetime.strptime(sitelib.today_jst(), '%Y-%m-%d'))
@@ -479,7 +492,7 @@ def main():
     else:
         if not a.base_url:
             raise SystemExit('--base-url が要る')
-        publish(out, a.base_url)
+        publish(out, a.base_url, repost=a.repost)
 
 
 if __name__ == '__main__':
