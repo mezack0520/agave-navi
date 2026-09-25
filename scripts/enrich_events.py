@@ -12,7 +12,7 @@ Usage:
   python scripts/enrich_events.py --slug <slug>      # Check specific event
   python scripts/enrich_events.py --limit 10         # Limit to 10 events
 
-Output: /tmp/enrich-report.md (Markdown report for GitHub Issue)
+Output: /tmp/enrich-report.md (Markdown report, weekly-enrichment.yml がメールで送る)
         /tmp/enrich-data.json (Machine-readable enrichment data)
 """
 

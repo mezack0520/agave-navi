@@ -93,6 +93,33 @@ if _info:
     lines.append("━━━ 📊 積み残し（急がないが減らしたい） ━━━")
     for _k, _v in _info:
         lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
+# 健全性チェック(health.yml の 1〜4)。2026-09-25 まで Issue に出していたが、
+# 誰も読まず閉じもしない置き場だったのでメールに一本化した。
+# 値は workflow の step outputs を環境変数で受ける。無ければ 0 扱い。
+def _env_int(k, d=0):
+    try:
+        return int(os.environ.get(k) or d)
+    except ValueError:
+        return d
+_h = [('データ整合性エラー', _env_int('INTEGRITY_ERR'), '/tmp/integrity.log', 30),
+      ('外部リンク切れ(check-links)', _env_int('LINKS_BROKEN'), '/tmp/links.log', 20),
+      ('画像URL死亡', _env_int('IMAGES_DEAD'), '/tmp/img.log', 20)]
+_ssl = _env_int('SSL_DAYS', 999)
+_hprob = [x for x in _h if x[1]]
+if _hprob or _ssl < 30:
+    lines.append("")
+    lines.append("━━━ 🩺 健全性チェック：異常あり ━━━")
+    if _ssl < 30:
+        lines.append(f"・SSL証明書の残り: {_ssl}日")
+    for _name, _n, _log, _tail in _hprob:
+        lines.append(f"・{_name}: {_n}件")
+        try:
+            with open(_log, encoding='utf-8', errors='replace') as _lf:
+                _ll = [l.rstrip() for l in _lf if l.strip()][-_tail:]
+        except OSError:
+            _ll = []
+        for _l in _ll:
+            lines.append(f"    {_l[:200]}")
 # 件数はURL単位。同じ出典を共有する回が並ぶため、イベント単位だと実体1件が7件に見える
 _dead_u = sorted({d['sourceUrl'] for d in data['dead_links']})
 _unreach_u = sorted({d['sourceUrl'] for d in (data.get('unreachable') or [])})
@@ -205,6 +232,8 @@ lines.append("アガベイベントナビ https://agave-navi.com")
 with open('email-body.txt', 'w') as f:
     f.write('\n'.join(lines))
 subj_prefix = f"【要判断{len(judgments)}件】" if judgments else ""
+if _hprob or _ssl < 30:
+    subj_prefix += f"【異常{len(_hprob) + (_ssl < 30)}件】"
 # CI の外でも動くこと。GITHUB_OUTPUT が無いだけで落ちると、
 # ローカルで確かめられない = 直書きだった頃と同じになる
 _out = os.environ.get('GITHUB_OUTPUT')
