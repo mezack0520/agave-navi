@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-26 20:49 JST",
+ "generated": "2026-09-27 08:31 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 266,
-  "awaitingNextEdition": 264,
+  "awaitingNextEdition": 272,
   "officialSiteCandidates": 72,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 71
+  "igNeedsBrowser": 70
  },
  "igAccounts": [
   {
@@ -157,7 +157,7 @@
    "lastEventDate": "2026-12-26",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kayustyle_botaniqa_atelier",
@@ -165,16 +165,6 @@
    "eventCount": 2,
    "lastEventName": "プレミアム ロックガーデン フェスタ2026",
    "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "chanchanchikachanchan",
-   "url": "https://www.instagram.com/chanchanchikachanchan/",
-   "eventCount": 2,
-   "lastEventName": "第二回 アガベース",
-   "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -470,12 +460,12 @@
    "apiStatus": "api"
   },
   {
-   "handle": "kinoco__inc",
-   "url": "https://www.instagram.com/kinoco__inc/",
-   "eventCount": 1,
-   "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
+   "handle": "chanchanchikachanchan",
+   "url": "https://www.instagram.com/chanchanchikachanchan/",
+   "eventCount": 2,
+   "lastEventName": "第二回 アガベース",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
@@ -484,7 +474,17 @@
    "url": "https://www.instagram.com/mononoke_botanical_garden/",
    "eventCount": 1,
    "lastEventName": "Onokoro Green Festa",
-   "lastEventDate": "2026-09-26",
+   "lastEventDate": "2026-09-01",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kinoco__inc",
+   "url": "https://www.instagram.com/kinoco__inc/",
+   "eventCount": 1,
+   "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
+   "lastEventDate": "2026-09-19",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
@@ -500,40 +500,10 @@
    "apiStatus": "api"
   },
   {
-   "handle": "gifumdrnmarche",
-   "url": "https://www.instagram.com/gifumdrnmarche/",
-   "eventCount": 1,
-   "lastEventName": "第2回 岐阜みどりのマルシェ",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "ayahadio.co.jp",
    "url": "https://www.instagram.com/ayahadio.co.jp/",
    "eventCount": 1,
    "lastEventName": "DIO PLANTS FES vol.1",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "siesta0890",
-   "url": "https://www.instagram.com/siesta0890/",
-   "eventCount": 1,
-   "lastEventName": "LITTLE GREEN MARCHE",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bba_e.w",
-   "url": "https://www.instagram.com/bba_e.w/",
-   "eventCount": 1,
-   "lastEventName": "Botanical Beauty Attractive vol.5",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
    "priority": 1,
@@ -554,26 +524,6 @@
    "url": "https://www.instagram.com/tompots_501/",
    "eventCount": 1,
    "lastEventName": "麋角植物作業室",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "nakayama.engei",
-   "url": "https://www.instagram.com/nakayama.engei/",
-   "eventCount": 1,
-   "lastEventName": "中山園芸 Instagram5周年感謝祭",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "our_plants_commune",
-   "url": "https://www.instagram.com/our_plants_commune/",
-   "eventCount": 1,
-   "lastEventName": "Our Plants ver. 2.04",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": true,
    "priority": 1,
@@ -2672,6 +2622,56 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "gifumdrnmarche",
+   "url": "https://www.instagram.com/gifumdrnmarche/",
+   "eventCount": 1,
+   "lastEventName": "第2回 岐阜みどりのマルシェ",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "siesta0890",
+   "url": "https://www.instagram.com/siesta0890/",
+   "eventCount": 1,
+   "lastEventName": "LITTLE GREEN MARCHE",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bba_e.w",
+   "url": "https://www.instagram.com/bba_e.w/",
+   "eventCount": 1,
+   "lastEventName": "Botanical Beauty Attractive vol.5",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "nakayama.engei",
+   "url": "https://www.instagram.com/nakayama.engei/",
+   "eventCount": 1,
+   "lastEventName": "中山園芸 Instagram5周年感謝祭",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "our_plants_commune",
+   "url": "https://www.instagram.com/our_plants_commune/",
+   "eventCount": 1,
+   "lastEventName": "Our Plants ver. 2.04",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   }
  ],
  "awaitingNextEdition": [
@@ -2707,6 +2707,17 @@
    "officialUrl": null,
    "recurring": true,
    "apiStatus": "personal"
+  },
+  {
+   "series": "Our Plants ver. 2.04",
+   "lastSlug": "our-plants-ver204-kyoto-2026-09",
+   "lastDate": "2026-09-26",
+   "lastEnd": "2026-09-26",
+   "monthsSinceLast": 0,
+   "igHandle": "our_plants_commune",
+   "officialUrl": "https://www.instagram.com/p/DdOntafTfau/",
+   "recurring": true,
+   "apiStatus": "api"
   },
   {
    "series": "ナイトマルシェ（さくら植物園）8月8日",
@@ -3103,17 +3114,6 @@
    "officialUrl": "https://www.instagram.com/p/DcbDS-oEz06/",
    "recurring": false,
    "apiStatus": "personal"
-  },
-  {
-   "series": "Jolie Nursery 即売会（スーパービバホーム茨木目垣店）",
-   "lastSlug": "jolie-nursery-vivahome-ibaraki-2026-09",
-   "lastDate": "2026-09-19",
-   "lastEnd": "2026-09-20",
-   "monthsSinceLast": 0,
-   "igHandle": "j_n_ishikawa",
-   "officialUrl": "https://jolienursery.co.jp/blogs/events/vivahome-ibaraki-20260919",
-   "recurring": false,
-   "apiStatus": "personal"
   }
  ],
  "officialSiteCandidates": [
@@ -3127,7 +3127,7 @@
    "domain": "awaji-botanicalgarden.com",
    "url": "https://awaji-botanicalgarden.com/onokoro-green-festa/",
    "eventName": "Onokoro Green Festa",
-   "eventDate": "2026-09-26"
+   "eventDate": "2026-09-01"
   },
   {
    "domain": "kayu-style-botaniqa-atelier.com",

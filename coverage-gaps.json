@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-26",
+  "sweptOn": "2026-09-27",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,29 +16,55 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1049,
-    "in_scope": 316,
-    "covered": 201,
-    "known_rejected": 113,
-    "truncated_resolved": 90,
-    "truncated_unresolved": 4,
+    "candidates": 1016,
+    "in_scope": 300,
+    "covered": 178,
+    "known_rejected": 105,
+    "truncated_resolved": 180,
+    "truncated_unresolved": 2,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 205,
-    "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 111,
-    "gaps_raw": 2
+    "in_scope_leafla": 203,
+    "truncated_unresolved_hits": 90,
+    "in_scope_nextmeet": 97,
+    "gaps_raw": 17
   },
   "errors": [],
   "truncatedUnresolved": [
-    "09/25 追加 有吉園芸店GRANDOPEN2026を開催、番...",
-    "09/25 追加 Nakayama Plantsが2026年に店...",
     "09/25 追加 タニクライダーがおかやまグリーントレジャー5t...",
-    "09/25 追加 第13回花郷園秋の芸術植物祭り2026を開催、..."
+    "09/25 追加 出雲ハーブ苑が蒸留体験WS植物の恵みにふれる日..."
   ],
   "gaps": [
     {
+      "date": "2026-10-09",
+      "lastSeen": "2026-10-12",
+      "days": 4,
+      "title": "Nakayama Plantsが2026年に店舗オープン1周年イベントを開催、10月9日から4日間実施"
+    },
+    {
+      "date": "2026-10-09",
+      "lastSeen": "2026-10-10",
+      "days": 2,
+      "title": "uellとHONOがMIDOLIEN2026を開催、珍奇植物の展示販売とワークショップを大阪で実施"
+    },
+    {
+      "date": "2026-10-11",
+      "title": "Aquarium Landed 2026が10月11日に第3回開催、雨林植物や水草と観賞魚を新潟で販売"
+    },
+    {
       "date": "2026-10-25",
       "title": "ボタの市meetsビカク横丁"
+    },
+    {
+      "date": "2026-10-31",
+      "lastSeen": "2026-11-01",
+      "days": 2,
+      "title": "Jolie Nurseryがレア観葉植物即売会2026を金沢で開催、希少種や斑入り植物が2日間集結"
+    },
+    {
+      "date": "2026-11-03",
+      "lastSeen": "2026-11-08",
+      "days": 6,
+      "title": "有吉園芸店GRANDOPEN2026を開催、番組放送100回記念で植物販売や作品展示とワークショップを実施"
     },
     {
       "date": "2026-11-08",
