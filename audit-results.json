@@ -1,5 +1,5 @@
 {
-  "total": 538,
+  "total": 535,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -586,19 +586,15 @@
     },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowもプレイブックも参照していないスクリプト",
-      "count": 1,
-      "items": [
-        "build-icons.py"
-      ],
+      "count": 0,
+      "items": [],
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
       "severity": "urgent"
     },
     "orphan_outputs": {
       "title": "書いているのに誰も読まない出力(旧設計の名残)",
-      "count": 1,
-      "items": [
-        "scripts/issue-to-shops.py: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。連絡はメールに一本化している)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "読む側を作る(日次/週次メールに載せる)か、書く側ごと消す。同じスクリプト内で消費しているなら _TMP_SELF_CONSUMED に理由つきで足す",
       "severity": "urgent"
     },
@@ -648,7 +644,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。**CIコミットが1件も見えない(shallow clone か履歴不足)。この検査は効いていない**",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -687,7 +683,7 @@
         "little-green-marche-mitoyo-2026-09(2026-09-26〜2026-09-26/1日)",
         "nakayama-engei-5th-anniversary-2026-09(2026-09-26〜2026-09-26/1日)",
         "nova-cultura-tradmans-2026-09(2026-09-19〜2026-09-27/9日/長期)",
-        "onokoro-green-festa-2026-09(2026-09-01〜2026-09-27/27日/長期)",
+        "onokoro-green-festa-2026-09(2026-09-26〜2026-09-27/2日)",
         "our-plants-ver204-kyoto-2026-09(2026-09-26〜2026-09-26/1日)",
         "plant-to-new-home-2026-09(2026-09-26〜2026-09-27/2日)",
         "premium-rock-garden-festa-2026(2026-09-19〜2026-09-27/9日/長期)",
@@ -848,9 +844,9 @@
       "title": "開催予定でアイキャッチが無い回",
       "count": 57,
       "items": [
-        "2026-09-01 onokoro-green-festa-2026-09",
         "2026-09-18 yamashiro-aisenen-autumn-2026-09",
         "2026-09-26 dio-plants-fes-vol1-kusatsu-2026-09",
+        "2026-09-26 onokoro-green-festa-2026-09",
         "2026-09-26 tabisuru-shokubutsuten-final-toky-2026-09",
         "2026-09-26 taniku-midori-marche-niitsu-2026-09",
         "2026-09-27 atilab-magari-hanbaikai-fangit-2026-09",
@@ -996,6 +992,13 @@
       "items": [],
       "note": "中止・延期の語は出ていないが、頁から中身が消えている。案内の取り下げ・別ページへの差し替え・出典の破損のどれか。JS で描く頁(Notion系など)は取得のたびに描画量が変わるので、それだけのこともある。一次情報を開いて scripts/cancel-reviewed.json に判断を書けば黙る（cancel_suspects と同じ規則）",
       "severity": "info"
+    },
+    "date_range_vs_time": {
+      "title": "会期の開始日が、時間欄に書かれた開催日より大幅に前",
+      "count": 0,
+      "items": [],
+      "note": "出典頁の公開日などを開始日に取っていないか、主催の告知で会期を確かめて date / dateDisplay を直す",
+      "severity": "urgent"
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
@@ -1150,10 +1153,8 @@
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 1,
-      "items": [
-        "pukubook-events(PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）): 最後に回ったのは 2026-09-18（8日前 / 上限7日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。NextMeet と まとめブログは CI から読めないので coverage-sweep.py に入れられず、回ったかどうかを残せるのはこのファイルだけ。coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない(あれは LEAFLA しか見ていない)。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
