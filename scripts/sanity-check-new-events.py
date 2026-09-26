@@ -107,6 +107,66 @@ def reasons(ev):
             break
     return rs
 
+_REASONS = {}
+
+
+def reasons_cached(ev):
+    return _REASONS.get(id(ev)) or []
+
+
+# 重複以外の理由で弾いた回は、要判断キュー(pending-judgments.json)に積む(2026-09-25)。
+# それまでは REJECT を Actions のログに出すだけで、new-events.json は処理後に
+# 消されるので、弾いた回は跡形もなく消えていた。チケット販売や集約サイトの
+# URL で弾くのは「URLが間違っている」のであって、イベント自体は実在しうる。
+# 日次メールの「あなたの判断が必要です」に出し、元の入力を event に丸ごと残す。
+# 重複で弾いた回は既に掲載があるので積まない(判断することが無い)。
+_DUP_PREFIX = ('duplicate', 'likely-duplicate', 'slug already exists')
+
+
+def queue_rejects(evs, src_path):
+    items = []
+    for ev in evs:
+        rs = reasons_cached(ev)
+        if not rs or any(r.startswith(_DUP_PREFIX) for r in rs):
+            continue
+        items.append(ev)
+    if not items:
+        return 0
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    qp = os.path.join(root, 'pending-judgments.json')
+    try:
+        with open(qp, encoding='utf-8') as f:
+            q = json.load(f)
+    except (OSError, ValueError):
+        q = {'items': []}
+    have = {it.get('id') for it in q.get('items') or []}
+    added = 0
+    for ev in items:
+        iid = f"sanity-check:{ev.get('slug') or ev.get('name')}"
+        if iid in have:
+            continue
+        q.setdefault('items', []).append({
+            'id': iid,
+            'source': 'sanity-check',
+            'title': f"取り込みを止めた回: {ev.get('name', '?')}",
+            'date': ev.get('date', ''),
+            'detail': ' / '.join(reasons_cached(ev))
+                      + f" url={ev.get('url') or '-'} sourceUrl={ev.get('sourceUrl') or '-'}",
+            'proposal': '正しいURL(主催の告知)に直して new-events.json に入れ直す。'
+                        '植物イベントでなければ rejected-events.json に見送りとして記録する。'
+                        'どちらでもこの項目を消す',
+            'event': ev,
+        })
+        added += 1
+    if added:
+        q['updated'] = sitelib.today_jst()
+        with open(qp, 'w', encoding='utf-8') as f:
+            json.dump(q, f, ensure_ascii=False, indent=2)
+            f.write('\n')
+        print(f'要判断キューに {added} 件積んだ (pending-judgments.json)')
+    return added
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--in', dest='inp', default='new-events.json')
@@ -124,6 +184,7 @@ def main():
     kept, rejected = [], []
     for ev in events:
         rs = reasons(ev)
+        _REASONS[id(ev)] = rs
         if rs:
             rejected.append((ev.get('slug','?'), ev.get('name','?'), rs))
         else:
@@ -166,6 +227,7 @@ def main():
 
     for slug, name, rs in rejected:
         print(f'  REJECT: {slug} ({name}) — {rs}')
+    queue_rejects([ev for ev in events if reasons_cached(ev)], args.inp)
 
     # Overwrite with kept-only
     if rejected:
