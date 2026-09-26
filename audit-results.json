@@ -586,16 +586,17 @@
     },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowもプレイブックも参照していないスクリプト",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "build-icons.py"
+      ],
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
       "severity": "urgent"
     },
     "orphan_outputs": {
       "title": "書いているのに誰も読まない出力(旧設計の名残)",
-      "count": 2,
+      "count": 1,
       "items": [
-        "scripts/issue-to-candidates.py: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。連絡はメールに一本化している)",
         "scripts/issue-to-shops.py: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。連絡はメールに一本化している)"
       ],
       "note": "読む側を作る(日次/週次メールに載せる)か、書く側ごと消す。同じスクリプト内で消費しているなら _TMP_SELF_CONSUMED に理由つきで足す",
