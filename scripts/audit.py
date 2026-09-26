@@ -1478,6 +1478,55 @@ def main():
         unused, '使われていないか、呼び出しが失われている。'
         '手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す')
 
+    # 13b. 書いているのに誰も読まない出力(昔の設計の名残)。
+    # 2026-09-25 に棚卸しして、次が全部「参照はされているが出力が誰にも届かない」
+    # 状態だった。13 の未参照スクリプト検査は「名前が出てくるか」しか見ないので
+    # すべて素通りしていた。
+    #   - crawl_events.py / discover_sources.py のレポート: 2026-08-10 の workflow
+    #     統合で Issue 化の手順が落ち、6週間だれにも届いていなかった
+    #   - 健全性・週次補完の Issue: 誰も読まず閉じもせず、127件溜まっていた
+    #   - check_events.py / check_date_updates.py の GITHUB_OUTPUT: 読む step が無い
+    # 見るのは3つ。どれも「書く側だけ残って読む側が消えた」形。
+    #   (a) /tmp のファイルが1ファイルにしか出てこない(書いて終わり)
+    #   (b) GITHUB_OUTPUT に書くキーを、どの workflow も steps.*.outputs.<key> で読まない
+    #   (c) GitHub Issue を読み書きする。Issue はこのリポジトリで誰の受信箱でもない。
+    #       人に届ける連絡は日次/週次メールに一本化している
+    _TMP_SELF_CONSUMED = {
+        # 書いた直後に同じスクリプトが cat して標準出力に流す。
+        # health.yml がそれを /tmp/links.log に tee して build-health-mail.py が読む
+        '/tmp/link-check-report.md',
+    }
+    _outs_files = (sorted(glob.glob(rp('scripts', '*.py'))) + sorted(glob.glob(rp('scripts', '*.sh')))
+                   + [rp('build-detail-pages.py')]
+                   + sorted(glob.glob(rp('.github', 'workflows', '*.yml'))))
+    _outs_files = [f for f in _outs_files
+                   if os.path.basename(f) != 'audit.py' and os.path.exists(f)]
+    _tmp_occ = {}
+    _orphan = []
+    _wf_all = ''
+    for f in _outs_files:
+        if f.endswith('.yml'):
+            _wf_all += open(f, encoding='utf-8').read()
+    for f in _outs_files:
+        body = open(f, encoding='utf-8').read()
+        rel = os.path.relpath(f, rp())
+        for t in set(re.findall(r'/tmp/[\w\-]+(?:\.[\w\-]+)*', body)):
+            _tmp_occ.setdefault(t, set()).add(rel)
+        if 'GITHUB_OUTPUT' in body:
+            for k in sorted(set(re.findall(r'''(?:write\(\s*f?["']|echo\s+["']?)(\w+)=''', body))):
+                if f'outputs.{k}' not in _wf_all:
+                    _orphan.append(f'{rel}: GITHUB_OUTPUT の {k} を読む step が無い')
+        code = '\n'.join(l for l in body.splitlines() if not l.lstrip().startswith('#'))
+        if re.search(r'gh\s+issue\b|/issues\b|issues:\s*write', code):
+            _orphan.append(f'{rel}: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。'
+                           '連絡はメールに一本化している)')
+    for t, fs in sorted(_tmp_occ.items()):
+        if len(fs) == 1 and t not in _TMP_SELF_CONSUMED:
+            _orphan.append(f'{next(iter(fs))}: {t} を書いているが読む側が無い')
+    add('orphan_outputs', '書いているのに誰も読まない出力(旧設計の名残)', _orphan,
+        '読む側を作る(日次/週次メールに載せる)か、書く側ごと消す。'
+        '同じスクリプト内で消費しているなら _TMP_SELF_CONSUMED に理由つきで足す')
+
     # CI の push 経路。2026-09-04 の Daily Maintenance #160 は、生成物を含むコミットで
     # `git pull --rebase || true` を回して失敗した。生成物は remote 側も毎回書き換えるので
     # rebase は必ず衝突し、`|| true` が衝突を握り潰してリポジトリを rebase 途中の
@@ -2815,9 +2864,15 @@ def main():
     _ow = load_json('organizer-posts.json', {}) or {}
     _ow_on = str(_ow.get('checkedOn') or '')
     _ow_cancel = []
+    # organizer-posts.json は日次の巡回時点の写し。反映した後も次の巡回まで
+    # 信号が残り、中止にした回で鳴り続けた(2026-09-26 アガベース)。
+    # 今の events.json で中止済みなら対応済みとして黙る
+    _ow_ev = {e.get('slug'): e for e in events if e.get('slug')}
     for _c in ((_ow.get('signals') or {}).get('cancel') or []):
         _sl = _c.get('slug', '')
         if _ow_on and _reviewed.get(_sl, '') >= _ow_on:
+            continue
+        if _sl in _ow_ev and sitelib.is_cancelled(_ow_ev[_sl]):
             continue
         _ow_cancel.append(
             f"{_c.get('date','')} {_sl}: @{_c.get('username','')} の "

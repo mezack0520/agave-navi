@@ -4,7 +4,7 @@ Discover new crawl sources for agave-navi.com
 
 Searches DuckDuckGo for plant event keywords, collects unique domains,
 compares with existing crawl-sources.json, and reports new candidates
-as a GitHub Issue for human review.
+to /tmp/discover-report.md. weekly-discovery.yml が週次メールで送る。
 
 Designed to run weekly via GitHub Actions.
 """
@@ -344,7 +344,7 @@ def main():
 
 
 def generate_report(analyzed, known_domains, all_results):
-    """Generate markdown report for GitHub Issue."""
+    """Generate markdown report (weekly mail body)."""
     now = datetime.now().strftime('%Y-%m-%d %H:%M')
 
     report = f"""## 巡回先 自動発掘レポート

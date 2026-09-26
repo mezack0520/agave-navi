@@ -41,8 +41,6 @@ from sitelib import (compact_date, is_aggregator_url, meta_dates,
 
 
 EVENTS_JSON = ROOT / "events.json"
-EVENTS_DIR = ROOT / "events"
-INDEX_HTML = ROOT / "index.html"
 
 # 日付パターン（日本語）
 DATE_PATTERNS = [
@@ -122,110 +120,9 @@ def fetch_page(url, timeout=15):
         return None
 
 
-def update_detail_html(slug, old_date, new_date, new_display):
-    """詳細ページHTMLの日付を更新"""
-    html_path = EVENTS_DIR / f"{slug}.html"
-    if not html_path.exists():
-        print(f"  HTML not found: {html_path}")
-        return False
-
-    content = html_path.read_text(encoding="utf-8")
-    original = content
-
-    # data-date属性の更新
-    content = content.replace(f'data-date="{old_date}"', f'data-date="{new_date}"')
-
-    # 表示日付の更新（複数パターン対応）
-    old_dt = datetime.strptime(old_date, "%Y-%m-%d")
-    new_dt = datetime.strptime(new_date, "%Y-%m-%d")
-
-    # Google Calendar リンクの日付更新
-    old_cal = old_dt.strftime("%Y%m%d")
-    new_cal = new_dt.strftime("%Y%m%d")
-    content = content.replace(old_cal, new_cal)
-
-    # 日本語表示の更新パターン
-    old_patterns = [
-        f"{old_dt.year}年{old_dt.month}月{old_dt.day}日",
-        f"{old_dt.year}年{old_dt.month}月（日程未確定）",
-        f"{old_dt.year}.{old_dt.month:02d} (日曜)",
-        f"{old_dt.year}.{old_dt.month:02d}",
-    ]
-    for p in old_patterns:
-        if p in content:
-            content = content.replace(p, new_display)
-
-    if content != original:
-        html_path.write_text(content, encoding="utf-8")
-        print(f"  ✅ 詳細ページ更新: {html_path.name}")
-        return True
-    else:
-        print(f"  ⚠ 詳細ページ変更なし: {html_path.name}")
-        return False
-
-
-def update_index_html(slug, old_date, new_date, new_display):
-    """一覧ペーズ(index.html)のイベントカード日付を更新"""
-    if not INDEX_HTML.exists():
-        print(f"  index.html not found")
-        return False
-
-    content = INDEX_HTML.read_text(encoding="utf-8")
-    original = content
-
-    old_dt = datetime.strptime(old_date, "%Y-%m-%d")
-    new_dt = datetime.strptime(new_date, "%Y-%m-%d")
-
-    # 1) data-date属性の更新（slugの近くにあるものだけ対象）
-    # data-date="2026-05-01" data-slug="gotanda-big-bazaar-2026-05"
-    pattern_data_date = re.compile(
-        r'(data-date=")' + re.escape(old_date) + r'("[\s\S]{0,50}data-slug="' + re.escape(slug) + r'")'
-    )
-    content = pattern_data_date.sub(r'\g<1>' + new_date + r'\g<2>', content)
-
-    # 2) JSON-LD内の startDate更新（slugのURL近くにあるもの）
-    # "startDate":"2026-05-01",...,"url":"...gotanda-big-bazaar-2026-05.html"
-    old_jsonld = f'"startDate":"{old_date}"'
-    new_jsonld = f'"startDate":"{new_date}"'
-    # slug付近のstartDateのみ置換
-    slug_url = f'{slug}.html'
-    # Find all occurrences of the slug in JSON-LD context and replace nearby startDate
-    pos = 0
-    while True:
-        slug_pos = content.find(slug_url, pos)
-        if slug_pos == -1:
-            break
-        # Look backwards for startDate within 300 chars
-        search_start = max(0, slug_pos - 300)
-        chunk = content[search_start:slug_pos]
-        sd_pos = chunk.rfind(old_jsonld)
-        if sd_pos != -1:
-            abs_pos = search_start + sd_pos
-            content = content[:abs_pos] + new_jsonld + content[abs_pos + len(old_jsonld):]
-        pos = slug_pos + len(slug_url)
-
-    # 3) event-dateテキストの更新（slugカード内）
-    # Find the card for this slug and update the event-date span
-    card_pattern = re.compile(
-        r'(data-slug="' + re.escape(slug) + r'"[\s\S]*?<span class="event-date">)'
-        r'([^<]+)'
-        r'(</span>)',
-        re.DOTALL
-    )
-    match = card_pattern.search(content)
-    if match:
-        # dateDisplay形式に変換: "2026.05.25" or "2026年5月25日（日）"
-        weekday = WEEKDAY_MAP[new_dt.weekday()]
-        card_date_display = f"{new_dt.year}.{new_dt.month:02d}.{new_dt.day:02d}"
-        content = content[:match.start(2)] + card_date_display + content[match.end(2):]
-
-    if content != original:
-        INDEX_HTML.write_text(content, encoding="utf-8")
-        print(f"  ✅ 一覧ページ(index.html)更新")
-        return True
-    else:
-        print(f"  ⚠ 一覧ページ変更なし")
-        return False
+# 詳細ページ・index.html を正規表現で直接書き換える処理は 2026-09-25 に削除した。
+# build-all.sh 以前の名残で、同じジョブの後段で build-all.sh が events.json から
+# 両方を作り直すので、書き換えは毎回上書きされていた。
 
 
 def main():
@@ -367,11 +264,6 @@ def main():
                 # 和文表記を入れるとサイト内で書式が割れるので sitelib に合わせる。
                 ev["dateDisplay"] = compact_date(ev)
 
-                # 詳細ページ更新
-                update_detail_html(slug, current_date, best["date"], new_display)
-
-                # 一覧ページ(index.html)更新
-                update_index_html(slug, current_date, best["date"], new_display)
 
             updates.append({
                 "slug": slug,
@@ -395,12 +287,6 @@ def main():
     if updates:
         summary = "\n".join([f"- {u['name']}: {u['old_date']} → {u['new_date']}" for u in updates])
         print(f"\n--- 変更サマリー ---\n{summary}")
-
-        # GitHub Actions output
-        if os.environ.get("GITHUB_OUTPUT"):
-            with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-                f.write(f"updated=true\n")
-                f.write(f"count={len(updates)}\n")
 
 
 if __name__ == "__main__":

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 Weekly event crawler for agave-navi.com
-Checks 17 crawl sources for new plant events and generates a report.
-Designed to run as a GitHub Actions workflow.
+crawl-sources.json の各ソースを見て、未掲載のイベント候補をレポートに出す。
+レポート(/tmp/crawl-report.md)は weekly-discovery.yml が週次メールで送る。
 """
 
 # Aggregator handling:
 # - crawl-sources.json で discovery_only:true がついたソースは "発見専用" 扱い
-# - 抽出した候補は Issue に "発見元: aggregator" と注記
+# - 抽出した候補はレポートに "発見元: aggregator" と注記
 # - ユーザーが手動レビューして new-events.json に追加するときに、
 #   実際の公式URLは別途確認する流れ
 # - sanity-check-new-events.py が aggregator URL を url/sourceUrl に

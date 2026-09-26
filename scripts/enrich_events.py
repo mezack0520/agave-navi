@@ -13,7 +13,6 @@ Usage:
   python scripts/enrich_events.py --limit 10         # Limit to 10 events
 
 Output: /tmp/enrich-report.md (Markdown report, weekly-enrichment.yml がメールで送る)
-        /tmp/enrich-data.json (Machine-readable enrichment data)
 """
 
 import json
@@ -43,7 +42,6 @@ REPORT_PATH = '/tmp/enrich-report.md'
 # 標準出力だけだと CI ログに埋もれ、翌週も同じ推測をやり直すことになるため
 # 週次レポート(Issue)に出す。形: (slug, 現在の字数, 候補の字数, 理由)
 DESC_SKIPS = []
-DATA_PATH = '/tmp/enrich-data.json'
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
@@ -1020,10 +1018,6 @@ def main():
         f.write(report)
     print(f"\nReport saved to {REPORT_PATH}")
 
-    serializable = [r for r in results if r is not None]
-    with open(DATA_PATH, 'w', encoding='utf-8') as f:
-        json.dump(serializable, f, ensure_ascii=False, indent=2)
-    print(f"Data saved to {DATA_PATH}")
 
     enriched = len([r for r in results if r and r.get('category') == 'enriched'])
     removed = len(needs_manual_slugs)

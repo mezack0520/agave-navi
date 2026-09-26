@@ -283,18 +283,6 @@ def main():
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
 
-    # GitHub Actions の GITHUB_OUTPUT に書き出し
-    github_output = os.environ.get('GITHUB_OUTPUT')
-    if github_output:
-        with open(github_output, 'a') as f:
-            f.write(f"dead_links={len({d['sourceUrl'] for d in results['dead_links']})}\n")
-            f.write(f"unreachable={len({d['sourceUrl'] for d in results['unreachable']})}\n")
-            f.write(f"tbd_count={len(results['tbd_events'])}\n")
-            f.write(f"past_count={len(results['past_events'])}\n")
-            f.write(f"today_count={len(results['today_events'])}\n")
-            has_issues = len(results['dead_links']) > 0 or len(results['tbd_events']) > 0
-            f.write(f"has_issues={'true' if has_issues else 'false'}\n")
-
     # 終了コード（リンク切れがあれば1）
     if results['dead_links']:
         sys.exit(1)

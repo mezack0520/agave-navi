@@ -165,5 +165,4 @@ fi
 cat "$REPORT_FILE"
 
 # 終了コードで通知判断（GitHub Actions用）
-echo "$BROKEN_COUNT" > /tmp/broken-count
-echo "$WARN_COUNT" > /tmp/warn-count
+echo "$BROKEN_COUNT" > /tmp/broken-count   # health.yml が読む
