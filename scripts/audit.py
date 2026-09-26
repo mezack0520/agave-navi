@@ -2852,6 +2852,28 @@ def main():
         '（cancel_suspects と同じ規則）',
         severity='info')
 
+    # 16y. 会期の始まりが、時間欄に書かれた開催日より大幅に前(2026-09-26)。
+    #      Onokoro Green Festa は 9/26-27 の2日開催なのに、出典頁の公開日(9/1)を
+    #      開始日に取って 2026-09-01〜27 で載っていた。時間欄は「26日 …／27日 …」と
+    #      正しく2日分だけ書いていたので、両者を突き合わせれば機械で分かる。
+    #      会期が7日を超え、時間欄が2日以上を日付で挙げ、そのどれもが開始日より後。
+    _rng_bad = []
+    for _e in events:
+        _t = _e.get('time') or ''
+        _ds = [int(x) for x in re.findall(r'(?<!\d)(\d{1,2})日', _t)]
+        _a, _b = _e.get('date') or '', _e.get('dateEnd') or ''
+        if len(set(_ds)) < 2 or not _a or not _b or _a[:7] != _b[:7]:
+            continue
+        try:
+            _span = int(_b[8:10]) - int(_a[8:10])
+        except ValueError:
+            continue
+        if _span > 7 and min(_ds) > int(_a[8:10]):
+            _rng_bad.append(f"{_e.get('slug')}: 会期 {_a}〜{_b} / 時間欄 {_t[:40]}")
+    add('date_range_vs_time', '会期の開始日が、時間欄に書かれた開催日より大幅に前',
+        _rng_bad, '出典頁の公開日などを開始日に取っていないか、主催の告知で会期を確かめて '
+        'date / dateDisplay を直す')
+
     # 16z. 主催者の Instagram(2026-09-23)。
     #      check-cancelled.py は Instagram を SKIP_DOMAINS で見ていないので、
     #      出典が Instagram の回は中止されても気づけなかった。
