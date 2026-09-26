@@ -120,6 +120,20 @@ if _hprob or _ssl < 30:
             _ll = []
         for _l in _ll:
             lines.append(f"    {_l[:200]}")
+# 主催の Instagram の告知で自動的に中止にした回(ig-organizer-watch.py)。
+# 人の判断を経ずに掲載を変えたので、何をどう変えたかは必ず本文に出す
+try:
+    with open('organizer-posts.json', encoding='utf-8') as _of:
+        _ow = json.load(_of)
+except (OSError, ValueError):
+    _ow = {}
+_auto = [c for c in ((_ow.get('signals') or {}).get('cancel') or []) if c.get('applied')]
+if _auto:
+    lines.append("")
+    lines.append("━━━ 🚫 主催の告知で中止にした回（自動） ━━━")
+    lines.append("誤りなら events.json の eventStatus を戻し、scripts/cancel-reviewed.json に判断を書く。")
+    for _c in _auto:
+        lines.append(f"・{_c.get('date')} {_c.get('slug')}  告知 {_c.get('postedOn')} {_c.get('permalink')}")
 # 件数はURL単位。同じ出典を共有する回が並ぶため、イベント単位だと実体1件が7件に見える
 _dead_u = sorted({d['sourceUrl'] for d in data['dead_links']})
 _unreach_u = sorted({d['sourceUrl'] for d in (data.get('unreachable') or [])})

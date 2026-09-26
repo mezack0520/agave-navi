@@ -26,6 +26,8 @@
                       言い切りがあり、かつ投稿がその回を指している(日付か名前)もの
   signals.unlisted  = 主催の最近の投稿に先の日付が出ているのに、その主催の
                       掲載済みの回のどれとも日付が合わないもの(取りこぼし候補)
+                      auto_cancel_ok() を満たす信号は events.json を中止にして
+                      applied に反映日を書く(2026-09-26〜)。残りは人が判断する
   errors            = 取れなかった主催(個人アカウント・非公開・名前違い)
   同じ呼び出しの原寸画像から、アイキャッチの候補を staging/eyecatch/ に置く
   (eyecatchlib.py。採否は人が apply-eyecatch.py で書く)
@@ -356,6 +358,70 @@ def plan_fetch(tg, watch_handles, prev, today_s, budget):
     return [u for _, _, u in due][:budget], accounts
 
 
+# 人を待たずに中止にしてよい信号(2026-09-26)。
+# 第二回アガベースは主催が前日昼に「開催中止」と告知し、翌朝の巡回で
+# organizer_cancel_signal(urgent) まで出ていたのに、人が言うまで開催予定の
+# まま載っていた。当日の朝に中止の回を「開催予定」と出すのが一番まずい。
+# 誤って中止にするほうも同じくらいまずいので、条件は狭く取る:
+#   - 語は「開催中止」「開催を中止」だけ。「中止のお知らせ」「中止となりました」は
+#     ワークショップやくじ等の一部企画の取り止めでも使われる
+#   - 延期・順延・見合わせの語が本文にあれば人に回す(日程変更の可能性)
+#   - 投稿がその回の日付を指している(名前だけの一致では反映しない)
+#   - 投稿がその回を掲載した日以降、開催日以前
+# 出展者1組の取り止めと天候の条件文は drop_conditional が先に落としている。
+AUTO_CANCEL_WORDS = ('開催中止', '開催を中止')
+_NOT_AUTO = ('延期', '順延', '見合わせ', '見送', '日程変更', '振替')
+
+
+def auto_cancel_ok(sig, ev, caption, reviewed=None):
+    # 人が一次情報を見て記録した回(cancel-reviewed.json)は、記録より古い投稿では動かさない。
+    # 自動の中止を人が戻したとき、翌日また中止にしないため
+    if (reviewed or {}).get(sig.get('slug'), '') >= (sig.get('postedOn') or '~'):
+        return False
+    if sig.get('by') != 'date':
+        return False
+    if not any(w in AUTO_CANCEL_WORDS for w in sig.get('words') or []):
+        return False
+    if any(w in (caption or '') for w in _NOT_AUTO):
+        return False
+    posted = sig.get('postedOn') or ''
+    if posted < (ev.get('addedDate') or '') or posted > (ev.get('date') or ''):
+        return False
+    return not sitelib.is_cancelled(ev)
+
+
+def load_reviewed():
+    try:
+        with open(os.path.join(REPO, 'scripts', 'cancel-reviewed.json'), encoding='utf-8') as f:
+            items = json.load(f).get('items') or []
+    except (OSError, ValueError):
+        items = []
+    out = {}
+    for r in items:
+        sl, on = r.get('slug'), str(r.get('checkedOn') or '')
+        if sl and on > out.get(sl, ''):
+            out[sl] = on
+    return out
+
+
+def apply_auto_cancels(signals, events, captions, today_s, reviewed=None):
+    """auto_cancel_ok を満たす信号で events を中止にする。反映した slug を返す"""
+    by = {e.get('slug'): e for e in events}
+    done = []
+    for sig in signals:
+        ev = by.get(sig.get('slug'))
+        if not ev or not auto_cancel_ok(sig, ev, captions.get(sig.get('permalink'), ''), reviewed):
+            continue
+        ev['eventStatus'] = 'cancelled'
+        ev['cancelledOn'] = sig['postedOn']
+        ev.setdefault('cancelReason', '主催がInstagramで開催中止を告知')
+        ev['cancelNoticeUrl'] = sig['permalink']
+        ev['updatedAt'] = today_s
+        sig['applied'] = today_s
+        done.append(ev['slug'])
+    return done
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--limit', type=int, default=0, help='今回取る主催の数を絞る(試験用)')
@@ -453,6 +519,19 @@ def main():
         out['signals']['cancel'] += c
         out['signals']['unlisted'] += n
     out['stats']['readable'] = ok_recent
+
+    caps = {p.get('permalink'): norm(p.get('caption'))
+            for r in out['results'].values() if r.get('ok') for p in r.get('posts') or []}
+    auto = apply_auto_cancels(out['signals']['cancel'], events, caps, today_s, load_reviewed())
+    if auto:
+        ev_path = os.path.join(REPO, 'events.json')
+        with open(ev_path, encoding='utf-8') as f:
+            _raw = f.read()
+        _txt = json.dumps(events, ensure_ascii=False, indent=2)
+        with open(ev_path, 'w', encoding='utf-8') as f:
+            f.write(_txt + ('\n' if _raw.endswith('\n') else ''))
+        print(f'主催の告知で中止にした回: {", ".join(auto)}')
+    out['stats']['autoCancelled'] = len(auto)
     out['stats']['personal'] = sum(1 for r in out['results'].values() if is_personal(r))
     out['stats']['neverChecked'] = len(accounts - set(out['results']))
 
@@ -500,6 +579,23 @@ def self_test():
           'caption': '10月18日のテストプランツ市は台風のため開催中止となりました'}]
     c, _ = analyze_posts('org', p, [ev, other], [ev, other], today)
     chk('日付で指した中止', [x['slug'] for x in c], ['x-2026-10'])
+    # 自動で中止にしてよいのは「開催中止」を日付で指した投稿だけ
+    ev_a = dict(ev, addedDate='2026-09-01')
+    sig = {'slug': 'x-2026-10', 'by': 'date', 'words': ['開催中止'], 'postedOn': '2026-09-20',
+           'permalink': 'u1'}
+    chk('自動中止: 開催中止を日付で', auto_cancel_ok(sig, ev_a, '10月18日は開催中止'), True)
+    chk('自動中止: 名前だけ', auto_cancel_ok(dict(sig, by='name'), ev_a, '開催中止'), False)
+    chk('自動中止: 一部企画の取り止め語', auto_cancel_ok(dict(sig, words=['中止のお知らせ']), ev_a,
+                                              '10/18 くじ引き中止のお知らせ'), False)
+    chk('自動中止: 延期を含む', auto_cancel_ok(sig, ev_a, '10/18は開催中止し11/1に延期します'), False)
+    chk('自動中止: 掲載前の投稿', auto_cancel_ok(dict(sig, postedOn='2026-08-20'), ev_a, '開催中止'), False)
+    chk('自動中止: 中止済み', auto_cancel_ok(sig, dict(ev_a, eventStatus='cancelled'), '開催中止'), False)
+    chk('自動中止: 人が確認済み', auto_cancel_ok(sig, ev_a, '開催中止', {'x-2026-10': '2026-09-22'}), False)
+    _evs = [dict(ev_a)]
+    chk('自動中止: 反映', apply_auto_cancels([dict(sig)], _evs, {'u1': '10/18 開催中止'}, '2026-09-21'),
+        ['x-2026-10'])
+    chk('自動中止: 項目', (_evs[0]['eventStatus'], _evs[0]['cancelledOn'], _evs[0]['cancelNoticeUrl']),
+        ('cancelled', '2026-09-20', 'u1'))
     # 雨天中止の条件文は鳴らない
     p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u2',
           'caption': '10/18開催。雨天中止となる場合があります'}]

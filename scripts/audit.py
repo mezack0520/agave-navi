@@ -1446,9 +1446,6 @@ def main():
     # 手で走らせる前提のスクリプトは自動実行の対象ではない。
     # ここに足すときは、そのスクリプトの docstring に「なぜ自動化しないか」を書くこと。
     MANUAL_ONLY = {
-        # アイコンはビルドのたびに変わらない。cairosvg を CI の依存に足すと
-        # ビルド全体が壊れる面が増えるだけなので、形を変えたいときだけ回す
-        'build-icons.py',
         # Instagram には CI のIPから届かない(2026-09-08 実測で取得0件)。
         # 組み込みブラウザを持つ定期タスク agave-navi-eyecatch から走らせる
         'fetch-event-images.py',
