@@ -34,8 +34,8 @@
 
 ## ステップ5: 動作確認
 
-GitHub Actions の **Event Info Enrichment** workflow を手動実行:
-1. https://github.com/mezack0520/agave-navi/actions/workflows/enrich-events.yml
+GitHub Actions の **Weekly Enrichment** workflow を手動実行:
+1. https://github.com/mezack0520/agave-navi/actions/workflows/weekly-enrichment.yml
 2. 「Run workflow」→ limit を 5 程度にして「Run workflow」
 3. ログに `Brave: N results for ...` が表示されればOK
 
