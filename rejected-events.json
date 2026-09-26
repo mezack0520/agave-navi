@@ -953,6 +953,62 @@
    "eventDate": "2026-09-27",
    "decided": "2026-09-24",
    "reason": "主催者の見張りで @fukuoka_effect の投稿から出た。花と緑のオークションで対象ジャンルではない"
+  },
+  {
+   "key": "lohas-festa-banpaku-2026-autumn",
+   "name": "ロハスフェスタ万博2026秋 (2026-10-09〜12・10-16〜18 万博記念公園・大阪)",
+   "aliases": [
+    "ロハスフェスタ",
+    "LOHAS FESTA",
+    "ロハスフェスタ万博"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-09",
+   "decided": "2026-09-26",
+   "reason": "PUKUBOOK の一覧に出た。主催の告知は手仕事の作品を中心とする総出展600店の屋外マーケットで、植物は主役ではない(compositeEvents の基準に届かない)"
+  },
+  {
+   "key": "tokyo-outside-festival-showa-2026",
+   "name": "TOKYO outside Festival × アウトドアフェスティバル (2026年10月下旬予定・国営昭和記念公園)",
+   "aliases": [
+    "アウトドアフェスティバル",
+    "TOKYO outside Festival",
+    "Outdoor Festival"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": null,
+   "decided": "2026-09-26",
+   "reason": "PUKUBOOK の一覧に仮予定として出た。外遊び・アウトドアグルメの総合フェスで、植物は主役ではない"
+  },
+  {
+   "key": "neyagawa-botanical-festival-2026-10",
+   "name": "BOTANICAL FESTIVAL in 寝屋川公園 (2026年10月予定・寝屋川公園中央広場)",
+   "aliases": [
+    "BOTANICAL FESTIVAL in 寝屋川公園",
+    "寝屋川公園 ボタニカルフェスティバル"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": null,
+   "decided": "2026-09-26",
+   "revisitedOn": "2026-09-26",
+   "reason": "PUKUBOOK に仮予定/非公式(主催 日本ケータリングカー協会、5月・10月)として出るだけで、2026年秋回の主催告知が見つからない。告知が出たら再評価"
+  },
+  {
+   "key": "haioku-club-goccia-2026-autumn",
+   "name": "廃屋倶楽部 2026秋 (2026年10月予定・GOCCIA 裏の工場跡地・兵庫県佐用郡)",
+   "aliases": [
+    "廃屋倶楽部",
+    "HAIOKU CLUB"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": null,
+   "decided": "2026-09-26",
+   "revisitedOn": "2026-09-26",
+   "reason": "PUKUBOOK に仮予定/非公式として出るだけ。主催 GOCCIA plants factory の告知で確認できるのは 2025-04-27 の春の部まで。2026年秋回の告知が出たら再評価"
   }
  ],
  "_reasonTypes": {
@@ -961,6 +1017,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-24",
+ "updated": "2026-09-26",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
