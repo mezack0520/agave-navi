@@ -885,7 +885,7 @@
   {
    "date": "2026-09-26",
    "urgent": {
-    "organizer_cancel_signal": 1,
+    "orphan_outputs": 2,
     "manual_sweep_stale": 1
    },
    "info": {
@@ -899,7 +899,7 @@
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 48,
-    "upcoming_with_image": 112,
+    "upcoming_with_image": 111,
     "events_with_image": 193,
     "upcoming_no_image": 57,
     "ongoing_events": 21,
@@ -907,7 +907,7 @@
     "eyecatch_backlog": 57
    },
    "events": 480,
-   "upcoming": 169
+   "upcoming": 168
   }
  ]
 }

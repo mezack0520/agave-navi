@@ -176,9 +176,8 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 112,
+      "count": 111,
       "items": [
-        "agabase-2nd-tomisato-2026-09",
         "aki-no-taniku-picnic-ibusuki-2026-11",
         "american-and-plants-sano-2026-10",
         "anthurium-festival-tokyo-2026-10",
@@ -217,7 +216,8 @@
         "green-champuroo-vol2-2026-10",
         "greensnap-marche-odaiba-2026",
         "greensnap-marche-toyosu-2026-autumn",
-        "greensnap-marche-yokohama-2026-autumn"
+        "greensnap-marche-yokohama-2026-autumn",
+        "hanatomofesta-2026"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -591,6 +591,16 @@
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
       "severity": "urgent"
     },
+    "orphan_outputs": {
+      "title": "書いているのに誰も読まない出力(旧設計の名残)",
+      "count": 2,
+      "items": [
+        "scripts/issue-to-candidates.py: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。連絡はメールに一本化している)",
+        "scripts/issue-to-shops.py: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。連絡はメールに一本化している)"
+      ],
+      "note": "読む側を作る(日次/週次メールに載せる)か、書く側ごと消す。同じスクリプト内で消費しているなら _TMP_SELF_CONSUMED に理由つきで足す",
+      "severity": "urgent"
+    },
     "ci_push_bypassed": {
       "title": "CIのpushが衝突復旧を持たない経路になっている",
       "count": 0,
@@ -637,7 +647,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -988,10 +998,8 @@
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
-      "count": 1,
-      "items": [
-        "2026-09-26 agabase-2nd-tomisato-2026-09: @chanchanchikachanchan の 2026-09-25 の投稿に「中止のお知らせ・開催を中止・開催中止」 https://www.instagram.com/p/DdsvCFxpPG-/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
       "severity": "urgent"
     },
