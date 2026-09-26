@@ -3056,11 +3056,20 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
 - 出るもの: 中止の兆候(`organizer_cancel_signal` urgent)、
   当サイトに無い先の日付(`organizer_unlisted_dates`。次回開催の告知待ちも
   ここに出る)、アイキャッチ候補(`eyecatch_candidates_pending`)。
+- **中止は条件を満たせば自動で反映する(2026-09-26〜)。**主催の投稿が
+  「開催中止」「開催を中止」をその回の日付つきで言い切り、延期・順延・見合わせの語が
+  無く、掲載日以降・開催日以前の投稿なら、`auto_cancel_ok()` が events.json を
+  cancelled にして cancelledOn / cancelNoticeUrl を書く。日次メールの
+  「主催の告知で中止にした回（自動）」に必ず出る。条件に届かない信号だけが
+  `organizer_cancel_signal` で人に回る。誤りなら eventStatus を戻して
+  `scripts/cancel-reviewed.json` に記録する(記録より古い投稿では再び動かない)。
+  きっかけ: 第二回アガベースは前日昼の中止告知を翌朝の巡回で拾いながら、
+  人が言うまで当日も開催予定のまま載っていた。
 - **読めない相手**: 個人アカウント・非公開・名前違い。開始時点で102中22。
   `watch-sources.json` の各アカウントに `apiStatus`(`api` / `personal` /
   `unchecked`)が付く。**ブラウザで回るのは `api` 以外だけでよい。**
   `api` のアカウントをブラウザで開き直すのは同じ仕事の二度手間。
-- アイキャッチ: 候補は `staging/eyecatch/<slug>.jpg` と `candidates.json`。
+- アイキャッチ: 候補は `staging/eyecatch/<slug>.jpg` と `staging/eyecatch/candidates.json`。
   **採否は画像を1枚ずつ見て決める**(機械の照合は根拠にならない。
   2026-09-08 の12件の誤り)。
   `python3 scripts/apply-eyecatch.py --list` で並べ、

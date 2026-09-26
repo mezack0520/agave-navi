@@ -62,7 +62,7 @@ push毎  [GitHub] pages build and deployment → 本番反映(CDNキャッシュ
          → 失敗があれば dispatch(daily) で自動再ビルド / 提案系はキューへ(最大2件/週)
 水 09:00 [GitHub] weekly-discovery.yml
          crawl_events.py(crawl-sources 52+watch-sources公式候補を巡回)
-         → discover_sources.py(新ソース発掘) → 候補issue化
+         → discover_sources.py(新ソース発掘) → 両レポートを週次メール
 日 10:00 [GitHub] weekly-enrichment.yml
          enrich_events.py(欠損フィールド補完) → backfill-images.py --upcoming-only
          (daybook記事本文フライヤー・開催日照合・汎用/無関係画像拒否) → build-all.sh
