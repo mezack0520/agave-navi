@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-27 15:28 JST",
+ "generated": "2026-09-28 08:46 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 266,
-  "awaitingNextEdition": 272,
+  "awaitingNextEdition": 293,
   "officialSiteCandidates": 72,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 70
@@ -55,16 +55,6 @@
    "eventCount": 5,
    "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
    "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "sapporo.cactus.club",
-   "url": "https://www.instagram.com/sapporo.cactus.club/",
-   "eventCount": 4,
-   "lastEventName": "秋のサボテン多肉植物展（札幌カクタスクラブ）",
-   "lastEventDate": "2026-09-25",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
@@ -155,36 +145,6 @@
    "eventCount": 3,
    "lastEventName": "enjoy place 番外編",
    "lastEventDate": "2026-12-26",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kayustyle_botaniqa_atelier",
-   "url": "https://www.instagram.com/kayustyle_botaniqa_atelier/",
-   "eventCount": 2,
-   "lastEventName": "プレミアム ロックガーデン フェスタ2026",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bizarre_farm",
-   "url": "https://www.instagram.com/bizarre_farm/",
-   "eventCount": 2,
-   "lastEventName": "bizarre farm AUTUMN FES 9th",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "fukuoka_green_party",
-   "url": "https://www.instagram.com/fukuoka_green_party/",
-   "eventCount": 2,
-   "lastEventName": "第7回 福岡グリーンパーティー",
-   "lastEventDate": "2026-09-27",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -380,6 +340,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "sapporo.cactus.club",
+   "url": "https://www.instagram.com/sapporo.cactus.club/",
+   "eventCount": 4,
+   "lastEventName": "秋のサボテン多肉植物展（札幌カクタスクラブ）",
+   "lastEventDate": "2026-09-25",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -440,6 +410,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "kayustyle_botaniqa_atelier",
+   "url": "https://www.instagram.com/kayustyle_botaniqa_atelier/",
+   "eventCount": 2,
+   "lastEventName": "プレミアム ロックガーデン フェスタ2026",
+   "lastEventDate": "2026-09-19",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "wi_wibotanical",
    "url": "https://www.instagram.com/wi_wibotanical/",
    "eventCount": 2,
@@ -470,114 +450,24 @@
    "apiStatus": "api"
   },
   {
-   "handle": "mononoke_botanical_garden",
-   "url": "https://www.instagram.com/mononoke_botanical_garden/",
-   "eventCount": 1,
-   "lastEventName": "Onokoro Green Festa",
-   "lastEventDate": "2026-09-01",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kinoco__inc",
-   "url": "https://www.instagram.com/kinoco__inc/",
-   "eventCount": 1,
-   "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bwoocraftplants",
-   "url": "https://www.instagram.com/bwoocraftplants/",
-   "eventCount": 1,
-   "lastEventName": "plant to new home",
+   "handle": "bizarre_farm",
+   "url": "https://www.instagram.com/bizarre_farm/",
+   "eventCount": 2,
+   "lastEventName": "bizarre farm AUTUMN FES 9th",
    "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
   {
-   "handle": "ayahadio.co.jp",
-   "url": "https://www.instagram.com/ayahadio.co.jp/",
-   "eventCount": 1,
-   "lastEventName": "DIO PLANTS FES vol.1",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "robingarden02",
-   "url": "https://www.instagram.com/robingarden02/",
-   "eventCount": 1,
-   "lastEventName": "第6回 ロビン ビザールガーデン",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "tompots_501",
-   "url": "https://www.instagram.com/tompots_501/",
-   "eventCount": 1,
-   "lastEventName": "麋角植物作業室",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "toky.jp",
-   "url": "https://www.instagram.com/toky.jp/",
-   "eventCount": 1,
-   "lastEventName": "旅する植物展 Final",
-   "lastEventDate": "2026-09-26",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "acupom219",
-   "url": "https://www.instagram.com/acupom219/",
-   "eventCount": 1,
-   "lastEventName": "Exploring Unpredictable Plants 2026",
+   "handle": "fukuoka_green_party",
+   "url": "https://www.instagram.com/fukuoka_green_party/",
+   "eventCount": 2,
+   "lastEventName": "第7回 福岡グリーンパーティー",
    "lastEventDate": "2026-09-27",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "engei_edamame",
-   "url": "https://www.instagram.com/engei_edamame/",
-   "eventCount": 1,
-   "lastEventName": "ビカクシダ板付け相談会 & 即売会",
-   "lastEventDate": "2026-09-27",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "yu_taniku_",
-   "url": "https://www.instagram.com/yu_taniku_/",
-   "eventCount": 1,
-   "lastEventName": "第2回 HAPPY SMILE",
-   "lastEventDate": "2026-09-27",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "atilab_dyc",
-   "url": "https://www.instagram.com/atilab_dyc/",
-   "eventCount": 1,
-   "lastEventName": "atilab 間借り販売会",
-   "lastEventDate": "2026-09-27",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "taniku.no.shizuku",
@@ -2254,6 +2144,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "mononoke_botanical_garden",
+   "url": "https://www.instagram.com/mononoke_botanical_garden/",
+   "eventCount": 1,
+   "lastEventName": "Onokoro Green Festa",
+   "lastEventDate": "2026-09-01",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "notreatelier.29",
    "url": "https://www.instagram.com/notreatelier.29/",
    "eventCount": 1,
@@ -2409,6 +2309,16 @@
    "eventCount": 1,
    "lastEventName": "阪急メンズ東京 × RAFLUM POP-UP STORE",
    "lastEventDate": "2026-09-16",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kinoco__inc",
+   "url": "https://www.instagram.com/kinoco__inc/",
+   "eventCount": 1,
+   "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
+   "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
@@ -2624,6 +2534,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "bwoocraftplants",
+   "url": "https://www.instagram.com/bwoocraftplants/",
+   "eventCount": 1,
+   "lastEventName": "plant to new home",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "gifumdrnmarche",
    "url": "https://www.instagram.com/gifumdrnmarche/",
    "eventCount": 1,
@@ -2632,6 +2552,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "ayahadio.co.jp",
+   "url": "https://www.instagram.com/ayahadio.co.jp/",
+   "eventCount": 1,
+   "lastEventName": "DIO PLANTS FES vol.1",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "siesta0890",
@@ -2648,6 +2578,26 @@
    "url": "https://www.instagram.com/bba_e.w/",
    "eventCount": 1,
    "lastEventName": "Botanical Beauty Attractive vol.5",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "robingarden02",
+   "url": "https://www.instagram.com/robingarden02/",
+   "eventCount": 1,
+   "lastEventName": "第6回 ロビン ビザールガーデン",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tompots_501",
+   "url": "https://www.instagram.com/tompots_501/",
+   "eventCount": 1,
+   "lastEventName": "麋角植物作業室",
    "lastEventDate": "2026-09-26",
    "hasUpcoming": false,
    "priority": 2,
@@ -2672,6 +2622,56 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "toky.jp",
+   "url": "https://www.instagram.com/toky.jp/",
+   "eventCount": 1,
+   "lastEventName": "旅する植物展 Final",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "acupom219",
+   "url": "https://www.instagram.com/acupom219/",
+   "eventCount": 1,
+   "lastEventName": "Exploring Unpredictable Plants 2026",
+   "lastEventDate": "2026-09-27",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "engei_edamame",
+   "url": "https://www.instagram.com/engei_edamame/",
+   "eventCount": 1,
+   "lastEventName": "ビカクシダ板付け相談会 & 即売会",
+   "lastEventDate": "2026-09-27",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "yu_taniku_",
+   "url": "https://www.instagram.com/yu_taniku_/",
+   "eventCount": 1,
+   "lastEventName": "第2回 HAPPY SMILE",
+   "lastEventDate": "2026-09-27",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "atilab_dyc",
+   "url": "https://www.instagram.com/atilab_dyc/",
+   "eventCount": 1,
+   "lastEventName": "atilab 間借り販売会",
+   "lastEventDate": "2026-09-27",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
   }
  ],
  "awaitingNextEdition": [
@@ -2716,6 +2716,61 @@
    "monthsSinceLast": 0,
    "igHandle": "our_plants_commune",
    "officialUrl": "https://www.instagram.com/p/DdOntafTfau/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "GreenSnap Marche YOKOHAMA 2026 Autumn",
+   "lastSlug": "greensnap-marche-yokohama-2026-autumn",
+   "lastDate": "2026-09-26",
+   "lastEnd": "2026-09-27",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://greensnap.jp/event/events/greensnap-marche-yokohama-2026-autumn/",
+   "recurring": true,
+   "apiStatus": "none"
+  },
+  {
+   "series": "bizarre farm AUTUMN FES 9th",
+   "lastSlug": "bizarre-farm-autumn-fes-9th-2026-09",
+   "lastDate": "2026-09-26",
+   "lastEnd": "2026-09-27",
+   "monthsSinceLast": 0,
+   "igHandle": "bizarre_farm",
+   "officialUrl": null,
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "第7回 福岡グリーンパーティー",
+   "lastSlug": "fukuoka-green-party-7th-2026",
+   "lastDate": "2026-09-27",
+   "lastEnd": "2026-09-27",
+   "monthsSinceLast": 0,
+   "igHandle": "fukuoka_green_party",
+   "officialUrl": "https://www.instagram.com/fukuoka_green_party/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "妙高多肉市場 vol.15",
+   "lastSlug": "myoko-taniku-market-15th-2026",
+   "lastDate": "2026-09-27",
+   "lastEnd": "2026-09-27",
+   "monthsSinceLast": 0,
+   "igHandle": "_myoko_plants_market_",
+   "officialUrl": "https://www.instagram.com/_myoko_plants_market_/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "第4回 がまごおり多肉フェスタ in 兵庫",
+   "lastSlug": "gamagori-taniku-festa-hyogo-2026-09",
+   "lastDate": "2026-09-27",
+   "lastEnd": "2026-09-27",
+   "monthsSinceLast": 0,
+   "igHandle": "gamagori_taniku_festa",
+   "officialUrl": null,
    "recurring": true,
    "apiStatus": "api"
   },
@@ -3059,61 +3114,6 @@
    "officialUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/",
    "recurring": false,
    "apiStatus": "api"
-  },
-  {
-   "series": "三浦園芸 アロイド販売会",
-   "lastSlug": "miuraengei-aroid-protoleaf-futako-2026-09",
-   "lastDate": "2026-09-04",
-   "lastEnd": "2026-09-20",
-   "monthsSinceLast": 0,
-   "igHandle": null,
-   "officialUrl": "https://www.protoleaf.com/?p=24182",
-   "recurring": false,
-   "apiStatus": "none"
-  },
-  {
-   "series": "Sakuya Green Jam 5",
-   "lastSlug": "sakuya-green-jam-5-2026",
-   "lastDate": "2026-09-05",
-   "lastEnd": "2026-09-20",
-   "monthsSinceLast": 0,
-   "igHandle": null,
-   "officialUrl": "https://www.sakuyakonohana.jp/event/22331/",
-   "recurring": false,
-   "apiStatus": "none"
-  },
-  {
-   "series": "コウレプ2026秋",
-   "lastSlug": "kourep-2026-autumn",
-   "lastDate": "2026-09-19",
-   "lastEnd": "2026-09-20",
-   "monthsSinceLast": 0,
-   "igHandle": null,
-   "officialUrl": "https://kourep.jp",
-   "recurring": false,
-   "apiStatus": "none"
-  },
-  {
-   "series": "BOTANICAL LIFE 2026",
-   "lastSlug": "botanical-life-arita-2026-09",
-   "lastDate": "2026-09-19",
-   "lastEnd": "2026-09-20",
-   "monthsSinceLast": 0,
-   "igHandle": "waltzbase_saga",
-   "officialUrl": "https://www.instagram.com/waltzbase_saga/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "高の宮市 〜植物のある暮らし〜",
-   "lastSlug": "takanomiya-ichi-shokubutsu-2026-09",
-   "lastDate": "2026-09-19",
-   "lastEnd": "2026-09-20",
-   "monthsSinceLast": 0,
-   "igHandle": "ichigoichie_antique",
-   "officialUrl": "https://www.instagram.com/p/DcbDS-oEz06/",
-   "recurring": false,
-   "apiStatus": "personal"
   }
  ],
  "officialSiteCandidates": [
