@@ -2,7 +2,7 @@
  "_note": "sitemap.xml の lastmod 台帳。generate_sitemap.py が内容のsha1と、その内容になった日を持つ。mtime はCIのcloneで毎回更新されるため使えない(2026-08-30)。",
  "pages": {
   "https://agave-navi.com/": {
-   "sha": "8628caba3c9af5c0fd4cec0efaa911dc813933de",
+   "sha": "cad4ef79f93eca53b82b6c61bf91f1d4fc7e77af",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/about.html": {
@@ -42,12 +42,12 @@
    "date": "2026-09-23"
   },
   "https://agave-navi.com/archive/2026-09/": {
-   "sha": "5cfdd58de1de323e6bd77e69794e521f632e253e",
+   "sha": "70e1436a4093763ec6dbf9865269ff838f0f9d92",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/archive/2026-10/": {
-   "sha": "2fe064274130068aabf6d3a0204e4b47417ef76b",
-   "date": "2026-09-24"
+   "sha": "daa9db7dbda88f88aa13bd8c5dd69a2ea39f54fa",
+   "date": "2026-09-27"
   },
   "https://agave-navi.com/archive/2026-11/": {
    "sha": "983fb2b24c16f33b6fa29cc7e6a4ff5a7855f922",
@@ -58,7 +58,7 @@
    "date": "2026-09-23"
   },
   "https://agave-navi.com/archive/2026/": {
-   "sha": "27010c93a9e7d178c4e2dcaec387d0b84dc6b0fe",
+   "sha": "c10e3d6f49e2cd8054ab754f465422a68c8aa117",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/archive/2027-01/": {
@@ -70,7 +70,7 @@
    "date": "2026-09-23"
   },
   "https://agave-navi.com/calendar.html": {
-   "sha": "e716ea08cf771b33732a10cb7298014a87c30d3c",
+   "sha": "aeec87969a62dcf3cfc359ae1a71b26b724ba32e",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/category/exhibition.html": {
@@ -86,7 +86,7 @@
    "date": "2026-09-27"
   },
   "https://agave-navi.com/category/sokubai.html": {
-   "sha": "90cc9213db0bbcdd164fc71c96f6ad305a2054f2",
+   "sha": "ac2fd0875334b2c51c8bfc976671a4e9ccd8b123",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/contact.html": {
@@ -302,7 +302,7 @@
    "date": "2026-09-27"
   },
   "https://agave-navi.com/events/dio-plants-fes-vol1-kusatsu-2026-09.html": {
-   "sha": "85b63c8044c7a2bd511aa8df6abf0782dd011915",
+   "sha": "8b9d63b8a8c071a2226439230376cc501ad85a15",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/events/edamame-bikaku-itazuke-2026-09.html": {
@@ -838,7 +838,7 @@
    "date": "2026-09-27"
   },
   "https://agave-navi.com/events/roots-market-inage-2026-10.html": {
-   "sha": "3c1f8bb5ccaff56e04d44cbb84b1ba0122bae9e7",
+   "sha": "f77c2829d30fa932476c109a3821b44b6d63d077",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/events/roots-plus-vol1-tsushima-2026-11.html": {
@@ -1190,12 +1190,12 @@
    "date": "2026-09-23"
   },
   "https://agave-navi.com/map.html": {
-   "sha": "6ef753189e31fafcedb0c264b1cc2a24d7966f8c",
+   "sha": "262988eae53129ae9c623c1a91645d4efc222b36",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/new/": {
-   "sha": "fcfe806fbe5929e527a5a04bbaf35a8c035ffdc2",
-   "date": "2026-09-24"
+   "sha": "498961bba1aa9a5b94b3f910769023d349f6549e",
+   "date": "2026-09-27"
   },
   "https://agave-navi.com/operator.html": {
    "sha": "5796f7ef0b0cf228d5ac1406b12faadafebf4ed8",
@@ -1210,7 +1210,7 @@
    "date": "2026-09-26"
   },
   "https://agave-navi.com/pref/chiba/": {
-   "sha": "448413cb8e47c3503232d17523a729f8501fed4e",
+   "sha": "20bd8607afc73e1d8902f70c959a89d47b53cf94",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/pref/ehime/": {
@@ -1318,8 +1318,8 @@
    "date": "2026-09-27"
   },
   "https://agave-navi.com/pref/shiga/": {
-   "sha": "00fcda0855817de66b8673c132863b4e7c4d8ac5",
-   "date": "2026-09-26"
+   "sha": "868ad5d6c756055e3374a70d5458c05b01285ce6",
+   "date": "2026-09-27"
   },
   "https://agave-navi.com/pref/shimane/": {
    "sha": "4fd0ec2c8311ef3a46ab6966252ace12836fd34a",
@@ -1374,11 +1374,11 @@
    "date": "2026-09-27"
   },
   "https://agave-navi.com/region/kansai/": {
-   "sha": "4c200e5f191b5dbc127856e67763d64cd1ab5e4e",
+   "sha": "3dc2db4abe95d71ac7c850cab00640a30873e1f4",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/region/kanto/": {
-   "sha": "d4c789b5d89ff5ec3c124663c2a1a4c37fac083b",
+   "sha": "cf1a94e13739144bbf99ca117a1af1de42729860",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/region/kyushu/": {
@@ -1442,11 +1442,11 @@
    "date": "2026-09-27"
   },
   "https://agave-navi.com/tag/sokubaikai/": {
-   "sha": "f6014d0ef4d619400813c656284b0f63a07e8a7d",
+   "sha": "9f9bbcd893237e5efa4624609fbaf66a3566c5ce",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/tag/succulent/": {
-   "sha": "adcc5880d388cafe7d5c4754d9db75fc019446f1",
+   "sha": "f123863629b94fd32d47af43abeab366d8ca42c2",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/tag/tag-970617a1/": {
@@ -1462,11 +1462,11 @@
    "date": "2026-09-23"
   },
   "https://agave-navi.com/this-month/": {
-   "sha": "72df241121f795543593e8de6d2dd62520359bd3",
+   "sha": "d524b92e8af043407a96554e79dade45c1b16ead",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/this-weekend/": {
-   "sha": "655999b1714ee3e2a99da0e7128fd617e351bb26",
+   "sha": "6f981a2f09d64834346ba7a157c7a273067941ff",
    "date": "2026-09-27"
   },
   "https://agave-navi.com/venue/": {
