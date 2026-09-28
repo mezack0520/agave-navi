@@ -3104,6 +3104,50 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
   試走で当たりかけた誤り: 別会場の同シリーズ(botanical botanical 福岡)、
   青山のスナップ投稿、前回の「無事終了」投稿、出典の投稿が「募集終了」のお知らせ。
 
+### LEAFLA の新着は記事番号を連番で引ける (2026-09-29)
+
+LEAFLA の個別記事は `/blogs/media/topics<番号>` で、番号は追加順の連番。
+**leaf-laboratory.com を開いたタブの JS から番号を範囲で fetch すると、
+前回以降に足された記事を1回で全部並べられる。**各頁の h1(題)・
+開催情報の表(開催日/会場/住所の行)・参考サイト欄の IG 投稿URLを抜けば、
+開かずに選別できる。2026-09-29 は 6180〜6253 の74件を1回で取り、
+未掲載の掲載相当12件のうち9件がここから出た。
+
+```js
+const out=[];
+for(let i=<前回の末尾>;i<=<末尾+10>;i++){
+ const r=await fetch('/blogs/media/topics'+i); if(!r.ok) continue;
+ const d=new DOMParser().parseFromString(await r.text(),'text/html');
+ const t=(d.querySelector('h1')||{}).innerText||'';
+ const tbl=[...d.querySelectorAll('table tr')].map(x=>x.innerText.replace(/\s+/g,' '))
+   .filter(x=>/開催日|会場|住所/.test(x)).slice(0,3).join(' / ');
+ const ig=[...d.querySelectorAll('a[href*="instagram.com/p/"]')].map(a=>a.getAttribute('href')).slice(0,1);
+ out.push(i+' '+t.trim()+' || '+tbl+' || '+ig);
+}
+out.join('\n').replace(/https?:\/\//g,'h//')
+```
+
+- 末尾の番号は記事下部「最近追加されたイベント」枠のリンクで分かる。
+  **次の回のために、見た範囲の右端をレポートに書く。**(今回 6253)
+- 日付別ページや `coverage-gaps.json` より早い。coverage-sweep は開催日の頁から拾うので、
+  追加された当日には候補に出ないことがある。
+- 参考サイト欄の IG URL は**複数の記事で同じ投稿を指している回がある**
+  (6227 / 6228 / 6229 が同じ `Dc_cXAVAtOP`)。§3 の「別イベントを指している例」と同じで、
+  必ず投稿本文で名称・日付を確かめる。
+- LEAFLA は出典に使えない(blockedUrlDomains)。拾ったら主催の投稿を開く。
+
+### embed/captioned が `(none)` を返すアカウントは、投稿頁のメタタグで読む (2026-09-29)
+
+§3「Instagram の本文は embed/captioned をページ内から叩く」は、
+**埋め込みを許可していないアカウントでは本文が空で返る**(@lelienvelt.staff で全投稿 `(none)`)。
+そのときは同じタブから `/p/<code>/` を fetch して `meta[name="description"]` を読む。
+全キャプションが入っている(HTML実体参照は DOMParser が戻す)。
+
+```js
+const desc=async c=>{const d=new DOMParser().parseFromString(await (await fetch('/p/'+c+'/',{credentials:'include'})).text(),'text/html');
+ const m=d.querySelector('meta[name="description"]'); return m?m.content:'(none)';};
+```
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。
