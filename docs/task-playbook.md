@@ -2693,6 +2693,21 @@ build-all を回せば、remote 側の項目を読み込んだ上に自分の差
 `track-updates.py` は `build-all.sh` の中にいる。それで足りる。
 「積み上げ式かどうか」は判定材料ではない。
 
+### events.json は行でなく回と項目で合わせる (2026-09-28)
+
+`Sync New Events` #111 が `ci-push.sh` の「データファイルが remote と衝突した」で
+落ち、新規5件が載らないまま `new-events.json` が公開URLに残った。
+events.json と new-events.json を1つの push に入れたので、daily(events.json の
+push で起動)と sync-events が同時に走り、**daily が回の status を書き換えた行の
+そばに sync-events が新規の回を足した。**JSON としては別の回を触っているだけだが、
+`git apply --3way` はテキストの隣接で衝突する。
+
+events.json は生成物ではない(作り直せない)ので `ci-generated-paths.txt` には
+入れられない。代わりに `ci-push.sh` が events.json だけを
+`scripts/merge-events-3way.py` で**回(slug)と項目の単位の3方向マージ**にかける。
+本当に衝突するのは両方が同じ回の同じ項目を別の値にしたときだけで、
+そのときはこのジョブの値を採って警告を出す。
+
 ### 503 は「相手の返事」だが、引き直すべき返事 (2026-09-17)
 
 2026-09-12 に `check-cancelled.py` の `fetch()` へ引き直しを入れたとき、
