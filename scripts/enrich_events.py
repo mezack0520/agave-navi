@@ -405,6 +405,15 @@ def try_web_search(query, num_results=5):
 
     return []
 
+# イベント名に頻出し、それ単独では別物を掴む語。_is_relevant_result が照合から外す。
+_GENERIC_NAME_TOKENS = {
+    'green', 'plants', 'plant', 'market', 'marche', 'marché', 'botanical', 'garden',
+    'festa', 'fes', 'fest', 'festival', 'event', 'pop', 'up', 'popup', 'pop-up', 'shop',
+    'vol', 'the', 'and', 'in', 'of', 'at', '2025', '2026', '2027',
+    '植物', 'マルシェ', 'マーケット', 'イベント', 'ボタニカル', 'フェス', 'フェスタ', '即売会', '販売会',
+}
+
+
 def _is_relevant_result(result, event_name):
     """Check if a search result is actually relevant to the event"""
     import re as _re
@@ -413,12 +422,23 @@ def _is_relevant_result(result, event_name):
     combined = title + ' ' + url
 
     # Tokenize event name by spaces and common delimiters
-    tokens = _re.split(r'[\s\u3000\u30FB\u2606\u2605\xd7\-]+', event_name)
+    # 括弧(全角・半角)も区切る。「Market（武雄）」が1語のまま残ると照合語にならない
+    tokens = _re.split(r'[\s\u3000\u30FB\u2606\u2605\xd7\-()（）［］\[\]【】「」]+', event_name)
     # Keep meaningful tokens (2+ chars)
     tokens = [t.lower() for t in tokens if len(t) >= 2]
 
     if not tokens:
         return True
+
+    # 一般語だけの一致は裏取りにならない(2026-09-29)。
+    # 「Green Plants Market（武雄）」が `green` の一致で青山フラワーマーケットの
+    # 商品頁を通し、入場料「9,350円(税込)」と商品画像が入った。
+    # 2026-09-12 の「Plants marché」→ andplants.jp も同じ形。
+    # 固有の語が1つも残らない名前は、検索結果を採らない(SNS の OGP に倒す)。
+    tokens = [t for t in tokens if t not in _GENERIC_NAME_TOKENS
+              and not _re.fullmatch(r'(vol\.?|no\.?|第)?\d+(th|st|nd|rd|回|弾)?', t)]
+    if not tokens:
+        return False
 
     # At least one significant token must appear in title or URL
     for token in tokens:

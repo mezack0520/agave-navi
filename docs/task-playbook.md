@@ -3104,6 +3104,17 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
   試走で当たりかけた誤り: 別会場の同シリーズ(botanical botanical 福岡)、
   青山のスナップ投稿、前回の「無事終了」投稿、出典の投稿が「募集終了」のお知らせ。
 
+### 一般語だけの名前は、enrich の関連判定を一般語で通す (2026-09-29 / 09-12 の再発)
+
+`Green Plants Market（武雄）` を掲載した直後、sync-events の enrich が
+青山フラワーマーケットの商品頁を掴み、`admission=9,350円(税込)` と商品画像を入れた。
+`_is_relevant_result` が `green` の一致で通したため。09-12 の `Plants marché` → andplants.jp と同じ形で、
+`page_is_wrong_place` は頁が県を名乗らないので降りる。
+対処: `enrich_events._GENERIC_NAME_TOKENS`(green / plants / market / マルシェ 等)と
+回数表記(vol.3 / 第7回)を照合語から外し、**固有の語が残らない名前は検索結果を採らない**。
+全角括弧も区切りに足した(「Market（武雄）」が1語のまま残っていた)。
+**掲載したら sync-events の後に、自分の回の `admission` / `imageUrl` / `access` を読む。**
+
 ### LEAFLA の新着は記事番号を連番で引ける (2026-09-29)
 
 LEAFLA の個別記事は `/blogs/media/topics<番号>` で、番号は追加順の連番。
