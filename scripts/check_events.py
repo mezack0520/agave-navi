@@ -127,16 +127,12 @@ def main():
         else:
             source_url_check_skip = False
 
-        # URL死活チェック(終了30日超のイベントは対象外。
-        # 主催者が告知ページを消すのは自然で、古い切れリンクを毎日報告しても積み上がるだけのため)
-        from datetime import datetime as _dt, timedelta as _td
+        # URL死活チェックは終わっていない回だけ(2026-09-28 に「終了30日以内」から狭めた)。
+        # 主催が告知ページを会期後に消すのは自然で、終わった回の切れリンクには
+        # 打つ手が無い。30日の猶予は、多肉＆みどりのマルシェ 2026秋(新津フラワーランド)の
+        # 頁が会期の翌日に消えて日次メールの「リンク切れ」に出た、という形でだけ効いていた。
         _end = ev.get('dateEnd') or ev_date
-        _recent = True
-        if _end:
-            try:
-                _recent = _dt.strptime(_end, '%Y-%m-%d') >= _dt.strptime(today, '%Y-%m-%d') - _td(days=30)
-            except ValueError:
-                pass
+        _recent = not _end or _end >= today
         if source_url and _recent and not source_url_check_skip:
             status_code = check_url(source_url)
             url_result = {

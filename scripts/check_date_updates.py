@@ -31,7 +31,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sitelib import (compact_date, is_aggregator_url, meta_dates,
                      stated_period_dates,
-                     page_is_wrong_place)  # 判定の単一情報源
+                     page_is_wrong_place,
+                     find_month_days, page_text_blob)  # 判定の単一情報源
 
 # 出典と画像の判定は sitelib が唯一の持ち主(2026-09-10 に統合)。
 # ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
@@ -239,6 +240,27 @@ def main():
 
         best = dates[0]
         print(f"  検出: {best['date']}")
+
+        # **今の開催日が頁にまだ出ているなら、日程は変わっていない。**(2026-09-26)
+        # Onokoro Green Festa は頁に「9/26（土）＆ 9/27（日）」と書いてあるのに、
+        # 名前のそばにあった掲載日「2026年9月1日」を拾って 09-26 → 09-01 に書き戻した。
+        # 9/17 に一度同じ誤りで入り、人が直した翌晩にまた戻している。
+        # 「日程変更」は旧い日付が頁から消えて初めて言える。候補の並べ方を
+        # いくら賢くしても、頁に日付は何個も出る。変更の根拠は旧い日付の消失に置く。
+        try:
+            _cd = datetime.strptime(current_date, "%Y-%m-%d")
+            if (_cd.month, _cd.day) in find_month_days(page_text_blob(html)):
+                print(f"  現在の開催日 {current_date} が頁にまだ出ている → 変更なし")
+                continue
+        except ValueError:
+            pass
+
+        # 会期物(date != dateEnd)の開始日は機械で動かさない。この関数は dateEnd を
+        # 書かないので、開始日を動かすと会期の長さが変わる。会期がずれたなら
+        # 両端を人が直す(上の単日ガードと同じ理由を会期物にも広げた)。
+        if date_end and date_end != current_date and best["date"] != current_date:
+            print(f"  会期物は開始日だけ動かさない: {current_date} ← {best['date']}(要確認)")
+            continue
 
         # 単日の回(date == dateEnd)を、開始日だけ早めて会期物に化けさせない。
         # この関数は dateEnd を一度も書かないので、date を早めると必ず
