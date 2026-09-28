@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-28 08:46 JST",
+ "generated": "2026-09-28 12:19 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 266,
@@ -2144,16 +2144,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "mononoke_botanical_garden",
-   "url": "https://www.instagram.com/mononoke_botanical_garden/",
-   "eventCount": 1,
-   "lastEventName": "Onokoro Green Festa",
-   "lastEventDate": "2026-09-01",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "notreatelier.29",
    "url": "https://www.instagram.com/notreatelier.29/",
    "eventCount": 1,
@@ -2532,6 +2522,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "mononoke_botanical_garden",
+   "url": "https://www.instagram.com/mononoke_botanical_garden/",
+   "eventCount": 1,
+   "lastEventName": "Onokoro Green Festa",
+   "lastEventDate": "2026-09-26",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "bwoocraftplants",
@@ -3127,7 +3127,7 @@
    "domain": "awaji-botanicalgarden.com",
    "url": "https://awaji-botanicalgarden.com/onokoro-green-festa/",
    "eventName": "Onokoro Green Festa",
-   "eventDate": "2026-09-01"
+   "eventDate": "2026-09-26"
   },
   {
    "domain": "kayu-style-botaniqa-atelier.com",
