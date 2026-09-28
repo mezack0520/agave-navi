@@ -73,6 +73,15 @@ for attempt in 1 2 3 4 5; do
   # このジョブが触ったファイルのうち、生成物でないものだけを取り出す。
   mapfile -t EXC < <(exclude_args)
   PATCH="$(mktemp)"
+  # events.json はテキストでなく回と項目の単位で合わせる(merge-events-3way.py の冒頭)。
+  # 差分が隣り合うだけで git apply が衝突し、sync-events の取り込みが落ちていた(#111)
+  EV_BASE=""; EV_OURS=""
+  if ! git diff --quiet "$BASE" HEAD -- events.json 2>/dev/null; then
+    EV_BASE="$(mktemp)"; EV_OURS="$(mktemp)"
+    git show "$BASE:events.json" > "$EV_BASE"
+    git show "HEAD:events.json" > "$EV_OURS"
+    EXC+=(":(exclude)events.json")
+  fi
   git diff --binary "$BASE" HEAD -- . "${EXC[@]}" > "$PATCH"
 
   if ! git fetch -q origin main; then
@@ -91,6 +100,14 @@ for attempt in 1 2 3 4 5; do
     echo "持ち越すデータ変更なし(生成物だけのコミットだった)"
   fi
   rm -f "$PATCH"
+
+  if [ -n "$EV_OURS" ]; then
+    if ! python3 scripts/merge-events-3way.py "$EV_BASE" "$EV_OURS" events.json events.json; then
+      echo "::error::events.json の項目単位のマージに失敗した"
+      rm -f "$EV_BASE" "$EV_OURS"; exit 1
+    fi
+    rm -f "$EV_BASE" "$EV_OURS"
+  fi
 
   if [ -n "$REGEN" ]; then
     if ! bash -c "$REGEN"; then
