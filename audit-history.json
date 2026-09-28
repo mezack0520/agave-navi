@@ -937,16 +937,14 @@
   },
   {
    "date": "2026-09-28",
-   "urgent": {
-    "desc_date_mismatch": 1
-   },
+   "urgent": {},
    "info": {
     "coverage_gaps": 7,
     "organizer_unlisted_dates": 2,
     "task_run_unrecorded_but_working": 1,
     "task_run_gap": 3,
     "cross_script_duplicate": 1,
-    "updated_at_missing_on_new": 5
+    "updated_at_missing_on_new": 4
    },
    "metric": {
     "thin_past_with_source": 33,

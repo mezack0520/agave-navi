@@ -1,5 +1,5 @@
 {
-  "total": 495,
+  "total": 493,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -334,10 +334,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
-      "items": [
-        "botanoichi-senju-2026-11: 本文 10月25日 が 2026-11-29〜2026-11-29 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
@@ -646,7 +644,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1111,7 +1109,7 @@
       "title": "台帳に書いていないが成果物から動いているタスク",
       "count": 1,
       "items": [
-        "agave-navi-eyecatch: 台帳は since=2026-09-10 以降も空だが、成果物から 12日ぶんの起動が分かる（2026-09-10〜2026-09-28）"
+        "agave-navi-eyecatch: 台帳は since=2026-09-10 以降も空だが、成果物から 1日ぶんの起動が分かる（2026-09-28〜2026-09-28）"
       ],
       "note": "**死んでいない。記録だけが落ちている。**この形を task_run_never_recorded として出していたので、2026-09-10〜18 に同じ指摘が9日出続け、そのうち5回が目崎に転送され、5回とも「SKILL.md に2行入れて」と返した。直せない指摘を出し続けるのは検出していないのと同じ。記録を入れたいなら、Cowork デスクトップのタスク画面の「手順」(鉛筆アイコン)に record-run.py とレポート保存の2行を足す。**目崎しか触れない**(Claude\\Scheduled は内部領域)ので、repo 側からは直せない。入れなくても稼働は成果物で追える",
       "severity": "info"
@@ -1121,7 +1119,7 @@
       "count": 3,
       "items": [
         "agave-event-update(daily) が動かなかった日: 2026-09-25 2026-09-26 2026-09-27（直近7日で3日）",
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-22 2026-09-25 2026-09-26 2026-09-27（直近7日で4日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-21 2026-09-22 2026-09-23 2026-09-24 2026-09-25 2026-09-26 2026-09-27（直近7日で7日）",
         "event-monitor(daily) が動かなかった日: 2026-09-21 2026-09-22 2026-09-23 2026-09-24 2026-09-25 2026-09-26 2026-09-27（直近7日で7日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
@@ -1306,10 +1304,9 @@
     },
     "updated_at_missing_on_new": {
       "title": "直近に足した回に updatedAt が無い",
-      "count": 5,
+      "count": 4,
       "items": [
         "botanoichi-meets-bikaku-yokocho-2026-10: addedDate 2026-09-28 / updatedAt なし",
-        "botanoichi-senju-2026-11: addedDate 2026-09-28 / updatedAt なし",
         "jolie-nursery-musashi-kanazawa-2026-10: addedDate 2026-09-28 / updatedAt なし",
         "midolien-hono-osaka-2026-10: addedDate 2026-09-28 / updatedAt なし",
         "yatchiro-plants-yatsushiro-2026-11: addedDate 2026-09-28 / updatedAt なし"
