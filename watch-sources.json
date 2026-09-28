@@ -1,14 +1,24 @@
 {
- "generated": "2026-09-28 14:55 JST",
+ "generated": "2026-09-29 08:22 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 268,
+  "igAccounts": 279,
   "awaitingNextEdition": 293,
   "officialSiteCandidates": 73,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 72
+  "igNeedsBrowser": 83
  },
  "igAccounts": [
+  {
+   "handle": "midorino_marche",
+   "url": "https://www.instagram.com/midorino_marche/",
+   "eventCount": 6,
+   "lastEventName": "KYOTO MIDORI NO MARCHE IN 茨木（2027年3月）",
+   "lastEventDate": "2027-03-20",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
   {
    "handle": "_myoko_plants_market_",
    "url": "https://www.instagram.com/_myoko_plants_market_/",
@@ -48,16 +58,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
-  },
-  {
-   "handle": "midorino_marche",
-   "url": "https://www.instagram.com/midorino_marche/",
-   "eventCount": 5,
-   "lastEventName": "Kyoto みどりのマルシェ 番外編 vol.10",
-   "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
   },
   {
    "handle": "j_n_ishikawa",
@@ -480,6 +480,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "hiroshima_shokubutsuen",
+   "url": "https://www.instagram.com/hiroshima_shokubutsuen/",
+   "eventCount": 1,
+   "lastEventName": "ひろしま植物園 2026",
+   "lastEventDate": "2026-10-02",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "taniku.no.shizuku",
    "url": "https://www.instagram.com/taniku.no.shizuku/",
    "eventCount": 1,
@@ -630,6 +640,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "thegreentime105",
+   "url": "https://www.instagram.com/thegreentime105/",
+   "eventCount": 1,
+   "lastEventName": "THE GREEN TIME 1st Anniversary Event",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "ibatama.ta29",
    "url": "https://www.instagram.com/ibatama.ta29/",
    "eventCount": 1,
@@ -710,6 +730,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "green_funk.agave",
+   "url": "https://www.instagram.com/green_funk.agave/",
+   "eventCount": 1,
+   "lastEventName": "LEGIT VOL.2",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "nara.bikakufes",
    "url": "https://www.instagram.com/nara.bikakufes/",
    "eventCount": 1,
@@ -718,6 +748,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "still_crazy_wataru",
+   "url": "https://www.instagram.com/still_crazy_wataru/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS POP-UP（アイテックサイトウ）",
+   "lastEventDate": "2026-10-12",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "green_prickle",
@@ -768,6 +808,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "lelienvelt.staff",
+   "url": "https://www.instagram.com/lelienvelt.staff/",
+   "eventCount": 1,
+   "lastEventName": "八王子ジャングル vol.7",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kikien.succulent0222",
@@ -830,6 +880,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "ysgarden2025",
+   "url": "https://www.instagram.com/ysgarden2025/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICALFES in 結城",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "nagashima_marche",
    "url": "https://www.instagram.com/nagashima_marche/",
    "eventCount": 1,
@@ -838,6 +898,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "industrial_works_hyogo",
+   "url": "https://www.instagram.com/industrial_works_hyogo/",
+   "eventCount": 1,
+   "lastEventName": "珍奇天烈植物 vol.5",
+   "lastEventDate": "2026-10-23",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "garden_link_festa",
@@ -900,6 +970,26 @@
    "apiStatus": "api"
   },
   {
+   "handle": "fumoto_plants_market",
+   "url": "https://www.instagram.com/fumoto_plants_market/",
+   "eventCount": 1,
+   "lastEventName": "麓 Plants Market Vol.3",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "hollows_general",
+   "url": "https://www.instagram.com/hollows_general/",
+   "eventCount": 1,
+   "lastEventName": "Green Plants Market（武雄）",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "driftwood.smokeywood",
    "url": "https://www.instagram.com/driftwood.smokeywood/",
    "eventCount": 1,
@@ -950,6 +1040,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "heart_plants",
+   "url": "https://www.instagram.com/heart_plants/",
+   "eventCount": 1,
+   "lastEventName": "Agave summit Osaka",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "botajam2026",
    "url": "https://www.instagram.com/botajam2026/",
    "eventCount": 1,
@@ -978,6 +1078,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "taishodo_staff",
+   "url": "https://www.instagram.com/taishodo_staff/",
+   "eventCount": 1,
+   "lastEventName": "Lier.多肉フェスティバル in TaiShoDo",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_wonder_market_",
