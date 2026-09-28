@@ -1,7 +1,57 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-27",
+  "updated": "2026-09-28",
   "items": [
+    {
+      "on": "2026-09-28",
+      "kind": "listed",
+      "slug": "midolien-hono-osaka-2026-10",
+      "name": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
+      "date": "2026-10-09",
+      "dateEnd": "2026-10-10",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-28",
+      "kind": "listed",
+      "slug": "botanoichi-meets-bikaku-yokocho-2026-10",
+      "name": "ボタの市 meets ビカク横丁",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-28",
+      "kind": "listed",
+      "slug": "jolie-nursery-musashi-kanazawa-2026-10",
+      "name": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "prefecture": "石川",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-28",
+      "kind": "listed",
+      "slug": "yatchiro-plants-yatsushiro-2026-11",
+      "name": "ヤッチロプランツ",
+      "date": "2026-11-08",
+      "dateEnd": "2026-11-08",
+      "prefecture": "熊本",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-28",
+      "kind": "listed",
+      "slug": "botanoichi-senju-2026-11",
+      "name": "ボタの市 年内ファイナル",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "東京",
+      "detail": ""
+    },
     {
       "on": "2026-09-27",
       "kind": "date",
@@ -1150,56 +1200,6 @@
       "date": "2026-09-25",
       "dateEnd": "2026-09-27",
       "prefecture": "北海道",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-01",
-      "kind": "listed",
-      "slug": "plants-bazaar-null-kanazawa-2026-09",
-      "name": "PLANTS BAZAAR なんせ植物が好きなもんで。",
-      "date": "2026-09-05",
-      "dateEnd": "2026-09-06",
-      "prefecture": "石川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-01",
-      "kind": "listed",
-      "slug": "kyoshokusai-vol7-2026-10",
-      "name": "狂植祭 Vol.7",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-10",
-      "prefecture": "奈良",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-01",
-      "kind": "listed",
-      "slug": "happy-smile-2nd-odawara-2026-09",
-      "name": "第2回 HAPPY SMILE",
-      "date": "2026-09-27",
-      "dateEnd": "2026-09-27",
-      "prefecture": "神奈川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-01",
-      "kind": "listed",
-      "slug": "edamame-bikaku-itazuke-2026-09",
-      "name": "ビカクシダ板付け相談会 & 即売会",
-      "date": "2026-09-27",
-      "dateEnd": "2026-09-27",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-01",
-      "kind": "listed",
-      "slug": "bikaku-shokubutsu-sagyoshitsu-2026-09",
-      "name": "麋角植物作業室",
-      "date": "2026-09-26",
-      "dateEnd": "2026-09-27",
-      "prefecture": "熊本",
       "detail": ""
     }
   ]
