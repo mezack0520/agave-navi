@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-29 14:54 JST",
+ "generated": "2026-09-30 08:28 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 280,
+  "igAccounts": 283,
   "awaitingNextEdition": 292,
   "officialSiteCandidates": 75,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 76
+  "igNeedsBrowser": 79
  },
  "igAccounts": [
   {
@@ -48,6 +48,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "morinotanikuen",
+   "url": "https://www.instagram.com/morinotanikuen/",
+   "eventCount": 5,
+   "lastEventName": "森の多肉園販売会 BIG",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botayoko",
@@ -118,6 +128,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "imama.jp",
+   "url": "https://www.instagram.com/imama.jp/",
+   "eventCount": 3,
+   "lastEventName": "縁日（IMAMA・神楽坂）",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "taniku_moromoro_ichiba",
@@ -220,16 +240,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "imama.jp",
-   "url": "https://www.instagram.com/imama.jp/",
-   "eventCount": 2,
-   "lastEventName": "Anthurium Festival 2026 Tokyo",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "_and_plants",
    "url": "https://www.instagram.com/_and_plants/",
    "eventCount": 2,
@@ -298,6 +308,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "1012katsuyuki7",
+   "url": "https://www.instagram.com/1012katsuyuki7/",
+   "eventCount": 2,
+   "lastEventName": "第6回 KA78企画祭",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "global_botanical_jam",
@@ -678,6 +698,26 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "kakegawa_kachouen",
+   "url": "https://www.instagram.com/kakegawa_kachouen/",
+   "eventCount": 1,
+   "lastEventName": "第8回 サボテン・多肉植物展 2026（掛川花鳥園）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "blue.ocean8484",
+   "url": "https://www.instagram.com/blue.ocean8484/",
+   "eventCount": 1,
+   "lastEventName": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "ibatama.ta29",
@@ -2408,16 +2448,6 @@
    "url": "https://www.instagram.com/homwaka_pappa/",
    "eventCount": 1,
    "lastEventName": "ホンワカパッパ 第3回",
-   "lastEventDate": "2026-09-13",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "1012katsuyuki7",
-   "url": "https://www.instagram.com/1012katsuyuki7/",
-   "eventCount": 1,
-   "lastEventName": "第二回 駿州蓬莱祭",
    "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
    "priority": 2,

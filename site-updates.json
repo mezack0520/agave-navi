@@ -1,7 +1,97 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-29",
+  "updated": "2026-09-30",
   "items": [
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-nara-2026-10",
+      "name": "森の多肉園販売会 in 奈良",
+      "date": "2026-10-04",
+      "dateEnd": "2026-10-04",
+      "prefecture": "奈良",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10",
+      "name": "第8回 サボテン・多肉植物展 2026（掛川花鳥園）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-11-01",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "blue-ocean-aki-shokubutsu-hanbaikai-2026-10",
+      "name": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-10",
+      "prefecture": "福井",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-hiroshima-2026-10",
+      "name": "森の多肉園販売会 in 広島",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-10",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-matsue-2026-10",
+      "name": "森の多肉園販売会 in 島根",
+      "date": "2026-10-11",
+      "dateEnd": "2026-10-11",
+      "prefecture": "島根",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-maizuru-2026-10",
+      "name": "森の多肉園販売会 in 京都舞鶴",
+      "date": "2026-10-12",
+      "dateEnd": "2026-10-12",
+      "prefecture": "京都",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "imama-ennichi-kagurazaka-2026-10",
+      "name": "縁日（IMAMA・神楽坂）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-11-01",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "ka78-kikakusai-6th-shimada-2026-11",
+      "name": "第6回 KA78企画祭",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-09-30",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-big-nabari-2026-11",
+      "name": "森の多肉園販売会 BIG",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "三重",
+      "detail": ""
+    },
     {
       "on": "2026-09-29",
       "kind": "listed",
@@ -1110,96 +1200,6 @@
       "date": "2026-12-05",
       "dateEnd": "2026-12-06",
       "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "aichin-shokusai-new-year-party-2027",
-      "name": "愛珍植祭 New Year Party 2027",
-      "date": "2027-01-24",
-      "dateEnd": "2027-01-24",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "tokimeki-marche-kodaihasu-2026-11",
-      "name": "多肉と雑貨のときめきマルシェ（古代蓮の里）",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "tokimeki-marche-gunma-kenchomae-2026-11",
-      "name": "多肉と雑貨のときめきマルシェ（群馬県庁前）",
-      "date": "2026-11-29",
-      "dateEnd": "2026-11-29",
-      "prefecture": "群馬",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "shumatsu-botanical-gotemba-2026-11",
-      "name": "週末ボタニカル in 御殿場展示場",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "shokubutsu-to-pan-vol1-mitakadai-2026-10",
-      "name": "植物と(パン) vol.1",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-10",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "plants-fes-vol4-ehime-2026-11",
-      "name": "PLANTS FES vol.4",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "愛媛",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "moromoro-plants-19th-izumi-2026-11",
-      "name": "モロモロプランツ 19th",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "midorigakuen-himeji-2026-11",
-      "name": "緑楽宴",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-06",
-      "kind": "listed",
-      "slug": "kkt-taniku-fes-vol6-machida-2026-11",
-      "name": "KKT多肉FES vol.6",
-      "date": "2026-11-29",
-      "dateEnd": "2026-11-29",
-      "prefecture": "東京",
       "detail": ""
     }
   ]
