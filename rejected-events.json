@@ -877,10 +877,11 @@
     "Jungle展"
    ],
    "reasonType": "undisclosed",
-   "revisit": true,
+   "revisit": false,
    "eventDate": "2026-09-29",
    "decided": "2026-09-24",
-   "reason": "主催 @gallerymejapan.info の告知は『アートな植物とアート雑貨をメインに』カフェで2週間展示販売するもの。植物のジャンル(アガベ・塊根・多肉等)が書かれておらず、作品展の主題が対象植物かを判断できない"
+   "reason": "主催 @gallerymejapan.info の告知は『アートな植物とアート雑貨をメインに』カフェで2週間展示販売するもの。植物のジャンル(アガベ・塊根・多肉等)が書かれておらず、作品展の主題が対象植物かを判断できない。2026-09-30 に主催の最新投稿を見直したが、植物のジャンルは最後まで出なかった。主催の植物店は『簡単で育てやすいシンプルな植物』を扱うと自分で書いており、対象植物が主役の回とは読めない。会期に入ったので revisit を外して確定",
+   "revisitedOn": "2026-09-30"
   },
   {
    "key": "otogino-marche-himi-2026-10",
@@ -1188,6 +1189,83 @@
    "decided": "2026-09-29",
    "revisitedOn": "2026-09-29",
    "reason": "告知はビカクシダの出展者 @shiro_ura24 の投稿のみで、会場主催 @ao.hostel_cafe_lounge の告知を確認できていない。primarySource.vendorAnnouncementsOnly"
+  },
+  {
+   "key": "kobe-renga-midori-kurashi-marche-2026-10",
+   "name": "神戸煉瓦倉庫 緑と暮らしのマルシェ (2026-10-17 神戸煉瓦倉庫 東広場・神戸市中央区)",
+   "aliases": [
+    "緑と暮らしのマルシェ",
+    "神戸煉瓦倉庫 緑と暮らしのマルシェ"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-17",
+   "decided": "2026-09-30",
+   "reason": "会場主催(神戸煉瓦倉庫・神戸ハーバーランド)の公式告知 kobe-renga.jp/news/2026-08-28/706/ に出店者一覧が出ている。取消1店を除く17店のうち多肉・サボテンを扱うのは plantery・Garden Party・South Garden・昭和屋の4店ほど(約24%)で、残りは観葉・盆栽・生花・フード・雑貨。著名ナーセリーの出店も無い → compositeEvents で見送り。春(5月)にも同名で開くシリーズなので、次回も内訳を数えて判断する"
+  },
+  {
+   "key": "soraniwa-green-flea-market-vol2-2026-10",
+   "name": "植物と暮らしのフリーマーケット Green Flea Market vol.2 (2026-10-31〜11-01 Soraniwa RAKURAKUEN・広島市佐伯区)",
+   "aliases": [
+    "Green Flea Market vol.2",
+    "植物と暮らしのフリーマーケット"
+   ],
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-10-31",
+   "decided": "2026-09-30",
+   "reason": "主催 @soraniwa_rakurakuen の告知 DdljVA8PoaZ は日付・時間(10:00〜16:00)・各日15組の出店を出しているが、出店者は 10/1 から順次解禁。品目は『株分けした苗・増やした多肉/塊根・鉢・ハンドメイド・ワークショップ』で、店自体は観葉・花苗が中心。出店者一覧が出たら数える(breakdownPublished)"
+  },
+  {
+   "key": "plants-market-machida-pario-2026-10",
+   "name": "Plants Market in 町田パリオ (2026-10-31〜11-01 町田パリオ・東京都町田市)",
+   "aliases": [
+    "Plants Market in 町田パリオ"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-10-31",
+   "decided": "2026-09-30",
+   "reason": "出店者 @jacksongardenlove の投稿だけに日程(10/31 10:00〜17:00・11/1 10:00〜15:00)がある。会場の町田パリオ公式イベント一覧には無く、主催の告知が見つからない → vendorAnnouncementsOnly"
+  },
+  {
+   "key": "kyoto-midori-marche-benkeisou-2026-11",
+   "name": "京都みどりのマルシェ ベンケイソウ (2026-11-08 いばらきスカイパレット・大阪府茨木市)",
+   "aliases": [
+    "KYOTO MIDORI NO MARCHE BENKEISOU",
+    "京都みどりのマルシェ ベンケイソウ"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-11-08",
+   "decided": "2026-09-30",
+   "reason": "出店者2件の投稿(2026-08-06)に『2026.11.08 10:00〜15:00 いばらきスカイパレット』とあるが、主催 @midorino_marche の直近の投稿は 9/19 回と 2027-03-20 回の出店者紹介だけで、11/8 回の告知が無い → vendorAnnouncementsOnly。同じシリーズは掲載実績があるので、主催の告知が出たら掲載する"
+  },
+  {
+   "key": "irie-plants-bash-5-2026-10",
+   "name": "IRIE PLANTS BASH #5 / THE FREE MARKET (2026-10-10〜11 Irie Garden concept shop ROOTS・新潟市江南区)",
+   "aliases": [
+    "IRIE PLANTS BASH",
+    "IRIE PLANTS BASH #5"
+   ],
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-10-10",
+   "decided": "2026-09-30",
+   "reason": "主催 @iriegarden_design の告知 DdoH7DOE1iu に出店者18組(PLANTS 10・ZAKKA & APPAREL 5・FOOD 3)が出ている。植物系の比率は3割を超えるが、主催は造園・外構と観葉植物の店で、PLANTS 10組の扱うジャンル(観葉か、アガベ・塊根か)が書かれていない。観葉主体なら plantCentric に当たらない。各出店者の取扱いが分かれば数え直す"
+  },
+  {
+   "key": "tokai-eco-festa-2026-autumn",
+   "name": "TOKAI ECO FESTA 2026 Autumn (2026-10-24〜25 モリコロパーク・愛知県長久手市)",
+   "aliases": [
+    "東海エコフェスタ 2026 Autumn",
+    "TOKAI ECO FESTA"
+   ],
+   "reasonType": "undisclosed",
+   "revisit": false,
+   "eventDate": "2026-10-24",
+   "decided": "2026-09-30",
+   "reason": "PUKUBOOK の『注目イベント』に常時出る。主催 @tokaiecofesta の告知で確認できたのは会期・時間(10:00〜16:30)・入場無料と、出店者紹介のワークショップ(工房 +niko)だけで、植物を主題とする記述が無い。名称は中立で出店内訳も非公開 → undisclosedBreakdown.exclude。春・秋に開くシリーズなので次の回も同じ判断でよい"
   }
  ],
  "_reasonTypes": {
@@ -1196,6 +1274,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-29",
+ "updated": "2026-09-30",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
