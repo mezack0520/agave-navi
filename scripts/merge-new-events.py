@@ -70,7 +70,14 @@ def merge(events, new_events):
             # 17件(url 空文字11 / imageUrl null 4 / imageUrl 空文字2)。
             # 「値が無い」が null と空文字の2通りで同居すると、`is None` や
             # `in e` で書いた検査が片方だけ拾って静かに漏れる。
-            events.append(drop_bad_image(drop_blanks(ne)))
+            ne = drop_bad_image(drop_blanks(ne))
+            # 登録時の本文は登録日に書いたもの。updatedAt を持たない新規は
+            # addedDate を写す(2026-09-29)。09-28 に手書きの new-events.json
+            # から3件が updatedAt 無しで入り、audit.updated_at_missing_on_new が
+            # 鳴った。書き手ごとに付け忘れるので、取り込みの入口で埋める。
+            if not ne.get('updatedAt') and ne.get('addedDate'):
+                ne['updatedAt'] = ne['addedDate']
+            events.append(ne)
             existing.add(slug)
             added.append(slug)
             continue
@@ -138,6 +145,18 @@ def self_test():
                           [{'slug': 'a', 'time': '10:00〜16:00'}])
     chk('値があれば足す', out[0].get('time'), '10:00〜16:00')
     chk('更新として数える', upd, ['a'])
+
+    out, add, upd = merge([dict(x) for x in ev],
+                          [{'slug': 'e', 'name': 'E', 'date': '2026-11-03',
+                            'status': 'upcoming', 'addedDate': '2026-09-29'}])
+    chk('新規で updatedAt が無ければ addedDate を写す',
+        next(e for e in out if e['slug'] == 'e').get('updatedAt'), '2026-09-29')
+    out, add, upd = merge([dict(x) for x in ev],
+                          [{'slug': 'f', 'name': 'F', 'date': '2026-11-03',
+                            'status': 'upcoming', 'addedDate': '2026-09-29',
+                            'updatedAt': '2026-09-30'}])
+    chk('新規で updatedAt があればそのまま',
+        next(e for e in out if e['slug'] == 'f').get('updatedAt'), '2026-09-30')
 
     out, _a, _u = merge([{'slug': 'p', 'date': '2026-01-01', 'status': 'past'},
                          {'slug': 'u', 'date': '2026-12-01', 'status': 'upcoming'}],

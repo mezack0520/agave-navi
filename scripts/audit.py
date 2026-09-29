@@ -4590,6 +4590,60 @@ def main():
         '本文が消える心配は無いが、以後この回を直したとき「最終更新」が動かない',
         severity='info')
 
+    # 開催予定の imageUrl が、その回のどの頁とも関係の無いホストにある(2026-09-29)。
+    # enrich は url が IG で埋まっている回にも検索結果の og:image を書いていた。
+    # 頁の URL はどこにも残らないので、画像だけが出所なしで本番に出る。
+    # 実例: NIGHTWALKER に dアニメストアの作品画像、グリーントレジャー 5th に
+    # なにわ男子5周年のOGP、PLANTS DIVE にジモティーの共通画像。
+    # 自前(agave-navi.com)・IG・url/sourceUrl/organizerUrl/imageSource と同じホストは除く。
+    # 手で他所の告知画像を付けた正しい回も出るので info。見て外すなら
+    # scripts/image-rejected.json に記録して imageUrl を消す。
+    from urllib.parse import urlparse as _up
+
+    def _h(u):
+        _x = _up(u or '').netloc.lower()
+        return _x[4:] if _x.startswith('www.') else _x
+    _orphan_img = []
+    _img_ok = {}
+    try:
+        with open(rp('scripts/image-rejected.json'), encoding='utf-8') as _f:
+            _img_ok = {k: v.get('imageUrl') for k, v in
+                       (json.load(_f).get('accepted') or {}).items()}
+    except FileNotFoundError:
+        pass
+    for e in events:
+        if _img_ok.get(e.get('slug')) and _img_ok[e['slug']] == e.get('imageUrl'):
+            continue
+        if e.get('status') != 'upcoming' or not e.get('imageUrl'):
+            continue
+        _ih = _h(e['imageUrl'])
+        if (_ih.endswith('agave-navi.com') or 'instagram' in _ih or 'fbcdn' in _ih):
+            continue
+        _own = {_h(e.get(k)) for k in ('url', 'sourceUrl', 'organizerUrl', 'imageSource')}
+        _own.discard('')
+        # wix / wordpress 等は画像が別ホスト(static.wixstatic.com)に出る。
+        # 自サイトが wixsite なら wixstatic は同じ持ち主とみなす
+        if _ih in _own or ('wixstatic.com' in _ih and any('wix' in o for o in _own)):
+            continue
+        _orphan_img.append(f"{e.get('date')} {e.get('slug')}: {_ih}"
+                           f"（url={_h(e.get('url')) or '-'} / "
+                           f"sourceUrl={_h(e.get('sourceUrl')) or '-'}）")
+    add('image_host_unrelated', '開催予定の画像が、その回のどの頁とも別のホストにある',
+        _orphan_img,
+        '画像を開いてその回の告知かを見る。別物なら imageUrl を消し、'
+        'scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。'
+        '正しければそのままでよい',
+        severity='info')
+
+    # 外した画像が imageUrl に戻っていないか。0件が正常
+    _rej_urls = sitelib.rejected_image_urls()
+    add('rejected_image_in_use', '人が外した画像が imageUrl に戻っている',
+        [f"{e.get('slug')}: {e.get('imageUrl')}" for e in events
+         if e.get('imageUrl') in _rej_urls],
+        'どのスクリプトが書き戻したかを git log -S で探す。書き込む側は '
+        'sitelib.is_quality_image_url を通しているはず',
+        severity='urgent')
+
     # 配布物のタイムスタンプが、同じビルドの中で食い違っていないか。
     # 2026-08-28、generate-ical.py が JST の時刻に 'Z'(=UTC)を付けており、
     # 3本の .ics すべてが DTSTAMP を9時間先に名乗っていた(RFC 5545 は UTC 必須)。
@@ -5096,7 +5150,18 @@ def main():
         severity='urgent')
 
     metric_moves = []
+    # 人が外した画像ぶんは急変に数えない(2026-09-29)。中央値の窓に入っている間、
+    # 外した回は「画像なし」に移ったままなので、差し引かないと数日鳴り続ける。
+    # 窓の最古の日より後に外し、今も開催予定で画像が空の回だけを数える
+    _win_from = min((r.get('date') or '' for r in _hist_wide), default='')
+    _ev_by = {e.get('slug'): e for e in events}
+    _unhooked_up = sum(
+        1 for _sl, _rs in sitelib.rejected_images().items()
+        if _sl in _ev_by and is_upcoming(_ev_by[_sl]) and not _ev_by[_sl].get('imageUrl')
+        and any((r.get('on') or '') > _win_from for r in _rs))
+    _IMG_ADJ = {'upcoming_no_image': -1, 'eyecatch_backlog': -1, 'upcoming_with_image': 1}
     for _k, _v in _cur_metric.items():
+        _v = _v + _IMG_ADJ.get(_k, 0) * _unhooked_up
         # そのキーを実際に持っている履歴だけで基準を作る。
         # 欠けている履歴を0とみなすと、検査を追加した初日に必ず誤検知する
         # (2026-08-24: upcoming_with_image を足した日に「0→13」で鳴った)。
@@ -5167,7 +5232,14 @@ def main():
         # 中止にした回は告知画像に差し替わるので imageUrl を外す。
         # これを消失として数えると、中止を記録するたびに鳴る
         _cancelled_now = sum(1 for e in events if is_cancelled(e))
-        _drop = _prev_img - _now_img - _removed - _cancelled_now
+        # 人が外した画像(scripts/image-rejected.json)も消失ではない(2026-09-29)。
+        # 前回の監査より後に外し、今も imageUrl が空の回だけ差し引く
+        _by_slug = {e.get('slug'): e for e in events}
+        _unhooked = sum(
+            1 for _sl, _rs in sitelib.rejected_images().items()
+            if any((r.get('on') or '') > (_prev_img_row.get('date') or '') for r in _rs)
+            and _sl in _by_slug and not _by_slug[_sl].get('imageUrl'))
+        _drop = _prev_img - _now_img - _removed - _cancelled_now - _unhooked
         if _drop > 0:
             _img_lost.append(
                 f"imageUrl のある回が {_prev_img} → {_now_img} 件"

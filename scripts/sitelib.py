@@ -1504,9 +1504,36 @@ def is_aggregator_url(url):
     return bool(url) and any(a in url.lower() for a in AGGREGATOR_DOMAINS)
 
 
+# 人が見て外した imageUrl (2026-09-29)。scripts/image-rejected.json が正。
+# 外しただけだと、enrich は「imageUrl が空」の回に同じ検索結果の og:image を
+# 翌週また書く。外した事実を書き込む側の関門(is_quality_image_url)に持たせる。
+_REJECTED_IMAGES = None
+
+
+def rejected_images():
+    """{slug: [{imageUrl, reason, on}]}。ファイルが無ければ空。"""
+    global _REJECTED_IMAGES
+    if _REJECTED_IMAGES is None:
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         'image-rejected.json')
+        try:
+            with open(p, encoding='utf-8') as f:
+                _REJECTED_IMAGES = json.load(f).get('items') or {}
+        except FileNotFoundError:
+            _REJECTED_IMAGES = {}
+    return _REJECTED_IMAGES
+
+
+def rejected_image_urls():
+    return {r.get('imageUrl') for rs in rejected_images().values() for r in rs
+            if r.get('imageUrl')}
+
+
 def is_quality_image_url(img_url):
     """imageUrl として受け入れてよいか。書き込む側は必ずここを通す。"""
     if not img_url:
+        return False
+    if img_url in rejected_image_urls():
         return False
     # 混在コンテンツ防止。サイトは https なので http の画像は落とされるか警告になる
     if img_url.startswith('http://'):

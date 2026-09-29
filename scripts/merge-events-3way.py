@@ -35,7 +35,7 @@ def _load(p):
     return json.loads(raw), raw
 
 
-def merge(base, ours, theirs):
+def merge3(base, ours, theirs):
     """(merged, conflicts)。conflicts は 'slug.field' の一覧"""
     b = {e.get('slug'): e for e in base}
     o = {e.get('slug'): e for e in ours}
@@ -91,7 +91,7 @@ def main(argv):
     base, _ = _load(argv[1])
     ours, _ = _load(argv[2])
     theirs, traw = _load(argv[3])
-    merged, conflicts = merge(base, ours, theirs)
+    merged, conflicts = merge3(base, ours, theirs)
     txt = json.dumps(merged, ensure_ascii=False, indent=2)
     with open(argv[4], 'w', encoding='utf-8') as f:
         f.write(txt + ('\n' if traw.endswith('\n') else ''))
@@ -116,29 +116,29 @@ def self_test():
     # daily が a の status を変え、sync が c を足した(#111 の形)
     theirs = [{'slug': 'a', 'status': 'past', 'name': 'A'}, {'slug': 'b', 'status': 'upcoming'}]
     ours = base + [{'slug': 'c', 'status': 'upcoming'}]
-    m, c = merge(base, ours, theirs)
+    m, c = merge3(base, ours, theirs)
     chk('別の回', [(e['slug'], e['status']) for e in m],
         [('a', 'past'), ('b', 'upcoming'), ('c', 'upcoming')])
     chk('別の回 衝突なし', c, [])
     # 同じ回の別の項目
     ours = [{'slug': 'a', 'status': 'upcoming', 'name': 'A2'}, base[1]]
-    m, c = merge(base, ours, theirs)
+    m, c = merge3(base, ours, theirs)
     chk('同じ回の別項目', m[0], {'slug': 'a', 'status': 'past', 'name': 'A2'})
     # 項目の削除
     ours = [{'slug': 'a', 'status': 'upcoming'}, base[1]]
-    m, c = merge(base, ours, theirs)
+    m, c = merge3(base, ours, theirs)
     chk('削除も変更', m[0], {'slug': 'a', 'status': 'past'})
     # 本当の衝突は OURS
     ours = [{'slug': 'a', 'status': 'cancelled', 'name': 'A'}, base[1]]
-    m, c = merge(base, ours, theirs)
+    m, c = merge3(base, ours, theirs)
     chk('衝突は OURS', (m[0]['status'], c), ('cancelled', ['a.status']))
     # 片方が消した回
     ours = [base[0]]
-    m, c = merge(base, ours, theirs)
+    m, c = merge3(base, ours, theirs)
     chk('OURS が消した(THEIRS 未変更)', [e['slug'] for e in m], ['a'])
     theirs2 = [base[0]]
     ours2 = [base[0], {'slug': 'b', 'status': 'past'}]
-    m, c = merge(base, ours2, theirs2)
+    m, c = merge3(base, ours2, theirs2)
     chk('THEIRS が消したが OURS が変えた', [e['slug'] for e in m], ['a', 'b'])
     print('self-test OK' if ok else 'self-test NG')
     return 0 if ok else 1

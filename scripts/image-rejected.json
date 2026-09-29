@@ -1,0 +1,89 @@
+{
+ "_note": "人が見て外した imageUrl。sitelib.is_quality_image_url がここにある URL を二度と受け入れない(enrich が同じ og:image を書き戻すのを止める)。audit.event_image_lost は on が前回監査より後の外しを消失に数えない。audit.rejected_image_in_use はここにある URL が imageUrl に残っていたら鳴る。",
+ "items": {
+  "kinshakusai-vol6-2026-10": [
+   {
+    "imageUrl": "https://synchro-food-mobimaru-production-web-app-assets.s3.amazonaws.com/assets/top_logo_color@2x-661f43a915c574aa3cd9b26ae278eab387df76492ea45b60748e941e12034c31.png",
+    "reason": "モビマル(キッチンカー予約)のサイトロゴ",
+    "on": "2026-09-29"
+   }
+  ],
+  "sapporo-bikaku-expo-lv3-2026-10": [
+   {
+    "imageUrl": "https://gigaplus.makeshop.jp/fullidol01/img/idol_ogp_new.png",
+    "reason": "アイドルグッズ通販のOGP画像",
+    "on": "2026-09-29"
+   }
+  ],
+  "okayama-green-treasure-5th-2026-10": [
+   {
+    "imageUrl": "https://naniwa-5th-anniversary.com/files/45/nd/5th/teaser/ogp_v2.png",
+    "reason": "なにわ男子5周年サイトのティザーOGP。「5th」の一致で掴んだ",
+    "on": "2026-09-29"
+   }
+  ],
+  "plants-dive-vol5-nara-2026-10": [
+   {
+    "imageUrl": "https://cdn.jmty.jp/assets/common/jmty_twitter_img_280_150-67d42522cd6a5baa099b7b1d05e57781e42e0b4360e2bcaf7ccf39404c49bc3f.png",
+    "reason": "ジモティーのサイト共通OGP画像",
+    "on": "2026-09-29"
+   }
+  ],
+  "nightwalker-horie-2026-10": [
+   {
+    "imageUrl": "https://bs8.animestore.docomo.ne.jp/prod/thumbnails/115008/volumes/401010/6471f62e80367.jpg",
+    "reason": "dアニメストアの作品サムネイル。同名のアニメ作品を検索で掴んだ",
+    "on": "2026-09-29"
+   }
+  ],
+  "nara-bikaku-fes-vol2-2026-10": [
+   {
+    "imageUrl": "https://ms-cache.walkerplus.com/walkertouch/wtd/event/06/l2/445906.jpg",
+    "reason": "別イベント(Nara Kawaii Marche)のチラシ",
+    "on": "2026-09-29"
+   }
+  ],
+  "plants-plants-plants-bhms-2026-10": [
+   {
+    "imageUrl": "https://static.wixstatic.com/media/cf2e7a_9e76e615def6419ead17b8ee11f08df9~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,usm_0.66_1.00_0.01/cf2e7a_9e76e615def6419ead17b8ee11f08df9~mv2.png",
+    "reason": "前年(2024-10-06)の回のチラシ",
+    "on": "2026-09-29"
+   }
+  ],
+  "yurutto-taniku-marche-1st-inabe-2026-10": [
+   {
+    "imageUrl": "https://static.hanaprime.jp/botanical-book-wp/wp-content/uploads/2025/03/20033553/f3aef5f15d81edd41c11182bfea9854b.gif",
+    "reason": "HanaPrime の記事バナー「人気の植物イベント全国版」",
+    "on": "2026-09-29"
+   }
+  ]
+ },
+ "accepted": {
+  "greensnap-marche-toyosu-2026-autumn": {
+   "imageUrl": "https://d3pbyuzcd27kd.cloudfront.net/wp-content/uploads/sites/14/2026/09/16175618/1788851912584_jpg.jpeg",
+   "reason": "主催 GreenSnap の告知画像(CDN が別ホスト)",
+   "on": "2026-09-29"
+  },
+  "greensnap-marche-odaiba-2026": {
+   "imageUrl": "https://d3pbyuzcd27kd.cloudfront.net/wp-content/uploads/sites/14/2026/09/18080538/odaiba_GSM-01.jpg",
+   "reason": "主催 GreenSnap の告知画像(CDN が別ホスト)",
+   "on": "2026-09-29"
+  },
+  "shumatsu-botanical-gotemba-2026-11": {
+   "imageUrl": "https://www.sbs-mhc.co.jp/contents/2024/05/mainimg_gotemba.jpg",
+   "reason": "会場(SBSマイホームセンター御殿場)の写真",
+   "on": "2026-09-29"
+  },
+  "hiroshima-shokubutsuen-2026-10": {
+   "imageUrl": "https://straightpress.jp/wp-content/uploads/2026/09/negi2609071025-300x225.jpg",
+   "reason": "会場(ひろしまゲートパーク)の催事写真",
+   "on": "2026-09-29"
+  },
+  "tiger-plants-hunters-2026-10": {
+   "imageUrl": "https://hanatomofesta.com/files/libs/2848/202312241612188838.JPG?1787844573",
+   "reason": "主催 Tiger の出店ブース写真",
+   "on": "2026-09-29"
+  }
+ },
+ "_noteAccepted": "accepted は人が見て「別ホストだがその回の画像として正しい」とした imageUrl。audit.image_host_unrelated は imageUrl が一致する間は出さない(画像が差し替われば再び出る)。"
+}

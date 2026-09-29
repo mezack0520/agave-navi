@@ -3159,6 +3159,24 @@ const desc=async c=>{const d=new DOMParser().parseFromString(await (await fetch(
  const m=d.querySelector('meta[name="description"]'); return m?m.content:'(none)';};
 ```
 
+### 出典に採らない頁の og:image が、出所の無い画像として本番に出る (2026-09-29)
+
+enrich は `url` が空なら検索結果の頁を `url` に書くが、**`url` が既に IG で埋まっている回にも、
+同じ頁の og:image を `imageUrl` に書いていた。**頁の URL はどこにも残らないので、
+画像だけが根拠なしで出る。09-29 に開催予定の画像を「url / sourceUrl / organizerUrl と
+別のホスト」で洗うと15件あり、目視で8件が別物だった
+(dアニメストアの作品画像、なにわ男子5周年のOGP、ジモティー・モビマル・アイドル通販の共通画像、
+別イベントのチラシ、前年のチラシ、HanaPrime の記事バナー)。
+アイキャッチのタスクは「画像がある回」を見ないので、誰も気付かなかった。
+
+- enrich は、その頁を url / sourceUrl / organizerUrl に持つ回にだけ画像を採る(`_same_host_as_event`)。
+- 外した画像は `scripts/image-rejected.json` の `items` に記録する。`sitelib.is_quality_image_url` が
+  二度と受け入れない。**記録せずに消すだけだと、翌週 enrich が同じ画像を書き戻す。**
+- 見て正しかった別ホストの画像は同ファイルの `accepted` に入れる。`audit.image_host_unrelated`(info)が
+  imageUrl の一致する間は出さない。
+- 外した回は `event_image_lost` と `metric_moved` が差し引く(外した日が前回監査/中央値の窓より後の分)。
+  差し引かないと意図した外しで urgent が数日鳴る。
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。

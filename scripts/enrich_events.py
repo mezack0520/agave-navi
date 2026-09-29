@@ -62,6 +62,19 @@ _PLACEHOLDER_VALUES = {
     '', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表',
 }
 
+
+def _host(u):
+    from urllib.parse import urlparse
+    h = urlparse(u or '').netloc.lower()
+    return h[4:] if h.startswith('www.') else h
+
+
+def _same_host_as_event(page_url, ev):
+    """page_url がこの回の url / sourceUrl / organizerUrl と同じホストか。"""
+    h = _host(page_url)
+    return bool(h) and h in {_host(ev.get(k)) for k in
+                             ('url', 'sourceUrl', 'organizerUrl')}
+
 def _is_empty(v):
     """Treat placeholder strings ('調整中', '未定' etc.) as effectively empty
     so enrichment can overwrite them."""
@@ -826,6 +839,16 @@ def main():
 
             # imageUrl (only if empty, with HEAD verification)
             ogp_image = info.get('ogp_image')
+            # 画像は、その頁を url / sourceUrl / organizerUrl として持つ回にだけ採る
+            # (2026-09-29)。url が既に IG で埋まっている回は best_url が
+            # どこにも残らないので、無関係の頁の og:image が「出所の無い画像」として
+            # 入っていた。dアニメストアの作品画像(NIGHTWALKER)、なにわ男子の
+            # 5周年OGP(グリーントレジャー 5th)、ジモティー・モビマルのサイト共通画像。
+            # 出典に採らない頁の画像は、その回の告知であるという根拠を持たない。
+            if ogp_image and best_url and not _same_host_as_event(best_url, ev):
+                print(f"    IMG-REJECTED for {ev['slug']}: 頁を url/sourceUrl に"
+                      f"持たない — {best_url[:70]}")
+                ogp_image = None
             if ogp_image and _is_empty(ev.get('imageUrl')):
                 if not is_quality_image_url(ogp_image):
                     print(f"    IMG-REJECTED for {ev['slug']}: aggregator/generic — {ogp_image[:70]}")
