@@ -1,0 +1,109 @@
+{
+ "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
+ "items": [
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "coverage_gaps",
+   "target": "多肉とくらしマルシェ 2026 (10/4 仙台・秋保)",
+   "action": "listed",
+   "detail": "主催 大貫建築の公式頁で裏取り。出店一覧22ブース中、植物系7店で3割を超える"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "coverage_gaps",
+   "target": "多肉だヨ！全員集合 in とっとり花回廊 (10/17-18)",
+   "action": "listed",
+   "detail": "とっとり花回廊の公式告知で裏取り。計43店舗"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "coverage_gaps",
+   "target": "SPINE NOTE Vol.2 GEEK OF FOOLS (11/28-29 下関)",
+   "action": "listed",
+   "detail": "主催 @spine_note_official の投稿で裏取り。植物専門店3店を含む10店"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "image_host_unrelated",
+   "target": "GREEN CHAMPUROO Vol.2 のアイキャッチ",
+   "action": "fixed",
+   "detail": "出店者の店舗写真だったので外し、image-rejected.json に記録"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "image_host_unrelated",
+   "target": "第6回 がまごおり多肉フェスタ のアイキャッチ",
+   "action": "fixed",
+   "detail": "2025年の個人ブログの写真だったので外し、image-rejected.json に記録"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "cancel_suspects",
+   "target": "ROOTS MARKET (10/25 稲毛)",
+   "action": "reviewed",
+   "detail": "本文は変わらず、横の記事サムネイルの入れ替わりだけ。画像だけの変化が続く頁は数えないよう検査を直した"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "dead_links",
+   "target": "緑楽宴 / ときめきマルシェ2件 の Threads 出典",
+   "action": "fixed",
+   "detail": "Threads は未ログインのCIに429を返すだけで切れていない。死活検査の対象外に足した"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "tbd",
+   "target": "BOTANICAL BOTANICAL FUKUOKA (10/3-4)",
+   "action": "fixed",
+   "detail": "主催の9/28投稿で会場(カイタックスクエアガーデン)・時間が出たので埋めて確定にした"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "tbd",
+   "target": "妙高多肉大市 (10/31-11/1)",
+   "action": "skipped",
+   "detail": "主催の最新告知(9/2)は出店者募集で、会場と時間がまだ出ていない"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "tbd",
+   "target": "BOTANICAL BOTANICAL OSAKA / OKINAWA、まるっと植物fes!!",
+   "action": "skipped",
+   "detail": "主催の最近の投稿に会場・時間の告知がまだ無い"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "tbd",
+   "target": "ビッグバザール 2027年分(6回)",
+   "action": "skipped",
+   "detail": "主催(ISIJ)の年間予定で日付だけ出ている回。会場・時間は例年直前に出る"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "task_run_gap",
+   "target": "agave-navi-eyecatch 9/22・event-monitor 9/23",
+   "action": "skipped",
+   "detail": "その日のレポートも成果物も無く、実際に起動していない。過去の日なので直す手段が無い"
+  },
+  {
+   "on": "2026-09-29",
+   "task": "claude-session",
+   "kind": "cross_script_duplicate",
+   "target": "log-fix.py と record-run.py の load/save",
+   "action": "fixed",
+   "detail": "log-fix.py 側の関数名を分けた"
+  }
+ ]
+}
