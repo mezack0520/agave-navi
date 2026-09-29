@@ -1633,6 +1633,8 @@ def main():
         # 巡回結果だが build-all.sh では作り直せない(2026-09-23)。
         # organizer-posts.json は周期取得の持ち越し状態、staging/eyecatch/ は採否待ちの候補
         'organizer-posts.json', 'staging/eyecatch/', 'scripts/eyecatch-rejected.json',
+        # 朝のタスクが直した記録(2026-09-29)。mailedOn はメールを送った回が付ける
+        'auto-fix-log.json',
     }
     # 分け方の判定は1つ。**remote の版に乗せて build-all.sh を回し直したとき、
     # この回の情報が失われるか。**失われるなら運ぶデータ、失われないなら生成物。

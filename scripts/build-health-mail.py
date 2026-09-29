@@ -60,6 +60,40 @@ if judgments:
         lines.append("")
     lines.append("対応はCoworkでClaudeに指示してください（例:「キューの◯◯を承認」）。対応済みの項目は各タスクが自動で消し込みます。")
     lines.append("")
+# 朝のタスクが直したもの(scripts/log-fix.py → auto-fix-log.json)。2026-09-29〜。
+# 目崎の指示は「報告だけでなく、そのまま直して、その結果を報告する」。
+# 未送信の記録をまとめて出し、実際に送る回(schedule / dispatch)だけ mailedOn を付ける。
+# push で走る回はメールを送らないので印を付けない(付けると一度も届かずに消える)。
+try:
+    with open('auto-fix-log.json', encoding='utf-8') as _ff:
+        _fix = json.load(_ff)
+except (OSError, ValueError):
+    _fix = {'items': []}
+_unsent = [i for i in _fix.get('items') or [] if not i.get('mailedOn')]
+_ACT = {'listed': '掲載', 'rejected': '見送り', 'fixed': '修正', 'reviewed': '確認済み',
+        'skipped': '直せなかった'}
+_done = [i for i in _unsent if i.get('action') != 'skipped']
+_skip = [i for i in _unsent if i.get('action') == 'skipped']
+if _done:
+    lines.append("")
+    lines.append(f"━━━ 🛠 直したもの（{len(_done)}件）━━━")
+    for _i in _done:
+        lines.append(f"・[{_ACT.get(_i.get('action'), _i.get('action'))}] {_i.get('target')}")
+        if _i.get('detail'):
+            lines.append(f"    {_i['detail']}")
+if _skip:
+    lines.append("")
+    lines.append(f"━━━ ⛔ 直せなかったもの（{len(_skip)}件・理由つき）━━━")
+    for _i in _skip:
+        lines.append(f"・{_i.get('target')}（{_i.get('kind')}）")
+        lines.append(f"    理由: {_i.get('detail')}")
+if _unsent and os.environ.get('GITHUB_OUTPUT') and os.environ.get('GITHUB_EVENT_NAME') not in ('push', None, ''):
+    for _i in _unsent:
+        _i['mailedOn'] = today.replace('/', '-')
+    with open('auto-fix-log.json', 'w', encoding='utf-8') as _ff:
+        json.dump(_fix, _ff, ensure_ascii=False, indent=1)
+        _ff.write('\n')
+
 lines.append("")
 lines.append("━━━ サマリー ━━━")
 lines.append(f"総イベント数: {data['total_events']}")
@@ -90,7 +124,7 @@ _info = [(k, v) for k, v in _af.items()
          if v.get('severity') == 'info' and v.get('count')]
 if _info:
     lines.append("")
-    lines.append("━━━ 📊 積み残し（急がないが減らしたい） ━━━")
+    lines.append("━━━ 📊 まだ直っていないもの（朝のタスクの後に残った分） ━━━")
     for _k, _v in _info:
         lines.append(f"・{_v.get('title', _k)}: {_v.get('count')}件")
 # 健全性チェック(health.yml の 1〜4)。2026-09-25 まで Issue に出していたが、
@@ -153,9 +187,8 @@ _cgaps = _cov.get('gaps') or []
 _cerr = _cov.get('errors') or []
 if _cgaps:
     lines.append("")
-    lines.append("━━━ 🔍 他所に出ていて当サイトに無いイベント ━━━")
-    lines.append("一次情報で裏取りして、掲載するか見送りに記録してください。")
-    lines.append("見送りを rejected-events.json に入れれば翌日から出なくなります。")
+    lines.append("━━━ 🔍 他所に出ていて当サイトに無いイベント（まだ処理されていない分） ━━━")
+    lines.append("朝のタスクが裏取りして掲載か見送りにする。ここに残っているのは今日のタスクが届かなかった分。")
     for _g in _cgaps[:25]:
         _sp = _g.get('date')
         if _g.get('days'):
