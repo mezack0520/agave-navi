@@ -120,6 +120,14 @@
    **だから「フォルダを接続してください」と頼んではいけない。**接続しても変わらない。
    目崎に貼ってもらう文面をそのまま出す。
 
+8. **日次メールに出る項目は、報告する前に直す（2026-09-29 目崎の指示）。**
+   「積み残し・異常あり・他所に出ていて当サイトに無いイベントは、報告だけでなく
+   そのまま直して、その結果を報告する」。朝のタスク(`agave-event-update` が主担当、
+   `event-monitor` は残りを拾う)は本業の後に §「日次メールの項目は、報告する前に直す」の
+   表を上から処理し、**1件ごとに `scripts/log-fix.py` で結果を残す。**
+   メール(12:00 JST)はその記録を「直したもの / 直せなかったもの」として先頭に出す。
+   記録しない修正はメールに載らず、目崎からは「何もしていない」に見える。
+
 置き場（すべて `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` 配下）:
 - PAT: `agave-navi\github.pat`
 - 実行レポート: `mzplants\agave-navi\task-reports\<taskId>_YYYY-MM-DD.md`
@@ -3176,6 +3184,55 @@ enrich は `url` が空なら検索結果の頁を `url` に書くが、**`url` 
   imageUrl の一致する間は出さない。
 - 外した回は `event_image_lost` と `metric_moved` が差し引く(外した日が前回監査/中央値の窓より後の分)。
   差し引かないと意図した外しで urgent が数日鳴る。
+
+## 日次メールの項目は、報告する前に直す (2026-09-29)
+
+**目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
+報告だけじゃなくて、そのまま直して、その結果を報告するようにしてくれ」。**
+
+それまでの日次メールは一覧を並べるだけで、直すのは目崎が「どんどんやって」と
+言ってからだった。9/28 に言われて処理したら、取りこぼし7件のうち5件は
+一次情報で裏取りでき、残りも見送りの理由が書けた。**判断材料は揃っていて、
+足りなかったのは手を動かす担当だけだった。**
+
+### 誰がいつ
+
+- **`agave-event-update`(08:06)が主担当。**本業(カバレッジスイープ・巡回)の後に、
+  下の表を上から処理する。
+- **`event-monitor`(11:00)は残りを拾う。**朝の回が届かなかった分と、朝以降に出た分。
+- メール(`health.yml`)は 12:00 JST に動かした(遅延で13〜14時台に着く)。
+  それより後に直した分は翌日のメールに載る。
+- 始める前に `python3 scripts/audit.py` と
+  `python3 scripts/build-health-mail.py`(ローカルで本文が出る)で**今日のメールに出る
+  予定の一覧**を作り、それを処理の入力にする。
+
+### 何をどう直すか
+
+| メールの項目(監査のキー) | 直し方 | log-fix の action |
+|---|---|---|
+| 他所に出ていて当サイトに無い(`coverage_gaps`) | 主催の一次情報で裏取り。載せる回は `new-events.json`、載せない回は `rejected-events.json`(listing-policy の規則どおり) | listed / rejected |
+| 主催の投稿に当サイトに無い日付(`organizer_unlisted_dates`) | 同上。ワークショップ単独などは workshopOnly で見送り | listed / rejected |
+| 中止・延期の兆候(`organizer_cancel_signal` / `cancel_suspects`) | 投稿・公式頁を開く。中止なら cancelled にする。違えば `scripts/cancel-reviewed.json` | fixed / reviewed |
+| 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
+| アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
+| 内容の異常(入場料・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった) | fixed |
+| リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
+| 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
+| 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |
+| その他の urgent | 監査の note のとおり直す | fixed / skipped |
+
+```
+python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
+    --target "ボタの市 meets ビカク横丁 (2026-10-25)" --action listed \
+    --detail "主催 @botanoichi の告知 Dds5U7DN2Vf で裏取り"
+```
+
+**直せなかった回は `skipped` に理由を書く。**理由の無い「直せなかった」は
+メールで目崎に丸投げするのと同じになる。`pending-judgments.json` に積むのは、
+listing-policy に規則が無い類型に出会ったときだけ(`doNotEscalate` の項目は積まない)。
+
+`auto-fix-log.json` は運ぶデータ(`audit._CI_CARRY_DATA`)。
+`log-fix.py` の変更も push に含めること。push しない記録はメールに届かない。
 
 ## 4. 自己改善のやり方
 

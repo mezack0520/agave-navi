@@ -33,11 +33,7 @@
        → watch-sources巡回(次回待ちシリーズ10+IG主催者ローテ約10/日・8日で一巡)
        → まとめブログ/aggregator広域探索 → 裏取り(公式ソース必須・拒否ドメイン照合)
        → new-events.json作成(contents API) → dispatch(sync-events)
-09:00  [GitHub] health.yml
-       check_events.py: 本日開催/URL死活(終了30日以内のみ)/TBD(開催前のみ)/内容妥当性
-       (入場料異常・説明文混入・日付なしupcoming・無関係ドメイン)
-       → pending-judgments.jsonを集約した日次メールをGmail送信
-       (件名に【要判断n件】/ 新着・本日開催・今後一覧・異常検知)
+       → 日次メールに出る項目を報告前に直す(プレイブック「日次メールの項目は、報告する前に直す」)
 10:09  [Claude] event-listing-review
        回答シート(Google Form)をChromeで読取 → 新着は種別問わず new-inquiries.json に書いてpush
        (通知メールはフォーム送信時にGASが送っている。Actions側は送らない)
@@ -46,6 +42,10 @@
 11:00  [Claude] agave-navi-event-monitor
        events.json不整合検査 → 確定できるもの(status/time由来の日付)は自動修正PUT
        → dispatch(daily)で再生成 → 確定不能はキューへ追加・解消分は消し込み
+12:00  [GitHub] health.yml (2026-09-29 に 09:00 から移動。遅延で実着は13〜14時台)
+       check_events.py: 本日開催/URL死活(終わっていない回のみ)/TBD(開催前のみ)/内容妥当性
+       → 朝のタスクの修正記録(auto-fix-log.json)を「直したもの/直せなかったもの」として先頭に出し、
+         残りと pending-judgments.json を集約した日次メールをGmail送信
 随時    [GitHub] sync-events.yml (dispatch: sync-events)
        new-events.json → sanity-check(チケット/aggregator/無関係イベントドメイン拒否)
        → events.jsonへマージ → enrich → indexカード追加 → build-all.sh → push
