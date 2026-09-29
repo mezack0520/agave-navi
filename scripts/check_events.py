@@ -120,7 +120,10 @@ def main():
         #   isij.net            2026-08-24 確認（現役・同日更新あり。素のHTTPで
         #                       urllib からは HEAD/GET とも例外になる。
         #                       7イベントが共有しているため -1 が7件に増幅されていた）
+        #   threads.com/net     2026-09-29（未ログインのCIには 429 を返す。
+        #                       緑楽宴・ときめきマルシェ2件が「リンク切れ」に出た）
         BOT_WALLED = ('x.com', 'twitter.com', 'instagram.com', 'facebook.com',
+                      'threads.com', 'threads.net',
                       'vandaka-plants.com', 'isij.net')
         if source_url and any(d in source_url.lower() for d in BOT_WALLED):
             source_url_check_skip = True

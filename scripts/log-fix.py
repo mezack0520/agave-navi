@@ -40,7 +40,7 @@ ACTIONS = ('listed', 'rejected', 'fixed', 'reviewed', 'skipped')
 KEEP_DAYS = 30
 
 
-def load():
+def read_fix_log():
     try:
         with open(LOG, encoding='utf-8') as f:
             return json.load(f)
@@ -50,7 +50,7 @@ def load():
                 'items': []}
 
 
-def save(d):
+def write_fix_log(d):
     with open(LOG, 'w', encoding='utf-8') as f:
         json.dump(d, f, ensure_ascii=False, indent=1)
         f.write('\n')
@@ -70,7 +70,7 @@ def main():
     ap.add_argument('--detail', default='')
     ap.add_argument('--list', action='store_true')
     a = ap.parse_args()
-    d = load()
+    d = read_fix_log()
     today = sitelib.today_jst()
     if a.list:
         for i in d.get('items', [])[-40:]:
@@ -85,7 +85,7 @@ def main():
     items.append({'on': today, 'task': a.task, 'kind': a.kind, 'target': a.target,
                   'action': a.action, 'detail': a.detail})
     d['items'] = prune(items, today)
-    save(d)
+    write_fix_log(d)
     print(f'log-fix: {a.action} {a.kind} {a.target}')
     return 0
 

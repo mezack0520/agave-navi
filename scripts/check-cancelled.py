@@ -399,12 +399,25 @@ def main():
             noisy = 0
         pages[slug]['textOnlyChanges'] = noisy
 
+        # 画像だけの変化にも同じ扱いを当てる(2026-09-29)。ROOTS MARKET の頁
+        # (sunsetbeachpark.jp、画像45枚)は本文が1字も変わらないまま、横の
+        # 新着記事のサムネイルが入れ替わるたびに「公式ページが変わった(画像)」で
+        # 毎日鳴り、確認して cancel-reviewed.json に書いても翌日また鳴った。
+        # 告知画像の差し替えは一度きりの変化なので、続けて起きる画像の変化は数えない。
+        img_noisy = int(before.get('imageOnlyChanges') or 0)
+        image_only = (changed == ['画像'])
+        if image_only:
+            img_noisy += 1
+        elif changed:
+            img_noisy = 0
+        pages[slug]['imageOnlyChanges'] = img_noisy
+
         why = []
         if res['strong']:
             why.append('中止・延期の語: ' + ' / '.join(res['strong']))
         elif res['weak'] and changed:
             why.append('弱い語(' + ' / '.join(res['weak']) + ')＋ページが変わった')
-        elif '画像' in changed:
+        elif '画像' in changed and not (image_only and img_noisy > 2):
             why.append('公式ページが変わった(' + '・'.join(changed) + ')')
         elif text_only and before and noisy <= 2:
             # 字数の増減を添える。**「変わった」だけでは、足されたのか
