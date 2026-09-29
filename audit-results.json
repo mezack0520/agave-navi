@@ -1,5 +1,5 @@
 {
-  "total": 517,
+  "total": 516,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -644,7 +644,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1306,10 +1306,8 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 1,
-      "items": [
-        "2026-10-04 tanikutokurashi-marche-akiu-2026-10: storage.googleapis.com（url=oonuki-kenchiku.co.jp / sourceUrl=oonuki-kenchiku.co.jp）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },
