@@ -1,5 +1,5 @@
 {
-  "total": 513,
+  "total": 517,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 86,
+      "count": 85,
       "items": [
         "aki-no-taniku-picnic-ibusuki-2026-11",
         "american-and-plants-sano-2026-10",
@@ -201,10 +201,8 @@
         "fujisan-festa-2026-autumn",
         "fujisan-garden-marche-2026-10",
         "fukuyama-de-marche-8th-2026-11",
-        "gamagori-taniku-festa-6th-2026-11",
         "garden-link-festa-2026-10",
         "green-base-market-vol1-nishikata-2026-10",
-        "green-champuroo-vol2-2026-10",
         "greensnap-marche-odaiba-2026",
         "greensnap-marche-toyosu-2026-autumn",
         "hanatomofesta-2026",
@@ -217,14 +215,16 @@
         "kamimusubi-1st-obihiro-2026-10",
         "kisarazu-engei-ichi-2026-10",
         "kkt-taniku-fes-vol6-machida-2026-11",
-        "kyoshokusai-vol7-2026-10"
+        "kyoshokusai-vol7-2026-10",
+        "midolien-hono-osaka-2026-10",
+        "minefarm-popup-okinawa-2026-10"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 192,
+      "count": 191,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "aki-no-taniku-picnic-ibusuki-2026-11",
@@ -272,7 +272,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 70,
+      "count": 74,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -295,7 +295,9 @@
         "chuushokushobutsusai-2026",
         "enjoy-place-bangaihen-2026-12",
         "fumoto-plants-market-vol3-2026-10",
+        "gamagori-taniku-festa-6th-2026-11",
         "gen-x-bocchi-botanical-market-2026-10",
+        "green-champuroo-vol2-2026-10",
         "green-plants-market-takeo-2026-10",
         "hachioji-jungle-vol7-2026-10",
         "hiroshima-cactus-succulent-ten-2026-10",
@@ -311,9 +313,7 @@
         "kadan-fes-2026-autumn",
         "kinshakusai-vol6-2026-10",
         "kusa-paradise-vol10-okazaki-2026-10",
-        "kyoto-midori-marche-ibaraki-2027-03",
-        "kyoto-midorino-marche-bangaihen-vol10-2026",
-        "legit-vol2-samukawa-2026-10"
+        "kyoto-midori-marche-ibaraki-2027-03"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -644,7 +644,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -821,7 +821,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 70,
+      "count": 74,
       "items": [
         "2026-10-03 gen-x-bocchi-botanical-market-2026-10",
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
@@ -829,6 +829,7 @@
         "2026-10-04 asamiya-tanikusai-7th-2026-10",
         "2026-10-04 botanic-collection2-ube-2026-10",
         "2026-10-04 chinki-plants-flea-market-2026-10",
+        "2026-10-09 green-champuroo-vol2-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
         "2026-10-10 kadan-fes-2026-autumn",
         "2026-10-10 kusa-paradise-vol10-okazaki-2026-10",
@@ -841,6 +842,7 @@
         "2026-10-12 plants-popup-itec-saito-niigata-2026-10",
         "2026-10-17 hachioji-jungle-vol7-2026-10",
         "2026-10-17 plants-plants-plants-bhms-2026-10",
+        "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
         "2026-10-17 uomachi-botanical-night-market-2026-10",
         "2026-10-18 botanical-fes-yuki-2026-10",
         "2026-10-18 kinshakusai-vol6-2026-10",
@@ -860,9 +862,7 @@
         "2026-11-01 agave-summit-osaka-2026-11",
         "2026-11-01 botariba-toyohashi-2026-11",
         "2026-11-07 agave-shokudo-2026-autumn-uchidanouen",
-        "2026-11-07 botanical-life-kasama-2026-11",
-        "2026-11-07 chuushokushobutsusai-2026",
-        "2026-11-07 lier-taniku-festival-taishodo-2026-11"
+        "2026-11-07 botanical-life-kasama-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -904,10 +904,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-10-25 roots-market-inage-2026-10: 公式ページが変わった(画像)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1118,7 +1116,7 @@
       "title": "スケジュールタスクの実行が抜けた日",
       "count": 2,
       "items": [
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-22 2026-09-23（直近7日で2日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-09-22（直近7日で1日）",
         "event-monitor(daily) が動かなかった日: 2026-09-23（直近7日で1日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
@@ -1308,10 +1306,9 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 2,
+      "count": 1,
       "items": [
-        "2026-10-09 green-champuroo-vol2-2026-10: vandaka-plants.com（url=instagram.com / sourceUrl=instagram.com）",
-        "2026-11-14 gamagori-taniku-festa-6th-2026-11: stat.ameba.jp（url=instagram.com / sourceUrl=instagram.com）"
+        "2026-10-04 tanikutokurashi-marche-akiu-2026-10: storage.googleapis.com（url=oonuki-kenchiku.co.jp / sourceUrl=oonuki-kenchiku.co.jp）"
       ],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"

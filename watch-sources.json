@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-29 11:13 JST",
+ "generated": "2026-09-29 13:10 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 279,
-  "awaitingNextEdition": 293,
-  "officialSiteCandidates": 73,
+  "igAccounts": 280,
+  "awaitingNextEdition": 292,
+  "officialSiteCandidates": 75,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 75
+  "igNeedsBrowser": 76
  },
  "igAccounts": [
   {
@@ -210,6 +210,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "tanikudayo.zeninsyuugou",
+   "url": "https://www.instagram.com/tanikudayo.zeninsyuugou/",
+   "eventCount": 2,
+   "lastEventName": "多肉だヨ！全員集合 in とっとり花回廊",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "imama.jp",
    "url": "https://www.instagram.com/imama.jp/",
    "eventCount": 2,
@@ -308,6 +318,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "spine_note_official",
+   "url": "https://www.instagram.com/spine_note_official/",
+   "eventCount": 2,
+   "lastEventName": "SPINE NOTE Vol.2「GEEK OF FOOLS」",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "tokimeki_marche",
@@ -528,6 +548,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "crafit_home",
+   "url": "https://www.instagram.com/crafit_home/",
+   "eventCount": 1,
+   "lastEventName": "多肉とくらしマルシェ 2026",
+   "lastEventDate": "2026-10-04",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "hanauchustaff",
@@ -1514,16 +1544,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "tanikudayo.zeninsyuugou",
-   "url": "https://www.instagram.com/tanikudayo.zeninsyuugou/",
-   "eventCount": 1,
-   "lastEventName": "第15回 多肉だヨ！全員集合 in 金沢",
-   "lastEventDate": "2026-05-29",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "iku_matsuri",
    "url": "https://www.instagram.com/iku_matsuri/",
    "eventCount": 1,
@@ -1628,16 +1648,6 @@
    "url": "https://www.instagram.com/kominkasaboten/",
    "eventCount": 1,
    "lastEventName": "古民家さぼてんオープンハウス",
-   "lastEventDate": "2026-06-13",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "spine_note_official",
-   "url": "https://www.instagram.com/spine_note_official/",
-   "eventCount": 1,
-   "lastEventName": "SPINE NOTE",
    "lastEventDate": "2026-06-13",
    "hasUpcoming": false,
    "priority": 2,
@@ -3266,6 +3276,12 @@
    "eventDate": "2026-10-04"
   },
   {
+   "domain": "oonuki-kenchiku.co.jp",
+   "url": "https://www.oonuki-kenchiku.co.jp/event/marche",
+   "eventName": "多肉とくらしマルシェ 2026",
+   "eventDate": "2026-10-04"
+  },
+  {
    "domain": "weekend.osaka",
    "url": "https://weekend.osaka/16061/",
    "eventName": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
@@ -3317,6 +3333,12 @@
    "domain": "uomachi-mirai.com",
    "url": "https://uomachi-mirai.com/news/2026-10-17/",
    "eventName": "魚町ボダニカルナイトマーケット",
+   "eventDate": "2026-10-17"
+  },
+  {
+   "domain": "tottorihanakairou.or.jp",
+   "url": "https://www.tottorihanakairou.or.jp/tanikuhanbai/",
+   "eventName": "多肉だヨ！全員集合 in とっとり花回廊",
    "eventDate": "2026-10-17"
   },
   {
@@ -3414,18 +3436,6 @@
    "url": "https://www.visit-oita.jp/events/detail/13493",
    "eventName": "Plants Garage Market",
    "eventDate": "2026-05-03"
-  },
-  {
-   "domain": "fujisanmesse.com",
-   "url": "https://www.fujisanmesse.com/",
-   "eventName": "FUJISAN FESTA",
-   "eventDate": "2026-05-03"
-  },
-  {
-   "domain": "jiyugaoka.net",
-   "url": "https://jiyugaoka.net/event/",
-   "eventName": "Jiyugaoka Botanical Market",
-   "eventDate": "2026-05-04"
   }
  ],
  "unresolvedIgHandles": []
