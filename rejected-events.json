@@ -446,11 +446,12 @@
   {
    "key": "rojiura-botanical-2026-09-30",
    "reasonType": "unverified",
-   "revisit": true,
+   "revisit": false,
    "name": "路地裏ボタニカル 秋回 (2026-09-30? ワイルドプランツ路地裏のギボウシ・茨城県稲敷郡阿見町荒川本郷1-60)",
    "decided": "2026-09-08",
    "eventDate": "2026-09-30",
-   "reason": "出店者 @sfera_verde の動画キャプションに『2026年9月30日（日）「路地裏ボタニカル」』とあるが、2026-09-30 は水曜で曜日が合わない。主催 @rojiuranogibousi の当該回の告知が無く、直近の主催投稿は 8/30 回の御礼と『10月までに気合いで素敵苗 揃えますねー』で、次回日程を出していない。主催告知が出たら日付と曜日をあわせて再評価する。8/30 回は rojiura-botanical-2026-08 として掲載済み"
+   "reason": "出店者 @sfera_verde の動画キャプションに『2026年9月30日（日）「路地裏ボタニカル」』とあるが、2026-09-30 は水曜で曜日が合わない。主催 @rojiuranogibousi の当該回の告知が無く、直近の主催投稿は 8/30 回の御礼と『10月までに気合いで素敵苗 揃えますねー』で、次回日程を出していない。主催告知が出たら日付と曜日をあわせて再評価する。8/30 回は rojiura-botanical-2026-08 として掲載済み。2026-10-01 確定: 主催はこの後 12/20 回(rojiura-botanical-2026-12)を告知して掲載済みで、9/30 の回は告知されないまま開催日を過ぎた",
+   "revisitedOn": "2026-10-01"
   },
   {
    "key": "hinata-garden-cactus-sale-2026-09",
@@ -1266,6 +1267,78 @@
    "eventDate": "2026-10-24",
    "decided": "2026-09-30",
    "reason": "PUKUBOOK の『注目イベント』に常時出る。主催 @tokaiecofesta の告知で確認できたのは会期・時間(10:00〜16:30)・入場無料と、出店者紹介のワークショップ(工房 +niko)だけで、植物を主題とする記述が無い。名称は中立で出店内訳も非公開 → undisclosedBreakdown.exclude。春・秋に開くシリーズなので次の回も同じ判断でよい"
+  },
+  {
+   "key": "protoleaf-yumegaoka-kaikon-stock-sale-2026-10",
+   "name": "塊根植物ストックセール (2026-10-03〜12 プロトリーフ ゆめが丘ソラトス店・横浜市)",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-03",
+   "decided": "2026-10-01",
+   "reason": "店舗 @protoleaf.shop_yumegaoka の告知は『アプリクーポンのご利用で、お好きな塊根植物が1点15%OFF』のみで、企画も外部の出店者も無い → storeSale.exclude(価格だけが変わる回)"
+  },
+  {
+   "key": "botanica-dia-de-los-muertos-inage-2026-10",
+   "name": "BOTANICA DÍA DE LOS MUERTOS (2026-10-31・11-01・11-03 BOTANICA MUSEUM / 稲毛海浜公園・千葉市美浜区)",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-31",
+   "decided": "2026-10-01",
+   "reason": "会場公式 sunsetbeachpark.jp の告知は『メキシコの伝統文化 DÍA DE LOS MUERTOS を思わせる色彩豊かなイベント』で、マリーゴールドの花壇・メキシコグルメ・マルシェ・お面づくり・パレード。主題はメキシコの祭りで植物の即売が主役ではない → compositeEvents で見送り。同じ公園の ROOTS MARKET(10/25) は掲載済み"
+  },
+  {
+   "key": "cosmo-fes-3rd-kobayashi-2027-02",
+   "name": "第3回 COSMOフェス (2027-02-21 のじりこぴあ・宮崎県小林市)",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2027-02-21",
+   "decided": "2026-10-01",
+   "reason": "主催 @cosmo_fes_official の告知は『多肉植物と雑貨をテーマ』『ハンドメイドやワークショップ、おいしいフードやキッチンカー、ステージパフォーマンス』で、対象ジャンルと対象外を並記している。出店募集もまだで内訳が無い → coTitledDescription / undisclosed。出店者一覧が出たら数える"
+  },
+  {
+   "key": "gamagori-taniku-festa-7th-2027-03",
+   "name": "第7回 蒲郡多肉フェスタ (2027-03-13〜14? みなとオアシスがまごおり・愛知県蒲郡市)",
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2027-03-13",
+   "decided": "2026-10-01",
+   "reason": "主催 @gamagori_taniku_festa の出店者募集投稿は『2027年3月14.15日（土.日）』だが、2027-03-14 は日曜・15日は月曜で曜日が合わない。出店募集ポータル(シュッテン!)は 3/13〜14 と書く。第6回(2026-11-14)は掲載済み。主催の来場者向け告知で日付が確定したら掲載する"
+  },
+  {
+   "key": "shokubutsu-ni-iyasareru-vol17-2026-10",
+   "name": "植物に癒される vol.17 (2026-10-03 路地裏Garage Market・さいたま市)",
+   "reasonType": "undisclosed",
+   "revisit": false,
+   "eventDate": "2026-10-03",
+   "decided": "2026-10-01",
+   "reason": "主催 hesocompany の告知は『植物にまつわる素敵なマルシェ』。出店者の投稿に出る店はハーブティ・自然素材とアフリカ布の雑貨・緑化の相談などで、ライブ(口琴演奏ほか)が並ぶ。対象ジャンル(アガベ・塊根・多肉・サボテン)の出店は1件も確認できない → outOfScopeGenres / undisclosed。開催が近いので revisit は付けない"
+  },
+  {
+   "key": "aki-kan-yurinosato-2026-10",
+   "name": "秋感inゆりの里公園 2026 (2026-10-11〜12 ゆりの里公園・福井県坂井市)",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-11",
+   "decided": "2026-10-01",
+   "reason": "会場主催。秋バラの時期に合わせた『花』『植物』がテーマのマルシェで、同園のゆりフェスタ・バラフェスタと同型の園芸イベント → outOfScopeGenres(ガーデニング)"
+  },
+  {
+   "key": "aiyama-marche-2026-autumn",
+   "name": "2026秋のあいやまマルシェ (2026-10-04 氷見あいやまガーデン・富山県氷見市)",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-04",
+   "decided": "2026-10-01",
+   "reason": "庭園主催のマルシェ。告知の前面はハンバーガー・ラクレット等の飲食で、植物は会場の庭の花 → compositeEvents で見送り"
+  },
+  {
+   "key": "midori-to-hana-hyakkaten-fuji-2026-10",
+   "name": "第110回 緑と花の百科展 (2026-10-11 中央公園イベント広場・静岡県富士市)",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-10-11",
+   "decided": "2026-10-01",
+   "reason": "富士市主催の緑化・園芸の催し。草花の販売と講習会が中心 → outOfScopeGenres(ガーデニング)。年1回の長寿シリーズなので次回も同じ判断でよい"
   }
  ],
  "_reasonTypes": {
@@ -1274,6 +1347,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-09-30",
+ "updated": "2026-10-01",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

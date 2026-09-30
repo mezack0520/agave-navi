@@ -1,7 +1,21 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [],
-  "updated": "2026-09-20",
+  "items": [
+    {
+      "id": "agave-event-update:plant-shop-x-potter-coexhibition",
+      "addedOn": "2026-10-01",
+      "source": "agave-event-update Step0",
+      "question": "植物専門店と陶芸家の共作展(植物を鉢に植えた一点ものを展示・販売)は掲載するか",
+      "facts": [
+        "桑田卓郎と叢 展『多肉植物とプラ鉢』 2026-10-03〜25 Roll(東京都新宿区揚場町2-12)。主催告知 qusamura.com/information/exhibition/",
+        "叢(Qusamura)は多肉植物・サボテンの専門店。店主が選んだ植物を陶芸家がプラスチックで作った鉢に植えた共作を展示・販売する",
+        "potteryAndVesselShows は『主題が器』の作家展を見送る規則で、初例は陶芸作家の単独の鉢展(KAKU PLANTS POT展)。植物店が共同主催で、売る品が植物そのもの(鉢植え)の回はどちらにも書いていない",
+        "告知文は鉢の意味を中心に語る一方、題名は『多肉植物とプラ鉢』で両者を並記している(coTitledEvents に近い)"
+      ],
+      "proposal": "listing-policy.json outOfScopeGenres.potteryAndVesselShows に plantShopCoExhibition を足す案: 『対象植物の専門店が共同主催し、その店の対象植物を植えた鉢植えを展示・販売する回は掲載する(売る品が植物だから)。陶芸家の単独展で植物店が植物を添えるだけの回は従来どおり見送る』。採れば本件は掲載、採らなければ policy で見送り。叢は年に数回同型の展示(鐵展・植器・吉田直嗣展など)を開くので一度決めれば以後に当てられる"
+    }
+  ],
+  "updated": "2026-10-01",
   "resolved": [
     {
       "id": "event-monitor:ig-post-known-but-not-embedded",

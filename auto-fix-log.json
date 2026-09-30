@@ -252,6 +252,102 @@
    "action": "fixed",
    "detail": "取得が UTF-8 決め打ちで本文が化け、中止の語も開催日も読めていなかった。文字コードを見て読むよう直し、化けを検出する監査を足した",
    "mailedOn": "2026-09-30"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "路地裏ボタニカル 秋回 (2026-09-30)",
+   "action": "fixed",
+   "detail": "revisit=false で確定。主催は12/20回を告知(掲載済み)、9/30回は告知されないまま開催日を過ぎた"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "秋のコラボde マルシェ 2026 (2026-10-04)",
+   "action": "listed",
+   "detail": "主催 @collab_de_marche の告知 DdWWw9hEssc。ボタニカルエリア16店(観葉・塊根・アガベ・サボテン)で全体の約4割"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "第2回 BOTA☆MAGIC (2027-04-18)",
+   "action": "listed",
+   "detail": "IGローテで主催 @bota_magic の告知 DarQxFgzshU(チラシ画像)から"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "桑田卓郎と叢 展『多肉植物とプラ鉢』(2026-10-03〜25)",
+   "action": "skipped",
+   "detail": "植物店×陶芸家の共作展は policy に規則が無いので pending-judgments に追記案つきで積んだ"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "塊根植物ストックセール (2026-10-03)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "BOTANICA DÍA DE LOS MUERTOS (2026-10-31)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "第3回 COSMOフェス (2027-02-21)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "第7回 蒲郡多肉フェスタ (2027-03)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "植物に癒される vol.17 (2026-10-03)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "秋感inゆりの里公園 2026 (2026-10-11)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "2026秋のあいやまマルシェ (2026-10-04)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "agave-event-update",
+   "kind": "coverage_sweep",
+   "target": "第110回 緑と花の百科展 (2026-10-11)",
+   "action": "rejected",
+   "detail": "rejected-events.json に理由つきで記録"
   }
  ]
 }
