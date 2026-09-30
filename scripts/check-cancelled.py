@@ -160,14 +160,26 @@ VENDOR_CANCEL = (
 )
 
 
+# 中止しているのがイベント本体ではなく**同じ主催の別の催し**である言い回し。
+# 京都カクタスクラブの頁(第51回 日本シャボテン大会の出典)は過去の年間予定を
+# 載せ続けていて、「( 1月、2月、5月の例会は開催が中止となりました )」(2021年)
+# が CANCEL_WORDS に当たる。2026-09-30 に文字コードの誤読を直すまで化けていて
+# 見えていなかった。主語が例会・講習会などのときだけ落とす。
+SUBPROGRAM_CANCEL = (
+    r'(?:例会|講習会|教室|ワークショップ|体験会)(?:は|が|を)?(?:開催(?:が|を)?)?'
+    r'(?:中止|延期)(?:と)?(?:なりました|なります|いたします|します|させていただ\w*)?',
+)
+
+
 def drop_conditional(text):
     """イベントの中止を指していない言い回しを落とす。判定に使う前に通す。
 
-    落とすのは2種類。(1) 天候の条件文 (2) 主語が出展者1組の取り止め。
+    落とすのは3種類。(1) 天候の条件文 (2) 主語が出展者1組の取り止め
+    (3) 主語が例会・講習会など同じ主催の別の催し。
     どちらも「イベントが中止になったか」とは別のことを言っている。
     """
     out = text
-    for pat in CONDITIONAL_CANCEL + VENDOR_CANCEL:
+    for pat in CONDITIONAL_CANCEL + VENDOR_CANCEL + SUBPROGRAM_CANCEL:
         out = re.sub(pat, ' ', out)
     return out
 
@@ -364,8 +376,16 @@ def main():
         bsig = before.get('signature') or {}
         sig = res['signature']
         changed = []
+        # 化けた字(U+FFFD)の数。audit.cancel_watch_undecodable が読む(2026-09-30)。
+        # 文字コードを読み違えた頁は、語も日付も拾えないまま「見張っている」ことになる。
+        bad_chars = html.count('\ufffd')
+        # UTF-8 以外の頁は 2026-09-30 に読み方を直したので、直した後の初回だけ
+        # 本文の署名が変わる。中身の変化ではないので、その回は本文の変化に数えない。
+        reread = ('badChars' not in before and bool(bsig) and bool(re.search(
+            r'charset=["\']?\s*(?:shift_jis|shift-jis|sjis|windows-31j|euc-jp|iso-2022-jp)',
+            html[:4096], re.I)))
         if bsig:
-            if bsig.get('text') != sig['text']:
+            if bsig.get('text') != sig['text'] and not reread:
                 changed.append('本文')
             if bsig.get('images') != sig['images']:
                 changed.append('画像')
@@ -385,6 +405,7 @@ def main():
             'eventDateSeen': res.get('eventDateSeen'),
             'startDateIsPageMeta': res.get('startDateIsPageMeta'),
             'firstSeenOn': before.get('firstSeenOn') or today,
+            'badChars': bad_chars,
         }
 
         # 「本文だけ毎回変わる」ページがある。Wix や WordPress の一部は
@@ -598,6 +619,12 @@ def self_test(verbose=True):
     s3 = page_signature(FIX_DATE_CHANGED, today=_t)
     chk('開催日が変わった頁 → 署名は変わる', s1['text'] != s3['text'], True)
 
+    say('\n--- 別の催し(例会など)の中止 ---')
+    s1, _w1 = find_words(['( 1月、2月、5月の例会は開催が中止となりました )'])
+    chk('例会の中止は強い語に数えない', s1, [])
+    s2, _w2 = find_words(['第51回 日本シャボテン大会は開催を中止いたします'])
+    chk('大会本体の中止は拾う', bool(s2), True)
+
     say('\n--- 画像だけの告知(文言では拾えないことの確認) ---')
     before = analyze(FIX_IMAGE_NOTICE_BEFORE)
     after = analyze(FIX_IMAGE_NOTICE_AFTER)
@@ -618,6 +645,13 @@ def self_test(verbose=True):
                                'dateEnd': '2026-10-11'})
     chk('2026.10.10 形式でも開催日は拾う', d['eventDateSeen'], True)
     chk('2026.10.10 形式は名乗りには数えない', d['datesNamed'], 0)
+    # 2026-09-30: 魚町みらい広場の頁は数字と 年/月/日 を別々の span で
+    # 装飾していて、タグを空白にすると「10 月 17 日」になり日付0件に見えていた
+    sp = analyze('<p>日程：<span>2026</span><span>年</span><span>10</span>'
+                 '<span>月</span><span>17</span><span>日（土）</span></p>',
+                 {'slug': 'u', 'date': '2026-10-17', 'dateEnd': '2026-10-18'})
+    chk('数字と月日が別の span でも開催日を拾う', sp['eventDateSeen'], True)
+    chk('数字と月日が別の span でも名乗りに数える', sp['datesNamed'], 1)
 
     say('\n--- 開始日が頁の更新日から来ていないか ---')
     # 2026-09-12: 道の駅仁保の郷の告知は開催日を「9月19日（土）」1つしか

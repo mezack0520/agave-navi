@@ -168,8 +168,18 @@ def main():
                 if _val >= 5000:
                     _issues.append(f'入場料が異常に高い({_adm}) — 別商品の価格混入の疑い')
             _desc = ev.get('description') or ''
+            # 直前に植物の語が掛かっている形(「植物モチーフのフィギュア」
+            # 「ボタニカルコスメ」)は植物イベントの物販なので数えない(2026-09-30)。
+            # BOTANICAL BOTANICAL FUKUOKA の主催告知どおりの説明文が
+            # 「別イベント文の混入」として日次メールに出ていた。
+            _plant_q = ('植物', '多肉', 'サボテン', 'ボタニカル', 'アガベ', '塊根', 'グリーン')
             for _kw in ('新作コレクション', 'アパレル販売', 'フィギュア', 'ワンマンライブ', 'チケット絶賛', 'コスメ'):
-                if _kw in _desc:
+                _hit = False
+                for _m_kw in _re_pl.finditer(_re_pl.escape(_kw), _desc):
+                    if not any(q in _desc[max(0, _m_kw.start() - 10):_m_kw.start()] for q in _plant_q):
+                        _hit = True
+                        break
+                if _hit:
                     _issues.append(f'説明文に植物イベントらしくない語({_kw}) — 別イベント文の混入の疑い')
                     break
             if not ev_date:

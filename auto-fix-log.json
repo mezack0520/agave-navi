@@ -184,6 +184,46 @@
    "target": "Green Flea Market vol.2 / IRIE PLANTS BASH #5 / Plants Market in 町田パリオ / 京都みどりのマルシェ ベンケイソウ / TOKAI ECO FESTA",
    "action": "rejected",
    "detail": "内訳非公開・出店者の告知のみ・主題が植物でない のいずれか。前4件は revisit で保留"
+  },
+  {
+   "on": "2026-09-30",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "魚町ボダニカルナイトマーケット (10/17-18)",
+   "action": "reviewed",
+   "detail": "公式頁で会期・会場そのまま、中止の記載なし。頁の日付を拾えていなかった原因(数字と年月日が別の span)を sitelib で直した"
+  },
+  {
+   "on": "2026-09-30",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "ROOTS MARKET (10/25 稲毛)",
+   "action": "reviewed",
+   "detail": "9/28・9/29 と同じく画像だけの変化。9/29 に入れた規則で、続けば数日で黙る"
+  },
+  {
+   "on": "2026-09-30",
+   "task": "event-monitor",
+   "kind": "cancel_watch_unreachable",
+   "target": "秋の多肉植物・サボテン展示会 樹里安 (10/24-25)",
+   "action": "reviewed",
+   "detail": "取得失敗は一過性。公式頁を開き、10/24-25 9:00〜17:00 のまま、中止の記載なし"
+  },
+  {
+   "on": "2026-09-30",
+   "task": "event-monitor",
+   "kind": "implausible",
+   "target": "BOTANICAL BOTANICAL FUKUOKA の説明文(フィギュア)",
+   "action": "fixed",
+   "detail": "主催告知どおりの「植物モチーフのフィギュア」を混入と判定していた。植物の語が掛かる形は数えないよう check_events.py を直した"
+  },
+  {
+   "on": "2026-09-30",
+   "task": "event-monitor",
+   "kind": "cancel_watch",
+   "target": "ビッグバザール・日本シャボテン大会の出典(Shift_JIS)",
+   "action": "fixed",
+   "detail": "取得が UTF-8 決め打ちで本文が化け、中止の語も開催日も読めていなかった。文字コードを見て読むよう直し、化けを検出する監査を足した"
   }
  ]
 }

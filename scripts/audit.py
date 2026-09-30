@@ -2814,6 +2814,23 @@ def main():
         '全体が止まっているわけではないので info',
         severity='info')
 
+    # 16x. 出典を文字コードを読み違えたまま見張っている(2026-09-30)。
+    #      sitelib.fetch_text は UTF-8 決め打ちで、Shift_JIS の isij.net と
+    #      kyotocactus.syuriken.jp は本文が化けていた(U+FFFD が 3,879 / 14,383 字)。
+    #      取得は成功するので cancel_watch_unreachable にも broken にも出ず、
+    #      中止の語も開催日も拾えないまま「見張っている」状態が続いていた。
+    #      直した後はどの頁も 0 字。0 が正常なので urgent。
+    _cw_garbled = []
+    for _sl, _pg in sorted((_cw.get('pages') or {}).items()):
+        _bc = (_pg or {}).get('badChars')
+        if isinstance(_bc, int) and _bc >= 20:
+            _cw_garbled.append(f"{_sl}: 化けた字 {_bc} 字 {(_pg or {}).get('url', '')}")
+    add('cancel_watch_undecodable', '中止の見張りが出典の文字コードを読めていない',
+        _cw_garbled,
+        '頁の charset を sitelib.decode_html が扱えていない。応答ヘッダと '
+        '<meta charset> を見て decode_html に足す。読めない間はその回の中止の語も'
+        '開催日も拾えない')
+
     add('cancel_watch_broken', '中止の見張りが機能していない',
         sorted(_cw_broken),
         'check-cancelled.py の取得が失敗しているか、日次で走っていない。'

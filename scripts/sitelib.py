@@ -180,6 +180,34 @@ def should_retry_status(code):
     return code in RETRY_HTTP_STATUS
 
 
+_CHARSET_RE = re.compile(rb'''<meta[^>]+charset=["\']?\s*([A-Za-z0-9_\-]+)''', re.I)
+
+
+def decode_html(raw, content_type=None):
+    """bytes を文字列にする。応答ヘッダ → meta の charset → UTF-8 の順に見る。
+
+    **UTF-8 決め打ちで読んでいた(〜2026-09-30)。**isij.net(ビッグバザール
+    6回ぶんの出典)は Shift_JIS で、本文が化けたまま中止の語も開催日も
+    1つも拾えず、cancel-watch.json に datesNamed=0 / eventDateSeen=False と
+    書かれていた。見張っているように見えて、何も読めていなかった。
+    """
+    cs = None
+    m = re.search(r'charset=["\']?([A-Za-z0-9_\-]+)', content_type or '', re.I)
+    if m:
+        cs = m.group(1)
+    if not cs:
+        m = _CHARSET_RE.search(raw[:4096] or b'')
+        if m:
+            cs = m.group(1).decode('ascii', 'ignore')
+    cs = (cs or 'utf-8').lower()
+    if cs in ('shift_jis', 'shift-jis', 'sjis', 'x-sjis', 'windows-31j'):
+        cs = 'cp932'   # 機種依存文字(①・㈱)で落ちないよう上位集合で読む
+    try:
+        return raw.decode(cs, 'replace')
+    except LookupError:
+        return raw.decode('utf-8', 'replace')
+
+
 def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
     """外部ページを取って文字列で返す。接続系の失敗と RETRY_HTTP_STATUS を引き直す。
 
@@ -198,7 +226,7 @@ def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
     for attempt in range(retries + 1):
         try:
             with _ureq.urlopen(req, timeout=timeout) as r:
-                return r.read().decode('utf-8', 'replace')
+                return decode_html(r.read(), r.headers.get('Content-Type'))
         except _uerr.HTTPError as ex:
             if not should_retry_status(ex.code) or attempt == retries:
                 raise
@@ -326,14 +354,18 @@ def compact_date(e):
 #
 # 年は持たない。告知は「9月20日(日)」と書くほうが多く、年まで書く頁のほうが
 # 少ない。年の食い違いは find_year_month_days() が別に見る。
-_MD_KANJI = re.compile(r'(\d{1,2})月\s*(\d{1,2})日')
+# 数字と 年/月/日 の間の空白も許す(2026-09-30)。page_text_blob はタグを空白に
+# 置き換えるので、WordPress のエディタが「<span>10</span><span>月</span>」と
+# 1字ずつ装飾した頁は「10 月 17 日」になり、1つも日付を名乗らない頁に見えていた
+# (魚町みらい広場。datesNamed=0 で出典の検査を素通りし、eventDateSeen=False)。
+_MD_KANJI = re.compile(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日')
 # 「6/1(土)」形式。前年告知の貼り付けを実際に取り逃がしたので拾う
 # (fujiyama-days-little-green-park-2026)。時刻 9:30 と比を巻き込まないよう
 # 前後に数字・コロン・スラッシュが来る形は外す。
 _MD_SLASH = re.compile(r'(?<![\d:/])(\d{1,2})/(\d{1,2})(?![\d/])')
 # 「2026.10.10」「2026-10-10」「2026/10/10」形式
 _YMD_SEP = re.compile(r'(\d{4})[./-](\d{1,2})[./-](\d{1,2})')
-_YMD_KANJI = re.compile(r'(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日')
+_YMD_KANJI = re.compile(r'(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日')
 
 
 def _md_ok(m, d):
