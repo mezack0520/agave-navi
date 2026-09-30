@@ -55,6 +55,12 @@ jobs:
       - name: Install deps
         run: pip install requests beautifulsoup4 lxml pillow
 
+      # メールに載せるのは「このジョブが実際に書き換えた内容」(2026-09-30)。
+      # 起点を覚えておき、補完の後に events.json の差分を回・項目ごとに出す
+      - name: Record base
+        id: base
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Resolve parameters
         id: p
         env:
@@ -88,6 +94,10 @@ jobs:
       - name: Backfill missing images (og:image)
         run: python3 scripts/backfill-images.py --upcoming-only || true
 
+      - name: Summarize data changes
+        if: always()
+        run: python3 scripts/data-change-report.py "${{ steps.base.outputs.sha }}" --out /tmp/changes.txt || true
+
       # Instagram の画像取得はここでは走らせない。
       # 2026-09-08 に試したところ、GitHub Actions のIPからは instagram.com が
       # 応答せず、30件すべてがタイムアウトして実行時間が5分→11分になり
@@ -106,16 +116,22 @@ jobs:
           # 以後の再試行が全て失敗していた(daily #160)。詳細はスクリプト冒頭。
           bash scripts/ci-push.sh "chore(weekly-enrichment): backfill imageUrl/url/venue + regen all" "bash scripts/build-all.sh"
 
-      # レポートはメールで送る。2026-09-25 まで Issue に出していたが、
-      # 誰も読まず閉じもしない置き場だった。
+      # メールは「書き換えた内容」と「埋められなかったもの(理由)」だけ(2026-09-30)。
+      # 以前は検索で見つけた候補値を並べて「確認の上で更新してください」と書いていたが、
+      # 値は --write-back で書き込み済みで、読んでも何が変わったのか分からなかった。
+      # どちらも無い週は送らない。
       - name: Prepare enrichment mail
         id: mail
         if: always()
         run: |
-          if [ -f /tmp/enrich-report.md ]; then
-            cp /tmp/enrich-report.md enrich-mail.txt
-            echo "exists=true" >> "$GITHUB_OUTPUT"
+          : > enrich-mail.txt
+          if [ -s /tmp/changes.txt ]; then
+            { echo "今週の自動補完で events.json に書き込んだ内容です。"; echo "値が違っていたら、その回のその項目を戻して scripts/image-rejected.json 等に記録してください。"; echo; cat /tmp/changes.txt; } >> enrich-mail.txt
           fi
+          if [ -f /tmp/enrich-report.md ] && grep -q "差し替えられなかった" /tmp/enrich-report.md; then
+            { echo; cat /tmp/enrich-report.md; } >> enrich-mail.txt
+          fi
+          [ -s enrich-mail.txt ] && echo "exists=true" >> "$GITHUB_OUTPUT"
           echo "today=$(TZ=Asia/Tokyo date +'%Y/%m/%d')" >> "$GITHUB_OUTPUT"
 
       - name: Send enrichment mail
