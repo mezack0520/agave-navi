@@ -7,7 +7,7 @@ name: Health Check
 # 3. 画像生死監視 + dead URL クリア (image-health-check.py)
 # 4. SSL/ドメイン残日数
 # 5. 各イベント詳細の生死 (check_events.py)
-# 結果は毎日メールで送る(異常は件名に【異常N件】)。Issue は 2026-09-25 に廃止
+# 結果はメールで送る。判断・反映・残った異常が無い日は送らない(2026-09-30)。Issue は 2026-09-25 に廃止
 
 on:
   schedule:
@@ -45,10 +45,6 @@ jobs:
       - name: Install deps
         run: pip install requests
 
-      - name: Set date (Asia/Tokyo)
-        id: date
-        run: echo "today=$(TZ=Asia/Tokyo date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
-
       - name: Detect newly added events (last 24h)
         if: github.event_name != 'push'
         run: python3 scripts/detect-added-events.py
@@ -70,12 +66,10 @@ jobs:
           echo "broken=$(cat /tmp/broken-count 2>/dev/null || echo 0)" >> $GITHUB_OUTPUT
 
       - name: 3. Image health (clear dead imageUrls)
-        id: imghealth
         if: github.event_name != 'push'
         run: |
-          python3 scripts/image-health-check.py 2>&1 | tee /tmp/img.log || true
-          DEAD=$(grep -c "dead\|404" /tmp/img.log || true)
-          echo "dead=$DEAD" >> $GITHUB_OUTPUT
+          # 死んだ imageUrl は自分で外す(直す側の処理)。件数をメールに載せる理由は無い
+          python3 scripts/image-health-check.py || true
 
           # If events.json changed, regen detail pages + sync index
           if ! git diff --quiet events.json; then
@@ -112,7 +106,6 @@ jobs:
         env:
           INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
           LINKS_BROKEN: ${{ steps.linkcheck.outputs.broken || 0 }}
-          IMAGES_DEAD: ${{ steps.imghealth.outputs.dead || 0 }}
           SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
         run: |
           if [ -f check-results.json ]; then
@@ -122,7 +115,8 @@ jobs:
             echo "results_exist=false" >> $GITHUB_OUTPUT
           fi
       - name: Send daily email
-        if: github.event_name != 'push' && steps.emailbody.outputs.results_exist == 'true'
+        # 判断・反映・残った異常のどれも無い日は送らない(build-health-mail.py の冒頭)
+        if: github.event_name != 'push' && steps.emailbody.outputs.results_exist == 'true' && steps.emailbody.outputs.send == 'true'
         continue-on-error: true
         # 第三者のactionはSHAで固定する。タグは動かせるので、v3 のままだと
         # 相手のリポジトリが乗っ取られた日に GMAIL_APP_PASSWORD が渡る。
@@ -134,7 +128,7 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "${{ steps.emailbody.outputs.subj_prefix }}【アガベイベント】定期チェック結果 agave-navi ${{ steps.date.outputs.today }}"
+          subject: "${{ steps.emailbody.outputs.subject }}"
           to: yuji.mezaki@gmail.com
           from: "アガベイベントナビ <${{ secrets.GMAIL_USER }}>"
           body: file://email-body.txt
