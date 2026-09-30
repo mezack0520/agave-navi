@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-09-29",
+  "sweptOn": "2026-09-30",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,35 +16,22 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 993,
-    "in_scope": 293,
-    "covered": 175,
-    "known_rejected": 115,
+    "candidates": 978,
+    "in_scope": 288,
+    "covered": 179,
+    "known_rejected": 109,
     "truncated_resolved": 180,
     "truncated_unresolved": 2,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 200,
+    "in_scope_leafla": 194,
     "truncated_unresolved_hits": 90,
-    "in_scope_nextmeet": 93,
-    "gaps_raw": 3
+    "in_scope_nextmeet": 94,
+    "gaps_raw": 0
   },
   "errors": [],
   "truncatedUnresolved": [
     "09/28 追加 SUGAMO KAIWAI／巣鴨界隈 2026...",
     "09/28 追加 豊田市の新盛集会所 扶桑館で秋の山野草展を10..."
   ],
-  "gaps": [
-    {
-      "date": "2026-10-04",
-      "title": "多肉とくらしマルシェvol 5"
-    },
-    {
-      "date": "2026-10-17",
-      "title": "第16回 多肉だヨ！全員集合"
-    },
-    {
-      "date": "2026-11-28",
-      "title": "SPINE NOTE Vol.2「GEEK OF FOOLS」"
-    }
-  ]
+  "gaps": []
 }

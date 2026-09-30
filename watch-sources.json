@@ -1,12 +1,12 @@
 {
- "generated": "2026-09-30 08:28 JST",
+ "generated": "2026-09-30 09:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 283,
   "awaitingNextEdition": 292,
   "officialSiteCandidates": 75,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 79
+  "igNeedsBrowser": 76
  },
  "igAccounts": [
   {
@@ -57,7 +57,7 @@
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "botayoko",
@@ -577,7 +577,7 @@
    "lastEventDate": "2026-10-04",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "hanauchustaff",
@@ -707,7 +707,7 @@
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "blue.ocean8484",
@@ -717,7 +717,7 @@
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "ibatama.ta29",

@@ -982,8 +982,10 @@
    "date": "2026-09-30",
    "urgent": {},
    "info": {
-    "coverage_gaps": 3,
-    "task_run_gap": 1
+    "cancel_suspects": 2,
+    "cancel_watch_unreachable": 1,
+    "eyecatch_candidates_pending": 12,
+    "task_run_gap": 2
    },
    "metric": {
     "thin_past_with_source": 33,
