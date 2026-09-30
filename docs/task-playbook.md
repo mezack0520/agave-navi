@@ -2090,6 +2090,12 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   入場時間・整理券の表のスライドだった。`igGrabHere` は1枚目を指定できない。
   カルーセルの回は取れた画像が告知かどうかを特に疑い、違えば捨てる。
 
+- **`no main image` が出ても1回は待って取り直す。**(2026-09-30)
+  ka78-kikakusai の投稿は4秒待ちで `no main image`、数秒後に同じページで呼び直すと取れた。
+  描画前の失敗と動画の失敗は同じ返り値になる。取り直しても img も video 要素も無く、
+  画面上で主メディア枠が暗いまま(botariba-toyohashi / lier-taniku-festival /
+  gamagori-taniku-festa-6th)なら動画扱いで諦める。
+
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
 `primarySource.vendorAnnouncementsOnly` は「出店者の告知は主催の告知の代わりに
