@@ -1518,6 +1518,12 @@ def main():
             _orphan.append(f'{rel}: GitHub Issue を読み書きする(Issue は誰の受信箱でもない。'
                            '連絡はメールに一本化している)')
     for t, fs in sorted(_tmp_occ.items()):
+        # workflow の中で書いて、同じ workflow の後の step で読むものは消費されている
+        # (weekly-enrichment の /tmp/changes.txt。2026-09-30)
+        if len(fs) == 1:
+            _only = next(iter(fs))
+            if _only.endswith('.yml') and open(rp(_only), encoding='utf-8').read().count(t) >= 2:
+                continue
         if len(fs) == 1 and t not in _TMP_SELF_CONSUMED:
             _orphan.append(f'{next(iter(fs))}: {t} を書いているが読む側が無い')
     add('orphan_outputs', '書いているのに誰も読まない出力(旧設計の名残)', _orphan,

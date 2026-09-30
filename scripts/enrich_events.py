@@ -641,78 +641,22 @@ def process_event(event, force=False):
 
 
 def generate_report(results, removed_names=None):
-    """Generate actionable markdown report"""
-    now = datetime.now().strftime('%Y-%m-%d %H:%M')
-    removed_names = removed_names or []
-
-    enriched = [r for r in results if r and r.get('category') == 'enriched']
-    needs_manual = [r for r in results if r and r.get('category') == 'needs_manual']
-    no_source = [r for r in results if r and r.get('category') == 'no_source']
-    skipped = len([r for r in results if r is None])
-    total = len(results) + skipped
-
-    report = f"""## イベント情報エンリッチメントレポート
-**実行日時**: {now} (UTC)
-**対象**: {total}件中 ✅{len(enriched)}件自動取得 / 🗑️{len(needs_manual)}件削除 / ⏭️{skipped}件スキップ
-
-"""
-
-    # === Section 1: Successfully enriched ===
-    if enriched:
-        report += "### ✅ 情報自動取得成功\n\n"
-        for r in enriched:
-            info = r.get('extracted_info', {})
-            report += f"#### {r['name']} (`{r['slug']}`)\n"
-            report += f"- **公式URL**: {r['best_url']}\n"
-
-            if info.get('ogp_image'):
-                report += f"- **サムネイル**: `{info['ogp_image'][:100]}`\n"
-            else:
-                report += f"- **サムネイル**: ❌ 取得できず\n"
-
-            if info.get('venues_found'):
-                report += f"- **会場**: {info['venues_found'][0]}\n"
-            if info.get('dates_found'):
-                report += f"- **日程**: {', '.join(info['dates_found'][:2])}\n"
-            if info.get('times_found'):
-                report += f"- **時間**: {', '.join(info['times_found'][:2])}\n"
-            if info.get('prices_found'):
-                report += f"- **入場料**: {', '.join(info['prices_found'][:3])}\n"
-            if info.get('organizers_found'):
-                report += f"- **主催**: {info['organizers_found'][0]}\n"
-
-            state = r['page_state']
-            issues = []
-            if state.get('has_generic_desc'):
-                issues.append("テンプレ概要文")
-            if not state.get('has_ogp_image'):
-                issues.append("OGP画像なし")
-            if issues:
-                report += f"- **要修正**: {', '.join(issues)}\n"
-            report += "\n"
-
-    # === Section 2: Removed events ===
-    if removed_names:
-        report += "### 🗑️ 削除済み（公式情報なし）\n\n"
-        report += "以下のイベントは公式サイトが見つからなかったため、`events.json` と詳細ページを削除しました。\n\n"
-        for name in removed_names:
-            report += f"- {name}\n"
-        report += "\n"
-        report += "※ 復元する場合は、公式サイトURLを見つけた上でイベントを再登録してください。\n\n"
+    """週次メールに載せる「埋められなかったもの」(理由つき)。無ければ空文字"""
+    # メールに載せるのは「埋められなかったもの」だけ(2026-09-30)。
+    # 書き込んだ内容は scripts/data-change-report.py が events.json の差分から出す。
+    # 以前ここにあった「抽出した候補値の一覧」は、--write-back で書き込み済みの値を
+    # 「確認の上で更新してください」と並べるだけで、読んでも打つ手が無かった。
+    report = ""
 
     # === Section 3: 短文のまま残ったイベントと、その理由 ===
     if DESC_SKIPS:
-        report += "### ✍️ 説明文が短いまま残った開催予定イベント\n\n"
-        report += "監査の `short_descriptions` が動かない原因はここに出る。"
-        report += "`candidate identical` が続く回は出典側に本文が無い。\n\n"
+        report += "■ 説明文を差し替えられなかった開催予定の回（理由つき）\n"
+        report += "candidate identical が続く回は出典側に本文が無い。朝のタスクが主催の告知から書き直す対象。\n\n"
         report += "| slug | 現在 | 候補 | 差し替えなかった理由 |\n|---|---|---|---|\n"
         for slug, cur_n, cand_n, why in DESC_SKIPS:
             report += f"| `{slug}` | {cur_n}字 | {cand_n}字 | {why} |\n"
         report += "\n"
 
-    report += "\n---\n"
-    report += "*このレポートは自動エンリッチメントスクリプトで生成されました。*\n"
-    report += "*✅の情報は自動抽出のため、正確性を確認の上で更新してください。*\n"
     return report
 
 
