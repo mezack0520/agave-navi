@@ -125,8 +125,10 @@
    そのまま直して、その結果を報告する」。朝のタスク(`agave-event-update` が主担当、
    `event-monitor` は残りを拾う)は本業の後に §「日次メールの項目は、報告する前に直す」の
    表を上から処理し、**1件ごとに `scripts/log-fix.py` で結果を残す。**
-   メール(12:00 JST)はその記録を「直したもの / 直せなかったもの」として先頭に出す。
-   記録しない修正はメールに載らず、目崎からは「何もしていない」に見える。
+   メール(12:00 JST)は「判断が必要なこと / サイトに反映したこと / タスクが直せずに
+   残っていること」だけを載せ、どれも無い日は送らない(2026-09-30。900行の一覧を
+   「あんまり意味ない」と言われて作り直した。`build-health-mail.py` の冒頭)。
+   掲載は events.json の差分から出るが、修正はこの記録からしか出ない。
 
 置き場（すべて `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` 配下）:
 - PAT: `agave-navi\github.pat`
@@ -3292,8 +3294,8 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
     --detail "主催 @botanoichi の告知 Dds5U7DN2Vf で裏取り"
 ```
 
-**直せなかった回は `skipped` に理由を書く。**理由の無い「直せなかった」は
-メールで目崎に丸投げするのと同じになる。`pending-judgments.json` に積むのは、
+**直せなかった回は `skipped` に理由を書く。**メールには出ないが、翌日のタスクが
+同じ調べ直しをしないための記録になる(主催の発表待ちなど)。`pending-judgments.json` に積むのは、
 listing-policy に規則が無い類型に出会ったときだけ(`doNotEscalate` の項目は積まない)。
 
 `auto-fix-log.json` は運ぶデータ(`audit._CI_CARRY_DATA`)。
