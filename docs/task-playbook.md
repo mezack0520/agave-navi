@@ -2711,6 +2711,22 @@ build-all を回せば、remote 側の項目を読み込んだ上に自分の差
 `track-updates.py` は `build-all.sh` の中にいる。それで足りる。
 「積み上げ式かどうか」は判定材料ではない。
 
+### 週次巡回(weekly-discovery)は廃止した (2026-09-30)
+
+目崎: 「週次巡回レポートのメール意味ない」。9/30 の回を手元で再現したら、
+「新規イベント候補」40件のうち新規は茨城の店頭セール1件だけで、残りは
+2019〜2024年のブログ記事・集約サイトの一覧頁の見出し・掲載済みの回だった。
+`crawl_events.py` の重複判定は名前の完全一致に近く、掲載済みの回を
+公式頁から拾い直しても新規と数えていた。新ソース発掘(`discover_sources.py`)も
+DuckDuckGo の検索結果を並べるだけで、採否の材料にならない。
+
+取りこぼしの検出は `coverage-sweep.py`(日次・名前/会場/見送りまで照合)と
+手でやる巡回(`manual-sweeps.json`)、朝のタスクの探索が担っており、
+週次巡回がそれに足していたものは無かった。**直す仕組みにつながらない一覧は
+メールにしても読まれない**(日次メールを「直した結果の報告」に変えたのと同じ理由)。
+`weekly-discovery.yml` / `crawl_events.py` / `discover_sources.py` を削除した。
+`crawl-sources.json` は `generate-watchlist.py` が使うので残す。
+
 ### events.json は行でなく回と項目で合わせる (2026-09-28)
 
 `Sync New Events` #111 が `ci-push.sh` の「データファイルが remote と衝突した」で

@@ -17,7 +17,7 @@
 | `docs/task-playbook.md` | タスク共通の運用手順。**タスク自身が更新してよい**唯一の恒久化先 | 各Claudeタスク |
 | `audit-history.json` | 監査結果の推移(直近90件)。改善/悪化の判断に使う | scripts/audit.py |
 | `listing-policy.json` | 掲載基準の機械可読版。event-updateが判断に使い、書いていない類型だけキューに積む | 人間の決定をClaudeが記録 |
-| `crawl-sources.json` | 週次クローラの巡回先(52+自動候補) | 手動+discover_sources |
+| `crawl-sources.json` | 既知の情報源の一覧。generate-watchlist.py が公式候補の重複除けに使う(週次クローラは 2026-09-30 に廃止) | 手動 |
 | `check-results.json` | 日次チェック結果(メール本文の素) | health.yml |
 | `audit-results.json` | 整合監査の結果。除外・欠落・孤児を毎ビルドで記録 | scripts/audit.py |
 | `scripts/sitelib.py` | 単一情報源(スラッグ表/日付整形/共通ヘッダフッタ/CSS版数) | 手動 |
@@ -60,9 +60,6 @@ push毎  [GitHub] pages build and deployment → 本番反映(CDNキャッシュ
 月 09:04 [Claude] agave-navi-site-health-check
          ページ構造(event-hero/eh-spec/status-auto.js等の現行基準)・Actions失敗検出
          → 失敗があれば dispatch(daily) で自動再ビルド / 提案系はキューへ(最大2件/週)
-水 09:00 [GitHub] weekly-discovery.yml
-         crawl_events.py(crawl-sources 52+watch-sources公式候補を巡回)
-         → discover_sources.py(新ソース発掘) → 両レポートを週次メール
 日 10:00 [GitHub] weekly-enrichment.yml
          enrich_events.py(欠損フィールド補完) → backfill-images.py --upcoming-only
          (daybook記事本文フライヤー・開催日照合・汎用/無関係画像拒否) → build-all.sh
