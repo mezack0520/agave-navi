@@ -1,7 +1,27 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-09-30",
+  "updated": "2026-10-01",
   "items": [
+    {
+      "on": "2026-10-01",
+      "kind": "listed",
+      "slug": "collab-de-marche-autumn-sunpu-2026-10",
+      "name": "秋のコラボde マルシェ 2026",
+      "date": "2026-10-04",
+      "dateEnd": "2026-10-04",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-01",
+      "kind": "listed",
+      "slug": "bota-magic-2nd-wakayama-2027-04",
+      "name": "第2回 BOTA☆MAGIC",
+      "date": "2027-04-18",
+      "dateEnd": "2027-04-18",
+      "prefecture": "和歌山",
+      "detail": ""
+    },
     {
       "on": "2026-09-30",
       "kind": "listed",
@@ -1180,26 +1200,6 @@
       "date": "2026-10-10",
       "dateEnd": "2026-10-12",
       "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "botanical-monsters-2027-okazaki",
-      "name": "BOTANICAL MONSTERS 2027",
-      "date": "2027-01-17",
-      "dateEnd": "2027-01-17",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "bizarre-plants-night-day-2026-12",
-      "name": "ビザールプランツナイト(&デイ)",
-      "date": "2026-12-05",
-      "dateEnd": "2026-12-06",
-      "prefecture": "愛知",
       "detail": ""
     }
   ]
