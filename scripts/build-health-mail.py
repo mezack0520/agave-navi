@@ -69,7 +69,7 @@ today_iso = now.strftime('%Y-%m-%d')
 _ENGINEERING_KINDS = {
     'cross_script_duplicate', 'cancel_watch', 'cancel_watch_unreachable', 'task_run_gap',
     'task_run_never_recorded', 'orphan_outputs', 'unreferenced_scripts', 'ci_push_bypassed',
-    'rejected_revisit_expired',
+    'rejected_revisit_expired', 'health_mail',
 }
 unsent = [i for i in fixlog.get('items') or [] if not i.get('mailedOn')]
 site_fixes = [i for i in unsent
@@ -93,9 +93,10 @@ lines = [f'【アガベイベントナビ】{today}', '']
 if judgments:
     lines.append(f'━━━ 🙋 あなたの判断が必要です（{len(judgments)}件）━━━')
     for j in judgments:
-        lines.append(f"■ {j.get('title', '')}（{j.get('date', '')}）")
-        if j.get('detail'):
-            lines.append(f"  {j['detail']}")
+        _h, _d, _body = sitelib.judgment_fields(j)
+        lines.append(f"■ {_h}" + (f"（{_d}）" if _d else ''))
+        for _b in _body:
+            lines.append(f"  {_b}")
         if j.get('proposal'):
             lines.append(f"  → 提案: {j['proposal']}")
     lines.append('Cowork で Claude に指示してください（例:「キューの◯◯を承認」）。')

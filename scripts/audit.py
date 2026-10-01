@@ -4959,6 +4959,16 @@ def main():
         if _id in _seen_ids:
             pj_bad.append(f'{_id}: 同じ id が重複して積まれている')
         _seen_ids.add(_id)
+        # 見出しはメールの「■」行になる。読む規則は sitelib.judgment_fields が
+        # 単一情報源(2026-10-01。メールが title だけを読み、question で積んだ
+        # 項目が「■ （）」で届いていた)
+        _jh, _jd, _jb = sitelib.judgment_fields(_it)
+        if not _jh:
+            pj_bad.append(f'{_id}: 見出し(question / title)が無い。'
+                          'メールの判断の行が空になる')
+        if not _jb:
+            pj_bad.append(f'{_id}: 根拠(facts / detail)が無い。'
+                          'メールに判断材料が出ない')
         if not (_it.get('proposal') or '').strip():
             pj_bad.append(f'{_id}: proposal が無い'
                           '（listing-policy.escalate.requirement）')

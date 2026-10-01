@@ -348,6 +348,62 @@
    "target": "第110回 緑と花の百科展 (2026-10-11)",
    "action": "rejected",
    "detail": "rejected-events.json に理由つきで記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "MIDOLIEN (2026-10-09)",
+   "action": "reviewed",
+   "detail": "出展頁の会期・会場は変わらず。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "SPICY GEM feat. KAKUSEN-EN (2026-10-11)",
+   "action": "reviewed",
+   "detail": "キャンセルは入店抽選の注文の説明。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "11月のサボテン・多肉植物ビッグバザール (2026-11-22)",
+   "action": "reviewed",
+   "detail": "ISIJ トップ頁に 11/22 の行が残っている。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "花と緑のフラワーオークション (2026-10-04)",
+   "action": "rejected",
+   "detail": "9/27 回と同じく対象ジャンル外。rejected-events.json に記録"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "cancel_watch",
+   "target": "check-cancelled.py",
+   "action": "fixed",
+   "detail": "通販の注文キャンセルの言い回しを弱い語から外した"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "health_mail",
+   "target": "日次メールの判断の行",
+   "action": "fixed",
+   "detail": "question/facts で積んだ項目が「■ （）」で届いていた。sitelib.judgment_fields に寄せた"
+  },
+  {
+   "on": "2026-10-01",
+   "task": "event-monitor",
+   "kind": "health_mail",
+   "target": "日次メールの掲載の行",
+   "action": "fixed",
+   "detail": "fetch-depth 10 の clone で比較元が取れず掲載が0件になっていた。detect-added-events.py が履歴を足す"
   }
  ]
 }

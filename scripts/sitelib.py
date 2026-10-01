@@ -1491,6 +1491,30 @@ def is_generic_image_url(u):
 # 画像の受け入れ判定も backfill と enrich に別々にあり、片方だけに
 # http:// を弾く行があって 2026-09-08 に事故を出している。ここに寄せる。
 
+def judgment_fields(item):
+    """pending-judgments.json の1項目から、日次メールに出す (見出し, 日付, 本文の行) を返す。
+
+    キューを書く側(各タスク)は question / facts / addedOn を書き、
+    メール(build-health-mail.py)は title / date / detail だけを読んでいた。
+    そのため**判断を求める行が「■ （）」になり、問いも根拠も届いていなかった**
+    (2026-10-01 発見。09-30 の作り直しより前の版も同じキーを読んでいた)。
+    読む側と書く側で別々にキー名を持つと食い違うので、ここに寄せる。
+    audit.pending_judgment_policy も同じ関数で見出しの有無を見る。
+    """
+    item = item or {}
+    head = str(item.get('title') or item.get('question') or '').strip()
+    date = str(item.get('date') or item.get('eventDate') or '').strip()
+    if not date and item.get('addedOn'):
+        date = f"{item['addedOn']} に積んだ"
+    body = []
+    if str(item.get('detail') or '').strip():
+        body.append(str(item['detail']).strip())
+    for f in item.get('facts') or []:
+        if str(f or '').strip():
+            body.append(f'・{str(f).strip()}')
+    return head, date, body
+
+
 def listing_policy():
     """listing-policy.json。壊れていたら黙って通さず落とす。
 

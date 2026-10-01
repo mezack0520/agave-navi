@@ -27,6 +27,26 @@ def _git(args):
                                    stderr=subprocess.DEVNULL).decode()
 
 
+def ensure_history(days=3):
+    """浅い clone なら、比較の窓を覆うところまで履歴を足す。
+
+    health.yml は fetch-depth: 10 で checkout する。ところが CI の自動コミットは
+    1日に15〜20本あり、24時間の窓が10本に収まらない。浅い clone の境界の
+    コミットは「ツリー全体を足した」ように見えるので、それが窓の最古として選ばれ、
+    親が無くて比較元が取れず、**その日の掲載がメールから黙って消えていた**
+    (2026-10-01 に depth 10 の clone で再現。実際は2件増えていて結果は0件)。
+    workflow の深さに頼らず、ここで足す。
+    """
+    try:
+        if _git(['rev-parse', '--is-shallow-repository']).strip() != 'true':
+            return
+        subprocess.run(['git', 'fetch', '--quiet', f'--shallow-since={days} days ago',
+                        'origin'], cwd=REPO, check=True, timeout=180,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception as ex:                         # noqa: BLE001
+        print(f'detect-added-events: 履歴を足せない: {ex}', file=sys.stderr)
+
+
 def baseline_ref(since='24 hours ago'):
     """比較元のコミット参照を返す。取れなければ None。"""
     try:
@@ -41,6 +61,7 @@ def baseline_ref(since='24 hours ago'):
 
 def baseline_slugs(since='24 hours ago'):
     """比較元の slug 集合。取れなければ None(= 増分ゼロ扱い)。"""
+    ensure_history()
     ref = baseline_ref(since)
     if ref is None:
         return None
