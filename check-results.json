@@ -1,16 +1,8 @@
 {
-  "check_date": "2026-09-30",
-  "total_events": 509,
+  "check_date": "2026-10-01",
+  "total_events": 511,
   "dead_links": [],
-  "unreachable": [
-    {
-      "slug": "jurian-aki-taniku-cactus-2026-10",
-      "name": "秋の多肉植物・サボテン展示会（樹里安）",
-      "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
-      "statusCode": -1,
-      "alive": false
-    }
-  ],
+  "unreachable": [],
   "tbd_events": [
     {
       "slug": "botanical-botanical-osaka-2026-10",
@@ -2268,6 +2260,15 @@
       "sourceUrl": "https://www.instagram.com/p/Dd4uh2FzckW/"
     },
     {
+      "slug": "collab-de-marche-autumn-sunpu-2026-10",
+      "name": "秋のコラボde マルシェ 2026",
+      "date": "2026-10-04",
+      "dateEnd": "2026-10-04",
+      "location": "駿府城公園 紅葉山庭園前広場（静岡県静岡市葵区駿府城公園1-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DdWWw9hEssc/"
+    },
+    {
       "slug": "hanauchu-dream-garden-28th-2026-10",
       "name": "第28回 花宇宙ドリームガーデン",
       "date": "2026-10-09",
@@ -3609,6 +3610,15 @@
       "sourceUrl": "https://www.instagram.com/p/Ddqwek_pm1Q/"
     },
     {
+      "slug": "bota-magic-2nd-wakayama-2027-04",
+      "name": "第2回 BOTA☆MAGIC",
+      "date": "2027-04-18",
+      "dateEnd": "2027-04-18",
+      "location": "和歌山城 西の丸広場（和歌山県和歌山市一番丁3）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DarQxFgzshU/"
+    },
+    {
       "slug": "isij-big-bazaar-2027-05-23",
       "name": "サボテン・多肉植物ビッグバザール（2027年5月）",
       "date": "2027-05-23",
@@ -3735,8 +3745,8 @@
       "slug": "jurian-aki-taniku-cactus-2026-10",
       "name": "秋の多肉植物・サボテン展示会（樹里安）",
       "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "roots-market-inage-2026-10",
