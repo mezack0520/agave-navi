@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-01 08:19 JST",
+ "generated": "2026-10-01 09:31 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 284,
   "awaitingNextEdition": 291,
   "officialSiteCandidates": 75,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 77
+  "igNeedsBrowser": 76
  },
  "igAccounts": [
   {
@@ -597,7 +597,7 @@
    "lastEventDate": "2026-10-04",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "hanauchustaff",
