@@ -1,5 +1,5 @@
 {
-  "total": 537,
+  "total": 530,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -176,7 +176,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 101,
+      "count": 104,
       "items": [
         "agave-summit-osaka-2026-11",
         "aki-no-taniku-picnic-ibusuki-2026-11",
@@ -194,6 +194,7 @@
         "botanical-marche-niigata-2026-10",
         "botanical-marche-toyama-2026-10",
         "botanical-style-beppu-2026-10",
+        "botanical-tamba-2026",
         "botanical-yokocho-senju-2026-10",
         "botanical-yokocho-senju-2026-11",
         "botanicbomb-vol11-fukuchiyama-2026-10",
@@ -216,15 +217,14 @@
         "hanatomofesta-2026",
         "hanauchu-dream-garden-28th-2026-10",
         "hiroshima-shokubutsuen-2026-10",
-        "ibatama-vol9-2026-10",
-        "jolie-nursery-musashi-kanazawa-2026-10"
+        "ibatama-vol9-2026-10"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 207,
+      "count": 210,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-summit-osaka-2026-11",
@@ -256,6 +256,7 @@
         "botanical-marche-toyama-2026-10",
         "botanical-night-market-kurashiki-2026-08",
         "botanical-style-beppu-2026-10",
+        "botanical-tamba-2026",
         "botanical-yokocho-senju-2026-09",
         "botanical-yokocho-senju-2026-10",
         "botanical-yokocho-senju-2026-11",
@@ -264,15 +265,14 @@
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chinki-tenretsu-shokubutsu-vol5-akashi-2026-10",
         "code-tokyo-popup-2026-08",
-        "collection-plants-miuraengei-yukuhashi-2026-06",
-        "deep-green-ono-2026-09"
+        "collection-plants-miuraengei-yukuhashi-2026-06"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 69,
+      "count": 66,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "aichin-shokusai-new-year-party-2027",
@@ -285,7 +285,6 @@
         "botanical-life-kasama-2026-11",
         "botanical-link-popup-kasugai-2026-10",
         "botanical-monsters-2027-okazaki",
-        "botanical-tamba-2026",
         "botanoichi-meets-bikaku-yokocho-2026-10",
         "botanoichi-senju-2026-11",
         "botariba-toyohashi-2026-11",
@@ -309,11 +308,12 @@
         "kadan-fes-2026-autumn",
         "kinshakusai-vol6-2026-10",
         "kusa-paradise-vol10-okazaki-2026-10",
-        "kyoto-midori-marche-ibaraki-2027-03",
         "kyoto-midorino-marche-bangaihen-vol10-2026",
         "lier-taniku-festival-taishodo-2026-11",
         "love-green-market-vol3-ichihara-2026-12",
-        "marutto-shokubutsu-fes-2026-11"
+        "marutto-shokubutsu-fes-2026-11",
+        "midorigakuen-himeji-2026-11",
+        "morino-tanikuen-hanbaikai-big-nabari-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -644,7 +644,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -817,7 +817,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 69,
+      "count": 66,
       "items": [
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
         "2026-10-04 asamiya-tanikusai-7th-2026-10",
@@ -998,16 +998,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 7,
-      "items": [
-        "2026-10-04 morino-tanikuen-hanbaikai-nara-2026-10: https://www.instagram.com/reel/Dd1A5kMJAqT/（caption）",
-        "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10: https://www.instagram.com/reel/Dd1A5kMJAqT/（caption）",
-        "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10: https://www.instagram.com/reel/Dd1A5kMJAqT/（caption）",
-        "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10: https://www.instagram.com/reel/Dd1A5kMJAqT/（caption）",
-        "2026-10-17 plants-plants-plants-bhms-2026-10: https://www.instagram.com/p/DdqgIkQGPwP/（caption）",
-        "2026-10-18 sapporo-bikaku-expo-lv3-2026-10: https://www.instagram.com/p/Dd6bdqTk5a9/（caption）",
-        "2026-11-22 morino-tanikuen-hanbaikai-big-nabari-2026-11: https://www.instagram.com/reel/Dd1A5kMJAqT/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
