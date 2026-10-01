@@ -423,6 +423,70 @@
    "action": "fixed",
    "detail": "fetch-depth 10 の clone で比較元が取れず掲載が0件になっていた。detect-added-events.py が履歴を足す",
    "mailedOn": "2026-10-01"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "bizarre Park monthly LOCAL MARKET 11月回 (2026-11-28)",
+   "action": "reviewed",
+   "detail": "主催IG最新6投稿に11月回の出店者一覧・植物主題の告知なし。undisclosed/revisit継続、revisitedOn更新"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "content_fix",
+   "target": "愿×ぼっち植堂 秋のボタニカルマーケット (2026-10-03)",
+   "action": "fixed",
+   "detail": "仮称のまま→正式名『叢宴 秋のボタニカルマーケット in 富士市中央公園』。出典をプロフィールから告知投稿 Dd461lREgXx に、入場無料を追記"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "秋のサボテンと多肉植物展 手柄山温室植物園 (2026-10-10)",
+   "action": "listed",
+   "detail": "姫路市まちづくり振興機構の告知(id=201)。会員育成株と園仕入株の販売あり"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "トキメキ市 多肉屋アルメリア (2026-10-03)",
+   "action": "listed",
+   "detail": "主催 @taniku.armeria Dd0jajiHzUh"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "PLANTS SWAP MEET 9th (2026-11-28)",
+   "action": "listed",
+   "detail": "主催 @_plants_dealer_ Dd3cDu3zR3Y"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "Plants garage market 2027 (2027-05-29)",
+   "action": "listed",
+   "detail": "主催 @plants.garage.market DdtSqBUB7e-。150日より先なのでCIの検出対象外だった"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ピザールプランツマーケット in オータム (2026-11-08)",
+   "action": "rejected",
+   "detail": "植物とピザの併記・内訳非公開。undisclosed/revisit"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "秋の小諸まちなかマルシェ2026 (2026-10-04)",
+   "action": "rejected",
+   "detail": "総合マルシェ(compositeEvents)"
   }
  ]
 }

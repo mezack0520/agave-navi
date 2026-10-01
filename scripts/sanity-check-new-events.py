@@ -105,6 +105,16 @@ def reasons(ev):
             and (ex_name_norm in new_name_norm or new_name_norm in ex_name_norm)):
             rs.append(f'likely-duplicate (venue+date+partialname matches slug={ee.get("slug")})')
             break
+        # 同じ主催IG+同じ県+同日 → 名前が違っても同じ回(2026-10-02)。
+        # 告知前の仮称で載せた回は、正式名で来ると名前の照合をすり抜ける。
+        # 実例: 「愿×ぼっち植堂 秋のボタニカルマーケット」(仮称)に
+        # 「叢宴 秋のボタニカルマーケット in 富士市中央公園」を重ねて立てかけた
+        new_ig = (ev.get('organizerIg') or '').strip().lower()
+        if (new_ig and new_ig == (ee.get('organizerIg') or '').strip().lower()
+                and new_date and ex_date == new_date
+                and ev.get('prefecture') and ev.get('prefecture') == ee.get('prefecture')):
+            rs.append(f'likely-duplicate (organizerIg+prefecture+date matches slug={ee.get("slug")})')
+            break
     return rs
 
 _REASONS = {}
