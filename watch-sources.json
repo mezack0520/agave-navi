@@ -2,11 +2,11 @@
  "generated": "2026-10-02 08:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 284,
-  "awaitingNextEdition": 291,
-  "officialSiteCandidates": 75,
+  "igAccounts": 286,
+  "awaitingNextEdition": 290,
+  "officialSiteCandidates": 76,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 76
+  "igNeedsBrowser": 78
  },
  "igAccounts": [
   {
@@ -390,6 +390,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "plants.garage.market",
+   "url": "https://www.instagram.com/plants.garage.market/",
+   "eventCount": 2,
+   "lastEventName": "Plants garage market 2027",
+   "lastEventDate": "2027-05-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "picnic.king.plants",
    "url": "https://www.instagram.com/picnic.king.plants/",
    "eventCount": 4,
@@ -558,6 +568,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "taniku.armeria",
+   "url": "https://www.instagram.com/taniku.armeria/",
+   "eventCount": 1,
+   "lastEventName": "トキメキ市（多肉屋 アルメリア）",
+   "lastEventDate": "2026-10-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "souransai",
@@ -1310,6 +1330,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "_plants_dealer_",
+   "url": "https://www.instagram.com/_plants_dealer_/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS SWAP MEET 9th",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "chinki_syokubutu_5",
    "url": "https://www.instagram.com/chinki_syokubutu_5/",
    "eventCount": 1,
@@ -1602,16 +1632,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "plants.garage.market",
-   "url": "https://www.instagram.com/plants.garage.market/",
-   "eventCount": 1,
-   "lastEventName": "Plants garage market 2026 -SPRING & SUMMER-",
-   "lastEventDate": "2026-05-30",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
   },
   {
    "handle": "koron_shop",
@@ -3010,17 +3030,6 @@
    "apiStatus": "none"
   },
   {
-   "series": "Plants garage market 2026 -SPRING & SUMMER-",
-   "lastSlug": "plants-garage-market-2026-spring",
-   "lastDate": "2026-05-30",
-   "lastEnd": "2026-05-31",
-   "monthsSinceLast": 5,
-   "igHandle": "plants.garage.market",
-   "officialUrl": "https://ilinobeclub.jp/archives/475",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
    "series": "aobouzu × 6 RACCOON コラボPOP UP",
    "lastSlug": "aobouzu-6raccoon-popup-2026-09",
    "lastDate": "2026-09-04",
@@ -3294,6 +3303,17 @@
    "officialUrl": "https://www.instagram.com/p/Dc3CF3YTPZg/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "三浦園芸 アロイド販売会",
+   "lastSlug": "miuraengei-aroid-protoleaf-futako-2026-09",
+   "lastDate": "2026-09-04",
+   "lastEnd": "2026-09-20",
+   "monthsSinceLast": 1,
+   "igHandle": null,
+   "officialUrl": "https://www.protoleaf.com/?p=24182",
+   "recurring": false,
+   "apiStatus": "none"
   }
  ],
  "officialSiteCandidates": [

@@ -1,7 +1,47 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-01",
+  "updated": "2026-10-02",
   "items": [
+    {
+      "on": "2026-10-02",
+      "kind": "listed",
+      "slug": "armeria-tokimeki-ichi-2026-10",
+      "name": "トキメキ市（多肉屋 アルメリア）",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-02",
+      "kind": "listed",
+      "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
+      "name": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-18",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-02",
+      "kind": "listed",
+      "slug": "plants-swap-meet-9th-oita-2026-11",
+      "name": "PLANTS SWAP MEET 9th",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-29",
+      "prefecture": "大分",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-02",
+      "kind": "listed",
+      "slug": "plants-garage-market-2027-05",
+      "name": "Plants garage market 2027",
+      "date": "2027-05-29",
+      "dateEnd": "2027-05-30",
+      "prefecture": "大分",
+      "detail": ""
+    },
     {
       "on": "2026-10-01",
       "kind": "listed",
@@ -1160,46 +1200,6 @@
       "date": "2026-12-12",
       "dateEnd": "2026-12-13",
       "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "taniku-handmade-marche-kushikino-vol2-2026-11",
-      "name": "第2回 多肉とHandmade雑貨のマルシェ in 串木野",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "鹿児島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "roots-and-sun-esaka-2026-10",
-      "name": "ROOTS & SUN",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-10",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "plants-dry-garden-market-meiwa-2026-10",
-      "name": "PLANTS & DRY GARDEN MARKET",
-      "date": "2026-10-11",
-      "dateEnd": "2026-10-11",
-      "prefecture": "三重",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-07",
-      "kind": "listed",
-      "slug": "plants-baka-4th-anniversary-2026-10",
-      "name": "Plants Baka 4周年祭",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-12",
-      "prefecture": "兵庫",
       "detail": ""
     }
   ]
