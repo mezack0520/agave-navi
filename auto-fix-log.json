@@ -487,6 +487,38 @@
    "target": "秋の小諸まちなかマルシェ2026 (2026-10-04)",
    "action": "rejected",
    "detail": "総合マルシェ(compositeEvents)"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "SPICY GEM feat. KAKUSEN-EN (2026-10-11)",
+   "action": "reviewed",
+   "detail": "本文1字差。入店抽選の案内のまま、中止の語なし。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "キムタロウ じゃんけん大会 (2026-10-03〜04)",
+   "action": "rejected",
+   "detail": "常設店舗内ブースの景品企画のみ(storeSale)。rejected-events.json に記録"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "AMAZON GACHA ゆくはし植物園 (2026-10-11)",
+   "action": "rejected",
+   "detail": "観葉植物店の通常営業日の植物ガチャのみ(storeSale)。rejected-events.json に記録"
+  },
+  {
+   "on": "2026-10-02",
+   "task": "event-monitor",
+   "kind": "rejected_eventdate_mismatch",
+   "target": "funny plants 決算セール final",
+   "action": "fixed",
+   "detail": "eventDate が決定日 09-24 になっていたので name の開始日 09-22 に。監査 rejected_eventdate_mismatch を追加"
   }
  ]
 }

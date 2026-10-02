@@ -1491,6 +1491,45 @@ def is_generic_image_url(u):
 # 画像の受け入れ判定も backfill と enrich に別々にあり、片方だけに
 # http:// を弾く行があって 2026-09-08 に事故を出している。ここに寄せる。
 
+# 見送り記録(rejected-events.json の items)の会期 (2026-10-02)。
+# 見送りは eventDate を1日しか持たないが、name は「名称 (2026-10-03〜04 会場…)」の
+# 形で会期を書く約束になっている。ig-organizer-watch の「見送り済みは既知」は
+# eventDate の1日だけを引いていたため、2日開催の回を見送っても2日目の日付が
+# 毎日「当サイトに無い先の日付」として出続けた。会期は name から読む。
+_REJ_RANGE_RE = re.compile(
+    r'[(（](\d{4})-(\d{2})-(\d{2})(?:\s*[〜~]\s*(?:(\d{4})-)?(?:(\d{2})-)?(\d{2}))?')
+
+
+def rejected_name_range(item):
+    """見送り記録の name に書かれた会期 (開始, 終了) を ISO 文字列で返す。読めなければ None。"""
+    m = _REJ_RANGE_RE.search((item or {}).get('name') or '')
+    if not m:
+        return None
+    y, mo, d, ey, emo, ed = m.groups()
+    try:
+        a = date(int(y), int(mo), int(d))
+        b = a
+        if ed:
+            b = date(int(ey or y), int(emo or mo), int(ed))
+            if b < a and not ey:
+                b = date(b.year + 1, b.month, b.day)
+    except ValueError:
+        return None
+    return a.isoformat(), b.isoformat()
+
+
+def rejected_days(item, cap_days=62):
+    """見送り記録がかかる日付(ISO)の一覧。name の会期を優先し、無ければ eventDate の1日。"""
+    rng = rejected_name_range(item)
+    ed = (item or {}).get('eventDate')
+    if rng and (not ed or ed == rng[0]):
+        a = date.fromisoformat(rng[0])
+        b = date.fromisoformat(rng[1])
+        n = min((b - a).days, cap_days)
+        return [(a + timedelta(days=i)).isoformat() for i in range(max(n, 0) + 1)]
+    return [ed] if ed else []
+
+
 def judgment_fields(item):
     """pending-judgments.json の1項目から、日次メールに出す (見出し, 日付, 本文の行) を返す。
 

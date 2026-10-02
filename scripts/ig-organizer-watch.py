@@ -199,9 +199,10 @@ def day_indexes(events, rejected_items):
         while d <= b and (d - a).days <= 62:
             di.setdefault(d.strftime('%Y-%m-%d'), []).append(e)
             d += timedelta(days=1)
+    # 見送りは会期の全日で引く(2日開催の2日目が残り続けた。sitelib.rejected_days)
     for r in rejected_items:
-        if r.get('eventDate'):
-            ri.setdefault(r['eventDate'], []).append(r)
+        for iso in sitelib.rejected_days(r):
+            ri.setdefault(iso, []).append(r)
     return di, ri
 
 
@@ -636,6 +637,12 @@ def self_test():
     chk('無関係なら未知', known_elsewhere('10/3に別の催し', '2026-10-03', di, {}), False)
     chk('見送り済みは既知', known_elsewhere('花と緑のフラワーオークション 9/27', '2026-09-27', {},
                                      {'2026-09-27': [{'name': '花と緑のフラワーオークション (2026-09-27・福岡)'}]}), True)
+    _, ri = day_indexes([], [{'name': 'じゃんけん大会 (2026-10-03〜04 さくら植物園・千葉県)', 'eventDate': '2026-10-03'}])
+    chk('見送りは会期の2日目も既知', known_elsewhere('じゃんけん大会開催します 10月4日', '2026-10-04', {}, ri), True)
+    chk('月またぎの会期', sitelib.rejected_days({'name': 'X (2026-09-29〜10-01 会場)', 'eventDate': '2026-09-29'}),
+        ['2026-09-29', '2026-09-30', '2026-10-01'])
+    chk('eventDate と name が食い違えば eventDate だけ',
+        sitelib.rejected_days({'name': 'X (2026-09-22〜29 会場)', 'eventDate': '2026-09-24'}), ['2026-09-24'])
     # 周期: 開催予定の主催は毎日、他は2日、読めない相手は7日
     prev = {'up': {'ok': True, 'checkedOn': '2026-09-22'},
             'other1': {'ok': True, 'checkedOn': '2026-09-22'},

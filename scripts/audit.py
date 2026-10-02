@@ -4589,6 +4589,22 @@ def main():
         '日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）',
         severity='info')
 
+    # 見送りの eventDate が、name に書いた開始日と食い違っていないか (2026-10-02)。
+    # eventDate は保留の期限(rejected_revisit_expired)と、主催IGの見張りの
+    # 「見送り済みは既知」(sitelib.rejected_days)の両方が読む。決定日を入れてしまうと
+    # 期限がずれ、取りこぼし候補の照合も外れる。funny plants 決算セール final は
+    # name が 2026-09-22〜29 なのに eventDate が決定日の 09-24 だった。
+    # name を書いた時点の日付が正なので、食い違いは0にできる。よって urgent。
+    _rej_dmis = []
+    for _it in (rej.get('items') or []):
+        _rng = sitelib.rejected_name_range(_it)
+        _ed = str(_it.get('eventDate') or '')
+        if _rng and _ed and _ed != _rng[0]:
+            _rej_dmis.append(f"{_it.get('key')}: eventDate {_ed} / name の開始日 {_rng[0]}")
+    add('rejected_eventdate_mismatch', '見送り記録の eventDate が name の開始日と違う',
+        sorted(_rej_dmis),
+        'name の会期を告知で確かめ、eventDate を開始日に揃える(決定日を入れない)')
+
     # 説明文の上書き保護が、新規登録の回で外れていないか。
     # 保護の目印は updatedAt だが、登録時に入れ忘れるのが常態で、
     # 2026-08-28 に「直近14日に足した30件すべてが無防備」という状態で見つかった

@@ -3315,6 +3315,19 @@ Plants garage market 2027(2027-05-29)の告知は API で取れていたが候�
 手元で audit を走らせたら commit 前に `git checkout -- audit-results.json audit-history.json`。
 commit 前に `git diff --stat` で触ったつもりのファイルだけかを見る。
 
+### 見送りは会期の全日で引く。eventDate は1日しか持たない (2026-10-02)
+
+`ig-organizer-watch.py` の「見送り済みは既知」は `rejected-events.json` の `eventDate` 1日だけを引いていた。
+2日開催の回を見送っても、**2日目の日付が「当サイトに無い先の日付」として出続ける。**
+会期は name の「(2026-10-03〜04 会場…)」から `sitelib.rejected_days` で読む(月またぎ・年またぎ可、62日で打ち切り)。
+name と eventDate の開始日が食い違う記録は `eventDate` の1日だけに戻す。
+食い違いそのものは `audit.rejected_eventdate_mismatch`(urgent)で出る。funny plants 決算セール final は
+eventDate に決定日(09-24)が入っていた。**見送りの eventDate は開始日。決定日を入れない。**
+
+常設店舗のじゃんけん大会・植物ガチャのような景品企画だけの告知は storeSale の exclude に当てて policy で見送る
+(販売企画・外部出店者・新着株の放出が無い)。見送りには投稿の語を `aliases` に入れておく。
+照合は name の先頭6字か aliases で本文に当てるので、名前の頭が店名だと当たらない。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
