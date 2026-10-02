@@ -1,5 +1,5 @@
 {
-  "total": 539,
+  "total": 550,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -644,7 +644,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -902,8 +902,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-10-11 spicy-gem-kakusen-en-figure-hanare-2026-10: 公式ページが変わった(本文: 3285→3284字 -1%)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -986,8 +988,11 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "@chanchanchikachanchan 2026-10-03,2026-10-04: がんばっぺキャンペーン第5弾といたしまして じゃんけん大会開催します✌️ 会場はさくら植物園 キムタロウブースです 10 https://www.instagram.com/p/Dd6ZcOdCQgu/",
+        "@yukuhashisyokubutsuen 2026-10-11: あのイベントが再来 人気レア植物ガチャ!! 【AMAZON GACHA🔔】 1回 1,000円(税別) 必ず1000円以 https://www.instagram.com/p/Dd83B1bPQR9/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1000,8 +1005,17 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 8,
+      "items": [
+        "2026-10-04 morino-tanikuen-hanbaikai-nara-2026-10: https://www.instagram.com/reel/Dd91zvGTmkq/（caption）",
+        "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10: https://www.instagram.com/reel/Dd91zvGTmkq/（caption）",
+        "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10: https://www.instagram.com/reel/Dd91zvGTmkq/（caption）",
+        "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10: https://www.instagram.com/reel/Dd91zvGTmkq/（caption）",
+        "2026-10-17 plants-plants-plants-bhms-2026-10: https://www.instagram.com/p/Ddkp96mGGyu/（caption）",
+        "2026-11-07 lier-taniku-festival-taishodo-2026-11: https://www.instagram.com/p/Dd9FxB_NQPU/（caption）",
+        "2026-11-22 morino-tanikuen-hanbaikai-big-nabari-2026-11: https://www.instagram.com/reel/Dd91zvGTmkq/（caption）",
+        "2026-11-28 plants-swap-meet-9th-oita-2026-11: https://www.instagram.com/p/Dd3cDu3zR3Y/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
