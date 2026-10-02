@@ -3306,6 +3306,15 @@ Step0 の見出しを events.json の name/slug に部分一致で当てると�
 Plants garage market 2027(2027-05-29)の告知は API で取れていたが候補に出なかった。
 **翌年春の次回告知は CI では拾えない。**IGローテと Step0 で拾う。
 
+### JSON を書き戻すときは元のインデントに合わせ、audit.py を手元で走らせたら結果ファイルを戻す (2026-10-02)
+
+`new-inquiries.json` などデータJSONは **1スペースのインデント**。`json.dumps(indent=2)` で書き戻すと
+`sheetCheckedOn` 1行の変更が全行の差分になり、レビューで実変更が埋もれる。書き戻しは `indent=1`。
+また `python3 scripts/audit.py` を確認のつもりで走らせると `audit-results.json` を書き換え、
+`git commit -a` に巻き込まれる(2026-10-02 に両方を踏み、追いコミット 6b65745 で戻した)。
+手元で audit を走らせたら commit 前に `git checkout -- audit-results.json audit-history.json`。
+commit 前に `git diff --stat` で触ったつもりのファイルだけかを見る。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
