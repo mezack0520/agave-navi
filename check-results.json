@@ -1,6 +1,6 @@
 {
-  "check_date": "2026-10-01",
-  "total_events": 511,
+  "check_date": "2026-10-02",
+  "total_events": 515,
   "dead_links": [],
   "unreachable": [],
   "tbd_events": [
@@ -2153,12 +2153,12 @@
     },
     {
       "slug": "gen-x-bocchi-botanical-market-2026-10",
-      "name": "愿×ぼっち植堂 秋のボタニカルマーケット",
+      "name": "叢宴 秋のボタニカルマーケット in 富士市中央公園",
       "date": "2026-10-03",
       "dateEnd": "2026-10-04",
       "location": "富士中央公園 芝生広場（静岡県富士市蓼原町）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/bocchi_syokudou/"
+      "sourceUrl": "https://www.instagram.com/p/Dd461lREgXx/"
     },
     {
       "slug": "yurutto-taniku-marche-1st-inabe-2026-10",
@@ -3653,9 +3653,55 @@
       "location": "調整中",
       "eventStatus": "tbd",
       "sourceUrl": "http://isij.net/"
+    },
+    {
+      "slug": "armeria-tokimeki-ichi-2026-10",
+      "name": "トキメキ市（多肉屋 アルメリア）",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04",
+      "location": "多肉屋 アルメリア（愛媛県伊予郡松前町大溝394）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd0jajiHzUh/"
+    },
+    {
+      "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
+      "name": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-18",
+      "location": "姫路市立手柄山温室植物園（兵庫県姫路市手柄93）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201"
+    },
+    {
+      "slug": "plants-swap-meet-9th-oita-2026-11",
+      "name": "PLANTS SWAP MEET 9th",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-29",
+      "location": "bi_noah 新店舗（大分県大分市本神崎1204）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd3cDu3zR3Y/"
+    },
+    {
+      "slug": "plants-garage-market-2027-05",
+      "name": "Plants garage market 2027",
+      "date": "2027-05-29",
+      "dateEnd": "2027-05-30",
+      "location": "つくみん公園（大分県津久見市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/reel/DdtSqBUB7e-/"
     }
   ],
-  "today_events": [],
+  "today_events": [
+    {
+      "slug": "hiroshima-shokubutsuen-2026-10",
+      "name": "ひろしま植物園 2026",
+      "date": "2026-10-02",
+      "dateEnd": "2026-10-04",
+      "location": "ひろしまゲートパーク（広島県広島市中区基町5-25）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DdWT7xrT_xm/"
+    }
+  ],
   "url_results": [
     {
       "slug": "wako-jurin-unique-plants-2026-10",
@@ -3808,6 +3854,13 @@
       "slug": "botanical-monsters-2027-okazaki",
       "name": "BOTANICAL MONSTERS 2027",
       "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
+      "name": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
+      "sourceUrl": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
       "statusCode": 200,
       "alive": true
     }
