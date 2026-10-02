@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-02 14:53 JST",
+ "generated": "2026-10-03 08:23 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 286,
-  "awaitingNextEdition": 290,
-  "officialSiteCandidates": 76,
+  "igAccounts": 295,
+  "awaitingNextEdition": 289,
+  "officialSiteCandidates": 77,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 77
+  "igNeedsBrowser": 86
  },
  "igAccounts": [
   {
@@ -240,6 +240,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "iwabaegarden",
+   "url": "https://www.instagram.com/iwabaegarden/",
+   "eventCount": 2,
+   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "_and_plants",
    "url": "https://www.instagram.com/_and_plants/",
    "eventCount": 2,
@@ -258,6 +268,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "0269plants",
+   "url": "https://www.instagram.com/0269plants/",
+   "eventCount": 2,
+   "lastEventName": "多肉植物苗販売会＆寄せ植えワークショップ（道の駅 花の駅千曲川）",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botanicbomb",
@@ -580,6 +600,26 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "nr.kabokusenta_kani",
+   "url": "https://www.instagram.com/nr.kabokusenta_kani/",
+   "eventCount": 1,
+   "lastEventName": "多肉・サボテンフェア（日本ライン花木センター）",
+   "lastEventDate": "2026-10-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "seiji4240",
+   "url": "https://www.instagram.com/seiji4240/",
+   "eventCount": 1,
+   "lastEventName": "多肉屋GPK Season5 オープニングイベント",
+   "lastEventDate": "2026-10-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "souransai",
    "url": "https://www.instagram.com/souransai/",
    "eventCount": 1,
@@ -760,6 +800,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "protoleaf.shop_futakotamagawa",
+   "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
+   "eventCount": 1,
+   "lastEventName": "X-PLANTS 即売会（プロトリーフ二子玉川本店）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "ibatama.ta29",
    "url": "https://www.instagram.com/ibatama.ta29/",
    "eventCount": 1,
@@ -930,6 +980,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "tropicalgarden_saitama",
+   "url": "https://www.instagram.com/tropicalgarden_saitama/",
+   "eventCount": 1,
+   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "kikien.succulent0222",
    "url": "https://www.instagram.com/kikien.succulent0222/",
    "eventCount": 1,
@@ -998,6 +1058,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "joyfulak_gardencenter",
+   "url": "https://www.instagram.com/joyfulak_gardencenter/",
+   "eventCount": 1,
+   "lastEventName": "アガベ展示即売会（ジョイフルエーケー屯田店）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagashima_marche",
@@ -1100,6 +1170,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "sabosabostore.jp",
+   "url": "https://www.instagram.com/sabosabostore.jp/",
+   "eventCount": 1,
+   "lastEventName": "SABOSABOSTORE Collection Exhibition & Sale",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "driftwood.smokeywood",
    "url": "https://www.instagram.com/driftwood.smokeywood/",
    "eventCount": 1,
@@ -1158,6 +1238,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "succutochi",
+   "url": "https://www.instagram.com/succutochi/",
+   "eventCount": 1,
+   "lastEventName": "さきゅとち2（succulent ochigi 2）",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botajam2026",
@@ -1288,6 +1378,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "haze_kasumigaura",
+   "url": "https://www.instagram.com/haze_kasumigaura/",
+   "eventCount": 1,
+   "lastEventName": "HAZE -various genres marche-（2026年11月）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mahota029",
@@ -1939,16 +2039,6 @@
    "eventCount": 1,
    "lastEventName": "トロピカルフェス 2026",
    "lastEventDate": "2026-07-18",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "iwabaegarden",
-   "url": "https://www.instagram.com/iwabaegarden/",
-   "eventCount": 1,
-   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 6TH TIME",
-   "lastEventDate": "2026-07-19",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
@@ -3378,6 +3468,12 @@
    "eventDate": "2026-10-10"
   },
   {
+   "domain": "himeji-machishin.jp",
+   "url": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
+   "eventName": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
+   "eventDate": "2026-10-10"
+  },
+  {
    "domain": "kyotocactus.syuriken.jp",
    "url": "https://kyotocactus.syuriken.jp/project.html",
    "eventName": "第51回 日本シャボテン大会",
@@ -3388,6 +3484,12 @@
    "url": "https://figure-online.net/blogs/news/spicy-gem-feat-kakusen-en-at-figure-hanare-entry",
    "eventName": "SPICY GEM feat. KAKUSEN-EN at FIGURE HANARE",
    "eventDate": "2026-10-11"
+  },
+  {
+   "domain": "kobe-park.or.jp",
+   "url": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
+   "eventName": "サボテン・多肉植物展示会（神戸市立須磨離宮公園）",
+   "eventDate": "2026-10-16"
   },
   {
    "domain": "uomachi-mirai.com",
@@ -3484,18 +3586,6 @@
    "url": "https://www.fumakilla.co.jp/new/6926/",
    "eventName": "カダンフェス2026 春",
    "eventDate": "2026-04-25"
-  },
-  {
-   "domain": "yfg-fes.jp",
-   "url": "https://yfg-fes.jp/",
-   "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
-   "eventDate": "2026-05-02"
-  },
-  {
-   "domain": "visit-oita.jp",
-   "url": "https://www.visit-oita.jp/events/detail/13493",
-   "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
   }
  ],
  "unresolvedIgHandles": []
