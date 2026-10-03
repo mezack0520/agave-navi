@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 118,
+      "count": 117,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -226,7 +226,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 226,
+      "count": 225,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 74,
+      "count": 75,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "aito-margueritestation-taniku-saboten-hanbaikai-2026-10",
@@ -648,7 +648,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -845,10 +845,11 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 74,
+      "count": 75,
       "items": [
         "2026-10-03 armeria-tokimeki-ichi-2026-10",
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
+        "2026-10-03 tochigi-taniku-fes-10th-yugao-park-2026-10",
         "2026-10-04 asamiya-tanikusai-7th-2026-10",
         "2026-10-04 botanic-collection2-ube-2026-10",
         "2026-10-04 chinki-plants-flea-market-2026-10",
@@ -885,8 +886,7 @@
         "2026-10-25 taniku-moromoro-vol16-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
         "2026-10-31 nightwalker-horie-2026-10",
-        "2026-11-01 botariba-toyohashi-2026-11",
-        "2026-11-07 botanical-life-kasama-2026-11"
+        "2026-11-01 botariba-toyohashi-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
