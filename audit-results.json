@@ -1,5 +1,5 @@
 {
-  "total": 600,
+  "total": 589,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -646,7 +646,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -719,10 +719,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 1,
-      "items": [
-        "プロトリーフ二子玉川本店(3件) → /venue/v-e5cca93b/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -919,15 +917,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 6,
-      "items": [
-        "2026-10-03 wako-jurin-unique-plants-2026-10: 公式ページが変わった(本文: 885→875字 -2%)",
-        "2026-10-10 tegarayama-aki-saboten-taniku-ten-2026-10: 公式ページが変わった(本文: 1003→1003字 +0%)",
-        "2026-10-11 spicy-gem-kakusen-en-figure-hanare-2026-10: 公式ページが変わった(本文: 3284→3293字 +0%)",
-        "2026-10-25 roots-market-inage-2026-10: 公式ページが変わった(本文・画像)",
-        "2026-10-31 jolie-nursery-musashi-kanazawa-2026-10: 公式ページが変わった(本文: 2410→2396字 -1%)",
-        "2026-11-28 greensnap-marche-odaiba-2026: 公式ページが変わった(本文: 881→890字 +1%)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -968,8 +959,10 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "取得できなかった: jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
+      ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },
@@ -1010,13 +1003,8 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 4,
-      "items": [
-        "@fukuoka_effect 2026-10-12: あのイベントが再来!人気レア植物ガチャ!! 【AMAZON GACHA🔔】 1回 1,000円(税別) 必ず1,000円 https://www.instagram.com/p/Dd_E4uIMO8V/",
-        "@greenfarmkanazawa 2026-10-21: 🌵多肉寄せ植え教室受付開始🌵 \\ 予約受付中 / 10月より多肉の寄せ植え教室がスタートします✨ 今回は大人気イブキさん https://www.instagram.com/p/Dd7tJq3hrBZ/",
-        "@protoleaf.shop_futakotamagawa 2026-10-14,2026-10-23,2026-10-28,2026-11-18,2026-11-20: 🌿【オリジナル寄せ植えワークショップのご案内です】🌿 ◆ワークショップの内容 お好きな苗を選び、講師のアドバイスを受けな https://www.instagram.com/p/DdqVFWOxbGp/",
-        "@uell_creators 2026-10-08: 【ミドリアン 出店者紹介 01】 植物と___ shokubutsu_to___ 植物好きのグラフィックデザイナー集団が https://www.instagram.com/p/Dd-ygOpE-YM/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1452,10 +1440,8 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 1,
-      "items": [
-        "ongoing_events: 直近中央値 20 → 11（掲載527件で換算 23）（-12）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },

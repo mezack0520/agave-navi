@@ -3,73 +3,13 @@
   "sweptOn": "2026-10-03",
   "stats": {
     "targets": 26,
-    "fetched": 26
+    "fetched": 25
   },
-  "errors": [],
-  "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "wako-jurin-unique-plants-2026-10",
-      "name": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
-      "date": "2026-10-03",
-      "url": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
-      "why": "公式ページが変わった(本文: 885→875字 -2%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
-      "name": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
-      "date": "2026-10-10",
-      "url": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
-      "why": "公式ページが変わった(本文: 1003→1003字 +0%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "spicy-gem-kakusen-en-figure-hanare-2026-10",
-      "name": "SPICY GEM feat. KAKUSEN-EN at FIGURE HANARE",
-      "date": "2026-10-11",
-      "url": "https://figure-online.net/blogs/news/spicy-gem-feat-kakusen-en-at-figure-hanare-entry",
-      "why": "公式ページが変わった(本文: 3284→3293字 +0%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "roots-market-inage-2026-10",
-      "name": "ROOTS MARKET",
-      "date": "2026-10-25",
-      "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "jolie-nursery-musashi-kanazawa-2026-10",
-      "name": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-      "date": "2026-10-31",
-      "url": "https://jolienursery.co.jp/pages/events",
-      "why": "公式ページが変わった(本文: 2410→2396字 -1%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-odaiba-2026",
-      "name": "GreenSnap Marche お台場 2026",
-      "date": "2026-11-28",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
-      "why": "公式ページが変わった(本文: 881→890字 +1%)",
-      "changed": [
-        "本文"
-      ]
-    }
+  "errors": [
+    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
   ],
+  "logicErrors": [],
+  "suspects": [],
   "pages": {
     "on-the-plants-vol9-fukuoka-2026-10": {
       "url": "https://ontheplants.com/",
@@ -100,7 +40,7 @@
         "textLen": 875,
         "imageCount": 16
       },
-      "prevTextLen": 885,
+      "prevTextLen": 875,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -260,7 +200,7 @@
         "textLen": 2396,
         "imageCount": 15
       },
-      "prevTextLen": 2410,
+      "prevTextLen": 2396,
       "strong": [],
       "weak": [],
       "datesNamed": 14,
@@ -322,7 +262,7 @@
         "textLen": 3293,
         "imageCount": 8
       },
-      "prevTextLen": 3284,
+      "prevTextLen": 3293,
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -342,7 +282,7 @@
         "textLen": 1423,
         "imageCount": 36
       },
-      "prevTextLen": null,
+      "prevTextLen": 1423,
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -393,26 +333,6 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
-    "jurian-aki-taniku-cactus-2026-10": {
-      "url": "https://www.jurian.or.jp/event/article/?id=1475",
-      "checkedOn": "2026-10-03",
-      "signature": {
-        "text": "bf7de8e13bbf97cd",
-        "images": "8859875c86a5399f",
-        "textLen": 1287,
-        "imageCount": 20
-      },
-      "prevTextLen": 1287,
-      "strong": [],
-      "weak": [],
-      "datesNamed": 1,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-30",
-      "badChars": 0,
-      "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
-    },
     "roots-market-inage-2026-10": {
       "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
       "checkedOn": "2026-10-03",
@@ -422,7 +342,7 @@
         "textLen": 5557,
         "imageCount": 44
       },
-      "prevTextLen": 5574,
+      "prevTextLen": 5557,
       "strong": [],
       "weak": [],
       "datesNamed": 10,
@@ -482,7 +402,7 @@
         "textLen": 2396,
         "imageCount": 15
       },
-      "prevTextLen": 2410,
+      "prevTextLen": 2396,
       "strong": [],
       "weak": [],
       "datesNamed": 14,
@@ -582,7 +502,7 @@
         "textLen": 890,
         "imageCount": 23
       },
-      "prevTextLen": 881,
+      "prevTextLen": 890,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
