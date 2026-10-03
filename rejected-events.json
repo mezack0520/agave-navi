@@ -713,11 +713,12 @@
   {
    "key": "tochigi-tanippe-2026-10",
    "name": "栃木★多肉フェス タニッペ (2026-10-03 栃木県下野市ゆうがおパーク として掲載していた回)",
-   "reason": "**実在しない回だった。**出典URLの @rinrin_rinarina は既に消えており(『このページはご利用いただけません』)、venue・sourceUrl・addedDate も空のまま残っていた。主催 RINA★RINA の一次情報(@tanippe2026 / @rinarina__3)では、2026年の回は 10月11日(日) 10:00〜15:00・深谷グリーンパーク(埼玉県深谷市樫合763)の『タニッペ Final』1回だけで、10月3日・栃木県下野市ゆうがおパークの回は存在しない。正しい回は tochigi-tanippe-fukaya-final-2026-10 として別に掲載済みで、こちらは日付・会場・県すべてが誤った二重掲載だった。contradictoryData により削除",
+   "reason": "**実在しない回だった。**出典URLの @rinrin_rinarina は既に消えており(『このページはご利用いただけません』)、venue・sourceUrl・addedDate も空のまま残っていた。主催 RINA★RINA の一次情報(@tanippe2026 / @rinarina__3)では、2026年の回は 10月11日(日) 10:00〜15:00・深谷グリーンパーク(埼玉県深谷市樫合763)の『タニッペ Final』1回だけで、10月3日・栃木県下野市ゆうがおパークの回は存在しない。正しい回は tochigi-tanippe-fukaya-final-2026-10 として別に掲載済みで、こちらは日付・会場・県すべてが誤った二重掲載だった。contradictoryData により削除。**訂正(2026-10-04): 10/3〜4 ゆうがおパークの回そのものは実在した。**会場公式 yugao-park.com/event/5446/ と地域メディア(とちぎびより)が『第10回 栃木★多肉フェス in ゆうがおパーク』46店舗・主催 栃木★多肉フェス実行委員会として告知しており、tochigi-taniku-fes-10th-yugao-park-2026-10 として掲載した。誤っていたのは『タニッペ』の名称と消えた出典で、回の存在ではない",
    "reasonType": "unverified",
    "revisit": false,
    "eventDate": "2026-10-03",
-   "decided": "2026-09-22"
+   "decided": "2026-09-22",
+   "coexistsWith": "tochigi-taniku-fes-10th-yugao-park-2026-10"
   },
   {
    "key": "kohnan-kohokuinter-taniku-cactus-2026-09",
@@ -1602,15 +1603,15 @@
   {
    "key": "cocoha-10th-anniversary-2026-10",
    "reasonType": "undisclosed",
-   "revisit": true,
+   "revisit": false,
    "name": "cocoha 10th ANNIVERSARY (2026-10-03〜 福岡県糸島市)",
    "aliases": [
     "cocoha"
    ],
    "decided": "2026-10-03",
-   "reason": "植物店の10周年企画だが、告知時点で企画内容が書かれていない(後日案内)。即売会や外部出店の有無が出たら storeSale で判断",
+   "reason": "植物店の10周年企画だが、告知時点で企画内容が書かれていない(後日案内)。即売会や外部出店の有無が出たら storeSale で判断。開催日(10/03)を過ぎ、企画内容が出ないまま会期に入ったため再評価を閉じる(2026-10-04)",
    "eventDate": "2026-10-03",
-   "revisitedOn": "2026-10-03"
+   "revisitedOn": "2026-10-04"
   },
   {
    "key": "re-green-market-otaki-2026-10",
@@ -1703,6 +1704,95 @@
    "decided": "2026-10-03",
    "reason": "workshopOnly。主催 @protoleaf.shop_futakotamagawa (DdqVFWOxbGp) の告知は定員4名・要予約の寄せ植え/ハンギングバスケット講座(10/14・10/23・10/28・11/18・11/20)の単独開催。品目も花苗・ビオラで対象外",
    "eventDate": "2026-10-14"
+  },
+  {
+   "key": "snack-rouka-kato-engei-2026-10",
+   "reasonType": "policy",
+   "revisit": false,
+   "name": "スナックROUKA (2026-10-10 カトーエンゲー東京)",
+   "aliases": [
+    "スナックROUKA",
+    "ROUKA"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-10",
+   "reason": "potteryAndVesselShows。主催 @kato_engei_tokyo (Dd32x27v71B) の告知は @rouka.plants によるお手製インナーセットポットの販売とトークで、植物の販売企画が書かれていない。主題が鉢"
+  },
+  {
+   "key": "kyoto-shaboten-club-reikai-2026-10",
+   "reasonType": "policy",
+   "revisit": false,
+   "name": "京都シャボテンクラブ 10月例会 (2026-10-24 六孫王会館)",
+   "aliases": [
+    "10月例会",
+    "京都シャボテンクラブ"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-24",
+   "reason": "clubShowNoSale。主催 @kyotoshabotenclub (Ddw76klkzev) の案内は展示(多肉植物)・サボテン談義・交換会(出品は会員のみ)で即売が無い。非会員も当日会費500円で参加可。月例なので以後の例会も同じ判断。即売会を併催する回(真夏の納涼即売会・日本シャボテン大会)は掲載する"
+  },
+  {
+   "key": "succulent-garden-3rd-anniv-preopening-2026-10",
+   "reasonType": "policy",
+   "revisit": false,
+   "name": "Succulent garden Wild house 3周年大感謝祭 プレオープン (2026-10-03〜04)",
+   "aliases": [
+    "3周年大感謝祭",
+    "大創業祭",
+    "Succulent garden"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-03",
+   "reason": "主催 @succulentgardencom (Dd1HhOxh1Sg) の告知でカード会員限定の先行販売、内容は親株・ティアラ全品550円の値引きのみ。会員限定は closedGatherings、価格だけの企画は storeSale.exclude。一般販売の日程は『追ってお知らせ』で、出たら別の回として storeAnniversary で判断する"
+  },
+  {
+   "key": "fukuland-2026-10",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "name": "福LAND 2026 (2026-10-11 南あわじ市福良地区)",
+   "aliases": [
+    "福LAND",
+    "フクランド"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-11",
+   "reason": "主催 @heavengreen_factory (Dd0G533yc5b) は福良祭と同日の街の祭りで、ハンドメイドマーケット・ワークショップ・フード・ライブステージに珍奇植物の企画を加えると告知。名称は中立で植物の出店内訳は非公開(undisclosedBreakdown.exclude)。内訳が出たら compositeEvents で数える"
+  },
+  {
+   "key": "mori-no-craft-fieldwork-2026-10",
+   "reasonType": "policy",
+   "revisit": false,
+   "name": "10月の森のクラフトフィールドワーク (2026-10-30〜31 おかざき自然体験の森)",
+   "aliases": [
+    "森のクラフトフィールドワーク"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-30",
+   "reason": "workshopOnly / outOfScopeGenres。主催 @morino_craft の告知は参加費500円の植物観察会・きのこ観察とピック作りで、販売は無く対象植物も扱わない"
+  },
+  {
+   "key": "gardex-2026",
+   "reasonType": "policy",
+   "revisit": false,
+   "name": "第20回 GARDEX 国際ガーデン&アウトドアEXPO (2026-10-07〜09 幕張メッセ)",
+   "aliases": [
+    "GARDEX"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-07",
+   "reason": "outOfScopeGenres(ガーデニング・造園)。ガーデン・アウトドア業界の商談展示会で、即売会・展示会の枠と性質が違う。年1回のシリーズなので以後の回も同じ"
+  },
+  {
+   "key": "terrace-no-marche-vol17-2026-10",
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "name": "テラスのマルシェ vol.17 (2026-10-11〜12 長久手中央二号公園 リニモテラス)",
+   "aliases": [
+    "テラスのマルシェ"
+   ],
+   "decided": "2026-10-04",
+   "eventDate": "2026-10-11",
+   "reason": "主催 @terrace.no.marche の出店者紹介はハーブティー・アクセサリー・カフェなどハンドメイドと飲食が中心で、長久手市観光の案内も『パンにスイーツ、コーヒーやフード、お花や多肉植物、雑貨』と並記。名称中立・内訳非公開"
   }
  ],
  "_reasonTypes": {
@@ -1711,6 +1801,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-10-03",
+ "updated": "2026-10-04",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
