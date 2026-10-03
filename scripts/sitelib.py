@@ -24,6 +24,59 @@ GA_ID = 'G-NKY8V1H8HY'
 
 WEEKDAYS_JA = ['月', '火', '水', '木', '金', '土', '日']
 
+# --- 日本の祝日 (単一情報源・2026-10-03) ---
+# 一日だけのイベントは土日だけでなく祝日にも集まる。曜日だけで休日を決めると
+# シルバーウィーク(2026-09-21〜23)の開催中件数 17/17/10 が平日の基準(中央値2)と
+# 比べられ、audit の metric_moved が 09-21・09-22 に誤検知した。
+# 祝日法の規則で計算する(外部ライブラリ・手書きの日付表を持たない)。
+# 春分・秋分は 1980〜2099 年に有効な近似式。官報公示と食い違う年は
+# _JP_HOLIDAY_OVERRIDES に書く。
+_JP_HOLIDAY_OVERRIDES = {}   # {'YYYY-MM-DD': True/False}
+
+def _nth_monday(y, m, n):
+    d = date(y, m, 1)
+    d += timedelta(days=(7 - d.weekday()) % 7)
+    return d + timedelta(weeks=n - 1)
+
+def _jp_base_holidays(y):
+    k = y - 1980
+    vernal = int(20.8431 + 0.242194 * k - k // 4)
+    autumnal = int(23.2488 + 0.242194 * k - k // 4)
+    hs = {date(y, 1, 1), date(y, 2, 11), date(y, 2, 23), date(y, 3, vernal),
+          date(y, 4, 29), date(y, 5, 3), date(y, 5, 4), date(y, 5, 5),
+          date(y, 8, 11), date(y, 9, autumnal), date(y, 11, 3), date(y, 11, 23),
+          _nth_monday(y, 1, 2), _nth_monday(y, 7, 3),
+          _nth_monday(y, 9, 3), _nth_monday(y, 10, 2)}
+    return hs
+
+def jp_holidays(y):
+    """その年の祝日・振替休日・国民の休日の集合(date)。"""
+    base = _jp_base_holidays(y)
+    out = set(base)
+    # 国民の休日: 前日と翌日が祝日の平日
+    for d in sorted(base):
+        mid = d + timedelta(days=1)
+        if mid not in base and (mid + timedelta(days=1)) in base and mid.weekday() != 6:
+            out.add(mid)
+    # 振替休日: 日曜の祝日の後、最初の祝日でない日
+    for d in sorted(base):
+        if d.weekday() == 6:
+            n = d + timedelta(days=1)
+            while n in out:
+                n += timedelta(days=1)
+            out.add(n)
+    for ds, flag in _JP_HOLIDAY_OVERRIDES.items():
+        dd = date.fromisoformat(ds)
+        if dd.year == y:
+            (out.add if flag else out.discard)(dd)
+    return out
+
+def is_rest_day(d):
+    """土日または日本の祝日。d は date か 'YYYY-MM-DD'。"""
+    if isinstance(d, str):
+        d = date.fromisoformat(d[:10])
+    return d.weekday() >= 5 or d in jp_holidays(d.year)
+
 # Instagram の投稿URL。1グループ目が投稿ID。
 # fetch-event-images と list-missing-eyecatch が別々に持っていて、
 # 片方は ID を取らない版だった(2026-09-10 に統合)。
@@ -119,7 +172,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
                 # 2026-09-17 ボタニックフロントフェスの掲載で3件になった
                 '四国造園':'shikoku-zouen',
                 # 2026-09-23 虫を食べる植物展2026の掲載で3件になった
-                '咲くやこの花館':'sakuya-konohana'}
+                '咲くやこの花館':'sakuya-konohana',
+                # 2026-10-03 X-PLANTS 即売会(10/10)の掲載で3件になった
+                'プロトリーフ二子玉川本店':'protoleaf-futakotamagawa'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -131,6 +186,7 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 ハッシュ → ローマ字
+    'v-e5cca93b': 'プロトリーフ二子玉川本店',   # 2026-10-03
     'v-6d3a4d6d': '咲くやこの花館',     # 2026-09-23
     'v-fe00aeb0': 'ゆくはし植物園',   # 2026-09-17
     'v-ec95bf25': '四国造園',          # 2026-09-17

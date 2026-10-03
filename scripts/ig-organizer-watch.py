@@ -99,6 +99,58 @@ def month_days(text):
     return out
 
 
+# 会期の範囲「10月8日(木)~11日(日)」「10/8〜10/11」「10/8~11」
+_RANGE = re.compile(
+    r'(?<!\d)(\d{1,2})\s*(?:月\s*(\d{1,2})\s*日?|/\s*(\d{1,2}))\s*(?:\([^)]{1,4}\))?\s*'
+    r'[〜~\-–—ー]\s*(?:(\d{1,2})\s*(?:月|/)\s*)?(\d{1,2})(?!\d)\s*日?')
+
+
+def md_ranges(text):
+    """本文に出る会期の範囲 [((月,日),(月,日))]。終わりの月が省かれていれば始まりの月"""
+    out = []
+    for m in _RANGE.finditer(text):
+        mo1, d1 = int(m.group(1)), int(m.group(2) or m.group(3))
+        mo2 = int(m.group(4) or mo1)
+        d2 = int(m.group(5))
+        if 1 <= mo1 <= 12 and 1 <= mo2 <= 12 and 1 <= d1 <= 31 and 1 <= d2 <= 31:
+            out.append(((mo1, d1), (mo2, d2)))
+    return out
+
+
+def umbrella_days(text, org_events, today):
+    """掲載済みの回を内に含む、より長い会期の日(月,日)。
+
+    主催が「本イベントは 10月8日(木)~11日(日) に開かれる DESIGN WEEKEND OSAKA の
+    枠組で開催」と書くと、その上位の催しの会期の端が当サイトに無い日付として出た
+    (2026-10-03 ミドリアン 10/9-10 に対し 10/8)。掲載済みの回を丸ごと含む範囲は
+    上位の会期であって別の回ではない。範囲の始まりと終わりの両方が掲載済みの回の
+    外にあるとは限らないので、範囲内の日をすべて既知にする。
+    """
+    days = set()
+    for (a, b) in md_ranges(text):
+        ya = today.year if a >= (today.month, today.day) else today.year + 1
+        yb = ya if b >= a else ya + 1
+        try:
+            da, db = datetime(ya, *a), datetime(yb, *b)
+        except ValueError:
+            continue
+        if not (0 < (db - da).days <= 62):
+            continue
+        for e in org_events:
+            try:
+                ea = datetime.strptime(e['date'], '%Y-%m-%d')
+                eb = datetime.strptime(e.get('dateEnd') or e['date'], '%Y-%m-%d')
+            except (KeyError, ValueError):
+                continue
+            if da <= ea and eb <= db and (eb - ea) < (db - da):
+                d = da
+                while d <= db:
+                    days.add((d.month, d.day))
+                    d += timedelta(days=1)
+                break
+    return days
+
+
 def event_md(e):
     s = set()
     for k in ('date', 'dateEnd'):
@@ -252,7 +304,7 @@ def analyze_posts(username, posts, org_events, all_org_events, today, day_index=
                                        'by': 'date' if hit_date else 'name'})
         if age <= UNLISTED_LOOKBACK and _looks_like_own_announcement(cap):
             fut = []
-            for (mo, d) in sorted(mds - known_md):
+            for (mo, d) in sorted(mds - known_md - umbrella_days(cap, all_org_events, today)):
                 y = today.year if (mo, d) >= (today.month, today.day) else today.year + 1
                 try:
                     cand = datetime(y, mo, d)
@@ -623,6 +675,19 @@ def self_test():
           'caption': '【植物市 開催決定】日程 10/18と11/22 会場 市民ホール'}]
     _, n = analyze_posts('org', p, [ev], [ev], today)
     chk('未掲載の日付', [x['dates'] for x in n], [['2026-11-22']])
+    # 掲載済みの回を含む上位の催しの会期は候補にしない(ミドリアン 2026-10-03)
+    p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4c',
+          'caption': '【植物市 開催決定】開催日時: 10月18日(日) 会場 市民ホール。'
+                     '本イベントは10月16日(金)~ 19日(月)の期間開催されるデザイン週間の枠組で開催します'}]
+    _, n = analyze_posts('org', p, [ev], [ev], today)
+    chk('上位の会期は候補にしない', n, [])
+    chk('範囲 10/16~19', md_ranges('10月16日(金)~ 19日(月)'), [((10, 16), (10, 19))])
+    chk('範囲 10/8〜10/11', md_ranges('10/8〜10/11'), [((10, 8), (10, 11))])
+    # 掲載済みの回を含まない範囲は従来どおり候補
+    p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4d',
+          'caption': '【植物市 開催決定】日程 10/18 と 11月21日~22日 会場 市民ホール'}]
+    _, n = analyze_posts('org', p, [ev], [ev], today)
+    chk('別の会期は候補', [x['dates'] for x in n], [['2026-11-21']])
     # 古い投稿は取りこぼし候補にしない
     p = [{'timestamp': '2026-08-01T01:00:00+0000', 'permalink': 'u5',
           'caption': '【植物市 開催決定】日程 11/22 会場 市民ホール'}]

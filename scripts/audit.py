@@ -5151,9 +5151,12 @@ def main():
 
     import datetime as _dtw   # 上の _dt に依存させない(この節だけで完結させる)
 
+    # 「土日」は休日の意味で、祝日も含める(2026-10-03)。曜日だけで分けると
+    # 09-21・09-22(シルバーウィーク)の開催中 17件が平日の基準(中央値2)と比べられ、
+    # metric_moved が2日続けて誤検知した。祝日は sitelib.is_rest_day が単一情報源。
     def _is_weekend(_ds):
         try:
-            return _dtw.date.fromisoformat(str(_ds)).weekday() >= 5
+            return sitelib.is_rest_day(_dtw.date.fromisoformat(str(_ds)))
         except ValueError:
             return None
 
