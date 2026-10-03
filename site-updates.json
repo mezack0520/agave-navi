@@ -1,7 +1,87 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-03",
+  "updated": "2026-10-04",
   "items": [
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "tochigi-taniku-fes-10th-yugao-park-2026-10",
+      "name": "第10回 栃木★多肉フェス in ゆうがおパーク",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04",
+      "prefecture": "栃木",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "aito-margueritestation-taniku-saboten-hanbaikai-2026-10",
+      "name": "多肉植物・サボテン販売会（道の駅あいとうマーガレットステーション）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-10",
+      "prefecture": "滋賀",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "direct-us-style-popup-kato-engei-2026-10",
+      "name": "Direct U.S. Style POP UP at カトーエンゲー東京",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "dokidoki-ibaraki-taniku-sokubaikai-2026-10-18",
+      "name": "多肉植物即売会（ポケットファームどきどき茨城町店）",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "mizunomori-aki-saboten-ten-2026-10",
+      "name": "秋のサボテン展（草津市立水生植物公園みずの森）",
+      "date": "2026-10-23",
+      "dateEnd": "2026-10-25",
+      "prefecture": "滋賀",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "isij-tokyo-reikai-2026-10-25",
+      "name": "I.S.I.J. 東京例会（2026年10月）",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
+      "name": "多肉植物即売会（ポケットファームどきどき茨城町店）",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-04",
+      "kind": "listed",
+      "slug": "isij-tokyo-reikai-2026-12-20",
+      "name": "I.S.I.J. 東京例会（2026年12月）",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "prefecture": "東京",
+      "detail": ""
+    },
     {
       "on": "2026-10-03",
       "kind": "listed",
@@ -1120,86 +1200,6 @@
       "date": "2026-10-24",
       "dateEnd": "2026-10-24",
       "prefecture": "沖縄",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-12",
-      "kind": "listed",
-      "slug": "botanical-life-kasama-2026-11",
-      "name": "第10回 ボタニカルライフ",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-12",
-      "kind": "date",
-      "slug": "midori-to-taniku-marche-nihonosato-2026-09",
-      "name": "第1回 緑と多肉を楽しむマルシェ",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-19",
-      "prefecture": "山口",
-      "detail": "2026.09.02-19 → 2026.09.19"
-    },
-    {
-      "on": "2026-09-12",
-      "kind": "date",
-      "slug": "kourep-2026-autumn",
-      "name": "コウレプ2026秋",
-      "date": "2026-09-16",
-      "dateEnd": "2026-09-20",
-      "prefecture": "兵庫",
-      "detail": "2026.09.19-20 → 2026.09.16-20"
-    },
-    {
-      "on": "2026-09-11",
-      "kind": "date",
-      "slug": "midori-to-taniku-marche-nihonosato-2026-09",
-      "name": "第1回 緑と多肉を楽しむマルシェ",
-      "date": "2026-09-02",
-      "dateEnd": "2026-09-19",
-      "prefecture": "山口",
-      "detail": "2026.09.19 → 2026.09.02-19"
-    },
-    {
-      "on": "2026-09-10",
-      "kind": "listed",
-      "slug": "kimtaro-sakura-open-sale-2026-09",
-      "name": "キムタロウ さくら植物園店 オープン販売会",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-23",
-      "prefecture": "千葉",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-10",
-      "kind": "listed",
-      "slug": "hamimoro-kitaharima-2026-09",
-      "name": "はみもろ（2026年9月）",
-      "date": "2026-09-13",
-      "dateEnd": "2026-09-13",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-10",
-      "kind": "listed",
-      "slug": "botalife-4th-anniversary-popup-2026-09",
-      "name": "ボタらいふ 4周年祭POPUP",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-23",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-10",
-      "kind": "listed",
-      "slug": "tanikutta-popup-petit-marche-2026-09",
-      "name": "たにくった POPUP プチマルシェ",
-      "date": "2026-09-21",
-      "dateEnd": "2026-09-22",
-      "prefecture": "愛知",
       "detail": ""
     }
   ]

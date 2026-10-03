@@ -1057,6 +1057,31 @@
    },
    "events": 527,
    "upcoming": 186
+  },
+  {
+   "date": "2026-10-04",
+   "urgent": {
+    "duplicate_indexable_title": 1,
+    "venue_slug_romaji_candidates": 1
+   },
+   "info": {
+    "short_descriptions": 1,
+    "coverage_gaps": 2,
+    "cancel_watch_unreachable": 1,
+    "cross_script_duplicate": 3
+   },
+   "metric": {
+    "thin_past_with_source": 33,
+    "thin_archived": 48,
+    "upcoming_with_image": 118,
+    "events_with_image": 226,
+    "upcoming_no_image": 74,
+    "ongoing_events": 18,
+    "workflow_secrets": 6,
+    "eyecatch_backlog": 74
+   },
+   "events": 535,
+   "upcoming": 192
   }
  ]
 }
