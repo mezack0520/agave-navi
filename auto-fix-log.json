@@ -651,6 +651,22 @@
    "target": "tochigi-taniku-fes-10th-yugao-park-2026-10 imageUrl",
    "action": "fixed",
    "detail": "会場の一覧記事の見出し画像。image-rejected.json に記録して外した"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "agave-event-update",
+   "kind": "duplicate_indexable_title",
+   "target": "どきどき多肉植物即売会 10/18・10/25",
+   "action": "fixed",
+   "detail": "同名2件の名称に開催日を入れた"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "agave-event-update",
+   "kind": "venue_slug_romaji_candidates",
+   "target": "カトーエンゲー東京",
+   "action": "fixed",
+   "detail": "kato-engei-tokyo を追加、旧 v-aafb626c を中継に残す"
   }
  ]
 }

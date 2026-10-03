@@ -174,7 +174,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
                 # 2026-09-23 虫を食べる植物展2026の掲載で3件になった
                 '咲くやこの花館':'sakuya-konohana',
                 # 2026-10-03 X-PLANTS 即売会(10/10)の掲載で3件になった
-                'プロトリーフ二子玉川本店':'protoleaf-futakotamagawa'}
+                'プロトリーフ二子玉川本店':'protoleaf-futakotamagawa',
+                # 2026-10-04 Direct U.S. Style POP UP(10/17)の掲載で3件になった
+                'カトーエンゲー東京':'kato-engei-tokyo'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -186,6 +188,7 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 ハッシュ → ローマ字
+    'v-aafb626c': 'カトーエンゲー東京',   # 2026-10-04
     'v-e5cca93b': 'プロトリーフ二子玉川本店',   # 2026-10-03
     'v-6d3a4d6d': '咲くやこの花館',     # 2026-09-23
     'v-fe00aeb0': 'ゆくはし植物園',   # 2026-09-17
