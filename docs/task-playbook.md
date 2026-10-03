@@ -2098,6 +2098,10 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   画面上で主メディア枠が暗いまま(botariba-toyohashi / lier-taniku-festival /
   gamagori-taniku-festa-6th)なら動画扱いで諦める。
 
+- **`igGrabHere` は主画像が描画されるまで自分で待つ(最大20秒)。**(2026-10-03)
+  8秒の固定待ちのあとでも img が0件の投稿が3件中2件あり、数秒後に同じページで取れた。
+  呼ぶ側で wait を挟む必要はない。20秒待っても無いと返したら動画扱いで諦める。
+
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
 `primarySource.vendorAnnouncementsOnly` は「出店者の告知は主催の告知の代わりに

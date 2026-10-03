@@ -124,7 +124,15 @@
 
   // いま開いている投稿ページの主画像を取って localStorage に積む
   window.igGrabHere = async function (slug, post, opt) {
-    const o = Object.assign({ maxEdge: 900, quality: 0.72 }, opt || {});
+    const o = Object.assign({ maxEdge: 900, quality: 0.72, waitSec: 20 }, opt || {});
+    // 描画が遅い。固定の待ちでは足りず、8秒待っても img が0件の投稿がある
+    // (2026-10-03: 3件中2件。数秒後に同じページで取れた)。主画像が出るまで1秒刻みで待つ
+    const ready = () => [...document.querySelectorAll('img')].some(i =>
+      /scontent|cdninstagram/.test(i.src) && i.naturalWidth >= 300
+      && !i.closest('a[href*="/p/"]') && !i.closest('a[href*="/reel/"]'));
+    for (let k = 0; k < o.waitSec && !ready(); k++) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
     const cand = [...document.querySelectorAll('img')]
       .filter(i => /scontent|cdninstagram/.test(i.src)
                    && i.naturalWidth >= 300
@@ -138,7 +146,7 @@
       // レイアウト未計算(面積が全て0)でも破綻しないよう二段で並べる
       .sort((a, b) => b.area - a.area || b.w * b.h - a.w * a.h);
     if (!cand.length) {
-      return { slug, err: 'no main image (動画投稿か描画前)' };
+      return { slug, err: 'no main image (' + o.waitSec + '秒待っても無い。動画投稿か描画前)' };
     }
     const pick = cand[0];
     // 切り出し指定つきのURLしか無いなら、それは主画像ではない
