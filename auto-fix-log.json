@@ -635,6 +635,22 @@
    "target": "第10回 栃木★多肉フェス in ゆうがおパーク (2026-10-03〜04)",
    "action": "listed",
    "detail": "会場公式 yugao-park.com/event/5446 で裏取り。09-22 に『実在しない回』として見送った記録は名称違いの別件で、回そのものは実在した"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "agave-event-update",
+   "kind": "implausible",
+   "target": "isij-tokyo-reikai-2026-12-20 admission",
+   "action": "fixed",
+   "detail": "sync-events の enrich が isij.net/event の別催事(三角広場の即売会)の『入場：無料』を入れた。例会は参加費制なので消した"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "agave-event-update",
+   "kind": "generic_image",
+   "target": "tochigi-taniku-fes-10th-yugao-park-2026-10 imageUrl",
+   "action": "fixed",
+   "detail": "会場の一覧記事の見出し画像。image-rejected.json に記録して外した"
   }
  ]
 }
