@@ -1,5 +1,5 @@
 {
-  "total": 576,
+  "total": 600,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -646,7 +646,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -805,8 +805,11 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-10-11 福LAND 2026が10月11日に開催 ハンドメイドや植物関連企画、ライブステージを実施",
+        "2026-10-30 10月の森のクラフトフィールドワークを森のクラフトで開催、植物ときのこを観察してピック作り"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -916,8 +919,15 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 6,
+      "items": [
+        "2026-10-03 wako-jurin-unique-plants-2026-10: 公式ページが変わった(本文: 885→875字 -2%)",
+        "2026-10-10 tegarayama-aki-saboten-taniku-ten-2026-10: 公式ページが変わった(本文: 1003→1003字 +0%)",
+        "2026-10-11 spicy-gem-kakusen-en-figure-hanare-2026-10: 公式ページが変わった(本文: 3284→3293字 +0%)",
+        "2026-10-25 roots-market-inage-2026-10: 公式ページが変わった(本文・画像)",
+        "2026-10-31 jolie-nursery-musashi-kanazawa-2026-10: 公式ページが変わった(本文: 2410→2396字 -1%)",
+        "2026-11-28 greensnap-marche-odaiba-2026: 公式ページが変わった(本文: 881→890字 +1%)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1000,8 +1010,13 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "@fukuoka_effect 2026-10-12: あのイベントが再来!人気レア植物ガチャ!! 【AMAZON GACHA🔔】 1回 1,000円(税別) 必ず1,000円 https://www.instagram.com/p/Dd_E4uIMO8V/",
+        "@greenfarmkanazawa 2026-10-21: 🌵多肉寄せ植え教室受付開始🌵 \\ 予約受付中 / 10月より多肉の寄せ植え教室がスタートします✨ 今回は大人気イブキさん https://www.instagram.com/p/Dd7tJq3hrBZ/",
+        "@protoleaf.shop_futakotamagawa 2026-10-14,2026-10-23,2026-10-28,2026-11-18,2026-11-20: 🌿【オリジナル寄せ植えワークショップのご案内です】🌿 ◆ワークショップの内容 お好きな苗を選び、講師のアドバイスを受けな https://www.instagram.com/p/DdqVFWOxbGp/",
+        "@uell_creators 2026-10-08: 【ミドリアン 出店者紹介 01】 植物と___ shokubutsu_to___ 植物好きのグラフィックデザイナー集団が https://www.instagram.com/p/Dd-ygOpE-YM/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1014,8 +1029,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-03 nihon-line-kaboku-taniku-saboten-fair-2026-10: https://www.instagram.com/p/DdupynnzV0V/（sourcePost）",
+        "2026-10-04 morino-tanikuen-hanbaikai-nara-2026-10: https://www.instagram.com/reel/Dd_TfYXAdDs/（caption）",
+        "2026-10-10 x-plants-sokubaikai-protoleaf-futakotamagawa-2026-10: https://www.instagram.com/p/Dd3teoaE79D/（sourcePost）",
+        "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10: https://www.instagram.com/reel/Dd_TfYXAdDs/（caption）",
+        "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10: https://www.instagram.com/reel/Dd_TfYXAdDs/（caption）",
+        "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10: https://www.instagram.com/reel/Dd_TfYXAdDs/（caption）",
+        "2026-10-17 nagasaki-bizarre-meetup-7th-2026-10: https://www.instagram.com/p/Dd75R5wAenM/（sourcePost）",
+        "2026-10-17 plants-plants-plants-bhms-2026-10: https://www.instagram.com/p/DdySj3smGd9/（caption）",
+        "2026-10-17 tropical-garden-konan-kohoku-2026-10: https://www.instagram.com/reel/Dd8103YKVBT/（sourcePost）",
+        "2026-10-18 joyfulak-tonden-agave-tenji-sokubaikai-2026-10: https://www.instagram.com/p/Dd8BeZ3T15S/（sourcePost）",
+        "2026-10-25 sabosabostore-collection-exhibition-sale-kimitsu-2026-10: https://www.instagram.com/p/DdyWeFop9fc/（sourcePost）",
+        "2026-10-27 shinshu-nakano-ikiikikan-taniku-hanbaikai-2026-10: https://www.instagram.com/p/DdkDcaVk6FW/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
