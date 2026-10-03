@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-03",
+  "sweptOn": "2026-10-04",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,33 +16,30 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1164,
-    "in_scope": 358,
-    "covered": 208,
-    "known_rejected": 147,
-    "truncated_resolved": 180,
-    "truncated_unresolved": 2,
+    "candidates": 1116,
+    "in_scope": 293,
+    "covered": 173,
+    "known_rejected": 118,
+    "truncated_resolved": 135,
+    "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 258,
-    "truncated_unresolved_hits": 90,
-    "in_scope_nextmeet": 100,
-    "gaps_raw": 3
+    "in_scope_leafla": 197,
+    "truncated_unresolved_hits": 135,
+    "in_scope_nextmeet": 96,
+    "gaps_raw": 2
   },
   "errors": [],
   "truncatedUnresolved": [
     "10/02 追加 Direct U.S. Style POP U...",
-    "10/02 追加 とちぎ花センターで多肉植物ミニ展示会＆即売会を..."
+    "10/02 追加 とちぎ花センターで多肉植物ミニ展示会＆即売会を...",
+    "10/02 追加 信州中野いきいき館で多肉植物苗販売会＆寄せ植え..."
   ],
   "gaps": [
     {
-      "date": "2026-10-11",
-      "title": "福LAND 2026が10月11日に開催 ハンドメイドや植物関連企画、ライブステージを実施"
-    },
-    {
-      "date": "2026-10-30",
-      "lastSeen": "2026-10-31",
+      "date": "2026-10-17",
+      "lastSeen": "2026-10-18",
       "days": 2,
-      "title": "10月の森のクラフトフィールドワークを森のクラフトで開催、植物ときのこを観察してピック作り"
+      "title": "麋角植物作業室 TOUR 2026"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "total": 598,
+  "total": 611,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -646,7 +646,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -810,10 +810,9 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 2,
+      "count": 1,
       "items": [
-        "2026-10-11 福LAND 2026が10月11日に開催 ハンドメイドや植物関連企画、ライブステージを実施",
-        "2026-10-30 10月の森のクラフトフィールドワークを森のクラフトで開催、植物ときのこを観察してピック作り"
+        "2026-10-17 麋角植物作業室 TOUR 2026"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -924,8 +923,13 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "2026-10-03 wako-jurin-unique-plants-2026-10: 公式ページが変わった(本文: 875→884字 +1%)",
+        "2026-10-04 souransai-koshigaya-2026-10: 公式ページが変わった(本文: 342→333字 -3%)",
+        "2026-10-09 midolien-hono-osaka-2026-10: 公式ページが変わった(本文・画像)",
+        "2026-10-25 roots-market-inage-2026-10: 公式ページが変わった(画像)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -966,17 +970,17 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 1,
-      "items": [
-        "取得できなかった: jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
-      ],
+      "count": 0,
+      "items": [],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
     },
     "cancel_watch_undecodable": {
       "title": "中止の見張りが出典の文字コードを読めていない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "mizunomori-aki-saboten-ten-2026-10: 化けた字 573097 字 https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf"
+      ],
       "note": "頁の charset を sitelib.decode_html が扱えていない。応答ヘッダと <meta charset> を見て decode_html に足す。読めない間はその回の中止の語も開催日も拾えない",
       "severity": "urgent"
     },
@@ -1010,8 +1014,11 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "@plants2306.fe 2026-11-02: 【ワークショップ開催のお知らせ】 「サボテンの自生地風ワークショップ」 大自然の中でたくましく育つサボテンたちの「本来の https://www.instagram.com/p/DeB5uT9k9Js/",
+        "@protoleaf.shop_yumegaoka 2026-10-13,2026-10-19: 🌿✨ワークショップのお知らせ✨🌿 ふんわりと、ゆるやかに揺れる穂のオブジェ。 「ブルーグレイのBotanical bal https://www.instagram.com/p/DeBdNbFzepa/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1024,8 +1031,17 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 8,
+      "items": [
+        "2026-10-04 morino-tanikuen-hanbaikai-nara-2026-10: https://www.instagram.com/p/DeBxF-WHysM/（caption）",
+        "2026-10-10 aito-margueritestation-taniku-saboten-hanbaikai-2026-10: https://www.instagram.com/p/Dd7sr3fk6An/（caption）",
+        "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10: https://www.instagram.com/p/DeBxF-WHysM/（caption）",
+        "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10: https://www.instagram.com/p/DeBxF-WHysM/（caption）",
+        "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10: https://www.instagram.com/p/DeBxF-WHysM/（caption）",
+        "2026-10-17 direct-us-style-popup-kato-engei-2026-10: https://www.instagram.com/p/Dd89w3YpNHJ/（sourcePost）",
+        "2026-10-17 plants-plants-plants-bhms-2026-10: https://www.instagram.com/p/DeBZIJcGPq8/（caption）",
+        "2026-11-22 morino-tanikuen-hanbaikai-big-nabari-2026-11: https://www.instagram.com/p/DeBxF-WHysM/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
