@@ -610,7 +610,8 @@
    "kind": "rejected_revisit_expired",
    "target": "cocoha 10th ANNIVERSARY (2026-10-03)",
    "action": "fixed",
-   "detail": "企画内容が出ないまま会期に入ったため revisit=false で閉じた"
+   "detail": "企画内容が出ないまま会期に入ったため revisit=false で閉じた",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -618,7 +619,8 @@
    "kind": "coverage_gaps",
    "target": "福LAND 2026 (2026-10-11)",
    "action": "rejected",
-   "detail": "主催 @heavengreen_factory Dd0G533yc5b。街の祭りに珍奇植物の企画を加える形で内訳非公開 → undisclosed / revisit"
+   "detail": "主催 @heavengreen_factory Dd0G533yc5b。街の祭りに珍奇植物の企画を加える形で内訳非公開 → undisclosed / revisit",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -626,7 +628,8 @@
    "kind": "coverage_gaps",
    "target": "10月の森のクラフトフィールドワーク (2026-10-30)",
    "action": "rejected",
-   "detail": "植物観察・きのこのピック作りの参加費制フィールドワーク。workshopOnly"
+   "detail": "植物観察・きのこのピック作りの参加費制フィールドワーク。workshopOnly",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -634,7 +637,8 @@
    "kind": "coverage_gaps",
    "target": "第10回 栃木★多肉フェス in ゆうがおパーク (2026-10-03〜04)",
    "action": "listed",
-   "detail": "会場公式 yugao-park.com/event/5446 で裏取り。09-22 に『実在しない回』として見送った記録は名称違いの別件で、回そのものは実在した"
+   "detail": "会場公式 yugao-park.com/event/5446 で裏取り。09-22 に『実在しない回』として見送った記録は名称違いの別件で、回そのものは実在した",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -642,7 +646,8 @@
    "kind": "implausible",
    "target": "isij-tokyo-reikai-2026-12-20 admission",
    "action": "fixed",
-   "detail": "sync-events の enrich が isij.net/event の別催事(三角広場の即売会)の『入場：無料』を入れた。例会は参加費制なので消した"
+   "detail": "sync-events の enrich が isij.net/event の別催事(三角広場の即売会)の『入場：無料』を入れた。例会は参加費制なので消した",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -650,7 +655,8 @@
    "kind": "generic_image",
    "target": "tochigi-taniku-fes-10th-yugao-park-2026-10 imageUrl",
    "action": "fixed",
-   "detail": "会場の一覧記事の見出し画像。image-rejected.json に記録して外した"
+   "detail": "会場の一覧記事の見出し画像。image-rejected.json に記録して外した",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -658,7 +664,8 @@
    "kind": "duplicate_indexable_title",
    "target": "どきどき多肉植物即売会 10/18・10/25",
    "action": "fixed",
-   "detail": "同名2件の名称に開催日を入れた"
+   "detail": "同名2件の名称に開催日を入れた",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -666,7 +673,8 @@
    "kind": "venue_slug_romaji_candidates",
    "target": "カトーエンゲー東京",
    "action": "fixed",
-   "detail": "kato-engei-tokyo を追加、旧 v-aafb626c を中継に残す"
+   "detail": "kato-engei-tokyo を追加、旧 v-aafb626c を中継に残す",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -674,7 +682,8 @@
    "kind": "coverage_gaps",
    "target": "麋角植物作業室 at pigment 名古屋 (2026-10-17)",
    "action": "listed",
-   "detail": "主催 @tompots_501 の告知 Dd8bLUhS04q で裏取り。9月の熊本編と同じ企画"
+   "detail": "主催 @tompots_501 の告知 Dd8bLUhS04q で裏取り。9月の熊本編と同じ企画",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -682,7 +691,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "サボテンの自生地風ワークショップ (2026-11-02)",
    "action": "rejected",
-   "detail": "workshopOnly。@plants2306.fe DeB5uT9k9Js"
+   "detail": "workshopOnly。@plants2306.fe DeB5uT9k9Js",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -690,7 +700,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "ブルーグレイのBotanical ball (2026-10-18〜19)",
    "action": "rejected",
-   "detail": "workshopOnly。10/13 は予約締切で、ig-organizer-watch が前置きの締切を日付に数えていたのも直した"
+   "detail": "workshopOnly。10/13 は予約締切で、ig-organizer-watch が前置きの締切を日付に数えていたのも直した",
+   "mailedOn": "2026-10-04"
   },
   {
    "on": "2026-10-04",
@@ -698,7 +709,8 @@
    "kind": "cancel_watch_undecodable",
    "target": "mizunomori-aki-saboten-ten-2026-10",
    "action": "fixed",
-   "detail": "出典がPDFでUTF-8として読んでいた。sitelib.pdf_to_text を足し、CIに pypdf を入れた。次の daily で解消"
+   "detail": "出典がPDFでUTF-8として読んでいた。sitelib.pdf_to_text を足し、CIに pypdf を入れた。次の daily で解消",
+   "mailedOn": "2026-10-04"
   }
  ]
 }
