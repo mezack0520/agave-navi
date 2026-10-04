@@ -711,6 +711,46 @@
    "action": "fixed",
    "detail": "出典がPDFでUTF-8として読んでいた。sitelib.pdf_to_text を足し、CIに pypdf を入れた。次の daily で解消",
    "mailedOn": "2026-10-04"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "agave-event-update",
+   "kind": "cancel_watch_undecodable",
+   "target": "mizunomori-aki-saboten-ten-2026-10",
+   "action": "skipped",
+   "detail": "pypdf 導入後の daily(10-04 02:10 UTC)は check-cancelled で読めていたが、push 衝突の作り直しで cancel-watch.json(持ち越さない観測結果)が捨てられた。手元で fetch_text が1644字・化け0字を返すことを確認。次の schedule daily で解消する"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "aki-no-shokubutsu-no-ichi-2026-10",
+   "action": "fixed",
+   "detail": "開催日を過ぎたので revisit=false。理由に一文追記"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "green-marche-hananoyu-2026-10",
+   "action": "fixed",
+   "detail": "開催日を過ぎたので revisit=false。理由に一文追記"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "savers-flea-market-vol1-susono-2026-10",
+   "action": "fixed",
+   "detail": "開催日を過ぎたので revisit=false。理由に一文追記"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "sippo-de-marche-shikinosato-2026-10",
+   "action": "fixed",
+   "detail": "開催日を過ぎたので revisit=false。理由に一文追記"
   }
  ]
 }
