@@ -1,5 +1,5 @@
 {
-  "total": 611,
+  "total": 614,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -274,13 +274,14 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 75,
+      "count": 76,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "aito-margueritestation-taniku-saboten-hanbaikai-2026-10",
         "armeria-tokimeki-ichi-2026-10",
         "asamiya-tanikusai-7th-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
+        "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
         "botanic-collection2-ube-2026-10",
         "botanical-botanical-okinawa-2026-11",
         "botanical-journey-onomichi-2026-11",
@@ -314,8 +315,7 @@
         "ka78-kikakusai-6th-shimada-2026-11",
         "kadan-fes-2026-autumn",
         "kinshakusai-vol6-2026-10",
-        "kusa-paradise-vol10-okazaki-2026-10",
-        "kyoto-midorino-marche-bangaihen-vol10-2026"
+        "kusa-paradise-vol10-okazaki-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -539,8 +539,10 @@
     },
     "html_in_data": {
       "title": "events.jsonの値にHTMLタグ・実体参照・改行が混入",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10: admission に改行/タブ '5,000円\\n(税込)'"
+      ],
       "note": "データは素のテキストで持つ。改行や強調はbuild側で付ける",
       "severity": "urgent"
     },
@@ -646,7 +648,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -840,7 +842,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 75,
+      "count": 76,
       "items": [
         "2026-10-03 armeria-tokimeki-ichi-2026-10",
         "2026-10-03 on-the-plants-vol9-fukuoka-2026-10",
@@ -864,6 +866,7 @@
         "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10",
         "2026-10-12 nara-bikaku-fes-vol2-2026-10",
         "2026-10-16 suma-rikyu-cactus-succulent-tenjikai-2026-10",
+        "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
         "2026-10-17 direct-us-style-popup-kato-engei-2026-10",
         "2026-10-17 plants-plants-plants-bhms-2026-10",
         "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
@@ -880,8 +883,7 @@
         "2026-10-25 isij-tokyo-reikai-2026-10-25",
         "2026-10-25 taniku-moromoro-vol16-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
-        "2026-10-31 nightwalker-horie-2026-10",
-        "2026-11-01 botariba-toyohashi-2026-11"
+        "2026-10-31 nightwalker-horie-2026-10"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -981,7 +983,7 @@
       "items": [
         "mizunomori-aki-saboten-ten-2026-10: 化けた字 573097 字 https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf"
       ],
-      "note": "頁の charset を sitelib.decode_html が扱えていない。応答ヘッダと <meta charset> を見て decode_html に足す。読めない間はその回の中止の語も開催日も拾えない",
+      "note": "頁の charset を sitelib.decode_html が扱えていない。応答ヘッダと <meta charset> を見て decode_html に足す。PDF なら pdf_to_text(daily.yml の pypdf)が効いているかを見る。読めない間はその回の中止の語も開催日も拾えない",
       "severity": "urgent"
     },
     "cancel_watch_broken": {
