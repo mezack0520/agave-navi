@@ -83,6 +83,10 @@ _MD = re.compile(r'(?<!\d)(\d{1,2})\s*(?:月\s*(\d{1,2})\s*日?|/\s*(\d{1,2})(?!
 
 
 _DEADLINE = re.compile(r'締め?切|〆切|まで(?:募集|受付|応募)|応募')
+# 締切の見出しが日付の前に付く形「☑️予約締切：10月13日まで」(2026-10-04)。
+# 後ろだけを見ていたので、プロトリーフゆめが丘のWS告知で 10/13 が
+# 「当サイトに無い先の日付」として出た
+_DEADLINE_BEFORE = re.compile(r'(?:締め?切り?|〆切|申込期限|受付期限|予約期限)(?:日)?\s*(?:[：:]|は)?\s*$')
 
 
 def month_days(text):
@@ -90,7 +94,10 @@ def month_days(text):
     out = set()
     for m in _MD.finditer(text):
         # 「募集は9月30日で締め切ります」のような締切日は開催日ではない
-        if _DEADLINE.search(text[m.end():m.end() + 12]):
+        # 後ろは同じ行の中だけを見る。次の行の「予約締切」で開催日まで落としていた(2026-10-04)
+        if _DEADLINE.search(text[m.end():m.end() + 12].split('\n')[0]):
+            continue
+        if _DEADLINE_BEFORE.search(text[max(0, m.start() - 10):m.start()]):
             continue
         mo = int(m.group(1))
         d = int(m.group(2) or m.group(3))
@@ -665,6 +672,8 @@ def self_test():
     c, _ = analyze_posts('org', p, [ev], [ev], today)
     chk('荒天時の予告は鳴らない', c, [])
     chk('締切日は日付に数えない', month_days('募集は9月30日で締め切ります。12/26開催'), {(12, 26)})
+    chk('前置きの締切も日付に数えない', month_days('① 10月18日（日）\n☑️予約締切：10月13日まで'), {(10, 18)})
+    chk('「締切は」の後の日付も数えない', month_days('募集締切は10月18日(日)!\n応募ご希望の方は'), set())
     # 別イベントへの出店告知は取りこぼし候補にしない
     p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4b',
           'caption': 'イベント出店のお知らせ 11/22 開催 会場はどこそこ'}]

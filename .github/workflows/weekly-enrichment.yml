@@ -53,7 +53,7 @@ jobs:
         with: { python-version: '3.11' }
 
       - name: Install deps
-        run: pip install requests beautifulsoup4 lxml pillow
+        run: pip install requests beautifulsoup4 lxml pillow pypdf
 
       # メールに載せるのは「このジョブが実際に書き換えた内容」(2026-09-30)。
       # 起点を覚えておき、補完の後に events.json の差分を回・項目ごとに出す

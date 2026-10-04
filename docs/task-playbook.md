@@ -3380,6 +3380,25 @@ Step0 の照合で `rejected-events.json` に当たった候補は通常そこ�
 前の回の残骸1つで起動直後の `record-run.py` ごと止まる。
 `D=/tmp/an-$(date +%s); mkdir -p $D && cd $D && git clone ...` のように毎回新しい場所へ取る。
 
+### 出典が PDF の回は、PDF を文字にしてから見張る (2026-10-04)
+
+`mizunomori-aki-saboten-ten-2026-10` の出典はみずの森の月間チラシ PDF で、`sitelib.fetch_text` は
+PDF の生バイトを UTF-8 として読んでいた(U+FFFD 57万字)。中止の語も開催日も拾えないまま「見張っている」状態になり、
+`cancel_watch_undecodable` が 0→1 に悪化した。`sitelib.decode_html` が PDF(先頭 `%PDF-` か Content-Type)を
+`pdf_to_text`(pypdf → pdftotext)に回す。CI は daily / sync-events / weekly-enrichment で `pypdf` を入れる。
+どちらも無い環境では `UnreadableDocument` を上げ、`check-cancelled.py` の errors 経由で
+`cancel_watch_undecodable`(urgent)に出る(info の unreachable には出さない)。
+化けていた頁が読めるようになった初回は、本文の署名の変化を中止の兆候に数えない。
+施設チラシの定型「掲載イベントは状況により変更・中止されることもございます」は条件文として落とす。
+
+### 締切の見出しは日付の前にも付く (2026-10-04)
+
+`ig-organizer-watch.month_days` は日付の**後ろ**12字だけで締切を見ていたので、
+「☑️予約締切：10月13日まで」「申込締切9月30日」「募集締切は10月18日」の日付を開催日として拾っていた。
+逆に後ろの窓が改行をまたぎ、次の行の「予約締切」「応募」で本物の開催日を落とす回もあった。
+前置き(`_DEADLINE_BEFORE`)を足し、後ろは同じ行の中だけを見る。
+organizer-posts.json の全投稿で新旧を比べ、変わったのは締切日11件だけだった。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは

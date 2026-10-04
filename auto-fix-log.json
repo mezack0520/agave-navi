@@ -667,6 +667,38 @@
    "target": "カトーエンゲー東京",
    "action": "fixed",
    "detail": "kato-engei-tokyo を追加、旧 v-aafb626c を中継に残す"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "event-monitor",
+   "kind": "coverage_gaps",
+   "target": "麋角植物作業室 at pigment 名古屋 (2026-10-17)",
+   "action": "listed",
+   "detail": "主催 @tompots_501 の告知 Dd8bLUhS04q で裏取り。9月の熊本編と同じ企画"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "サボテンの自生地風ワークショップ (2026-11-02)",
+   "action": "rejected",
+   "detail": "workshopOnly。@plants2306.fe DeB5uT9k9Js"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "ブルーグレイのBotanical ball (2026-10-18〜19)",
+   "action": "rejected",
+   "detail": "workshopOnly。10/13 は予約締切で、ig-organizer-watch が前置きの締切を日付に数えていたのも直した"
+  },
+  {
+   "on": "2026-10-04",
+   "task": "event-monitor",
+   "kind": "cancel_watch_undecodable",
+   "target": "mizunomori-aki-saboten-ten-2026-10",
+   "action": "fixed",
+   "detail": "出典がPDFでUTF-8として読んでいた。sitelib.pdf_to_text を足し、CIに pypdf を入れた。次の daily で解消"
   }
  ]
 }

@@ -64,7 +64,7 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           GOOGLE_CSE_ID:  ${{ secrets.GOOGLE_CSE_ID }}
         run: |
-          pip install requests beautifulsoup4 lxml pillow
+          pip install requests beautifulsoup4 lxml pillow pypdf
           IFS=',' read -ra SLUGS <<< "${{ steps.newslugs.outputs.slugs }}"
           for slug in "${SLUGS[@]}"; do
             echo "::group::Enrich $slug"

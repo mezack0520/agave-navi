@@ -242,14 +242,60 @@ def should_retry_status(code):
 _CHARSET_RE = re.compile(rb'''<meta[^>]+charset=["\']?\s*([A-Za-z0-9_\-]+)''', re.I)
 
 
+class UnreadableDocument(Exception):
+    """取得はできたが本文を文字にできない(PDF を読む手段が無い等)。
+
+    引き直しても結果は変わらないので fetch_text は再試行しない。
+    check-cancelled.py は errors に型名ごと積み、audit.cancel_watch_undecodable
+    (urgent) がこの型名を拾う。info の cancel_watch_unreachable に混ぜると、
+    「相手が落ちていた」と「こちらが読めない」が区別できなくなる(2026-10-04)。
+    """
+
+
+def pdf_to_text(raw):
+    """PDF の bytes から本文を取る。pypdf → pdftotext の順に試す(2026-10-04)。
+
+    **出典が PDF の回は、PDF の生バイトを UTF-8 として読んでいた。**
+    mizunomori-aki-saboten-ten-2026-10 (みずの森の月間チラシ) は U+FFFD が
+    57万字になり、中止の語も開催日も1つも拾えないまま「見張っている」状態だった。
+    daily.yml は pypdf を入れる。どちらも無ければ UnreadableDocument。
+    """
+    import io as _io
+    try:
+        import pypdf as _pypdf
+        r = _pypdf.PdfReader(_io.BytesIO(raw))
+        return '\n'.join((pg.extract_text() or '') for pg in r.pages)
+    except ImportError:
+        pass
+    except Exception as ex:                           # noqa: BLE001
+        raise UnreadableDocument(f'PDF を解析できない: {type(ex).__name__}')
+    import shutil as _sh
+    import subprocess as _sp
+    if _sh.which('pdftotext'):
+        p = _sp.run(['pdftotext', '-layout', '-', '-'], input=raw,
+                    capture_output=True, timeout=60)
+        if p.returncode == 0:
+            return p.stdout.decode('utf-8', 'replace')
+        raise UnreadableDocument(f'pdftotext が失敗した: rc={p.returncode}')
+    raise UnreadableDocument('PDF を読む手段が無い(pypdf も pdftotext も無い)')
+
+
+def is_pdf(raw, content_type=None):
+    return (raw[:5] == b'%PDF-'
+            or 'application/pdf' in (content_type or '').lower())
+
+
 def decode_html(raw, content_type=None):
     """bytes を文字列にする。応答ヘッダ → meta の charset → UTF-8 の順に見る。
+    PDF は pdf_to_text で本文を取る(2026-10-04)。
 
     **UTF-8 決め打ちで読んでいた(〜2026-09-30)。**isij.net(ビッグバザール
     6回ぶんの出典)は Shift_JIS で、本文が化けたまま中止の語も開催日も
     1つも拾えず、cancel-watch.json に datesNamed=0 / eventDateSeen=False と
     書かれていた。見張っているように見えて、何も読めていなかった。
     """
+    if is_pdf(raw, content_type):
+        return pdf_to_text(raw)
     cs = None
     m = re.search(r'charset=["\']?([A-Za-z0-9_\-]+)', content_type or '', re.I)
     if m:
@@ -286,6 +332,8 @@ def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
         try:
             with _ureq.urlopen(req, timeout=timeout) as r:
                 return decode_html(r.read(), r.headers.get('Content-Type'))
+        except UnreadableDocument:
+            raise                                     # 引き直しても同じ
         except _uerr.HTTPError as ex:
             if not should_retry_status(ex.code) or attempt == retries:
                 raise

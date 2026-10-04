@@ -141,6 +141,10 @@ CONDITIONAL_CANCEL = (
     r'(?:雨天|荒天|悪天候|台風)(?:の)?(?:場合|際|時|とき)[^。\n]{0,30}?(?:中止|延期|順延)(?:の(?:お知らせ|ご連絡|告知))?',
     # これから知らせるという予告。まだ中止していない
     r'(?:中止|延期)(?:の)?(?:お知らせ|ご連絡|告知)を(?:致|いた)?します',
+    # 「掲載イベントは状況により変更・中止されることもございます」。施設の月間チラシ・
+    # 広報誌の定型の断り書き。可能性を述べているだけで告知ではない
+    # (みずの森の月間チラシ PDF、2026-10-04)
+    r'(?:変更|延期|中止)[・、]?(?:変更|延期|中止)?(?:される|となる|になる|する)(?:こと|場合)(?:も|が)(?:ございます|あります|あり得ます|ありえます)',
 )
 
 
@@ -399,6 +403,12 @@ def main():
         reread = ('badChars' not in before and bool(bsig) and bool(re.search(
             r'charset=["\']?\s*(?:shift_jis|shift-jis|sjis|windows-31j|euc-jp|iso-2022-jp)',
             html[:4096], re.I)))
+        # 前回まで化けていた頁が読めるようになった回も同じ(2026-10-04)。
+        # PDF の出典を UTF-8 で読んでいた回は署名が化けた字のハッシュなので、
+        # 読めるようになった初回に「本文が変わった」を中止の兆候として鳴らしてしまう。
+        if (isinstance(before.get('badChars'), int) and before['badChars'] >= 20
+                and bad_chars < 20):
+            reread = True
         if bsig:
             if bsig.get('text') != sig['text'] and not reread:
                 changed.append('本文')
@@ -589,6 +599,26 @@ FIX_SPAN_PAGE = """<html><body>
 </body></html>"""
 
 
+def _tiny_pdf(text):
+    """自己テスト用の1頁の PDF(ASCII 本文)を組み立てる"""
+    objs = [b'<</Type/Catalog/Pages 2 0 R>>', b'<</Type/Pages/Kids[3 0 R]/Count 1>>',
+            b'<</Type/Page/Parent 2 0 R/MediaBox[0 0 200 200]/Contents 4 0 R'
+            b'/Resources<</Font<</F1 5 0 R>>>>>>', None,
+            b'<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>']
+    st = b'BT /F1 12 Tf 10 100 Td (' + text.encode('ascii') + b') Tj ET'
+    objs[3] = b'<</Length %d>>stream\n' % len(st) + st + b'\nendstream'
+    out, offs = bytearray(b'%PDF-1.4\n'), []
+    for i, o in enumerate(objs, 1):
+        offs.append(len(out))
+        out += b'%d 0 obj' % i + o + b'endobj\n'
+    x = len(out)
+    out += b'xref\n0 %d\n0000000000 65535 f \n' % (len(objs) + 1)
+    for o in offs:
+        out += b'%010d 00000 n \n' % o
+    out += b'trailer<</Size %d/Root 1 0 R>>\nstartxref\n%d\n%%%%EOF' % (len(objs) + 1, x)
+    return bytes(out)
+
+
 def self_test(verbose=True):
     ok = True
 
@@ -604,7 +634,22 @@ def self_test(verbose=True):
         if verbose:
             print(msg)
 
+    say('--- PDF の出典 (2026-10-04) ---')
+    # PDF の生バイトを UTF-8 で読むと U+FFFD だらけになり、語も日付も拾えない
+    try:
+        _pt = sitelib.decode_html(_tiny_pdf('Closed 10/23-25'), 'application/pdf')
+    except sitelib.UnreadableDocument:
+        _pt = None   # 読む手段が無い環境。本番では errors に積まれ urgent で出る
+    if _pt is not None:
+        chk('PDF の本文を文字にできる', 'Closed 10/23-25' in _pt, True)
+        chk('PDF を読んで化けた字が出ない', _pt.count('\ufffd'), 0)
+    chk('PDF の判定(先頭バイト)', sitelib.is_pdf(b'%PDF-1.4\n'), True)
+    chk('HTML は PDF と判定しない', sitelib.is_pdf(b'<html>', 'text/html'), False)
+
     say('--- 文言の検出 ---')
+    _disc = analyze('<html><body><p>※掲載イベントは状況により変更・中止されることもございます。</p></body></html>')
+    chk('施設チラシの断り書き(変更・中止されることも) → 数えない',
+        bool(_disc['strong'] or _disc['weak']), False)
     a = analyze(FIX_TEXT_NOTICE)
     chk('本文に中止告知 → 強い語', bool(a['strong']), True)
     b = analyze(FIX_WEAK)

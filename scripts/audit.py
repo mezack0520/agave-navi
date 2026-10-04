@@ -2804,7 +2804,8 @@ def main():
             f'巡回対象 {_cw_targets} 件のうち {len(_cw_err)} 件が取得できていない'
             '（3割超）')
     elif _cw_err:
-        _cw_partial = [f'取得できなかった: {e}' for e in _cw_err]
+        _cw_partial = [f'取得できなかった: {e}' for e in _cw_err
+                       if 'UnreadableDocument' not in str(e)]  # undecodable に出す
     if _cw_on and re.fullmatch(r'\d{4}-\d{2}-\d{2}', _cw_on):
         import datetime as _dtcw
         _cw_age = (_dtcw.date.fromisoformat(today_s)
@@ -2831,11 +2832,16 @@ def main():
         _bc = (_pg or {}).get('badChars')
         if isinstance(_bc, int) and _bc >= 20:
             _cw_garbled.append(f"{_sl}: 化けた字 {_bc} 字 {(_pg or {}).get('url', '')}")
+    # 取得はできたが文字にできなかった出典(2026-10-04)。PDF を読む手段が
+    # CI に無い等。errors に入るので放っておくと info の unreachable に混ざる。
+    for _e in (_cw.get('errors') or []):
+        if 'UnreadableDocument' in str(_e):
+            _cw_garbled.append(f'文字にできない: {_e}')
     add('cancel_watch_undecodable', '中止の見張りが出典の文字コードを読めていない',
         _cw_garbled,
         '頁の charset を sitelib.decode_html が扱えていない。応答ヘッダと '
-        '<meta charset> を見て decode_html に足す。読めない間はその回の中止の語も'
-        '開催日も拾えない')
+        '<meta charset> を見て decode_html に足す。PDF なら pdf_to_text(daily.yml の pypdf)'
+        'が効いているかを見る。読めない間はその回の中止の語も開催日も拾えない')
 
     add('cancel_watch_broken', '中止の見張りが機能していない',
         sorted(_cw_broken),

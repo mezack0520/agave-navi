@@ -65,7 +65,7 @@ jobs:
         with: { python-version: '3.11' }
 
       - name: Install deps
-        run: pip install requests beautifulsoup4 lxml pillow
+        run: pip install requests beautifulsoup4 lxml pillow pypdf
 
       # push で入ったときは「何が変わったか」で巡回の要否を決める。
       # 巡回(外部サイトを叩く3ステップ)は6〜9分かかり、cancel-watch.json と
