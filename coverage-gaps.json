@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-04",
+  "sweptOn": "2026-10-05",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,30 +16,28 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1116,
-    "in_scope": 293,
-    "covered": 173,
-    "known_rejected": 118,
+    "candidates": 1238,
+    "in_scope": 284,
+    "covered": 159,
+    "known_rejected": 124,
     "truncated_resolved": 135,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 197,
+    "in_scope_leafla": 195,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 96,
-    "gaps_raw": 2
+    "in_scope_nextmeet": 89,
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
-    "10/02 追加 Direct U.S. Style POP U...",
+    "10/04 追加 ニコライ・バーグマンのハロウィンフラワーインス...",
     "10/02 追加 とちぎ花センターで多肉植物ミニ展示会＆即売会を...",
-    "10/02 追加 信州中野いきいき館で多肉植物苗販売会＆寄せ植え..."
+    "10/02 追加 lahainagardenで「らはちゅ〜hol..."
   ],
   "gaps": [
     {
-      "date": "2026-10-17",
-      "lastSeen": "2026-10-18",
-      "days": 2,
-      "title": "麋角植物作業室 TOUR 2026"
+      "date": "2026-11-01",
+      "title": "Tailors Market on MEDAKA & Water Plant"
     }
   ]
 }
