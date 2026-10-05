@@ -7,29 +7,7 @@
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "suma-rikyu-cactus-succulent-tenjikai-2026-10",
-      "name": "サボテン・多肉植物展示会（神戸市立須磨離宮公園）",
-      "date": "2026-10-16",
-      "url": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
-      "why": "弱い語(中止)＋ページが変わった",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "roots-market-inage-2026-10",
-      "name": "ROOTS MARKET",
-      "date": "2026-10-25",
-      "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "midolien-hono-osaka-2026-10": {
       "url": "https://weekend.osaka/16061/",
@@ -41,6 +19,7 @@
         "imageCount": 12
       },
       "prevTextLen": 1383,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -61,6 +40,7 @@
         "imageCount": 6
       },
       "prevTextLen": 700,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -81,6 +61,7 @@
         "imageCount": 19
       },
       "prevTextLen": 690,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -101,6 +82,7 @@
         "imageCount": 26
       },
       "prevTextLen": 549,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -121,6 +103,7 @@
         "imageCount": 36
       },
       "prevTextLen": 1353,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -141,6 +124,7 @@
         "imageCount": 15
       },
       "prevTextLen": 2396,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 14,
@@ -161,6 +145,7 @@
         "imageCount": 6
       },
       "prevTextLen": 1003,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -181,6 +166,7 @@
         "imageCount": 0
       },
       "prevTextLen": 14221,
+      "sigScope": "page",
       "strong": [],
       "weak": [
         "中止"
@@ -203,6 +189,7 @@
         "imageCount": 8
       },
       "prevTextLen": 3293,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -222,11 +209,10 @@
         "textLen": 1403,
         "imageCount": 36
       },
-      "prevTextLen": 1423,
+      "prevTextLen": 1403,
+      "sigScope": "page",
       "strong": [],
-      "weak": [
-        "中止"
-      ],
+      "weak": [],
       "datesNamed": 1,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
@@ -245,6 +231,7 @@
         "imageCount": 2
       },
       "prevTextLen": 945,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -265,6 +252,7 @@
         "imageCount": 46
       },
       "prevTextLen": 1195,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -284,7 +272,8 @@
         "textLen": 1642,
         "imageCount": 0
       },
-      "prevTextLen": 660406,
+      "prevTextLen": 1642,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -305,6 +294,7 @@
         "imageCount": 20
       },
       "prevTextLen": 1287,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -319,12 +309,13 @@
       "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
       "checkedOn": "2026-10-05",
       "signature": {
-        "text": "6ef69e4dbc7b6985",
-        "images": "c08d424ee546398e",
-        "textLen": 5573,
-        "imageCount": 45
+        "text": "98d0a5abf924608f",
+        "images": "1f036f16f034e43b",
+        "textLen": 519,
+        "imageCount": 3
       },
-      "prevTextLen": 5557,
+      "prevTextLen": null,
+      "sigScope": "article",
       "strong": [],
       "weak": [],
       "datesNamed": 11,
@@ -345,6 +336,7 @@
         "imageCount": 0
       },
       "prevTextLen": 1069,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -365,6 +357,7 @@
         "imageCount": 1
       },
       "prevTextLen": 710,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -379,12 +372,13 @@
       "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
       "checkedOn": "2026-10-05",
       "signature": {
-        "text": "2a854ecd5ec00d56",
-        "images": "c112e486262ceb8a",
-        "textLen": 944,
-        "imageCount": 23
+        "text": "f4d21572ac78166b",
+        "images": "9d506a0f7e6f5a1f",
+        "textLen": 493,
+        "imageCount": 7
       },
-      "prevTextLen": 944,
+      "prevTextLen": null,
+      "sigScope": "article",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -405,6 +399,7 @@
         "imageCount": 15
       },
       "prevTextLen": 2396,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 14,
@@ -425,6 +420,7 @@
         "imageCount": 2
       },
       "prevTextLen": 3110,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -445,6 +441,7 @@
         "imageCount": 600
       },
       "prevTextLen": 15721,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 1,
@@ -465,6 +462,7 @@
         "imageCount": 9
       },
       "prevTextLen": 4504,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 54,
@@ -485,6 +483,7 @@
         "imageCount": 0
       },
       "prevTextLen": 7,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -499,12 +498,13 @@
       "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
       "checkedOn": "2026-10-05",
       "signature": {
-        "text": "f4e34aca1e05b20d",
-        "images": "7ce5fff1fd32f7d7",
-        "textLen": 890,
-        "imageCount": 23
+        "text": "fad9ab23144e36e3",
+        "images": "00831727e550abe3",
+        "textLen": 445,
+        "imageCount": 7
       },
-      "prevTextLen": 890,
+      "prevTextLen": null,
+      "sigScope": "article",
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -524,7 +524,8 @@
         "textLen": 781,
         "imageCount": 4
       },
-      "prevTextLen": null,
+      "prevTextLen": 781,
+      "sigScope": "page",
       "strong": [],
       "weak": [],
       "datesNamed": 0,
