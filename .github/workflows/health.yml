@@ -1,7 +1,7 @@
 name: Health Check
 
 # 統合元: event-check.yml + link-check.yml + image-health.yml + domain-check.yml + data-integrity.yml
-# 毎日 12:00 JST (03:00 UTC) に全ヘルスチェック実行
+# 毎日 00:00 UTC 指定(実際は 11時台 JST に走る)に全ヘルスチェック実行
 # 1. データ整合性チェック (events.json)
 # 2. 外部リンク生死監視 (link-check.sh)
 # 3. 画像生死監視 + dead URL クリア (image-health-check.py)
@@ -11,11 +11,12 @@ name: Health Check
 
 on:
   schedule:
-    # 12:00 JST 想定(遅延で実際は 13〜14時台に着く)。2026-09-29 に 09:00 から動かした。
-    # メールは「朝のタスクが直した結果」を報告するので、08:06 agave-event-update・
-    # 10:09 event-listing-review・11:00 event-monitor が終わってから組む。
-    # 09:00 のままだと、直す前の一覧を報告して直した分は翌日に回っていた。
-    - cron: '0 3 * * *'
+    # UTC 00:00 指定。GitHub の schedule は混む時刻ほど遅れ、実測で 00:00 指定は
+    # 毎日 02:05〜02:30 UTC(11時台 JST)に走る。2026-09-29 に 03:00 指定へ動かしたら
+    # 09:00〜10:00 UTC(18〜19時 JST)まで遅れ、メールが夕方に届いていた(9/30〜10/4)。
+    # 11時台なら 08:06 agave-event-update と 10:09 event-listing-review の後。
+    # 11:00 event-monitor の修正は翌日のメールに載る。
+    - cron: '0 0 * * *'
   push:
     paths:
       - 'events.json'
