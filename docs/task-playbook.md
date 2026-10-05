@@ -1682,6 +1682,12 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `[...document.querySelectorAll('[aria-label]')].map(e=>e.getAttribute('aria-label')).filter(s=>s&&s.includes('@'))`
   が `Google アカウント: Yuji Mezaki (yuji.mezaki@gmail.com)` を返す。
   **番号を固定で信用せず、開いた画面のアカウントを毎回読んでから判定する。**
+  **Claude in Chrome ではこの戻り値がブロックされる（2026-10-05 実測）。**
+  メールアドレスを含む文字列を返すと `[BLOCKED: Cookie/query string data]` で
+  同じ呼び出しの他の値（gviz の行数など）ごと失われる。
+  `.some(s=>s&&s.includes('yuji.mezaki@gmail'))` で真偽値だけを返す。
+  また**スプレッドシートの htmlview にはアカウントボタンが無く**、そこで読むと
+  個人アカウントでも `false` になる。アカウントの確認は `/home/triggers` の画面でやる。
 
 - **フォーム→GAS→push→メールは、端から端まで通った実績がある（2026-09-06 確認）。**
   08-25 に「疎通は `testConnection` の手動実行だけで、実フォーム送信では一度も通っていない」と
