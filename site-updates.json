@@ -1,7 +1,27 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-04",
+  "updated": "2026-10-05",
   "items": [
+    {
+      "on": "2026-10-05",
+      "kind": "listed",
+      "slug": "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
+      "name": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-25",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-05",
+      "kind": "listed",
+      "slug": "plat-taniku-fes-4th-shibukawa-2026-12",
+      "name": "第4回 ぷらっと 多肉フェス！",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-05",
+      "prefecture": "群馬",
+      "detail": ""
+    },
     {
       "on": "2026-10-04",
       "kind": "listed",
@@ -1180,26 +1200,6 @@
       "date": "2026-10-25",
       "dateEnd": "2026-10-25",
       "prefecture": "徳島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-12",
-      "kind": "listed",
-      "slug": "trillgreen-special-event-2026-09",
-      "name": "TRILLGREEN SPECIAL EVENT SILVER WEEKEND",
-      "date": "2026-09-20",
-      "dateEnd": "2026-09-22",
-      "prefecture": "山形",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-12",
-      "kind": "listed",
-      "slug": "nakayama-engei-5th-anniversary-2026-09",
-      "name": "中山園芸 Instagram5周年感謝祭",
-      "date": "2026-09-26",
-      "dateEnd": "2026-09-26",
-      "prefecture": "茨城",
       "detail": ""
     }
   ]

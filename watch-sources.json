@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-05 15:27 JST",
+ "generated": "2026-10-05 15:55 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 299,
+  "igAccounts": 300,
   "awaitingNextEdition": 308,
-  "officialSiteCandidates": 79,
+  "officialSiteCandidates": 80,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 78
+  "igNeedsBrowser": 79
  },
  "igAccounts": [
   {
@@ -250,16 +250,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "hokuriku.saboten.club",
-   "url": "https://www.instagram.com/hokuriku.saboten.club/",
-   "eventCount": 2,
-   "lastEventName": "ボタニカルマルシェ富山2026",
-   "lastEventDate": "2026-10-25",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "dokidoki_ibaraki",
    "url": "https://www.instagram.com/dokidoki_ibaraki/",
    "eventCount": 2,
@@ -268,6 +258,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "hokuriku.saboten.club",
+   "url": "https://www.instagram.com/hokuriku.saboten.club/",
+   "eventCount": 2,
+   "lastEventName": "ボタニカルマルシェ富山2026",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "0269plants",
@@ -1428,6 +1428,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "plat_1205",
+   "url": "https://www.instagram.com/plat_1205/",
+   "eventCount": 1,
+   "lastEventName": "第4回 ぷらっと 多肉フェス！",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tanikurevolution",
@@ -3010,17 +3020,6 @@
  ],
  "awaitingNextEdition": [
   {
-   "series": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
-   "lastSlug": "wako-jurin-unique-plants-2026-10",
-   "lastDate": "2026-10-03",
-   "lastEnd": "2026-10-04",
-   "monthsSinceLast": 0,
-   "igHandle": null,
-   "officialUrl": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
-   "recurring": true,
-   "apiStatus": "none"
-  },
-  {
    "series": "第10回 珍奇植物フリーマーケット",
    "lastSlug": "chinki-plants-flea-market-2026-10",
    "lastDate": "2026-10-04",
@@ -3030,6 +3029,17 @@
    "officialUrl": "https://www.instagram.com/p/DdELYx6nzjt/",
    "recurring": true,
    "apiStatus": "api"
+  },
+  {
+   "series": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
+   "lastSlug": "wako-jurin-unique-plants-2026-10",
+   "lastDate": "2026-10-03",
+   "lastEnd": "2026-10-04",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
+   "recurring": true,
+   "apiStatus": "none"
   },
   {
    "series": "ピクニックガーデン vol.24",
@@ -3452,34 +3462,10 @@
  ],
  "officialSiteCandidates": [
   {
-   "domain": "ontheplants.com",
-   "url": "https://ontheplants.com/",
-   "eventName": "On the Plants Vol.09",
+   "domain": "qusamura.com",
+   "url": "https://qusamura.com/information/exhibition/",
+   "eventName": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
    "eventDate": "2026-10-03"
-  },
-  {
-   "domain": "seibu-green.co.jp",
-   "url": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
-   "eventName": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
-   "eventDate": "2026-10-03"
-  },
-  {
-   "domain": "yugao-park.com",
-   "url": "https://yugao-park.com/event/5446/",
-   "eventName": "第10回 栃木★多肉フェス in ゆうがおパーク",
-   "eventDate": "2026-10-03"
-  },
-  {
-   "domain": "soransai.com",
-   "url": "https://soransai.com/",
-   "eventName": "草乱祭with月刊チューズデイ - World Plant Market -",
-   "eventDate": "2026-10-04"
-  },
-  {
-   "domain": "oonuki-kenchiku.co.jp",
-   "url": "https://www.oonuki-kenchiku.co.jp/event/marche",
-   "eventName": "多肉とくらしマルシェ 2026",
-   "eventDate": "2026-10-04"
   },
   {
    "domain": "weekend.osaka",
@@ -3630,6 +3616,30 @@
    "url": "https://botanical-monsters.chibigo-tokai.com/",
    "eventName": "BOTANICAL MONSTERS 2027",
    "eventDate": "2027-01-17"
+  },
+  {
+   "domain": "raflum.com",
+   "url": "https://raflum.com/",
+   "eventName": "RAFLUM POP-UP（ジェイアール名古屋タカシマヤ）",
+   "eventDate": "2026-04-22"
+  },
+  {
+   "domain": "fumakilla.co.jp",
+   "url": "https://www.fumakilla.co.jp/new/6926/",
+   "eventName": "カダンフェス2026 春",
+   "eventDate": "2026-04-25"
+  },
+  {
+   "domain": "yfg-fes.jp",
+   "url": "https://yfg-fes.jp/",
+   "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
+   "eventDate": "2026-05-02"
+  },
+  {
+   "domain": "visit-oita.jp",
+   "url": "https://www.visit-oita.jp/events/detail/13493",
+   "eventName": "Plants Garage Market",
+   "eventDate": "2026-05-03"
   }
  ],
  "unresolvedIgHandles": []
