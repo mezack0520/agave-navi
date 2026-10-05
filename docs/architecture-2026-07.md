@@ -354,3 +354,5 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   薄い判定のページには枠を出さない。AFFILIATE_ENABLED=true。AdSenseは未申請
 - 2026-07-28: sync-eventsに多重dispatch安全化(checkout後にorigin/mainへreset)。同日の4重dispatchで
   余剰Runが古いSHAを再処理しpush競合失敗した件の恒久対応。dispatchは204空応答が正常・再送禁止
+- 2026-10-06: watch-seeds.json に deadHandles を追加。generate-watchlist.py が実在しない IG handle を apiStatus=dead にして
+  igNeedsBrowser(ブラウザのローテ対象)から外す。Business Discovery は個人と不在を同じ code 110 で返すため

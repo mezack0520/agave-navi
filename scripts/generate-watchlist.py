@@ -79,6 +79,22 @@ def load_seeds():
         return []
 
 
+def load_dead_handles():
+    """watch-seeds.json の deadHandles(ブラウザで開いて「ページが見つかりません」だった handle)。
+
+    Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、
+    API の結果だけでは区別が付かない(どちらも personal になる)。2026-10-05・06 のローテで
+    personal 78件のうち7件が実在しなかった。開いて確かめた結果をここに残し、
+    ブラウザで回る対象(igNeedsBrowser)から外す。2026-10-06 追加。
+    """
+    try:
+        with open(SEEDS, encoding='utf-8') as f:
+            rows = json.load(f).get('deadHandles') or []
+    except (FileNotFoundError, ValueError):
+        return {}
+    return {(r.get('handle') or '').strip().lstrip('@').lower(): r for r in rows if r.get('handle')}
+
+
 def api_status_map(today, fresh_days=3):
     """organizer-posts.json から handle → api / personal を作る"""
     try:
@@ -226,9 +242,15 @@ def main():
     #   api       直近に取得できた(プロアカウント)
     #   personal  個人アカウントなどで API では読めない
     #   unchecked まだ一度も取得していない
+    #   dead      ブラウザで開いたら存在しなかった(watch-seeds.json の deadHandles)。回らない
     api = api_status_map(today)
+    dead = load_dead_handles()
     for a in ig_accounts:
         a['apiStatus'] = api.get(a['handle'], 'unchecked')
+        # API が読めている handle は実在するので dead にしない(改名後に同名が取られた場合など)
+        if a['handle'] in dead and a['apiStatus'] != 'api':
+            a['apiStatus'] = 'dead'
+            a['deadCheckedOn'] = dead[a['handle']].get('checkedOn')
     for w in awaiting:
         w['apiStatus'] = api.get((w.get('igHandle') or '').lower(), 'unchecked') if w.get('igHandle') else 'none'
 
@@ -240,7 +262,8 @@ def main():
             'awaitingNextEdition': len(awaiting),
             'officialSiteCandidates': len(site_candidates),
             'unresolvedIgHandles': len(unresolved),
-            'igNeedsBrowser': sum(1 for a in ig_accounts if a['apiStatus'] != 'api'),
+            'igNeedsBrowser': sum(1 for a in ig_accounts if a['apiStatus'] not in ('api', 'dead')),
+            'igDead': sum(1 for a in ig_accounts if a['apiStatus'] == 'dead'),
         },
         'igAccounts': ig_accounts,
         'awaitingNextEdition': awaiting[:40],

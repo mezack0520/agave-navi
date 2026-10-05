@@ -27,5 +27,43 @@
       "why": "TANIKU JAM の主催本人。告知は @tanikujam と同時にこちらにも出る",
       "addedOn": "2026-10-05"
     }
+  ],
+  "_deadHandles": "ブラウザで開いて『ページが見つかりません』だった handle。Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、API だけでは見分けられない。generate-watchlist.py がこの handle を apiStatus=dead にして igNeedsBrowser から外す。現行の handle が分かったら events.json の organizerIg を直し、ここから消す",
+  "deadHandles": [
+    {
+      "handle": "plants_junkee",
+      "checkedOn": "2026-10-05",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    },
+    {
+      "handle": "plant_freaks_official",
+      "checkedOn": "2026-10-05",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    },
+    {
+      "handle": "sky_palette_ibaraki",
+      "checkedOn": "2026-10-06",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    },
+    {
+      "handle": "botanical_botanical__",
+      "checkedOn": "2026-10-06",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    },
+    {
+      "handle": "nara.botanical_garden",
+      "checkedOn": "2026-10-06",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    },
+    {
+      "handle": "wakayama_green_marche",
+      "checkedOn": "2026-10-06",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    },
+    {
+      "handle": "iku_matsuri",
+      "checkedOn": "2026-10-06",
+      "note": "組み込みブラウザで開いて『このページはご利用いただけません』"
+    }
   ]
 }

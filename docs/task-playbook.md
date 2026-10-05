@@ -3480,6 +3480,34 @@ LEAFLA の「Tailors Market on MEDAKA & Water Plant」(熱帯魚店のメダカ�
 name は約束どおり「(開催日 会場・都道府県市)」で書き直した。
 **見送りを足したら audit を回し、`rejected_but_listed` が増えていないかを見る。**
 
+### API の「personal」には、存在しないアカウントが混ざっている (2026-10-06)
+
+Business Discovery は個人アカウントと**存在しないアカウント**を同じ code 110「ユーザーが見つかりません」で返す。
+`generate-watchlist.py` はどちらも `personal` にするので、ブラウザのローテ対象(igNeedsBrowser)に死んだ handle が残る。
+10-05・06 のローテで開いた personal 15件のうち7件(plants_junkee / plant_freaks_official / sky_palette_ibaraki /
+botanical_botanical__ / nara.botanical_garden / wakayama_green_marche / iku_matsuri)が「このページはご利用いただけません」だった。
+**ローテの半分が空振りしていた。**
+
+- 開いて存在しなかった handle は `watch-seeds.json` の `deadHandles` に `checkedOn` 付きで足す。
+  `generate-watchlist.py` が `apiStatus=dead` にして igNeedsBrowser から外す(stats の `igDead`)。
+- API が読めた handle は dead にしない(同名が取り直された場合)。現行の handle が分かったら events.json の organizerIg を直し、deadHandles から消す。
+- ローテは `apiStatus == 'personal'` だけを回す。`dead` は回らない。
+
+### 告知の日程がチラシ画像にしか無い回は、画像をページに貼り直して読む (2026-10-06)
+
+多肉園おひさまの10月日程(6会場)は投稿の本文に無く、画像だけだった。組み込みブラウザの `zoom` は
+「region crop not yet supported」で全画面が返り、投稿頁のスクリーンショットでは字が小さい。
+同じタブの javascript で `img`(naturalWidth>500)を fetch → dataURL にし、`document.body.innerHTML` を
+その画像1枚(`width:100%; margin-top:-N%` で読みたい段まで送る)に置き換えてから screenshot すると読める。
+画像の転送はタブの中で閉じるので、戻り値に大きな文字列を返さないこと(長さだけ返す)。
+
+### 検索スニペットの「出店予定一覧」は、別の出店者の一覧が混ざって出る (2026-10-06 / 10-05 の再発)
+
+「山奥屋の多肉 加西市民会館 10/24」で引くと、山奥屋の名前の下に「10/24 加西・10/25 岡山・10/26 広島・10/31 延岡」が出た。
+山奥屋本人(@yamaokuya_ta29)の固定投稿の予定は 10/25 大崎・11/15 さくら・1/17 韮崎で、加西〜延岡は別の多肉販売業者の巡業予定だった
+(同じ文面が無関係な4アカウントのリールに出ていた)。**Google は道の駅の投稿の本文と、別アカウントの予定表を1つのスニペットに組む。**
+予定表から回を立てるのは、その出店者本人のプロフィール(固定投稿)で同じ日付を見たときだけにする。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
