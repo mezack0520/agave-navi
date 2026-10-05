@@ -751,6 +751,38 @@
    "target": "sippo-de-marche-shikinosato-2026-10",
    "action": "fixed",
    "detail": "開催日を過ぎたので revisit=false。理由に一文追記"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "event-monitor",
+   "kind": "coverage_gaps",
+   "target": "Tailors Market on MEDAKA & Water Plant (2026-11-01)",
+   "action": "rejected",
+   "detail": "めだか小屋紅 @medakakoya.kou の告知 Dd1A7a0pY8U(LEAFLA topics6293)。熱帯魚店のメダカ・水草市で出店はメダカ店のみ。outOfScopeGenres。coverage-sweep の OUT_OF_SCOPE に英字綴り(medaka/aquarium/水草/waterplant)を足した"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "サボテン・多肉植物展示会 須磨離宮公園 (2026-10-16)",
+   "action": "reviewed",
+   "detail": "告知頁は会期・内容とも不変。弱い語は施設状況欄の『子供の森 利用中止』。FACILITY_CANCEL で恒久対応"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "ROOTS MARKET (2026-10-25)",
+   "action": "reviewed",
+   "detail": "記事本文は不変。新着お知らせ欄が本文と画像を同時に変えていた(5回目)。署名を単独記事に絞る main_entry で恒久対応"
+  },
+  {
+   "on": "2026-10-05",
+   "task": "event-monitor",
+   "kind": "cancel_watch_body_shrunk",
+   "target": "みずの森 秋のサボテン展 (PDF)",
+   "action": "reviewed",
+   "detail": "-100% は PDF を文字にした読み方の変更による一過性。読み方・範囲が変わった回は prevTextLen を残さないよう修正"
   }
  ]
 }

@@ -1836,6 +1836,20 @@
    "eventDate": "2026-11-21",
    "reason": "compositeEvents。企画・運営 COFFEE ACTION(@boso_coffee_action) / 共催 BOTANICA MUSEUM のコーヒーフェス。主催告知 Dd7zjkmz2MP は『植物とコーヒー、ふたつのカルチャーが出会うコーヒーフェス』で、出店は県内コーヒーショップ約18店とクラフト・フードのマーケット約40店。植物はフラワーカードを束ねる演出(coffee bouquet)だけで、即売の告知は無い",
    "url": "https://www.instagram.com/p/Dd7zjkmz2MP/"
+  },
+  {
+   "key": "tailors-market-medaka-water-plant-kobe-2026-11",
+   "reasonType": "policy",
+   "revisit": false,
+   "name": "Tailors Market on MEDAKA & Water Plant (2026-11-01 アクアテイラーズ神戸駒ヶ林店)",
+   "aliases": [
+    "Tailors Market on MEDAKA & Water Plant",
+    "Tailors Market"
+   ],
+   "decided": "2026-10-05",
+   "eventDate": "2026-11-01",
+   "reason": "outOfScopeGenres(メダカ・アクアリウム)。めだか小屋紅 @medakakoya.kou の告知 Dd1A7a0pY8U(LEAFLA topics6293 の要約で確認)は、名称どおりメダカと水草のマーケット。会場は熱帯魚店アクアテイラーズ神戸駒ヶ林店の2F特設会場、Market Members は花小屋・しいらメダカ・日本改良めだか研究所・めだか小屋紅・めだか倶楽部クリーク・熊庭めだか・月とカフェ(飲食)で、対象植物の出店者はいない",
+   "url": "https://www.instagram.com/p/Dd1A7a0pY8U/"
   }
  ],
  "_reasonTypes": {
@@ -1844,6 +1858,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-10-04",
+ "updated": "2026-10-05",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

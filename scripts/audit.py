@@ -2595,6 +2595,35 @@ def main():
         '兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)',
         severity='info')
 
+    # 16a2. 同じ回の空振りを、見張りの規則を直さずに記録し続けている(2026-10-05)。
+    #       cancel-reviewed.json は「その日の巡回ぶん黙らせる」記録で、規則は直さない。
+    #       ROOTS MARKET(sunsetbeachpark.jp)は 09-24・09-28・09-29・09-30 と4回
+    #       「開催予定のまま」を書かれ、10-05 に5回目で鳴った。原因は記事の外の
+    #       新着欄で、4回とも同じだった。**記録が増えるのは症状で、直すのは
+    #       check-cancelled.py の側。**14日で3回以上記録した回が今日も鳴っていれば出す。
+    import datetime as _dtrv
+    _rv_cnt = {}
+    try:
+        _rv_from = (_dtrv.date.fromisoformat((_swept or today_jst())[:10])
+                    - _dtrv.timedelta(days=14)).isoformat()
+    except ValueError:
+        _rv_from = ''
+    for _r in ((load_json(os.path.join('scripts', 'cancel-reviewed.json'), {})
+                or {}).get('items') or []):
+        _on = str(_r.get('checkedOn') or '')
+        if _rv_from and _on >= _rv_from:
+            _rv_cnt[_r.get('slug')] = _rv_cnt.get(_r.get('slug'), 0) + 1
+    _rv_repeat = []
+    for _s in (_cw.get('suspects') or []):
+        _sl = _s.get('slug', '')
+        if _rv_cnt.get(_sl, 0) >= 3:
+            _rv_repeat.append(f"{_sl}: 14日で{_rv_cnt[_sl]}回空振りを記録 / 今日も「{_s.get('why','')}」")
+    add('cancel_review_repeated', '同じ回の中止の兆候が空振りを繰り返している(見張りの規則が直っていない)',
+        sorted(_rv_repeat),
+        '一次情報を開いて cancel-reviewed.json に書くだけでは翌日また鳴る。'
+        '何が変わって鳴ったか(新着欄・施設の状況欄・日付表示など)を突き止め、'
+        'check-cancelled.py の drop_* / main_entry / 自己テストで規則を直す')
+
     # 16b. 出典がその回を裏付けているか。
     #      `url` はこれまで「在るか」しか見られておらず、中身が別の回でも
     #      薄頁判定を外れて index 対象になり、詳細頁は「出典」の見出しで

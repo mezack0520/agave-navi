@@ -124,6 +124,11 @@ OUT_OF_SCOPE = (
     '洋ラン', '洋らん', '東洋蘭', '富貴蘭', '万年青',
     '山野草', '山草', '野草',
     'メダカ', 'めだか', '熱帯魚', 'アクアリウム',
+    # 2026-10-05。英字の名前は仮名の語に当たらない。LEAFLA の
+    # 「Tailors Market on MEDAKA & Water Plant」(熱帯魚店のメダカ・水草市)が
+    # 'plant' で範囲内に入り、'メダカ' をすり抜けて取りこぼし候補に出た。
+    # 対象外ジャンルの語は英字の綴りも併せて持つ。
+    'medaka', 'aquarium', '水草', 'waterplant',
     '造園', 'ガーデニングショー', '有用植物', 'ハーブ',
     # 2026-09-16 に IN_SCOPE へ総称('植物'など)を足したぶん、
     # LEAFLA が載せる植物世界の残りがここへ流れ込む。実測した雑音だけを足す。
@@ -785,6 +790,9 @@ def self_test(verbose=True):
         # prescoped でも対象外ジャンルは落とす
         ('秋の洋ラン展', False, False),
         ('にしかたメダカフェス', False, False),
+        # 2026-10-05。英字の名前。'plant' で範囲内に入り、仮名の 'メダカ' に当たらなかった
+        ('Tailors Market on MEDAKA & Water Plant', True, False),
+        ('Tailors Market on MEDAKA & Water Plant', False, False),
         # LEAFLA 側(文が来る)は今までどおりジャンル語を要求する
         ('ぶらりぷらんつ vol.3 × feel 15th Anniversary', True, False),
         # 2026-09-16。LEAFLA の見出しがジャンル語を1つも名乗らない回。

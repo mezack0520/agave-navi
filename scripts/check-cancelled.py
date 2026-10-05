@@ -190,15 +190,29 @@ ORDER_CANCEL = (
 )
 
 
+# 止まっているのがイベントではなく**施設の利用**である言い回し。
+# 須磨離宮公園の頁は全頁の共通欄に施設の状況を出していて、
+# 「駐車場 空いています … 子供の森 利用中止」が弱い語「中止」に当たり、
+# サボテン・多肉植物展示会(10/16-18)が「弱い語(中止)＋ページが変わった」で
+# 鳴った(2026-10-05 確認。告知本文は会期も内容も変わっていない)。
+# 催しの中止は「開催中止」「中止となりました」と書く。「利用」「使用」が
+# 主語の側に付く中止は、施設・設備の話なので落とす。
+FACILITY_CANCEL = (
+    r'(?:利用|使用|ご利用)(?:を)?(?:中止|休止|停止)(?:中)?',
+)
+
+
 def drop_conditional(text):
     """イベントの中止を指していない言い回しを落とす。判定に使う前に通す。
 
-    落とすのは4種類。(1) 天候の条件文 (2) 主語が出展者1組の取り止め
-    (3) 主語が例会・講習会など同じ主催の別の催し (4) 通販の注文のキャンセル。
+    落とすのは5種類。(1) 天候の条件文 (2) 主語が出展者1組の取り止め
+    (3) 主語が例会・講習会など同じ主催の別の催し (4) 通販の注文のキャンセル
+    (5) 施設・設備の利用の中止。
     どちらも「イベントが中止になったか」とは別のことを言っている。
     """
     out = text
-    for pat in CONDITIONAL_CANCEL + VENDOR_CANCEL + SUBPROGRAM_CANCEL + ORDER_CANCEL:
+    for pat in (CONDITIONAL_CANCEL + VENDOR_CANCEL + SUBPROGRAM_CANCEL
+                + ORDER_CANCEL + FACILITY_CANCEL):
         out = re.sub(pat, ' ', out)
     return out
 
@@ -236,14 +250,64 @@ def drop_today(text, today=None):
     return out
 
 
-def page_signature(html, today=None):
+def og_images(html):
+    return [norm(m.group(1)) for m in re.finditer(
+        r'(?i)<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
+        html or '')]
+
+
+def main_entry(html, event=None):
+    """頁の主たる記事。署名をこの範囲に絞ってよいときだけ HTML 片を返す。
+
+    WordPress の単独記事頁は、本文の `<article>` の外に「新着のお知らせ」の
+    抜粋とサムネイルを並べる。新しいお知らせが1本出るたびに本文と画像が
+    **同時に**変わるので、本文だけ・画像だけの変化を数えない規則
+    (textOnlyChanges / imageOnlyChanges)にも掛からず、毎回
+    「公式ページが変わった(本文・画像)」で鳴る。ROOTS MARKET の頁
+    (sunsetbeachpark.jp)は 09-24 から 10-05 までに5回鳴り、5回とも
+    告知本文は1字も変わっていなかった(2026-10-05)。
+
+    絞るのは次の2つを両方満たすときだけ。
+    - `<article>` が頁にちょうど1つ(一覧頁は記事が並ぶので絞らない)
+    - その中にこの回の開催日が出ている(記事が別物なら絞ると見えなくなる)
+    実測(2026-10-05 の巡回対象25件): 当たるのは3件(ROOTS MARKET と
+    GreenSnap Marche 2件)。`<article>` が1つでも開催日が無い3件
+    (weekend.osaka・咲くやこの花館・FIGURE HANARE)は絞らない。
+
+    中止の語は従来どおり頁全体から拾う(analyze)。新着欄に
+    「◯◯中止のお知らせ」が出れば強い語で鳴る。絞るのは署名だけ。
+    """
+    starts = [m.start() for m in re.finditer(r'(?i)<article\b', html or '')]
+    if len(starts) != 1:
+        return None
+    m = re.search(r'(?i)</article\s*>', html[starts[0]:])
+    if not m:
+        return None
+    frag = html[starts[0]:starts[0] + m.end()]
+    if event is None:
+        return None
+    span = event_month_days(event)
+    if not span:
+        return None
+    _named, found = page_dates(frag)
+    return frag if (span & found) else None
+
+
+def page_signature(html, today=None, scope=None):
     """本文と画像の集合から署名を作る。
 
     画像の中の文字は読めないので、URLの集合が変わったことをもって
     「差し替わった」と見る。メインビジュアルが告知画像に変わる型を拾うため。
+    `scope` (main_entry の返り値)があれば本文と画像はその範囲だけを見る。
+    og:image は頁の `<head>` にあり記事の外なので、頁全体から足す
+    (告知画像を「中止」の絵に差し替えた回は og:image で拾う)。
     """
-    body = drop_today(strip_html(html), today)
-    imgs = sorted(set(image_tokens(html)))
+    src = scope if scope else html
+    body = drop_today(strip_html(src), today)
+    imgs = image_tokens(src)
+    if scope:
+        imgs = imgs + og_images(html)
+    imgs = sorted(set(imgs))
     return {
         'text': hashlib.sha256(body.encode('utf-8')).hexdigest()[:16],
         'images': hashlib.sha256('\n'.join(imgs).encode('utf-8')).hexdigest()[:16],
@@ -269,10 +333,11 @@ meta_dates = sitelib.meta_dates
 def analyze(html, event=None):
     texts = [strip_html(html)] + meta_texts(html) + image_tokens(html)
     strong, weak = find_words(texts)
-    sig = page_signature(html)
+    scope = main_entry(html, event)
+    sig = page_signature(html, scope=scope)
     named, found = page_dates(html)
     out = {'strong': strong, 'weak': weak, 'signature': sig,
-           'datesNamed': named}
+           'datesNamed': named, 'sigScope': 'article' if scope else 'page'}
     if event is not None:
         span = event_month_days(event)
         out['eventDateSeen'] = bool(span & found) if span else None
@@ -409,7 +474,11 @@ def main():
         if (isinstance(before.get('badChars'), int) and before['badChars'] >= 20
                 and bad_chars < 20):
             reread = True
-        if bsig:
+        # 署名の範囲(頁全体 / 主たる記事)が前回と変わった回は、本文も画像も
+        # 範囲が違うものどうしの比較になる。中身の変化ではないので数えない
+        # (2026-10-05 に main_entry を入れた。前回の記録に範囲が無ければ頁全体)。
+        rescoped = bool(bsig) and (before.get('sigScope') or 'page') != res['sigScope']
+        if bsig and not rescoped:
             if bsig.get('text') != sig['text'] and not reread:
                 changed.append('本文')
             if bsig.get('images') != sig['images']:
@@ -421,7 +490,11 @@ def main():
         # 監査側 audit.cancel_watch_body_shrunk が この差を読む。
         pages[slug] = {
             'url': url, 'checkedOn': today, 'signature': sig,
-            'prevTextLen': bsig.get('textLen'),
+            # 読み方か範囲が変わった回の前回の字数は、別の物差しで測った値。
+            # 比べると audit.cancel_watch_body_shrunk が鳴る。みずの森の PDF は
+            # 化けた生バイト 660406字 → 本文 1642字で -100% と出た(2026-10-05)。
+            'prevTextLen': (None if (reread or rescoped) else bsig.get('textLen')),
+            'sigScope': res['sigScope'],
             'strong': res['strong'], 'weak': res['weak'],
             # 出典がこの回を裏付けているか。audit.source_page_wrong_edition が読む。
             # CI から頁を取れるのはこのスクリプトだけなので、判定材料を
@@ -619,6 +692,19 @@ def _tiny_pdf(text):
     return bytes(out)
 
 
+# WordPress の単独記事頁。本文の <article> の外に新着のお知らせが並ぶ(2026-10-05)
+FIX_WP_ENTRY = '''<html><head><title>ROOTS MARKET開催決定</title>
+<meta property="og:image" content="https://x.jp/uploads/2026/09/roots_market.png"></head><body>
+<main><article class="post-7291 post type-post">
+<h1>10月25日(日)にROOTS MARKET開催決定</h1>
+<img src="https://x.jp/uploads/2026/09/roots_market.png" alt="">
+<p>開催日 2026年10月25日(日) 時間 10:00~16:00 場所 時計台広場</p>
+</article></main>
+<aside><section class="c-entry-summary"><img src="https://x.jp/uploads/2026/09/{news}.jpg" alt="">
+<h3>{news}のお知らせ</h3><p>{news}についてお知らせいたします。</p></section></aside>
+</body></html>'''
+
+
 def self_test(verbose=True):
     ok = True
 
@@ -684,6 +770,41 @@ def self_test(verbose=True):
     chk('例会の中止は強い語に数えない', s1, [])
     s2, _w2 = find_words(['第51回 日本シャボテン大会は開催を中止いたします'])
     chk('大会本体の中止は拾う', bool(s2), True)
+
+    say('\n--- 施設の利用中止 (2026-10-05) ---')
+    _s5, w5 = find_words(['駐車場 空いています ※休園日は利用不可 子供の森 利用中止 詳しくみる'])
+    chk('施設の状況欄の「利用中止」は弱い語に数えない', w5, [])
+    _s6, w6 = find_words(['サボテン・多肉植物展示会は中止します'])
+    chk('催しの中止は弱い語で拾う', w6, ['中止'])
+
+    say('\n--- 署名を主たる記事に絞る (2026-10-05) ---')
+    _ev = {'slug': 'r', 'date': '2026-10-25', 'dateEnd': '2026-10-25'}
+    _a1 = analyze(FIX_WP_ENTRY.replace('{news}', 'TALK OVER COFFEE FES'), _ev)
+    _a2 = analyze(FIX_WP_ENTRY.replace('{news}', 'BOTANICA 10月営業時間変更'), _ev)
+    chk('単独記事に開催日 → 記事に絞る', _a1['sigScope'], 'article')
+    chk('新着欄の本文が変わっても本文の署名は同じ',
+        _a1['signature']['text'] == _a2['signature']['text'], True)
+    chk('新着欄のサムネイルが変わっても画像の署名は同じ',
+        _a1['signature']['images'] == _a2['signature']['images'], True)
+    _a3 = analyze(FIX_WP_ENTRY.replace('{news}', 'TALK OVER COFFEE FES')
+                  .replace('10:00~16:00', '中止となりました'), _ev)
+    chk('記事の本文が変われば本文の署名は変わる',
+        _a1['signature']['text'] != _a3['signature']['text'], True)
+    chk('記事の本文の中止は強い語で拾う', bool(_a3['strong']), True)
+    _a4 = analyze(FIX_WP_ENTRY.replace('{news}', 'TALK OVER COFFEE FES')
+                  .replace('roots_market.png"></head>', 'roots_cancel.png"></head>'), _ev)
+    chk('og:image の差し替えは画像の署名に出る',
+        _a1['signature']['images'] != _a4['signature']['images'], True)
+    _a5 = analyze(FIX_WP_ENTRY.replace('{news}', 'ROOTS MARKET 中止'), _ev)
+    chk('新着欄に出た中止の告知も語は拾う', bool(_a5['strong'] or _a5['weak']), True)
+    _two = FIX_WP_ENTRY.replace('{news}', 'X').replace(
+        '<aside>', '<article><p>別の記事 2026年10月25日</p></article><aside>')
+    chk('記事が2つ以上の頁(一覧) → 絞らない', analyze(_two, _ev)['sigScope'], 'page')
+    chk('記事に開催日が無い → 絞らない',
+        analyze(FIX_WP_ENTRY.replace('{news}', 'X'),
+                {'slug': 'q', 'date': '2026-11-03', 'dateEnd': '2026-11-03'})['sigScope'], 'page')
+    chk('回が渡されない → 絞らない',
+        analyze(FIX_WP_ENTRY.replace('{news}', 'X'))['sigScope'], 'page')
 
     say('\n--- 通販の注文のキャンセル ---')
     _s3, w3 = find_words(['エントリー受付後、ご注文は自動的にキャンセルされます。'
