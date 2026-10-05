@@ -1,35 +1,18 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "agave-event-update:plant-shop-x-potter-coexhibition",
-      "addedOn": "2026-10-01",
-      "source": "agave-event-update Step0",
-      "question": "植物専門店と陶芸家の共作展(植物を鉢に植えた一点ものを展示・販売)は掲載するか",
-      "facts": [
-        "桑田卓郎と叢 展『多肉植物とプラ鉢』 2026-10-03〜25 Roll(東京都新宿区揚場町2-12)。主催告知 qusamura.com/information/exhibition/",
-        "叢(Qusamura)は多肉植物・サボテンの専門店。店主が選んだ植物を陶芸家がプラスチックで作った鉢に植えた共作を展示・販売する",
-        "potteryAndVesselShows は『主題が器』の作家展を見送る規則で、初例は陶芸作家の単独の鉢展(KAKU PLANTS POT展)。植物店が共同主催で、売る品が植物そのもの(鉢植え)の回はどちらにも書いていない",
-        "告知文は鉢の意味を中心に語る一方、題名は『多肉植物とプラ鉢』で両者を並記している(coTitledEvents に近い)"
-      ],
-      "proposal": "listing-policy.json outOfScopeGenres.potteryAndVesselShows に plantShopCoExhibition を足す案: 『対象植物の専門店が共同主催し、その店の対象植物を植えた鉢植えを展示・販売する回は掲載する(売る品が植物だから)。陶芸家の単独展で植物店が植物を添えるだけの回は従来どおり見送る』。採れば本件は掲載、採らなければ policy で見送り。叢は年に数回同型の展示(鐵展・植器・吉田直嗣展など)を開くので一度決めれば以後に当てられる"
-    },
+  "items": [],
+  "updated": "2026-10-05",
+  "resolved": [
     {
       "id": "agave-event-update:application-lottery-sale",
-      "addedOn": "2026-10-03",
-      "source": "agave-event-update LEAFLA連番巡回",
-      "question": "事前応募・抽選で入場者を決める多肉の販売会は掲載するか",
-      "facts": [
-        "第4回 ぷらっと 多肉フェス！ 2026-12-05 渋川市民会館(群馬県渋川市)。主催 @plat_1205 の告知 Dd89OwXzddp",
-        "午前・午後の2部制で各部120名。参加者は10月中旬に主催アカウントで募集し、定員を超えれば抽選。出店は個人の多肉生産者・趣味家が4チーム十数組",
-        "closedGatherings は『当日ふらりと立ち寄って買える販売会か』で切る規則だが、対象は参加費・持ち物が条件の交流会・交換会・BBQで、販売会そのものが事前応募制の場合は書いていない",
-        "誰でも応募はできるが、当日に行っても買えない。読者に載せる価値(応募の告知)と、行けない回を載せる不利益の両方がある"
-      ],
-      "proposal": "listing-policy.json closedGatherings に applicationLotterySale を足す案: 『一般の誰でも応募できる抽選・事前応募制の販売会は掲載する。description と time に応募方法・応募期間・抽選であることを必ず書き、tags に「要事前応募」を付ける。会員限定・紹介制は従来どおり見送る』。採れば本件を掲載、採らなければ policy で見送り。抽選制の即売会は人気店の周年・大型多肉イベントで今後も出る"
-    }
-  ],
-  "updated": "2026-10-03",
-  "resolved": [
+      "resolvedOn": "2026-10-05",
+      "decision": "承認。listing-policy closedGatherings.applicationLotterySale を追加し、第4回 ぷらっと 多肉フェス！を掲載(time/description に応募制・抽選を明記、tags に要事前応募)"
+    },
+    {
+      "id": "agave-event-update:plant-shop-x-potter-coexhibition",
+      "resolvedOn": "2026-10-05",
+      "decision": "承認。listing-policy outOfScopeGenres.potteryAndVesselShows.plantShopCoExhibition を追加し、桑田卓郎と叢 展を掲載"
+    },
     {
       "id": "event-monitor:ig-post-known-but-not-embedded",
       "resolvedOn": "2026-09-20",
