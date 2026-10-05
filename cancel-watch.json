@@ -3,33 +3,15 @@
   "sweptOn": "2026-10-05",
   "stats": {
     "targets": 25,
-    "fetched": 25
+    "fetched": 23
   },
-  "errors": [],
+  "errors": [
+    "midolien-hono-osaka-2026-10: URLError https://weekend.osaka/16061/",
+    "roots-market-inage-2026-10: URLError https://sunsetbeachpark.jp/rtmt0922/2026/09/22/"
+  ],
   "logicErrors": [],
   "suspects": [],
   "pages": {
-    "midolien-hono-osaka-2026-10": {
-      "url": "https://weekend.osaka/16061/",
-      "checkedOn": "2026-10-05",
-      "signature": {
-        "text": "2c88bcfbf599d459",
-        "images": "1f075f180f70eec6",
-        "textLen": 1383,
-        "imageCount": 12
-      },
-      "prevTextLen": 1383,
-      "sigScope": "page",
-      "strong": [],
-      "weak": [],
-      "datesNamed": 1,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-29",
-      "badChars": 0,
-      "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
-    },
     "shimane-cactus-succulent-ten-2026-10": {
       "url": "https://shimane-hananosato.com/event/event-906/",
       "checkedOn": "2026-10-05",
@@ -305,27 +287,6 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
-    "roots-market-inage-2026-10": {
-      "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-      "checkedOn": "2026-10-05",
-      "signature": {
-        "text": "98d0a5abf924608f",
-        "images": "1f036f16f034e43b",
-        "textLen": 519,
-        "imageCount": 3
-      },
-      "prevTextLen": null,
-      "sigScope": "article",
-      "strong": [],
-      "weak": [],
-      "datesNamed": 11,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-09-23",
-      "badChars": 0,
-      "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
-    },
     "isij-tokyo-reikai-2026-10-25": {
       "url": "http://isij.net/reikai.html",
       "checkedOn": "2026-10-05",
@@ -377,7 +338,7 @@
         "textLen": 493,
         "imageCount": 7
       },
-      "prevTextLen": null,
+      "prevTextLen": 493,
       "sigScope": "article",
       "strong": [],
       "weak": [],
@@ -503,7 +464,7 @@
         "textLen": 445,
         "imageCount": 7
       },
-      "prevTextLen": null,
+      "prevTextLen": 445,
       "sigScope": "article",
       "strong": [],
       "weak": [],
