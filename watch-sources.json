@@ -1,12 +1,13 @@
 {
- "generated": "2026-10-05 15:55 JST",
+ "generated": "2026-10-06 08:20 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 300,
+  "igAccounts": 302,
   "awaitingNextEdition": 308,
   "officialSiteCandidates": 80,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 79
+  "igNeedsBrowser": 74,
+  "igDead": 7
  },
  "igAccounts": [
   {
@@ -18,6 +19,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "tanikuen_ohisama",
+   "url": "https://www.instagram.com/tanikuen_ohisama/",
+   "eventCount": 5,
+   "lastEventName": "多肉園おひさま 多肉イベント in イオンモール日吉津",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_myoko_plants_market_",
@@ -168,6 +179,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "yamaokuya_ta29",
+   "url": "https://www.instagram.com/yamaokuya_ta29/",
+   "eventCount": 3,
+   "lastEventName": "山奥屋の多肉 単独販売会 in 韮崎",
+   "lastEventDate": "2027-01-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "earthwalk_plants",
@@ -1545,7 +1566,8 @@
    "lastEventDate": "2026-02-21",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-06"
   },
   {
    "handle": "plant_freaks_official",
@@ -1555,7 +1577,8 @@
    "lastEventDate": "2026-02-28",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-05"
   },
   {
    "handle": "botanical_botanical__",
@@ -1565,7 +1588,8 @@
    "lastEventDate": "2026-03-28",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-06"
   },
   {
    "handle": "nara.botanical_garden",
@@ -1575,7 +1599,8 @@
    "lastEventDate": "2026-03-28",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-06"
   },
   {
    "handle": "wakayama_green_marche",
@@ -1585,7 +1610,8 @@
    "lastEventDate": "2026-03-29",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-06"
   },
   {
    "handle": "joyfulhonda_official",
@@ -1605,7 +1631,8 @@
    "lastEventDate": "2026-04-05",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-05"
   },
   {
    "handle": "botanical_circus",
@@ -1705,7 +1732,8 @@
    "lastEventDate": "2026-05-30",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "dead",
+   "deadCheckedOn": "2026-10-06"
   },
   {
    "handle": "koron_shop",

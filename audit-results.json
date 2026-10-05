@@ -1,5 +1,5 @@
 {
-  "total": 561,
+  "total": 577,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 67,
+      "count": 75,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "aito-margueritestation-taniku-saboten-hanbaikai-2026-10",
@@ -821,7 +821,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 67,
+      "count": 75,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-09 green-champuroo-vol2-2026-10",
@@ -830,6 +830,7 @@
         "2026-10-10 kadan-fes-2026-autumn",
         "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10",
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
+        "2026-10-10 tanikuen-ohisama-aeon-kofu-showa-2026-10",
         "2026-10-10 tegarayama-aki-saboten-taniku-ten-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
         "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10",
@@ -840,6 +841,7 @@
         "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
         "2026-10-17 plants-plants-plants-bhms-2026-10",
         "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
+        "2026-10-17 tanikuen-ohisama-aeon-shimotsuma-2026-10",
         "2026-10-17 uomachi-botanical-night-market-2026-10",
         "2026-10-18 dokidoki-ibaraki-taniku-sokubaikai-2026-10-18",
         "2026-10-18 kinshakusai-vol6-2026-10",
@@ -848,21 +850,19 @@
         "2026-10-24 imama-ennichi-kagurazaka-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
+        "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10",
         "2026-10-25 botanoichi-meets-bikaku-yokocho-2026-10",
         "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
         "2026-10-25 isij-tokyo-reikai-2026-10-25",
         "2026-10-25 taniku-moromoro-vol16-2026-10",
+        "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10",
+        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
         "2026-10-31 nightwalker-horie-2026-10",
+        "2026-10-31 tanikuen-ohisama-aeon-hiezu-2026-10",
         "2026-11-01 botariba-toyohashi-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
-        "2026-11-07 chuushokushobutsusai-2026",
-        "2026-11-07 lier-taniku-festival-taishodo-2026-11",
-        "2026-11-08 yatchiro-plants-yatsushiro-2026-11",
-        "2026-11-14 botanical-botanical-okinawa-2026-11",
-        "2026-11-14 gamagori-taniku-festa-6th-2026-11",
-        "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
-        "2026-11-15 taniku-moromoro-vol16-2026-11"
+        "2026-11-07 chuushokushobutsusai-2026"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
