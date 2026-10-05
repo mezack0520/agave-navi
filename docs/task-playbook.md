@@ -487,6 +487,8 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `upcoming_no_image` は、画像が13件消えても +13、イベントが13件増えても +13 で同じに見える。
   そこで `upcoming_with_image`（ある件数）を足した。追加では減らないので、
   減ったら必ず消失を意味する。**異常を検知したい向きに動く指標を選ぶこと**
+  **※「減ったら必ず消失」は誤り(2026-09-01 / 09-21 / 09-28 に3回確認)。** 会期が終われば母数から抜けて減る。
+  不変量は `upcoming == upcoming_with_image + upcoming_no_image` と「`upcoming` が動かないのに with_image が減ったら消失」。下の 2026-09-01 の項
 
 - **`sync-index-cards.py` の `THUMB_RE` は thumb の中身に依存させない。**
   `<img></div>` と空の `</div>` だけを想定した正規表現だったため、
@@ -873,6 +875,8 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   実Chrome(Claude in Chrome)の話で、組み込みブラウザには当てはまらない。
   matchMedia を差し替えて `affiliate.js` を再注入する手順は要らず、
   50%までスクロールして `.aff-bar.is-shown` と実商品リンクを見れば足りる
+  (**「50%」は目安で不正確。**条件は `scrolled/total > 0.45 && !boxVisible`。商品枠が threshold 0.15 で
+  見えている間は出ない。下の 2026-10-05 の項の手順で 0.3/0.5/0.7/0.9/1.0 を順に見る)
 - **組み込みブラウザは `document.hidden === true` のまま動く。
   スクロールイベントも IntersectionObserver も一切発火しない（2026-09-14）。**
   `window.scrollTo()` は `scrollY` を動かすが、ページは描画されないので
@@ -889,6 +893,15 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   ```
 
   これで `is-shown` が付き、`getBoundingClientRect().top` が画面内に入る。
+
+  **`scrollTo` は `behavior:'instant'` を必ず付ける（2026-10-05）。**
+  `style.css` が `html{scroll-behavior:smooth}` を持つので、引数なしの `scrollTo` は滑らかスクロールになり、
+  描画しないペインでは1pxも進まない(`scrollY` が 0 のまま)。10-05 にこれで 0.3〜1.0 全部 `is-shown` なしを観測し、
+  `scrollingElement.scrollTop` 代入も 0 のままだった。`window.scrollTo({top:y, behavior:'instant'})` で即座に動き、
+  0.3 で無し・0.5 以降で `is-shown`(実商品リンク `hb.afl.rakuten.co.jp`)。
+  **併せて `resize_window` の `mobile` で 375x812 にしてから再読込する。**素の組み込みブラウザは
+  `innerWidth`/`innerHeight` が 0 で、`total = scrollHeight - 0` になり閾値の位置がずれる(09-21 に 55% 不可・60% 可と出た原因)。
+  終わったら `preset:'desktop'` に戻す。**判定の順序: `scrollY` が動いたかを先に見る。** 動いていなければ環境。
   2026-09-14 に 0.1/0.3 では付かず 0.6/0.9 で付くことを確認した(閾値45%と一致)。
 
   **同じ理由で CSS トランジションも進まない。** `transform .22s` を持つ要素は
@@ -901,6 +914,8 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   「自前の `scroll` リスナが発火するか」を見る。環境を先に疑う。
   本番の `style.css` / `affiliate.js` は `curl` の sha1 を repo と突き合わせれば
   1行で否定できる。ブラウザで悩む前にこちらを先にやる
+- **`.aff-shop-btn` は Yahoo!ショッピング(`ck.jp.ap.valuecommerce.com`)だけが正常（2026-09-23 Amazon アソシエイト終了・575c8cf）。**
+  `amazon.co.jp` が混じっていたら旧版の配信か戻りを疑う。09-28 / 10-05 とも valuecommerce のみで正常。
 - **`.aff-bar`(スマホ固定バー)はデスクトップ幅ではDOMに存在しないのが正常。**
   `affiliate.js` が `matchMedia('(max-width: 720px)')` で生成自体を止めている。
   かつ `resize_window` は効かない(420px を指定しても `innerWidth` は 1478 のまま)。
@@ -3380,6 +3395,11 @@ Step0 の照合で `rejected-events.json` に当たった候補は通常そこ�
 前の回の残骸1つで起動直後の `record-run.py` ごと止まる。
 `D=/tmp/an-$(date +%s); mkdir -p $D && cd $D && git clone ...` のように毎回新しい場所へ取る。
 
+**中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
+リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
+そこには当日もう無い「カレンダー埋め込み不一致 8件」「再評価期限切れ 1件」が出ており、今日の結果と読み違えるところだった。
+`/tmp` の固定名には書かない。`/sessions/<自分>/scratch/` か `mktemp` を使い、リダイレクトの失敗を `set -e` で止める。
+
 ### 出典が PDF の回は、PDF を文字にしてから見張る (2026-10-04)
 
 `mizunomori-aki-saboten-ten-2026-10` の出典はみずの森の月間チラシ PDF で、`sitelib.fetch_text` は
@@ -3577,6 +3597,14 @@ shell 障害と同じ型で、§1.6 に手当て済み)。追わない。
 `pending-judgments.json` に 09-12 から積んである(現在1件・3件未満なので棚卸し不要)。
 **同じ日に並ぶ抜けでも、原因が2種類混ざることがある。** 台帳の抜けを数える前に
 `task_run_never_recorded` を先に引いてから「全タスク同日か」を見ること。
+
+**2026-10-05 の週次点検の記録。**
+bash は 09-29 に復帰し、09-29〜10-05 の全タスクが台帳・task-reports とも揃っている(`task_run_gap` 0)。
+09-21 / 09-28 に push できず `work/site-health-check-unpushed-*.json` に控えた更新は、コード修正(check_date_updates.py)は
+09-28 に目崎が 1456efd で反映済み、プレイブック分はこの回に反映した。**push 不可の回に控えた更新は、次に押せた週次が
+`work/*-unpushed-*.json` を開いて残りを当てる。**控えは各タスクの持ち物ではなく週次の回収対象として扱う。
+台帳の転記も同様に、各タスクの自己申告に任せず `task-reports/` のファイル名を走査して入れる(09-28 に event-monitor の8回が漏れていた)。
+`cross_script_duplicate` 3 は 10-01 から不動だが info で、関数名の重複(_load/diff/render)なので放置でよい。
 
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、
