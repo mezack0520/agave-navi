@@ -17,7 +17,10 @@
 1. `request_cowork_directory` で `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` を接続
    （2026-08-18に OneDrive から iCloud Drive へ移行。古いパスは存在しない）
    （既に接続済みなら何もしない）
-2. リポジトリを clone
+2. リポジトリを clone し、**最初のコミットより前に** 名義を設定する:
+   `git config user.name mezack0520 && git config user.email 88774621+mezack0520@users.noreply.github.com`
+   名義の規定は §2 にしか無く、手順5の起動記録コミットは §2 を読む前に作られる。
+   そのため 10-05・10-06 と2日続けて起動記録だけが別名義で入った(2026-10-06 追記)。
 3. このファイル、`docs/architecture-2026-07.md`、`listing-policy.json` を読む
 4. プロンプトとここに差異があれば**こちらが正**
 5. **起動直後に `python3 scripts/record-run.py <taskId>` を実行し、その変更を含めて push する。**
