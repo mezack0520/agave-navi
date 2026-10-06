@@ -819,6 +819,70 @@
    "action": "fixed",
    "detail": "url の観光協会頁(splash_tamba_2026)が404。主催 @botanical.tamba の告知投稿に差し替え。check_events.py が url も死活を見るようにした",
    "mailedOn": "2026-10-06"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "LaLa Botaniq 第二回 (2026-11-29)",
+   "action": "reviewed",
+   "detail": "特設頁で会場(おうら多目的広場・邑楽町)と時間は判明。第二回の出店者一覧は未公開のため保留を継続し revisitedOn を更新"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13)",
+   "action": "reviewed",
+   "detail": "主催 @tyutyu_ivt に12/13の回の告知はまだ無い。保留を継続し revisitedOn を更新"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "GreenSnap Marche 豊洲 2026 Autumn (2026-10-31)",
+   "action": "reviewed",
+   "detail": "公式頁に出店ブースと企画が足されただけ。開催予定のまま。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "オキボタ December 2026 (2026-12-04)",
+   "action": "reviewed",
+   "detail": "Wix のメニュー項目が増えただけ。開催予定のまま。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit",
+   "target": "らはちゅ〜Holiday (2026-10-11)",
+   "action": "listed",
+   "detail": "主催 @lahainagarden の投稿 Dd7cjBLkijG に掲載あり。見送り(出店者の告知のみ)を外して new-events.json に追加"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit",
+   "target": "トハメルカド～有鄰館 第4回 (2026-10-11)",
+   "action": "rejected",
+   "detail": "第4回の出店者一覧が開催4日前でも未公開。seriesOrganizerPrecedent どおり保留を閉じた"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit",
+   "target": "GREEN DAYS まつやま vol.4 (2026-10-10)",
+   "action": "rejected",
+   "detail": "物販50店舗+グルメ48種で、確認できた対象植物の店は1者。出店者一覧が出そろわないまま開催3日前のため保留を閉じた"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit",
+   "target": "ビカ森ハウスの即売会 (2026-10-11)",
+   "action": "rejected",
+   "detail": "主催の告知で日付は確認。会場は公式LINEのみで県・市も非公開のため保留を閉じた"
   }
  ]
 }

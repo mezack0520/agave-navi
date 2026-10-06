@@ -1,7 +1,23 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [],
-  "updated": "2026-10-05",
+  "items": [
+    {
+      "id": "agave-event-update:rare-aroid-collector-event",
+      "addedOn": "2026-10-07",
+      "source": "agave-event-update Step0(Google qdr:w2)",
+      "question": "モンステラなど希少アロイドが主役のコレクター向け展示即売会は掲載するか",
+      "facts": [
+        "RARE PLANTS COLLECTION 2026-11-18〜24 阪急うめだ本店8階 GREEN AGE コトコトステージ81。共同企画は GREEN AGE と RARE PLANTS JAPAN(@rareplantsjapan2025・モンステラ中心の希少株の販売店)。主催の告知 rareplantsjapan.jp/2210 と /2228",
+        "告知は『世界最先端トレンドのモンステラを中心に展開』『マニア心をくすぐる希少株の展示・販売』。構成は MARKET(販売)・COLLECTION(コレクターやナーセリーが育てた株の展示)・GROWING・INTERIOR・EXPERIENCE・MEDIA & STORY の6テーマ。出店者は今後発表",
+        "plantCentric.rule の対象はアガベ・塊根・多肉・サボテン・ビザールプランツで、アロイドの扱いは書いていない",
+        "掲載済み: Anthurium Festival 2026 Tokyo(アンスリウム)、Jolie Nursery のレアアロイド即売会(ムサシ金沢・新潟ほか)、三浦園芸 レアアロイド即売会。タグ『アロイド』の回が20件以上ある",
+        "見送り済み: GREAT GREEN GARDENS VOL.5(2026-11-01)を 10-03 に『目玉がモンステラ・タイコンステレーション品評会で、出店も観葉植物の店が中心。対象植物が主役ではない』として見送った",
+        "掲載と見送りの線がどこにあるかを決めた記録が無い。今回は同じモンステラ主体なので、どちらの前例にも寄せられる"
+      ],
+      "proposal": "listing-policy.json plantCentric に rareAroids を足す案: 『希少株・コレクター向けを掲げるアロイド(モンステラ・アンスリウム・フィロデンドロン等)の専門の即売会・展示会は掲載し、タグ「アロイド」を付ける。一般の観葉植物店が中心の回や、流通量の多い品種の品評会が目玉の回は見送る(GREAT GREEN GARDENS VOL.5)』。採れば RARE PLANTS COLLECTION を掲載、採らなければ plantCentric で見送り、あわせて掲載済みのアロイド専門の回の扱いを見直す。開催は 11/18 なので急がない"
+    }
+  ],
+  "updated": "2026-10-07",
   "resolved": [
     {
       "id": "agave-event-update:application-lottery-sale",
