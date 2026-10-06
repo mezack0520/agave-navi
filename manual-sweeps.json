@@ -19,8 +19,8 @@
    "url": "https://pukubook.jp/events/",
    "staleDays": 7,
    "why": "3社目のアグリゲータ。LEAFLA(coverage-sweep が自動巡回)と NextMeet(月別)のどちらにも出ない回を拾う。2026-09-07 の巡回で THE BOTANICAL SHOW 6th・トハメルカド境赤レンガ倉庫・アジア有用植物祭がここにだけ出ていた。プレイブック §3 に『pukubook の一覧を必ず1回読む』と 2026-08-12 から書いてあるが、回ったかを残す場所が無く、やらなくても誰も気づかない状態だった",
-   "lastSweptOn": "2026-10-06",
-   "lastScope": "注目3件 + 今後のイベント20件(日付つきは注目のビッグバザール11/22のみ、残りは仮予定)。09-30 に未確定だった BOTANICAL PARTY in SHICHIGAHAMA・FUKUI GREEN FESTA・TOKYO BOTANICAL MEETING・トナリグミ・Plants BOX(町田)・館林サキュレントフェスティバルを Google(直近2か月)で引き直したが、今年の告知はまだ出ていない。取りこぼし0",
+   "lastSweptOn": "2026-10-07",
+   "lastScope": "一覧29件。日付つきの回はすべて掲載済み・見送り済み。残りは仮予定/非公式で、プランツジャンキー(11月ごろ)は主催 cactus-jp の即売会頁が「告知は現在ありません」、オザキ珍植物コレクション(10月)・Botanical Circus(10月)・農マルシェ(11月)・ニホンカキナイトは主催の告知未確認。取りこぼし0",
    "history": [
     "2026-09-07",
     "2026-09-12",
@@ -30,7 +30,8 @@
     "2026-09-18",
     "2026-09-26",
     "2026-09-30",
-    "2026-10-06"
+    "2026-10-06",
+    "2026-10-07"
    ]
   },
   "nextmeet-monthly-check": {
@@ -38,11 +39,12 @@
    "url": "https://nextmeet.app/plants/monthly/",
    "staleDays": 10,
    "why": "NextMeet は 2026-09-10 に coverage-sweep.py へ機械化したが、**機械が拾えるのは『判定を通った候補』だけ**で、一覧をそのまま events.json と並べて見る回が無かった。2026-09-17 に10月の一覧(46件)を目で突き合わせたら、coverage-gaps が出していない未掲載が1件(Green marche 花の湯)あった。coverage_source_missing は『自動で回った』で満たされてしまうので、この台帳で別に数える。",
-   "lastSweptOn": "2026-09-28",
-   "lastScope": "2026年10月(56件)・11月(31件、10/31-11/1跨ぎ3件重複で計84件)を events.json・rejected-events.json と照合。掲載済み77・見送り済み6、未掲載1件(ボタの市meetsビカク横丁)は掲載。主催告知で11/29ボタの市も未掲載と分かり掲載。SOUPer MARKET は主催@soup_plants_fes・会場ラチッタデッラが出たが主催投稿は未読で見送りのまま",
+   "lastSweptOn": "2026-10-07",
+   "lastScope": "2026年10月(10/7以降)・11月・12月・2027年1月の月別ページ89件を events.json・rejected-events.json と日付+名称/会場で照合。未掲載0件(照合が外れたのは名前3文字の「ONE」1件で、one-wakayama-2026-10 として掲載済み)",
    "history": [
     "2026-09-17",
-    "2026-09-28"
+    "2026-09-28",
+    "2026-10-07"
    ]
   },
   "organizer-official-index": {
@@ -59,6 +61,6 @@
    ]
   }
  },
- "updated": "2026-09-18",
+ "updated": "2026-10-07",
  "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
 }
