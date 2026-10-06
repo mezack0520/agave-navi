@@ -1,7 +1,7 @@
 name: Health Check
 
 # 統合元: event-check.yml + link-check.yml + image-health.yml + domain-check.yml + data-integrity.yml
-# 毎日 00:00 UTC 指定(実際は 11時台 JST に走る)に全ヘルスチェック実行
+# 朝のタスクの最後(event-monitor)の合図 mail-request.json の push で全ヘルスチェックとメール
 # 1. データ整合性チェック (events.json)
 # 2. 外部リンク生死監視 (link-check.sh)
 # 3. 画像生死監視 + dead URL クリア (image-health-check.py)
@@ -11,15 +11,19 @@ name: Health Check
 
 on:
   schedule:
-    # UTC 00:00 指定。GitHub の schedule は混む時刻ほど遅れ、実測で 00:00 指定は
-    # 毎日 02:05〜02:30 UTC(11時台 JST)に走る。2026-09-29 に 03:00 指定へ動かしたら
-    # 09:00〜10:00 UTC(18〜19時 JST)まで遅れ、メールが夕方に届いていた(9/30〜10/4)。
-    # 11時台なら 08:06 agave-event-update と 10:09 event-listing-review の後。
-    # 11:00 event-monitor の修正は翌日のメールに載る。
-    - cron: '0 0 * * *'
+    # 保険(2026-10-06)。メールは朝の最後のタスク(11:00 event-monitor)が
+    # mail-request.json を push して起こす。PC が止まっていて合図が来なかった日だけ、
+    # この回が送る(その日に送り済みなら送らない。build-health-mail.py)。
+    # GitHub の schedule は遅れも抜けもある: 00:00 指定が 11時台、03:00 指定が
+    # 18〜19時台に走り、10/5・10/6 は1回も走らなかった。時刻は当てにしない。
+    - cron: '0 5 * * *'
   push:
     paths:
       - 'events.json'
+      # 朝の最後のタスク(event-monitor)が書いて push する「メールを組んで送って」の合図
+      # (2026-10-06)。schedule は遅れも抜けもある(10/5 は1回も走らなかった)。
+      # workflow_dispatch はタスクの PAT に Actions 権限が無く 403 なので、push で起こす
+      - 'mail-request.json'
   repository_dispatch:
     types: [health]
   workflow_dispatch:
@@ -43,11 +47,22 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
 
+      # 全部のチェックとメールを回す回か。schedule / dispatch と、mail-request.json を
+      # 含む push。events.json だけの push は整合性チェックだけ
+      - name: Decide mode
+        id: mode
+        run: |
+          FULL=false
+          if [ "${{ github.event_name }}" != "push" ]; then FULL=true
+          elif git diff --name-only HEAD^ HEAD 2>/dev/null | grep -qx 'mail-request.json'; then FULL=true; fi
+          echo "full=$FULL" >> "$GITHUB_OUTPUT"
+          echo "full=$FULL"
+
       - name: Install deps
         run: pip install requests
 
       - name: Detect newly added events (last 24h)
-        if: github.event_name != 'push'
+        if: steps.mode.outputs.full == 'true'
         run: python3 scripts/detect-added-events.py
 
       - name: 1. Data integrity check
@@ -59,7 +74,7 @@ jobs:
 
       - name: 2. Link check (external URLs)
         id: linkcheck
-        if: github.event_name != 'push'
+        if: steps.mode.outputs.full == 'true'
         run: |
           bash scripts/check-links.sh 2>&1 | tee /tmp/links.log || true
           # 件数は check-links.sh 自身の集計を読む。ログを grep で数えると
@@ -67,7 +82,7 @@ jobs:
           echo "broken=$(cat /tmp/broken-count 2>/dev/null || echo 0)" >> $GITHUB_OUTPUT
 
       - name: 3. Image health (clear dead imageUrls)
-        if: github.event_name != 'push'
+        if: steps.mode.outputs.full == 'true'
         run: |
           # 死んだ imageUrl は自分で外す(直す側の処理)。件数をメールに載せる理由は無い
           python3 scripts/image-health-check.py || true
@@ -83,7 +98,7 @@ jobs:
 
       - name: 4. Domain/SSL check
         id: domain
-        if: github.event_name != 'push'
+        if: steps.mode.outputs.full == 'true'
         run: |
           DOMAIN="agave-navi.com"
           EXPIRY=$(echo | openssl s_client -servername $DOMAIN -connect $DOMAIN:443 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
@@ -97,7 +112,7 @@ jobs:
           fi
 
       - name: 5. Event detail page checks
-        if: github.event_name != 'push'
+        if: steps.mode.outputs.full == 'true'
         # 結果は check-results.json に出て build-health-mail.py が読む。
         # リンク切れがあると exit 1 なので || true は要る
         run: python3 scripts/check_events.py || true
@@ -108,6 +123,7 @@ jobs:
           INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
           LINKS_BROKEN: ${{ steps.linkcheck.outputs.broken || 0 }}
           SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
+          MAIL_RUN: ${{ steps.mode.outputs.full }}
         run: |
           if [ -f check-results.json ]; then
             echo "results_exist=true" >> $GITHUB_OUTPUT
@@ -117,7 +133,7 @@ jobs:
           fi
       - name: Send daily email
         # 判断・反映・残った異常のどれも無い日は送らない(build-health-mail.py の冒頭)
-        if: github.event_name != 'push' && steps.emailbody.outputs.results_exist == 'true' && steps.emailbody.outputs.send == 'true'
+        if: steps.mode.outputs.full == 'true' && steps.emailbody.outputs.results_exist == 'true' && steps.emailbody.outputs.send == 'true'
         continue-on-error: true
         # 第三者のactionはSHAで固定する。タグは動かせるので、v3 のままだと
         # 相手のリポジトリが乗っ取られた日に GMAIL_APP_PASSWORD が渡る。

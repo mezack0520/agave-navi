@@ -42,7 +42,9 @@
 11:00  [Claude] agave-navi-event-monitor
        events.json不整合検査 → 確定できるもの(status/time由来の日付)は自動修正PUT
        → dispatch(daily)で再生成 → 確定不能はキューへ追加・解消分は消し込み
-11時台 [GitHub] health.yml (00:00 UTC 指定。GitHub の遅延で実際は 11時台に走る。03:00 指定にした 9/30〜10/4 は 18時台まで遅れた)
+       → 最後に request-mail.py で mail-request.json を push(メールの合図)
+11時台 [GitHub] health.yml (mail-request.json の push で起動。schedule 05:00 UTC は合図が来なかった日の保険。
+       GitHub の schedule は遅れ・抜けがあり 10/5・10/6 は走らなかった)
        check_events.py: 本日開催/URL死活(終わっていない回のみ)/TBD(開催前のみ)/内容妥当性
        → 朝のタスクの修正記録(auto-fix-log.json)を「直したもの/直せなかったもの」として先頭に出し、
          残りと pending-judgments.json を集約した日次メールをGmail送信

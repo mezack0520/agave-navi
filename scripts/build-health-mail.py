@@ -126,12 +126,15 @@ if residual:
 send = bool(judgments or added or site_fixes or residual)
 
 # 1日1通(2026-10-06)。メールは朝の最後のタスク(event-monitor)が終わったところで
-# workflow_dispatch で起こす。GitHub の schedule は遅れも抜けもあり(03:00 指定が
-# 18時台に、00:00 指定が当日来ない日もあった)、時刻を当てにできない。
-# schedule は保険として残し、その日に送り済みなら送らない。
+# mail-request.json を push して起こす(タスクの PAT は Actions 権限が無く dispatch は 403)。
+# GitHub の schedule は遅れも抜けもあり(03:00 指定が18時台に、10/5・10/6 は1回も
+# 走らなかった)、時刻を当てにできない。schedule は合図が来なかった日の保険。
+# 手動の Run workflow 以外は、その日に送り済みなら送らない。
+# MAIL_RUN: health.yml の mode。schedule / dispatch / mail-request.json の push で true
 _event = os.environ.get('GITHUB_EVENT_NAME') or ''
+_mail_run = os.environ.get('MAIL_RUN') == 'true'
 _state = _load('mail-state.json', {})
-if send and _event == 'schedule' and _state.get('lastMailedOn') == today_iso:
+if send and _event != 'workflow_dispatch' and _state.get('lastMailedOn') == today_iso:
     send = False
 
 # 数字は1行。一覧は載せない(サイトを見れば分かる)
@@ -165,16 +168,15 @@ elif residual:
 else:
     subject = f'アガベイベントナビ 今日の反映{len(added) + len(site_fixes)}件 {today}'
 
-# 送る回(schedule / dispatch)だけ mailedOn を付ける。push で走る回は送らないので付けない
-if unsent and os.environ.get('GITHUB_OUTPUT') \
-        and os.environ.get('GITHUB_EVENT_NAME') not in ('push', None, ''):
+# 送る回だけ mailedOn を付ける。events.json だけの push で走る回は送らないので付けない
+if send and unsent and os.environ.get('GITHUB_OUTPUT') and _mail_run:
     for i in unsent:
         i['mailedOn'] = today_iso
     with open('auto-fix-log.json', 'w', encoding='utf-8') as f:
         json.dump(fixlog, f, ensure_ascii=False, indent=1)
         f.write('\n')
 
-if send and os.environ.get('GITHUB_OUTPUT') and _event not in ('push', ''):
+if send and os.environ.get('GITHUB_OUTPUT') and _mail_run:
     with open('mail-state.json', 'w', encoding='utf-8') as f:
         json.dump({'_note': '日次メールを送った日。build-health-mail.py が書き、同じ日の2通目を止める',
                    'lastMailedOn': today_iso}, f, ensure_ascii=False, indent=1)

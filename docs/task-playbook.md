@@ -131,7 +131,9 @@
    そのまま直して、その結果を報告する」。朝のタスク(`agave-event-update` が主担当、
    `event-monitor` は残りを拾う)は本業の後に §「日次メールの項目は、報告する前に直す」の
    表を上から処理し、**1件ごとに `scripts/log-fix.py` で結果を残す。**
-   メール(11時台 JST。health.yml の schedule の注記)は「判断が必要なこと / サイトに反映したこと / タスクが直せずに
+   **`event-monitor` は最後に `python3 scripts/request-mail.py --task event-monitor` を実行し、
+   `mail-request.json` を push する。これがその日のメールの合図**(2026-10-06。下の「誰がいつ」)。
+   メールは「判断が必要なこと / サイトに反映したこと / タスクが直せずに
    残っていること」だけを載せ、どれも無い日は送らない(2026-09-30。900行の一覧を
    「あんまり意味ない」と言われて作り直した。`build-health-mail.py` の冒頭)。
    掲載は events.json の差分から出るが、修正はこの記録からしか出ない。
@@ -920,8 +922,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   「自前の `scroll` リスナが発火するか」を見る。環境を先に疑う。
   本番の `style.css` / `affiliate.js` は `curl` の sha1 を repo と突き合わせれば
   1行で否定できる。ブラウザで悩む前にこちらを先にやる
-- **`.aff-shop-btn` は Yahoo!ショッピング(`ck.jp.ap.valuecommerce.com`)だけが正常（2026-09-23 Amazon アソシエイト終了・575c8cf）。**
-  `amazon.co.jp` が混じっていたら旧版の配信か戻りを疑う。09-28 / 10-05 とも valuecommerce のみで正常。
+- **`.aff-shop-btn` は Amazon(`tag=aganavi-22`)と Yahoo!ショッピング(`ck.jp.ap.valuecommerce.com`)が正常（2026-10-06 Amazon アソシエイト再開）。**
+  2026-09-23〜10-05 は旧アカウント終了で Amazon を止めていた(575c8cf)。旧ID `agavenavi-22` が出たら旧版の配信か戻りを疑う
+  (監査 `affiliate_dead_tag` も拾う)。新アカウントも登録から180日以内に適格販売3件が要る。
 - **`.aff-bar`(スマホ固定バー)はデスクトップ幅ではDOMに存在しないのが正常。**
   `affiliate.js` が `matchMedia('(max-width: 720px)')` で生成自体を止めている。
   かつ `resize_window` は効かない(420px を指定しても `innerWidth` は 1478 のまま)。
@@ -3546,9 +3549,15 @@ botanical_botanical__ / nara.botanical_garden / wakayama_green_marche / iku_mats
 - **`agave-event-update`(08:06)が主担当。**本業(カバレッジスイープ・巡回)の後に、
   下の表を上から処理する。
 - **`event-monitor`(11:00)は残りを拾う。**朝の回が届かなかった分と、朝以降に出た分。
-- メール(`health.yml`)は 00:00 UTC 指定で、GitHub の遅延により実際は 11時台に走る。
-  03:00 UTC 指定にしたら 18時台まで遅れた(2026-09-30〜10-04)。混む時刻ほど遅れる。
-  `event-monitor`(11:00)の修正は翌日のメールに載る。
+- **メールは `event-monitor` の最後に送る。**直し終えたら
+  `python3 scripts/request-mail.py --task event-monitor` で `mail-request.json` を書き、
+  他の変更と一緒に push する。health.yml は push の paths にこのファイルを持ち、
+  全チェックを回してメールを送る。**忘れるとその日のメールは夕方以降の保険まで出ない。**
+  GitHub の schedule は時刻を当てにできない: 00:00 UTC 指定が 11時台、03:00 指定が
+  18〜19時台に走り、10/5・10/6 は1回も走らず「メール来ないよ」と言われた。
+  PAT は Actions 権限が無く dispatch は 403 なので、push で起こす。
+  schedule(05:00 UTC 指定)は合図が来なかった日の保険で、送り済みの日は送らない
+  (`mail-state.json`。手動の Run workflow だけは何度でも送る)。
 - 始める前に `python3 scripts/audit.py` と
   `python3 scripts/build-health-mail.py`(ローカルで本文が出る)で**今日のメールに出る
   予定の一覧**を作り、それを処理の入力にする。
