@@ -1,5 +1,5 @@
 {
-  "total": 611,
+  "total": 601,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 114,
+      "count": 117,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -226,7 +226,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 233,
+      "count": 236,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 84,
+      "count": 81,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
@@ -304,7 +304,6 @@
         "isij-big-bazaar-2027-11-28",
         "isij-tokyo-reikai-2026-10-25",
         "isij-tokyo-reikai-2026-12-20",
-        "itoshima-bariyoka-taniku-ichi-7th-2026-12",
         "jurian-aki-taniku-cactus-2026-10",
         "ka78-kikakusai-6th-shimada-2026-11",
         "kadan-fes-2026-autumn",
@@ -315,7 +314,8 @@
         "lahaina-rahachu-holiday-2026-10",
         "lier-taniku-festival-taishodo-2026-11",
         "love-green-market-vol3-ichihara-2026-12",
-        "marutto-shokubutsu-fes-2026-11"
+        "marutto-shokubutsu-fes-2026-11",
+        "midorigakuen-himeji-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -653,7 +653,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -828,7 +828,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 84,
+      "count": 81,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-09 green-champuroo-vol2-2026-10",
@@ -853,7 +853,6 @@
         "2026-10-17 plants-plants-plants-bhms-2026-10",
         "2026-10-17 taniku-the-hanbaikai-aki-kibiji-2026-10",
         "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
-        "2026-10-17 tanikuen-ohisama-aeon-shimotsuma-2026-10",
         "2026-10-17 uomachi-botanical-night-market-2026-10",
         "2026-10-18 dokidoki-ibaraki-taniku-sokubaikai-2026-10-18",
         "2026-10-18 kinshakusai-vol6-2026-10",
@@ -869,7 +868,8 @@
         "2026-10-25 roots-market-inage-2026-10",
         "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10",
         "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10",
-        "2026-10-30 toyama-saboten-taniku-9th-2026-10"
+        "2026-10-30 toyama-saboten-taniku-9th-2026-10",
+        "2026-10-31 nightwalker-horie-2026-10"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1016,19 +1016,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 10,
-      "items": [
-        "2026-10-17 tanikuen-ohisama-aeon-shimotsuma-2026-10: https://www.instagram.com/reel/DeKMBFDs-dw/（caption）",
-        "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10: https://www.instagram.com/p/DdoKsvmyNCD/（caption）",
-        "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10: https://www.instagram.com/reel/DeJbScasIUd/（caption）",
-        "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10: https://www.instagram.com/reel/DdQUqrfhIDz/（caption）",
-        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10: https://www.instagram.com/reel/DeJbScasIUd/（caption）",
-        "2026-10-31 tanikuen-ohisama-aeon-hiezu-2026-10: https://www.instagram.com/reel/DeJbScasIUd/（caption）",
-        "2026-11-14 gamagori-taniku-festa-6th-2026-11: https://www.instagram.com/p/DeGxQceGZ_j/（caption）",
-        "2026-11-15 taniku-moromoro-vol16-2026-11: https://www.instagram.com/p/DeD3GIygeZc/（caption）",
-        "2026-11-15 yamaokuya-tandoku-hanbaikai-sakura-2026-11: https://www.instagram.com/p/DanB2o1hXiQ/（sourcePost）",
-        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01: https://www.instagram.com/p/DanB2o1hXiQ/（sourcePost）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
