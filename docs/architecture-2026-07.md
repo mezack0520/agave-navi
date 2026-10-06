@@ -359,3 +359,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   余剰Runが古いSHAを再処理しpush競合失敗した件の恒久対応。dispatchは204空応答が正常・再送禁止
 - 2026-10-06: watch-seeds.json に deadHandles を追加。generate-watchlist.py が実在しない IG handle を apiStatus=dead にして
   igNeedsBrowser(ブラウザのローテ対象)から外す。Business Discovery は個人と不在を同じ code 110 で返すため
+- 2026-10-07: ci-push.sh が push 衝突の作り直しで巡回結果(cancel-watch.json / coverage-gaps.json)を捨てていたのを直した。scripts/ci-snapshot-paths.txt のパスは差分から外したまま「この回の版」を置き直す。監査 ci_snapshot_paths_unpaired

@@ -18,6 +18,15 @@
 #   生成物は data から一意に決まるので、持ち越すのは data の差分だけでよい。
 #   生成物のパスは scripts/ci-generated-paths.txt が単一情報源。
 #   HEAD^ を基準にするので shallow clone (fetch-depth: 1) でも動く。
+#
+# 巡回の観測結果(scripts/ci-snapshot-paths.txt)は「この回の版」で上書きする(2026-10-07):
+#   cancel-watch.json / coverage-gaps.json は build-all.sh では作り直せないが、
+#   毎回まるごと書き換わるので差分で貼ると同時に走った回と衝突する(2026-09-15)。
+#   そこで生成物と同じく差分からは外し、この回が書き換えていれば作り直しの後に
+#   この回の版をそのまま置く。外すだけにしていた間は、push が拒否された回の
+#   巡回結果が黙って捨てられていた。朝の巡回は合図(crawl-request.json)の push で
+#   走り、合図を出したタスクがその数分後に自分の変更を push するので、
+#   2026-10-06 以降はほぼ毎朝ここに当たる(10-07 実測: 中止の疑い2件が落ちた)。
 set -uo pipefail
 
 MSG="${1:?commit message required}"
@@ -25,6 +34,7 @@ REGEN="${2:-}"
 
 cd "$(git rev-parse --show-toplevel)"
 GEN_LIST="scripts/ci-generated-paths.txt"
+SNAP_LIST="scripts/ci-snapshot-paths.txt"
 
 git config user.name  "github-actions[bot]"
 git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -44,6 +54,34 @@ exclude_args() {
     case "$p" in ''|\#*) continue;; esac
     printf '%s\n' ":(exclude)$p"
   done < "$GEN_LIST"
+}
+
+# 巡回の観測結果のうち、このジョブが書き換えたものを退避する。
+# 退避先のディレクトリを標準出力に返す(何も無ければ空)。
+save_snapshots() {
+  local base="$1" dir="" p
+  [ -f "$SNAP_LIST" ] || return 0
+  while IFS= read -r p; do
+    case "$p" in ''|\#*) continue;; esac
+    git cat-file -e "HEAD:$p" 2>/dev/null || continue
+    git diff --quiet "$base" HEAD -- "$p" 2>/dev/null && continue
+    [ -n "$dir" ] || dir="$(mktemp -d)"
+    mkdir -p "$dir/$(dirname "$p")"
+    git show "HEAD:$p" > "$dir/$p"
+  done < "$SNAP_LIST"
+  printf '%s' "$dir"
+}
+
+restore_snapshots() {
+  local dir="$1" f
+  [ -n "$dir" ] && [ -d "$dir" ] || return 0
+  while IFS= read -r f; do
+    f="${f#./}"
+    mkdir -p "$(dirname "$f")"
+    cp "$dir/$f" "$f"
+    echo "巡回結果をこの回の版で置いた: $f"
+  done < <(cd "$dir" && find . -type f)
+  rm -rf "$dir"
 }
 
 # 差分が無くても push まで進む。前のステップが既にコミットしている場合があり、
@@ -83,6 +121,8 @@ for attempt in 1 2 3 4 5; do
     EXC+=(":(exclude)events.json")
   fi
   git diff --binary "$BASE" HEAD -- . "${EXC[@]}" > "$PATCH"
+  # reset で消える前に、この回の巡回結果を退避する
+  SNAP_DIR="$(save_snapshots "$BASE")"
 
   if ! git fetch -q origin main; then
     echo "::error::origin/main を fetch できない"
@@ -108,6 +148,8 @@ for attempt in 1 2 3 4 5; do
     fi
     rm -f "$EV_BASE" "$EV_OURS"
   fi
+
+  restore_snapshots "$SNAP_DIR"
 
   if [ -n "$REGEN" ]; then
     if ! bash -c "$REGEN"; then

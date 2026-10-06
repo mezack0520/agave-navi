@@ -48,6 +48,11 @@ scripts/events-meta.json
 # 落ちた。ci-push.sh がこれを「データファイル」と判定して復旧を諦め、
 # その回の status 更新と再生成が丸ごと捨てられた。**毎回書き換わるものを
 # 持ち越そうとすると、同時に走った回の数だけ衝突する。**
+# ただし「翌朝には同じものが入る」は 2026-10-06 に崩れた。巡回は朝の合図の
+# push で1日1回だけ走り、合図を出したタスクがその数分後に push するので、
+# 毎朝ここで捨てられていた(10-07 に中止の疑い2件が落ちた)。
+# この2つは scripts/ci-snapshot-paths.txt にも置き、差分では貼らずに
+# 「この回の版」を置き直す(ci-push.sh の save_snapshots / restore_snapshots)。
 cancel-watch.json
 coverage-gaps.json
 # organizer-posts.json と staging/eyecatch/ はここに置かない(2026-09-23)。

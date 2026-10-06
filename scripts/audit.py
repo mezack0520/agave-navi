@@ -1622,6 +1622,40 @@ def main():
         'ci-push.sh が衝突復旧で除外する対象。綴りが合わないと除外が効かない',
         severity='urgent')
 
+    # 巡回の観測結果(2026-10-07)。ci-push.sh は ci-snapshot-paths.txt のパスを
+    # 差分から外したうえで「この回の版」を置き直す。差分から外すのは
+    # ci-generated-paths.txt の役目なので、**両方に載っていないと働かない。**
+    # 生成物リストにだけあると push 衝突のたびに巡回結果が黙って捨てられ
+    # (2026-10-04 と 10-07 に cancel-watch.json で実際に落ちた)、
+    # snapshot リストにだけあると差分にも残って同時に走った回と衝突する。
+    snap_list = rp('scripts', 'ci-snapshot-paths.txt')
+    _snap_bad = []
+    _gen_lines = set()
+    for _line in (open(gen_list, encoding='utf-8') if os.path.exists(gen_list) else []):
+        _line = _line.strip()
+        if _line and not _line.startswith('#'):
+            _gen_lines.add(_line)
+    for _line in (open(snap_list, encoding='utf-8') if os.path.exists(snap_list) else []):
+        _line = _line.strip()
+        if not _line or _line.startswith('#'):
+            continue
+        if not os.path.exists(rp(_line)):
+            _snap_bad.append(f'{_line}: 実在しない')
+        if _line not in _gen_lines:
+            _snap_bad.append(f'{_line}: ci-generated-paths.txt に無い(差分に残って衝突する)')
+    for _p in ('cancel-watch.json', 'coverage-gaps.json'):
+        if _p in _gen_lines and not any(
+                l.strip() == _p for l in (open(snap_list, encoding='utf-8')
+                                          if os.path.exists(snap_list) else [])):
+            _snap_bad.append(f'{_p}: 生成物リストにだけある(push 衝突で巡回結果が捨てられる)')
+    add('ci_snapshot_paths_unpaired',
+        '巡回結果の持ち越しリストと生成物リストが揃っていない',
+        sorted(set(_snap_bad)),
+        'scripts/ci-snapshot-paths.txt のパスは scripts/ci-generated-paths.txt にも置く。'
+        'build-all.sh で作り直せない観測結果を生成物リストにだけ置くと、'
+        'push が拒否された回の巡回結果を ci-push.sh が捨てる',
+        severity='urgent')
+
     # 逆向き。**CIのコミットが触ったのに、除外リストにも「運ぶデータ」にも
     # 入っていないパス**を出す。ci-generated-paths.txt の冒頭は 2026-09-07 から
     # 「ci_generated_paths_drift が漏れを検出する」と書いていたが、

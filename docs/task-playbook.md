@@ -3538,6 +3538,47 @@ botanical_botanical__ / nara.botanical_garden / wakayama_green_marche / iku_mats
 `check_events.py` が url も見るようにした(結果の `field` が `url`)。10-06 に開催前の回へ当てて、リンク切れはこの1件だけ。
 直し方: 主催の告知に差し替える。見つからなければ `sourceUrl` と同じにする。
 
+### 朝の巡回結果は、push 衝突の作り直しで毎朝捨てられていた (2026-10-07)
+
+10-07 の daily(合図の push で 06:36 起動)は巡回を完走し、ログには「中止の疑い2件」(GreenSnap 豊洲・オキボタ December)が
+出ていたのに、`cancel-watch.json` と `coverage-gaps.json` は 10-06 の版のままだった。
+合図を出した event-listing-review が数分後に自分の変更を push し、daily の push が拒否された。
+`ci-push.sh` は作り直しで `ci-generated-paths.txt` のパスを捨てて build-all.sh に任せるが、
+**この2つは build-all.sh では作り直せない。**「捨てても翌朝には同じものが入る」という前提は、
+巡回を朝の合図の1回に絞った 10-06 に崩れていた(schedule の保険は合図があった日は巡回しない)。
+10-05 のレポートにも同じ形の取りこぼし(みずの森 PDF の badChars)が書いてあった。
+
+- `scripts/ci-snapshot-paths.txt` に置いたパスは、差分からは外したまま(衝突しない)、このジョブが書き換えていれば
+  作り直しの後に「この回の版」を置き直す(`ci-push.sh` の `save_snapshots` / `restore_snapshots`)。
+- bare repo で4通りを実測した: 割り込み1回 / 同時に走った巡回が同じファイルを書いた(この回の版が勝つ・衝突しない) /
+  巡回しないジョブ(相手の版が残る) / 2回続けて割り込まれた(2周とも持ち越す)。
+- 監査 `ci_snapshot_paths_unpaired`(urgent): 2つのリストが揃っていないと鳴る。片方だけだと「衝突で落ちる」か「黙って捨てる」に戻る。
+- **daily のログと repo の版を突き合わせる。**ログに出た件数が repo のファイルに無ければ、作り直しで捨てられている。
+  その日は手元で `coverage-sweep.py --days 45` と `check-cancelled.py` を回して押せば取り戻せる(10-07 に実施)。
+
+### Google のタブ内 fetch は、短い間隔で30回前後引くと CAPTCHA になる (2026-10-07)
+
+0.5秒間隔で約30クエリ引いた時点で、fetch の応答が「数秒たってもリダイレクトされない場合は」の JS 頁(h3 が0件)に変わり、
+タブで開くと「通常と異なるトラフィック」の確認画面になった。**CAPTCHA は解かない。**そこで Google は打ち止めにして、
+残りは Instagram と会場・主催の公式頁で引いた。
+- 1回の起動で使える量は25クエリ前後と見て、汎用語(多肉植物 イベント 等)より、候補の名前のクォート検索に回す。
+- `runQ` の結果が `(0)` ばかりになったら、ゼロ件ではなくブロックを疑う(h3 を数えず本文に「リダイレクト」があるかを見る)。
+
+### 主催アカウントは Instagram の topsearch で名前から引ける (2026-10-07)
+
+出店者の「出店予定」一覧にだけ名前が出る回(つながる輪多肉MARCHE・糸島ばりよか多肉市・ヒナタ多肉園)は、
+Google のスニペットに主催の handle が出ない。ログイン済みの組み込みブラウザで instagram.com を開いたタブから
+
+```js
+fetch('/api/v1/web/search/topsearch/?context=blended&query='+encodeURIComponent('つながる輪多肉'),
+      {credentials:'include', headers:{'x-ig-app-id':'936619743392459'}}).then(r=>r.json())
+  .then(j=>j.users.map(u=>u.user.username+' / '+u.user.full_name))
+```
+
+を叩くと、表示名に回の名前を持つ主催アカウントが1回で出る(3件とも当たった)。プロフィールの `meta[name="description"]` に
+次回の日付と会場を書いている主催が多い(つながる輪は投稿が前回のままで、次回は自己紹介欄にだけあった)。
+**vendorAnnouncementsOnly で見送る前に1回引く。**自己紹介欄の告知も主催の公式SNSの告知として扱ってよい。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは

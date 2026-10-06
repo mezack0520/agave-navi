@@ -1,0 +1,14 @@
+# 巡回の観測結果。scripts/ci-push.sh が push 衝突から作り直すとき、
+# このジョブが書き換えていれば「この回の版」で上書きする(2026-10-07)。
+#
+# ここに置くのは「毎回まるごと書き直す観測結果」で、かつ build-all.sh では
+# 作り直せないものだけ。差分では貼らない(同時に走った回と必ず衝突する)ので、
+# 同じパスを scripts/ci-generated-paths.txt にも置いて差分から外すこと。
+# 片方だけに置くと、衝突で daily が落ちるか(差分に残る)、巡回結果が
+# 黙って捨てられるか(上書きされない)のどちらかになる。
+# 監査 ci_snapshot_paths_unpaired が両方に載っているかを見る。
+#
+# 状態を持ち越す取得結果(organizer-posts.json など)はここに置かない。
+# あれは差分で貼る「運ぶデータ」(audit.py の _CI_CARRY_DATA)。
+cancel-watch.json
+coverage-gaps.json
