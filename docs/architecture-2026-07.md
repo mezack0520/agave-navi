@@ -23,31 +23,32 @@
 | `scripts/sitelib.py` | 単一情報源(スラッグ表/日付整形/共通ヘッダフッタ/CSS版数) | 手動 |
 
 ## 2. 毎日のタイムライン (JST)
+
+2026-10-06 に詰めた。目崎の指示は「全体をコンパクトに、メールは9時に」。
+**朝の流れは PC のタスクが合図ファイルを push して進める**(scripts/request-run.py)。
+GitHub の schedule は時刻を当てにできない(daily の 06:00 指定は 08:50〜10:40、
+health の 00:00 指定は 11時台、03:00 指定は 18〜19時台に走り、health は 10/5・10/6 に走らなかった)。
+schedule はどちらも合図が来なかった日の保険で、合図で済んだ日は巡回もメールもしない。
 ```
-06:00  [GitHub] daily.yml
-       check_date_updates.py(公式ソースから日付スクレイプ照合)
-       → build-all.sh → push
-       (status自動更新と eventCountバッジ は build-all.sh 内に移管。2026-08-10)
-08:06  [Claude] agave-event-update
-       Step0 直近14日カバレッジスイープ(日付明示のWeb検索+pukubook地域頁+leaf個別記事)
-       → watch-sources巡回(次回待ちシリーズ10+IG主催者ローテ約10/日・8日で一巡)
-       → まとめブログ/aggregator広域探索 → 裏取り(公式ソース必須・拒否ドメイン照合)
-       → new-events.json作成(contents API) → dispatch(sync-events)
-       → 日次メールに出る項目を報告前に直す(プレイブック「日次メールの項目は、報告する前に直す」)
-10:09  [Claude] event-listing-review
+06:30  [Claude] event-listing-review
+       起動記録(record-run.py)がその日最初なら crawl-request.json を書く → 一緒に push
        回答シート(Google Form)をChromeで読取 → 新着は種別問わず new-inquiries.json に書いてpush
-       (通知メールはフォーム送信時にGASが送っている。Actions側は送らない)
        → 掲載リクエスト:裏取り→new-events.json+sync-events / 修正・訂正:キュー積み(自動書換なし)
-       → inquiries-processed.json更新
-11:00  [Claude] agave-navi-event-monitor
-       events.json不整合検査 → 確定できるもの(status/time由来の日付)は自動修正PUT
-       → dispatch(daily)で再生成 → 確定不能はキューへ追加・解消分は消し込み
-       → 最後に request-mail.py で mail-request.json を push(メールの合図)
-11時台 [GitHub] health.yml (mail-request.json の push で起動。schedule 05:00 UTC は合図が来なかった日の保険。
-       GitHub の schedule は遅れ・抜けがあり 10/5・10/6 は走らなかった)
+06:3x  [GitHub] daily.yml (crawl-request.json の push で起動。約8分)
+       check_date_updates.py / coverage-sweep.py(未掲載) / check-cancelled.py(中止) /
+       ig-organizer-watch.py(主催IG・アイキャッチ候補) → build-all.sh → push
+07:00  [Claude] agave-event-update (約10〜20分)
+       直近14日カバレッジスイープ → watch-sources巡回 → 裏取り → new-events.json → sync-events
+       → 日次メールに出る項目を報告前に直す(プレイブック「日次メールの項目は、報告する前に直す」)
+07:45  [Claude] agave-navi-eyecatch (約5分)
+       CIの候補(staging/eyecatch/)を目で見て採否 → 候補が無い回だけ組み込みブラウザで取る
+08:15  [Claude] agave-navi-event-monitor (約5〜10分)
+       events.json不整合検査 → 確定できるものは自動修正 → 確定不能はキューへ
+       → 最後に request-run.py mail で mail-request.json を push(メールの合図)
+08:3x  [GitHub] health.yml (mail-request.json の push で起動。約10分) → 日次メール(9時までに届く)
        check_events.py: 本日開催/URL死活(終わっていない回のみ)/TBD(開催前のみ)/内容妥当性
-       → 朝のタスクの修正記録(auto-fix-log.json)を「直したもの/直せなかったもの」として先頭に出し、
-         残りと pending-judgments.json を集約した日次メールをGmail送信
+       → 判断が必要なこと・サイトに反映したこと・直せず残ったことだけを送る。無い日は送らない
+保険    daily.yml schedule 21:00 UTC(実際 9〜11時)/ health.yml schedule 00:00 UTC(実際 11時台)
 随時    [GitHub] sync-events.yml (dispatch: sync-events)
        new-events.json → sanity-check(チケット/aggregator/無関係イベントドメイン拒否)
        → events.jsonへマージ → enrich → indexカード追加 → build-all.sh → push

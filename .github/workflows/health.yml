@@ -1,7 +1,7 @@
 name: Health Check
 
 # 統合元: event-check.yml + link-check.yml + image-health.yml + domain-check.yml + data-integrity.yml
-# 朝のタスクの最後(event-monitor)の合図 mail-request.json の push で全ヘルスチェックとメール
+# 朝の最後のタスク(event-monitor)の合図 mail-request.json の push で全ヘルスチェックとメール(08時台)
 # 1. データ整合性チェック (events.json)
 # 3. 画像生死監視 + dead URL クリア (image-health-check.py)
 # 4. SSL/ドメイン残日数
@@ -10,12 +10,12 @@ name: Health Check
 
 on:
   schedule:
-    # 保険(2026-10-06)。メールは朝の最後のタスク(11:00 event-monitor)が
-    # mail-request.json を push して起こす。PC が止まっていて合図が来なかった日だけ、
-    # この回が送る(その日に送り済みなら送らない。build-health-mail.py)。
+    # 保険(2026-10-06)。メールは朝の最後のタスク(event-monitor)が
+    # mail-request.json を push して起こす(scripts/request-run.py mail)。PC が止まっていて
+    # 合図が来なかった日だけ、この回が送る(その日に送り済みなら送らない。build-health-mail.py)。
     # GitHub の schedule は遅れも抜けもある: 00:00 指定が 11時台、03:00 指定が
     # 18〜19時台に走り、10/5・10/6 は1回も走らなかった。時刻は当てにしない。
-    - cron: '0 5 * * *'
+    - cron: '0 0 * * *'
   push:
     paths:
       - 'events.json'

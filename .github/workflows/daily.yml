@@ -1,13 +1,15 @@
 name: Daily Maintenance
 
 # 統合元: auto-status-update.yml + check-date-updates.yml + update-sitemap.yml
-# 毎日 06:00 JST (21:00 UTC) に実行
+# 朝の最初のタスク(event-listing-review)が push する crawl-request.json で巡回する(2026-10-06)。
+# schedule(06:00 JST 指定)は実測 08:50〜10:40 に走り、朝のタスクより後になるので保険
 # 1. 各公式ページから日付検証で events.json 補正
 # 2. upcoming → past 自動遷移
 # 3. 全 static (detail / sitemap / RSS / iCal / CSV / landing) 再生成
 
 on:
   schedule:
+    # 保険。合図(crawl-request.json)が来なかった日の巡回。遅れて昼前に走る
     - cron: '0 21 * * *'
   # events.json が変わったpushで再生成する(2026-07-31)。
   # Chrome経由のrepository_dispatchが認証ヘッダ遮断で送れなくなったため、
@@ -17,6 +19,8 @@ on:
     branches: [main]
     paths:
       - 'events.json'
+      # 朝の巡回の合図(scripts/request-run.py crawl)。push で入っても巡回を全部回す
+      - 'crawl-request.json'
       # 巡回スクリプトを直したら回して結果を確かめられるようにする。
       # CI側(GITHUB_TOKEN)のpushはワークフローを再起動しない仕様なので、
       # sync-events が events.json を更新しても daily は発火しない。
@@ -72,22 +76,27 @@ jobs:
       # coverage-gaps.json を毎回書き換える。この2つは同時に走った回と
       # 必ず衝突するので、**用が無い push で回すと事故だけが増える**
       # (2026-09-15 と 09-17 の daily はどちらもこれで落ちた)。
-      # 巡回スクリプト自身を直した回は確かめたいので、そこだけ回す。
-      - name: What changed (push のときだけ)
+      # 巡回スクリプト自身を直した回と、朝の合図(crawl-request.json)の回だけ回す。
+      # schedule は保険なので、今日の合図で巡回済みなら回さない(2026-10-06)
+      - name: Decide crawl
         id: changed
-        if: github.event_name == 'push'
         run: |
-          FILES=$(git diff --name-only HEAD^ HEAD || true)
-          echo "$FILES"
-          if echo "$FILES" | grep -qE '^scripts/(coverage-sweep|check-cancelled|ig-organizer-watch|iglib|eyecatchlib)\.py$'; then
-            echo "crawl=true" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" = "push" ]; then
+            FILES=$(git diff --name-only HEAD^ HEAD || true)
+            echo "$FILES"
+            if echo "$FILES" | grep -qE '^(scripts/(coverage-sweep|check-cancelled|ig-organizer-watch|iglib|eyecatchlib)\.py|crawl-request\.json)$'; then
+              CRAWL=true; else CRAWL=false; fi
+          elif [ "${{ github.event_name }}" = "schedule" ] && \
+               grep -q "\"requestedAt\": \"$(TZ=Asia/Tokyo date +%F)" crawl-request.json 2>/dev/null; then
+            echo "今日は朝の合図で巡回済み"; CRAWL=false
           else
-            echo "crawl=false" >> $GITHUB_OUTPUT
+            CRAWL=true
           fi
+          echo "crawl=$CRAWL" >> "$GITHUB_OUTPUT"
 
       - name: Check date updates (scrape official sources)
-        # pushトリガ(再生成目的)では外部サイトを叩かない
-        if: github.event_name != 'push' && github.event.inputs.skip_date_check != 'true'
+        # 再生成目的の push では外部サイトを叩かない。合図(crawl-request.json)の push は叩く
+        if: steps.changed.outputs.crawl == 'true' && github.event.inputs.skip_date_check != 'true'
         run: python3 scripts/check_date_updates.py || true
 
       # UTC判定の Auto status update ステップは 2026-08-10 に削除した(移管は 2026-08-03)。
@@ -108,7 +117,7 @@ jobs:
       # 失敗しても後続を止めない(|| true)が、失敗自体は coverage-gaps.json の
       # errors に残り、audit の coverage_sweep_broken が鳴る。
       - name: Sweep coverage gaps (他所にあって当サイトに無いイベント)
-        if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
+        if: steps.changed.outputs.crawl == 'true'
         run: python3 scripts/coverage-sweep.py --days 45 || true
 
       # 逆向きの巡回。載せた回がもう開催されないことに気づくための経路。
@@ -117,7 +126,7 @@ jobs:
       # 失敗しても後続を止めないが、失敗は cancel-watch.json の errors に残り
       # audit の cancel_watch_broken が鳴る。
       - name: Watch for cancellations (載せた回が中止・延期になっていないか)
-        if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
+        if: steps.changed.outputs.crawl == 'true'
         run: python3 scripts/check-cancelled.py || true
 
       # 主催者の Instagram を Business Discovery で見る(2026-09-23)。
@@ -125,7 +134,7 @@ jobs:
       # こちらが中止の見張りになる。結果は organizer-posts.json に出て、
       # audit の organizer_cancel_signal(urgent) / organizer_unlisted_dates が読む。
       - name: Watch organizers on Instagram (主催者の最新投稿)
-        if: github.event_name != 'push' || steps.changed.outputs.crawl == 'true'
+        if: steps.changed.outputs.crawl == 'true'
         env:
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
         run: python3 scripts/ig-organizer-watch.py || true

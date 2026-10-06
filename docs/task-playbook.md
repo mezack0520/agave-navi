@@ -131,7 +131,7 @@
    そのまま直して、その結果を報告する」。朝のタスク(`agave-event-update` が主担当、
    `event-monitor` は残りを拾う)は本業の後に §「日次メールの項目は、報告する前に直す」の
    表を上から処理し、**1件ごとに `scripts/log-fix.py` で結果を残す。**
-   **`event-monitor` は最後に `python3 scripts/request-mail.py --task event-monitor` を実行し、
+   **`event-monitor` は最後に `python3 scripts/request-run.py mail --task event-monitor` を実行し、
    `mail-request.json` を push する。これがその日のメールの合図**(2026-10-06。下の「誰がいつ」)。
    メールは「判断が必要なこと / サイトに反映したこと / タスクが直せずに
    残っていること」だけを載せ、どれも無い日は送らない(2026-09-30。900行の一覧を
@@ -2082,7 +2082,7 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
 
 ## アイキャッチの取り方 (2026-09-08)
 
-定期タスク `agave-navi-eyecatch`（毎日14:50、1回6件まで）が担当する。
+定期タスク `agave-navi-eyecatch`（毎日07:45。2026-10-06 まで14:50。1回6件まで）が担当する。
 タスクのSKILL.mdは環境移行で消えることがあるので、経路はここに残す。
 
 > **2026-09-23 から、まず CI の候補を片づける。**主催がプロアカウントなら
@@ -3546,17 +3546,19 @@ botanical_botanical__ / nara.botanical_garden / wakayama_green_marche / iku_mats
 
 ### 誰がいつ
 
-- **`agave-event-update`(08:06)が主担当。**本業(カバレッジスイープ・巡回)の後に、
-  下の表を上から処理する。
-- **`event-monitor`(11:00)は残りを拾う。**朝の回が届かなかった分と、朝以降に出た分。
+- 時刻は `docs/architecture-2026-07.md` §2(2026-10-06 に詰めた。メールは9時までに届く)。
+- **`agave-event-update`(07:00)が主担当。**本業(カバレッジスイープ・巡回)の後に、
+  下の表を上から処理する。巡回結果はその日最初のタスク(06:30 `event-listing-review`)の
+  起動記録が出す合図(`crawl-request.json`。`record-run.py` が自動で書く)で 06:3x に出ている。
+- **`event-monitor`(08:15)は残りを拾う。**朝の回が届かなかった分と、朝以降に出た分。
 - **メールは `event-monitor` の最後に送る。**直し終えたら
-  `python3 scripts/request-mail.py --task event-monitor` で `mail-request.json` を書き、
+  `python3 scripts/request-run.py mail --task event-monitor` で `mail-request.json` を書き、
   他の変更と一緒に push する。health.yml は push の paths にこのファイルを持ち、
-  全チェックを回してメールを送る。**忘れるとその日のメールは夕方以降の保険まで出ない。**
+  全チェックを回してメールを送る(約10分)。**忘れるとその日のメールは昼の保険まで出ない。**
   GitHub の schedule は時刻を当てにできない: 00:00 UTC 指定が 11時台、03:00 指定が
   18〜19時台に走り、10/5・10/6 は1回も走らず「メール来ないよ」と言われた。
   PAT は Actions 権限が無く dispatch は 403 なので、push で起こす。
-  schedule(05:00 UTC 指定)は合図が来なかった日の保険で、送り済みの日は送らない
+  schedule(00:00 UTC 指定・実際は11時台)は合図が来なかった日の保険で、送り済みの日は送らない
   (`mail-state.json`。手動の Run workflow だけは何度でも送る)。
 - 始める前に `python3 scripts/audit.py` と
   `python3 scripts/build-health-mail.py`(ローカルで本文が出る)で**今日のメールに出る

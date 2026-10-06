@@ -176,6 +176,20 @@ def ensure_git_identity():
         print(f'record-run: git の名義を設定できなかった: {err}', file=sys.stderr)
 
 
+def request_crawl_once(task_id, day):
+    """その日最初に起動したタスクが、朝の巡回(daily.yml)の合図を書く(2026-10-06)。
+    daily の schedule(06:00 JST 指定)は実測 08:50〜10:40 に走り、朝のタスクより後になる。
+    起動記録と一緒に push されるので、どのタスクが最初でも、手順を読み落としても巡回が起きる。"""
+    path = os.path.join(REPO, 'crawl-request.json')
+    try:
+        if load(path).get('requestedAt', '')[:10] == day:
+            return
+    except (OSError, ValueError):
+        pass
+    subprocess.run([sys.executable, os.path.join(REPO, 'scripts', 'request-run.py'),
+                    'crawl', '--task', task_id], check=False)
+
+
 def main():
     ensure_git_identity()
     if len(sys.argv) == 3 and sys.argv[1] == '--flush-worklog':
@@ -189,6 +203,7 @@ def main():
     if (task_id != INQUIRY_TASK and changed is False
             and task_id not in load(TASK_RUNS).get('tasks', {})):
         return 1
+    request_crawl_once(task_id, day)
     print(f'record-run: {task_id} {day} → {where} '
           f'({"追記" if changed else "既に記録済み"})')
     print('  この変更を含めて push すること。push しないと台帳は残らない。')

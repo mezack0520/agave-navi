@@ -135,7 +135,7 @@ if residual:
 send = bool(judgments or added or site_fixes or residual)
 
 # 1日1通(2026-10-06)。メールは朝の最後のタスク(event-monitor)が終わったところで
-# mail-request.json を push して起こす(タスクの PAT は Actions 権限が無く dispatch は 403)。
+# mail-request.json を push して起こす(scripts/request-run.py。タスクの PAT は Actions 権限が無く dispatch は 403)。
 # GitHub の schedule は遅れも抜けもあり(03:00 指定が18時台に、10/5・10/6 は1回も
 # 走らなかった)、時刻を当てにできない。schedule は合図が来なかった日の保険。
 # 手動の Run workflow 以外は、その日に送り済みなら送らない。
