@@ -1,15 +1,25 @@
 {
- "generated": "2026-10-07 07:29 JST",
+ "generated": "2026-10-07 07:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 306,
-  "awaitingNextEdition": 308,
+  "awaitingNextEdition": 307,
   "officialSiteCandidates": 80,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 76,
   "igDead": 7
  },
  "igAccounts": [
+  {
+   "handle": "nagomitaniku",
+   "url": "https://www.instagram.com/nagomitaniku/",
+   "eventCount": 7,
+   "lastEventName": "ナゴリバ in 舞鶴赤レンガパーク",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
   {
    "handle": "midorino_marche",
    "url": "https://www.instagram.com/midorino_marche/",
@@ -19,6 +29,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "picnic.king.plants",
+   "url": "https://www.instagram.com/picnic.king.plants/",
+   "eventCount": 5,
+   "lastEventName": "ピクニックガーデン vol.26 in ガーデンプラザ華 福島店",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "tanikuen_ohisama",
@@ -36,16 +56,6 @@
    "eventCount": 5,
    "lastEventName": "妙高多肉大市 2026",
    "lastEventDate": "2026-10-31",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "nagomitaniku",
-   "url": "https://www.instagram.com/nagomitaniku/",
-   "eventCount": 5,
-   "lastEventName": "第8回 福山deマルシェ",
-   "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -116,6 +126,16 @@
    "eventCount": 4,
    "lastEventName": "Plant Freaks in オリナス錦糸町 2026（11月）",
    "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "king.plants.slugger",
+   "url": "https://www.instagram.com/king.plants.slugger/",
+   "eventCount": 3,
+   "lastEventName": "キングプランツ 収穫祭（気仙沼クラブハウス）",
+   "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -221,6 +241,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "protoleaf.shop_futakotamagawa",
+   "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
+   "eventCount": 2,
+   "lastEventName": "PINE APPLES チランジア・ブロメリア即売会（プロトリーフ二子玉川本店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "tanikudayo.zeninsyuugou",
    "url": "https://www.instagram.com/tanikudayo.zeninsyuugou/",
    "eventCount": 2,
@@ -235,6 +265,16 @@
    "url": "https://www.instagram.com/iwabaegarden/",
    "eventCount": 2,
    "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tropicalgarden_saitama",
+   "url": "https://www.instagram.com/tropicalgarden_saitama/",
+   "eventCount": 2,
+   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
    "priority": 0,
@@ -411,6 +451,36 @@
    "apiStatus": "api"
   },
   {
+   "handle": "greensanta2020",
+   "url": "https://www.instagram.com/greensanta2020/",
+   "eventCount": 2,
+   "lastEventName": "SANTA_29 FESTA vol.20（サンタフェ）",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "engeiyatanaka",
+   "url": "https://www.instagram.com/engeiyatanaka/",
+   "eventCount": 2,
+   "lastEventName": "飯塚農園 出張販売会（園芸屋たなか）",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "garden_messe",
+   "url": "https://www.instagram.com/garden_messe/",
+   "eventCount": 2,
+   "lastEventName": "Orai's party 2026",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "succulent_wonderland__",
    "url": "https://www.instagram.com/succulent_wonderland__/",
    "eventCount": 2,
@@ -438,16 +508,6 @@
    "lastEventDate": "2027-05-29",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "picnic.king.plants",
-   "url": "https://www.instagram.com/picnic.king.plants/",
-   "eventCount": 4,
-   "lastEventName": "PICNIC GARDEN vol.25 in 鶴岡公園",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": false,
-   "priority": 1,
    "apiStatus": "api"
   },
   {
@@ -516,16 +576,6 @@
    "eventCount": 2,
    "lastEventName": "Green Summit vol.22 in Yamagata",
    "lastEventDate": "2026-09-06",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "king.plants.slugger",
-   "url": "https://www.instagram.com/king.plants.slugger/",
-   "eventCount": 2,
-   "lastEventName": "Botanical in はら笑楽交",
-   "lastEventDate": "2026-09-13",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -751,16 +801,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "protoleaf.shop_futakotamagawa",
-   "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
-   "eventCount": 1,
-   "lastEventName": "X-PLANTS 即売会（プロトリーフ二子玉川本店）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "aitomargueritestation",
    "url": "https://www.instagram.com/aitomargueritestation/",
    "eventCount": 1,
@@ -959,16 +999,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "tropicalgarden_saitama",
-   "url": "https://www.instagram.com/tropicalgarden_saitama/",
-   "eventCount": 1,
-   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
   },
   {
    "handle": "kikien.succulent0222",
@@ -1465,16 +1495,6 @@
    "url": "https://www.instagram.com/botanical.tamba/",
    "eventCount": 1,
    "lastEventName": "BOTANICAL TAMBA 2026",
-   "lastEventDate": "2026-12-05",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "garden_messe",
-   "url": "https://www.instagram.com/garden_messe/",
-   "eventCount": 1,
-   "lastEventName": "Orai's party 2026",
    "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
    "priority": 1,
@@ -2696,30 +2716,10 @@
    "apiStatus": "api"
   },
   {
-   "handle": "greensanta2020",
-   "url": "https://www.instagram.com/greensanta2020/",
-   "eventCount": 1,
-   "lastEventName": "サンタフェ 学校編 vol.21",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "ichikawazouen_mine",
    "url": "https://www.instagram.com/ichikawazouen_mine/",
    "eventCount": 1,
    "lastEventName": "TANIKU collection（タニコレ）",
-   "lastEventDate": "2026-09-20",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "engeiyatanaka",
-   "url": "https://www.instagram.com/engeiyatanaka/",
-   "eventCount": 1,
-   "lastEventName": "大辻屋さん 出張販売会",
    "lastEventDate": "2026-09-20",
    "hasUpcoming": false,
    "priority": 2,
