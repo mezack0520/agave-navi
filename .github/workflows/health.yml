@@ -3,7 +3,6 @@ name: Health Check
 # 統合元: event-check.yml + link-check.yml + image-health.yml + domain-check.yml + data-integrity.yml
 # 朝のタスクの最後(event-monitor)の合図 mail-request.json の push で全ヘルスチェックとメール
 # 1. データ整合性チェック (events.json)
-# 2. 外部リンク生死監視 (link-check.sh)
 # 3. 画像生死監視 + dead URL クリア (image-health-check.py)
 # 4. SSL/ドメイン残日数
 # 5. 各イベント詳細の生死 (check_events.py)
@@ -72,15 +71,6 @@ jobs:
           ERR=$(grep -c "ERROR\|FAIL" /tmp/integrity.log || true)
           echo "errors=$ERR" >> $GITHUB_OUTPUT
 
-      - name: 2. Link check (external URLs)
-        id: linkcheck
-        if: steps.mode.outputs.full == 'true'
-        run: |
-          bash scripts/check-links.sh 2>&1 | tee /tmp/links.log || true
-          # 件数は check-links.sh 自身の集計を読む。ログを grep で数えると
-          # 本文中の "404" 等も拾って水増しになる
-          echo "broken=$(cat /tmp/broken-count 2>/dev/null || echo 0)" >> $GITHUB_OUTPUT
-
       - name: 3. Image health (clear dead imageUrls)
         if: steps.mode.outputs.full == 'true'
         run: |
@@ -121,7 +111,6 @@ jobs:
         id: emailbody
         env:
           INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
-          LINKS_BROKEN: ${{ steps.linkcheck.outputs.broken || 0 }}
           SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
           MAIL_RUN: ${{ steps.mode.outputs.full }}
         run: |

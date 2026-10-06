@@ -722,7 +722,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `build-all.sh` は前景で完走する。2026-08-11 の実測で全289件の詳細ページ+ガイド+
   ランディング+フィード+sitemap が **1.2秒**。分割して叩く必要はない
   (以前「45秒制限に収まらない」と書いていたのは誤り。遅いのは
-  `check_date_updates.py` と `check-links.sh` のようなネットワークを叩く側だけ)
+  `check_date_updates.py` のようなネットワークを叩く側だけ)
 - **push が non-fast-forward で拒否されたら、生成物のrebaseは必ず衝突する。**
   `origin/main` に `reset --hard` → データ変更を再適用 → 再ビルド → push の順でやり直す
 - **その規則を、CI側6本は2026-09-07まで守っていなかった（2026-09-07）。**

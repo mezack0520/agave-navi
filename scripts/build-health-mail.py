@@ -48,10 +48,13 @@ def _env_int(k, d=0):
         return d
 
 
-def _tail(path, n):
+def _hits(path, needles, n=5):
+    """ログから該当行だけを出す。末尾を出すと集計行しか載らず、
+    どのリンクが切れたのかが分からなかった(2026-10-06 のメール)"""
     try:
         with open(path, encoding='utf-8', errors='replace') as f:
-            return [l.rstrip() for l in f if l.strip()][-n:]
+            return [l.strip().lstrip('- ').replace('**', '').replace('`', '')
+                    for l in f if any(k in l for k in needles)][:n]
     except OSError:
         return []
 
@@ -80,11 +83,17 @@ residual = []
 for k, v in (audit.get('findings') or {}).items():
     if v.get('severity', 'urgent') == 'urgent' and v.get('count'):
         residual.append((f"{v.get('title', k)}: {v.get('count')}件", (v.get('items') or [])[:3]))
-_ie, _lb, _ssl = _env_int('INTEGRITY_ERR'), _env_int('LINKS_BROKEN'), _env_int('SSL_DAYS', 999)
+_ie, _ssl = _env_int('INTEGRITY_ERR'), _env_int('SSL_DAYS', 999)
+# リンク切れは check_events.py の dead_links(終わっていない回の url / sourceUrl)。
+# 2026-10-06 まで check-links.sh が終わった回まで叩き、主催が消した過去の告知頁を
+# 「要確認」として出していた(その日の4件は全部終了済み)。check-links.sh は廃止
+_dead = data.get('dead_links') or []
 if _ie:
-    residual.append((f'データ整合性エラー: {_ie}件', _tail('/tmp/integrity.log', 5)))
-if _lb:
-    residual.append((f'サイト内の外部リンク切れ: {_lb}件', _tail('/tmp/links.log', 5)))
+    residual.append((f'データ整合性エラー: {_ie}件', _hits('/tmp/integrity.log', ('ERROR', 'FAIL'))))
+if _dead:
+    residual.append((f'開催前の回の公式リンク切れ: {len(_dead)}件',
+                     [f"{d.get('name')} {d.get('field')}: {d.get('sourceUrl')} ({d.get('statusCode')})"
+                      for d in _dead[:5]]))
 if _ssl < 30:
     residual.append((f'SSL証明書の残り: {_ssl}日', []))
 

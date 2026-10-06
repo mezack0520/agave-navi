@@ -1492,11 +1492,9 @@ def main():
     #   (b) GITHUB_OUTPUT に書くキーを、どの workflow も steps.*.outputs.<key> で読まない
     #   (c) GitHub Issue を読み書きする。Issue はこのリポジトリで誰の受信箱でもない。
     #       人に届ける連絡は日次/週次メールに一本化している
-    _TMP_SELF_CONSUMED = {
-        # 書いた直後に同じスクリプトが cat して標準出力に流す。
-        # health.yml がそれを /tmp/links.log に tee して build-health-mail.py が読む
-        '/tmp/link-check-report.md',
-    }
+    # 書いた直後に同じスクリプトが読む /tmp ファイル。2026-10-06 に check-links.sh を
+    # 廃止して空になった
+    _TMP_SELF_CONSUMED = set()
     _outs_files = (sorted(glob.glob(rp('scripts', '*.py'))) + sorted(glob.glob(rp('scripts', '*.sh')))
                    + [rp('build-detail-pages.py')]
                    + sorted(glob.glob(rp('.github', 'workflows', '*.yml'))))
