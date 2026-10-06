@@ -826,7 +826,8 @@
    "kind": "rejected_revisit_stale",
    "target": "LaLa Botaniq 第二回 (2026-11-29)",
    "action": "reviewed",
-   "detail": "特設頁で会場(おうら多目的広場・邑楽町)と時間は判明。第二回の出店者一覧は未公開のため保留を継続し revisitedOn を更新"
+   "detail": "特設頁で会場(おうら多目的広場・邑楽町)と時間は判明。第二回の出店者一覧は未公開のため保留を継続し revisitedOn を更新",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -834,7 +835,8 @@
    "kind": "rejected_revisit_stale",
    "target": "芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13)",
    "action": "reviewed",
-   "detail": "主催 @tyutyu_ivt に12/13の回の告知はまだ無い。保留を継続し revisitedOn を更新"
+   "detail": "主催 @tyutyu_ivt に12/13の回の告知はまだ無い。保留を継続し revisitedOn を更新",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -842,7 +844,8 @@
    "kind": "cancel_suspects",
    "target": "GreenSnap Marche 豊洲 2026 Autumn (2026-10-31)",
    "action": "reviewed",
-   "detail": "公式頁に出店ブースと企画が足されただけ。開催予定のまま。cancel-reviewed.json に記録"
+   "detail": "公式頁に出店ブースと企画が足されただけ。開催予定のまま。cancel-reviewed.json に記録",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -850,7 +853,8 @@
    "kind": "cancel_suspects",
    "target": "オキボタ December 2026 (2026-12-04)",
    "action": "reviewed",
-   "detail": "Wix のメニュー項目が増えただけ。開催予定のまま。cancel-reviewed.json に記録"
+   "detail": "Wix のメニュー項目が増えただけ。開催予定のまま。cancel-reviewed.json に記録",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -858,7 +862,8 @@
    "kind": "rejected_revisit",
    "target": "らはちゅ〜Holiday (2026-10-11)",
    "action": "listed",
-   "detail": "主催 @lahainagarden の投稿 Dd7cjBLkijG に掲載あり。見送り(出店者の告知のみ)を外して new-events.json に追加"
+   "detail": "主催 @lahainagarden の投稿 Dd7cjBLkijG に掲載あり。見送り(出店者の告知のみ)を外して new-events.json に追加",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -866,7 +871,8 @@
    "kind": "rejected_revisit",
    "target": "トハメルカド～有鄰館 第4回 (2026-10-11)",
    "action": "rejected",
-   "detail": "第4回の出店者一覧が開催4日前でも未公開。seriesOrganizerPrecedent どおり保留を閉じた"
+   "detail": "第4回の出店者一覧が開催4日前でも未公開。seriesOrganizerPrecedent どおり保留を閉じた",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -874,7 +880,8 @@
    "kind": "rejected_revisit",
    "target": "GREEN DAYS まつやま vol.4 (2026-10-10)",
    "action": "rejected",
-   "detail": "物販50店舗+グルメ48種で、確認できた対象植物の店は1者。出店者一覧が出そろわないまま開催3日前のため保留を閉じた"
+   "detail": "物販50店舗+グルメ48種で、確認できた対象植物の店は1者。出店者一覧が出そろわないまま開催3日前のため保留を閉じた",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -882,7 +889,8 @@
    "kind": "rejected_revisit",
    "target": "ビカ森ハウスの即売会 (2026-10-11)",
    "action": "rejected",
-   "detail": "主催の告知で日付は確認。会場は公式LINEのみで県・市も非公開のため保留を閉じた"
+   "detail": "主催の告知で日付は確認。会場は公式LINEのみで県・市も非公開のため保留を閉じた",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -890,7 +898,8 @@
    "kind": "content_anomaly",
    "target": "多肉植物と生マスタード『The販売会』秋の部 (2026-10-17)",
    "action": "fixed",
-   "detail": "sync-events の enrich が会場の店の頁(noumaru.jp)から店の営業時間 9:00〜18:00 を time に入れた。主催の告知に時間は無いので消し、enrich が url/sourceUrl に持たない頁から time/admission/access を採らないよう直した"
+   "detail": "sync-events の enrich が会場の店の頁(noumaru.jp)から店の営業時間 9:00〜18:00 を time に入れた。主催の告知に時間は無いので消し、enrich が url/sourceUrl に持たない頁から time/admission/access を採らないよう直した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -898,7 +907,8 @@
    "kind": "time_vs_organizer_post",
    "target": "多肉園おひさま 多肉イベント in イオンモール下妻 (2026-10-17)",
    "action": "fixed",
-   "detail": "time 10:00〜21:00 は sync-events の enrich がイオンの施設頁(aeon.jp/sc/shimotsuma/)から入れた営業時間。主催の告知 DeKMBFDs-dw どおり 10:00〜18:00（最終日は17:00まで）に直した"
+   "detail": "time 10:00〜21:00 は sync-events の enrich がイオンの施設頁(aeon.jp/sc/shimotsuma/)から入れた営業時間。主催の告知 DeKMBFDs-dw どおり 10:00〜18:00（最終日は17:00まで）に直した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -906,7 +916,8 @@
    "kind": "time_implausible",
    "target": "多肉園おひさま 多肉イベント in イオンモール盛岡 (2026-10-30)",
    "action": "fixed",
-   "detail": "time 5:00〜9:00 は enrich が別の商業施設の頁(aeon.jp/sc/moriokaminami/)から入れた値。主催の告知 DeGzgrYMA8d に時刻は無いので消した"
+   "detail": "time 5:00〜9:00 は enrich が別の商業施設の頁(aeon.jp/sc/moriokaminami/)から入れた値。主催の告知 DeGzgrYMA8d に時刻は無いので消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -914,7 +925,8 @@
    "kind": "content_implausible",
    "target": "GREEN CHAMPUROO -Vol.2- (2026-10-09)",
    "action": "fixed",
-   "detail": "入場料 5,000円 は 09-28 に出店料として消した値を weekly-enrichment(10-04)が PR TIMES の頁から書き戻したもの。消した"
+   "detail": "入場料 5,000円 は 09-28 に出店料として消した値を weekly-enrichment(10-04)が PR TIMES の頁から書き戻したもの。消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -922,7 +934,8 @@
    "kind": "content_implausible",
    "target": "麋角植物作業室 at pigment 名古屋 (2026-10-17)",
    "action": "fixed",
-   "detail": "入場料 5,000円 は enrich が貸しスペースの紹介頁(kasikiru.com)から入れた利用料。主催の告知 Dd8bLUhS04q に入場料の記載は無いので消した"
+   "detail": "入場料 5,000円 は enrich が貸しスペースの紹介頁(kasikiru.com)から入れた利用料。主催の告知 Dd8bLUhS04q に入場料の記載は無いので消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -930,7 +943,8 @@
    "kind": "enrich_foreign_page",
    "target": "サッポロビカクエキスポ Lv.3 (2026-10-18)",
    "action": "fixed",
-   "detail": "入場料「330円（加算）」は enrich が通販の商品頁(fullahead-idol.com)から入れた値。主催の告知 Dd6bdqTk5a9 の「入場料有」に合わせて「入場料が必要」にした"
+   "detail": "入場料「330円（加算）」は enrich が通販の商品頁(fullahead-idol.com)から入れた値。主催の告知 Dd6bdqTk5a9 の「入場料有」に合わせて「入場料が必要」にした",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -938,7 +952,8 @@
    "kind": "enrich_foreign_page",
    "target": "プランツボックス 甲府 (2026-10-24)",
    "action": "fixed",
-   "detail": "time 10:00〜17:00 は weekly-enrichment(09-08)が宝石店の「甲府ジェム」の記事から入れた別の催しの時刻。消した"
+   "detail": "time 10:00〜17:00 は weekly-enrichment(09-08)が宝石店の「甲府ジェム」の記事から入れた別の催しの時刻。消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -946,7 +961,8 @@
    "kind": "enrich_foreign_page",
    "target": "PLANTS DIVE vol.5 in NARA (2026-10-25)",
    "action": "fixed",
-   "detail": "入場無料 は enrich がジモティーの掲載から入れた値で、主催の告知 DbPOU-HTR5f に記載が無い。消した"
+   "detail": "入場無料 は enrich がジモティーの掲載から入れた値で、主催の告知 DbPOU-HTR5f に記載が無い。消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -954,7 +970,8 @@
    "kind": "enrich_foreign_page",
    "target": "多肉のまつり in 万葉公園 (2026-11-29)",
    "action": "fixed",
-   "detail": "入場無料 は enrich がマルシェポータル(marche.portal-th.com)から入れた値。主催の告知で確かめられないので消した"
+   "detail": "入場無料 は enrich がマルシェポータル(marche.portal-th.com)から入れた値。主催の告知で確かめられないので消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -962,7 +979,8 @@
    "kind": "enrich_foreign_page",
    "target": "モロモロプランツ 19th (2026-11-21)",
    "action": "fixed",
-   "detail": "入場無料 は enrich が別サイト(helisgarden.wraptas.site)から入れた値。主催の告知で確かめられないので消した"
+   "detail": "入場無料 は enrich が別サイト(helisgarden.wraptas.site)から入れた値。主催の告知で確かめられないので消した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -970,7 +988,8 @@
    "kind": "enrich_foreign_page",
    "target": "縁日（IMAMA・神楽坂） (2026-10-24)",
    "action": "fixed",
-   "detail": "time 11:00〜20:00 は enrich が出店者の頁(beatgarden-agave.com)から入れた値で、主催 @imama.jp の告知に時刻は無い。消した。access は会場の道順なので残した"
+   "detail": "time 11:00〜20:00 は enrich が出店者の頁(beatgarden-agave.com)から入れた値で、主催 @imama.jp の告知に時刻は無い。消した。access は会場の道順なので残した",
+   "mailedOn": "2026-10-07"
   },
   {
    "on": "2026-10-07",
@@ -978,7 +997,8 @@
    "kind": "time_missing",
    "target": "第四回 珍奇植物フェア (2026-11-29)",
    "action": "fixed",
-   "detail": "time が空だった。主催の告知 DYO3beUzO_p の 10:00〜15:00 を入れた"
+   "detail": "time が空だった。主催の告知 DYO3beUzO_p の 10:00〜15:00 を入れた",
+   "mailedOn": "2026-10-07"
   }
  ]
 }
