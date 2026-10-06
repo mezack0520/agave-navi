@@ -1645,6 +1645,8 @@ def main():
         'organizer-posts.json', 'staging/eyecatch/', 'scripts/eyecatch-rejected.json',
         # 朝のタスクが直した記録(2026-09-29)。mailedOn はメールを送った回が付ける
         'auto-fix-log.json',
+        # 日次メールを送った日(2026-10-06)。同じ日の2通目を止める
+        'mail-state.json',
     }
     # 分け方の判定は1つ。**remote の版に乗せて build-all.sh を回し直したとき、
     # この回の情報が失われるか。**失われるなら運ぶデータ、失われないなら生成物。

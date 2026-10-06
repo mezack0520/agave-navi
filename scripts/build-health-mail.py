@@ -125,6 +125,15 @@ if residual:
 
 send = bool(judgments or added or site_fixes or residual)
 
+# 1日1通(2026-10-06)。メールは朝の最後のタスク(event-monitor)が終わったところで
+# workflow_dispatch で起こす。GitHub の schedule は遅れも抜けもあり(03:00 指定が
+# 18時台に、00:00 指定が当日来ない日もあった)、時刻を当てにできない。
+# schedule は保険として残し、その日に送り済みなら送らない。
+_event = os.environ.get('GITHUB_EVENT_NAME') or ''
+_state = _load('mail-state.json', {})
+if send and _event == 'schedule' and _state.get('lastMailedOn') == today_iso:
+    send = False
+
 # 数字は1行。一覧は載せない(サイトを見れば分かる)
 _up = data.get('upcoming_events') or []
 _sat = now.date() + timedelta(days=(5 - now.weekday()) % 7)
@@ -163,6 +172,12 @@ if unsent and os.environ.get('GITHUB_OUTPUT') \
         i['mailedOn'] = today_iso
     with open('auto-fix-log.json', 'w', encoding='utf-8') as f:
         json.dump(fixlog, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+
+if send and os.environ.get('GITHUB_OUTPUT') and _event not in ('push', ''):
+    with open('mail-state.json', 'w', encoding='utf-8') as f:
+        json.dump({'_note': '日次メールを送った日。build-health-mail.py が書き、同じ日の2通目を止める',
+                   'lastMailedOn': today_iso}, f, ensure_ascii=False, indent=1)
         f.write('\n')
 
 _out = os.environ.get('GITHUB_OUTPUT')
