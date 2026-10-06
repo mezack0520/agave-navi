@@ -356,10 +356,17 @@
       "severity": "urgent"
     },
     "time_implausible": {
-      "title": "開催時間の幅が2時間未満(経路検索など別データの貼り付けの疑い)",
+      "title": "開催時間がありえない(幅2時間未満・6時前の開始。別データの貼り付けの疑い)",
       "count": 0,
       "items": [],
-      "note": "即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す",
+      "note": "即売会・マルシェの実データは最短でも150分で、早い回でも7時台に始まる。経路検索・施設の営業時間の貼り付けを疑う。裏取りできなければ time を消す",
+      "severity": "urgent"
+    },
+    "content_implausible": {
+      "title": "掲載値が植物イベントの値としてありえない(別商品の価格・別イベント文の混入)",
+      "count": 0,
+      "items": [],
+      "note": "主催の告知で確かめて直す。出典に無い値は消す(入場料の5,000円は出店料・貸しスペース料・商品価格の混入だった)。enrich が書いた値なら、出所の頁は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
     "access_pref_mismatch": {
@@ -653,7 +660,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1012,6 +1019,13 @@
       "count": 0,
       "items": [],
       "note": "IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない",
+      "severity": "urgent"
+    },
+    "time_vs_organizer_post": {
+      "title": "time が主催の告知投稿に書かれた時刻と食い違う",
+      "count": 0,
+      "items": [],
+      "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
     "eyecatch_candidates_pending": {
