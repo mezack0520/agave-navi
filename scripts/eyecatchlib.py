@@ -5,7 +5,7 @@
 ## なぜ CI で候補を作るのか (2026-09-23)
 
 アイキャッチ取得はブラウザ専用だった。GitHub Actions からも Cowork の
-サンドボックスからも instagram.com に届かないためで、毎日14:50の
+サンドボックスからも instagram.com に届かないためで、毎日07:45(10-06 まで14:50)の
 agave-navi-eyecatch タスクが組み込みブラウザで1件ずつ投稿を開いていた。
 
 Business Discovery(Graph API)は主催がプロアカウントなら最新投稿の
