@@ -360,3 +360,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-10-06: watch-seeds.json に deadHandles を追加。generate-watchlist.py が実在しない IG handle を apiStatus=dead にして
   igNeedsBrowser(ブラウザのローテ対象)から外す。Business Discovery は個人と不在を同じ code 110 で返すため
 - 2026-10-07: ci-push.sh が push 衝突の作り直しで巡回結果(cancel-watch.json / coverage-gaps.json)を捨てていたのを直した。scripts/ci-snapshot-paths.txt のパスは差分から外したまま「この回の版」を置き直す。監査 ci_snapshot_paths_unpaired
+- 2026-10-07(event-monitor): check_events.py の内容妥当性の規則を sitelib.content_implausible_issues に移し、audit.content_implausible(urgent)で events.json に当てる(09-30 のメール作り直しで読む側が消えていた)。audit.time_vs_organizer_post(time と主催の告知本文の時刻の照合。sitelib.time_ranges / announced_hours)を追加し、time_implausible に6時前の開始を足した

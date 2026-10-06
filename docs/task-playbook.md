@@ -3602,6 +3602,39 @@ The販売会 秋の部(出典はIG)を掲載した直後、sync-events の enric
 `enrich_events.py` は time / admission / access も、その頁を `url` / `sourceUrl` / `organizerUrl` に持つ回にだけ採る
 (`FIELDS-REJECTED` をログに出す)。**掲載した後は sync-events のログで `WRITE-BACK` の行を見て、書かれた値の出所を確かめる。**
 
+### メールの節を外すと、その節だけが読んでいた検出は黙って死ぬ (2026-10-07)
+
+`check_events.py` は 07-13 から入場料5,000円以上・別イベント文の混入などを `check-results.json` の `implausible` に書き、
+読むのは日次メールの「内容の異常」節だけだった。09-30 のメール作り直しで節ごと外れ、**書く側だけが残った。**
+10-04 に GREEN CHAMPUROO の admission に 5,000円 が戻り(09-28 に目崎が出店料として消した値を weekly-enrichment が PR TIMES の頁から書いた)、
+同じ日に麋角植物作業室にも貸しスペースの利用料 5,000円 が入ったが、3日間だれも見ていなかった。朝のタスクの入力は監査とメールだけだから。
+規則を `sitelib.content_implausible_issues` に移し、`audit.content_implausible`(urgent)が events.json に直接当てる(直せばその場で0に戻る)。
+**メールや一覧から節を外すときは、その節が読んでいたキーを grep し、読む側を監査へ移してから外す。**
+`check-results.json` の `tbd_events` も読むコードは無い(朝のタスクが直接読む前提。09-30 の docstring)。
+
+### enrich を直しても、直す前に書いた値は残る。関門を足した日に、関門の無かった期間の書き込みを洗う (2026-10-07)
+
+10-07 に enrich が「出典の頁以外から time/admission/access を採らない」ようになったが、それ以前に書かれた値は残っていた。
+09-29 に出典外の頁の画像を8件外したときも、**同じ頁から同じ回に書いた time/admission/access は残した**(プランツボックス 甲府の time は宝石店の「甲府ジェム」の記事の時刻だった)。
+洗い方: Actions のログ(90日保持)に、回ごとの `Found:`(掴んだ頁)と `WRITE-BACK: <slug> ← <項目>` が出る。
+PAT で `actions/workflows/<id>/runs` → `runs/<id>/jobs` → `jobs/<id>/logs` を引く(無認証は60回/時で尽きるので jobs も PAT で引く)。
+weekly-enrichment は全件を処理してから最後に WRITE-BACK をまとめて出すので、`Found:` は slug ごとに持ち、WRITE-BACK の slug で引く(直前の節に紐づけると取り違える)。
+書いた値は、その回の head_sha を親に持つ github-actions のコミットの events.json で分かる。
+
+10-07 に開催前の回へ当てた結果: 出典の頁以外から書かれて今も残っていた値が14回分あり(他に8回分は人が直し済み)、10回分を直した。
+- 告知と食い違う・明らかに別物: 下妻の time(イオンの営業時間 10:00〜21:00 → 告知の 10:00〜18:00（最終日は17:00まで）)、盛岡の time(別の商業施設の頁の 5:00〜9:00)、
+  入場料 5,000円 2件、サッポロビカクエキスポの「330円（加算）」(通販の商品頁。告知は「入場料有」)、プランツボックス 甲府の time
+- 出所がアグリゲータ・出店者・別サイトで、一次情報に無い: 入場無料 3件(ジモティー・マルシェポータル・他店の頁)、IMAMA 縁日の time
+- 残したもの: 一次情報と一致(奈良ビカクフェスの time、金鯱祭の access)、会場の施設の頁の access(会場への道順は施設の頁が一次情報)、
+  手で書いた説明文が一次情報から同じ値を書いている回(タニッペ Final)、自分の出典の頁
+- あわせて、告知に時刻があるのに time が空だった第四回 珍奇植物フェアを告知どおり埋めた
+
+再発の検出は2つ足した。`audit.time_vs_organizer_post`(urgent): その回の url/sourceUrl/imageSource/instagramPostId が指す投稿の本文
+(organizer-posts.json)に開催時間らしい範囲(2時間以上・「営業時間」の行を除く)があり、time の範囲が1つも一致しない回。
+09-23〜10-07 の33版に当てて、比べられた45件は全部一致し、食い違いは下妻の1件だけだった。
+`time_implausible` に「6時前の開始」を足した(掲載の全履歴で6時前に始まる回は盛岡の1件だけ)。
+告知本文の時刻は `sitelib.time_ranges` / `announced_hours` で読む(全角・「10時半」・「から」・‐–—・午前/午後を吸う。「11:00〜1時間程度」は範囲にしない)。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -3641,7 +3674,7 @@ The販売会 秋の部(出典はIG)を掲載した直後、sync-events の enric
 | 中止・延期の兆候(`organizer_cancel_signal` / `cancel_suspects`) | 投稿・公式頁を開く。中止なら cancelled にする。違えば `scripts/cancel-reviewed.json` | fixed / reviewed |
 | 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
-| 内容の異常(入場料・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった) | fixed |
+| 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
 | リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |

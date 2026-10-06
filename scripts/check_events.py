@@ -14,7 +14,7 @@ from datetime import datetime, date
 
 EVENTS_JSON = os.path.join(os.path.dirname(__file__), '..', 'events.json')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sitelib import today_jst, DESC_MIN_CHARS
+from sitelib import today_jst, DESC_MIN_CHARS, content_implausible_issues
 
 def check_url(url, timeout=15):
     """URLの死活チェック。ステータスコードを返す。
@@ -164,35 +164,11 @@ def main():
         _end_pl = ev.get('dateEnd') or ev_date
         _is_future = (not _end_pl) or _end_pl >= today
         if _is_future and ev.get('status') == 'upcoming':
-            _issues = []
-            import re as _re_pl
-            _adm = ev.get('admission') or ''
-            _m = _re_pl.search(r'(\d{1,3}(?:,\d{3})+|\d{4,})', _adm.replace('￥','').replace('¥',''))
-            if _m:
-                _val = int(_m.group(1).replace(',', ''))
-                if _val >= 5000:
-                    _issues.append(f'入場料が異常に高い({_adm}) — 別商品の価格混入の疑い')
+            # 規則は sitelib.content_implausible_issues が単一情報源(2026-10-07)。
+            # audit.content_implausible が同じ関数を当てて urgent で出す。
+            # ここに書いていた頃は、メールの節が落ちた 09-30 から誰も読んでいなかった
+            _issues = content_implausible_issues(ev)
             _desc = ev.get('description') or ''
-            # 直前に植物の語が掛かっている形(「植物モチーフのフィギュア」
-            # 「ボタニカルコスメ」)は植物イベントの物販なので数えない(2026-09-30)。
-            # BOTANICAL BOTANICAL FUKUOKA の主催告知どおりの説明文が
-            # 「別イベント文の混入」として日次メールに出ていた。
-            _plant_q = ('植物', '多肉', 'サボテン', 'ボタニカル', 'アガベ', '塊根', 'グリーン')
-            for _kw in ('新作コレクション', 'アパレル販売', 'フィギュア', 'ワンマンライブ', 'チケット絶賛', 'コスメ'):
-                _hit = False
-                for _m_kw in _re_pl.finditer(_re_pl.escape(_kw), _desc):
-                    if not any(q in _desc[max(0, _m_kw.start() - 10):_m_kw.start()] for q in _plant_q):
-                        _hit = True
-                        break
-                if _hit:
-                    _issues.append(f'説明文に植物イベントらしくない語({_kw}) — 別イベント文の混入の疑い')
-                    break
-            if not ev_date:
-                _issues.append('開催日なしのupcoming — 日付の裏取りが必要')
-            _name_l = (name or '').lower()
-            _u_l = ((ev.get('url') or '') + (ev.get('sourceUrl') or '')).lower()
-            if _u_l and any(x in _u_l for x in ('goodsmile', 'comiket', 'wonfes', 'designfesta')):
-                _issues.append('URLが植物と無関係の有名イベントドメイン')
             if _issues:
                 results['implausible'].append({'slug': slug, 'name': name, 'issues': _issues})
             # meta description(=description流用)が下限字数未満だとSERPスニペット枠を使い切れない

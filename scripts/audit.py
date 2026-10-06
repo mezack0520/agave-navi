@@ -597,9 +597,40 @@ def main():
         if dur < 120:
             time_odd.append(f"{e['slug']}: time=\"{e.get('time')}\" は{dur}分"
                             + (f"(会期{days}日)" if days > 1 else ''))
-    add('time_implausible', '開催時間の幅が2時間未満(経路検索など別データの貼り付けの疑い)',
+        elif a < 6 * 60:
+            # 6時前の開始(2026-10-07)。多肉園おひさま イオンモール盛岡に、enrich が
+            # 別の商業施設の頁(aeon.jp/sc/moriokaminami/)から 5:00〜9:00 を書いていた。
+            # 幅は4時間あるので上の条件では鳴らない。掲載済み559件で6時前の開始はこの1件だけ
+            time_odd.append(f"{e['slug']}: time=\"{e.get('time')}\" は{a // 60}時台の開始")
+    add('time_implausible', '開催時間がありえない(幅2時間未満・6時前の開始。別データの貼り付けの疑い)',
         sorted(time_odd),
-        '即売会・マルシェの実データは最短でも150分。裏取りできなければ time を消す')
+        '即売会・マルシェの実データは最短でも150分で、早い回でも7時台に始まる。'
+        '経路検索・施設の営業時間の貼り付けを疑う。裏取りできなければ time を消す')
+
+    # 9b-2. 掲載値が植物イベントの値としてありえない(入場料5,000円以上・別イベント文の混入・
+    #       日付なし・無関係の有名イベントのドメイン)。規則は sitelib.content_implausible_issues。
+    #       check_events.py が 2026-07-13 から check-results.json の implausible に書いていたが、
+    #       読んでいたのは日次メールの「内容の異常」節だけで、09-30 のメール作り直しで節ごと
+    #       落ちた。以後は**書く側だけが残り**、10-04 に入った GREEN CHAMPUROO の 5,000円
+    #       (09-28 に目崎が出店料として消した値を weekly-enrichment が別の頁から戻した)と
+    #       麋角植物作業室の 5,000円(貸しスペースの利用料)が3日間 check-results.json に
+    #       出たまま本番に載っていた(2026-10-07 に検出)。
+    #       監査に置くのは、朝のタスクが処理の入力にしているのが監査とメールだけだから。
+    #       events.json に直接当てるので、直せばその場で0に戻る(check-results.json は
+    #       health の回にしか作り直されない)。
+    from sitelib import content_implausible_issues as _implausible
+    implausible = []
+    for e in events:
+        _end = e.get('dateEnd') or e.get('date')
+        if e.get('status') != 'upcoming' or (_end and _end < today):
+            continue
+        for _iss in _implausible(e):
+            implausible.append(f"{e.get('slug')}: {_iss}")
+    add('content_implausible', '掲載値が植物イベントの値としてありえない(別商品の価格・別イベント文の混入)',
+        sorted(implausible),
+        '主催の告知で確かめて直す。出典に無い値は消す(入場料の5,000円は出店料・貸しスペース料・'
+        '商品価格の混入だった)。enrich が書いた値なら、出所の頁は sync-events / weekly-enrichment の'
+        'ログの Found: の行で分かる')
 
     # 事業者・路線ごとの営業県。ここに無い事業者は判定しない(誤検出を出さないため)。
     # JRは全国なので事業者では見ず、線名だけを見る。
@@ -3040,6 +3071,59 @@ def main():
         'IG_PAGE_TOKEN の失効か、daily.yml の取得ステップが落ちている。'
         'この状態では organizer_cancel_signal が0件でも中止が無い証拠にならない',
         severity='info' if not _ow_on else 'urgent')
+
+    # 16z1b. time が、その回の主催の告知投稿に書かれた時刻と食い違う(2026-10-07)。
+    #        多肉園おひさま イオンモール下妻(10/17-18)の time は 10:00〜21:00 だったが、
+    #        告知(imageSource の DeKMBFDs-dw)は「⏰ 10:00〜18:00（2日目17:00終了）」。
+    #        21:00 はイオンの施設頁の営業時間で、sync-events の enrich が書いた
+    #        (10-07 に enrich は出典の頁以外から time を採らなくなったが、それ以前に
+    #        書かれた値は残る)。告知本文は organizer-posts.json に入っており、照合すれば
+    #        機械で分かったのに、誰も照合していなかった。
+    #        照合するのは、その回の url / sourceUrl / imageSource / instagramPostId が
+    #        指す投稿だけ(主催の他の投稿は別の回のことがある)。告知に開催時間らしい
+    #        範囲(2時間以上・営業時間の行を除く)があり、time の範囲が1つも一致しないときに
+    #        鳴る。読み方は sitelib.time_ranges / announced_hours。
+    #        09-23〜10-07 の organizer-posts.json 33版に当てて、比べられた45件は全部一致、
+    #        食い違いは下妻の1件だけだった。
+    _posts_by_code = {}
+    for _r in (_ow.get('results') or {}).values():
+        for _p in (_r.get('posts') or []):
+            _m = sitelib.IG_POST_RE.search(_p.get('permalink') or '')
+            if _m:
+                _posts_by_code[_m.group(1)] = _p
+    _time_post_bad = []
+    for e in events:
+        _t = e.get('time') or ''
+        _end = e.get('dateEnd') or e.get('date')
+        if e.get('status') != 'upcoming' or not _t or (_end and _end < today):
+            continue
+        _ev_r = set(sitelib.time_ranges(_t))
+        if not _ev_r:
+            continue
+        _codes = set()
+        for _k in ('url', 'sourceUrl', 'imageSource', 'instagramUrl'):
+            _m = sitelib.IG_POST_RE.search(e.get(_k) or '')
+            if _m:
+                _codes.add(_m.group(1))
+        if e.get('instagramPostId'):
+            _codes.add(e['instagramPostId'])
+        _cap_r, _src = set(), []
+        for _c in sorted(_codes):
+            if _c in _posts_by_code:
+                _rr = sitelib.announced_hours(_posts_by_code[_c].get('caption') or '')
+                if _rr:
+                    _cap_r |= set(_rr)
+                    _src.append(_c)
+        if _cap_r and not (_ev_r & _cap_r):
+            _time_post_bad.append(
+                f"{e.get('slug')}: time「{_t[:40]}」/ 告知 "
+                f"{'・'.join(sitelib.format_time_range(r) for r in sorted(_cap_r))} "
+                f"({', '.join(_src)})")
+    add('time_vs_organizer_post', 'time が主催の告知投稿に書かれた時刻と食い違う',
+        sorted(_time_post_bad),
+        '告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。'
+        '告知が後から時刻を変えたなら新しいほうに合わせる。enrich が書いた値なら、出所は '
+        'sync-events / weekly-enrichment のログの Found: の行で分かる')
 
     # 16z2. アイキャッチ候補(2026-09-23)。ig-organizer-watch.py が主催の最新投稿の
     #       原寸画像から staging/eyecatch/ に置く。採否は人が画像を見て決める

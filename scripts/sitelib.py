@@ -1578,6 +1578,47 @@ def admission_is_free(admission):
         return False
     return not _ADMISSION_PAID_HINT.search(a)
 
+
+# 掲載値が「機構は正常・中身が異常」になっていないかの単一情報源(2026-10-07 に
+# check_events.py から移した)。規則そのものは 2026-07-13 の check_events.py のまま。
+# 入場料33,000円(アパレル価格の混入)・別イベントの説明文混入・日付なしの upcoming を
+# 毎日拾うために置いたもので、結果は check-results.json の implausible に出て日次メールの
+# 「内容の異常」節が読んでいた。**2026-09-30 のメール作り直しでその節が落ち、書く側だけが
+# 残った。**10-04 に weekly-enrichment が GREEN CHAMPUROO の admission に 5,000円 を
+# 書き戻し(09-28 に目崎が出店料として消した値)、10-04 には麋角植物作業室にも貸しスペースの
+# 利用料 5,000円 が入ったが、check-results.json に出たまま3日間だれも読まなかった。
+# audit.py の content_implausible(urgent) が同じ関数を events.json に当てる。
+ADMISSION_IMPLAUSIBLE_YEN = 5000
+_IMPLAUSIBLE_DESC_WORDS = ('新作コレクション', 'アパレル販売', 'フィギュア', 'ワンマンライブ',
+                           'チケット絶賛', 'コスメ')
+# 直前に植物の語が掛かっている形(「植物モチーフのフィギュア」「ボタニカルコスメ」)は
+# 植物イベントの物販なので数えない(2026-09-30)。BOTANICAL BOTANICAL FUKUOKA の主催告知
+# どおりの説明文が「別イベント文の混入」として日次メールに出ていた。
+_IMPLAUSIBLE_PLANT_QUALIFIERS = ('植物', '多肉', 'サボテン', 'ボタニカル', 'アガベ', '塊根', 'グリーン')
+_UNRELATED_EVENT_DOMAINS = ('goodsmile', 'comiket', 'wonfes', 'designfesta')
+
+
+def content_implausible_issues(ev):
+    """その回の値のうち、植物イベントの値としてありえないものの説明のリスト。空なら正常。"""
+    issues = []
+    adm = ev.get('admission') or ''
+    m = re.search(r'(\d{1,3}(?:,\d{3})+|\d{4,})', adm.replace('￥', '').replace('¥', ''))
+    if m and int(m.group(1).replace(',', '')) >= ADMISSION_IMPLAUSIBLE_YEN:
+        issues.append(f'入場料が異常に高い({adm}) — 別商品の価格混入の疑い')
+    desc = ev.get('description') or ''
+    for kw in _IMPLAUSIBLE_DESC_WORDS:
+        if any(not any(q in desc[max(0, mk.start() - 10):mk.start()]
+                       for q in _IMPLAUSIBLE_PLANT_QUALIFIERS)
+               for mk in re.finditer(re.escape(kw), desc)):
+            issues.append(f'説明文に植物イベントらしくない語({kw}) — 別イベント文の混入の疑い')
+            break
+    if not ev.get('date'):
+        issues.append('開催日なしのupcoming — 日付の裏取りが必要')
+    u = ((ev.get('url') or '') + (ev.get('sourceUrl') or '')).lower()
+    if u and any(x in u for x in _UNRELATED_EVENT_DOMAINS):
+        issues.append('URLが植物と無関係の有名イベントドメイン')
+    return issues
+
 def is_generic_image_url(u):
     """サイト共通アセット(ロゴ・OGP既定・ファビコン・テーマ内画像)なら True。
 
@@ -1585,6 +1626,74 @@ def is_generic_image_url(u):
     (カード / og:image / twitter:image / JSON-LD image / sitemap の image:image)。
     """
     return bool(u) and bool(GENERIC_IMAGE_RE.search(u))
+
+
+# --- 時刻の範囲 (単一情報源) ------------------------------------------------
+# 告知本文と events.json の time を同じ物差しで読むためのもの(2026-10-07)。
+# 多肉園おひさま イオンモール下妻(10/17-18)の time に、sync-events の enrich が
+# イオンの施設頁(aeon.jp/sc/shimotsuma/)から営業時間 10:00〜21:00 を書き、主催の告知
+# 「⏰ 10:00〜18:00（2日目17:00終了）」と食い違ったまま載っていた。同じ回の告知本文は
+# organizer-posts.json に入っていたので、照合すれば機械で分かった。
+# 書き方の揺れを全部ここで吸う: 全角(NFKC)・「10時半」「10時〜16時」・「から」・
+# ‐ – — ー などの区切り・午前/午後/AM/PM。「11:00〜1時間程度」は範囲ではない(時間の長さ)。
+_TR_AMPM = r'(?:(午前|午後|AM|PM|am|pm)\s*)?'
+_TR_CLOCK_A = _TR_AMPM + r'(\d{1,2})\s*(?::\s*(\d{2})|時\s*(半|\d{1,2}\s*分)?)'
+_TR_CLOCK_B = _TR_AMPM + r'(\d{1,2})\s*(?::\s*(\d{2})|時(?!間)\s*(半|\d{1,2}\s*分)?)'
+_TR_SEP = r'(?:[~\-〜‐‑–—―ーｰ−]+|から)'
+TIME_RANGE_RE = re.compile(r'(?<![\d:])' + _TR_CLOCK_A + r'\s*' + _TR_SEP + r'\s*' + _TR_CLOCK_B)
+# 告知に並ぶが、その回の開催時間ではない時刻の行(会場の店の営業時間)。
+# Bizarre Plants Maniax の告知は「10:00‐15:00」と会場の「営業時間9:00～18:00」を両方書く
+ANNOUNCED_HOURS_SKIP = ('営業時間',)
+
+
+def _tr_minutes(ampm, h, mm, jp):
+    h = int(h)
+    m = int(mm) if mm else 0
+    if jp:
+        m = 30 if jp == '半' else int(re.sub(r'\D', '', jp) or 0)
+    if ampm and ampm.upper() in ('午後', 'PM') and h < 12:
+        h += 12
+    return h, m
+
+
+def time_ranges(text):
+    """文字列に出てくる時刻の範囲を [(開始の分, 終了の分)] で返す。0時起点の分。
+
+    終了が開始以前で、終了が12時前なら午後の書き落としとみなす(「PM1:00-5:00」)。
+    それでも逆転する範囲(日付またぎ)は捨てる。植物の催しに深夜をまたぐ回は無い。
+    """
+    t = unicodedata.normalize('NFKC', text or '')
+    out = []
+    for m in TIME_RANGE_RE.finditer(t):
+        a = _tr_minutes(m.group(1), m.group(2), m.group(3), m.group(4))
+        b = _tr_minutes(m.group(5), m.group(6), m.group(7), m.group(8))
+        if not (a[0] <= 24 and b[0] <= 24 and a[1] < 60 and b[1] < 60):
+            continue
+        s, e = a[0] * 60 + a[1], b[0] * 60 + b[1]
+        if e <= s and b[0] < 12:
+            e += 12 * 60
+        if e > s:
+            out.append((s, e))
+    return out
+
+
+def announced_hours(caption, min_minutes=120):
+    """告知本文から、開催時間とみなせる範囲だけを返す。
+
+    2時間未満の範囲(先行入場・ワークショップの枠・トーク)と、
+    ANNOUNCED_HOURS_SKIP の語を含む行(会場の店の営業時間)は数えない。
+    """
+    out = []
+    for line in unicodedata.normalize('NFKC', caption or '').splitlines():
+        if any(w in line for w in ANNOUNCED_HOURS_SKIP):
+            continue
+        out += [r for r in time_ranges(line) if r[1] - r[0] >= min_minutes]
+    return out
+
+
+def format_time_range(r):
+    return f'{r[0] // 60}:{r[0] % 60:02d}〜{r[1] // 60}:{r[1] % 60:02d}'
+
 
 
 # --- 出典ドメインと画像URLの受け入れ (単一情報源) ---------------------------
