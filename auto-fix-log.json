@@ -883,6 +883,14 @@
    "target": "ビカ森ハウスの即売会 (2026-10-11)",
    "action": "rejected",
    "detail": "主催の告知で日付は確認。会場は公式LINEのみで県・市も非公開のため保留を閉じた"
+  },
+  {
+   "on": "2026-10-07",
+   "task": "agave-event-update",
+   "kind": "content_anomaly",
+   "target": "多肉植物と生マスタード『The販売会』秋の部 (2026-10-17)",
+   "action": "fixed",
+   "detail": "sync-events の enrich が会場の店の頁(noumaru.jp)から店の営業時間 9:00〜18:00 を time に入れた。主催の告知に時間は無いので消し、enrich が url/sourceUrl に持たない頁から time/admission/access を採らないよう直した"
   }
  ]
 }

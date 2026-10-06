@@ -3593,6 +3593,15 @@ CI は狭いままにして、**朝のタスクが `python3 scripts/scan-organiz
 主催の告知と読めた行だけ投稿を開いて裏取りし、ワークショップ単独・値引きだけ・営業日の案内は見送りに記録する
 (記録すると `known_elsewhere` が翌日から一覧から外す)。
 
+### enrich は会場の店の頁から営業時間を「この回の時間」として入れていた (2026-10-07)
+
+The販売会 秋の部(出典はIG)を掲載した直後、sync-events の enrich が検索で会場の店の頁
+`noumaru.jp/index_kibiji.html` を掴み、店の営業時間 `9:00〜18:00` を `time` に書いた。同じ頁の og:image は
+09-29 の `_same_host_as_event` で落としていたのに、時間・入場料・アクセスは素通しだった
+(09-12 の Plants marché の入場料・アクセス、09-29 の Green Plants Market の 9,350円も同じ形)。
+`enrich_events.py` は time / admission / access も、その頁を `url` / `sourceUrl` / `organizerUrl` に持つ回にだけ採る
+(`FIELDS-REJECTED` をログに出す)。**掲載した後は sync-events のログで `WRITE-BACK` の行を見て、書かれた値の出所を確かめる。**
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは

@@ -902,13 +902,26 @@ def main():
                 print(f"    DESC-REJECTED for {ev['slug']}: {why}")
 
             # time (only if empty)
-            times_found = info.get('times_found') or []
+            # 時間・入場料・アクセスも、画像と同じく「その回の頁」からだけ採る(2026-10-07)。
+            # 検索で見つけた頁が会場や店のトップだと、施設の営業時間・料金・道順が
+            # この回の値として入る。10-07 に The販売会 秋の部(出典はIG)へ
+            # noumaru.jp/index_kibiji.html(会場の店の頁)から time=9:00〜18:00 が入った。
+            # 同じ頁の og:image は上の _same_host_as_event で落としていたのに、
+            # 時間は素通しだった。09-12 の Plants marché(andplants.jp の入場料・アクセス)、
+            # 09-29 の Green Plants Market(商品頁の 9,350円)も同じ形。
+            # **出典に採らない頁の値は、その回の値であるという根拠を持たない。**
+            page_is_event_own = (not best_url) or _same_host_as_event(best_url, ev)
+            if not page_is_event_own and any(
+                    info.get(k) for k in ('times_found', 'prices_found', 'access_found')):
+                print(f"    FIELDS-REJECTED for {ev['slug']}: time/admission/access は "
+                      f"url/sourceUrl に持たない頁から採らない — {best_url[:70]}")
+            times_found = (info.get('times_found') or []) if page_is_event_own else []
             if times_found and _is_empty(ev.get('time')):
                 ev['time'] = sitelib.strip_field_label(times_found[0])
                 changed_fields.append('time')
 
             # admission (only if empty)
-            prices = info.get('prices_found') or []
+            prices = (info.get('prices_found') or []) if page_is_event_own else []
             if prices and _is_empty(ev.get('admission')):
                 # pick the shortest non-trivial entry as the headline price
                 pick = sorted(prices, key=lambda s: (len(s) > 60, len(s)))[0]
@@ -920,7 +933,7 @@ def main():
                     changed_fields.append('admission')
 
             # access (new field, only if empty)
-            access_lines = info.get('access_found') or []
+            access_lines = (info.get('access_found') or []) if page_is_event_own else []
             if access_lines and _is_empty(ev.get('access')):
                 # 「JR大阪中央北出口駅より」のように出口名と駅名がつながった行は
                 # 落とす。規則は sitelib が持ち、audit.access_malformed_station が
