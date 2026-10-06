@@ -791,6 +791,22 @@
    "target": "キノコリウムワークショップ @greenfarmkanazawa (2026-10-18)",
    "action": "rejected",
    "detail": "告知 DeEQ3hvkj-- は苔・キノコのテラリウム作りWS単独(要予約・8,800円)。workshopOnly"
+  },
+  {
+   "on": "2026-10-06",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "サボテン・多肉植物展示会（神戸市立須磨離宮公園） (2026-10-16)",
+   "action": "reviewed",
+   "detail": "公式告知頁は会期・会場とも変わらず。変化は全頁共通の施設状況欄。check-cancelled.py の署名から状況欄の語を落とした"
+  },
+  {
+   "on": "2026-10-06",
+   "task": "event-monitor",
+   "kind": "cancel_watch_unreachable",
+   "target": "BOTANICAL TAMBA 2026 (2026-12-05)",
+   "action": "fixed",
+   "detail": "url の観光協会頁(splash_tamba_2026)が404。主催 @botanical.tamba の告知投稿に差し替え。check_events.py が url も死活を見るようにした"
   }
  ]
 }

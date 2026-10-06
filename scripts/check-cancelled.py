@@ -250,6 +250,31 @@ def drop_today(text, today=None):
     return out
 
 
+# 施設の「今の状況」欄の語(2026-10-06)。
+# 公園・植物園の頁は全頁共通の欄に「駐車場 空いています」「子供の森 利用可能」の
+# ような現在の状態を出し、日によって「利用中止」「満車」に入れ替わる。
+# 神戸市立須磨離宮公園の告知頁は 10-05 に「子供の森 利用中止」、10-06 に
+# 「利用可能」で、記事は1字も変わらないまま本文が 1403→1423字(+20字)になり
+# 2日続けて「公式ページが変わった」で鳴った。頁に <article> が無いので
+# main_entry では絞れない。**未来の回が中止かどうかと、今日の駐車場の空き具合は
+# 何の関係もない。**署名からだけ落とす。中止の語は analyze が頁全体から拾うので、
+# ここで落としても「◯◯展 中止」は鳴る。
+LIVE_STATUS = re.compile(
+    r'空いています|やや混雑|大変混雑|混雑(?:しています|しております|中)'
+    r'|満車(?:です)?|空車|利用(?:可能|不可)'
+    r'|(?:利用|使用|ご利用)(?:を)?(?:中止|休止|停止)(?:中)?'
+    r'|営業中|開園中|閉園中|休園中|本日休園日?|本日休館日?')
+
+# 署名の作り方の版。変えたら上げる。前回の記録がこの版でなければ、
+# 前回と同じ作り方(live_status=False)で今回の頁を署名し直して比べる。
+# 作り方を変えた初回に、全頁が「本文が変わった」で鳴らないため。
+SIG_RULE = 2
+
+
+def drop_live_status(text):
+    return re.sub(r'\s+', ' ', LIVE_STATUS.sub(' ', text)).strip()
+
+
 def og_images(html):
     return [norm(m.group(1)) for m in re.finditer(
         r'(?i)<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
@@ -293,7 +318,7 @@ def main_entry(html, event=None):
     return frag if (span & found) else None
 
 
-def page_signature(html, today=None, scope=None):
+def page_signature(html, today=None, scope=None, live_status=True):
     """本文と画像の集合から署名を作る。
 
     画像の中の文字は読めないので、URLの集合が変わったことをもって
@@ -304,6 +329,8 @@ def page_signature(html, today=None, scope=None):
     """
     src = scope if scope else html
     body = drop_today(strip_html(src), today)
+    if live_status:
+        body = drop_live_status(body)
     imgs = image_tokens(src)
     if scope:
         imgs = imgs + og_images(html)
@@ -478,8 +505,12 @@ def main():
         # 範囲が違うものどうしの比較になる。中身の変化ではないので数えない
         # (2026-10-05 に main_entry を入れた。前回の記録に範囲が無ければ頁全体)。
         rescoped = bool(bsig) and (before.get('sigScope') or 'page') != res['sigScope']
+        # 前回の署名が古い作り方なら、今回の頁も古い作り方で署名し直して比べる。
+        cmp_sig = sig
+        if bsig and before.get('sigRule') != SIG_RULE:
+            cmp_sig = page_signature(html, scope=main_entry(html, e), live_status=False)
         if bsig and not rescoped:
-            if bsig.get('text') != sig['text'] and not reread:
+            if bsig.get('text') != cmp_sig['text'] and not reread:
                 changed.append('本文')
             if bsig.get('images') != sig['images']:
                 changed.append('画像')
@@ -494,7 +525,7 @@ def main():
             # 比べると audit.cancel_watch_body_shrunk が鳴る。みずの森の PDF は
             # 化けた生バイト 660406字 → 本文 1642字で -100% と出た(2026-10-05)。
             'prevTextLen': (None if (reread or rescoped) else bsig.get('textLen')),
-            'sigScope': res['sigScope'],
+            'sigScope': res['sigScope'], 'sigRule': SIG_RULE,
             'strong': res['strong'], 'weak': res['weak'],
             # 出典がこの回を裏付けているか。audit.source_page_wrong_edition が読む。
             # CI から頁を取れるのはこのスクリプトだけなので、判定材料を
@@ -543,7 +574,7 @@ def main():
             # 消えたのかが読めず、一次情報を開くまで軽重が分からない。**
             # 2026-09-15 の食虫植物祭は 3041→1334字(-56%)で、
             # 文面は「チケット販売のお知らせが増えた」形に見えていた。
-            _b, _a = bsig.get('textLen'), sig.get('textLen')
+            _b, _a = bsig.get('textLen'), cmp_sig.get('textLen')
             if isinstance(_b, int) and isinstance(_a, int) and _b:
                 why.append('公式ページが変わった(本文: '
                            f'{_b}→{_a}字 {(_a - _b) * 100 // _b:+d}%)')
@@ -776,6 +807,18 @@ def self_test(verbose=True):
     chk('施設の状況欄の「利用中止」は弱い語に数えない', w5, [])
     _s6, w6 = find_words(['サボテン・多肉植物展示会は中止します'])
     chk('催しの中止は弱い語で拾う', w6, ['中止'])
+
+    say('\n--- 施設の状況欄は署名に入れない (2026-10-06) ---')
+    _lv1 = page_signature('<p>10月16日 展示会</p><p>駐車場 空いています 子供の森 利用中止</p>')
+    _lv2 = page_signature('<p>10月16日 展示会</p><p>駐車場 満車 子供の森 利用可能</p>')
+    chk('状況欄だけが変わっても本文の署名は同じ', _lv1['text'] == _lv2['text'], True)
+    _lv3 = page_signature('<p>10月17日 展示会</p><p>駐車場 空いています 子供の森 利用中止</p>')
+    chk('開催日が変われば本文の署名は変わる', _lv1['text'] != _lv3['text'], True)
+    _lv4 = analyze('<p>10月16日 展示会は中止します</p><p>駐車場 空いています</p>')
+    chk('状況欄を落としても催しの中止の語は拾う', bool(_lv4['strong'] or _lv4['weak']), True)
+    _lv5 = page_signature('<p>10月16日 展示会</p><p>駐車場 空いています</p>', live_status=False)
+    chk('旧い作り方の署名は状況欄を含む', _lv5['text'] != page_signature(
+        '<p>10月16日 展示会</p><p>駐車場 満車</p>', live_status=False)['text'], True)
 
     say('\n--- 署名を主たる記事に絞る (2026-10-05) ---')
     _ev = {'slug': 'r', 'date': '2026-10-25', 'dateEnd': '2026-10-25'}

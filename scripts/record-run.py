@@ -34,6 +34,7 @@ worklog の形:
 """
 import json
 import os
+import subprocess
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -153,7 +154,30 @@ def flush_worklog(path):
     return 0
 
 
+# コミットの名義(docs/task-playbook.md §2)。起動記録のコミットは §2 を読む前に
+# 作られるので、各タスクが git config を設定する前に別名義で入り続けた
+# (10-06 の起動記録だけで Claude / agave-bot / event-monitor の3通り)。
+# プレイブック §1 に手順を書いても、プロンプトの順序が「clone → これ」なので効かない。
+# 台帳を書くこのスクリプトは全タスクが最初のコミットの前に必ず呼ぶので、ここで揃える。
+GIT_NAME = 'mezack0520'
+GIT_EMAIL = '88774621+mezack0520@users.noreply.github.com'
+
+
+def ensure_git_identity():
+    """repo ローカルの user.name / user.email を規定の名義に揃える。git が無ければ何もしない"""
+    try:
+        for key, want in (('user.name', GIT_NAME), ('user.email', GIT_EMAIL)):
+            cur = subprocess.run(['git', '-C', REPO, 'config', key],
+                                 capture_output=True, text=True).stdout.strip()
+            if cur != want:
+                subprocess.run(['git', '-C', REPO, 'config', key, want], check=True)
+                print(f'record-run: git {key} を {cur or "(未設定)"} → {want} に直した')
+    except (OSError, subprocess.CalledProcessError) as err:
+        print(f'record-run: git の名義を設定できなかった: {err}', file=sys.stderr)
+
+
 def main():
+    ensure_git_identity()
     if len(sys.argv) == 3 and sys.argv[1] == '--flush-worklog':
         return flush_worklog(sys.argv[2])
     if len(sys.argv) != 2:

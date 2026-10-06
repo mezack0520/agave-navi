@@ -125,23 +125,28 @@ def main():
         BOT_WALLED = ('x.com', 'twitter.com', 'instagram.com', 'facebook.com',
                       'threads.com', 'threads.net',
                       'vandaka-plants.com', 'isij.net')
-        if source_url and any(d in source_url.lower() for d in BOT_WALLED):
-            source_url_check_skip = True
-        else:
-            source_url_check_skip = False
-
-        # URL死活チェックは終わっていない回だけ(2026-09-28 に「終了30日以内」から狭めた)。
-        # 主催が告知ページを会期後に消すのは自然で、終わった回の切れリンクには
-        # 打つ手が無い。30日の猶予は、多肉＆みどりのマルシェ 2026秋(新津フラワーランド)の
-        # 頁が会期の翌日に消えて日次メールの「リンク切れ」に出た、という形でだけ効いていた。
+        # 見るのは sourceUrl だけでなく url(詳細頁の「公式サイト」)も(2026-10-06)。
+        # url が sourceUrl と別の頁を指す回は、どこからも死活を見られていなかった。
+        # BOTANICAL TAMBA 2026 は url が観光協会の 404 の頁のまま 09-10 から載っており、
+        # 開催60日前に中止の見張りの対象に入った 10-06 に初めて取得失敗として出た。
+        # 結果の 'sourceUrl' キーは「確かめたURL」の意味で使い、どちらの項目かは 'field' に書く。
         _end = ev.get('dateEnd') or ev_date
         _recent = not _end or _end >= today
-        if source_url and _recent and not source_url_check_skip:
-            status_code = check_url(source_url)
+        _targets = [('sourceUrl', source_url)]
+        _u = (ev.get('url') or '').strip()
+        if _u and _u != '#' and _u != source_url:
+            _targets.append(('url', _u))
+        for _field, _chk in _targets:
+            if not (_chk and _recent):
+                continue
+            if any(d in _chk.lower() for d in BOT_WALLED):
+                continue
+            status_code = check_url(_chk)
             url_result = {
                 'slug': slug,
                 'name': name,
-                'sourceUrl': source_url,
+                'sourceUrl': _chk,
+                'field': _field,
                 'statusCode': status_code,
                 'alive': status_code in (0, 200, 301, 302, 303, 307, 308)
             }
