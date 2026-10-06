@@ -1,8 +1,41 @@
 {
-  "check_date": "2026-10-04",
-  "total_events": 536,
+  "check_date": "2026-10-06",
+  "total_events": 546,
   "dead_links": [],
-  "unreachable": [],
+  "unreachable": [
+    {
+      "slug": "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
+      "name": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
+      "sourceUrl": "https://qusamura.com/information/exhibition/",
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "midolien-hono-osaka-2026-10",
+      "name": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
+      "sourceUrl": "https://weekend.osaka/16061/",
+      "field": "url",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "roots-market-inage-2026-10",
+      "name": "ROOTS MARKET",
+      "sourceUrl": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
+    },
+    {
+      "slug": "botanical-monsters-2027-okazaki",
+      "name": "BOTANICAL MONSTERS 2027",
+      "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "botanical-botanical-osaka-2026-10",
@@ -2123,6 +2156,66 @@
       "dateEnd": "2026-09-27"
     },
     {
+      "slug": "hiroshima-shokubutsuen-2026-10",
+      "name": "ひろしま植物園 2026",
+      "date": "2026-10-02",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "on-the-plants-vol9-fukuoka-2026-10",
+      "name": "On the Plants Vol.09",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "botanical-botanical-fukuoka-2026-10",
+      "name": "BOTANICAL BOTANICAL FUKUOKA",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "gen-x-bocchi-botanical-market-2026-10",
+      "name": "叢宴 秋のボタニカルマーケット in 富士市中央公園",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "wako-jurin-unique-plants-2026-10",
+      "name": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "nagoya-cactus-club-aki-2026-10",
+      "name": "サボテン&多肉植物 秋の展示即売会（名古屋サボテンクラブ）",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "armeria-tokimeki-ichi-2026-10",
+      "name": "トキメキ市（多肉屋 アルメリア）",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "nihon-line-kaboku-taniku-saboten-fair-2026-10",
+      "name": "多肉・サボテンフェア（日本ライン花木センター）",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "tanikuya-gpk-season5-opening-2026-10",
+      "name": "多肉屋GPK Season5 オープニングイベント",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
+      "slug": "tochigi-taniku-fes-10th-yugao-park-2026-10",
+      "name": "第10回 栃木★多肉フェス in ゆうがおパーク",
+      "date": "2026-10-03",
+      "dateEnd": "2026-10-04"
+    },
+    {
       "slug": "yurutto-taniku-marche-1st-inabe-2026-10",
       "name": "第1回 ゆるっと多肉マルシェ ONE DAY BOTANICAL ESCAPE",
       "date": "2026-10-03",
@@ -2133,81 +2226,57 @@
       "name": "Plants Ride",
       "date": "2026-10-03",
       "dateEnd": "2026-10-03"
-    }
-  ],
-  "upcoming_events": [
+    },
     {
       "slug": "botanical-marche-niigata-2026-10",
       "name": "ボタニカルマルシェ新潟2026",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "いくとぴあ食花 花と緑の展示館（新潟県新潟市中央区清五郎336）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/hokuriku.saboten.club/"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "souransai-koshigaya-2026-10",
       "name": "草乱祭with月刊チューズデイ - World Plant Market -",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "見田方遺跡公園（越谷レイクタウン駅前広場）（埼玉県越谷市レイクタウン8-2-6-2）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://soransai.com/"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "asamiya-tanikusai-7th-2026-10",
       "name": "第7回 あさみや in 多肉祭",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "雑貨のお店 あさみや（茨城県那珂郡東海村舟石川149-4）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/minicar_ya_san/"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "botanic-collection2-ube-2026-10",
       "name": "ぼたにっくcollection2",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "ときわミュージアム ときわ公園内（山口県宇部市野中3丁目4-29）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/botanic_collection/"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "chinki-plants-flea-market-2026-10",
       "name": "第10回 珍奇植物フリーマーケット",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "町田パリオ 4階",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdELYx6nzjt/"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "tanikutokurashi-marche-akiu-2026-10",
       "name": "多肉とくらしマルシェ 2026",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "crafit home（宮城県仙台市太白区秋保町湯元木戸保5-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.oonuki-kenchiku.co.jp/event/marche"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "morino-tanikuen-hanbaikai-nara-2026-10",
       "name": "森の多肉園販売会 in 奈良",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "OTENKIテラス（奈良県橿原市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd4uh2FzckW/"
+      "dateEnd": "2026-10-04"
     },
     {
       "slug": "collab-de-marche-autumn-sunpu-2026-10",
       "name": "秋のコラボde マルシェ 2026",
       "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "駿府城公園 紅葉山庭園前広場（静岡県静岡市葵区駿府城公園1-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdWWw9hEssc/"
-    },
+      "dateEnd": "2026-10-04"
+    }
+  ],
+  "upcoming_events": [
     {
       "slug": "hanauchu-dream-garden-28th-2026-10",
       "name": "第28回 花宇宙ドリームガーデン",
@@ -2414,6 +2483,15 @@
       "location": "道の駅あいとうマーガレットステーション（滋賀県東近江市妹町184-1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/DdX0gFSE0wP/"
+    },
+    {
+      "slug": "tanikuen-ohisama-aeon-kofu-showa-2026-10",
+      "name": "多肉園おひさま 多肉イベント in イオンモール甲府昭和",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-12",
+      "location": "イオンモール甲府昭和 さくら南ブリッジ（山梨県中巨摩郡昭和町）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd9X4MjsR6q/"
     },
     {
       "slug": "ibatama-vol9-2026-10",
@@ -2713,6 +2791,15 @@
       "sourceUrl": "https://www.instagram.com/reel/Dd8bLUhS04q/"
     },
     {
+      "slug": "tanikuen-ohisama-aeon-shimotsuma-2026-10",
+      "name": "多肉園おひさま 多肉イベント in イオンモール下妻",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-18",
+      "location": "イオンモール下妻（茨城県下妻市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeGzgrYMA8d/"
+    },
+    {
       "slug": "green-base-market-vol1-nishikata-2026-10",
       "name": "GREEN BASE MARKET vol.1",
       "date": "2026-10-18",
@@ -2893,6 +2980,15 @@
       "sourceUrl": "https://www.instagram.com/p/DdwCbdqNuax/"
     },
     {
+      "slug": "tanikuen-ohisama-apita-ashikaga-2026-10",
+      "name": "多肉園おひさま 多肉イベント in アピタ足利店",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "location": "アピタ足利店（栃木県足利市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeGzgrYMA8d/"
+    },
+    {
       "slug": "botanical-marche-toyama-2026-10",
       "name": "ボタニカルマルシェ富山2026",
       "date": "2026-10-25",
@@ -3001,6 +3097,15 @@
       "sourceUrl": "https://www.instagram.com/p/Dd8wJMdDWl6/"
     },
     {
+      "slug": "yamaokuya-tandoku-hanbaikai-osaki-2026-10",
+      "name": "山奥屋の多肉 単独販売会 in 大崎",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "location": "地域交流センター「あすも」研修室3（宮城県大崎市古川七日町11-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DanB2o1hXiQ/"
+    },
+    {
       "slug": "shinshu-nakano-ikiikikan-taniku-hanbaikai-2026-10",
       "name": "多肉植物苗販売会＆寄せ植えワークショップ（信州中野いきいき館）",
       "date": "2026-10-27",
@@ -3017,6 +3122,15 @@
       "location": "富山県中央植物園 サンライトホール（富山県富山市婦中町上轡田42）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.bgtym.org/event/13014/"
+    },
+    {
+      "slug": "tanikuen-ohisama-aeon-morioka-2026-10",
+      "name": "多肉園おひさま 多肉イベント in イオンモール盛岡",
+      "date": "2026-10-30",
+      "dateEnd": "2026-11-01",
+      "location": "イオンモール盛岡（岩手県盛岡市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeGzgrYMA8d/"
     },
     {
       "slug": "botanical-botanical-osaka-2026-10",
@@ -3080,6 +3194,15 @@
       "location": "道の駅 花の駅千曲川 ビジターセンター前（長野県飯山市大字常盤7425）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/Dd54fn4P7_x/"
+    },
+    {
+      "slug": "tanikuen-ohisama-aeon-hiezu-2026-10",
+      "name": "多肉園おひさま 多肉イベント in イオンモール日吉津",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "location": "イオンモール日吉津（鳥取県西伯郡日吉津村）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeGzgrYMA8d/"
     },
     {
       "slug": "purari-plants-vol3-2026-11",
@@ -3332,6 +3455,15 @@
       "location": "道の駅北はりまエコミュージアム周辺（兵庫県西脇市寺内517-1）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/Ddkt_H6E9J-/"
+    },
+    {
+      "slug": "yamaokuya-tandoku-hanbaikai-sakura-2026-11",
+      "name": "山奥屋の多肉 単独販売会 in さくら",
+      "date": "2026-11-15",
+      "dateEnd": "2026-11-15",
+      "location": "さくらテラス 多目的室（栃木県さくら市氏家2337）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DanB2o1hXiQ/"
     },
     {
       "slug": "moromoro-plants-19th-izumi-2026-11",
@@ -3613,6 +3745,15 @@
       "sourceUrl": "https://www.instagram.com/garden_messe/p/DaPRYNOTdVz/"
     },
     {
+      "slug": "plat-taniku-fes-4th-shibukawa-2026-12",
+      "name": "第4回 ぷらっと 多肉フェス！",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-05",
+      "location": "渋川市民会館（群馬県渋川市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd89OwXzddp/"
+    },
+    {
       "slug": "succulent-wonderland-2nd-tatebayashi-2026-12",
       "name": "多肉ワンダーランド 第2回",
       "date": "2026-12-06",
@@ -3703,6 +3844,15 @@
       "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/"
     },
     {
+      "slug": "yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
+      "name": "山奥屋の多肉 単独販売会 in 韮崎",
+      "date": "2027-01-17",
+      "dateEnd": "2027-01-17",
+      "location": "韮崎市民交流センター SASAKI NIKORI 陶芸・工作室（山梨県韮崎市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DanB2o1hXiQ/"
+    },
+    {
       "slug": "aichin-shokusai-new-year-party-2027",
       "name": "愛珍植祭 New Year Party 2027",
       "date": "2027-01-24",
@@ -3786,201 +3936,37 @@
   ],
   "today_events": [
     {
-      "slug": "hiroshima-shokubutsuen-2026-10",
-      "name": "ひろしま植物園 2026",
-      "date": "2026-10-02",
-      "dateEnd": "2026-10-04",
-      "location": "ひろしまゲートパーク（広島県広島市中区基町5-25）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdWT7xrT_xm/"
-    },
-    {
-      "slug": "on-the-plants-vol9-fukuoka-2026-10",
-      "name": "On the Plants Vol.09",
+      "slug": "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
+      "name": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
       "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "福岡アイランドシティフォーラム",
+      "dateEnd": "2026-10-25",
+      "location": "Roll（東京都新宿区揚場町2-12 セントラルコーポラス No.105）",
       "eventStatus": "confirmed",
-      "sourceUrl": ""
-    },
-    {
-      "slug": "botanical-botanical-fukuoka-2026-10",
-      "name": "BOTANICAL BOTANICAL FUKUOKA",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "カイタックスクエアガーデン（福岡）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd1tjzej40H/"
-    },
-    {
-      "slug": "gen-x-bocchi-botanical-market-2026-10",
-      "name": "叢宴 秋のボタニカルマーケット in 富士市中央公園",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "富士中央公園 芝生広場（静岡県富士市蓼原町）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd461lREgXx/"
-    },
-    {
-      "slug": "wako-jurin-unique-plants-2026-10",
-      "name": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "埼玉県営和光樹林公園（埼玉県和光市広沢三番地内）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html"
-    },
-    {
-      "slug": "nagoya-cactus-club-aki-2026-10",
-      "name": "サボテン&多肉植物 秋の展示即売会（名古屋サボテンクラブ）",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "ナゴヤハウジングセンター日進梅森会場（愛知県日進市梅森町西田面15）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdAgV6qyVMQ/"
-    },
-    {
-      "slug": "armeria-tokimeki-ichi-2026-10",
-      "name": "トキメキ市（多肉屋 アルメリア）",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "多肉屋 アルメリア（愛媛県伊予郡松前町大溝394）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd0jajiHzUh/"
-    },
-    {
-      "slug": "nihon-line-kaboku-taniku-saboten-fair-2026-10",
-      "name": "多肉・サボテンフェア（日本ライン花木センター）",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "日本ライン花木センター イベントホール（岐阜県可児市土田4567）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdupynnzV0V/"
-    },
-    {
-      "slug": "tanikuya-gpk-season5-opening-2026-10",
-      "name": "多肉屋GPK Season5 オープニングイベント",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "多肉屋GPK（岩手県滝沢市巣子983-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Ddv0ckimkeE/"
-    },
-    {
-      "slug": "tochigi-taniku-fes-10th-yugao-park-2026-10",
-      "name": "第10回 栃木★多肉フェス in ゆうがおパーク",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "location": "ゆうがおパーク（栃木県下野市中大領687）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://yugao-park.com/event/5446/"
-    },
-    {
-      "slug": "botanical-marche-niigata-2026-10",
-      "name": "ボタニカルマルシェ新潟2026",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "いくとぴあ食花 花と緑の展示館（新潟県新潟市中央区清五郎336）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/hokuriku.saboten.club/"
-    },
-    {
-      "slug": "souransai-koshigaya-2026-10",
-      "name": "草乱祭with月刊チューズデイ - World Plant Market -",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "見田方遺跡公園（越谷レイクタウン駅前広場）（埼玉県越谷市レイクタウン8-2-6-2）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://soransai.com/"
-    },
-    {
-      "slug": "asamiya-tanikusai-7th-2026-10",
-      "name": "第7回 あさみや in 多肉祭",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "雑貨のお店 あさみや（茨城県那珂郡東海村舟石川149-4）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/minicar_ya_san/"
-    },
-    {
-      "slug": "botanic-collection2-ube-2026-10",
-      "name": "ぼたにっくcollection2",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "ときわミュージアム ときわ公園内（山口県宇部市野中3丁目4-29）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/botanic_collection/"
-    },
-    {
-      "slug": "chinki-plants-flea-market-2026-10",
-      "name": "第10回 珍奇植物フリーマーケット",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "町田パリオ 4階",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdELYx6nzjt/"
-    },
-    {
-      "slug": "tanikutokurashi-marche-akiu-2026-10",
-      "name": "多肉とくらしマルシェ 2026",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "crafit home（宮城県仙台市太白区秋保町湯元木戸保5-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.oonuki-kenchiku.co.jp/event/marche"
-    },
-    {
-      "slug": "morino-tanikuen-hanbaikai-nara-2026-10",
-      "name": "森の多肉園販売会 in 奈良",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "OTENKIテラス（奈良県橿原市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd4uh2FzckW/"
-    },
-    {
-      "slug": "collab-de-marche-autumn-sunpu-2026-10",
-      "name": "秋のコラボde マルシェ 2026",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "location": "駿府城公園 紅葉山庭園前広場（静岡県静岡市葵区駿府城公園1-1）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdWWw9hEssc/"
+      "sourceUrl": "https://qusamura.com/information/exhibition/"
     }
   ],
   "url_results": [
     {
-      "slug": "wako-jurin-unique-plants-2026-10",
-      "name": "エミパーク和光樹林 ゆにーくしょくぶつ販売会",
-      "sourceUrl": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
-      "statusCode": 200,
-      "alive": true
+      "slug": "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
+      "name": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
+      "sourceUrl": "https://qusamura.com/information/exhibition/",
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
     },
     {
-      "slug": "tochigi-taniku-fes-10th-yugao-park-2026-10",
-      "name": "第10回 栃木★多肉フェス in ゆうがおパーク",
-      "sourceUrl": "https://yugao-park.com/event/5446/",
-      "statusCode": 200,
-      "alive": true
-    },
-    {
-      "slug": "souransai-koshigaya-2026-10",
-      "name": "草乱祭with月刊チューズデイ - World Plant Market -",
-      "sourceUrl": "https://soransai.com/",
-      "statusCode": 200,
-      "alive": true
-    },
-    {
-      "slug": "tanikutokurashi-marche-akiu-2026-10",
-      "name": "多肉とくらしマルシェ 2026",
-      "sourceUrl": "https://www.oonuki-kenchiku.co.jp/event/marche",
-      "statusCode": 200,
-      "alive": true
+      "slug": "midolien-hono-osaka-2026-10",
+      "name": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
+      "sourceUrl": "https://weekend.osaka/16061/",
+      "field": "url",
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "shimane-cactus-succulent-ten-2026-10",
       "name": "サボテン・多肉植物展",
       "sourceUrl": "https://shimane-hananosato.com/event/event-906/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -3988,6 +3974,7 @@
       "slug": "hiroshima-cactus-succulent-ten-2026-10",
       "name": "サボテン・多肉植物展（広島市植物公園）",
       "sourceUrl": "http://www.hiroshima-bot.jp/info/%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3%E3%83%BB%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9%E5%B1%95/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -3995,6 +3982,15 @@
       "slug": "kadan-fes-2026-autumn",
       "name": "カダンフェス2026秋",
       "sourceUrl": "https://fumakilla.jp/kadanlife/kadanfes/",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "kagoen-aki-geijutsu-shokubutsu-matsuri-13th-2026",
+      "name": "第13回 花郷園 秋の芸術植物祭り",
+      "sourceUrl": "https://www.kagoen.co/",
+      "field": "url",
       "statusCode": 200,
       "alive": true
     },
@@ -4002,6 +3998,7 @@
       "slug": "jolie-nursery-musashi-niigata-2026-10",
       "name": "インドアプランツ即売会（Jolie Nursery・ムサシ新潟店）",
       "sourceUrl": "https://jolienursery.co.jp/pages/events",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4009,6 +4006,7 @@
       "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
       "name": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
       "sourceUrl": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4016,6 +4014,15 @@
       "slug": "nihon-shaboten-taikai-51st-2026-10",
       "name": "第51回 日本シャボテン大会",
       "sourceUrl": "https://www.pulseplaza.jp/event/index.php?y=2026&m=10",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "nihon-shaboten-taikai-51st-2026-10",
+      "name": "第51回 日本シャボテン大会",
+      "sourceUrl": "https://kyotocactus.syuriken.jp/project.html",
+      "field": "url",
       "statusCode": 200,
       "alive": true
     },
@@ -4023,6 +4030,7 @@
       "slug": "spicy-gem-kakusen-en-figure-hanare-2026-10",
       "name": "SPICY GEM feat. KAKUSEN-EN at FIGURE HANARE",
       "sourceUrl": "https://figure-online.net/blogs/news/spicy-gem-feat-kakusen-en-at-figure-hanare-entry",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4030,6 +4038,7 @@
       "slug": "suma-rikyu-cactus-succulent-tenjikai-2026-10",
       "name": "サボテン・多肉植物展示会（神戸市立須磨離宮公園）",
       "sourceUrl": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4037,6 +4046,7 @@
       "slug": "uomachi-botanical-night-market-2026-10",
       "name": "魚町ボダニカルナイトマーケット",
       "sourceUrl": "https://uomachi-mirai.com/news/2026-10-17/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4044,6 +4054,15 @@
       "slug": "tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
       "name": "多肉だヨ！全員集合 in とっとり花回廊",
       "sourceUrl": "https://www.tottorihanakairou.or.jp/info/r854/",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
+      "name": "多肉だヨ！全員集合 in とっとり花回廊",
+      "sourceUrl": "https://www.tottorihanakairou.or.jp/tanikuhanbai/",
+      "field": "url",
       "statusCode": 200,
       "alive": true
     },
@@ -4051,6 +4070,7 @@
       "slug": "taniku-midori-marche-nabana-2026-10",
       "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
       "sourceUrl": "https://www.nagashima-onsen.co.jp/nabana/info/marchenabana.html",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4058,6 +4078,7 @@
       "slug": "mizunomori-aki-saboten-ten-2026-10",
       "name": "秋のサボテン展（草津市立水生植物公園みずの森）",
       "sourceUrl": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4065,6 +4086,7 @@
       "slug": "jurian-aki-taniku-cactus-2026-10",
       "name": "秋の多肉植物・サボテン展示会（樹里安）",
       "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4072,13 +4094,15 @@
       "slug": "roots-market-inage-2026-10",
       "name": "ROOTS MARKET",
       "sourceUrl": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-      "statusCode": 200,
-      "alive": true
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "toyama-saboten-taniku-9th-2026-10",
       "name": "第9回 サボテン・多肉植物展（富山県中央植物園）",
       "sourceUrl": "https://www.bgtym.org/event/13014/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4086,6 +4110,23 @@
       "slug": "greensnap-marche-toyosu-2026-autumn",
       "name": "GreenSnap Marche 豊洲 2026 Autumn",
       "sourceUrl": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "jolie-nursery-musashi-kanazawa-2026-10",
+      "name": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
+      "sourceUrl": "https://jolienursery.co.jp/pages/events",
+      "field": "url",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "chuushokushobutsusai-2026",
+      "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
+      "sourceUrl": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
+      "field": "url",
       "statusCode": 200,
       "alive": true
     },
@@ -4093,6 +4134,7 @@
       "slug": "botanical-life-kasama-2026-11",
       "name": "第10回 ボタニカルライフ",
       "sourceUrl": "https://bookkasama.com/bot2611.html",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4100,6 +4142,7 @@
       "slug": "greensnap-marche-odaiba-2026",
       "name": "GreenSnap Marche お台場 2026",
       "sourceUrl": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4107,6 +4150,15 @@
       "slug": "okibota-december-2026-sunshine",
       "name": "オキボタ December 2026 in サンシャインシティ",
       "sourceUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "taniku-xmas-flarie-2026-12",
+      "name": "多肉X'mas",
+      "sourceUrl": "https://www.flarie.jp/news/succulents-xmas.html",
+      "field": "url",
       "statusCode": 200,
       "alive": true
     },
@@ -4114,6 +4166,7 @@
       "slug": "hanatomofesta-2026",
       "name": "第9回 花友フェスタ",
       "sourceUrl": "https://hanatomofesta.com/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4121,6 +4174,7 @@
       "slug": "tokai-okibota-2026",
       "name": "東海オキボタ 2026",
       "sourceUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
@@ -4128,8 +4182,9 @@
       "slug": "botanical-monsters-2027-okazaki",
       "name": "BOTANICAL MONSTERS 2027",
       "sourceUrl": "https://botanical-monsters.chibigo-tokai.com/",
-      "statusCode": 200,
-      "alive": true
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
     }
   ],
   "implausible": [
