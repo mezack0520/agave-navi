@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-07 06:44 JST",
+ "generated": "2026-10-07 07:29 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 302,
+  "igAccounts": 306,
   "awaitingNextEdition": 308,
-  "officialSiteCandidates": 79,
+  "officialSiteCandidates": 80,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 72,
+  "igNeedsBrowser": 76,
   "igDead": 7
  },
  "igAccounts": [
@@ -861,6 +861,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "lahainagarden",
+   "url": "https://www.instagram.com/lahainagarden/",
+   "eventCount": 1,
+   "lastEventName": "らはちゅ〜Holiday",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "nara.bikakufes",
    "url": "https://www.instagram.com/nara.bikakufes/",
    "eventCount": 1,
@@ -879,6 +889,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "narakaki_flower",
+   "url": "https://www.instagram.com/narakaki_flower/",
+   "eventCount": 1,
+   "lastEventName": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
+   "lastEventDate": "2026-10-14",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "green_prickle",
@@ -1421,6 +1441,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "tanikumarche.kumamoto",
+   "url": "https://www.instagram.com/tanikumarche.kumamoto/",
+   "eventCount": 1,
+   "lastEventName": "第3回 つながる輪多肉MARCHE",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "goodthings.jp",
    "url": "https://www.instagram.com/goodthings.jp/",
    "eventCount": 1,
@@ -1459,6 +1489,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "itoshima.bariyoka_tanikuichi",
+   "url": "https://www.instagram.com/itoshima.bariyoka_tanikuichi/",
+   "eventCount": 1,
+   "lastEventName": "第7回 糸島ばりよか多肉市",
+   "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tanikurevolution",
@@ -3550,6 +3590,12 @@
    "eventDate": "2026-10-11"
   },
   {
+   "domain": "narakaki.or.jp",
+   "url": "https://narakaki.or.jp/info/%ef%bc%91%ef%bc%90%e6%9c%88%ef%bc%91%ef%bc%94%e6%97%a5%e6%b0%b4%e3%83%bb%ef%bc%91%ef%bc%95%e6%97%a5%e6%9c%a8%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%81%a8%e8%b3%87%e6%9d%90%e3%81%ae%e5%b1%95/",
+   "eventName": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
+   "eventDate": "2026-10-14"
+  },
+  {
    "domain": "kobe-park.or.jp",
    "url": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
    "eventName": "サボテン・多肉植物展示会（神戸市立須磨離宮公園）",
@@ -3661,12 +3707,6 @@
    "domain": "visit-oita.jp",
    "url": "https://www.visit-oita.jp/events/detail/13493",
    "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
-  },
-  {
-   "domain": "fujisanmesse.com",
-   "url": "https://www.fujisanmesse.com/",
-   "eventName": "FUJISAN FESTA",
    "eventDate": "2026-05-03"
   }
  ],
