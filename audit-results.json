@@ -1033,10 +1033,17 @@
       "severity": "urgent"
     },
     "time_vs_organizer_post": {
-      "title": "time が主催の告知投稿に書かれた時刻と食い違う",
+      "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
       "count": 0,
       "items": [],
-      "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
+      "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
+      "severity": "urgent"
+    },
+    "time_vs_description": {
+      "title": "time が説明文に書いた開催時間と食い違う・欠けている",
+      "count": 0,
+      "items": [],
+      "note": "主催の告知で確かめて、time(と食い違っていれば説明文)を直す。日ごとに違えば「14:00〜20:00（11/1は10:00〜15:00）」の形。説明文の時刻が企画や常設の店の時間なら、同じ文にその語(オークション・営業 など)を書けば数えない",
       "severity": "urgent"
     },
     "eyecatch_candidates_pending": {
