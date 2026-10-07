@@ -168,10 +168,15 @@ def event_md(e):
 
 
 def name_key(e):
-    """投稿がその回を名前で指しているかを見る鍵。数字と記号を落とした先頭6字"""
-    n = norm(e.get('name') or '')
-    n = re.sub(r'[0-9第回vol.Vol\s()（）【】「」・\-–—!！?？#＃]+', '', n)
-    return n[:6]
+    """投稿がその回を名前で指しているかを見る鍵。数字・記号・「vol.◯」を落とした先頭6字(小文字)。
+    本文の側も sitelib.name_key_text に通してから当てる。
+
+    2026-10-08 まで、落とす文字を文字クラス [0-9第回vol.Vol...] で書いていたので、
+    v・o・l を名前の途中からも落としていた(「Plant Freaks」→「PantFr」、
+    「AGAVE MEETING」→「AGAEME」)。掲載575件のうち57件の鍵が本文に当たらない形で、
+    名前で指した中止の告知・出店者の投稿の既知判定が、その回だけ効いていなかった。
+    規則は sitelib.name_key_text(監査 time_vs_organizer_post も同じ鍵で投稿を引く)。"""
+    return sitelib.name_key_text(e.get('name') or '')[:6]
 
 
 def upcoming_by_org(events, today):
@@ -224,10 +229,11 @@ def known_elsewhere(cap, iso, day_index, rejected_by_day):
     その日の回の名前か会場が本文に出ていれば既知とみなす。
     """
     c = norm(cap).replace(' ', '').lower()
+    cn = sitelib.name_key_text(cap)
     for e in day_index.get(iso, []):
-        k = name_key(e).lower()
+        k = name_key(e)
         v = norm(e.get('venue') or '').replace(' ', '').lower()
-        if (k and len(k) >= 3 and k in c) or (v and len(v) >= 4 and v[:8] in c):
+        if (k and len(k) >= 3 and k in cn) or (v and len(v) >= 4 and v[:8] in c):
             return True
         # 主催のアカウントに触れていれば、その主催の回の話(叢宴の出店者は
         # 「主催のぼっちさん @bocchi_syokudou」と書き、会場名は表記が揺れていた)
@@ -300,7 +306,7 @@ def analyze_posts(username, posts, org_events, all_org_events, today, day_index=
                 for e in org_events:
                     hit_date = bool(event_md(e) & mds)
                     k = name_key(e)
-                    hit_name = bool(k) and k in norm(cap).replace(' ', '')
+                    hit_name = bool(k) and k in sitelib.name_key_text(cap)
                     # 投稿がこの回を指していると言えるときだけ鳴らす。
                     # 主催が年に何度も開く場合、別の回の中止で全回が鳴るのを防ぐ
                     if hit_date or hit_name:
@@ -631,6 +637,12 @@ def self_test():
           'dateEnd': '2026-10-18'}
     other = {'slug': 'y-2026-12', 'name': '冬のテスト市', 'date': '2026-12-06',
              'dateEnd': '2026-12-06'}
+    # 名前の鍵は v・o・l を名前の途中から落とさない(2026-10-08)
+    chk('鍵 Plant Freaks', name_key({'name': 'Plant Freaks in オリナス錦糸町 2026（10月）'}), 'plantf')
+    chk('鍵 Vol.03 は落とす', name_key({'name': 'KITAKYUSHU BOTANICAL MARKET Vol.03'}), 'kitaky')
+    chk('鍵 VOL.6 は落とす', name_key({'name': '金鯱祭 VOL.6'}), '金鯱祭')
+    chk('鍵 Revolution は残す', name_key({'name': 'Revolution vol.3'}), 'revolu')
+    chk('鍵 第3回', name_key(ev), 'テストプラン')
     chk('月日 9月26日', month_days('9月26日(土)開催'), {(9, 26)})
     chk('月日 10/18', month_days('10/18 10:00〜'), {(10, 18)})
     chk('月日 年は拾わない', month_days('2026年'), set())
@@ -639,6 +651,13 @@ def self_test():
           'caption': '10月18日のテストプランツ市は台風のため開催中止となりました'}]
     c, _ = analyze_posts('org', p, [ev, other], [ev, other], today)
     chk('日付で指した中止', [x['slug'] for x in c], ['x-2026-10'])
+    # 名前で指した中止は、ラテン文字の名前でも鳴る(鍵が v・o・l を落としていて鳴らなかった)
+    ev_l = {'slug': 'pf-2026-10', 'name': 'Plant Freaks in オリナス錦糸町', 'date': '2026-10-18',
+            'dateEnd': '2026-10-18'}
+    p = [{'timestamp': '2026-09-20T01:00:00+0000', 'permalink': 'u1l',
+          'caption': 'plant freaks in 錦糸町は都合により開催中止となりました'}]
+    c, _ = analyze_posts('org', p, [ev_l], [ev_l], today)
+    chk('名前で指した中止(ラテン文字)', [(x['slug'], x['by']) for x in c], [('pf-2026-10', 'name')])
     # 自動で中止にしてよいのは「開催中止」を日付で指した投稿だけ
     ev_a = dict(ev, addedDate='2026-09-01')
     sig = {'slug': 'x-2026-10', 'by': 'date', 'words': ['開催中止'], 'postedOn': '2026-09-20',

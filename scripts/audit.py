@@ -3113,39 +3113,97 @@ def main():
             _m = sitelib.IG_POST_RE.search(_p.get('permalink') or '')
             if _m:
                 _posts_by_code[_m.group(1)] = _p
+    #  2026-10-08 に照合の範囲を広げた。紐づいた投稿だけを見ていたので、
+    #        (1) 出典が主催のプロフィールで投稿に紐づいていない回(NIGHTWALKER は告知の
+    #            「11月1日（日）10:00〜15:00」が time に無いまま40日載っていた)と、
+    #        (2) 紐づいた投稿が古い速報の回(JSS秋の多肉市は6月の「10:00〜16:00(仮)」に
+    #            紐づき、9月の確定の告知「10:00～15:30」を誰も見ていなかった)が素通りした。
+    #        紐づいた投稿で食い違いが無い回は、主催の投稿のうち名前と会期の全日を書いている
+    #        ものの「日付つきの開催時間」(◯月◯日 10:00〜16:00)を見て、time に無い時刻を出す。
+    #        time が空の回も対象(THE BOTANICAL SHOW 6th は告知に両日の時刻があるのに空だった)。
+    #        同じ日を書いた投稿が複数あれば新しいほうだけ。規則は sitelib.organizer_post_hours_missing。
+    #        09-23〜10-08 の日次の版に当てて、出たのは14回分ですべて実際の欠け・食い違い
+    #        (開催前の7回を 10-08 に直した。残りは開催日を過ぎていた)。誤検知は0。
+    _posts_by_acc = {}
+    for _u, _r in (_ow.get('results') or {}).items():
+        if _r.get('ok'):
+            _posts_by_acc[_u.lower()] = _r.get('posts') or []
     _time_post_bad = []
+    _time_post_slugs = set()
     for e in events:
         _t = e.get('time') or ''
         _end = e.get('dateEnd') or e.get('date')
-        if e.get('status') != 'upcoming' or not _t or (_end and _end < today):
+        if (e.get('status') != 'upcoming' or sitelib.is_cancelled(e)
+                or (_end and _end < today)):
             continue
         _ev_r = set(sitelib.time_ranges(_t))
-        if not _ev_r:
-            continue
-        _codes = set()
-        for _k in ('url', 'sourceUrl', 'imageSource', 'instagramUrl'):
-            _m = sitelib.IG_POST_RE.search(e.get(_k) or '')
-            if _m:
-                _codes.add(_m.group(1))
-        if e.get('instagramPostId'):
-            _codes.add(e['instagramPostId'])
-        _cap_r, _src = set(), []
-        for _c in sorted(_codes):
-            if _c in _posts_by_code:
-                _rr = sitelib.announced_hours(_posts_by_code[_c].get('caption') or '')
-                if _rr:
-                    _cap_r |= set(_rr)
-                    _src.append(_c)
-        if _cap_r and not (_ev_r & _cap_r):
+        if _ev_r:
+            _codes = set()
+            for _k in ('url', 'sourceUrl', 'imageSource', 'instagramUrl'):
+                _m = sitelib.IG_POST_RE.search(e.get(_k) or '')
+                if _m:
+                    _codes.add(_m.group(1))
+            if e.get('instagramPostId'):
+                _codes.add(e['instagramPostId'])
+            _cap_r, _src = set(), []
+            for _c in sorted(_codes):
+                if _c in _posts_by_code:
+                    _rr = sitelib.announced_hours(_posts_by_code[_c].get('caption') or '')
+                    if _rr:
+                        _cap_r |= set(_rr)
+                        _src.append(_c)
+            if _cap_r and not (_ev_r & _cap_r):
+                _time_post_bad.append(
+                    f"{e.get('slug')}: time「{_t[:40]}」/ 告知 "
+                    f"{'・'.join(sitelib.format_time_range(r) for r in sorted(_cap_r))} "
+                    f"({', '.join(_src)})")
+                _time_post_slugs.add(e.get('slug'))
+                continue
+        _miss = sitelib.organizer_post_hours_missing(e, _posts_by_acc)
+        if _miss:
+            _links = sorted({(sitelib.IG_POST_RE.search(_l) or [None, _l])[1] for _, _, _l, _ in _miss})
             _time_post_bad.append(
-                f"{e.get('slug')}: time「{_t[:40]}」/ 告知 "
-                f"{'・'.join(sitelib.format_time_range(r) for r in sorted(_cap_r))} "
-                f"({', '.join(_src)})")
-    add('time_vs_organizer_post', 'time が主催の告知投稿に書かれた時刻と食い違う',
+                f"{e.get('slug')}: time「{_t[:40] or '(空)'}」/ 告知に "
+                f"{'・'.join(f'{_d[0]}/{_d[1]} {sitelib.format_time_range(_r)}' for _d, _r, _, _ in _miss)}"
+                f" がある ({', '.join(_links)})")
+            _time_post_slugs.add(e.get('slug'))
+    add('time_vs_organizer_post', 'time が主催の告知投稿に書かれた時刻と食い違う・欠けている',
         sorted(_time_post_bad),
         '告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。'
-        '告知が後から時刻を変えたなら新しいほうに合わせる。enrich が書いた値なら、出所は '
-        'sync-events / weekly-enrichment のログの Found: の行で分かる')
+        '告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、'
+        '時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。'
+        'enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる')
+
+    # 16z1c. time が、説明文に書いた開催時間と食い違う・欠けている(2026-10-08)。
+    #        説明文は告知を読んで書いているので、そこに出た開催時間は time にもあるはず。
+    #        主催の投稿が読めない回(個人アカウント・Web の告知・12件より古い投稿)は上の照合が
+    #        届かないので、自分の説明文と突き合わせる。7〜9月に time が空のまま説明文が
+    #        「10時から16時」と書く回が30件、説明文の「27日は9時から16時」が time に無い回が
+    #        2件あった(DIO PLANTS FES は time が両日とも1時間ずれたまま開催日を過ぎた)。
+    #        規則は sitelib.description_hours_missing。上の検査に出た回は引く(同じ事実を2行に出さない)。
+    #        07-01〜10-08 の events.json 84日分に当てて34回分が出て、誤検知は0(上の検査に出る回を除く)。
+    _time_desc_bad = []
+    for e in events:
+        _end = e.get('dateEnd') or e.get('date')
+        if (e.get('status') != 'upcoming' or sitelib.is_cancelled(e)
+                or (_end and _end < today) or e.get('slug') in _time_post_slugs):
+            continue
+        _iss = sitelib.description_hours_missing(e)
+        if not _iss:
+            continue
+        _t = e.get('time') or ''
+        if _iss[0][0] is None:
+            _time_desc_bad.append(f"{e.get('slug')}: time が空 / 説明文に "
+                                  f"{sitelib.format_time_range(_iss[0][1])}")
+        else:
+            _time_desc_bad.append(
+                f"{e.get('slug')}: time「{_t[:40]}」/ 説明文に "
+                + '・'.join(f'{_d.month}/{_d.day} {sitelib.format_time_range(_r)}' for _d, _r in _iss))
+    add('time_vs_description', 'time が説明文に書いた開催時間と食い違う・欠けている',
+        sorted(_time_desc_bad),
+        '主催の告知で確かめて、time(と食い違っていれば説明文)を直す。日ごとに違えば'
+        '「14:00〜20:00（11/1は10:00〜15:00）」の形。説明文の時刻が企画や常設の店の時間なら、'
+        '同じ文にその語(オークション・営業 など)を書けば数えない')
 
     # 16z2. アイキャッチ候補(2026-09-23)。ig-organizer-watch.py が主催の最新投稿の
     #       原寸画像から staging/eyecatch/ に置く。採否は人が画像を見て決める

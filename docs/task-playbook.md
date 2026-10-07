@@ -3726,6 +3726,39 @@ PIL で左右に切って Read で読めば足りる。施設・自治体の告�
 約40クエリ引いたが一度も止まらなかった。1回の起動の目安(25クエリ前後)は、間隔を空ければ上げてよい。
 汎用語より候補名のクォート検索に回す方針は変わらない。
 
+### time は主催の投稿と自分の説明文の両方に当てる。紐づいた投稿だけでは届かない (2026-10-08)
+
+開催前の7回で time が告知と食い違うか空だった。NIGHTWALKER は告知の「11月1日（日）10:00〜15:00」が無いまま
+08-27 から載り、JSS秋の多肉市は6月の速報「10:00〜16:00(仮)」のままで、9月の出店者確定の告知は 10:00～15:30。
+THE BOTANICAL SHOW 6th・Plant Freaks 10月・森の多肉園の広島/島根/舞鶴(今週末)は、告知に時刻があるのに time が空だった。
+開催済みでは DIO PLANTS FES の time が両日とも告知より1時間早く終わる形のまま開催日を過ぎた(説明文は正しかった)。
+
+`time_vs_organizer_post` は url / sourceUrl / imageSource / instagramPostId が指す投稿だけを見て、範囲が1つも一致しないときだけ鳴る。
+- 出典がプロフィールや予定一覧の投稿の回は、照合の外に居た(NIGHTWALKER・森の多肉園・DIO)
+- 紐づいた投稿が古い速報なら、古い時刻と一致して通る(JSS)
+- time が空の回は対象外だった
+- 日ごとに違う時刻は、片方が一致すれば通る(NIGHTWALKER)
+
+足したもの:
+- `sitelib.organizer_post_hours_missing`: 主催の投稿のうち、名前の鍵(`event_name_keys`)と会期の全日を書いた投稿の
+  「日付つきの開催時間」(`announced_dated_hours`。「10月31日（土）14:00〜20:00」、日付の行の下の「開催時間 10:00〜16:00」)を見て、
+  time の時刻の点(`clock_minutes`)に無いものを出す。同じ日を書いた投稿が複数あれば新しいほうだけ。出店者の募集の投稿
+  (`ANNOUNCED_RECRUIT_WORDS`)と、企画の見出しの下の時刻(`ANNOUNCED_SUBEVENT_WORDS`。キャンドルナイト等)は数えない。
+  `time_vs_organizer_post` が紐づいた投稿の照合で食い違いを出さなかった回に当てる(同じ検査の中で1回1行)。
+- `audit.time_vs_description`(urgent): 説明文に書いた開催時間(time が空の回 / 「11月1日は10時から15時」)が time に無い回。
+  主催の投稿が読めない回(個人アカウント・Web の告知・12件より古い投稿)はこちらでしか拾えない。上の検査に出た回は引く。
+- 当てた結果: 09-23〜10-08 の日次の版で前者14回分、07-01〜10-08 の84日分で後者34回分。開いて確かめて誤検知0。
+
+直すときは **time と一緒に sourceUrl を時刻を書いた告知の投稿に替える。**古い速報に紐づいたまま time だけ直すと、
+紐づいた投稿との照合が「1つも一致しない」で鳴り直す。organizer-posts.json はアカウントごとに最新12件しか持たないので、
+時刻を書いた投稿は日が経つと見えなくなる(森の多肉園の各回の告知は 09-16/17 の投稿で、10-02 には一覧から外れていた)。**鳴った日に直す。**
+
+ついでに見つけた不具合: `ig-organizer-watch.name_key` は落とす文字を文字クラス `[0-9第回vol.Vol...]` で書いており、
+v・o・l を名前の途中からも落としていた(「Plant Freaks」→「PantFr」、「AGAVE MEETING」→「AGAEME」。掲載575件のうち57件)。
+名前で指した中止の告知と、出店者の投稿の既知判定がその回だけ効いていなかった。`sitelib.name_key_text` に寄せ、本文の側も
+同じ形に通して当てる。09-23〜10-08 の34版で信号を旧版と比べ、差は0(日付・会場・ハンドルの照合が拾っていた)。自己テストを足した。
+**語を正規表現で落とすときは文字クラス `[...]` ではなく選択 `(?:vol\.?)` で書く。**文字クラスは文字を1字ずつ落とす。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -3765,7 +3798,7 @@ PIL で左右に切って Read で読めば足りる。施設・自治体の告�
 | 中止・延期の兆候(`organizer_cancel_signal` / `cancel_suspects`) | 投稿・公式頁を開く。中止なら cancelled にする。違えば `scripts/cancel-reviewed.json` | fixed / reviewed |
 | 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
-| 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
+| 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
 | リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |

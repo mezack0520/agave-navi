@@ -1047,6 +1047,70 @@
    "target": "サボテン・多肉植物ビッグバザール 2027年1・3・5・7・9・11月",
    "action": "fixed",
    "detail": "isij.net のイベント頁が6回とも「場所 五反田TOCビル」を出したので会場を埋めて tbd を外した。2027年分には告知の無い開場時刻・入場料・13階を書いていたので消した"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "NIGHTWALKER (2026-10-31)",
+   "action": "fixed",
+   "detail": "主催 @driftwood.smokeywood の告知 DeIkWxcShL5 は 10/31 14:00〜20:00・11/1 10:00〜15:00・両日入場料500円(中学生以下無料)。time に 11/1 の時間を足し、入場料を入れ、出典をプロフィールから告知の投稿に替えた"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "JSS秋の多肉市 (2026-11-14)",
+   "action": "fixed",
+   "detail": "time が6月の速報の「10:00〜16:00(仮)」のままだった。9月の出店者確定の告知 Dc3L-ZXRV07 の 10:00〜15:30 に直し、出典をその投稿に替えた"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "THE BOTANICAL SHOW 6TH (2026-11-14)",
+   "action": "fixed",
+   "detail": "time と入場料が空だった。主催の告知 Ddqo_4nRAlB の 11/14 11:00〜16:00・11/15 10:00〜15:00・入場無料を入れた"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "Plant Freaks in オリナス錦糸町 2026（10月） (2026-10-17)",
+   "action": "fixed",
+   "detail": "time が空で、説明文も「開催時間は未発表」のままだった。主催の 10/6〜7 の告知(DeLNyyAGpsm ほか)の 10:00〜16:00 を入れ、説明文を直した"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "森の多肉園販売会 in 広島 (2026-10-10)",
+   "action": "fixed",
+   "detail": "time が空だった。主催のこの回の告知 DdWP0kiH46N の 10:30〜14:00 を入れ、出典を予定一覧の投稿からこの告知に替えた"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "森の多肉園販売会 in 島根 (2026-10-11)",
+   "action": "fixed",
+   "detail": "time が空だった。主催のこの回の告知 DdY0ccwH9Sz の 10:30〜14:00 を入れ、出典を予定一覧の投稿からこの告知に替えた"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "森の多肉園販売会 in 京都舞鶴 (2026-10-12)",
+   "action": "fixed",
+   "detail": "time が空だった。主催のこの回の告知 DdY2FP9H4nG の 10:30〜15:00(当日のハーフマラソンで終了を1時間延長)を入れ、出典をこの告知に替えた"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "開催済み2件 DIO PLANTS FES vol.1・第6回 ロビン ビザールガーデン (2026-09-26〜27)",
+   "action": "fixed",
+   "detail": "DIO は time が両日とも告知より1時間早く終わる形(10:00〜17:00/27日16:00)で、告知は 10:00〜18:00/27日17:00。ロビンは27日の16:00終了が無かった。どちらも説明文には正しい時刻があった。告知どおりに直した"
   }
  ]
 }

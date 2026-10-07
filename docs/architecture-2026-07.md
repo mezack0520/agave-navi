@@ -361,3 +361,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   igNeedsBrowser(ブラウザのローテ対象)から外す。Business Discovery は個人と不在を同じ code 110 で返すため
 - 2026-10-07: ci-push.sh が push 衝突の作り直しで巡回結果(cancel-watch.json / coverage-gaps.json)を捨てていたのを直した。scripts/ci-snapshot-paths.txt のパスは差分から外したまま「この回の版」を置き直す。監査 ci_snapshot_paths_unpaired
 - 2026-10-07(event-monitor): check_events.py の内容妥当性の規則を sitelib.content_implausible_issues に移し、audit.content_implausible(urgent)で events.json に当てる(09-30 のメール作り直しで読む側が消えていた)。audit.time_vs_organizer_post(time と主催の告知本文の時刻の照合。sitelib.time_ranges / announced_hours)を追加し、time_implausible に6時前の開始を足した
+- 2026-10-08(event-monitor): audit.time_vs_organizer_post を、紐づいた投稿に加えて主催の投稿のうち名前と会期の全日を書いたものの日付つきの開催時間で照合するようにした(sitelib.organizer_post_hours_missing。time が空の回も対象)。audit.time_vs_description(説明文の開催時間と time。sitelib.description_hours_missing)を追加。ig-organizer-watch.name_key を sitelib.name_key_text に寄せた(文字クラスで v・o・l を名前の途中から落としていた)

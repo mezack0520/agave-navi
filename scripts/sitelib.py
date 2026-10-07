@@ -1699,6 +1699,209 @@ def format_time_range(r):
     return f'{r[0] // 60}:{r[0] % 60:02d}〜{r[1] // 60}:{r[1] % 60:02d}'
 
 
+# --- 日ごとの開催時間 (2026-10-08) -------------------------------------------
+# time 欄は日ごとの違いを「10:00〜17:00（8日は16:00まで）」の形で持つ。範囲(time_ranges)を
+# 比べるだけでは「その日の終わりの時刻を書いているか」が分からないので、時刻の「点」で比べる。
+# NIGHTWALKER(10/31-11/1)は主催の告知が「10月31日（土）14:00〜20:00 / 11月1日（日）10:00〜15:00」、
+# 説明文にも「11月1日は10時から15時まで」とあるのに、time は 14:00〜20:00 だけだった。
+# 出典が主催のプロフィールで投稿に紐づいておらず、time_vs_organizer_post の照合の外に居た。
+# JSS秋の多肉市は紐づいた投稿が6月の速報「10:00〜16:00(仮)」で、9月の確定の告知「10:00～15:30」を
+# 誰も照合していなかった。
+# 催しの中の企画の時刻(キャンドルナイト・オークション等)を開催時間と読まないための語。
+# 見出しの行か同じ行にあれば、その行の時刻は数えない
+ANNOUNCED_SUBEVENT_WORDS = ('キャンドル', 'ワークショップ', 'オークション', 'セリ', '競り', '先行',
+                            '整理券', 'トーク', 'ライブ', '抽選', '講習', '教室', '説明会',
+                            'セミナー', '搬入', '設営', '搬出')
+# 出店者の募集の投稿。書いてある時刻は出店者の搬入・営業の時刻で、来場の時刻ではない
+# (富士山フェスタの二次募集は「時間 8:30～15:30」、来場の告知は 9:15〜)
+ANNOUNCED_RECRUIT_WORDS = ('出店者募集', '出店募集', '出店者様募集', '出店者さま募集', '募集要項',
+                           '出店料', '出展料', '出店費')
+
+
+def clock_minutes(text):
+    """文字列に出てくる時刻の集合(0時起点の分)。範囲の両端も「16:00まで」の単独の時刻も拾う"""
+    t = unicodedata.normalize('NFKC', text or '')
+    out = set()
+    for m in re.finditer(_TR_CLOCK_A, t):
+        h, mm = _tr_minutes(m.group(1), m.group(2), m.group(3), m.group(4))
+        if h <= 24 and mm < 60:
+            out.add(h * 60 + mm)
+    return out
+
+
+def _single_month_day(text):
+    ds = find_month_days(text)
+    return next(iter(ds)) if len(ds) == 1 else None
+
+
+def announced_dated_hours(caption, month_days, min_minutes=120):
+    """告知本文から「会期内の1日 → その日の開催時間」を拾う。{(月, 日): {(開始の分, 終了の分)}}
+
+    日付は、その範囲の前(同じ行で、前の範囲より後ろ)か、範囲を持たない直前の行(空行は飛ばす)から取る。
+    1つの日付に決まらない行・会期の外の日付・2時間未満の範囲・営業時間の行・
+    企画の見出し(ANNOUNCED_SUBEVENT_WORDS)の下の行は数えない。
+    """
+    out = {}
+    lines = unicodedata.normalize('NFKC', caption or '').splitlines()
+    for i, ln in enumerate(lines):
+        if any(w in ln for w in ANNOUNCED_HOURS_SKIP):
+            continue
+        ms = list(TIME_RANGE_RE.finditer(ln))
+        if not ms:
+            continue
+        head = ''
+        for j in range(i - 1, max(-1, i - 4), -1):
+            if lines[j].strip():
+                if not TIME_RANGE_RE.search(lines[j]):
+                    head = lines[j]
+                break
+        if any(w in ln or w in head for w in ANNOUNCED_SUBEVENT_WORDS):
+            continue
+        prev_end = 0
+        for k, m in enumerate(ms):
+            rr = time_ranges(m.group(0))
+            seg = ln[prev_end:m.start()]
+            prev_end = m.end()
+            if not rr or rr[0][1] - rr[0][0] < min_minutes:
+                continue
+            d = _single_month_day(seg)
+            if d is None and k == 0 and head:
+                d = _single_month_day(head)
+            if d is not None and d in month_days:
+                out.setdefault(d, set()).add(rr[0])
+    return out
+
+
+# 投稿の本文がその回を名前で指しているかを見る鍵。数字・記号・「第◯回」「vol.◯」を落とした先頭6字。
+# ig-organizer-watch.name_key は文字クラス [vol.Vol] で v・o・l を名前の途中からも落としており
+# (「Plant Freaks」→「PantFr」)、ラテン文字の名前の1割が本文に当たらなかった(2026-10-08)。
+_NAME_KEY_VOL = re.compile(r'(?i)(?<![a-z])vol\.?(?=\s*\d)')
+_NAME_KEY_DROP = re.compile(r'[0-9第回\s()（）【】「」『』・･.\-–—!！?？#＃]+')
+
+
+def name_key_text(s):
+    """name_key の比べる形。本文の側もこれに通してから `in` で当てる"""
+    t = unicodedata.normalize('NFKC', s or '')
+    return _NAME_KEY_DROP.sub('', _NAME_KEY_VOL.sub('', t)).lower()
+
+
+def event_name_keys(e, width=6):
+    """name と aliases から作る鍵の一覧。3字に満たない鍵は一般語に当たるので使わない"""
+    out = []
+    for n in [e.get('name') or ''] + list(e.get('aliases') or []):
+        k = name_key_text(n)[:width]
+        if len(k) >= 3 and k not in out:
+            out.append(k)
+    return out
+
+
+_IG_PROFILE_RE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?(?:[?#].*)?$')
+
+
+def event_ig_accounts(e):
+    """その回の主催の Instagram アカウント。organizerIg と、url / sourceUrl がプロフィールならその名前"""
+    out = set()
+    if (e.get('organizerIg') or '').strip():
+        out.add(e['organizerIg'].strip().lstrip('@').lower())
+    for k in ('url', 'sourceUrl'):
+        u = e.get(k) or ''
+        if 'instagram.com' in u and not IG_POST_RE.search(u):
+            m = _IG_PROFILE_RE.search(u)
+            if m and m.group(1).lower() not in ('p', 'reel', 'tv', 'explore', 'stories'):
+                out.add(m.group(1).lower())
+    return out
+
+
+def organizer_post_hours_missing(e, posts_by_account):
+    """主催の投稿に書かれた日付つきの開催時間のうち、time に無いもの。[(月日, 範囲, permalink, 投稿日)]
+
+    見る投稿は、その回の名前(event_name_keys)と会期の全日を書いている主催の投稿だけ。
+    出店者の募集の投稿は見ない。同じ日を書いた投稿が複数あれば新しいほうだけを見る
+    (6月の速報「10:00〜16:00(仮)」を、9月の確定の告知「10:00～15:30」が上書きする)。
+    time 側は時刻の点(clock_minutes)で比べるので「（27日は16:00まで）」の形も通る。
+    """
+    md = event_month_days(e)
+    if not md:
+        return []
+    keys = event_name_keys(e)
+    have = clock_minutes(e.get('time') or '')
+    latest = {}
+    for acc in event_ig_accounts(e):
+        for p in posts_by_account.get(acc) or []:
+            cap = p.get('caption') or ''
+            if any(w in cap for w in ANNOUNCED_RECRUIT_WORDS):
+                continue
+            if not md <= find_month_days(cap):
+                continue
+            if keys and not any(k in name_key_text(cap) for k in keys):
+                continue
+            ts = p.get('timestamp') or ''
+            for d, rs in announced_dated_hours(cap, md).items():
+                if d not in latest or ts > latest[d][0]:
+                    latest[d] = (ts, rs, p.get('permalink') or '')
+    out = []
+    for d, (ts, rs, link) in sorted(latest.items()):
+        for r in sorted(rs):
+            if not {r[0], r[1]} <= have:
+                out.append((d, r, link, ts[:10]))
+    return out
+
+
+# 説明文が名乗る「その日」。「11月1日は」「27日は」「9/26」「初日」「最終日」「2日目」
+_DESC_DAYREF = re.compile(r'(?:(\d{1,2})\s*月\s*)?(\d{1,2})\s*日(?!間|目)|(\d{1,2})/(\d{1,2})'
+                          r'|(初日|最終日)|([2-9])日目')
+# 説明文の時刻のうち、催しの開催時間ではないもの(常設の店の営業時間・企画の時刻)
+_DESC_NOT_HOURS = ANNOUNCED_SUBEVENT_WORDS + ('営業',)
+
+
+def description_hours_missing(e):
+    """説明文に書いた開催時間が time に無い。[(会期内の日 or None, 範囲)]。None は time が空の回
+
+    説明文は告知を読んで書いているので、そこに出た開催時間は time にも入っているはず。
+    time が空なのに説明文が「10時から16時」と書く回(7〜9月に30件)と、
+    説明文の「11月1日は10時から15時まで」が time に無い回を出す。2時間未満の範囲と、
+    同じ文に企画・営業の語がある範囲は数えない。
+    """
+    d0, d1 = event_span(e)
+    try:
+        a = date.fromisoformat(d0)
+        b = date.fromisoformat(d1 or d0)
+    except (TypeError, ValueError):
+        return []
+    days = [a + timedelta(n) for n in range(min((b - a).days, 62) + 1)]
+    ds = unicodedata.normalize('NFKC', e.get('description') or '')
+    t = e.get('time') or ''
+    have = clock_minutes(t)
+    out = []
+    for m in TIME_RANGE_RE.finditer(ds):
+        rr = time_ranges(m.group(0))
+        if not rr or rr[0][1] - rr[0][0] < 120:
+            continue
+        pre = ds[ds.rfind('。', 0, m.start()) + 1:m.start()]
+        if any(w in pre or w in ds[m.end():m.end() + 12] for w in _DESC_NOT_HOURS):
+            continue
+        if not t.strip():
+            return [(None, rr[0])]
+        refs = list(_DESC_DAYREF.finditer(pre[-16:]))
+        if not refs:
+            continue
+        g = refs[-1].groups()
+        day = None
+        if g[4] == '初日' and len(days) > 1:
+            day = days[0]
+        elif g[4] == '最終日' and len(days) > 1:
+            day = days[-1]
+        elif g[5]:
+            day = days[int(g[5]) - 1] if len(days) >= int(g[5]) else None
+        elif g[1] or g[3]:
+            mo = int(g[2]) if g[2] else (int(g[0]) if g[0] else None)
+            dd = int(g[3]) if g[3] else int(g[1])
+            day = next((x for x in days if x.day == dd and (mo is None or x.month == mo)), None)
+        if day is not None and not {rr[0][0], rr[0][1]} <= have:
+            out.append((day, rr[0]))
+    return out
+
+
 
 # --- 出典ドメインと画像URLの受け入れ (単一情報源) ---------------------------
 # アグリゲータの一覧は listing-policy.json の blockedUrlDomains が正。
