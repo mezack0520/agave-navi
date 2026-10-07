@@ -1,21 +1,23 @@
 {
-  "check_date": "2026-10-07",
-  "total_events": 560,
+  "check_date": "2026-10-08",
+  "total_events": 575,
   "dead_links": [],
-  "unreachable": [],
+  "unreachable": [
+    {
+      "slug": "jurian-aki-taniku-cactus-2026-10",
+      "name": "秋の多肉植物・サボテン展示会（樹里安）",
+      "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
+      "field": "sourceUrl",
+      "statusCode": -1,
+      "alive": false
+    }
+  ],
   "tbd_events": [
     {
       "slug": "botanical-botanical-osaka-2026-10",
       "name": "BOTANICAL BOTANICAL OSAKA",
       "date": "2026-10-31",
       "sourceUrl": "https://www.instagram.com/botanical.botanical/",
-      "note": "日時・詳細未確定"
-    },
-    {
-      "slug": "myoko-taniku-oichi-2026-11",
-      "name": "妙高多肉大市 2026",
-      "date": "2026-10-31",
-      "sourceUrl": "https://www.instagram.com/_myoko_plants_market_/",
       "note": "日時・詳細未確定"
     },
     {
@@ -33,45 +35,24 @@
       "note": "日時・詳細未確定"
     },
     {
-      "slug": "isij-big-bazaar-2027-01-10",
-      "name": "サボテン・多肉植物ビッグバザール（2027年1月）",
-      "date": "2027-01-10",
-      "sourceUrl": "http://isij.net/",
+      "slug": "botanical-style-fukuoka-minato-2026-12",
+      "name": "BOTANICAL STYLE -Fukuoka Minato-",
+      "date": "2026-12-19",
+      "sourceUrl": "https://www.instagram.com/p/Ddz9MZXhJfz/",
       "note": "日時・詳細未確定"
     },
     {
-      "slug": "isij-big-bazaar-2027-03-14",
-      "name": "サボテン・多肉植物ビッグバザール（2027年3月）",
-      "date": "2027-03-14",
-      "sourceUrl": "http://isij.net/",
+      "slug": "chinki-plants-flea-market-2027-01",
+      "name": "珍奇植物フリーマーケット（2027年1月）",
+      "date": "2027-01-17",
+      "sourceUrl": "https://www.instagram.com/p/DeGApJNyZW_/",
       "note": "日時・詳細未確定"
     },
     {
-      "slug": "isij-big-bazaar-2027-05-23",
-      "name": "サボテン・多肉植物ビッグバザール（2027年5月）",
-      "date": "2027-05-23",
-      "sourceUrl": "http://isij.net/",
-      "note": "日時・詳細未確定"
-    },
-    {
-      "slug": "isij-big-bazaar-2027-07-11",
-      "name": "サボテン・多肉植物ビッグバザール（2027年7月）",
-      "date": "2027-07-11",
-      "sourceUrl": "http://isij.net/",
-      "note": "日時・詳細未確定"
-    },
-    {
-      "slug": "isij-big-bazaar-2027-09-26",
-      "name": "サボテン・多肉植物ビッグバザール（2027年9月）",
-      "date": "2027-09-26",
-      "sourceUrl": "http://isij.net/",
-      "note": "日時・詳細未確定"
-    },
-    {
-      "slug": "isij-big-bazaar-2027-11-28",
-      "name": "サボテン・多肉植物ビッグバザール（2027年11月）",
-      "date": "2027-11-28",
-      "sourceUrl": "http://isij.net/",
+      "slug": "chinki-plants-flea-market-2027-04",
+      "name": "珍奇植物フリーマーケット（2027年4月）",
+      "date": "2027-04-11",
+      "sourceUrl": "https://www.instagram.com/p/DeGApJNyZW_/",
       "note": "日時・詳細未確定"
     }
   ],
@@ -2422,7 +2403,7 @@
       "dateEnd": "2026-10-10",
       "location": "広島市南区民文化センター ギャラリー（広島県広島市南区）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd4uh2FzckW/"
+      "sourceUrl": "https://www.instagram.com/p/DdWP0kiH46N/"
     },
     {
       "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
@@ -2584,7 +2565,7 @@
       "dateEnd": "2026-10-11",
       "location": "松江市市民活動センター 市民交流広場（島根県松江市）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd4uh2FzckW/"
+      "sourceUrl": "https://www.instagram.com/p/DdY0ccwH9Sz/"
     },
     {
       "slug": "lahaina-rahachu-holiday-2026-10",
@@ -2638,7 +2619,7 @@
       "dateEnd": "2026-10-12",
       "location": "舞鶴市西駅交流センター 3階ホール（京都府舞鶴市）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd4uh2FzckW/"
+      "sourceUrl": "https://www.instagram.com/p/DdY2FP9H4nG/"
     },
     {
       "slug": "kakukaku-shikajika-6th-narakaki-2026-10",
@@ -2929,6 +2910,15 @@
       "sourceUrl": "https://www.instagram.com/p/Dd8wJMdDWl6/"
     },
     {
+      "slug": "saidaiji-garden-taniku-event-2026-10",
+      "name": "西大寺ガーデン 多肉イベント（2026秋）",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "location": "西大寺ガーデン 外売り場（岡山県岡山市東区金岡西町191-2）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd8kUOimYiy/"
+    },
+    {
       "slug": "taniku-midori-marche-nabana-2026-10",
       "name": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
       "date": "2026-10-23",
@@ -3017,6 +3007,15 @@
       "location": "アピタ足利店（栃木県足利市）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/DeGzgrYMA8d/"
+    },
+    {
+      "slug": "sunny-drop-5th-anniversary-kato-2026-10",
+      "name": "sunny drop 5th Anniversary 感謝祭",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-26",
+      "location": "sunny drop（兵庫県加東市社）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd7UMbIzFxQ/"
     },
     {
       "slug": "botanical-marche-toyama-2026-10",
@@ -3182,12 +3181,12 @@
     },
     {
       "slug": "myoko-taniku-oichi-2026-11",
-      "name": "妙高多肉大市 2026",
+      "name": "妙高多肉市場 vol.16-17（妙高多肉大市）",
       "date": "2026-10-31",
       "dateEnd": "2026-11-01",
-      "location": "調整中",
-      "eventStatus": "tbd",
-      "sourceUrl": "https://www.instagram.com/_myoko_plants_market_/"
+      "location": "フィールド妙高（道の駅あらい東側）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeMUU1Qibom/"
     },
     {
       "slug": "botanicbomb-vol11-fukuchiyama-2026-10",
@@ -3205,7 +3204,7 @@
       "dateEnd": "2026-11-01",
       "location": "HORIE BASE CASO（大阪府大阪市西区北堀江1-17-1 COR 202号）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/driftwood.smokeywood/"
+      "sourceUrl": "https://www.instagram.com/p/DeIkWxcShL5/"
     },
     {
       "slug": "greensnap-marche-toyosu-2026-autumn",
@@ -3242,6 +3241,15 @@
       "location": "イオンモール日吉津（鳥取県西伯郡日吉津村）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/DeGzgrYMA8d/"
+    },
+    {
+      "slug": "taniku-garden-marche-arakogawa-2026-10",
+      "name": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "location": "荒子川公園 催し物広場（愛知県名古屋市港区品川町2丁目1-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/"
     },
     {
       "slug": "purari-plants-vol3-2026-11",
@@ -3316,6 +3324,15 @@
       "sourceUrl": "https://www.instagram.com/p/Dd9MsFMCctx/"
     },
     {
+      "slug": "kasamajuku-tanikusai-2026-11",
+      "name": "まちの駅 笠間宿 多肉祭（2026年11月）",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "location": "まちの駅 笠間宿（茨城県笠間市笠間2247-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeAv_9evHhJ/"
+    },
+    {
       "slug": "fujisan-festa-2026-autumn",
       "name": "フジサンフェスタ 2026秋",
       "date": "2026-11-03",
@@ -3388,6 +3405,24 @@
       "sourceUrl": "https://www.instagram.com/p/DdvqAoNmWJg/"
     },
     {
+      "slug": "kitakyushu-botanical-market-vol3-2026-11",
+      "name": "KITAKYUSHU BOTANICAL MARKET Vol.03",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "location": "平田ナーセリー本城店 温室（福岡県北九州市八幡西区本城3451-2）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DdWIw5pD3J0/"
+    },
+    {
+      "slug": "ceramall-hanbaikai-2026-11",
+      "name": "セラモール販売会（2026年11月）",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-07",
+      "location": "セラモール（愛知県常滑市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeEjFWGiYup/"
+    },
+    {
       "slug": "wonder-market-2026-11",
       "name": "Wonder Market（2026年11月）",
       "date": "2026-11-08",
@@ -3406,13 +3441,22 @@
       "sourceUrl": "https://www.instagram.com/yatsushiro_to_mikuniya/"
     },
     {
+      "slug": "lahaina-garden-7th-anniversary-2026-11",
+      "name": "LahainaGarden 7周年記念祭",
+      "date": "2026-11-08",
+      "dateEnd": "2026-11-08",
+      "location": "LahainaGarden（滋賀県蒲生郡日野町鎌掛2373）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeDa7EsD8VX/"
+    },
+    {
       "slug": "the-botanical-show-6th-2026",
       "name": "THE BOTANICAL SHOW 6TH",
       "date": "2026-11-14",
       "dateEnd": "2026-11-15",
       "location": "茅ヶ崎中央公園",
       "eventStatus": "confirmed",
-      "sourceUrl": ""
+      "sourceUrl": "https://www.instagram.com/reel/Ddqo_4nRAlB/"
     },
     {
       "slug": "botanical-botanical-okinawa-2026-11",
@@ -3430,7 +3474,7 @@
       "dateEnd": "2026-11-14",
       "location": "ヤマダデンキLABI1 LIFE SELECT高崎 屋外イベントスペース「LABI GARDEN」（群馬県高崎市栄町1-1）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DZgJZvjzudN/"
+      "sourceUrl": "https://www.instagram.com/p/Dc3L-ZXRV07/"
     },
     {
       "slug": "gamagori-taniku-festa-6th-2026-11",
@@ -3559,11 +3603,20 @@
       "sourceUrl": "https://www.instagram.com/p/Dd3AskCzE-w/"
     },
     {
+      "slug": "botanical-popup-ondo-kurate-2026-11",
+      "name": "BOTANICAL POP UP（ONDO・鞍手町）",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "location": "ONDO（福岡県鞍手郡鞍手町中山3214）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/ondo_6465/"
+    },
+    {
       "slug": "isij-big-bazaar-2026-11-22",
       "name": "11月のサボテン・多肉植物ビッグバザール",
       "date": "2026-11-22",
       "dateEnd": "2026-11-22",
-      "location": "五反田TOCビル 13階",
+      "location": "五反田TOCビル",
       "eventStatus": "confirmed",
       "sourceUrl": ""
     },
@@ -3710,6 +3763,15 @@
       "location": "bi_noah 新店舗（大分県大分市本神崎1204）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/Dd3cDu3zR3Y/"
+    },
+    {
+      "slug": "granterrace-chikusei-tanikusai-2026-11",
+      "name": "グランテラスin多肉祭",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-29",
+      "location": "道の駅 グランテラス筑西（茨城県筑西市川澄1850）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeJMagAH6jc/"
     },
     {
       "slug": "chinki-shokubutsu-fair-4th-kasugai-2026",
@@ -3892,6 +3954,15 @@
       "sourceUrl": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026"
     },
     {
+      "slug": "botanical-style-fukuoka-minato-2026-12",
+      "name": "BOTANICAL STYLE -Fukuoka Minato-",
+      "date": "2026-12-19",
+      "dateEnd": "2026-12-20",
+      "location": "調整中",
+      "eventStatus": "tbd",
+      "sourceUrl": "https://www.instagram.com/p/Ddz9MZXhJfz/"
+    },
+    {
       "slug": "rojiura-botanical-2026-12",
       "name": "路地裏ボタニカル（2026年12月）",
       "date": "2026-12-20",
@@ -3910,6 +3981,24 @@
       "sourceUrl": "http://isij.net/event"
     },
     {
+      "slug": "asamiya-tanikusai-xmas-market-2026-12",
+      "name": "あさみやin多肉祭 Xmasマーケット",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "location": "雑貨のお店 あさみや（茨城県那珂郡東海村舟石川149-4）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DeJtAjfPlE0/"
+    },
+    {
+      "slug": "nbgarden-festa-shizuoka-2026-12",
+      "name": "NBgardenフェスタ",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "location": "SBSマイホームセンター静岡展示場（静岡県静岡市駿河区桃園町1-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DaHRU3cOpwB/"
+    },
+    {
       "slug": "enjoy-place-bangaihen-2026-12",
       "name": "enjoy place 番外編",
       "date": "2026-12-26",
@@ -3923,8 +4012,8 @@
       "name": "サボテン・多肉植物ビッグバザール（2027年1月）",
       "date": "2027-01-10",
       "dateEnd": "2027-01-10",
-      "location": "調整中",
-      "eventStatus": "tbd",
+      "location": "五反田TOCビル",
+      "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
     },
     {
@@ -3946,6 +4035,15 @@
       "sourceUrl": "https://www.instagram.com/p/DanB2o1hXiQ/"
     },
     {
+      "slug": "chinki-plants-flea-market-2027-01",
+      "name": "珍奇植物フリーマーケット（2027年1月）",
+      "date": "2027-01-17",
+      "dateEnd": "2027-01-17",
+      "location": "調整中",
+      "eventStatus": "tbd",
+      "sourceUrl": "https://www.instagram.com/p/DeGApJNyZW_/"
+    },
+    {
       "slug": "aichin-shokusai-new-year-party-2027",
       "name": "愛珍植祭 New Year Party 2027",
       "date": "2027-01-24",
@@ -3959,8 +4057,8 @@
       "name": "サボテン・多肉植物ビッグバザール（2027年3月）",
       "date": "2027-03-14",
       "dateEnd": "2027-03-14",
-      "location": "調整中",
-      "eventStatus": "tbd",
+      "location": "五反田TOCビル",
+      "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
     },
     {
@@ -3973,6 +4071,15 @@
       "sourceUrl": "https://www.instagram.com/p/Ddqwek_pm1Q/"
     },
     {
+      "slug": "chinki-plants-flea-market-2027-04",
+      "name": "珍奇植物フリーマーケット（2027年4月）",
+      "date": "2027-04-11",
+      "dateEnd": "2027-04-11",
+      "location": "調整中",
+      "eventStatus": "tbd",
+      "sourceUrl": "https://www.instagram.com/p/DeGApJNyZW_/"
+    },
+    {
       "slug": "bota-magic-2nd-wakayama-2027-04",
       "name": "第2回 BOTA☆MAGIC",
       "date": "2027-04-18",
@@ -3982,12 +4089,21 @@
       "sourceUrl": "https://www.instagram.com/p/DarQxFgzshU/"
     },
     {
+      "slug": "fukuoka-green-party-8th-2027-05",
+      "name": "第8回 福岡グリーンパーティー",
+      "date": "2027-05-03",
+      "dateEnd": "2027-05-04",
+      "location": "志摩中央公園 屋根付きプロムナード（福岡県糸島市）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Dd54SCpyWKY/"
+    },
+    {
       "slug": "isij-big-bazaar-2027-05-23",
       "name": "サボテン・多肉植物ビッグバザール（2027年5月）",
       "date": "2027-05-23",
       "dateEnd": "2027-05-23",
-      "location": "調整中",
-      "eventStatus": "tbd",
+      "location": "五反田TOCビル",
+      "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
     },
     {
@@ -4004,8 +4120,8 @@
       "name": "サボテン・多肉植物ビッグバザール（2027年7月）",
       "date": "2027-07-11",
       "dateEnd": "2027-07-11",
-      "location": "調整中",
-      "eventStatus": "tbd",
+      "location": "五反田TOCビル",
+      "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
     },
     {
@@ -4013,8 +4129,8 @@
       "name": "サボテン・多肉植物ビッグバザール（2027年9月）",
       "date": "2027-09-26",
       "dateEnd": "2027-09-26",
-      "location": "調整中",
-      "eventStatus": "tbd",
+      "location": "五反田TOCビル",
+      "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
     },
     {
@@ -4022,8 +4138,8 @@
       "name": "サボテン・多肉植物ビッグバザール（2027年11月）",
       "date": "2027-11-28",
       "dateEnd": "2027-11-28",
-      "location": "調整中",
-      "eventStatus": "tbd",
+      "location": "五反田TOCビル",
+      "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
     }
   ],
@@ -4188,8 +4304,8 @@
       "name": "秋の多肉植物・サボテン展示会（樹里安）",
       "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
       "field": "sourceUrl",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": -1,
+      "alive": false
     },
     {
       "slug": "roots-market-inage-2026-10",
@@ -4220,6 +4336,14 @@
       "name": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
       "sourceUrl": "https://jolienursery.co.jp/pages/events",
       "field": "url",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "taniku-garden-marche-arakogawa-2026-10",
+      "name": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
+      "sourceUrl": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
+      "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
     },
