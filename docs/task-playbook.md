@@ -607,6 +607,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   関数=`onFormSubmit`、エラー率は空）
   **トリガー画面を開けない回がある（2026-10-07）。**定期実行で `script.google.com/home/triggers` への遷移が
   権限判定で拒否された。前日までの3回は開けている。拒否されたら別の経路で開き直さない。
+  10-08 も同じく拒否された(理由は `[Browser Navigate Exfil]`)。2回続いた。定期実行では開けない前提で、試すのは1回だけにする。
   その回は gviz 検算（行数 = `processed`）だけで新着を判定し、レポートに「トリガー未確認」と書く。
   検算はGASが送信を取りこぼせば翌日に差として出るので、新着の判定はこれで足りる。
 - **取りこぼしの回収は `backfillFromSheet`。**
