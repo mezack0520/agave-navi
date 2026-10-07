@@ -999,6 +999,38 @@
    "action": "fixed",
    "detail": "time が空だった。主催の告知 DYO3beUzO_p の 10:00〜15:00 を入れた",
    "mailedOn": "2026-10-07"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "第4回リアルイベ (2026-10-12)",
+   "action": "rejected",
+   "detail": "porto が相模国分寺手づくりマーケットのブースを借りて開く回(主催 @porto_taniku DckRofpmXHX)。上位の催事がハンドメイド市なので vendorBoothInHostEvent で見送り"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@santaanagarden Green & Aroma (2026-10-08〜26)",
+   "action": "rejected",
+   "detail": "家具店 ARFLEX FUKUOKA の観葉植物とアロマの店頭企画(DeMTfcwExqm)。plantCentric で見送り"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "オキボタ December 2026 in サンシャインシティ (2026-12-04)",
+   "action": "reviewed",
+   "detail": "画像だけの変化。公式頁は 12/4〜6・サンシャインシティ文化会館ビルのままで中止・延期の語なし。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-08",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "スモリ祭 2026秋 (2026-10-31)",
+   "action": "reviewed",
+   "detail": "日程が出た(ここばな庵 DeIx0_gsmWe: 10/31〜11/1 9:30〜16:00・50ブース超え)。出店者一覧が未公開なので undisclosed / revisit に移して eventDate を入れた"
   }
  ]
 }
