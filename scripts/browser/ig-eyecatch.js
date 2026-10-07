@@ -28,6 +28,13 @@
 // つかむことがあった(one-love-sano で雑談投稿の 940x529 を採っていた。
 // 2026-09-08 に12件を誤った真因はこれ)。
 //
+// **カルーセルは「見えている面積」で選ぶ(2026-10-08)。**隣のスライドも同じ寸法で
+// DOM に描画され、枠の overflow で隠れているだけなので、矩形の面積は表示中の
+// スライドと並ぶ。並ぶと実寸の大きいほうに落ち、表示中の1枚目(フライヤー)ではなく
+// 隣の写真を掴んでいた(西大寺ガーデンの SG fair、SPINE NOTE の ARCHIVE。5件中2件)。
+// 画像の矩形を overflow で切る祖先とビューポートで切り詰めた面積で並べる。
+// レイアウトが無く(面積が全て0)候補が複数なら、推測で選ばずに err を返す。
+//
 // ## リール投稿
 // /reel/<code> では img が描画されない。**/p/<code>/ に読み替えると
 // 表紙(無切り出し)が取れる。**それでも取れなければ動画なので諦める。
@@ -39,6 +46,12 @@
 // DOM からしか取れない。
 //
 // ## 使い方
+// 0. **ペインが隠れていると描画されない(2026-10-08)。**`document.visibilityState` が
+//    'hidden' のままで、投稿の主画像もプロフィールのグリッドも DOM に出ず、
+//    20秒待っても `no main image` / 投稿リンク0件になる。resize_window で寸法を
+//    与えても hidden のまま。**navigate の直後に computer の screenshot を1回撮ると
+//    'visible' になって描画される。**browser_batch では navigate → screenshot →
+//    javascript の順に並べる(screenshot は scale 0.3 で足りる)
 // 1. navigate で https://www.instagram.com/<handle>/ を開く
 // 2. 注入して window.igPickPost(name, [dates]) を呼ぶ。直近の投稿から
 //    キャプションで当該回を選び、投稿コードを返す
@@ -122,6 +135,24 @@
              score: best.score, nameHit: best.nh, dateHit: best.dh };
   };
 
+  // 画面に実際に見えている面積。overflow で切る祖先(カルーセルの枠)とビューポートで切り詰める。
+  // カルーセルは隣のスライドも同じ寸法で描画しておき、枠の overflow で隠している
+  function visibleArea(el) {
+    const r = el.getBoundingClientRect();
+    let L = r.left, T = r.top, R = r.right, B = r.bottom;
+    for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+      const cs = getComputedStyle(p);
+      if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') {
+        const q = p.getBoundingClientRect();
+        L = Math.max(L, q.left); T = Math.max(T, q.top);
+        R = Math.min(R, q.right); B = Math.min(B, q.bottom);
+      }
+    }
+    L = Math.max(L, 0); T = Math.max(T, 0);
+    R = Math.min(R, innerWidth || R); B = Math.min(B, innerHeight || B);
+    return Math.max(0, R - L) * Math.max(0, B - T);
+  }
+
   // いま開いている投稿ページの主画像を取って localStorage に積む
   window.igGrabHere = async function (slug, post, opt) {
     const o = Object.assign({ maxEdge: 900, quality: 0.72, waitSec: 20 }, opt || {});
@@ -138,17 +169,21 @@
                    && i.naturalWidth >= 300
                    && !i.closest('a[href*="/p/"]')
                    && !i.closest('a[href*="/reel/"]'))
-      .map(i => { const r = i.getBoundingClientRect();
-                  return { src: i.src, area: r.width * r.height,
-                           w: i.naturalWidth, h: i.naturalHeight,
-                           stp: (i.src.match(/stp=([^&]+)/) || [])[1] || '' }; })
-      // 面積で決まらないときは実寸の大きいほうを採る。
-      // レイアウト未計算(面積が全て0)でも破綻しないよう二段で並べる
-      .sort((a, b) => b.area - a.area || b.w * b.h - a.w * a.h);
+      .map(i => ({ src: i.src, vis: visibleArea(i),
+                   w: i.naturalWidth, h: i.naturalHeight,
+                   stp: (i.src.match(/stp=([^&]+)/) || [])[1] || '' }))
+      // 見えている面積で選ぶ。素の面積(矩形の幅x高さ)では、カルーセルの隣のスライドと
+      // 表示中のスライドが同寸で並び、実寸の大きい隣のスライドに落ちる。
+      // 実寸で並べるのはレイアウト未計算(見えている面積が全て0)のときだけ
+      .sort((a, b) => b.vis - a.vis || b.w * b.h - a.w * a.h);
     if (!cand.length) {
-      return { slug, err: 'no main image (' + o.waitSec + '秒待っても無い。動画投稿か描画前)' };
+      return { slug, err: 'no main image (' + o.waitSec + '秒待っても無い。動画投稿か描画前。ペインが隠れているなら screenshot を1回撮ってから呼び直す)' };
     }
     const pick = cand[0];
+    // レイアウトが無いと、どのスライドが表示中か分からない。候補が複数なら推測で選ばない
+    if (!(pick.vis > 0) && cand.length > 1) {
+      return { slug, err: 'layout not computed (' + cand.length + ' 候補。どれが表示中か分からない。screenshot を1回撮ってから呼び直す)' };
+    }
     // 切り出し指定つきのURLしか無いなら、それは主画像ではない
     if (/^c\d/.test(pick.stp)) {
       return { slug, err: 'cropped variant only', stp: pick.stp };
@@ -183,6 +218,6 @@
     acc.push({ slug, post: post || location.href, b64: btoa(bin) });
     localStorage.setItem('__acc', JSON.stringify(acc));
     return { slug, ok: 1, 元寸: bmp.width + 'x' + bmp.height, 保存: n + 'x' + n,
-             stp: pick.stp, bytes: bf.length, stored: acc.length };
+             stp: pick.stp, 候補: cand.length, bytes: bf.length, stored: acc.length };
   };
 })();

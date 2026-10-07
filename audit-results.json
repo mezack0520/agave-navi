@@ -1,5 +1,5 @@
 {
-  "total": 647,
+  "total": 635,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 118,
+      "count": 125,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -213,20 +213,20 @@
         "fukuyama-de-marche-8th-2026-11",
         "fumoto-plants-market-vol3-2026-10",
         "garden-link-festa-2026-10",
+        "garden-messe-aki-kanshasai-2026-10",
         "green-base-market-vol1-nishikata-2026-10",
         "green-plants-market-takeo-2026-10",
         "greensnap-marche-odaiba-2026",
         "greensnap-marche-toyosu-2026-autumn",
         "hachioji-jungle-vol7-2026-10",
-        "hana-no-eki-chikumagawa-taniku-hanbaikai-2026-10",
-        "hanatomofesta-2026"
+        "hana-no-eki-chikumagawa-taniku-hanbaikai-2026-10"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 237,
+      "count": 244,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 96,
+      "count": 89,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -298,7 +298,6 @@
         "enjoy-place-bangaihen-2026-12",
         "fukuoka-green-party-8th-2027-05",
         "gamagori-taniku-festa-6th-2026-11",
-        "garden-messe-aki-kanshasai-2026-10",
         "granterrace-chikusei-tanikusai-2026-11",
         "green-champuroo-vol2-2026-10",
         "hiroshima-cactus-succulent-ten-2026-10",
@@ -315,7 +314,8 @@
         "jurian-aki-taniku-cactus-2026-10",
         "ka78-kikakusai-6th-shimada-2026-11",
         "kadan-fes-2026-autumn",
-        "kakukaku-shikajika-6th-narakaki-2026-10"
+        "kakukaku-shikajika-6th-narakaki-2026-10",
+        "kasamajuku-tanikusai-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -667,7 +667,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -844,7 +844,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 96,
+      "count": 89,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-09 green-champuroo-vol2-2026-10",
@@ -858,21 +858,16 @@
         "2026-10-11 lahaina-rahachu-holiday-2026-10",
         "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
-        "2026-10-11 tropical-garden-house-hanbai-kamikawa-2026-10",
         "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10",
         "2026-10-12 nara-bikaku-fes-vol2-2026-10",
         "2026-10-14 kakukaku-shikajika-6th-narakaki-2026-10",
         "2026-10-16 suma-rikyu-cactus-succulent-tenjikai-2026-10",
         "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
-        "2026-10-17 picnic-garden-vol26-plaza-hana-fukushima-2026-10",
-        "2026-10-17 pineapples-bromeliad-protoleaf-futako-2026-10",
         "2026-10-17 plants-plants-plants-bhms-2026-10",
-        "2026-10-17 taniku-the-hanbaikai-aki-kibiji-2026-10",
         "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
         "2026-10-17 uomachi-botanical-night-market-2026-10",
         "2026-10-18 dokidoki-ibaraki-taniku-sokubaikai-2026-10-18",
         "2026-10-18 kinshakusai-vol6-2026-10",
-        "2026-10-18 saidaiji-garden-taniku-event-2026-10",
         "2026-10-18 sapporo-bikaku-expo-lv3-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
@@ -881,11 +876,16 @@
         "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10",
         "2026-10-25 botanoichi-meets-bikaku-yokocho-2026-10",
         "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
-        "2026-10-25 garden-messe-aki-kanshasai-2026-10",
         "2026-10-25 isij-tokyo-reikai-2026-10-25",
         "2026-10-25 roots-market-inage-2026-10",
         "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10",
-        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10"
+        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10",
+        "2026-10-30 toyama-saboten-taniku-9th-2026-10",
+        "2026-10-31 nightwalker-horie-2026-10",
+        "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
+        "2026-10-31 tanikuen-ohisama-aeon-hiezu-2026-10",
+        "2026-11-01 botariba-toyohashi-2026-11",
+        "2026-11-01 kasamajuku-tanikusai-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1041,21 +1041,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 12,
-      "items": [
-        "2026-10-10 king-plants-shuukakusai-kesennuma-2026-10: https://www.instagram.com/reel/DdyuHBKpl5b/（sourcePost）",
-        "2026-10-11 lahaina-rahachu-holiday-2026-10: https://www.instagram.com/p/Dd7cjBLkijG/（sourcePost）",
-        "2026-10-11 tropical-garden-house-hanbai-kamikawa-2026-10: https://www.instagram.com/reel/Dd81qUaqco3/（sourcePost）",
-        "2026-10-14 kakukaku-shikajika-6th-narakaki-2026-10: https://www.instagram.com/p/DdsPbFfmGXy/（caption）",
-        "2026-10-17 pineapples-bromeliad-protoleaf-futako-2026-10: https://www.instagram.com/p/DeB92TTz3CF/（sourcePost）",
-        "2026-10-17 picnic-garden-vol26-plaza-hana-fukushima-2026-10: https://www.instagram.com/p/DeGLe7Sk_OX/（sourcePost）",
-        "2026-10-17 taniku-the-hanbaikai-aki-kibiji-2026-10: https://www.instagram.com/p/DdyIrH1z4OP/（sourcePost）",
-        "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10: https://www.instagram.com/p/DdkHoHdzkhv/（caption）",
-        "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10: https://www.instagram.com/p/DeMSYhRFKyY/（caption）",
-        "2026-10-25 garden-messe-aki-kanshasai-2026-10: https://www.instagram.com/p/DeIz95NzmKC/（sourcePost）",
-        "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10: https://www.instagram.com/reel/DcpZRLWB-lT/（caption）",
-        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10: https://www.instagram.com/p/DeMSYhRFKyY/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
