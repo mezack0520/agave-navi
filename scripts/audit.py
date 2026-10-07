@@ -895,6 +895,28 @@ def main():
         '同一建物内の区画なら venue を「建物名 区画」の形にまとめる',
         severity='info')
 
+    # 9c-2. 詳細未定(tbd)なのに会場名が入っている(2026-10-08)
+    #       tbd は listing-policy の venueUnannounced(会場未発表)の印で、
+    #       venue / location は「調整中」にする約束。ISIJ ビッグバザールの2027年の6回は
+    #       venue に「五反田TOCビル 13階」(2026年の回の写し)を持ったまま tbd で、
+    #       会場が出ているのか、写しなのかが値から分からなくなっていた。
+    #       会場が告知に出たなら tbd を外し、出ていないなら venue を調整中に戻す。
+    #       修正前のデータ(78423372d)で6件、修正後0件を確認済み。
+    tbd_venue = []
+    for e in events:
+        if e.get('eventStatus') != 'tbd' or not is_upcoming(e, today_s):
+            continue
+        _named = [x for x in ((e.get('venue') or '').strip(),
+                              (e.get('location') or '').strip())
+                  if x and not is_vague_venue(x)]
+        if _named:
+            tbd_venue.append(f"{e['date']} {e['slug']}: {_named[0][:30]}")
+    add('tbd_with_named_venue', '詳細未定(tbd)なのに会場名が入っている',
+        sorted(tbd_venue),
+        '主催の告知を見て、会場が出ていれば venue/location を埋めて eventStatus を外す。'
+        '出ていなければ venue と location を「調整中」にする(前の回の会場を写さない)',
+        severity='urgent')
+
     # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
     #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する
     junk = []
