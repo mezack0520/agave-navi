@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-07",
+  "sweptOn": "2026-10-08",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,17 +16,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1208,
-    "in_scope": 276,
-    "covered": 159,
-    "known_rejected": 117,
+    "candidates": 1202,
+    "in_scope": 278,
+    "covered": 162,
+    "known_rejected": 115,
     "truncated_resolved": 135,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 187,
+    "in_scope_leafla": 185,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 89,
-    "gaps_raw": 0
+    "in_scope_nextmeet": 93,
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -34,5 +34,10 @@
     "10/02 追加 とちぎ花センターで多肉植物ミニ展示会＆即売会を...",
     "10/02 追加 lahainagardenで「らはちゅ〜hol..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-10-12",
+      "title": "第4回リアルイベ"
+    }
+  ]
 }
