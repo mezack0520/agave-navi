@@ -1,5 +1,5 @@
 {
-  "total": 653,
+  "total": 647,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -336,13 +336,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 4,
-      "items": [
-        "chinki-plants-flea-market-2027-01: 本文 4月11日/10月4日 が 2027-01-17〜2027-01-17 の外",
-        "chinki-plants-flea-market-2027-04: 本文 1月17日/10月4日 が 2027-04-11〜2027-04-11 の外",
-        "nbgarden-festa-shizuoka-2026-12: 本文 11月1日 が 2026-12-20〜2026-12-20 の外",
-        "taniku-garden-marche-arakogawa-2026-10: 本文 10月24日 が 2026-10-31〜2026-11-01 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
       "severity": "urgent"
     },
@@ -672,7 +667,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -735,10 +730,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 1,
-      "items": [
-        "雑貨のお店あさみや(3件) → /venue/v-05cef6bf/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -1471,10 +1464,8 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 1,
-      "items": [
-        "eyecatch_backlog: 直近中央値 68 → 89（+21）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },
