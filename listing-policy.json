@@ -1,6 +1,6 @@
 {
  "_note": "掲載基準の機械可読版。agave-event-update が判断に使う。about.html の掲載基準と整合させること。ここに書いていない類型に出会ったときだけ pending-judgments に積む(同じ問いを繰り返し人間に投げないため)。",
- "updated": "2026-10-05",
+ "updated": "2026-10-07",
  "primarySource": {
   "rule": "主催者の公式サイト・公式SNSに当該回の告知があることを必須とする",
   "insufficient": [
@@ -82,6 +82,13 @@
    "how": "催事本体の名称・主催・出店内訳で plantCentric / compositeEvents / outOfScopeGenres を当てる。本体が掲載相当なら本体の名前で1件立て、説明文に植物店の出店を書く",
    "notApplies": "百貨店やモールの区画を1店が単独で使うPOPUPは対象外。催事名そのものがその店のPOPUPなので、出店者イベントではない。阪急メンズ東京 × RAFLUM POP-UP STORE、notre atelier POP UP STORE AT TOKYO はこちらで掲載している",
    "precedent": "N3SELECT 博多阪急POPUP(2026-09-24〜27)は、博多阪急が主催する『Botanical & Wellness Marché』(8階催場)の1区画。催事本体は花と緑とウェルネスの総合催事で、ハーブティー・生姜・焼菓子・チーズケーキなど飲食が中心のため見送り(2026-09-12)",
+   "doNotEscalate": true
+  },
+  "rareAroids": {
+   "rule": "希少株・コレクター向けを掲げるアロイド(モンステラ・アンスリウム・フィロデンドロン等)の専門の即売会・展示会は掲載し、タグ「アロイド」を付ける。一般の観葉植物店が中心の回や、流通量の多い品種の品評会が目玉の回は見送る",
+   "decided": "2026-10-07",
+   "decidedBy": "目崎(要判断キューの提案を承認)",
+   "precedent": "RARE PLANTS COLLECTION 2026-11-18〜24 阪急うめだ本店8階 GREEN AGE(RARE PLANTS JAPAN 共同企画) → 掲載。GREAT GREEN GARDENS VOL.5(2026-11-01)は観葉植物店が中心で品評会が目玉 → 見送り(2026-10-03)のまま",
    "doNotEscalate": true
   }
  },
