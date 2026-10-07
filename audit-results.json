@@ -1,5 +1,5 @@
 {
-  "total": 643,
+  "total": 653,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 93,
+      "count": 96,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -290,6 +290,8 @@
         "botanoichi-senju-2026-11",
         "botariba-toyohashi-2026-11",
         "ceramall-hanbaikai-2026-11",
+        "chinki-plants-flea-market-2027-01",
+        "chinki-plants-flea-market-2027-04",
         "chuushokushobutsusai-2026",
         "dokidoki-ibaraki-taniku-sokubaikai-2026-10-18",
         "dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
@@ -313,9 +315,7 @@
         "jurian-aki-taniku-cactus-2026-10",
         "ka78-kikakusai-6th-shimada-2026-11",
         "kadan-fes-2026-autumn",
-        "kakukaku-shikajika-6th-narakaki-2026-10",
-        "kasamajuku-tanikusai-2026-11",
-        "king-plants-shuukakusai-kesennuma-2026-10"
+        "kakukaku-shikajika-6th-narakaki-2026-10"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -336,8 +336,11 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
+      "count": 4,
       "items": [
+        "chinki-plants-flea-market-2027-01: 本文 4月11日/10月4日 が 2027-01-17〜2027-01-17 の外",
+        "chinki-plants-flea-market-2027-04: 本文 1月17日/10月4日 が 2027-04-11〜2027-04-11 の外",
+        "nbgarden-festa-shizuoka-2026-12: 本文 11月1日 が 2026-12-20〜2026-12-20 の外",
         "taniku-garden-marche-arakogawa-2026-10: 本文 10月24日 が 2026-10-31〜2026-11-01 の外"
       ],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
@@ -662,7 +665,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -841,7 +844,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 93,
+      "count": 96,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-09 green-champuroo-vol2-2026-10",
@@ -1461,8 +1464,10 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "eyecatch_backlog: 直近中央値 68 → 89（+21）"
+      ],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },

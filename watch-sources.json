@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-08 07:34 JST",
+ "generated": "2026-10-08 07:36 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 311,
-  "awaitingNextEdition": 305,
+  "igAccounts": 312,
+  "awaitingNextEdition": 304,
   "officialSiteCandidates": 82,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 78,
+  "igNeedsBrowser": 79,
   "igDead": 7
  },
  "igAccounts": [
@@ -136,6 +136,16 @@
    "eventCount": 4,
    "lastEventName": "Plant Freaks in オリナス錦糸町 2026（11月）",
    "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "unique_plants.community",
+   "url": "https://www.instagram.com/unique_plants.community/",
+   "eventCount": 4,
+   "lastEventName": "珍奇植物フリーマーケット（2027年4月）",
+   "lastEventDate": "2027-04-11",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -676,16 +686,6 @@
    "eventCount": 2,
    "lastEventName": "叢宴 秋のボタニカルマーケット in 富士市中央公園",
    "lastEventDate": "2026-10-03",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "unique_plants.community",
-   "url": "https://www.instagram.com/unique_plants.community/",
-   "eventCount": 2,
-   "lastEventName": "第10回 珍奇植物フリーマーケット",
-   "lastEventDate": "2026-10-04",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -1609,6 +1609,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "nb_garden2015",
+   "url": "https://www.instagram.com/nb_garden2015/",
+   "eventCount": 1,
+   "lastEventName": "NBgardenフェスタ",
+   "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "aichinn_syokusai",
