@@ -154,7 +154,7 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
 # 'サンシャインシティ' は削除(2026-08-21)。実データの location は
 # 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
 # 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
-_VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
+_VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キーを建物に(フロアは回ごとに変わる。旧キーは「五反田TOCビル 13階」)
                 '久屋大通庭園フラリエ':'flarie','研究学園駅前公園（つくば市）':'kenkyu-gakuen-park',
                 '千住本氷川神社':'senju-hikawa-jinja',
                 # 掲載3件以上の会場だけローマ字URLにする(2026-08-20)。
@@ -176,7 +176,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル 13階':'gotanda-toc',
                 # 2026-10-03 X-PLANTS 即売会(10/10)の掲載で3件になった
                 'プロトリーフ二子玉川本店':'protoleaf-futakotamagawa',
                 # 2026-10-04 Direct U.S. Style POP UP(10/17)の掲載で3件になった
-                'カトーエンゲー東京':'kato-engei-tokyo'}
+                'カトーエンゲー東京':'kato-engei-tokyo',
+                # 2026-10-08 あさみやin多肉祭 Xmasマーケット(12/20)の掲載で3件になった
+                '雑貨のお店 あさみや':'zakka-asamiya'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -188,6 +190,8 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 ハッシュ → ローマ字
+    'v-05cef6bf': '雑貨のお店 あさみや',   # 2026-10-08
+    'toc-8c00': '五反田TOCビル',   # 2026-10-08 ISIJ 2027年の回だけが別キーで頁を立てた分(数分だけ公開)
     'v-aafb626c': 'カトーエンゲー東京',   # 2026-10-04
     'v-e5cca93b': 'プロトリーフ二子玉川本店',   # 2026-10-03
     'v-6d3a4d6d': '咲くやこの花館',     # 2026-09-23

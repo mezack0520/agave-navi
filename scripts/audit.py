@@ -5305,10 +5305,14 @@ def main():
     # 全部が upcoming を持つときだけ upcoming を使う。
     _METRIC_SCALES_WITH_UPCOMING = {
         'upcoming_with_image', 'upcoming_no_image', 'ongoing_events',
+        # eyecatch_backlog は upcoming_no_image と同じ集合を数える(2026-10-08 に 96 / 96)。
+        # ここに無かったので、まとめて掲載した日に「直近中央値 68 → 89」で鳴った。
+        # 掲載を15件足せば画像の無い回は15件増える。それは異常ではない
+        'eyecatch_backlog',
     }
     # その指標が「異常を示す向き」。反対向きの動きは、
     # その指標を足した理由からして異常の証拠にならない。
-    _METRIC_ALARM_DIR = {'upcoming_no_image': +1, 'events_with_image': -1}
+    _METRIC_ALARM_DIR = {'upcoming_no_image': +1, 'eyecatch_backlog': +1, 'events_with_image': -1}
 
     # 暦だけで動く指標は、ここでは判定できない。
     # upcoming_with_image は「増えたら正常・減ったら消失」という前提で

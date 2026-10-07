@@ -3674,6 +3674,19 @@ ISIJ ビッグバザールの2027年の6回は、07-31 に会場未発表(tbd)�
 「今年は◯時開場だった」のような補足も書かない。
 検査 `audit.tbd_with_named_venue`(urgent): 開催予定で tbd なのに venue / location に会場名が入っている回を出す
 (tbd は「会場未発表」の印なので、会場名と同居すると写しか告知かが値から分からない)。修正前のデータで6件、修正後0件を確認。
+**直した後に会場ページが割れた。**2027年の回の location を「五反田TOCビル」にしたら、会場ページを束ねる
+`venue_key` が「五反田TOCビル13階」(2026年の4回)と別のキーになり、2027年の6回だけで `/venue/toc-8c00/` が立った
+(`safe_slug` が英字を残すので `v-` で始まらず、`venue_slug_romaji_candidates` にも出ない)。会場ページは建物で束ねるのが筋なので、
+ISIJ の10回の location を「五反田TOCビル」に揃え、`_VENUE_ROMAJI_RAW` のキーを建物に移した(URL の gotanda-toc は不変、
+toc-8c00 は中継頁)。**location を書き換えたら、その回が今までと同じ会場ページに入るかを `sitelib.venue_slug()` で確かめる。**
+
+### まとめて掲載した日に eyecatch_backlog が metric_moved で鳴った (2026-10-08)
+
+15件を足した日に `metric_moved` が「eyecatch_backlog: 直近中央値 68 → 89」で urgent になった。eyecatch_backlog は
+upcoming_no_image と同じ集合(この日は 96 / 96)なのに、開催予定の母数で換算する `_METRIC_SCALES_WITH_UPCOMING` に入っておらず、
+掲載を足した分がそのまま「急変」に見えていた。母数の換算と、増える向きだけを見る `_METRIC_ALARM_DIR` に足した。
+**同じ集合を数える指標を足したら、既存の指標と同じ換算・向きの表に入れる。**手元で build-all → audit を回すと、
+足した日の分は掲載の作業中に鳴りを確かめられる(コピーした clone で回せば作業ツリーを汚さない)。
 
 ### PDF のチラシにテキスト層が無いときは、画像にして読む (2026-10-08)
 
