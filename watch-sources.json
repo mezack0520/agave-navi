@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-08 06:44 JST",
+ "generated": "2026-10-08 07:32 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 307,
-  "awaitingNextEdition": 307,
-  "officialSiteCandidates": 81,
+  "igAccounts": 311,
+  "awaitingNextEdition": 305,
+  "officialSiteCandidates": 82,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 74,
+  "igNeedsBrowser": 78,
   "igDead": 7
  },
  "igAccounts": [
@@ -86,6 +86,16 @@
    "eventCount": 5,
    "lastEventName": "ボタニカル横丁（2026年11月）",
    "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "minicar_ya_san",
+   "url": "https://www.instagram.com/minicar_ya_san/",
+   "eventCount": 5,
+   "lastEventName": "あさみやin多肉祭 Xmasマーケット",
+   "lastEventDate": "2026-12-20",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -181,6 +191,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "earthwalk_plants",
+   "url": "https://www.instagram.com/earthwalk_plants/",
+   "eventCount": 3,
+   "lastEventName": "BOTANICAL STYLE -Fukuoka Minato-",
+   "lastEventDate": "2026-12-19",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "rojiuranogibousi",
    "url": "https://www.instagram.com/rojiuranogibousi/",
    "eventCount": 3,
@@ -211,21 +231,11 @@
    "apiStatus": "api"
   },
   {
-   "handle": "earthwalk_plants",
-   "url": "https://www.instagram.com/earthwalk_plants/",
-   "eventCount": 2,
-   "lastEventName": "BOTANICAL STYLE -Beppu Oita-",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "minicar_ya_san",
-   "url": "https://www.instagram.com/minicar_ya_san/",
-   "eventCount": 2,
-   "lastEventName": "空のえき「そ・ら・ら」in 多肉祭",
-   "lastEventDate": "2026-10-11",
+   "handle": "fukuoka_green_party",
+   "url": "https://www.instagram.com/fukuoka_green_party/",
+   "eventCount": 3,
+   "lastEventName": "第8回 福岡グリーンパーティー",
+   "lastEventDate": "2027-05-03",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -311,6 +321,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "_sunnydrop_",
+   "url": "https://www.instagram.com/_sunnydrop_/",
+   "eventCount": 2,
+   "lastEventName": "sunny drop 5th Anniversary 感謝祭",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "dokidoki_ibaraki",
    "url": "https://www.instagram.com/dokidoki_ibaraki/",
    "eventCount": 2,
@@ -359,6 +379,26 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "greendays_emi_8783",
+   "url": "https://www.instagram.com/greendays_emi_8783/",
+   "eventCount": 2,
+   "lastEventName": "セラモール販売会（2026年11月）",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "lahainagarden",
+   "url": "https://www.instagram.com/lahainagarden/",
+   "eventCount": 2,
+   "lastEventName": "LahainaGarden 7周年記念祭",
+   "lastEventDate": "2026-11-08",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "jss_event_info",
@@ -631,16 +671,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "fukuoka_green_party",
-   "url": "https://www.instagram.com/fukuoka_green_party/",
-   "eventCount": 2,
-   "lastEventName": "第7回 福岡グリーンパーティー",
-   "lastEventDate": "2026-09-27",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "bocchi_syokudou",
    "url": "https://www.instagram.com/bocchi_syokudou/",
    "eventCount": 2,
@@ -901,16 +931,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "lahainagarden",
-   "url": "https://www.instagram.com/lahainagarden/",
-   "eventCount": 1,
-   "lastEventName": "らはちゅ〜Holiday",
-   "lastEventDate": "2026-10-11",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "nara.bikakufes",
    "url": "https://www.instagram.com/nara.bikakufes/",
    "eventCount": 1,
@@ -1081,6 +1101,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "saidaijigarden",
+   "url": "https://www.instagram.com/saidaijigarden/",
+   "eventCount": 1,
+   "lastEventName": "西大寺ガーデン 多肉イベント（2026秋）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "nagashima_marche",
    "url": "https://www.instagram.com/nagashima_marche/",
    "eventCount": 1,
@@ -1201,6 +1231,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "arakogawa_p",
+   "url": "https://www.instagram.com/arakogawa_p/",
+   "eventCount": 1,
+   "lastEventName": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "burari_plants",
    "url": "https://www.instagram.com/burari_plants/",
    "eventCount": 1,
@@ -1299,6 +1339,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "kitakyushu_botanical_market",
+   "url": "https://www.instagram.com/kitakyushu_botanical_market/",
+   "eventCount": 1,
+   "lastEventName": "KITAKYUSHU BOTANICAL MARKET Vol.03",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_wonder_market_",
@@ -1409,6 +1459,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "ondo_6465",
+   "url": "https://www.instagram.com/ondo_6465/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL POP UP（ONDO・鞍手町）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mahota029",
@@ -1954,16 +2014,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "_sunnydrop_",
-   "url": "https://www.instagram.com/_sunnydrop_/",
-   "eventCount": 1,
-   "lastEventName": "On The Deck 3rd",
-   "lastEventDate": "2026-06-21",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
   },
   {
    "handle": "ta29sukijaken_ichi",
@@ -2826,16 +2876,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "greendays_emi_8783",
-   "url": "https://www.instagram.com/greendays_emi_8783/",
-   "eventCount": 1,
-   "lastEventName": "セラモール販売会（2026年9月）",
-   "lastEventDate": "2026-09-22",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "kisarazu_c_and_s",
    "url": "https://www.instagram.com/kisarazu_c_and_s/",
    "eventCount": 1,
@@ -3186,17 +3226,6 @@
    "apiStatus": "none"
   },
   {
-   "series": "第7回 福岡グリーンパーティー",
-   "lastSlug": "fukuoka-green-party-7th-2026",
-   "lastDate": "2026-09-27",
-   "lastEnd": "2026-09-27",
-   "monthsSinceLast": 1,
-   "igHandle": "fukuoka_green_party",
-   "officialUrl": "https://www.instagram.com/fukuoka_green_party/",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
    "series": "妙高多肉市場 vol.15",
    "lastSlug": "myoko-taniku-market-15th-2026",
    "lastDate": "2026-09-27",
@@ -3536,6 +3565,17 @@
    "officialUrl": "https://kariya-urbanfes.com/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "Green Summit vol.22 in Yamagata",
+   "lastSlug": "green-summit-vol22-yamagata-2026",
+   "lastDate": "2026-09-06",
+   "lastEnd": "2026-09-06",
+   "monthsSinceLast": 1,
+   "igHandle": "green_summit_touhoku",
+   "officialUrl": "https://www.instagram.com/green_summit_touhoku/",
+   "recurring": false,
+   "apiStatus": "api"
   }
  ],
  "officialSiteCandidates": [
@@ -3654,6 +3694,12 @@
    "eventDate": "2026-10-31"
   },
   {
+   "domain": "nga.or.jp",
+   "url": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
+   "eventName": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
+   "eventDate": "2026-10-31"
+  },
+  {
    "domain": "helisgarden.wraptas.site",
    "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
    "eventName": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
@@ -3712,12 +3758,6 @@
    "url": "https://www.fumakilla.co.jp/new/6926/",
    "eventName": "カダンフェス2026 春",
    "eventDate": "2026-04-25"
-  },
-  {
-   "domain": "yfg-fes.jp",
-   "url": "https://yfg-fes.jp/",
-   "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
-   "eventDate": "2026-05-02"
   }
  ],
  "unresolvedIgHandles": []
