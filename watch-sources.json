@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-07 08:44 JST",
+ "generated": "2026-10-07 09:12 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 306,
+  "igAccounts": 307,
   "awaitingNextEdition": 307,
-  "officialSiteCandidates": 80,
+  "officialSiteCandidates": 81,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 76,
+  "igNeedsBrowser": 77,
   "igDead": 7
  },
  "igAccounts": [
@@ -251,6 +251,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "tropicalgarden_saitama",
+   "url": "https://www.instagram.com/tropicalgarden_saitama/",
+   "eventCount": 2,
+   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "tanikudayo.zeninsyuugou",
    "url": "https://www.instagram.com/tanikudayo.zeninsyuugou/",
    "eventCount": 2,
@@ -265,16 +275,6 @@
    "url": "https://www.instagram.com/iwabaegarden/",
    "eventCount": 2,
    "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "tropicalgarden_saitama",
-   "url": "https://www.instagram.com/tropicalgarden_saitama/",
-   "eventCount": 2,
-   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
    "priority": 0,
@@ -451,20 +451,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "greensanta2020",
-   "url": "https://www.instagram.com/greensanta2020/",
+   "handle": "engeiyatanaka",
+   "url": "https://www.instagram.com/engeiyatanaka/",
    "eventCount": 2,
-   "lastEventName": "SANTA_29 FESTA vol.20（サンタフェ）",
+   "lastEventName": "飯塚農園 出張販売会（園芸屋たなか）",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "engeiyatanaka",
-   "url": "https://www.instagram.com/engeiyatanaka/",
+   "handle": "greensanta2020",
+   "url": "https://www.instagram.com/greensanta2020/",
    "eventCount": 2,
-   "lastEventName": "飯塚農園 出張販売会（園芸屋たなか）",
+   "lastEventName": "SANTA_29 FESTA vol.20（サンタフェ）",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 0,
@@ -1369,6 +1369,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "rareplantsjapan2025",
+   "url": "https://www.instagram.com/rareplantsjapan2025/",
+   "eventCount": 1,
+   "lastEventName": "RARE PLANTS COLLECTION",
+   "lastEventDate": "2026-11-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "moro2_plants",
@@ -3656,6 +3666,12 @@
    "eventDate": "2026-11-07"
   },
   {
+   "domain": "rareplantsjapan.jp",
+   "url": "https://rareplantsjapan.jp/2210",
+   "eventName": "RARE PLANTS COLLECTION",
+   "eventDate": "2026-11-18"
+  },
+  {
    "domain": "threads.com",
    "url": "https://www.threads.com/@honoka.kakogawa",
    "eventName": "緑楽宴",
@@ -3702,12 +3718,6 @@
    "url": "https://yfg-fes.jp/",
    "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
    "eventDate": "2026-05-02"
-  },
-  {
-   "domain": "visit-oita.jp",
-   "url": "https://www.visit-oita.jp/events/detail/13493",
-   "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
   }
  ],
  "unresolvedIgHandles": []
