@@ -178,7 +178,15 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キー�
                 # 2026-10-04 Direct U.S. Style POP UP(10/17)の掲載で3件になった
                 'カトーエンゲー東京':'kato-engei-tokyo',
                 # 2026-10-08 あさみやin多肉祭 Xmasマーケット(12/20)の掲載で3件になった
-                '雑貨のお店 あさみや':'zakka-asamiya'}
+                '雑貨のお店 あさみや':'zakka-asamiya',
+                # 2026-10-09 秋の展示即売会(10/24-25)の掲載で3件になった
+                'みのり花木センター インターパーク店':'minori-kaboku-interpark',
+                # 2026-10-09 ボタニカルX 2027年3月・9月の掲載で3件になった
+                'ヨークタウン坂東':'yorktown-bando',
+                # 2026-10-09 路地裏ボタニカル 2027年8月の掲載で3件になった
+                'ワイルドプランツ路地裏のギボウシ':'rojiura-no-gibousi',
+                # 2026-10-09 Lier.多肉フェスティバル in 刈谷(12/10)の掲載で3件になった
+                '刈谷市産業振興センター あいおいホール':'kariya-aioi-hall'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -190,6 +198,10 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
     # 2026-08-20 ハッシュ → ローマ字
+    'v-0d40a798': 'みのり花木センター インターパーク店',   # 2026-10-09
+    'v-934512a0': 'ヨークタウン坂東',   # 2026-10-09 (ハッシュURLは同日の取り込みで数分だけ公開)
+    'v-e7039b8b': 'ワイルドプランツ路地裏のギボウシ',   # 2026-10-09
+    'v-94908e1a': '刈谷市産業振興センター あいおいホール',   # 2026-10-09
     'v-05cef6bf': '雑貨のお店 あさみや',   # 2026-10-08
     'toc-8c00': '五反田TOCビル',   # 2026-10-08 ISIJ 2027年の回だけが別キーで頁を立てた分(数分だけ公開)
     'v-aafb626c': 'カトーエンゲー東京',   # 2026-10-04
@@ -1581,6 +1593,31 @@ def admission_is_free(admission):
     if '無料' not in a:
         return False
     return not _ADMISSION_PAID_HINT.search(a)
+
+
+# 「入場無料」の前に条件が付いている行(2026-10-09)。enrich_events.py は頁の本文から
+# 素の「入場無料」を拾って admission に書いていたので、オキボタ March 2027 の公式頁の
+# 「最終日は入場無料」から、3日間とも無料の回として admission=入場無料 が入った
+# (MAX の回は 9/19・9/20 が有料)。同じ形は「12:00以降：入場無料」(先行入場が有料)・
+# 「中学生以下は入場無料」でも起きる。条件の語が同じ行の手前にあれば素の値として採らない。
+_FREE_CONDITION_RE = re.compile(
+    r'最終日|初日|[0-9０-９]+\s*日\s*[（(]?[月火水木金土日]?[)）]?\s*(?:は|のみ|だけ|限定)'
+    r'|以降|以下|未満|未就学|[小中高]学生|大学生|学生|歳|先着|当日|前売|時から|時以降|のみ|限り|午後|午前')
+
+
+def free_admission_is_conditional(text, pos):
+    """text の pos にある「入場無料」が、同じ行の手前に条件を伴っていれば True。
+
+    素の「入場無料」を admission に採るかどうかの判定。True の行からは採らない
+    (欠けているほうが、条件付きの無料を全日無料と書くよりよい)。"""
+    start = text.rfind('\n', 0, pos) + 1
+    before = text[start:pos]
+    end = text.find('\n', pos)
+    after = text[pos:end if end >= 0 else len(text)]
+    if _FREE_CONDITION_RE.search(before):
+        return True
+    # 「入場無料（3/21のみ）」「入場無料は日曜だけ」のように後ろに付く条件
+    return bool(re.match(r'入場無料\s*[（(]?[^。\n]{0,12}(?:のみ|だけ|限定|以降)', after))
 
 
 # 掲載値が「機構は正常・中身が異常」になっていないかの単一情報源(2026-10-07 に

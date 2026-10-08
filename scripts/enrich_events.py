@@ -213,13 +213,18 @@ def extract_page_info(url):
         r'(?:^|\n)\s*入場[料金]?\s*\n([^\n]{3,80})',
         r'(一般入?場?\s*[：:]?\s*[\d,]+円(?:[^\n]{0,40})?)',
         r'(前売[りり]?\s*[：:]?\s*[\d,]+円)',
-        r'(入場無料)',
         r'([\d,]+円\s*[（(].*?[）)])',
     ]
     prices = []
     for pat in price_patterns:
         for m in re.finditer(pat, text):
             prices.append(m.group().strip())
+    # 素の「入場無料」は、同じ行に条件(最終日は・12:00以降・中学生以下は…)が付いていない
+    # ときだけ採る。条件付きの無料を全日無料として書いていた(2026-10-09 オキボタ March 2027)。
+    # 規則は sitelib.free_admission_is_conditional
+    for m in re.finditer('入場無料', text):
+        if not sitelib.free_admission_is_conditional(text, m.start()):
+            prices.append('入場無料')
     if prices:
         info['prices_found'] = list(set(prices))[:5]
 
@@ -660,7 +665,20 @@ def generate_report(results, removed_names=None):
     return report
 
 
+def _self_test_free_admission():
+    """条件付きの「入場無料」を素の入場無料として採らないこと(2026-10-09)。main() が毎回呼ぶ。"""
+    cases = [('最終日は入場無料', True), ('12:00以降：入場無料', True),
+             ('中学生以下は入場無料', True), ('3月21日（日）は入場無料', True),
+             ('🎫 入場無料 🚗 駐車場無料', False), ('開催時間 10:00～16:00\n入場無料', False)]
+    bad = [t for t, want in cases
+           if sitelib.free_admission_is_conditional(t, t.index('入場無料')) != want]
+    if bad:
+        print(f"SELFTEST-FAILED free_admission_is_conditional: {bad}")
+    return not bad
+
+
 def main():
+    _self_test_free_admission()
     parser = argparse.ArgumentParser(description='Enrich event information')
     parser.add_argument('--write-back', action='store_true',
         help='Write discovered imageUrl/url back to events.json (for empty fields only)')
