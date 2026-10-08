@@ -1,5 +1,5 @@
 {
-  "total": 742,
+  "total": 736,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -667,7 +667,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -733,13 +733,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 4,
-      "items": [
-        "みのり花木センターインターパーク店(3件) → /venue/v-0d40a798/",
-        "ヨークタウン坂東(3件) → /venue/v-934512a0/",
-        "ワイルドプランツ路地裏のギボウシ(3件) → /venue/v-e7039b8b/",
-        "刈谷市産業振興センターあいおいホール(3件) → /venue/v-94908e1a/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -1268,11 +1263,8 @@
     },
     "shared_source_page_multi_date": {
       "title": "同じ出典頁を読む回が別の日付を持っている",
-      "count": 2,
-      "items": [
-        "https://hanatomofesta.com/ → 未保護 hanatomofesta-10th-makuhari-2027-04, hanatomofesta-2026 (同じ頁を読む回 2件)",
-        "https://www.threads.com/@38_ten_/post/Dd-Hh5mE5Iv → 未保護 sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-10, sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-17 (同じ頁を読む回 2件)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知頁が回ごとに分かれているなら sourceUrl をそちらへ。分かれていないなら autoDateUpdate: false を入れて自動更新から外す",
       "severity": "info"
     },
