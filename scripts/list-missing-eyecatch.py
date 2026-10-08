@@ -54,6 +54,21 @@ def classify(ev):
     return 'none', ''
 
 
+POST_CODE = re.compile(r'instagram\.com/(?:p|reel|tv)/([A-Za-z0-9_-]+)')
+
+
+def rejected_hint(rows, hint):
+    """hint の投稿が scripts/eyecatch-rejected.json でこの回に不採用なら、その理由"""
+    m = POST_CODE.search(hint or '')
+    if not m:
+        return ''
+    for r in rows:
+        n = POST_CODE.search(r.get('post') or '')
+        if n and n.group(1) == m.group(1):
+            return r.get('reason') or '(理由なし)'
+    return ''
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--kind', help='igPost / igProfile / web / none')
@@ -63,6 +78,11 @@ def main():
 
     with open(os.path.join(REPO, 'events.json'), encoding='utf-8') as f:
         events = json.load(f)
+    try:
+        with open(os.path.join(SCRIPT_DIR, 'eyecatch-rejected.json'), encoding='utf-8') as f:
+            rejected = json.load(f).get('items', {})
+    except (OSError, ValueError):
+        rejected = {}
     today = today_jst()
 
     out = []
@@ -73,12 +93,20 @@ def main():
         if not d or (de or d) < today:
             continue
         kind, hint = classify(e)
-        out.append({
+        row = {
             'slug': e.get('slug'), 'name': e.get('name'),
             'date': e.get('date'), 'dateEnd': e.get('dateEnd') or e.get('date'),
             'prefecture': e.get('prefecture'),
             'kind': kind, 'hint': hint,
-        })
+        }
+        # 出典の投稿を既に見て捨てた回は印を付ける。開き直しても同じ画像しか出ない。
+        # 2026-10-09: Lier.多肉フェスティバル24会場の出典 DdszFGQBiY- は花友フェスタの
+        # フライヤーで、一覧からは分からず1枠を使って開いた。主催のプロフィールから
+        # その回の告知を探すか、翌日以降に回す
+        why = rejected_hint(rejected.get(e.get('slug')) or [], hint) if kind == 'igPost' else ''
+        if why:
+            row['hintRejected'] = why
+        out.append(row)
     out.sort(key=lambda x: x['date'])
 
     if args.counts:

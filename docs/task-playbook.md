@@ -2179,6 +2179,14 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   中央が幼児の写真。public repo に置くと主催の削除が及ばないので、`pending-judgments.json` の
   `agave-navi-eyecatch:flyer-with-child-photo` に積んだ。決まったら規則を listing-policy に移し、この項を消す。
 
+- **`list-missing-eyecatch.py` は、出典の投稿を既に捨てた回に `hintRejected` を付ける。**(2026-10-09)
+  Lier.多肉フェスティバル24会場の出典 `DdszFGQBiY-` は巡業日程が本文にあるだけで、画像は
+  第9回花友フェスタ(12/19 インテックス大阪)のフライヤーだった。一覧からは分からず1枠を使って開いた。
+  24会場ぶんを `eyecatch-rejected.json` に記録したので、今は一覧に印が出る。
+  **印の付いた回は同じ投稿を開き直さない。**主催のプロフィールか会場側の告知からその回の投稿を探す
+  (高知会場は蔦屋書店の告知 `DeLMPWsy9vF` に会場・日付入りのフライヤーがあった)。
+  igPost 73件のうち40件に印が付く。対象を選ぶ前に `hintRejected` の無い回へ絞る。
+
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
 `primarySource.vendorAnnouncementsOnly` は「出店者の告知は主催の告知の代わりに
