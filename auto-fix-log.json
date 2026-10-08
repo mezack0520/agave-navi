@@ -1132,7 +1132,8 @@
    "kind": "cancel_suspects",
    "target": "MIDOLIEN（ミドリアン） (2026-10-09)",
    "action": "reviewed",
-   "detail": "weekend.osaka/16061/ を取り直し、会期10/9-10・HONO のまま中止・延期の語なし。cancel-reviewed.json に記録"
+   "detail": "weekend.osaka/16061/ を取り直し、会期10/9-10・HONO のまま中止・延期の語なし。cancel-reviewed.json に記録",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1140,7 +1141,8 @@
    "kind": "cancel_suspects",
    "target": "多肉だヨ！全員集合 in とっとり花回廊 (2026-10-17)",
    "action": "reviewed",
-   "detail": "花回廊の告知頁は 10/17-18 9:00〜15:00 のまま。出店者の追加のみ。cancel-reviewed.json に記録"
+   "detail": "花回廊の告知頁は 10/17-18 9:00〜15:00 のまま。出店者の追加のみ。cancel-reviewed.json に記録",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1148,7 +1150,8 @@
    "kind": "cancel_suspects",
    "target": "第10回 ボタニカルライフ (2026-11-07)",
    "action": "reviewed",
-   "detail": "画像だけの変化。11/7-8 笠間工芸の丘のまま。cancel-reviewed.json に記録"
+   "detail": "画像だけの変化。11/7-8 笠間工芸の丘のまま。cancel-reviewed.json に記録",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1156,7 +1159,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "@botajam2026 2026-11-06",
    "action": "reviewed",
-   "detail": "ボランティア募集の投稿で、11/6 は前日搬入・設営の日。本番の BOTAJAM 2026(11/7-8)は掲載済み"
+   "detail": "ボランティア募集の投稿で、11/6 は前日搬入・設営の日。本番の BOTAJAM 2026(11/7-8)は掲載済み",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1164,7 +1168,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "@uell_creators 2026-10-11",
    "action": "reviewed",
-   "detail": "MIDOLIEN(10/9-10・HONO)の設営報告の投稿。会期は掲載済みの2日間のまま"
+   "detail": "MIDOLIEN(10/9-10・HONO)の設営報告の投稿。会期は掲載済みの2日間のまま",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1172,7 +1177,8 @@
    "kind": "tbd",
    "target": "BOTANICAL BOTANICAL OSAKA (10/31)・OKINAWA (11/14)",
    "action": "skipped",
-   "detail": "主催 @botanical.botanical の最新投稿は福岡回(10/3-4)の御礼まで。大阪・沖縄の会場は未発表"
+   "detail": "主催 @botanical.botanical の最新投稿は福岡回(10/3-4)の御礼まで。大阪・沖縄の会場は未発表",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1180,7 +1186,8 @@
    "kind": "tbd",
    "target": "まるっと植物fes!! (11/21-22)",
    "action": "skipped",
-   "detail": "主催の10/8の投稿は2日間開催の再告知と『正式な告知画像は10月末』まで。会場は未発表"
+   "detail": "主催の10/8の投稿は2日間開催の再告知と『正式な告知画像は10月末』まで。会場は未発表",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1188,7 +1195,8 @@
    "kind": "tbd",
    "target": "BOTANICAL STYLE -Fukuoka Minato- (12/19-20)・珍奇植物フリーマーケット 2027年1月/4月",
    "action": "skipped",
-   "detail": "主催 @earthwalk_plants・@unique_plants.community とも会場の告知なし"
+   "detail": "主催 @earthwalk_plants・@unique_plants.community とも会場の告知なし",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1196,7 +1204,8 @@
    "kind": "venue_key_split",
    "target": "会場ページの分割 28組・45件(志摩中央公園・サンシャインシティ・Lier 福山 ほか)",
    "action": "fixed",
-   "detail": "location に区画(部屋・階・棟・広場)まで書いた回を施設名(＋住所)に揃え、区画は venue へ移した。会場ページ 50→72、旧URL5本は中継頁。せんだい農業園芸センター(愛称違い)も同じ形に"
+   "detail": "location に区画(部屋・階・棟・広場)まで書いた回を施設名(＋住所)に揃え、区画は venue へ移した。会場ページ 50→72、旧URL5本は中継頁。せんだい農業園芸センター(愛称違い)も同じ形に",
+   "mailedOn": "2026-10-09"
   },
   {
    "on": "2026-10-09",
@@ -1204,7 +1213,8 @@
    "kind": "venue_history_drift",
    "target": "詳細頁の「同会場の他イベント」80頁",
    "action": "fixed",
-   "detail": "住所の括弧書きの有無だけで同じ会場の回が節から落ちていた(52頁は節ごと無し)。会場ページと同じ束ね方にし、見出しから住所を外した"
+   "detail": "住所の括弧書きの有無だけで同じ会場の回が節から落ちていた(52頁は節ごと無し)。会場ページと同じ束ね方にし、見出しから住所を外した",
+   "mailedOn": "2026-10-09"
   }
  ]
 }
