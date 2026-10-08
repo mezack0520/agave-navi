@@ -1,5 +1,5 @@
 {
-  "total": 635,
+  "total": 653,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -693,8 +693,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 1,
+      "count": 4,
       "items": [
+        "green-champuroo-vol2-2026-10(2026-10-09〜2026-10-11/3日)",
+        "hanauchu-dream-garden-28th-2026-10(2026-10-09〜2026-10-11/3日)",
+        "midolien-hono-osaka-2026-10(2026-10-09〜2026-10-10/2日)",
         "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10(2026-10-03〜2026-10-25/23日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -814,10 +817,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-10-12 第4回リアルイベ"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -927,8 +928,12 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-10-09 midolien-hono-osaka-2026-10: 公式ページが変わった(本文: 1383→1374字 -1%)",
+        "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10: 公式ページが変わった(本文・画像)",
+        "2026-11-07 botanical-life-kasama-2026-11: 公式ページが変わった(画像)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1018,9 +1023,10 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
+      "count": 2,
       "items": [
-        "@santaanagarden 2026-10-08,2026-10-16,2026-10-26: 【イベント出店】 特別企画「Green & Aroma」が、 ARFLEX FUKUOKAにて開催されます! インテリア https://www.instagram.com/p/DeMTfcwExqm/"
+        "@botajam2026 2026-11-06: 🌱 BOTAJAM 2026 ボランティア募集 🌱 11/7・8開催のBOTAJAMを 一緒に支えてくれる仲間を募集しま https://www.instagram.com/p/DeNauOmsXwi/",
+        "@uell_creators 2026-10-11: 【uell植物日記_14】 こんばんは。高木です。 いよいよ明日・あさってHONOさんとuellのコラボイベント「MID https://www.instagram.com/p/DePIk4Zk-EJ/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -1048,8 +1054,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-10 king-plants-shuukakusai-kesennuma-2026-10: https://www.instagram.com/p/DeOo0LIEiTa/（caption）",
+        "2026-10-11 lahaina-rahachu-holiday-2026-10: https://www.instagram.com/p/DeK4sDgklc9/（caption）",
+        "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10: https://www.instagram.com/p/DeN0t0kyUVw/（caption）",
+        "2026-10-18 kinshakusai-vol6-2026-10: https://www.instagram.com/p/DeOWP1XTYYo/（caption）",
+        "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10: https://www.instagram.com/p/Dd7UMbIzFxQ/（sourcePost）",
+        "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10: https://www.instagram.com/p/Dd7v7QkmBG1/（caption）",
+        "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10: https://www.instagram.com/reel/Dcfl-izB1F7/（caption）",
+        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10: https://www.instagram.com/reel/DeHsX-4sCbW/（caption）",
+        "2026-10-31 nightwalker-horie-2026-10: https://www.instagram.com/p/DeIkWxcShL5/（sourcePost）",
+        "2026-10-31 tanikuen-ohisama-aeon-hiezu-2026-10: https://www.instagram.com/p/DeMSYhRFKyY/（caption）",
+        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/Dd-YU2iiVQ-/（caption）",
+        "2026-11-07 ceramall-hanbaikai-2026-11: https://www.instagram.com/p/DeNdW5gybN3/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
