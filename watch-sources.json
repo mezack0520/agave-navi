@@ -1,15 +1,25 @@
 {
- "generated": "2026-10-09 06:45 JST",
+ "generated": "2026-10-09 07:42 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 312,
+  "igAccounts": 320,
   "awaitingNextEdition": 304,
-  "officialSiteCandidates": 82,
+  "officialSiteCandidates": 83,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 76,
+  "igNeedsBrowser": 84,
   "igDead": 7
  },
  "igAccounts": [
+  {
+   "handle": "lier_succulent",
+   "url": "https://www.instagram.com/lier_succulent/",
+   "eventCount": 26,
+   "lastEventName": "第10回 花友フェスタ in 幕張メッセ",
+   "lastEventDate": "2027-04-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
+  },
   {
    "handle": "nagomitaniku",
    "url": "https://www.instagram.com/nagomitaniku/",
@@ -31,6 +41,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "rojiuranogibousi",
+   "url": "https://www.instagram.com/rojiuranogibousi/",
+   "eventCount": 6,
+   "lastEventName": "ボタニカルX（2027年9月）",
+   "lastEventDate": "2027-09-05",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "picnic.king.plants",
    "url": "https://www.instagram.com/picnic.king.plants/",
    "eventCount": 5,
@@ -39,6 +59,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "j_n_ishikawa",
+   "url": "https://www.instagram.com/j_n_ishikawa/",
+   "eventCount": 5,
+   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "tanikuen_ohisama",
@@ -99,16 +129,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
-  },
-  {
-   "handle": "j_n_ishikawa",
-   "url": "https://www.instagram.com/j_n_ishikawa/",
-   "eventCount": 4,
-   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
   },
   {
    "handle": "fuji_taniku",
@@ -181,6 +201,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "minori_kaboku_interpark",
+   "url": "https://www.instagram.com/minori_kaboku_interpark/",
+   "eventCount": 3,
+   "lastEventName": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター 2026年10月）",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "taniku_moromoro_ichiba",
    "url": "https://www.instagram.com/taniku_moromoro_ichiba/",
    "eventCount": 3,
@@ -211,16 +241,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "rojiuranogibousi",
-   "url": "https://www.instagram.com/rojiuranogibousi/",
-   "eventCount": 3,
-   "lastEventName": "路地裏ボタニカル（2026年12月）",
-   "lastEventDate": "2026-12-20",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "taniten_kengo202",
    "url": "https://www.instagram.com/taniten_kengo202/",
    "eventCount": 3,
@@ -236,6 +256,16 @@
    "eventCount": 3,
    "lastEventName": "山奥屋の多肉 単独販売会 in 韮崎",
    "lastEventDate": "2027-01-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "greensanta2020",
+   "url": "https://www.instagram.com/greensanta2020/",
+   "eventCount": 3,
+   "lastEventName": "サンタフェ周年祭（2027年2月）",
+   "lastEventDate": "2027-02-20",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -269,6 +299,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "38_ten_",
+   "url": "https://www.instagram.com/38_ten_/",
+   "eventCount": 2,
+   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tropicalgarden_saitama",
@@ -441,6 +481,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "hirata_ns.odo",
+   "url": "https://www.instagram.com/hirata_ns.odo/",
+   "eventCount": 2,
+   "lastEventName": "第4回 ハートンフェス（平田ナーセリー小戸店）",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "1012katsuyuki7",
    "url": "https://www.instagram.com/1012katsuyuki7/",
    "eventCount": 2,
@@ -505,16 +555,6 @@
    "url": "https://www.instagram.com/engeiyatanaka/",
    "eventCount": 2,
    "lastEventName": "飯塚農園 出張販売会（園芸屋たなか）",
-   "lastEventDate": "2026-11-29",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "greensanta2020",
-   "url": "https://www.instagram.com/greensanta2020/",
-   "eventCount": 2,
-   "lastEventName": "SANTA_29 FESTA vol.20（サンタフェ）",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 0,
@@ -596,16 +636,6 @@
    "eventCount": 2,
    "lastEventName": "BOTANICAL AJITO",
    "lastEventDate": "2026-07-20",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "minori_kaboku_interpark",
-   "url": "https://www.instagram.com/minori_kaboku_interpark/",
-   "eventCount": 2,
-   "lastEventName": "サボテン・アガベ・多肉植物 展示即売会（みのり花木センター）",
-   "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -841,6 +871,26 @@
    "apiStatus": "api"
   },
   {
+   "handle": "mishimarukan",
+   "url": "https://www.instagram.com/mishimarukan/",
+   "eventCount": 1,
+   "lastEventName": "みしまるかん多肉市",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "tomitan.nouen",
+   "url": "https://www.instagram.com/tomitan.nouen/",
+   "eventCount": 1,
+   "lastEventName": "とみたん農園 多肉植物販売会（道の駅 石神の丘）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "ibatama.ta29",
    "url": "https://www.instagram.com/ibatama.ta29/",
    "eventCount": 1,
@@ -929,6 +979,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "m_yzao",
+   "url": "https://www.instagram.com/m_yzao/",
+   "eventCount": 1,
+   "lastEventName": "ともぞうえん＆ナコリ！多肉と雑貨ポップアップストア",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nara.bikakufes",
@@ -1301,6 +1361,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "yamanishihiryouten",
+   "url": "https://www.instagram.com/yamanishihiryouten/",
+   "eventCount": 1,
+   "lastEventName": "masappe多肉 周年祭（2周年）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "botajam2026",
    "url": "https://www.instagram.com/botajam2026/",
    "eventCount": 1,
@@ -1419,6 +1489,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "meguru___museum",
+   "url": "https://www.instagram.com/meguru___museum/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS POP UP at 螺旋珈琲（Heaven Green Factory × TT POTS）",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "rareplantsjapan2025",
@@ -3638,6 +3718,18 @@
    "eventDate": "2026-10-10"
   },
   {
+   "domain": "threads.com",
+   "url": "https://www.threads.com/@38_ten_/post/Dd-Hh5mE5Iv",
+   "eventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月10〜12日）",
+   "eventDate": "2026-10-10"
+  },
+  {
+   "domain": "shaboten.co.jp",
+   "url": "https://shaboten.co.jp/press/7561/",
+   "eventName": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
+   "eventDate": "2026-10-10"
+  },
+  {
    "domain": "kyotocactus.syuriken.jp",
    "url": "https://kyotocactus.syuriken.jp/project.html",
    "eventName": "第51回 日本シャボテン大会",
@@ -3728,12 +3820,6 @@
    "eventDate": "2026-11-18"
   },
   {
-   "domain": "threads.com",
-   "url": "https://www.threads.com/@honoka.kakogawa",
-   "eventName": "緑楽宴",
-   "eventDate": "2026-11-22"
-  },
-  {
    "domain": "h27664.wixsite.com",
    "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
    "eventName": "オキボタ December 2026 in サンシャインシティ",
@@ -3762,12 +3848,6 @@
    "url": "https://raflum.com/",
    "eventName": "RAFLUM POP-UP（ジェイアール名古屋タカシマヤ）",
    "eventDate": "2026-04-22"
-  },
-  {
-   "domain": "fumakilla.co.jp",
-   "url": "https://www.fumakilla.co.jp/new/6926/",
-   "eventName": "カダンフェス2026 春",
-   "eventDate": "2026-04-25"
   }
  ],
  "unresolvedIgHandles": []

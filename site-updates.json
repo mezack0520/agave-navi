@@ -1,7 +1,437 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "items": [
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "mishimarukan-tanikuichi-2026-10",
+      "name": "みしまるかん多肉市",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-11",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "tomitan-nouen-ishigami-no-oka-2026-10",
+      "name": "とみたん農園 多肉植物販売会（道の駅 石神の丘）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-12",
+      "prefecture": "岩手",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-10",
+      "name": "さんぱち 多肉植物販売会（道の駅あさじ・10月10〜12日）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-12",
+      "prefecture": "大分",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10",
+      "name": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
+      "date": "2026-10-10",
+      "dateEnd": "2026-11-23",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "tomozouen-nakori-popup-yamagata-zao-2026-10",
+      "name": "ともぞうえん＆ナコリ！多肉と雑貨ポップアップストア",
+      "date": "2026-10-11",
+      "dateEnd": "2026-10-11",
+      "prefecture": "山形",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-matsuyama-hojo-2026-10",
+      "name": "Lier.多肉フェスティバル in 松山",
+      "date": "2026-10-16",
+      "dateEnd": "2026-10-16",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-mitoyo-2026-10",
+      "name": "Lier.多肉フェスティバル in 三豊",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "prefecture": "香川",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-17",
+      "name": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-18",
+      "prefecture": "大分",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-kochi-tsutaya-2026-10",
+      "name": "Lier.多肉フェスティバル in 高知 蔦屋書店",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "prefecture": "高知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-kasai-2026-10",
+      "name": "Lier.多肉フェスティバル in 加西",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-24",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "minori-kaboku-cactus-agave-2026-10",
+      "name": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター 2026年10月）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "栃木",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "jolie-nursery-musashinoyouhinten-misato-2026-10",
+      "name": "Jolie Nursery 即売会（武蔵乃葉品店・三郷）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-okayama-2026-10",
+      "name": "Lier.多肉フェスティバル in 岡山",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "岡山",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-hiroshima-2026-10",
+      "name": "Lier.多肉フェスティバル in 広島",
+      "date": "2026-10-26",
+      "dateEnd": "2026-10-26",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-nobeoka-2026-10",
+      "name": "Lier.多肉フェスティバル in 延岡",
+      "date": "2026-10-31",
+      "dateEnd": "2026-10-31",
+      "prefecture": "宮崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-aira-2026-11",
+      "name": "Lier.多肉フェスティバル in 姶良",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "prefecture": "鹿児島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-kumamoto-2026-11",
+      "name": "Lier.多肉フェスティバル in 熊本",
+      "date": "2026-11-02",
+      "dateEnd": "2026-11-02",
+      "prefecture": "熊本",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-munakata-2026-11",
+      "name": "Lier.多肉フェスティバル in 宗像",
+      "date": "2026-11-03",
+      "dateEnd": "2026-11-03",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "masappe-taniku-2nd-anniversary-2026-11",
+      "name": "masappe多肉 周年祭（2周年）",
+      "date": "2026-11-03",
+      "dateEnd": "2026-11-03",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "plants-popup-rasen-coffee-osaka-2026-11",
+      "name": "PLANTS POP UP at 螺旋珈琲（Heaven Green Factory × TT POTS）",
+      "date": "2026-11-15",
+      "dateEnd": "2026-11-16",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-shimonoseki-kikugawa-2026-11",
+      "name": "Lier.多肉フェスティバル in 下関",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-21",
+      "prefecture": "山口",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "hartn-fes-4th-hirata-kasuga-2026-11",
+      "name": "第4回 ハートンフェス（平田ナーセリー春日店）",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-21",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-hamada-2026-11",
+      "name": "Lier.多肉フェスティバル in 浜田",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "島根",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "hartn-fes-4th-hirata-odo-2026-11",
+      "name": "第4回 ハートンフェス（平田ナーセリー小戸店）",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-yonago-2026-11",
+      "name": "Lier.多肉フェスティバル in 米子",
+      "date": "2026-11-23",
+      "dateEnd": "2026-11-23",
+      "prefecture": "鳥取",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-niihama-2026-12",
+      "name": "Lier.多肉フェスティバル in 新居浜",
+      "date": "2026-12-04",
+      "dateEnd": "2026-12-04",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-tokushima-2026-12",
+      "name": "Lier.多肉フェスティバル in 徳島",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-05",
+      "prefecture": "徳島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-fukuyama-2026-12",
+      "name": "Lier.多肉フェスティバル in 福山（2026年12月）",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-kariya-2026-12",
+      "name": "Lier.多肉フェスティバル in 刈谷",
+      "date": "2026-12-10",
+      "dateEnd": "2026-12-10",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-shimizu-2026-12",
+      "name": "Lier.多肉フェスティバル in 静岡（清水）",
+      "date": "2026-12-11",
+      "dateEnd": "2026-12-11",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-hyuga-2027-01",
+      "name": "Lier.多肉フェスティバル in 日向",
+      "date": "2027-01-08",
+      "dateEnd": "2027-01-08",
+      "prefecture": "宮崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-tamana-2027-01",
+      "name": "Lier.多肉フェスティバル in 玉名",
+      "date": "2027-01-09",
+      "dateEnd": "2027-01-09",
+      "prefecture": "熊本",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-nagasaki-2027-01",
+      "name": "Lier.多肉フェスティバル in 長崎",
+      "date": "2027-01-10",
+      "dateEnd": "2027-01-10",
+      "prefecture": "長崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-kitakyushu-2027-01",
+      "name": "Lier.多肉フェスティバル in 北九州",
+      "date": "2027-01-11",
+      "dateEnd": "2027-01-11",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-ube-2027-01",
+      "name": "Lier.多肉フェスティバル in 宇部",
+      "date": "2027-01-23",
+      "dateEnd": "2027-01-23",
+      "prefecture": "山口",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-oda-2027-01",
+      "name": "Lier.多肉フェスティバル in 大田",
+      "date": "2027-01-24",
+      "dateEnd": "2027-01-24",
+      "prefecture": "島根",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-fukuyama-2027-01",
+      "name": "Lier.多肉フェスティバル in 福山（2027年1月）",
+      "date": "2027-01-25",
+      "dateEnd": "2027-01-25",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "santafe-shunensai-2027-02",
+      "name": "サンタフェ周年祭（2027年2月）",
+      "date": "2027-02-20",
+      "dateEnd": "2027-02-21",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "botanical-x-2027-03",
+      "name": "ボタニカルX（2027年3月）",
+      "date": "2027-03-07",
+      "dateEnd": "2027-03-07",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "okibota-march-2027-sunshine",
+      "name": "オキボタ March 2027 in サンシャインシティ",
+      "date": "2027-03-19",
+      "dateEnd": "2027-03-21",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "hanatomofesta-10th-makuhari-2027-04",
+      "name": "第10回 花友フェスタ in 幕張メッセ",
+      "date": "2027-04-29",
+      "dateEnd": "2027-04-29",
+      "prefecture": "千葉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "rojiura-botanical-2027-08",
+      "name": "路地裏ボタニカル（2027年8月）",
+      "date": "2027-08-29",
+      "dateEnd": "2027-08-29",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-09",
+      "kind": "listed",
+      "slug": "botanical-x-2027-09",
+      "name": "ボタニカルX（2027年9月）",
+      "date": "2027-09-05",
+      "dateEnd": "2027-09-05",
+      "prefecture": "茨城",
+      "detail": ""
+    },
     {
       "on": "2026-10-08",
       "kind": "listed",
@@ -770,436 +1200,6 @@
       "date": "2026-10-17",
       "dateEnd": "2026-10-18",
       "prefecture": "鳥取",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
-      "name": "SPINE NOTE Vol.2「GEEK OF FOOLS」",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-29",
-      "prefecture": "山口",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "hiroshima-shokubutsuen-2026-10",
-      "name": "ひろしま植物園 2026",
-      "date": "2026-10-02",
-      "dateEnd": "2026-10-04",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "the-green-time-1st-anniversary-iwaki-2026-10",
-      "name": "THE GREEN TIME 1st Anniversary Event",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-11",
-      "prefecture": "福島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "legit-vol2-samukawa-2026-10",
-      "name": "LEGIT VOL.2",
-      "date": "2026-10-11",
-      "dateEnd": "2026-10-11",
-      "prefecture": "神奈川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "plants-popup-itec-saito-niigata-2026-10",
-      "name": "PLANTS POP-UP（アイテックサイトウ）",
-      "date": "2026-10-12",
-      "dateEnd": "2026-10-12",
-      "prefecture": "新潟",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "hachioji-jungle-vol7-2026-10",
-      "name": "八王子ジャングル vol.7",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-17",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "botanical-fes-yuki-2026-10",
-      "name": "BOTANICALFES in 結城",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "chinki-tenretsu-shokubutsu-vol5-akashi-2026-10",
-      "name": "珍奇天烈植物 vol.5",
-      "date": "2026-10-23",
-      "dateEnd": "2026-10-27",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "fumoto-plants-market-vol3-2026-10",
-      "name": "麓 Plants Market Vol.3",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "滋賀",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "green-plants-market-takeo-2026-10",
-      "name": "Green Plants Market（武雄）",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "佐賀",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "agave-summit-osaka-2026-11",
-      "name": "Agave summit Osaka",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-taishodo-2026-11",
-      "name": "Lier.多肉フェスティバル in TaiShoDo",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "kyoto-midori-marche-ibaraki-2027-03",
-      "name": "KYOTO MIDORI NO MARCHE IN 茨木（2027年3月）",
-      "date": "2027-03-20",
-      "dateEnd": "2027-03-20",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-28",
-      "kind": "listed",
-      "slug": "midolien-hono-osaka-2026-10",
-      "name": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
-      "date": "2026-10-09",
-      "dateEnd": "2026-10-10",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-28",
-      "kind": "listed",
-      "slug": "botanoichi-meets-bikaku-yokocho-2026-10",
-      "name": "ボタの市 meets ビカク横丁",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-28",
-      "kind": "listed",
-      "slug": "jolie-nursery-musashi-kanazawa-2026-10",
-      "name": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-      "date": "2026-10-31",
-      "dateEnd": "2026-11-01",
-      "prefecture": "石川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-28",
-      "kind": "listed",
-      "slug": "yatchiro-plants-yatsushiro-2026-11",
-      "name": "ヤッチロプランツ",
-      "date": "2026-11-08",
-      "dateEnd": "2026-11-08",
-      "prefecture": "熊本",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-28",
-      "kind": "listed",
-      "slug": "botanoichi-senju-2026-11",
-      "name": "ボタの市 年内ファイナル",
-      "date": "2026-11-29",
-      "dateEnd": "2026-11-29",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-27",
-      "kind": "date",
-      "slug": "onokoro-green-festa-2026-09",
-      "name": "Onokoro Green Festa",
-      "date": "2026-09-01",
-      "dateEnd": "2026-09-27",
-      "prefecture": "兵庫",
-      "detail": "2026.09.26-27 → 2026.09.01-27"
-    },
-    {
-      "on": "2026-09-25",
-      "kind": "date",
-      "slug": "ore-no-plants-collection-2026-09",
-      "name": "俺の！プランツ・コレクション！！",
-      "date": "2026-09-14",
-      "dateEnd": "2026-09-21",
-      "prefecture": "島根",
-      "detail": "2026.09.19-21 → 2026.09.14-21"
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "nagoya-cactus-club-aki-2026-10",
-      "name": "サボテン&多肉植物 秋の展示即売会（名古屋サボテンクラブ）",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "uomachi-botanical-night-market-2026-10",
-      "name": "魚町ボダニカルナイトマーケット",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "bizarre-plants-maniax-tottori-2026-10",
-      "name": "Bizarre Plants Maniax⇄",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "鳥取",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "okayama-green-treasure-5th-2026-10",
-      "name": "おかやまグリーントレジャー 5th",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "岡山",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "plant-and-pot-vol16-2026-10",
-      "name": "PLANT & POT Vol.16",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-25",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "fukuyama-de-marche-8th-2026-11",
-      "name": "第8回 福山deマルシェ",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-24",
-      "kind": "listed",
-      "slug": "botariba-toyohashi-2026-11",
-      "name": "ボタり場 2026 Autumn",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "date",
-      "slug": "kourep-2026-autumn",
-      "name": "コウレプ2026秋",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-20",
-      "prefecture": "兵庫",
-      "detail": "2026.09.16-20 → 2026.09.19-20"
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "roots-market-inage-2026-10",
-      "name": "ROOTS MARKET",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "千葉",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "atilab-magari-hanbaikai-fangit-2026-09",
-      "name": "atilab 間借り販売会",
-      "date": "2026-09-27",
-      "dateEnd": "2026-09-27",
-      "prefecture": "神奈川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "kusa-paradise-vol10-okazaki-2026-10",
-      "name": "草パラダイス vol.10",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-11",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "agave-shokudo-2026-autumn-uchidanouen",
-      "name": "秋のアガベ食堂",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "山梨",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "plants-panic-11th-hirata-nursery-kurume-2026-11",
-      "name": "第11回 PLANTS PANIC!!",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "taniku-mobure-vol13-marugame-2026-11",
-      "name": "多肉もぶれ vol.13",
-      "date": "2026-11-15",
-      "dateEnd": "2026-11-15",
-      "prefecture": "香川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "marutto-shokubutsu-fes-2026-11",
-      "name": "まるっと植物fes!!",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "神奈川",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "plant-addict-festa-ishiuchi-pennon-2026-11",
-      "name": "P•A•F 〜Plant addict Festa",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-21",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "aki-no-taniku-picnic-ibusuki-2026-11",
-      "name": "秋の多肉ピクニック",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "鹿児島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "botanical-journey-onomichi-2026-11",
-      "name": "BOTANICAL JOURNEY",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-28",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "orais-party-2026-garden-messe-hachioji",
-      "name": "Orai's party 2026",
-      "date": "2026-12-05",
-      "dateEnd": "2026-12-05",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-23",
-      "kind": "listed",
-      "slug": "love-green-market-vol3-ichihara-2026-12",
-      "name": "LOVE GReeN MARKeT Vol.3",
-      "date": "2026-12-12",
-      "dateEnd": "2026-12-12",
-      "prefecture": "千葉",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-22",
-      "kind": "removed",
-      "slug": "tochigi-tanippe-2026-10",
-      "name": "栃木★多肉フェス タニッペ",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-19",
-      "kind": "date",
-      "slug": "premium-rock-garden-festa-2026",
-      "name": "プレミアム ロックガーデン フェスタ2026",
-      "date": "2026-09-09",
-      "dateEnd": "2026-09-27",
-      "prefecture": "群馬",
-      "detail": "2026.09.19-27 → 2026.09.09-27"
-    },
-    {
-      "on": "2026-09-18",
-      "kind": "listed",
-      "slug": "premium-rock-garden-festa-2026",
-      "name": "プレミアム ロックガーデン フェスタ2026",
-      "date": "2026-09-19",
-      "dateEnd": "2026-09-27",
-      "prefecture": "群馬",
       "detail": ""
     }
   ]
