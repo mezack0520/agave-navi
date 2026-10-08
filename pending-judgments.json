@@ -1,21 +1,13 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "agave-navi-eyecatch:flyer-with-child-photo",
-      "addedOn": "2026-10-08",
-      "source": "agave-navi-eyecatch",
-      "question": "子どもの写真が主体の告知フライヤーをアイキャッチに採るか",
-      "facts": [
-        "kyoto-midorino-marche-bangaihen-vol10-2026 の主催告知 https://www.instagram.com/p/DYtFh54ASy-/ は「Kyoto midorino marche BANGAIHEN vol.10 IN touto 2026.11.28 10:00~15:30」の文字入りで、中央に幼児の写真を使っている。イベント名・日付・時間・会場がそろっており、告知としての基準は満たす",
-        "採ると images/events/ に置かれ、public repo の履歴に残る。主催が後で投稿を消しても当サイトと git 履歴からは消えない",
-        "掲載基準・プレイブックに人物(子ども)が写る画像の規則は無い。返事が出るまでこの回は採らずに置いている"
-      ],
-      "proposal": "listing-policy.json に eyecatchPeople 節を足す。採らない場合の文案:「告知画像でも子どもの顔が主体のものはアイキャッチに採らない。主催が公開していても、当サイトから再配布すると主催の削除が及ばない」。採る場合:「主催が告知に使っている画像は人物が写っていても採る」"
-    }
-  ],
+  "items": [],
   "updated": "2026-10-08",
   "resolved": [
+    {
+      "id": "agave-navi-eyecatch:flyer-with-child-photo",
+      "resolvedOn": "2026-10-08",
+      "decision": "採る。listing-policy eyecatchPeople を追加。kyoto-midorino-marche-bangaihen-vol10-2026 は次回の agave-navi-eyecatch で主催告知 DYtFh54ASy- を採る"
+    },
     {
       "id": "agave-event-update:rare-aroid-collector-event",
       "resolvedOn": "2026-10-07",

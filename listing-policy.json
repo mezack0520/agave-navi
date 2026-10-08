@@ -301,5 +301,12 @@
     "note": "2026-09-10 に coverage-sweep.py へ機械化。Actions からも 3/3 か月取得できた。届かなくなったら manual-sweeps.json に台帳を作り直して manualSweepId を戻す。"
    }
   }
+ },
+ "eyecatchPeople": {
+  "rule": "主催が告知に使っている画像は、人物(子どもを含む)が写っていてもアイキャッチに採る。採否は告知としての基準(イベント名・日付・会場が読めるか)で決め、写っている人物では切らない",
+  "decided": "2026-10-08",
+  "decidedBy": "目崎(要判断キューで「採る」を選択)",
+  "precedent": "Kyoto midorino marche BANGAIHEN vol.10 (2026-11-28) の主催告知 instagram.com/p/DYtFh54ASy-/ は中央に幼児の写真 → 採る",
+  "doNotEscalate": true
  }
 }
