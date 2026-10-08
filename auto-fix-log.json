@@ -1125,6 +1125,70 @@
    "action": "fixed",
    "detail": "DIO は time が両日とも告知より1時間早く終わる形(10:00〜17:00/27日16:00)で、告知は 10:00〜18:00/27日17:00。ロビンは27日の16:00終了が無かった。どちらも説明文には正しい時刻があった。告知どおりに直した",
    "mailedOn": "2026-10-08"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "MIDOLIEN（ミドリアン） (2026-10-09)",
+   "action": "reviewed",
+   "detail": "weekend.osaka/16061/ を取り直し、会期10/9-10・HONO のまま中止・延期の語なし。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "多肉だヨ！全員集合 in とっとり花回廊 (2026-10-17)",
+   "action": "reviewed",
+   "detail": "花回廊の告知頁は 10/17-18 9:00〜15:00 のまま。出店者の追加のみ。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "第10回 ボタニカルライフ (2026-11-07)",
+   "action": "reviewed",
+   "detail": "画像だけの変化。11/7-8 笠間工芸の丘のまま。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@botajam2026 2026-11-06",
+   "action": "reviewed",
+   "detail": "ボランティア募集の投稿で、11/6 は前日搬入・設営の日。本番の BOTAJAM 2026(11/7-8)は掲載済み"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@uell_creators 2026-10-11",
+   "action": "reviewed",
+   "detail": "MIDOLIEN(10/9-10・HONO)の設営報告の投稿。会期は掲載済みの2日間のまま"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "BOTANICAL BOTANICAL OSAKA (10/31)・OKINAWA (11/14)",
+   "action": "skipped",
+   "detail": "主催 @botanical.botanical の最新投稿は福岡回(10/3-4)の御礼まで。大阪・沖縄の会場は未発表"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "まるっと植物fes!! (11/21-22)",
+   "action": "skipped",
+   "detail": "主催の10/8の投稿は2日間開催の再告知と『正式な告知画像は10月末』まで。会場は未発表"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "BOTANICAL STYLE -Fukuoka Minato- (12/19-20)・珍奇植物フリーマーケット 2027年1月/4月",
+   "action": "skipped",
+   "detail": "主催 @earthwalk_plants・@unique_plants.community とも会場の告知なし"
   }
  ]
 }
