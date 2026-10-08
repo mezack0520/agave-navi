@@ -60,7 +60,8 @@ def _hits(path, needles, n=5):
 
 
 data = _load('check-results.json', {})
-added = (_load('new-events-added.json', {}) or {}).get('events') or []
+_added_doc = _load('new-events-added.json', {}) or {}
+added = _added_doc.get('events') or []
 judgments = _load('pending-judgments.json', {}).get('items', []) or []
 audit = _load('audit-results.json', {})
 fixlog = _load('auto-fix-log.json', {'items': []})
@@ -96,6 +97,11 @@ if _dead:
                       for d in _dead[:5]]))
 if _ssl < 30:
     residual.append((f'SSL証明書の残り: {_ssl}日', []))
+# 掲載の一覧を git の差分で取れなかった回(2026-10-09)。detect-added-events.py が addedDate で
+# 代用した印。10-07・10-09 は比較元が取れず掲載0件になり、載せるものが無くてメールが出なかった
+if _added_doc.get('fallback'):
+    residual.append(('掲載の一覧を git の差分で取れず、addedDate(今日)で代用した',
+                     [str(_added_doc.get('fallbackReason') or '')[:160]]))
 
 lines = [f'【アガベイベントナビ】{today}', '']
 

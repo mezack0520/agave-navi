@@ -1189,6 +1189,22 @@
    "target": "BOTANICAL STYLE -Fukuoka Minato- (12/19-20)・珍奇植物フリーマーケット 2027年1月/4月",
    "action": "skipped",
    "detail": "主催 @earthwalk_plants・@unique_plants.community とも会場の告知なし"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "event-monitor",
+   "kind": "venue_key_split",
+   "target": "会場ページの分割 28組・45件(志摩中央公園・サンシャインシティ・Lier 福山 ほか)",
+   "action": "fixed",
+   "detail": "location に区画(部屋・階・棟・広場)まで書いた回を施設名(＋住所)に揃え、区画は venue へ移した。会場ページ 50→72、旧URL5本は中継頁。せんだい農業園芸センター(愛称違い)も同じ形に"
+  },
+  {
+   "on": "2026-10-09",
+   "task": "event-monitor",
+   "kind": "venue_history_drift",
+   "target": "詳細頁の「同会場の他イベント」80頁",
+   "action": "fixed",
+   "detail": "住所の括弧書きの有無だけで同じ会場の回が節から落ちていた(52頁は節ごと無し)。会場ページと同じ束ね方にし、見出しから住所を外した"
   }
  ]
 }

@@ -1116,18 +1116,23 @@ def make_nearby_events(ev, ctx):
 
 
 def make_venue_history(ev, ctx):
+    # 束ねるキーは会場ページと同じ sitelib.venue_key(2026-10-09)。
+    # 生の location で束ねていたので、住所の括弧書きの有無だけで同じ会場の回が
+    # この節から落ち(80頁)、見出しに住所の括弧書きまで出ていた。audit venue_history_drift
     v = (ev.get('location') or '').strip()
     if _is_vague(v):
         return ''
-    others = [e for e in ctx['venues'].get(v, []) if e.get('slug') != ev.get('slug')]
+    k = sitelib.venue_key(v)
+    others = [e for e in ctx['venues'].get(k, []) if e.get('slug') != ev.get('slug')]
     if not others:
         return ''
     others = sorted(others, key=lambda e: e.get('date') or '', reverse=True)[:5]
     today = ctx['today']
     cards = ''.join(make_mini_card(e, today) for e in others)
+    label = ctx['venue_labels'].get(k) or sitelib.venue_display(v)
     return (
         f'        <div class="detail-section detail-enriched">\n'
-        f'          <h2 class="detail-section-title" data-kicker="VENUE">{html_escape(v)}で開催される他のイベント</h2>\n'
+        f'          <h2 class="detail-section-title" data-kicker="VENUE">{html_escape(label)}で開催される他のイベント</h2>\n'
         f'          <p class="section-note">同じ会場での開催情報です。会場の雰囲気やアクセスの参考になります。</p>\n'
         f'          <div class="mini-grid">{cards}</div>\n'
         f'        </div>\n'
@@ -1323,6 +1328,7 @@ def build_context(events):
 
     series = {}
     venues = {}
+    venue_labels = {}
     pref_counts = {}
     cat_counts = {}
     free_n = 0
@@ -1333,7 +1339,12 @@ def build_context(events):
             series.setdefault(k, []).append(e)
         v = (e.get('location') or '').strip()
         if v and not _is_vague(v):
-            venues.setdefault(v, []).append(e)
+            # 会場ページ(generate-landing-pages)と同じ束ね方・同じ表示名(いちばん短い名前)
+            vk = sitelib.venue_key(v)
+            venues.setdefault(vk, []).append(e)
+            vd = sitelib.venue_display(v)
+            if vk not in venue_labels or len(vd) < len(venue_labels[vk]):
+                venue_labels[vk] = vd
         p = e.get('prefecture')
         if p:
             pref_counts[p] = pref_counts.get(p, 0) + 1
@@ -1356,6 +1367,7 @@ def build_context(events):
         'today': today,
         'series': series,
         'venues': venues,
+        'venue_labels': venue_labels,
         'stats': {
             'pref_counts': pref_counts,
             'pref_rank': pref_rank,

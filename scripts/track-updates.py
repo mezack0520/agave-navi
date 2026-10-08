@@ -49,7 +49,7 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
-from sitelib import today_jst, is_cancelled, cancel_label   # noqa: E402
+from sitelib import today_jst, is_cancelled, cancel_label, venue_key   # noqa: E402
 
 EVENTS = os.path.join(REPO, 'events.json')
 LOG = os.path.join(REPO, 'site-updates.json')
@@ -81,6 +81,22 @@ def venue_of(e):
     return (e.get('venue') or e.get('location') or '').strip()
 
 
+def same_place(a, b):
+    """同じ場所の書き直しか(2026-10-09)。
+
+    区画を足した・落とした(「豊洲公園」→「豊洲公園 子供の広場側」)、住所の括弧書きや
+    空白だけの違いは、来場の判断が変わらないので会場変更にしない。
+    10-09 に location を施設で束ね直したとき(audit venue_key_split)、手元で回すと
+    区画を venue に移した7件が「会場変更」として更新欄に並びかけた。
+    短いほうが4字未満なら同じ場所とみなさない(「道の駅」だけの値で他を飲み込まない)。
+    """
+    ka, kb = venue_key(a), venue_key(b)
+    if ka == kb:
+        return True
+    short, long_ = sorted((ka, kb), key=len)
+    return len(short) >= 4 and long_.startswith(short)
+
+
 def span_of(e):
     return ((e.get('date') or '').strip(), (e.get('dateEnd') or '').strip())
 
@@ -108,7 +124,8 @@ def diff(prev, cur):
             out.append(('date', now, f'{a} → {b}'))
             continue
         # 会場が動いた
-        if venue_of(was) != venue_of(now) and venue_of(was) and venue_of(now):
+        if venue_of(was) != venue_of(now) and venue_of(was) and venue_of(now) \
+                and not same_place(venue_of(was), venue_of(now)):
             out.append(('venue', now, f'{venue_of(was)} → {venue_of(now)}'))
 
     for slug, e in p.items():
@@ -135,6 +152,19 @@ def main():
     args = ap.parse_args()
     if args.self_test:
         return self_test()
+
+    # 自己テストは毎回静かに走らせる(--self-test を呼ぶ CI が無かった。2026-10-09)。
+    # 落ちたらこの回は差分を積まない。誤った「会場変更」を更新欄とフィードに出すより、
+    # 1回積まないほうがよい(build-all は warning を出して先へ進む)
+    import contextlib
+    import io
+    _buf = io.StringIO()
+    with contextlib.redirect_stdout(_buf):
+        _rc = self_test()
+    if _rc:
+        print(_buf.getvalue())
+        print('::warning::track-updates の自己テストが失敗したので、この回は差分を積まない')
+        return 1
 
     with open(EVENTS, encoding='utf-8') as f:
         cur = json.load(f)
@@ -233,6 +263,16 @@ def self_test():
         one([cx], [cx]), [])
     chk('会場が空→入った は変更としない（初回登録の埋め）',
         one([dict(base, venue='')], [base]), [])
+    tb = dict(base, venue='豊洲公園')
+    chk('区画を足しただけ（豊洲公園 → 豊洲公園 子供の広場側）',
+        one([tb], [dict(tb, venue='豊洲公園 子供の広場側')]), [])
+    chk('住所の括弧書きと空白だけの違い',
+        one([dict(tb, venue='')], [dict(tb, venue='', location='豊洲公園（東京都江東区豊洲2-3-6）')]) or
+        one([dict(base, venue='', location='豊洲公園')],
+            [dict(base, venue='', location='豊洲 公園（東京都江東区豊洲2-3-6）')]), [])
+    chk('短い値の先頭一致は同じ場所としない（道の駅 → 道の駅しょうなん）',
+        [k for k, _ in one([dict(base, venue='道の駅')], [dict(base, venue='道の駅しょうなん')])],
+        ['venue'])
 
     print('\n結果: ' + ('すべて通過' if ok else '★失敗あり'))
     return 0 if ok else 1

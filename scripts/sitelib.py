@@ -166,7 +166,8 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キー�
                 # 2026-09-14 第10回の掲載で3件になった
                 '町田パリオ 4階':'machida-palio',
                 # 2026-09-15 enjoy place 番外編の掲載で3件になった
-                'シマムラ園芸 第2ハウス':'shimamura-engei',
+                # 2026-10-09 キーを施設に(区画は回ごとに違う。旧キーは「シマムラ園芸 第2ハウス」。URLは不変)
+                'シマムラ園芸':'shimamura-engei',
                 # 2026-09-17 鹿鳥風月(ゆくはし植物園 会場)の掲載で3件になった
                 'ゆくはし植物園':'yukuhashi-shokubutsuen',
                 # 2026-09-17 ボタニックフロントフェスの掲載で3件になった
@@ -186,7 +187,15 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キー�
                 # 2026-10-09 路地裏ボタニカル 2027年8月の掲載で3件になった
                 'ワイルドプランツ路地裏のギボウシ':'rojiura-no-gibousi',
                 # 2026-10-09 Lier.多肉フェスティバル in 刈谷(12/10)の掲載で3件になった
-                '刈谷市産業振興センター あいおいホール':'kariya-aioi-hall'}
+                '刈谷市産業振興センター あいおいホール':'kariya-aioi-hall',
+                # 2026-10-09 location の区画を落として施設で束ね直した(audit venue_key_split)結果、3件以上になった
+                '志摩中央公園':'shima-chuo-koen',
+                '道の駅北はりまエコミュージアム':'michinoeki-kitaharima',
+                'サンシャインシティ':'sunshine-city',
+                '産直市場よってって南紀の台店':'yotte-nankinodai',
+                'いくとぴあ食花':'ikutopia-shokka',
+                '木更津市金田地域交流センター きさてらす':'kisarazu-kisaterasu',
+                '道の駅 富士川楽座':'michinoeki-fujikawa-rakuza'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -197,6 +206,13 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    # 2026-10-09 location の区画を落として施設で束ね直した(audit venue_key_split)。
+    # 区画ごとに立っていた頁と、3件以上になってローマ字に移ったハッシュの頁
+    'v-becb83de': '志摩中央公園',
+    'v-3908bd09': '志摩中央公園',   # 「志摩中央公園 屋根付きプロムナード」の2件で立っていた頁
+    'v-23f823ff': '道の駅北はりまエコミュージアム',
+    'v-e79f4b8c': '道の駅北はりまエコミュージアム',   # 「…周辺」の2件で立っていた頁
+    'v-99111871': '産直市場よってって南紀の台店',
     # 2026-08-20 ハッシュ → ローマ字
     'v-0d40a798': 'みのり花木センター インターパーク店',   # 2026-10-09
     'v-934512a0': 'ヨークタウン坂東',   # 2026-10-09 (ハッシュURLは同日の取り込みで数分だけ公開)
@@ -209,7 +225,7 @@ _VENUE_REDIRECTS_RAW = {
     'v-6d3a4d6d': '咲くやこの花館',     # 2026-09-23
     'v-fe00aeb0': 'ゆくはし植物園',   # 2026-09-17
     'v-ec95bf25': '四国造園',          # 2026-09-17
-    'v-b6e1de21': 'シマムラ園芸 第2ハウス',   # 2026-09-15
+    'v-b6e1de21': 'シマムラ園芸',   # 2026-09-15(宛先は 2026-10-09 に施設のキーへ)
     'v-1324528c': '町田パリオ 4階',   # 2026-09-14
     'v-5d0f0de9': 'オリナス錦糸町',
     'v-98e5c913': 'さくら植物園',
@@ -443,6 +459,94 @@ def venue_key(v):
 VENUE_ROMAJI = {venue_key(k): v for k, v in _VENUE_ROMAJI_RAW.items()}
 VENUE_SLUG_REDIRECTS = {k: (venue_key(v) if v else None)
                         for k, v in _VENUE_REDIRECTS_RAW.items()}
+
+
+# --- 同じ施設が会場ページで割れていないか (2026-10-09) ---
+# location に区画(部屋・階・棟・広場)まで書くと、venue_key が区画ごとに別の値になり、
+# 同じ施設の回が別々の会場ページに割れる。どちらも1件なら頁そのものが立たない。
+# 2026-10-09 に29組を確認した。志摩中央公園は「屋根付きプロムナード」の2件だけで
+# 別の頁が立ち、オキボタ(サンシャインシティ)は4回とも区画が違って頁が無く、
+# Lier.多肉フェスティバルの福山2回は「小ホールE」「小ホールF」で割れていた。
+# 約束は「location は施設名(＋住所の括弧書き)、区画は venue に書く」。
+# audit venue_location_disagree の note と、10-08 に ISIJ(五反田TOCビル)で揃えた形と同じ。
+# 末尾の語がこれで終わるものを区画とみなす。「館」は美術館・博物館を拾わないよう方角・本別新旧だけ
+VENUE_SUBAREA_RE = re.compile(
+    r'(?:室|棟|B?\d+F|\d+階|[本別新旧東西南北中]館|展示館|\d+号館|ホール[A-Z0-9]*|'
+    r'広場|エリア|スペース|テラス|アトリウム|温室|ハウス内?|ギャラリー[A-Z0-9]*|'
+    r'ルーム|ラウンジ|ロビー|ステージ|展示場|プロムナード|特設会場|側|周辺|内|高架下|屋上)$')
+_VENUE_GENERIC_HEAD = re.compile(r'^道の駅')
+
+# 区画ではなく別の施設だと一次情報で確かめた組。{(短いほうのキー, 長いほうのキー): 理由}
+# キーは venue_key() の値(空白なし・住所の括弧なし)。
+VENUE_SPLIT_OK = {}
+
+
+def _venue_norm(k):
+    return _VENUE_GENERIC_HEAD.sub('', k)
+
+
+def venue_split_groups(events):
+    """同じ施設なのに venue_key が割れている組。[(県, 施設のキー, [割れているキー...])]
+
+    次の3つの形を拾う(県が違えば別の施設。「市民会館」のような一般名は全国にある)。
+    (a) 片方のキーがもう片方の先頭にある(4字以上): 志摩中央公園 / 志摩中央公園屋根付きプロムナード
+    (b) 空白で区切った末尾の語だけが違い、両方の末尾が区画の語(VENUE_SUBAREA_RE):
+        ビッグ・ローズ 小ホールE / ビッグ・ローズ 小ホールF。片方だけが区画の語なら拾わない
+        (「大阪南港 ATCホール」と「大阪南港 インテックス」は別の施設)
+    (c) 先頭の「道の駅」の有無だけが違う: 道の駅 富士川楽座 / 富士川楽座
+    """
+    seen = {}
+    by_norm = {}
+    by_base = {}
+    for e in events:
+        loc = (e.get('location') or '').strip()
+        if is_vague_venue(loc):
+            continue
+        pref = e.get('prefecture') or ''
+        k = venue_key(loc)
+        n = _venue_norm(k)
+        by_norm.setdefault((pref, n), set()).add(k)
+        toks = unicodedata.normalize('NFKC', venue_display(loc)).split()
+        if len(toks) >= 2:
+            base = _venue_norm(''.join(toks[:-1]))
+            if len(base) >= 4:
+                by_base.setdefault((pref, base), set()).add((n, toks[-1]))
+    parent = {}
+
+    def find(x):
+        while parent.setdefault(x, x) != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a, b):
+        parent[find(a)] = find(b)
+
+    norms = sorted(by_norm)
+    for pref, a in norms:
+        if len(a) < 4:
+            continue
+        for pref2, b in norms:
+            if pref2 == pref and b != a and b.startswith(a):
+                union((pref, a), (pref, b))
+    for (pref, base), ents in by_base.items():
+        ns = sorted({n for n, _ in ents})
+        if len(ns) >= 2 and all(VENUE_SUBAREA_RE.search(t) for _, t in ents):
+            for n in ns[1:]:
+                union((pref, ns[0]), (pref, n))
+    groups = {}
+    for node in norms:
+        groups.setdefault(find(node), []).append(node)
+    out = []
+    for members in groups.values():
+        keys = sorted({k for m in members for k in by_norm[m]}, key=lambda x: (len(x), x))
+        if len(keys) < 2:
+            continue
+        short = keys[0]
+        if all((short, k) in VENUE_SPLIT_OK for k in keys[1:]):
+            continue
+        out.append((members[0][0], short, keys))
+    return sorted(out)
 
 # --- 日付整形 ---
 

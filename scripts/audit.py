@@ -27,7 +27,7 @@ from sitelib import (today_jst, ADSENSE_CLIENT, VAGUE_VENUES, is_generic_image_u
                      is_quality_image_url,
                      event_phase, is_long_run, event_days, LONG_RUN_DAYS,
                      is_vague_venue, venue_key, venue_slug, venue_display,
-                     VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
+                     venue_split_groups, VENUE_ROMAJI, VENUE_ROMAJI_MIN_EVENTS, VENUE_SLUG_REDIRECTS,
                      tag_slug, region_slug, pref_slug, DESC_MIN_CHARS,
                      is_recent_past, event_span, PAST_KEEP_MAX,
                      is_upcoming, compact_date, DESC_PROTECT_DAYS,
@@ -2027,6 +2027,68 @@ def main():
         sorted(romaji_cand),
         'sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず '
         '_VENUE_REDIRECTS_RAW に残す(URLが変わるため)')
+
+    # 同じ施設が会場ページで割れている(2026-10-09)。
+    #     location に区画(部屋・階・棟・広場)まで書いた回は venue_key が区画ごとに
+    #     別の値になり、同じ施設の回が別々の会場ページに割れる(1件ずつなら頁が立たない)。
+    #     判定は sitelib.venue_split_groups が単一情報源。
+    #     2026-10-09 に28組: 志摩中央公園は「屋根付きプロムナード」の2件だけで別の頁が立ち、
+    #     オキボタ(サンシャインシティ)は4回とも区画違いで頁が無く、同日に足した
+    #     Lier.多肉フェスティバルの福山2回は「小ホールE」「小ホールF」で割れていた。
+    #     修正前のデータで28組、修正後0組を確認。区画の語を持たない愛称違い
+    #     (せんだい農業園芸センター「みどりの杜」/「研修室」)は拾わない。片方だけ区画の語だと
+    #     「大阪南港 ATCホール」と「大阪南港 インテックス」のような別施設を拾うため。
+    split_items = []
+    for _pref, _short, _keys in venue_split_groups(events):
+        split_items.append(f'{_pref} ' + ' / '.join(
+            f'{k}({len(v_groups.get(k, []))}件)' for k in _keys))
+    add('venue_key_split', '同じ施設が会場ページで割れている(location に区画まで書いている)',
+        sorted(split_items),
+        'location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く'
+        '(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。'
+        '頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は '
+        '_VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す')
+
+    # 詳細頁の「同会場の他イベント」が会場ページの束ね方と食い違う(2026-10-09)。
+    #     build-detail-pages は生の location 文字列で束ねていたので、住所の括弧書きの
+    #     有無だけで同じ会場の回が節から落ち(80頁。52頁は節ごと出ていなかった)、
+    #     見出しには住所の括弧書きまで出ていた
+    #     (「プロトリーフ二子玉川本店（東京都世田谷区玉川3丁目17-1 …）で開催される他のイベント」)。
+    #     会場ページは venue_key で束ねるので、同じサイトの中で「同じ会場」の範囲が2通りあった。
+    #     生成物を見る(機能確認): 節に並ぶ回が venue_key の束(自分を除く新しい順5件)と一致するか、
+    #     見出しに住所の括弧書きが出ていないか。修正前の生成物で80頁+見出し46頁、修正後0を確認。
+    _vh_re = re.compile(r'data-kicker="VENUE">(.*?)で開催される他のイベント</h2>(.*?)</div>\s*</div>',
+                        re.S)
+    _vh_addr = re.compile(r'[（(](?:' + '|'.join(map(re.escape, _P2R)) + ')')
+    vh_bad = []
+    for e in events:
+        try:
+            with open(rp('events', f"{e.get('slug')}.html"), encoding='utf-8') as f:
+                _pg = f.read()
+        except OSError:
+            continue
+        _m = _vh_re.search(_pg)
+        _got = re.findall(r'href="/events/([^"]+)\.html"', _m.group(2)) if _m else []
+        _loc = (e.get('location') or '').strip()
+        _grp = [] if is_vague_venue(_loc) else \
+            [x for x in v_groups.get(venue_key(_loc), []) if x.get('slug') != e.get('slug')]
+        _grp = sorted(_grp, key=lambda x: x.get('date') or '', reverse=True)
+        _exp = {x['slug'] for x in _grp[:5]}
+        if len(_grp) > 5:
+            # 同じ日付が5件目の前後にまたがると、どれが入るかは並び順しだい。日付だけで見る
+            _floor = _grp[4].get('date') or ''
+            _ok = (len(_got) == 5 and all(any(x['slug'] == g and (x.get('date') or '') >= _floor
+                                             for x in _grp) for g in _got))
+        else:
+            _ok = set(_got) == _exp
+        if not _ok:
+            vh_bad.append(f"{e.get('slug')}: 節に{len(_got)}件 / 会場ページの束では{len(_grp)}件")
+        elif _m and _vh_addr.search(_m.group(1)):
+            vh_bad.append(f"{e.get('slug')}: 見出しに住所「{_m.group(1)[:40]}」")
+    add('venue_history_drift', '詳細頁の「同会場の他イベント」が会場ページの束ね方と食い違う',
+        sorted(vh_bad),
+        'build-detail-pages.py の同会場の束ねは sitelib.venue_key、見出しは sitelib.venue_display を使う。'
+        '生の location で束ねると住所の括弧書きの有無だけで同じ会場の回が落ちる')
 
     # VENUE_ROMAJI に書いたが頁が立たないキー(会場ページは2件以上のみ)。
     # 表記が変わって当たらなくなった項目が残ると、次に同じ会場を足すときに

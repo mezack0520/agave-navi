@@ -6,8 +6,15 @@
 どう振る舞うのかもコードを読まないと分からなかった。
 
 比較元は「24時間以内に events.json を触った最古のコミットの親」。
-その窓に何も無ければ `HEAD~1`。どちらも取れない回は **増分ゼロ** にする
-(全件を新規として通知に流すより、黙って落とすほうが安全)。
+その窓に何も無ければ `HEAD~1`。
+
+**比較元が取れない回は addedDate で代用する(2026-10-09)。**以前は増分ゼロにしていた
+(全件を新規として通知に流すより安全、という理由)。ところが 10-07 と 10-09 の health で
+浅い clone を深くする fetch が exit 128 で落ち、比較元が取れず掲載0件になり、
+**ほかに載せることが無い日はメールそのものが送られなかった**(10-09 は44件を掲載した日)。
+addedDate は追加した日を持つので、今日(JST)に足した回だけを出す。昨日の分を入れると前日のメールと
+重なる(朝のタスクの掲載は前日のメールに載っている)。昨日の午後に足した回は代用の日だけ落ちる。
+代用した回は出力に `fallback` と理由を書き、メールの「残っていること」に1行出す(黙って代用しない)。
 
   python3 scripts/detect-added-events.py [--out new-events-added.json]
   python3 scripts/detect-added-events.py --self-test
@@ -17,6 +24,10 @@ import json
 import os
 import subprocess
 import sys
+import time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sitelib import today_jst   # noqa: E402  「今日」は sitelib が単一情報源
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIELDS = ('slug', 'name', 'date', 'dateEnd', 'location', 'prefecture')
@@ -39,12 +50,36 @@ def ensure_history(days=3):
     """
     try:
         if _git(['rev-parse', '--is-shallow-repository']).strip() != 'true':
-            return
-        subprocess.run(['git', 'fetch', '--quiet', f'--shallow-since={days} days ago',
-                        'origin'], cwd=REPO, check=True, timeout=180,
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            return None
     except Exception as ex:                         # noqa: BLE001
-        print(f'detect-added-events: 履歴を足せない: {ex}', file=sys.stderr)
+        return f'rev-parse: {ex}'
+    # 10-07・10-09 は --shallow-since が exit 128 で落ち、10-08 は通った。stderr を捨てていたので
+    # 理由が残っていない。落ちたら別の深め方で引き直し、全部落ちたら理由を返す(2026-10-09)
+    errs = []
+    for i, opt in enumerate([f'--shallow-since={days} days ago', f'--shallow-since={days} days ago',
+                             '--deepen=300', '--unshallow']):
+        if i == 1:
+            time.sleep(3)
+        try:
+            r = subprocess.run(['git', 'fetch', '--quiet', opt, 'origin'], cwd=REPO, timeout=300,
+                               capture_output=True, text=True)
+        except Exception as ex:                     # noqa: BLE001
+            errs.append(f'{opt}: {ex}')
+            continue
+        if r.returncode == 0:
+            if errs:
+                print('detect-added-events: 引き直しで履歴を足した: ' + ' / '.join(errs),
+                      file=sys.stderr)
+            return None
+        tail = (r.stderr or '').strip().splitlines()
+        errs.append(f'{opt}: exit {r.returncode} {tail[-1] if tail else ""}'.strip())
+    uniq = []
+    for x in errs:
+        if x not in uniq:
+            uniq.append(x)
+    msg = ' / '.join(uniq)
+    print(f'detect-added-events: 履歴を足せない: {msg}', file=sys.stderr)
+    return msg
 
 
 def baseline_ref(since='24 hours ago'):
@@ -60,16 +95,23 @@ def baseline_ref(since='24 hours ago'):
 
 
 def baseline_slugs(since='24 hours ago'):
-    """比較元の slug 集合。取れなければ None(= 増分ゼロ扱い)。"""
-    ensure_history()
+    """(比較元の slug 集合, 取れなかった理由)。取れなければ集合は None。"""
+    why = ensure_history()
     ref = baseline_ref(since)
     if ref is None:
-        return None
+        return None, (why or 'git log が読めない')
     try:
-        return {e['slug'] for e in json.loads(_git(['show', f'{ref}:events.json']))}
+        return {e['slug'] for e in json.loads(_git(['show', f'{ref}:events.json']))}, None
     except Exception as ex:                         # noqa: BLE001
         print(f'detect-added-events: 比較元 {ref} が取れない: {ex}', file=sys.stderr)
-        return None
+        return None, f'比較元 {ref} が取れない' + (f'({why})' if why else '')
+
+
+def added_by_date(current, today):
+    """比較元が取れない回の代用。addedDate が今日(JST)の回。"""
+    return [{k: e.get(k, '') for k in FIELDS}
+            for e in sorted(current, key=lambda x: x.get('slug') or '')
+            if (e.get('addedDate') or '') == today and e.get('slug')]
 
 
 def added(current, old_slugs):
@@ -95,10 +137,18 @@ def main():
 
     with open(os.path.join(REPO, 'events.json'), encoding='utf-8') as f:
         current = json.load(f)
-    evs = added(current, baseline_slugs(a.since))
+    old, why = baseline_slugs(a.since)
+    out = {}
+    if old is None:
+        evs = added_by_date(current, today_jst())
+        out = {'fallback': 'addedDate', 'fallbackReason': why or ''}
+        print(f'detect-added-events: 比較元が取れないので addedDate(今日)で代用: {why}',
+              file=sys.stderr)
+    else:
+        evs = added(current, old)
     with open(a.out, 'w', encoding='utf-8') as f:
-        json.dump({'count': len(evs), 'events': evs}, f, ensure_ascii=False, indent=2)
-    print(f'New events added (last 24h): {len(evs)}')
+        json.dump(dict({'count': len(evs), 'events': evs}, **out), f, ensure_ascii=False, indent=2)
+    print(f'New events added (last 24h): {len(evs)}' + (' (addedDate で代用)' if out else ''))
     return 0
 
 
@@ -121,7 +171,15 @@ def self_test():
     assert ref is None or ref.endswith('~1'), ref
     assert baseline_ref('1 second ago') == 'HEAD~1', '窓が空なら直前コミット'
 
-    print('self-test: 9 assertions OK')
+    cur2 = [{'slug': 'x', 'name': 'X', 'addedDate': '2026-10-09'},
+            {'slug': 'y', 'name': 'Y', 'addedDate': '2026-10-08'},
+            {'slug': 'z', 'name': 'Z', 'addedDate': '2026-10-07'},
+            {'slug': 'w', 'name': 'W'}]
+    assert [e['slug'] for e in added_by_date(cur2, '2026-10-09')] == ['x'], \
+        '代用は今日に足した回だけ。昨日の分は前日のメールに載っている。addedDate の無い回は出さない'
+    assert set(added_by_date(cur2, '2026-10-09')[0]) == set(FIELDS)
+
+    print('self-test: 11 assertions OK')
     return 0
 
 
