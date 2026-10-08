@@ -3843,8 +3843,9 @@ venue_key」の規則が詳細頁に届いていなかった)。住所の括弧�
 10-09 は mail-request.json を押して health が full で走ったのに、本文が見出し1行だけで `send=false` になり、メールが出なかった
 (44件を掲載した日)。`detect-added-events.py` が浅い clone(fetch-depth 10)を深くする `git fetch --shallow-since` で exit 128 になり、
 比較元のコミットが取れず「掲載0件」、ほかに載せることも無かったので送らなかった。**10-07 も同じ形で落ちていた**(10-08 は通った)。
-stderr を捨てていたので 128 の理由は残っていない(手元の depth 10 の clone では同じ fetch が通る)。
-- 落ちたら3秒おいて引き直し、`--deepen=300`、`--unshallow` の順に試す。全部落ちたら理由を stderr に出す。
+stderr を捨てていたので理由が残っておらず、拾うようにして合図を押し直したら `fatal: error processing shallow info: 4` だった
+(runner の git 2.55。手元の depth 10 の clone では同じ fetch が通る)。同じ回に `--deepen=300` は通り、44件が載ってメールが出た。
+- `--deepen=300` → `--shallow-since` → `--unshallow` の順に試す。全部落ちたら理由を stderr に出す。
 - それでも比較元が取れない回は **addedDate が今日(JST)の回で代用し**、出力に `fallback` を書く。メールの「残っていること」に1行出る。
   昨日の分は前日のメールに載っているので入れない。
 - **合図を押した後は、health のログの `New events added` と本文を見る。**`send=False` で終わっていても workflow は success で緑になる。

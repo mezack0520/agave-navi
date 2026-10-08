@@ -24,7 +24,6 @@ import json
 import os
 import subprocess
 import sys
-import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import today_jst   # noqa: E402  「今日」は sitelib が単一情報源
@@ -53,13 +52,12 @@ def ensure_history(days=3):
             return None
     except Exception as ex:                         # noqa: BLE001
         return f'rev-parse: {ex}'
-    # 10-07・10-09 は --shallow-since が exit 128 で落ち、10-08 は通った。stderr を捨てていたので
-    # 理由が残っていない。落ちたら別の深め方で引き直し、全部落ちたら理由を返す(2026-10-09)
+    # 10-07・10-09 は --shallow-since が「fatal: error processing shallow info: 4」(exit 128)で落ちた
+    # (runner の git 2.55。10-08 は通った)。同じ回に --deepen=300 は通ったので、こちらを先に使う。
+    # 300本あれば CI の自動コミット(1日15〜20本)で2週間ぶんを覆う。落ちたら次の深め方で引き直し、
+    # 全部落ちたら理由を返す(2026-10-09)
     errs = []
-    for i, opt in enumerate([f'--shallow-since={days} days ago', f'--shallow-since={days} days ago',
-                             '--deepen=300', '--unshallow']):
-        if i == 1:
-            time.sleep(3)
+    for opt in ('--deepen=300', f'--shallow-since={days} days ago', '--unshallow'):
         try:
             r = subprocess.run(['git', 'fetch', '--quiet', opt, 'origin'], cwd=REPO, timeout=300,
                                capture_output=True, text=True)
