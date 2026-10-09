@@ -355,6 +355,13 @@
       "note": "",
       "severity": "urgent"
     },
+    "desc_span_mismatch": {
+      "title": "説明文が書く会期の長さ・日と date〜dateEnd が食い違う(日付欄だけが書き換えられた疑い)",
+      "count": 0,
+      "items": [],
+      "note": "出典の告知で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら、git log -G で書き換えたコミットを引いて元の値と比べる。会場ごとに分けた回は同じ organizerIg を入れれば合わせて数える",
+      "severity": "urgent"
+    },
     "time_implausible": {
       "title": "開催時間がありえない(幅2時間未満・6時前の開始。別データの貼り付けの疑い)",
       "count": 0,
@@ -667,7 +674,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
