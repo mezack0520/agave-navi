@@ -5,6 +5,7 @@
     python3 scripts/apply-eyecatch.py --list
     python3 scripts/apply-eyecatch.py --approve slug-a slug-b
     python3 scripts/apply-eyecatch.py --reject "slug-c=出店者募集の投稿"
+    python3 scripts/apply-eyecatch.py --reject-post "slug-d=https://www.instagram.com/p/XXXX/=出店者募集の投稿"
 
 候補は CI(ig-organizer-watch.py → eyecatchlib.stage_candidates)が
 Business Discovery の原寸画像から作る。**採否は画像を1枚ずつ目で見て決める。**
@@ -13,6 +14,11 @@ Business Discovery の原寸画像から作る。**採否は画像を1枚ずつ�
 採用: 画像を images/events/<slug>.jpg に移し、imageUrl / imageSource / updatedAt を書く。
 不採用: scripts/eyecatch-rejected.json に投稿URLと理由を残す。
         同じ投稿は二度と候補に出ない。同じ主催の別の投稿は出る。
+--reject-post: staging に無い投稿(ブラウザ経路で取って捨てたもの)を同じ台帳に書く。
+        --reject は staging の候補からしか投稿URLを引けない。ブラウザで捨てた投稿を
+        書かずにいると list-missing-eyecatch.py の hintRejected が付かず、翌日以降の回が
+        同じ投稿を開き直して1枠を使う(2026-10-10: 10-08 に捨てた nbgarden / spine-note が
+        印なしのまま一覧に残っていた)。
 """
 import argparse
 import json
@@ -32,11 +38,13 @@ def main():
     ap.add_argument('--list', action='store_true')
     ap.add_argument('--approve', nargs='*', default=[])
     ap.add_argument('--reject', nargs='*', default=[], help='slug=理由')
+    ap.add_argument('--reject-post', nargs='*', default=[],
+                    help='slug=投稿URL=理由(staging に無い投稿。ブラウザ経路で捨てたもの)')
     a = ap.parse_args()
 
     stage = ec.load_json(ec.STAGE_JSON, {'items': {}})
     items = stage.get('items') or {}
-    if a.list or not (a.approve or a.reject):
+    if a.list or not (a.approve or a.reject or a.reject_post):
         for sl, it in sorted(items.items(), key=lambda x: x[1].get('date') or ''):
             print(json.dumps({'slug': sl, 'image': f'staging/eyecatch/{sl}.jpg', **it},
                              ensure_ascii=False))
@@ -81,7 +89,20 @@ def main():
         except OSError:
             pass
         print(f'– {sl}: 不採用 {reason}')
-    if a.reject:
+    for arg in a.reject_post:
+        sl, _, rest = arg.partition('=')
+        post, _, reason = rest.partition('=')
+        code = ec.post_code(post)
+        if sl not in by_slug or not code:
+            print(f'✗ {sl}: 回が無いか、投稿URLの形でない')
+            continue
+        rows = ritems.setdefault(sl, [])
+        if any(ec.post_code(r.get('post')) == code for r in rows):
+            print(f'– {sl}: 記録済み {post}')
+            continue
+        rows.append({'post': post, 'reason': reason or '(理由なし)', 'on': today})
+        print(f'– {sl}: 不採用 {reason} ← {post}')
+    if a.reject or a.reject_post:
         ec.write_json(ec.REJECTED_JSON, rej)
     ec.write_json(ec.STAGE_JSON, stage)
     if changed:

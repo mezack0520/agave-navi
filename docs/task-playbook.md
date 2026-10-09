@@ -2189,6 +2189,14 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   (高知会場は蔦屋書店の告知 `DeLMPWsy9vF` に会場・日付入りのフライヤーがあった)。
   igPost 73件のうち40件に印が付く。対象を選ぶ前に `hintRejected` の無い回へ絞る。
 
+- **ブラウザ経路で捨てた投稿は `apply-eyecatch.py --reject-post "<slug>=<投稿URL>=<理由>"` で台帳に書く。**(2026-10-10)
+  `--reject` は staging の候補からしか投稿URLを引けないので、ブラウザで取って捨てた投稿は
+  `eyecatch-rejected.json` に入らず、`hintRejected` も付かなかった。10-08 に捨てた
+  nbgarden-festa(DaHRU3cOpwB・出店者募集)と spine-note-vol2(DdtFp9Qktqi・Vol.1 のアーカイブ写真)が
+  印なしのまま一覧に残り、次の回が同じ投稿に1枠を使うところだった。
+  spine-note は同じ日の `igGrabHere` 修正(カルーセルの隣のスライドを掴んでいた)の前に取った1枚で
+  判定した可能性があるので、記録せず取り直し候補にしてある。**判定の根拠が修正前の取得なら、記録の前に取り直す。**
+
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
 `primarySource.vendorAnnouncementsOnly` は「出店者の告知は主催の告知の代わりに
@@ -3472,6 +3480,8 @@ Step0 の照合で `rejected-events.json` に当たった候補は通常そこ�
 clone の一手の時点ではまだ読まれていない。§1 の 2 の名義と同じ型。ここで効くのは、衝突したときに無理に進めないことだけ:
 `rm -rf` が Permission denied、または `dubious ownership` が出たら、その場所は捨てて `/sessions/<自分>/` 配下へ取り直す。
 置き場を最初から外すには、各タスクの SKILL.md の clone の行に置き場を書くしかない(目崎しか触れない)。
+同じ 10-10 に agave-navi-eyecatch も、スケジュールのプロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で
+`/tmp/agave` の残骸に当たり `dubious ownership` で止まった(`/sessions/<自分>/agave` に取り直して続行)。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
