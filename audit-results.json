@@ -1,5 +1,5 @@
 {
-  "total": 795,
+  "total": 794,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -1068,10 +1068,8 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
-      "items": [
-        "@uell_creators 2026-10-11: 【uell植物日記_14】 こんばんは。高木です。 いよいよ明日・あさってHONOさんとuellのコラボイベント「MID https://www.instagram.com/p/DePIk4Zk-EJ/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
