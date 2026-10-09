@@ -93,6 +93,11 @@ _DEADLINE_BEFORE = re.compile(r'(?:締め?切り?|〆切|申込期限|受付期�
 _SETUP_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:の|は)?\s*(?:前日|翌日)?\s*(?:の)?\s*'
                           r'(?:搬入|設営|搬出|撤収|撤去|設置作業|リハーサル)')
 _SETUP_BEFORE = re.compile(r'(?:搬入|設営|搬出|撤収)(?:日|作業)?\s*(?:[：:]|は)?\s*$')
+# チケットの販売開始日も開催日ではない(2026-10-10)。BOTANICAL BOTANICAL OSAKA(10/31-11/1)の告知
+# 「🎫オンラインチケット販売開始\n10月17日(土)20:00〜」の 10/17 が当サイトに無い日付として出た。
+# 見出しは日付の前の行に来るので、前の24字(改行を含む)を見る。「販売開始」だけでは
+# 当日の苗の販売開始と区別できないので、チケット・前売・整理券・入場券の語があるときだけ
+_TICKET_BEFORE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)[^\n]{0,14}(?:販売|発売|受付|予約)(?:開始)?(?:日)?\s*[：:]?\s*$')
 
 
 def month_days(text):
@@ -108,6 +113,8 @@ def month_days(text):
         if _SETUP_AFTER.search(text[m.end():m.end() + 14].split('\n')[0]):
             continue
         if _SETUP_BEFORE.search(text[max(0, m.start() - 8):m.start()]):
+            continue
+        if _TICKET_BEFORE.search(text[max(0, m.start() - 24):m.start()]):
             continue
         mo = int(m.group(1))
         d = int(m.group(2) or m.group(3))
@@ -708,6 +715,10 @@ def self_test():
         {(11, 7)})   # 「・8」は月の無い日なので元から読まない(既存の挙動)
     chk('設営日の見出しの後の日付も数えない', month_days('設営日：10月30日\n開催 10月31日(土)'), {(10, 31)})
     chk('開催日の後の設営以外の語は落とさない', month_days('10月31日(土)開催 11月1日(日)も開催'), {(10, 31), (11, 1)})
+    chk('チケットの販売開始日は数えない',
+        month_days('ABENO HARUKAS 10/31(SAT)-11/1(SUN)\n🎫オンラインチケット販売開始\n10月17日(土)20:00〜'),
+        {(10, 31), (11, 1)})
+    chk('苗の販売開始の時刻は落とさない', month_days('販売開始\n10月18日(日)9:30〜'), {(10, 18)})
     # 別イベントへの出店告知は取りこぼし候補にしない
     p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4b',
           'caption': 'イベント出店のお知らせ 11/22 開催 会場はどこそこ'}]
