@@ -57,6 +57,9 @@ KNOWN_EVENT_FIELDS = {
     # 「株を持ち帰る前に揃えるもの」の枠を出さないために使う。
     # artworkShows の改定で、植物を売らない作品展が載るようになった
     'plantSale',
+    # 同じ会場・同じ日に並べて開く別の主催の回(2026-10-10)。読むのは
+    # audit.duplicate_venue_date で、書いた組だけを二重掲載の疑いから外す
+    'coexistsWith',
     # 他所での呼び名(2026-09-24)。読むのは coverage-sweep.py の照合で、
     # 主催の表記(PLNTS RIDE)とアグリゲータの表記(Plants Ride)が違う回を掲載済みと判定する
     'aliases',
@@ -159,8 +162,21 @@ def main():
         d = e.get('date') or ''
         if vk and d and not _vague(vk):
             seen_vd[(vk, d)].append(e.get('slug'))
+    # 同じ会場・同じ日に別の主催が並べて開く回(2026-10-10)。坪井健樹園の 11/1 は
+    # FELICITA の『ビザールプランツ 名古屋ノ陣』と、隣の屋外駐車場でディッキアの
+    # 『DYCKIA EVENT NEEDLES』が同時に開かれ、主催も告知も別。名称で区別できていても
+    # この検査は (会場, 日付) で束ねるので必ず鳴る。片方の回に coexistsWith=<相手のslug>
+    # (文字列か配列)を書いて明示したときだけ外す。見送り側の coexistsWith と同じ逃げ道で、
+    # 書かない限り従来どおり鳴る。
+    _coexist = sitelib.coexisting_pairs(events)
+
+    def _all_coexist(_slugs):
+        _ss = sorted(set(_slugs))
+        return len(_ss) > 1 and all(frozenset((_ss[i], _ss[j])) in _coexist
+                                    for i in range(len(_ss)) for j in range(i + 1, len(_ss)))
+
     dup_vd = sorted(f"{k[1]} {k[0]}: {' / '.join(sorted(v))}"
-                    for k, v in seen_vd.items() if len(v) > 1)
+                    for k, v in seen_vd.items() if len(v) > 1 and not _all_coexist(v))
 
     by_date_v = defaultdict(list)
     for (vk, d), slugs_v in seen_vd.items():
@@ -189,6 +205,8 @@ def main():
                         suffix) and not _same_source_host(a[1], b[1]):
                     continue
                 if len(short) < 6 or not long_.startswith(short):
+                    continue
+                if _all_coexist(a[1] + b[1]):
                     continue
                 dup_vd.append(f"{d} {short} ⊂ {long_}: "
                               + ' / '.join(sorted(a[1] + b[1])))
@@ -3210,7 +3228,10 @@ def main():
             _cap_r, _src = set(), []
             for _c in sorted(_codes):
                 if _c in _posts_by_code:
-                    _rr = sitelib.announced_hours(_posts_by_code[_c].get('caption') or '')
+                    # 会期の外の日付にだけ紐づく時刻は比べない(2026-10-10。巡業日程の投稿の冒頭にある
+                    # 別の催し 12/19 の時刻で、高知 10/18 の回が鳴った)。sitelib.announced_hours_for_event
+                    _rr = sitelib.announced_hours_for_event(_posts_by_code[_c].get('caption') or '',
+                                                            sitelib.event_month_days(e))
                     if _rr:
                         _cap_r |= set(_rr)
                         _src.append(_c)
@@ -5430,6 +5451,16 @@ def main():
         # 掲載を15件足せば画像の無い回は15件増える。それは異常ではない
         'eyecatch_backlog',
     }
+    # 新しく足した回が**全部**その集合に入る指標は、比例ではなく足し算で換算する(2026-10-10)。
+    # 掲載した回は必ず画像なしで入る(アイキャッチは後から別のタスクが付ける)ので、
+    # 開催予定が N 件増えれば画像の無い回も N 件増える。比例の換算(上の集合)は
+    # 「足した回も既存と同じ割合で画像を持つ」と置くので、まとめて掲載が続くと追いつかない。
+    # 10-09 に44件、10-10 に21件を足した日に「直近中央値 73 → 140(換算 106)」で鳴った
+    # (比例 73×279/193=106、足し算なら 73+(279-193)=159)。開催予定が減った分は
+    # 終わった回が抜けただけなので、そちらは従来どおり比例で減らす。
+    # 画像の消失そのものは event_image_lost が全件の実数で見ている(ここは補助の信号)。
+    # audit-history の 48回で旧・新の判定を比べ、変わったのは今日の1件だけ。
+    _METRIC_ADDS_WITH_UPCOMING = {'upcoming_no_image', 'eyecatch_backlog'}
     # その指標が「異常を示す向き」。反対向きの動きは、
     # その指標を足した理由からして異常の証拠にならない。
     _METRIC_ALARM_DIR = {'upcoming_no_image': +1, 'eyecatch_backlog': +1, 'events_with_image': -1}
@@ -5551,6 +5582,9 @@ def main():
             _d_base = _ds[len(_ds) // 2]
             if _d_base > 0 and _now_denom > 0:
                 _scaled = _base * _now_denom / _d_base
+                if _k in _METRIC_ADDS_WITH_UPCOMING and _field == 'upcoming':
+                    _dd = _now_denom - _d_base
+                    _scaled = _base + _dd if _dd > 0 else _base + _dd * _base / _d_base
         _delta = _v - _scaled
         _dir = _METRIC_ALARM_DIR.get(_k, 0)
         if _dir and (_delta > 0) != (_dir > 0):

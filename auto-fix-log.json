@@ -1215,6 +1215,190 @@
    "action": "fixed",
    "detail": "住所の括弧書きの有無だけで同じ会場の回が節から落ちていた(52頁は節ごと無し)。会場ページと同じ束ね方にし、見出しから住所を外した",
    "mailedOn": "2026-10-09"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "花めぐりビンゴラリー (2026-10-10〜25 山口きらら博記念公園・ときわ公園)",
+   "action": "rejected",
+   "detail": "植物館を巡るビンゴラリーで即売・展示ではない。policy で見送りに記録"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "花西海「観葉植物SALE 第1弾」(2026-10-10〜12 波佐見)",
+   "action": "rejected",
+   "detail": "観葉植物20%OFFだけの店頭セール(storeSale.exclude)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "PLANTS BOX (2026-10-24 甲府駅北口)",
+   "action": "fixed",
+   "detail": "掲載済み plants-box-kofu-2026-10(プランツボックス 甲府)の英字表記。aliases に PLANTS BOX を足した"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "体験型植物イベント NABOLO vol.10 (2026-10-24〜25 garage NAGOYA)",
+   "action": "rejected",
+   "detail": "苔テラリウムの展示・WS・素材販売(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ビザールプランツ 名古屋ノ陣 (2026-11-01 坪井健樹園)",
+   "action": "listed",
+   "detail": "主催 FELICITA @felicita_plants の告知 DeGwJuCxg1I で裏取り。隣の DYCKIA EVENT NEEDLES も坪井健樹園の告知 DeJyS07TUZU で掲載"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "HOBBY PLANTS FREAKS vol.6 (2026-11-14〜15 ナガサコファーム)",
+   "action": "listed",
+   "detail": "主催 @nagasako_farm の告知 DeG8M8dJZ8p で裏取り"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "パキポの園 －つなげる縁－ 井戸端集会 (2026-11-23 カネヨシプレイス)",
+   "action": "listed",
+   "detail": "主催 @pachypo_no_en の告知 DeNyO1zz_Ae(チラシ画像に 10:30〜15:30)で裏取り"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "生活文化・趣味の作品展 (2026-10-17〜18 四日市市文化会館)",
+   "action": "rejected",
+   "detail": "truncatedUnresolved。盆栽・華道・山野草の作品展(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "リトリートマルシェ vol.10 (2026-11-08 リコルソガーデン)",
+   "action": "rejected",
+   "detail": "truncatedUnresolved。体験中心の中立名のマルシェ(undisclosedBreakdown.exclude)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@botajam2026 2026-11-06",
+   "action": "fixed",
+   "detail": "前日搬入・設営の日。ig-organizer-watch.month_days が搬入・設営・撤収の日を開催日に数えないようにした(全2811投稿で変わるのはこの1件)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@botanical.botanical 2026-10-17 (BOTANICAL BOTANICAL OSAKA)",
+   "action": "fixed",
+   "detail": "10/17 はチケット販売開始日。告知 DeQpiYACU1P で会場・時間・料金が出たので tbd を外して埋めた"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@hirata_ns.odo 2026-10-31 横山直樹氏のクリスマスローズ&ダイヤモンドリリー&原種シクラメンの世界",
+   "action": "rejected",
+   "detail": "球根・宿根草の講習会と即売(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@meguru___museum 2026-12-12〜13 BE SMITH BONSAI 1st ANNIVERSARY POP UP",
+   "action": "rejected",
+   "detail": "盆栽ブランドのポップアップ(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@uell_creators 2026-10-11 MIDOLIEN",
+   "action": "reviewed",
+   "detail": "DESIGN WEEKEND OSAKA(10/8〜11)の会期末。告知の『10月8（木）』に日の字が無く範囲として読めなかった。会期は今日10/10まで"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "kadan-fes-2026-autumn / mizunomori-aki-saboten-ten-2026-10 / jolie-nursery-musashi-kanazawa-2026-10",
+   "action": "reviewed",
+   "detail": "公式頁を取り直して開催予定のまま。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "midolien-hono-osaka-2026-10",
+   "action": "reviewed",
+   "detail": "weekend.osaka の頁は会期 10/9-10 のままで中止の語なし(+9字の揺れは記事の外)。最終日が今日で明日から見張りの対象外になるため、3回目の記録はせず規則も直さない"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "cancel_watch_unreachable",
+   "target": "jurian-aki-taniku-cactus-2026-10",
+   "action": "reviewed",
+   "detail": "手元から取り直すと200で開催案内のまま。一過性の取得失敗"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "lier-taniku-festival-kochi-tsutaya-2026-10",
+   "action": "fixed",
+   "detail": "誤検知。巡業日程の投稿の冒頭にある別の催し(12/19 花友フェスタ)の 9:00〜16:00 と比べていた。会期の外の日付にだけ紐づく時刻は比べないようにした(sitelib.announced_hours_for_event。16日分の版で変わるのはこの1件)"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "botanical-botanical-osaka-2026-10",
+   "action": "fixed",
+   "detail": "告知 DeQpiYACU1P の 10/31 12:00〜17:00・11/1 10:00〜16:00 を time に入れた"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "nakayama-plants-1st-anniversary-2026-10",
+   "action": "fixed",
+   "detail": "内容が出た(DeJh5QrE81h)。割引・記念品・グッズだけでスキンダプサス専門店。policy / revisit=false にした"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "botanical-botanical-osaka-2026-10",
+   "action": "fixed",
+   "detail": "あべのハルカス近鉄本店 ウイング館10階屋上 ハルカスウイングガーデン。tbd を外した"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "botanical-botanical-okinawa / masappe 周年祭 / まるっと植物fes / BOTANICAL STYLE 福岡 / 珍奇植物FM 2回 / サンタフェ周年祭",
+   "action": "skipped",
+   "detail": "主催の告知に会場・時間が出ていない。まるっと植物fesは #淵野辺公園 のタグのみで、正式な告知画像は10月末の予定"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "agave-event-update",
+   "kind": "eyecatch_candidates_pending",
+   "target": "12件",
+   "action": "skipped",
+   "detail": "agave-navi-eyecatch の担当"
   }
  ]
 }

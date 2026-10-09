@@ -195,7 +195,11 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キー�
                 '産直市場よってって南紀の台店':'yotte-nankinodai',
                 'いくとぴあ食花':'ikutopia-shokka',
                 '木更津市金田地域交流センター きさてらす':'kisarazu-kisaterasu',
-                '道の駅 富士川楽座':'michinoeki-fujikawa-rakuza'}
+                '道の駅 富士川楽座':'michinoeki-fujikawa-rakuza',
+                # 2026-10-10 叢宴 春の陣(2027/3)の掲載で3件になった
+                '富士中央公園':'fuji-chuo-koen',
+                # 2026-10-10 ビザールプランツ 名古屋ノ陣・DYCKIA EVENT NEEDLES(11/1)の掲載で3件になった
+                '坪井健樹園':'tsuboi-kenjuen'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -218,6 +222,7 @@ _VENUE_REDIRECTS_RAW = {
     'v-934512a0': 'ヨークタウン坂東',   # 2026-10-09 (ハッシュURLは同日の取り込みで数分だけ公開)
     'v-e7039b8b': 'ワイルドプランツ路地裏のギボウシ',   # 2026-10-09
     'v-94908e1a': '刈谷市産業振興センター あいおいホール',   # 2026-10-09
+    'v-12bff723': '富士中央公園',   # 2026-10-10 (2件で立っていたハッシュの頁)
     'v-05cef6bf': '雑貨のお店 あさみや',   # 2026-10-08
     'toc-8c00': '五反田TOCビル',   # 2026-10-08 ISIJ 2027年の回だけが別キーで頁を立てた分(数分だけ公開)
     'v-aafb626c': 'カトーエンゲー東京',   # 2026-10-04
@@ -1911,6 +1916,41 @@ def announced_dated_hours(caption, month_days, min_minutes=120):
             if d is not None and d in month_days:
                 out.setdefault(d, set()).add(rr[0])
     return out
+
+
+def coexisting_pairs(events):
+    """同じ会場・同じ日に並べて開く別の回の組。{frozenset((slug, slug))}(2026-10-10)
+
+    events.json の回に coexistsWith=<相手のslug>(文字列か配列)を書いたものだけ。
+    audit.duplicate_venue_date が二重掲載の疑いから外すのに使う。
+    坪井健樹園の 11/1 は FELICITA の『ビザールプランツ 名古屋ノ陣』と、隣の屋外駐車場で
+    ディッキアの『DYCKIA EVENT NEEDLES』が主催も告知も別に開かれる。
+    """
+    out = set()
+    for e in events:
+        cw = e.get('coexistsWith') or []
+        for o in ([cw] if isinstance(cw, str) else cw):
+            if o and o != e.get('slug'):
+                out.add(frozenset((e.get('slug'), o)))
+    return out
+
+
+def announced_hours_for_event(caption, event_days, min_minutes=120):
+    """告知本文の開催時間(announced_hours)のうち、この回の会期の外の日付にだけ紐づくものを除く(2026-10-10)。
+
+    Lier.succulent の巡業日程の投稿(DdszFGQBiY-)は冒頭に『第9回花友フェスタin大阪 12/19(土)9:00~16:00』を
+    書き、その下に各会場の日付だけを並べる。高知 蔦屋書店回(10/18・time 11:00〜16:00)は sourceUrl が
+    この投稿なので、time_vs_organizer_post が 12/19 の 9:00〜16:00 を「告知の時刻」と読んで食い違いを出した。
+    日付に紐づいた範囲(announced_dated_hours)は、会期の日に紐づくものだけを比べる。
+    日付に紐づかない範囲は従来どおり比べる(日付を見出しに書かない告知が多いので落とさない)。
+    event_days は event_month_days(e) の (月, 日) の集合。
+    """
+    all_r = announced_hours(caption, min_minutes)
+    dated = announced_dated_hours(caption, find_month_days(caption or ''), min_minutes)
+    mine, other = set(), set()
+    for d, rs in dated.items():
+        (mine if d in (event_days or set()) else other).update(rs)
+    return [r for r in all_r if r in mine or r not in other]
 
 
 # 投稿の本文がその回を名前で指しているかを見る鍵。数字・記号・「第◯回」「vol.◯」を落とした先頭6字。
