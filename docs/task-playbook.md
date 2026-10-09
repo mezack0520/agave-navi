@@ -795,8 +795,10 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   置換は `assert s.count(old)==1` を挟んでから書き戻すと、当てが外れたまま進むのを防げる
 - **clone 先を outputs マウント配下に置くと失敗する。**
   `.git/config.lock` を unlink できず `fatal: could not set 'remote.origin.fetch'` で止まる。
-  `/tmp/<name>` か `$HOME/<name>` に取る。マウント外に clone した場合
-  `git config --global --add safe.directory <path>` が要ることがある。
+  `/sessions/<自分>/<name>` か `mktemp -d` で作った場所に取る(`/tmp` の固定名は前のセッションの残骸と衝突する)。
+  マウント外に clone した場合 `git config --global --add safe.directory <path>` が要ることがある。
+  **ただし自分がいま作ったディレクトリに限る。**既にあったディレクトリで dubious ownership が出たら
+  別セッションの残骸なので、safe.directory を足さずに場所を変える(07-31 は他プロセスの古い checkout を読んでいた)。
   JSONの照合だけなら `--depth 1 --filter=blob:none --no-checkout` + `git show HEAD:<file>` で足りる
 - **Googleの検索結果に出るIG画像のOCRは、曜日表記をイベント名に食い込ませる。**
   「2026.10.18. SUN GREEN BASE MARKET 出店者さま募集中」は `10月18日(日)` の `SUN` が
@@ -3464,6 +3466,12 @@ Step0 の照合で `rejected-events.json` に当たった候補は通常そこ�
 `rm -rf` が Permission denied で全件失敗した。固定パスに clone する手順は、
 前の回の残骸1つで起動直後の `record-run.py` ごと止まる。
 `D=/tmp/an-$(date +%s); mkdir -p $D && cd $D && git clone ...` のように毎回新しい場所へ取る。
+
+**10-10 も同じ `/tmp/agave-navi`(10-08 07:47 の残骸)に当たった。event-listing-review のレポートで確かめられるだけで5回目**
+(07-31・08-18・08-20・10-04・10-10)。この項はプロンプトの順序(clone → record-run.py → このファイルを読む)のせいで、
+clone の一手の時点ではまだ読まれていない。§1 の 2 の名義と同じ型。ここで効くのは、衝突したときに無理に進めないことだけ:
+`rm -rf` が Permission denied、または `dubious ownership` が出たら、その場所は捨てて `/sessions/<自分>/` 配下へ取り直す。
+置き場を最初から外すには、各タスクの SKILL.md の clone の行に置き場を書くしかない(目崎しか触れない)。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
