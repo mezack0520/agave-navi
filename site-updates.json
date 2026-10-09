@@ -1,7 +1,217 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-09",
+  "updated": "2026-10-10",
   "items": [
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "miyagawa-yoran-open-farm-2026-10",
+      "name": "宮川洋蘭 OPEN FARM",
+      "date": "2026-10-10",
+      "dateEnd": "2026-10-10",
+      "prefecture": "熊本",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "banryoku-popup-vol6-setagaya-2026-10",
+      "name": "万緑 POP-UP STORE VOL.6",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-18",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "toyohashi-cactus-club-tenjikai-2026-10",
+      "name": "豊橋カクタスクラブ サボテン・多肉植物展示会・品評会",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-18",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "plants-party-the-park-kinashi-2026-10",
+      "name": "秋のPlants Party!（THE PARK × DOLCE'S）",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-18",
+      "prefecture": "香川",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "agave-popup-mellow-plants-toon-2026-10",
+      "name": "AGAVE POP UP（MELLOW PLANTS）",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "plants-journey-vol5-yao-2026-10",
+      "name": "Plants Journey Vol.5",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "crossover-hybrid-titanota-shinyokohama-2026-10",
+      "name": "CrossOver hybrid × titanota 〜次の時代へ行くぞ！〜",
+      "date": "2026-10-18",
+      "dateEnd": "2026-10-18",
+      "prefecture": "神奈川",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "happa-san-popup-harajuku-2026-10",
+      "name": "Happa San POP UP STORE（原宿）",
+      "date": "2026-10-23",
+      "dateEnd": "2026-10-25",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "wakayama-cactus-club-aki-sokubaikai-2026-10",
+      "name": "秋のサボテン即売会（和歌山県植物公園緑花センター）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "和歌山",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "bikaku-junction-hirata-odo-2026-10",
+      "name": "BIKAKU JUNCTION（ビカクジャンクション）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "plants-and-coffee-hugcoffee-minamicho-2026-10",
+      "name": "PLANTS and COFFEE（CHAM × hugcoffee 南町店）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-11-01",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "ingolle-kakamigahara-2026-10",
+      "name": "INGOLLE",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "岐阜",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "shabomaniac-popup-saboru-inu-2026-10",
+      "name": "Shabomaniac! POP-UP SHOP & OPEN GREENHOUSE",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "od-plants-1st-anniversary-sukagawa-2026-10",
+      "name": "O.D plants 1周年記念イベント",
+      "date": "2026-10-31",
+      "dateEnd": "2026-10-31",
+      "prefecture": "福島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "bizarre-plants-nagoya-no-jin-2026-11",
+      "name": "ビザールプランツ 名古屋ノ陣",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "dyckia-needles-tsuboikenjuen-2026-11",
+      "name": "DYCKIA EVENT NEEDLES",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "hobby-plants-freaks-vol6-2026-11",
+      "name": "HOBBY PLANTS FREAKS vol.6",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-15",
+      "prefecture": "岡山",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "iwakuni-green-bazaar-6th-2026-11",
+      "name": "第6回 岩国グリーンバザール",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "山口",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "pakipo-no-sono-idobata-2026-11",
+      "name": "パキポの園 －つなげる縁－ 井戸端集会",
+      "date": "2026-11-23",
+      "dateEnd": "2026-11-23",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "bbb-snowpeak-miyakonojo-2026-11",
+      "name": "Bizarre Botanicals Bazaar in Snow Peak MIYAKONOJO Campfield",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "宮崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-10",
+      "kind": "listed",
+      "slug": "soen-haru-no-jin-fuji-2027-03",
+      "name": "叢宴 〜春の陣〜（春のボタニカルマーケット in 富士市中央公園）",
+      "date": "2027-03-13",
+      "dateEnd": "2027-03-14",
+      "prefecture": "静岡",
+      "detail": ""
+    },
     {
       "on": "2026-10-09",
       "kind": "listed",
@@ -990,216 +1200,6 @@
       "date": "2026-10-18",
       "dateEnd": "",
       "prefecture": "北海道",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-03",
-      "kind": "listed",
-      "slug": "sabosabostore-collection-exhibition-sale-kimitsu-2026-10",
-      "name": "SABOSABOSTORE Collection Exhibition & Sale",
-      "date": "2026-10-25",
-      "dateEnd": "",
-      "prefecture": "千葉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-03",
-      "kind": "listed",
-      "slug": "shinshu-nakano-ikiikikan-taniku-hanbaikai-2026-10",
-      "name": "多肉植物苗販売会＆寄せ植えワークショップ（信州中野いきいき館）",
-      "date": "2026-10-27",
-      "dateEnd": "",
-      "prefecture": "長野",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-03",
-      "kind": "listed",
-      "slug": "hana-no-eki-chikumagawa-taniku-hanbaikai-2026-10",
-      "name": "多肉植物苗販売会＆寄せ植えワークショップ（道の駅 花の駅千曲川）",
-      "date": "2026-10-31",
-      "dateEnd": "2026-11-01",
-      "prefecture": "長野",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-03",
-      "kind": "listed",
-      "slug": "succutochi-2-tenpyo-2026-11",
-      "name": "さきゅとち2（succulent ochigi 2）",
-      "date": "2026-11-01",
-      "dateEnd": "",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-03",
-      "kind": "listed",
-      "slug": "haze-various-genres-marche-2026-11",
-      "name": "HAZE -various genres marche-（2026年11月）",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-02",
-      "kind": "listed",
-      "slug": "armeria-tokimeki-ichi-2026-10",
-      "name": "トキメキ市（多肉屋 アルメリア）",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-04",
-      "prefecture": "愛媛",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-02",
-      "kind": "listed",
-      "slug": "tegarayama-aki-saboten-taniku-ten-2026-10",
-      "name": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-18",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-02",
-      "kind": "listed",
-      "slug": "plants-swap-meet-9th-oita-2026-11",
-      "name": "PLANTS SWAP MEET 9th",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-29",
-      "prefecture": "大分",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-02",
-      "kind": "listed",
-      "slug": "plants-garage-market-2027-05",
-      "name": "Plants garage market 2027",
-      "date": "2027-05-29",
-      "dateEnd": "2027-05-30",
-      "prefecture": "大分",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-01",
-      "kind": "listed",
-      "slug": "collab-de-marche-autumn-sunpu-2026-10",
-      "name": "秋のコラボde マルシェ 2026",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-01",
-      "kind": "listed",
-      "slug": "bota-magic-2nd-wakayama-2027-04",
-      "name": "第2回 BOTA☆MAGIC",
-      "date": "2027-04-18",
-      "dateEnd": "2027-04-18",
-      "prefecture": "和歌山",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "morino-tanikuen-hanbaikai-nara-2026-10",
-      "name": "森の多肉園販売会 in 奈良",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "prefecture": "奈良",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10",
-      "name": "第8回 サボテン・多肉植物展 2026（掛川花鳥園）",
-      "date": "2026-10-10",
-      "dateEnd": "2026-11-01",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "blue-ocean-aki-shokubutsu-hanbaikai-2026-10",
-      "name": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-10",
-      "prefecture": "福井",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "morino-tanikuen-hanbaikai-hiroshima-2026-10",
-      "name": "森の多肉園販売会 in 広島",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-10",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "morino-tanikuen-hanbaikai-matsue-2026-10",
-      "name": "森の多肉園販売会 in 島根",
-      "date": "2026-10-11",
-      "dateEnd": "2026-10-11",
-      "prefecture": "島根",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "morino-tanikuen-hanbaikai-maizuru-2026-10",
-      "name": "森の多肉園販売会 in 京都舞鶴",
-      "date": "2026-10-12",
-      "dateEnd": "2026-10-12",
-      "prefecture": "京都",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "imama-ennichi-kagurazaka-2026-10",
-      "name": "縁日（IMAMA・神楽坂）",
-      "date": "2026-10-24",
-      "dateEnd": "2026-11-01",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "ka78-kikakusai-6th-shimada-2026-11",
-      "name": "第6回 KA78企画祭",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-30",
-      "kind": "listed",
-      "slug": "morino-tanikuen-hanbaikai-big-nabari-2026-11",
-      "name": "森の多肉園販売会 BIG",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "三重",
-      "detail": ""
-    },
-    {
-      "on": "2026-09-29",
-      "kind": "listed",
-      "slug": "tanikutokurashi-marche-akiu-2026-10",
-      "name": "多肉とくらしマルシェ 2026",
-      "date": "2026-10-04",
-      "dateEnd": "2026-10-04",
-      "prefecture": "宮城",
       "detail": ""
     }
   ]
