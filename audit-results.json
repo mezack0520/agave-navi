@@ -1,5 +1,5 @@
 {
-  "total": 807,
+  "total": 795,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 133,
+      "count": 139,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -226,7 +226,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 252,
+      "count": 258,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 146,
+      "count": 140,
       "items": [
         "agave-popup-mellow-plants-toon-2026-10",
         "aichin-shokusai-new-year-party-2027",
@@ -667,7 +667,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -887,7 +887,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 146,
+      "count": 140,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-09 green-champuroo-vol2-2026-10",
@@ -895,15 +895,11 @@
         "2026-10-10 kadan-fes-2026-autumn",
         "2026-10-10 king-plants-shuukakusai-kesennuma-2026-10",
         "2026-10-10 miyagawa-yoran-open-farm-2026-10",
-        "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10",
         "2026-10-10 sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-10",
         "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-10 tegarayama-aki-saboten-taniku-ten-2026-10",
-        "2026-10-10 tomitan-nouen-ishigami-no-oka-2026-10",
         "2026-10-11 botanical-link-popup-kasugai-2026-10",
-        "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10",
         "2026-10-11 nihon-shaboten-taikai-51st-2026-10",
-        "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10",
         "2026-10-12 nara-bikaku-fes-vol2-2026-10",
         "2026-10-14 kakukaku-shikajika-6th-narakaki-2026-10",
         "2026-10-16 lier-taniku-festival-matsuyama-hojo-2026-10",
@@ -928,7 +924,11 @@
         "2026-10-24 bikaku-junction-hirata-odo-2026-10",
         "2026-10-24 jolie-nursery-musashinoyouhinten-misato-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
-        "2026-10-24 lier-taniku-festival-kasai-2026-10"
+        "2026-10-24 lier-taniku-festival-kasai-2026-10",
+        "2026-10-24 plants-and-coffee-hugcoffee-minamicho-2026-10",
+        "2026-10-24 plants-box-kofu-2026-10",
+        "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10",
+        "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1091,21 +1091,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 12,
-      "items": [
-        "2026-10-10 tomitan-nouen-ishigami-no-oka-2026-10: https://www.instagram.com/reel/DeF1V-lzLt-/（sourcePost）",
-        "2026-10-10 king-plants-shuukakusai-kesennuma-2026-10: https://www.instagram.com/p/DeQmmfMktu_/（caption）",
-        "2026-10-10 morino-tanikuen-hanbaikai-hiroshima-2026-10: https://www.instagram.com/p/DeRWTH5nxNx/（caption）",
-        "2026-10-11 morino-tanikuen-hanbaikai-matsue-2026-10: https://www.instagram.com/p/DeRWTH5nxNx/（caption）",
-        "2026-10-12 morino-tanikuen-hanbaikai-maizuru-2026-10: https://www.instagram.com/p/DeRWTH5nxNx/（caption）",
-        "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10: https://www.instagram.com/p/Dd-ds_LE98V/（caption）",
-        "2026-10-24 minori-kaboku-cactus-agave-2026-10: https://www.instagram.com/p/DeGayWQnR8D/（sourcePost）",
-        "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10: https://www.instagram.com/p/DdyPPRhlJRL/（caption）",
-        "2026-10-25 yamaokuya-tandoku-hanbaikai-osaki-2026-10: https://www.instagram.com/reel/DeRKkRRBR_h/（caption）",
-        "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10: https://www.instagram.com/p/Dd7v7QkmBG1/（caption）",
-        "2026-10-31 tanikuen-ohisama-aeon-hiezu-2026-10: https://www.instagram.com/reel/DeHsX-4sCbW/（caption）",
-        "2026-11-03 masappe-taniku-2nd-anniversary-2026-11: https://www.instagram.com/p/DdyOGNTv5Io/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
