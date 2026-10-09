@@ -149,28 +149,37 @@ def umbrella_days(text, org_events, today):
     (2026-10-03 ミドリアン 10/9-10 に対し 10/8)。掲載済みの回を丸ごと含む範囲は
     上位の会期であって別の回ではない。範囲の始まりと終わりの両方が掲載済みの回の
     外にあるとは限らないので、範囲内の日をすべて既知にする。
+
+    範囲の年は、掲載済みの回を含む年を前年・今年・翌年から探す(2026-10-10)。
+    以前は「始まりが今日より前なら翌年」と決めていたので、上位の会期の途中
+    (10/9 以降)に読むと範囲が 2027-10-08〜11 になり、2026年の回を含まず、
+    会期末の 10/11 が 10-09・10-10 と2日続けて当サイトに無い日付として出た。
     """
     days = set()
     for (a, b) in md_ranges(text):
-        ya = today.year if a >= (today.month, today.day) else today.year + 1
-        yb = ya if b >= a else ya + 1
-        try:
-            da, db = datetime(ya, *a), datetime(yb, *b)
-        except ValueError:
-            continue
-        if not (0 < (db - da).days <= 62):
-            continue
-        for e in org_events:
+        for ya in (today.year, today.year + 1, today.year - 1):
+            yb = ya if b >= a else ya + 1
             try:
-                ea = datetime.strptime(e['date'], '%Y-%m-%d')
-                eb = datetime.strptime(e.get('dateEnd') or e['date'], '%Y-%m-%d')
-            except (KeyError, ValueError):
-                continue
-            if da <= ea and eb <= db and (eb - ea) < (db - da):
-                d = da
-                while d <= db:
-                    days.add((d.month, d.day))
-                    d += timedelta(days=1)
+                da, db = datetime(ya, *a), datetime(yb, *b)
+            except ValueError:
+                break
+            if not (0 < (db - da).days <= 62):
+                break
+            hit = False
+            for e in org_events:
+                try:
+                    ea = datetime.strptime(e['date'], '%Y-%m-%d')
+                    eb = datetime.strptime(e.get('dateEnd') or e['date'], '%Y-%m-%d')
+                except (KeyError, ValueError):
+                    continue
+                if da <= ea and eb <= db and (eb - ea) < (db - da):
+                    d = da
+                    while d <= db:
+                        days.add((d.month, d.day))
+                        d += timedelta(days=1)
+                    hit = True
+                    break
+            if hit:
                 break
     return days
 
@@ -735,6 +744,14 @@ def self_test():
                      '本イベントは10月16日(金)~ 19日(月)の期間開催されるデザイン週間の枠組で開催します'}]
     _, n = analyze_posts('org', p, [ev], [ev], today)
     chk('上位の会期は候補にしない', n, [])
+    # 上位の会期の途中に読んでも同じ(2026-10-10 ミドリアン。会期 10/8〜11 の 10/10 に読んで 10/11 が出た)
+    _cap_u = ('【植物市】開催日時: 10月18日(日) 会場 市民ホール。本イベントは'
+              '10月16（金）〜10月19日（月）の期間中、各所で行われるデザイン週間の関連イベントです')
+    for _td in (datetime(2026, 10, 1), datetime(2026, 10, 17), datetime(2026, 10, 18)):
+        p = [{'timestamp': (_td - timedelta(days=1)).strftime('%Y-%m-%dT01:00:00+0000'),
+              'permalink': 'u4u', 'caption': _cap_u}]
+        _, n = analyze_posts('org', p, [ev], [ev], _td)
+        chk(f'上位の会期の途中に読んでも候補にしない({_td:%m-%d})', n, [])
     chk('範囲 10/16~19', md_ranges('10月16日(金)~ 19日(月)'), [((10, 16), (10, 19))])
     chk('範囲 10/8〜10/11', md_ranges('10/8〜10/11'), [((10, 8), (10, 11))])
     # 掲載済みの回を含まない範囲は従来どおり候補
