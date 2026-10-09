@@ -3,50 +3,17 @@
   "sweptOn": "2026-10-10",
   "stats": {
     "targets": 33,
-    "fetched": 32
+    "fetched": 33
   },
-  "errors": [
-    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475"
-  ],
+  "errors": [],
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "midolien-hono-osaka-2026-10",
-      "name": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
-      "date": "2026-10-09",
-      "url": "https://weekend.osaka/16061/",
-      "why": "公式ページが変わった(本文: 1374→1383字 +0%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "kadan-fes-2026-autumn",
-      "name": "カダンフェス2026秋",
-      "date": "2026-10-10",
-      "url": "https://fumakilla.jp/kadanlife/kadanfes/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "mizunomori-aki-saboten-ten-2026-10",
-      "name": "秋のサボテン展（草津市立水生植物公園みずの森）",
-      "date": "2026-10-23",
-      "url": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
-      "why": "公式ページが変わった(本文: 1642→1641字 -1%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "jolie-nursery-musashi-kanazawa-2026-10",
-      "name": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-      "date": "2026-10-31",
-      "url": "https://jolienursery.co.jp/pages/events",
-      "why": "公式ページが変わった(本文: 2396→2385字 -1%)",
+      "slug": "kakukaku-shikajika-6th-narakaki-2026-10",
+      "name": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
+      "date": "2026-10-14",
+      "url": "https://narakaki.or.jp/info/%ef%bc%91%ef%bc%90%e6%9c%88%ef%bc%91%ef%bc%94%e6%97%a5%e6%b0%b4%e3%83%bb%ef%bc%91%ef%bc%95%e6%97%a5%e6%9c%a8%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%81%a8%e8%b3%87%e6%9d%90%e3%81%ae%e5%b1%95/",
+      "why": "公式ページが変わった(本文: 1462→1471字 +0%)",
       "changed": [
         "本文"
       ]
@@ -84,7 +51,7 @@
         "textLen": 1383,
         "imageCount": 12
       },
-      "prevTextLen": 1374,
+      "prevTextLen": 1383,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -106,7 +73,7 @@
         "textLen": 687,
         "imageCount": 6
       },
-      "prevTextLen": 698,
+      "prevTextLen": 687,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -150,7 +117,7 @@
         "textLen": 538,
         "imageCount": 26
       },
-      "prevTextLen": 549,
+      "prevTextLen": 538,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -194,7 +161,7 @@
         "textLen": 2385,
         "imageCount": 15
       },
-      "prevTextLen": 2396,
+      "prevTextLen": 2385,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -238,7 +205,7 @@
         "textLen": 7,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 7,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -260,7 +227,7 @@
         "textLen": 1715,
         "imageCount": 24
       },
-      "prevTextLen": null,
+      "prevTextLen": 1715,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -323,9 +290,9 @@
       "url": "https://narakaki.or.jp/info/%ef%bc%91%ef%bc%90%e6%9c%88%ef%bc%91%ef%bc%94%e6%97%a5%e6%b0%b4%e3%83%bb%ef%bc%91%ef%bc%95%e6%97%a5%e6%9c%a8%e5%a4%9a%e8%82%89%e6%a4%8d%e7%89%a9%e3%81%a8%e8%b3%87%e6%9d%90%e3%81%ae%e5%b1%95/",
       "checkedOn": "2026-10-10",
       "signature": {
-        "text": "141efd8b30ea1e6d",
+        "text": "4b9a0bd086b7efb5",
         "images": "a6cea92a1b9de411",
-        "textLen": 1462,
+        "textLen": 1471,
         "imageCount": 11
       },
       "prevTextLen": 1462,
@@ -338,7 +305,7 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-08",
       "badChars": 0,
-      "textOnlyChanges": 0,
+      "textOnlyChanges": 1,
       "imageOnlyChanges": 0
     },
     "suma-rikyu-cactus-succulent-tenjikai-2026-10": {
@@ -416,7 +383,7 @@
         "textLen": 7,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 7,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -438,7 +405,7 @@
         "textLen": 1641,
         "imageCount": 0
       },
-      "prevTextLen": 1642,
+      "prevTextLen": 1641,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -449,6 +416,28 @@
       "firstSeenOn": "2026-10-04",
       "badChars": 0,
       "textOnlyChanges": 1,
+      "imageOnlyChanges": 0
+    },
+    "jurian-aki-taniku-cactus-2026-10": {
+      "url": "https://www.jurian.or.jp/event/article/?id=1475",
+      "checkedOn": "2026-10-10",
+      "signature": {
+        "text": "bf7de8e13bbf97cd",
+        "images": "8859875c86a5399f",
+        "textLen": 1287,
+        "imageCount": 20
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-10",
+      "badChars": 0,
+      "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
     "roots-market-inage-2026-10": {
@@ -548,7 +537,7 @@
         "textLen": 2385,
         "imageCount": 15
       },
-      "prevTextLen": 2396,
+      "prevTextLen": 2385,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
