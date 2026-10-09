@@ -2,12 +2,12 @@
  "_note": "主催者の Instagram の最新投稿。scripts/ig-organizer-watch.py が毎日書く。全アカウントを毎日は取らない(plan_fetch() の周期)。今回取らなかった主催は前回の結果を checkedOn つきで持ち越す。signals は取得から3日以内の結果で出す。errors の多くは相手が個人アカウントで、異常ではない",
  "checkedOn": "2026-10-10",
  "stats": {
-  "accounts": 320,
-  "targets": 0,
-  "fetched": 0,
-  "readable": 236,
+  "accounts": 337,
+  "targets": 19,
+  "fetched": 17,
+  "readable": 251,
   "autoCancelled": 0,
-  "personal": 84,
+  "personal": 86,
   "neverChecked": 0,
   "eyecatchStaged": 0
  },
@@ -7411,8 +7411,13 @@
   },
   "felicita_plants": {
    "ok": true,
-   "checkedOn": "2026-10-09",
+   "checkedOn": "2026-10-10",
    "posts": [
+    {
+     "timestamp": "2026-10-09T01:32:01+0000",
+     "permalink": "https://www.instagram.com/p/DeQVeYzEgMp/",
+     "caption": "昨日の話し\nkemuriradio さんの育成場にて、植物談義。\n実生10年越えのウィンゾリーを見せつけられて、\n改めて実生のポテンシャルを実感した。\nやっぱり良いよね、ウィンゾリー\n育成している人の個性が出る。\nうちのはまだ５年の株だけど、自分好みな姿には\n作れてると実感した訳でした😊\n現地も良いけど、実生も最高です✨\nそして何より熱い思いの入った植物は、\n育成者の最高の誇りだと改めて思う一日でした。\nケムリさん、楽しい時間をありがとうございました🙇"
+    },
     {
      "timestamp": "2026-10-05T08:12:46+0000",
      "permalink": "https://www.instagram.com/p/DeGwJuCxg1I/",
@@ -7467,11 +7472,6 @@
      "timestamp": "2026-07-29T09:20:26+0000",
      "permalink": "https://www.instagram.com/p/DbXx2KTkpBv/",
      "caption": "Bursera paradoxa\nブルセラ・パラドクサ\nメキシコ原産の灌木✨\n細いヒラヒラの葉が特長的❤️\nスッキリとしたフォルムが人気の秘訣かな🤭\n育成も簡単なので、オススメのコーデックスです❗\n\n#ビザールプランツ\n#植物好きな人と繋がりたい \n#植物のあるくらし \n#観葉植物\n#パキプス"
-    },
-    {
-     "timestamp": "2026-07-24T09:08:58+0000",
-     "permalink": "https://www.instagram.com/p/DbK4j1AEbPO/",
-     "caption": "Stephania kaweesakii\nステファニア・カウイサキー\nタイ原産のコーデックス✨\n塊根はゴツゴツと、葉は真ん丸、葉脈はピンク\n珍しい植物です🤭\n\n#植物\n#珍奇植物\n#ビザールプランツ\n#植物好きな人と繋がりたい\n#植物のあるくらし"
     }
    ]
   },
@@ -12691,8 +12691,13 @@
   },
   "tsuboikenjuen": {
    "ok": true,
-   "checkedOn": "2026-10-09",
+   "checkedOn": "2026-10-10",
    "posts": [
+    {
+     "timestamp": "2026-10-09T05:39:01+0000",
+     "permalink": "https://www.instagram.com/p/DeQxvgoEfEO/",
+     "caption": "新しい商品入荷致しました🌱\n\nストロマンテサンギネア　トリオスター\nフィロデン　セローム\nフィカス　ルビギノーサ\nモンキーツリー\nサンセベリア　ムーンシャイン\nポインセチア／プリンセチア\nドラセナ　サンデリアーナ等々\n\n皆様のご来店お待ちしております🐕\n\n#坪井健樹園#健樹園#名古屋#花屋#花flowerflowershop花のある暮らし緑緑のある暮らしgreen 観葉植物多肉植物サボテンディッキアビカクシダアガベ"
+    },
     {
      "timestamp": "2026-10-06T12:29:56+0000",
      "permalink": "https://www.instagram.com/p/DeJyS07TUZU/",
@@ -12747,11 +12752,6 @@
      "timestamp": "2026-09-12T01:14:13+0000",
      "permalink": "https://www.instagram.com/p/DdKx4gmzVwr/",
      "caption": "本日花の日5%offの日です♪(現金のみ)\n皆様のご来店お待ちしております🐕\n\n#坪井健樹園#健樹園#名古屋#花屋#花flowerflowershop花のある暮らし緑緑のある暮らしgreen 観葉植物多肉植物サボテンディッキアビカクシダアガベ"
-    },
-    {
-     "timestamp": "2026-09-10T06:28:08+0000",
-     "permalink": "https://www.instagram.com/p/DdGMT1HERdY/",
-     "caption": "新しい商品入荷致しました🌱\n\nアガベ　ベネズエラ\nタニクmix\nサボテン　リュウジンボク\nサクラフブキ\nサボテンmix\nプヤ　セルーレア\nウサギノミミ\nハートカズラ\nハオルチア\nチューリップ\nシンゴニウム　チョコレート\nスキンダプサス等々\n\n皆様のご来店お待ちしております🐕\n\n#坪井健樹園#健樹園#名古屋#花屋#花flowerflowershop花のある暮らし緑緑のある暮らしgreen 観葉植物多肉植物サボテンディッキアビカクシダアガベ"
     }
    ]
   },
@@ -16016,20 +16016,1013 @@
      "caption": "本日より、多肉植物販売通常通り営業させていただきます🎵\n皆様のお越しをお待ちしております🙇‍♀️\n#多肉植物販売 #山西肥料店  #Taniko #農業 #肥料農薬資材販売  園芸用品販売"
     }
    ]
+  },
+  "ban_ryoku": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-09T04:39:51+0000",
+     "permalink": "https://www.instagram.com/p/DeQq9sXSkgy/",
+     "caption": "10/17(土),18(日) 万緑 POP-UP VOL.6✨\n10:00-17:00\n\nポップアップ特典🤩\n今回のみこちらの植物お一つ¥500で販売いたします🤗\nどれも丈夫なので初心者の方にオススメです！\nよろしければお立ち寄りくださいませ🙇\n\n場所👉allday_cafe_setagaya\n\n左上から\n■琴糸丸\n■バッテリー\n■守殿玉\n■怪竜丸\n■スルコレブチア・アレナケア\n■兜丸\n■銀冠玉\n■ギムノ hyb.\n■五色万代\n■吉祥天"
+    },
+    {
+     "timestamp": "2026-10-06T02:50:42+0000",
+     "permalink": "https://www.instagram.com/p/DeIwGEwEiFx/",
+     "caption": "金碧✨\nGymnocalycium multiflorum var. albispinum\n\n水やり後の\n朝日を浴びた刺が美しいです🤗\n\n👇WEBサイトに追加しました\nwww.banryoku.com"
+    },
+    {
+     "timestamp": "2026-10-05T06:28:02+0000",
+     "permalink": "https://www.instagram.com/p/DeGkLCdEmx_/",
+     "caption": "万緑 POP-UP STORE VOL.6✨\n\nいつも楽しみにしていただいているお客様ありがとうございます😊\n秋の園芸シーズンに合わせまして今回も植物を販売させていただきます！\n\n国内やタイのサボテン(兜は9月入荷の初出しです！写真2,3のトレーになります。)\n多肉植物、盆栽など...\n\n🟢入場は無料です！\n🟢植物は初心者の方でもお求めやすい￥500からご用意いたします！\n🟢￥3,000以上ご購入のお客様には希少な植物が当たるくじが引けます！¥8,000以上の場合は2回引けます🤩\nハズレ無しです👍\n\n皆様お気軽にお越しくださいませ🤗\n\n※写真の植物にお目当てがありお越しいただく場合は、予めDMにてお問合せくださいませ🙏\n\n※お支払いは現金、QRコード(PayPay、メルペイなど)、クレジットカード(タッチのみ)が可能です。\n\n日程：2026/10/17(土)-10/18(日)\n時間：10:00-17:00\n場所：【ALL DAY CAFE】\nallday_cafe_setagaya\nallday_gallery\n〒154-0023\n東京都世田谷区若林4-8-3\n🚃世田谷線「若林駅」「松陰神社駅」より徒歩6分\n\nカフェ＆ギャラリーの素敵なお店です✨\nおいしいコーヒーやビール、ポテトフライやホットサンド、唐揚げプレートなどのお食事もできます😋\n\n近くには人気のスポット「松陰神社」があり散歩するには気持ちいい場所です🌞"
+    },
+    {
+     "timestamp": "2026-10-01T09:52:44+0000",
+     "permalink": "https://www.instagram.com/p/Dd8oaatSYdd/",
+     "caption": "玉翁殿\nMammillaria hahniana f. lanata\n\n毛並み良しです🤗"
+    },
+    {
+     "timestamp": "2026-10-01T09:40:38+0000",
+     "permalink": "https://www.instagram.com/p/Dd8nCKhkgLm/",
+     "caption": "金鯱\n王道ですが\n間違い無いですね🤗\n\nサボテンで何が好きって聞かれた時に一番多いと思う👍\n不動ですね✨"
+    },
+    {
+     "timestamp": "2026-09-29T09:14:46+0000",
+     "permalink": "https://www.instagram.com/p/Dd3aemgyktA/",
+     "caption": "日の出丸✨\n刺の配置が綺麗ですよね〜🤗\nバランス🥹\n\n日に当てると新棘出る出る✨\n\n詳細👇\nwww.banryoku.com"
+    },
+    {
+     "timestamp": "2026-09-23T22:36:04+0000",
+     "permalink": "https://www.instagram.com/p/DdpZanLkvyQ/",
+     "caption": "リザード・スキン瑠璃兜 綴化\nAstrophytum asterias 'Lizard Skin' f. cristata\n\nモンストしたものが綴化して橋のような形態になっています🤗\n\nリザードは「トカゲ」🦎の意味で正に爬虫類のような肌です。\n\n成長点がたくさんある状態で成長早いです👍\n👇過去の写真も載せておきます。\n\n写真\n1-5：2026/9/23  3号鉢 現在\n6：2025/5/14  2.5号鉢\n7：2025/2/2  2.5号鉢\n\n詳細はWEBサイトご覧ください🙏\nwww.banryoku.com\n※プロフィールにもリンクがあります。"
+    },
+    {
+     "timestamp": "2026-09-20T23:37:29+0000",
+     "permalink": "https://www.instagram.com/p/DdhyDzxkl_O/",
+     "caption": "万緑 POP-UP STORE VOL.6✨\n\n毎回楽しみにしていただいているお客様ありがとうございます😊\n秋の園芸シーズンに合わせまして今回も植物を販売させていただきます！\n\n国内やタイのサボテン\n多肉植物、盆栽など...\n\n🟢入場は無料です！\n🟢植物は初心者の方でもお求めやすい￥500からご用意いたします！\n🟢￥3,000以上ご購入のお客様には希少な植物が当たるくじ引きが出来ます！\n\n皆様お気軽にお越しくださいませ🤗\n\n※写真の植物にお目当てがありお越しいただく場合は、予めDMにてお問合せくださいませ🙏\n\n※お支払いは現金、QRコード(PayPay、メルペイなど)、クレジットカード(タッチのみ)が可能です。\n\n日程：2026/10/17(土)-10/18(日)\n時間：10:00-17:00\n場所：【ALL DAY CAFE】\nallday_cafe_setagaya\nallday_gallery\n〒154-0023\n東京都世田谷区若林4-8-3\n🚃世田谷線「若林駅」「松陰神社駅」より徒歩6分\n\nカフェ＆ギャラリーの素敵なお店です✨\nおいしいコーヒーやビール、ポテトフライやホットサンド、唐揚げプレートなどのお食事もできます😋\n\n近くには人気のスポット「松陰神社」があり散歩するには気持ちいい場所です🌞"
+    },
+    {
+     "timestamp": "2026-09-20T01:42:57+0000",
+     "permalink": "https://www.instagram.com/p/DdfbnybEoP0/",
+     "caption": "9/16にタイから兜が到着いたしました🤗\n今回はVと大疣中心の計40兜です✨\n\n当店は写真と動画から1株1株厳選しまして、信頼するタイのナーセリーの厳しいチェックを通った株のみ入れております😊\n\nこれから発根管理をしまして10月中旬頃からイベントやWEBなどで販売をさせていただきます✨\n\nご質問などはDMをくださいませ🙂‍↕️\nよろしくお願いいたします🙇"
+    },
+    {
+     "timestamp": "2026-09-16T22:21:12+0000",
+     "permalink": "https://www.instagram.com/p/DdXWJgfEt1s/",
+     "caption": "V-type兜\nAstrophytum asterias cv. 'V-type'\n\n仔吹きは刺座からまたは稜の間から出てきます👶\n2cmくらいで取り外すとわりとスムーズに発根してくれます👍\n\n詳細はWEBサイトをご覧ください🤗\nwww.banryoku.com\n※プロフィールにリンクあります✨"
+    },
+    {
+     "timestamp": "2026-09-16T07:30:22+0000",
+     "permalink": "https://www.instagram.com/p/DdVwM5qktzM/",
+     "caption": "V-type兜\nAstrophytum asterias cv. 'V-type'\n\n7月にタイから入荷した株をWEBサイトで公開しております🤗\n\nwww.banryoku.com\n※プロフィールにリンクあります✨"
+    },
+    {
+     "timestamp": "2026-09-10T20:55:13+0000",
+     "permalink": "https://www.instagram.com/p/DdHviihkxbF/",
+     "caption": "9/12(土),13(日) 10:00-16:00\n『叢宴』soen in 清水 エスパルスドリームプラザ \n詳細👉bocchi_syokudou\n\n当店は12(土)のみです✨\nサボテン、盆栽、水石など販売いたします🤗\n\n魚とちびまる子ちゃんの町清水に、\nぜひ遊びに来てくださいませ！"
+    }
+   ]
+  },
+  "bizarrebotanicalsbazaar_rn": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-06T12:11:29+0000",
+     "permalink": "https://www.instagram.com/p/DeJwQ5nzylS/",
+     "caption": "暮らしのそばに、お気に入りの植物を。\nそれだけで、時間の流れ方が少し変わります。\n\n今年も各地から都城に\n素晴らしい出店者の皆さまが集結\n\nアガベ、塊根植物、モンステラ、\n多肉植物、エアプランツ。\n自然光のもとで出会う植物は、\n店頭や写真とは、また違った表情を見せます。\n\n関之尾公園の豊かな自然と澄んだ空気のなか\nお気に入りの一鉢をゆっくり選ぶ時間をお過ごしください🌿\n\nBizarre Botanicals Bazaar in \nSnow Peak MIYAKONOJO Campfield\n【概要】\n日時:2026年11月29日(日) 10:00–16:00\n会場:スノーピーク都城キャンプフィールド\n住所:宮崎県都城市関之尾町6615-2\nsnowpeak_miyakonojo\n入場:無料\n\n【出店者一覧】\na_____kira \nberatta_garden \nchopmans.masa\nchiisana_shiawase2\ncoco.plants3 \ngordon_and_conner \nfaint_plants \nfreezedry_kagoshima\nkobe_agave_shop \nkokopelligarden_fuk　\nmonster_house_nagoya\nnew_jack_seek\nobsessed_bross_plants \nshokubutsudokoro.kokoro\nharuzo_shouten\nikiiki_plants_noveldy\nlagurus2009 \nplanetplants._.mimata\n_plantsheaven_\nred.leaf_plants_ohv757\nsakabasa1\ntakasaki_farm\nyuu_forest \nmilksun99 \nm97foodtrack \n\n#BizarreBotanicalsBaz"
+    },
+    {
+     "timestamp": "2026-05-26T13:42:55+0000",
+     "permalink": "https://www.instagram.com/p/DYzdAtOlLDS/",
+     "caption": "​当日のほんの一場面です🌿\n\n​皆様の充実した笑顔を引き出すきっかけとなった\n素敵なブースをご覧ください✨️\n\na_____kira\nazurintaniku\nikiiki_plants_noveldy\ninoue_saboten\nberatta_garden \nearthwalk_plants \ngordon_and_conner\nhappy_come_2 \nharuzo_shouten\nkobe_agave_shop \nkt.botanical\nlagurus2009\nnew_jack_seek \nm3_create\nmovin_plants \nred.leaf_plants_ohv757\nta2tano \nutsuroki_seisyo \nwatacon.plants\nyellow_plants \n🍴\nbakebreadworks \nniji_iro_coco \nnumero_.otto._\nn_and_a__kitchen\nyamabitokitchencar \n\nbizarrebotanicalsbazaar_rn\ncoconotsu_miyama\n​#BBB #BizarreBotanicalsBazaar #cocoNotsu"
+    },
+    {
+     "timestamp": "2026-05-25T07:50:25+0000",
+     "permalink": "https://www.instagram.com/p/DYwP3z7RWWJ/",
+     "caption": "5月24日BBB in cocoNotsu\n無事に閉幕いたしました✨️\n\nご来場いただいた全てのお客様、\n最高の空間を共に作ってくださった\ncocoNotsuのスタッフと出店者の皆様、\nそして頼れるボランティアスタッフの皆さん、\n本当にありがとうございました！\n\n​「出店者とお客さんの雰囲気がすごく温かくて\n最高のイベントだった」\nそんな嬉しい声を沢山いただきました。\n\nただ植物を売り買いするだけでなく、自然と人と人が繋がっていく。そんな温かい交流の場となったBBBを、皆様と一緒に作れたことが何よりの誇りです。\n​そして、皆様の愛情を受けて植物のように大きく成長させてもらっているなと実感した1日となりました。\n​至らぬ点もあったかと思いますが、今回の経験を大切に、これからも皆様と最高の空間を作っていけたら嬉しいです。\n\n​関わってくれた全ての方に\n最大の感謝を込めて🥀\n\nそして、\n次のステージへ…\nplants.up.satsuma\n\na_____kira\nazurintaniku\nikiiki_plants_noveldy\ninoue_saboten\nberatta_garden \nearthwalk_plants \ngordon_and_conner\nhappy_come_2 \nharuzo_shouten\nkobe_agave_shop \nkt.botanical\nlagurus2009\nnew_jack_seek \nm3_create\nmovin_plants \nred.leaf_plants_ohv757\nta2tano \nutsuroki_seisyo \nwatacon.plants\nyellow_plants \n🍴\nbakebreadworks \nniji_iro_coco \nnumero_.otto._\nn_and_a__kitchen\nyamabitoki"
+    },
+    {
+     "timestamp": "2026-05-21T10:26:38+0000",
+     "permalink": "https://www.instagram.com/p/DYmOkoQlA6p/",
+     "caption": "【抽選会】を今回も開催いたします！\n毎回大盛り上がりの抽選会👏\nまずは詳しい参加ルールと流れを必ずご確認ください👇\n\n​🎁 抽選会のルール＆流れ\n​① お買い物でチケットをGET！\nイベント会場内の【  3,000円以上 】のお買い物をされた方に、その場で「抽選チケット」を1枚お渡しします。\n\n②13:00 抽選スタート！\nスタッフが抽選箱から引いたチケットの方が当選となります。\n\n当選された方から順番に、お好きな景品をお選びいただけます。\n\n※抽選時にその場にご不在の場合は、大変恐縮ですが「再抽選（無効）」となってしまいます。 13:00前には必ず抽選会場にお戻りください！\n\n​⚠️ 注意事項\n1. 1店舗で6,000円以上購入された場合や、複数の店舗でそれぞれ3,000円以上購入された場合でも、チケットのお渡しはお一人様につき【1枚限り】となります。\n\n2.​飲食店は対象外： キッチンカーなどの飲食店での購入は対象外となります。\n\n​3.抽選箱へ投函！\nチケットに【お名前】と【連絡先】をご記入の上\n会場内の中央広場に設置されている抽選箱へ投函してください。\n\n​\n​感謝💘景品協賛のご紹介\n植物店舗から景品の協賛をいただいてます✨\n\n​また、BBBをアツく応援してくださる方からも\n素晴らしい景品をご協賛いただきました。\n\nsakabasa1\n​inastagram_official さん\n​hexianyudu さん\n​「これから植物を始めよう、楽しもうとしている方に1人でも多く届けたい」\n​そんな温かい想いの詰まったアガベや景品が並びます。\n本当にありがとうございます❇\n\n​皆様に最高の景品が当たりますように🥀\nお買い物を楽しんだ後は、ぜひ13時からの抽選会でお会いしましょう！\n\n​#BBB #BizarreBotanicalsBazaar #cocoNotsu #アガ"
+    },
+    {
+     "timestamp": "2026-05-20T12:47:55+0000",
+     "permalink": "https://www.instagram.com/p/DYj58JQzGwU/",
+     "caption": "当日の会場MAPです！\n​お目当てのブースがどこにあるか\nぜひ事前にチェックしてください👍\n\nどこのブースから回ろうか、今からワクワクしながらお買い物の計画を立ててみてくださいね！\n\n​🚗🛍️ 【ご来場の際のお願い】\n\n​乗り合わせでのご来場： 駐車場が拡大されていますが、当日は大変混雑が予想されます。限られたスペースを皆様でスムーズにご利用いただけるよう、お友達やご家族とはぜひお車を乗り合わせてお越しいただけますようご協力をお願いいたします。\n\n​マイバッグのご持参： エコバッグや、株を持ち帰るための箱などのご持参にご協力をお願いいたします。\n\n​いつも遊びに来てくださる皆様のアツい支えがあって\nこのBBBは回を追うごとに最高の形へと作り上げられています。本当にありがとうございます✴️\n​5月24日、あの自然に囲まれた素晴らしいロケーションで皆様とお会いできるのを楽しみにしてます😊\n\n​​【イベント概要】\n🌵 Bizarre Botanicals Bazaar in cocoNotsu\n🗓 2026.05.24 [SUN]\n⏰ 10:00 - 16:00\n📍 cocoNotsu（日置市東市来町美山1932）\ncoconotsu_miyama\n\n#BIZARREBOTANICALSBAZAAR \n#鹿児島#美山"
+    },
+    {
+     "timestamp": "2026-05-20T07:49:33+0000",
+     "permalink": "https://www.instagram.com/p/DYjXzOikXwA/",
+     "caption": "Gordon And Conner製 BBB公式ロゴTシャツ（数量限定）\n人気ショップgordon_and_conner さんに\nご協力いただき、ロゴ入りのシルクスクリーンTシャツが完成しました🔥\n\n​カラーは、シンプルな「白」。\n当日運営ブースにて少部数のみ限定販売いたします。\n​\n植え替えで付いた土汚れは勲章！\nシルクスクリーンならではの抜群の風合いと共に\nボロボロになるまで着倒してください。\n\n​#BBB #BizarreBotanicalsBazaar #cocoNotsu #gordonandconner"
+    },
+    {
+     "timestamp": "2026-05-19T12:36:12+0000",
+     "permalink": "https://www.instagram.com/p/DYhTz2jFIUX/",
+     "caption": "【レーザー刻印ワークショップ】\ncdiy.s\n12:00～START\n\n​お気に入りのプラ鉢やレザー小物を、\n自分だけのオリジナルギアにカスタムしてみませんか？\n​今回のワークショップでは、皆様がお持ち込みいただいたプレステラなどのプラ鉢や革製品、木製品と、\nレーザーでグラフィックをその場で刻印いたします⚡\n\nレーザーの熱でじわじわとデザインが焼き付けられていく瞬間は、見ているだけでもテンションが上がるはず🔥\n​今回は特別に【BBBのイベント公式ロゴ】や【今回のフライヤー用ロゴ】の刻印OK👌 ここでしか手に入らないイベント限定の記念ギアを。​どなたでも気軽に体験できますので、ぜひ当日はブースへ遊びにきてください！\n\n素材となる木製台座やプレステラ、雑貨も販売します。\n\n​⚠️ご参加にあたっての注意点​確実かつ安全に刻印を行うため、以下の点について事前にご確認をお願いいたします。\n\n​形状について：\nレーザーのピントを合わせる性質上、原則として「平らな面」への刻印となります。湾曲がきついプラ鉢など、カーブのあるものはきちんと刻印できない可能性（歪みやボケ）があります。（※プレステラのような四角くフラットな面がある鉢は綺麗に刻印できます）\n\n​素材について：\nプラスチックや本革は刻印可能ですが、ガラスや陶器への刻印は機械の特性上お受けできません。\n\n​著作権・商標権について：\nアニメのキャラクター、既存のブランドロゴ、他人が作成したイラストなど、著作権や商標権を侵害する恐れのあるデザインの刻印はお受けできません。必ずご自身が権利を持つデザインか、商標利用が許可されているデータをお持ち込みください。\n\n​状態について：\n既ににお使いの鉢を持ち込まれる場合は、機械の故障を防ぐため、必ず土や泥などの汚れをきれいに洗い流し、完全に乾燥させた状態でお持ち込みください。\n\n​​【イベント概"
+    },
+    {
+     "timestamp": "2026-05-19T01:16:34+0000",
+     "permalink": "https://www.instagram.com/p/DYgGCCzGb-S/",
+     "caption": "【出店者紹介】 \nKOBE AGAVE SHOP\nkobe_agave_shop\nsatsumatogegama\n\nアガベ、塊根植物、薩摩棘窯鉢の販売。\n\n5月はイベント出店MAXなので、BBBで自然に囲まれて皆様とリフレッシュしたいと思います🌳\n\n皆さんと直接会話しながら一株一株を手渡していく時間を大切にしています。\n5月の連戦の最後、皆さんと対面できるのを楽しみに\n最高のラインナップを並べてお待ちしています。\n\n​​【イベント概要】\n🌵 Bizarre Botanicals Bazaar in cocoNotsu\n🗓 2026.05.24 [SUN]\n⏰ 10:00 - 16:00\n📍 cocoNotsu（日置市東市来町美山1932）\ncoconotsu_miyama\n\n写真だけでは伝えきれない、植物の圧倒的な造形美を\nぜひ会場で\n\n​\n#BizarreBotanicalsBazaar #BBB #珍奇植物\n#鹿児島"
+    },
+    {
+     "timestamp": "2026-05-17T12:31:34+0000",
+     "permalink": "https://www.instagram.com/p/DYcJsPGFLjh/",
+     "caption": "【出店者紹介】 \nGordon And Conner\ngordon_and_conner\n\n\"Silkscreen/Tufting Rug\"\n\n鹿児島の霧島でシルクスクリーンとラグを作っています。\nシルクはデザインから製版プリントまで拘りを持ち制作しています。\n\nラグもウール毛糸を使用しています。\n当日オーダーラグのご相談等もできますのでお気軽にお越しください。\n\n​​【イベント概要】\n🌵 Bizarre Botanicals Bazaar in cocoNotsu\n🗓 2026.05.24 [SUN]\n⏰ 10:00 - 16:00\n📍 cocoNotsu（日置市東市来町美山1932）\ncoconotsu_miyama\n\n写真だけでは伝えきれない、植物の圧倒的な造形美を\nぜひ会場で\n\n​\n#BizarreBotanicalsBazaar #BBB #珍奇植物\n#鹿児島"
+    },
+    {
+     "timestamp": "2026-05-16T12:09:42+0000",
+     "permalink": "https://www.instagram.com/p/DYZiZNAgbCC/",
+     "caption": "【出店者紹介】 \nN&A Kitchen\nn_and_a__kitchen\n\n揚げたてのアツアツの唐揚げ、子育て真っ盛りの元居酒屋店長が作る手作りタルタルのチキン南蛮の販売をメインに提供します！\nぜひ一度食べてみてください🤤\nご飯のおかずにもビールのお供にも最高です♪\n\n​​【イベント概要】\n🌵 Bizarre Botanicals Bazaar in cocoNotsu\n🗓 2026.05.24 [SUN]\n⏰ 10:00 - 16:00\n📍 cocoNotsu（日置市東市来町美山1932）\ncoconotsu_miyama\n\n写真だけでは伝えきれない、植物の圧倒的な造形美を\nぜひ会場で\n\n​\n#BizarreBotanicalsBazaar #BBB #珍奇植物\n#鹿児島#キッチンカー"
+    },
+    {
+     "timestamp": "2026-05-15T12:14:12+0000",
+     "permalink": "https://www.instagram.com/p/DYW-HRmlFvs/",
+     "caption": "【出店者紹介】 \nCMA\na_____kira\n\nCMAシーマと申します \n日々金属に触れ 、思い浮かんだ形をデザインし 、気の向くまま作品を作っています 。\n貴方と共に寄り添うものになれば嬉しいです。\n\n出品内容は\n園芸用品(植替え道具、鉢等)、アクセサリー、雑貨です\n\n​​【イベント概要】\n🌵 Bizarre Botanicals Bazaar in cocoNotsu\n🗓 2026.05.24 [SUN]\n⏰ 10:00 - 16:00\n📍 cocoNotsu（日置市東市来町美山1932）\ncoconotsu_miyama\n\n写真だけでは伝えきれない、植物の圧倒的な造形美を\nぜひ会場で\n\n​\n#BizarreBotanicalsBazaar #BBB #珍奇植物\n#鹿児島"
+    },
+    {
+     "timestamp": "2026-05-14T12:21:49+0000",
+     "permalink": "https://www.instagram.com/p/DYUaMHMlHI7/",
+     "caption": "【出店者紹介】 \nwatacon plants\nwatacon.plants\n\n鹿児島の自然豊かな場所でビカクシダを生産しております、watacon plantsです。\n初心者の方から愛好家の方まで楽しめる品種をご用意してますので、足を運んで頂けると幸いです。\n\n​​【イベント概要】\n🌵 Bizarre Botanicals Bazaar in cocoNotsu\n🗓 2026.05.24 [SUN]\n⏰ 10:00 - 16:00\n📍 cocoNotsu（日置市東市来町美山1932）\ncoconotsu_miyama\n\n写真だけでは伝えきれない、植物の圧倒的な造形美を\nぜひ会場で\n\n​\n#BizarreBotanicalsBazaar #BBB #珍奇植物\n#鹿児島#ビカクシダ"
+    }
+   ]
+  },
+  "goodtaniku": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-09T02:46:45+0000",
+     "permalink": "https://www.instagram.com/p/DeQeBxcE_cC/",
+     "caption": "【イベント告知】\nCrossOver hybrid × titanota\n〜次の時代へ行くぞ！🏃‍♀️〜\n 日程： 10月18日(日) 11:30〜17:30\n 場所： 新横浜食料品センター 2F No static\n 入場料： ワンドリンク制\n【アクセス】\n 新幹線「新横浜駅」から徒歩5分\n JR横浜線／ブルーライン「新横浜駅」から徒歩5分\n 東横線「菊名駅」から徒歩20分\n※お近くに大型駐車場もございます🅿️\n福園芸 & goodtaniku 初コラボ開催！\n最先端の様々なハイブリッドと、GT実生選抜＆オアハカ二世など、ここでしか手に入らない独自のラインナップを出品します！\n✨ 注目ポイント ✨\n GTオアハカ二世： 前回大絶賛いただいた株を、今回も激安で放出します！\n 限定コラボタグ： 福園芸さんとのスペシャルコラボ！\n 限定イラストグッズ： 私が作成した限定イラストのアイテムも販売します。ぜひお部屋に飾ってください❤️\n⚠️ 【ご来場のお願い】\n当日はお店の前に長い行列が作れないため、事前予約サイトでの整理券登録にご協力をお願いいたします！\nhttps://goodtaniku.stores.jp/\n\n「ストア登録が面倒だな…」という方は、私へDMをいただければ代わりに整理券を手配いたしますので、お気軽にご連絡ください📩\nみんなで横浜のイベントを一緒に盛り上げましょう！🔥"
+    },
+    {
+     "timestamp": "2026-10-07T02:21:16+0000",
+     "permalink": "https://www.instagram.com/reel/DeLRdc3TVS9/",
+     "caption": "Gt Oaxaca No.31"
+    },
+    {
+     "timestamp": "2026-10-03T15:24:41+0000",
+     "permalink": "https://www.instagram.com/p/DeCX-_UzfYm/",
+     "caption": "Gt Oaxaca \nNo.30\n２世"
+    },
+    {
+     "timestamp": "2026-09-26T06:07:52+0000",
+     "permalink": "https://www.instagram.com/reel/DdvWdNdTvWE/",
+     "caption": "GT Oaxaca No.03\n6cmサイズの表現\n青葉　\n白鋸歯　\nトップ強　\nサイド密集＆うねり"
+    },
+    {
+     "timestamp": "2026-09-20T01:53:44+0000",
+     "permalink": "https://www.instagram.com/p/Ddfc2zwEwqV/",
+     "caption": "青葉　白棘　ワイルド\nC4"
+    },
+    {
+     "timestamp": "2026-09-16T12:12:01+0000",
+     "permalink": "https://www.instagram.com/p/DdWQbzaE2e7/",
+     "caption": ""
+    },
+    {
+     "timestamp": "2026-09-12T01:55:21+0000",
+     "permalink": "https://www.instagram.com/reel/DdK2iSOTngB/",
+     "caption": "【焔斧】\n滝の白糸 × 血雷（schidigera ×（Bloodspot × potatorum））\n\n小ぶりながらも赤い連刺が細かく続き、スポットも安定。赤と紫の色合いが凝縮された、絶妙なバランスの一品です。\nとても上品で可愛らしい姿に仕上がっています。"
+    },
+    {
+     "timestamp": "2026-09-09T02:32:01+0000",
+     "permalink": "https://www.instagram.com/p/DdDMfoik5_H/",
+     "caption": "血妖×チタノタ選抜　2世(直子)\n数量限定予約開始"
+    },
+    {
+     "timestamp": "2026-09-08T08:52:47+0000",
+     "permalink": "https://www.instagram.com/reel/DdBTM0vz6Uq/",
+     "caption": "Gt seedling\nNo.13"
+    },
+    {
+     "timestamp": "2026-09-07T14:56:16+0000",
+     "permalink": "https://www.instagram.com/reel/Dc_X9AszFLG/",
+     "caption": "Gt seedling No.05\nやっと子株出てました、、、"
+    },
+    {
+     "timestamp": "2026-09-05T06:54:12+0000",
+     "permalink": "https://www.instagram.com/reel/Dc5XSoUTRFL/",
+     "caption": "GT seedling\nBlue Selection"
+    },
+    {
+     "timestamp": "2026-09-02T13:29:56+0000",
+     "permalink": "https://www.instagram.com/p/DcyWOOoE9Rb/",
+     "caption": "こんばんは！\n連投で大変申し訳ございません。\n続いて、E2（緑）株のご紹介です！\n\nこちらはGTオリジナル実生株で、トップが太く、サイドもワシャワシャと4本ずつ出ています。\n最近さらに進化していて、サイドの刺が中心に向かって融合し、トップがどんどん分厚くなってきました。\n実生株でここまで進化し続ける株は本当に珍しく、とても期待している一株です。\n\nこちらはE2（赤）と一緒に子株を2株販売します。\n価格は（赤）と同じ6万円です。\n\nさらに！！\nGTからご購入いただいた「E2（緑）」と「E2（赤）」の株から育った子株は、無条件で交換できるようにします！\n一株買って、2株の育成を楽しめる企画です！\n\nどちらも2株しかご用意できないため、4名様限定となります。\nぜひチャレンジしてみてください！"
+    }
+   ]
+  },
+  "happa_san0412": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-03T10:08:37+0000",
+     "permalink": "https://www.instagram.com/reel/DeBzYJBz3y1/",
+     "caption": "Happa San POP UP STORE\n2026.10.23 — 10.25\nin HARAJUKU\n\n10.23 FRI｜17:30–19:00\n10.24 SAT｜11:00–19:00\n10.25 SUN｜11:00–17:00\n\n📍 レンタルスペースさくら 原宿竹下口\n〒151-0051\n東京都渋谷区千駄ヶ谷3-54-8\n\nJR山手線「原宿駅」徒歩5分\n東京メトロ副都心線「北参道駅」徒歩5分\n東京メトロ副都心線・千代田線\n「明治神宮前〈原宿〉駅」徒歩6分\n\nPOP UP STORE 開催\n「冬、植物と暮らす。」\n\n🪴 数量限定の株\n🎰 POP UP限定 GACHA\n\nなど、会場でしか楽しめないものをご用意しています。\nさらに今回は、\nTHE TRIBUS STUDIO®も出展。\n植物と暮らす時間や、\n好きなものを集める楽しさを感じてもらえるような\n3日間になればと思っています。\nぜひお気に入りの一株を探しに、\n遊びに来てください。\n\n#HappaSan #ビカクシダ #platycerium #popupstore #原宿"
+    },
+    {
+     "timestamp": "2026-09-24T11:30:07+0000",
+     "permalink": "https://www.instagram.com/p/Ddqx_7xE3F9/",
+     "caption": "🇦🇺 Australia — Cairns\n\n野生のマウンテンルイスを発見。\n\nひっそりとそこに佇みながらも、\nどこか圧倒されるような存在感と、\n長い時間を生きてきたものだけが持つ貫禄。\n\nそして、そこには他にも\n野生のビカクシダの原種たちが。\n\n彼らがいつからそこにいて、\nどれだけの時間をかけてここまで育ったのかは、\n誰にもわからない。\n\nただ、ひとつ確かなこと。\n\nこの場所で彼らは、\n長い年月を生き抜き、\n命を繋ぎ続けている。\n\n人の手によって育てられた姿とはまた違う、\n自然の中で生きるビカクシダの姿。\n\nその強さと美しさを、\n自分の目で見ることができた旅でした。\n\n#ビカクシダ #happasan ##platycerium #コウモリラン"
+    },
+    {
+     "timestamp": "2026-09-19T12:45:09+0000",
+     "permalink": "https://www.instagram.com/reel/DdeCg4IExzG/",
+     "caption": "19日追い込み配信販売！🔥\n追加株あり！\n\n今回特別価格や特典は9月22日までとなります！\n以降は通常価格での販売、予約となりますのでご注意ください！\n\n#ビカクシダ #veitchii #麋角羊歯 #ビカクシダのある生活 #platycerium"
+    },
+    {
+     "timestamp": "2026-09-18T12:27:10+0000",
+     "permalink": "https://www.instagram.com/reel/Ddbbnn_zWVE/",
+     "caption": "ケアンズ４日目は車で山奥まで。\n山奥に進むにつれて\nマウンテンルイスやヒリーがちらほら顔を見せました。\n\n山奥はしっかり日が当たり、暖かく\nしかし風が吹くと心地いのい体感温度になります。\n\n雨が前日降っていたせいか日陰は\n肌寒かったですが\n光、風、水がバランスが良い感覚がしました。\n\n木達もちょうどよく日陰を作っていて\nゆっくりと時間が流れる空間でした🌳\n\n#ビカクシダ #鹿角蕨 #platycerium #happasan #珍奇植物"
+    },
+    {
+     "timestamp": "2026-09-16T11:31:17+0000",
+     "permalink": "https://www.instagram.com/reel/DdWLYIazq2i/",
+     "caption": "3日目\n2カ所まわりました！\nあったのはやはり日が差していて\n風も吹き少し木漏れ日な所\n太陽ガンガンな所にもあったりする個体もありましたが😂\n\n#ビカクシダ #鹿角蕨 #platycerium #happasan #珍奇植物"
+    },
+    {
+     "timestamp": "2026-09-15T23:23:44+0000",
+     "permalink": "https://www.instagram.com/reel/DdU4DDcT1MY/",
+     "caption": "ARファーンさんと野生のビカクシダを探す旅🔍\nまだまだ続きます🧭\n\n#ビカクシダ  #鹿角蕨 #platycerium #happasan #珍奇植物"
+    },
+    {
+     "timestamp": "2026-09-12T10:42:21+0000",
+     "permalink": "https://www.instagram.com/p/DdLysN5z7qf/",
+     "caption": "購入🔗\nhttps://forms.gle/YapncoK5TZPoW6nT6\n\n今日行った配信販売についてです！\n19日も再度配信しますので\n今日見れなかった方は是非19日にきて\nご検討ください！\n\n#AR\n#ビカクシダ"
+    },
+    {
+     "timestamp": "2026-09-12T06:58:02+0000",
+     "permalink": "https://www.instagram.com/reel/DdLZPjJk6YP/",
+     "caption": "0912Live配信"
+    },
+    {
+     "timestamp": "2026-09-06T04:54:05+0000",
+     "permalink": "https://www.instagram.com/reel/Dc7uCG7zwJA/",
+     "caption": "ライブ配信で日本初出し販売！🌿🔥\n\nオーストラリア・ブラックダウンで育った新商品を、\n世界に先駆けていち早く販売スタート！\n\nさらに今回は、ブラックダウン以外の新種・選抜個体も\n数量限定で販売予定です✨\n\n日本代理店「はっぱさん」が、\nAR Fern Factoryの最新商品を日本先行でお届けします！🇯🇵🌏\n\n📅 9月12日（土）14:00〜（日本時間）\n新商品の初出しライブ販売を予定しています！\n\nそして、\n📅 9月19日（土）にも最終ライブ配信を予定しています。\n\n数量限定の商品もございますので、\nぜひライブ配信をお見逃しなく！🔥\n\nさらに、9月13日〜17日はCairns（ケアンズ）へ！\nVeitchii、Hillii、Mount Lewisなど、\n現地のビカクシダを探す旅に行ってきます🌿🇦🇺\n\n現地でどんな株に出会えるのか…\nこちらもぜひ楽しみにしていてください！🔥\n\n※スケジュールや販売内容は変更になる場合がございます。\n最新情報は随時チェックしてください！\n\n#ビカクシダ\n#Veitchi\ni#オーストラリア\n#鹿角蕨 \n#platycerium"
+    },
+    {
+     "timestamp": "2026-08-26T09:04:43+0000",
+     "permalink": "https://www.instagram.com/reel/Dcf1oM6z9Ap/",
+     "caption": "▼白幻スポア予約🔗\nhttps://forms.gle/jz1s6oM4fcEVxUrD8\n\nfrom createplant\n\n予約購入START\n8月28日金曜日　18時00分\n\n〆切\n9月28日月曜日　0時00分\n\n数量限定になりますので無くなり次第終了になります！\n\n#ビカクシダ \n#白幻\n#スポア"
+    },
+    {
+     "timestamp": "2026-08-24T11:29:23+0000",
+     "permalink": "https://www.instagram.com/p/Dca9RY9E9iw/",
+     "caption": "Hakugen\n\nHakugen / Hakugen Sporeling\n\n今年の春、皆さまのもとへ旅立った\n「Hakugen Sporeling」\n\nその名前は、フォロワーの皆さまの投稿・投票によって決まりました。\n\n名前に込められたのは、\n\n「白い霧の中にふと現れ、儚く消えていく神秘の存在」\n\nそんな幻想的なイメージ。\n\ncelso × yellow moonから生まれた、\n新しい魅力を持つスポアです。✨\n\nそして今回――\n\n🌿 Hakugen Sporeling 第2弾\n予約販売をスタートします。\n\n前回お迎えできなかった方も、\nずっと気になっていた方も、\nぜひこの機会に「白幻」を育ててみてください。\n\n成長していくほどに変化していく姿を、\nあなたの手で育てる楽しみ。\n\n白い霧の中から現れた「白幻」を、\n今度はあなたのコレクションへ。\n\n数量に限りがございますので、\nぜひお早めにご検討ください。🌿✨\n\n子株につきましては、DMからお気軽にお問い合わせください☺️\n\n_____________________________________\n\nHakugen / Hakugen Sporeling\n\n今年春天推出的「Hakugen Sporeling」，\n名稱由粉絲們的投稿與投票共同決定。\n\n「白幻」的意象源自於——\n在白色霧氣中悄然出現，又如夢般消逝的神秘存在。\n\n誕生於 celso × yellow moon，\n擁有細緻而獨特的魅力。✨\n\n如果你也喜歡「白幻」，\n歡迎把握這次機會，將它帶回自己的植物收藏。\n\n數量有限，歡迎儘早聯繫。\n\n子株相關資訊，歡迎透過 DM 私訊詢問☺️\n\n#白幻 #Hakugen #白幻スポア #ビカクシダ #platycerium\n\n白幻親株\n\nかなりコンパクトなサイズ感が愛らしい☺️\n\n白幻sporelikg\n\nスポアならではの楽しみを"
+    },
+    {
+     "timestamp": "2026-08-01T07:16:36+0000",
+     "permalink": "https://www.instagram.com/reel/DbfR-e_TaFu/",
+     "caption": "繼水美園後又緊鑼密鼓地迎接\n7月份的艸植感 現場除了老朋友外\n這次更認識了不少外國的客人們\n此外，桃園市長更蒞臨葉子先生的攤位\n\n感謝主辦單位\n讓我們有機會讓更多人知道鹿角蕨的美\n今年十一月台南艸植感見\n\n期待下一次的見面\n歡迎再次蒞臨葉子先生 Happa San攤位\n____________\n\n水美園に続いて、あっという間に7月の「艸植感」がやってきました。\n会場では、いつも来てくださるお客様とさらに、海外からのお客様ともたくさん出会えました！\n\nさらに、なんと桃園市長にも「葉子先生 Happa San」のブースへ足をお運びいただきました！\n\nこんなにも多くの方々に鹿角蕨（ビカクシダ）の魅力をお伝えする機会をくださった主催者の皆様に、心より感謝申し上げます。\n\n次回は、今年11月に台南で開催される「艸植感」でお会いしましょう！\n\nまた皆様にお会いできるのを楽しみにしております。\nぜひ「葉子先生 Happa San」のブースへ遊びにいらしてくださいね！\n\n#HappaSan\n#Platycerium\n#鹿角蕨\n#ビカクシダ\n#platyceriumlovers"
+    }
+   ]
+  },
+  "hugcoffee_minamicho": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-09T05:38:45+0000",
+     "permalink": "https://www.instagram.com/p/DeQxpt9yVTN/",
+     "caption": "朝の時間を、少しだけ豊かに。\n\nHUGCOFFEE南町店では、\n朝7:30よりモーニングをご用意しております。\n\n人気のベーグルサンドをはじめ、\nこのたび新しくモーニングプレートも仲間入りしました。\n\n淹れたてのコーヒーと、\n素材にこだわった朝食で、一日の始まりを心地よく。\n\nお仕事前に。\nお出かけ前に。\n少し早起きした休日にも。\n\n皆さまの朝に寄り添えるよう、\n心を込めてお迎えいたします。\n\n皆さまのご来店をお待ちしております☀️"
+    },
+    {
+     "timestamp": "2026-10-07T10:06:06+0000",
+     "permalink": "https://www.instagram.com/p/DeMGt2iEnHK/",
+     "caption": "・\nこんばんは🌝理乃です！\n\n植物とコーヒーが、人と人をつなぐ時間。\n\n10月24日から11月1日まで、\nhugcoffee南町店にて\nPLANTS and COFFEEを開催します🌿☕️\n\n今回一緒にPOP-UPをするのは、\nアガベやサボテンを育てている\nCHAMのゆいくん。\ncham_plants \n\nゆいくんは私がhugcoffeeで働く前から\nお客さん同士で世間話をする仲。\n\nでも互い何をしている人なのかは\nよく知なくて。\n\n働き始めてからカウンターで話すようになり、\nあれ？！同級生じゃん！\nということが判明！\n\nそこからいろいろ話していくうちに、\nいつか何か一緒にできたらいいね\nそんな話になったことが、\n今回のPOP-UPのきっかけです。\n\nゆいくんが好きな植物と、\n私が好きなコーヒー。\n\n植物を通して心を耕し、\nコーヒーを通して人がつながる。\n\n植物が好きな人と、\nコーヒーが好きな人が出会って、\nそれぞれの好きが\n少しずつ広がっていったら嬉しいです。\n\n植物を見に来た人が\nコーヒーを好きになったり、☕️\n\nコーヒーを飲みに来た人が\n植物を好きになったり。🪴\n\nそんなきっかけをつくれたらと思っています。\nそして、私たちは同じ1999年生まれ。\n\n静岡には、\n同じ世代でも自分の好きなことを形にしながら\n頑張っている人たちがたくさんいます。\n\n私自身もまだまだこれから。\n面白いと思うことや、\n一緒にやりたいと思える人との出会いを大切にしながら、\n少しずつ、\n自分たちの地元・静岡を\n面白くしていけたらと思っています。\n\n植物とコーヒーのある生活を\nもっと身近に。\n\n10月24日から11月1日まで、\n南町店でお待ちしています🌿☕️\n\n植物が好きな方も、\nコーヒーが好きな方も、\n\nまだどちらもよく知らない方も。\nぜひふらっと遊びに来てください。"
+    },
+    {
+     "timestamp": "2026-10-07T04:13:40+0000",
+     "permalink": "https://www.instagram.com/p/DeLdu4cSQK_/",
+     "caption": "⁡ー南町6th anniversaryー\n⁡「スタッフ紹介」 vol.1\nーーーーーーーーーーーーー\n\n南町店モーニング担当のさやかです☀️\n実は、自販機担当も兼任しております😆\n\n私にとってHUG COFFEEは、\n「人と人が繋がれる場所」。\n\n一杯のコーヒーをきっかけに、お客様同士やスタッフとの間に新しい繋がりが生まれたり、思いがけない出会いがあったり。\n\nそんな、人と人との繋がりを間近で感じられるところが、私の大好きなところです。私自身も、HUG COFFEEでたくさんの出会いや刺激をもらってきました。\n⁡\n入社して、気づけば2年ちょっと。\n南町店の朝に立っていると、毎朝顔を合わせるとほっとする常連さん、旅行や出張の途中に立ち寄ってくださる方、初めて来てくださる方など、毎日たくさんの出会いがあります。\n\n「おはようございます！」から始まる何気ない会話や、\n「いつものですね！」とこちらから声をかける瞬間。\n\nそんな小さなやりとりの積み重ねが、\n南町店の朝をつくっているんだなと感じています。\n\nお客様にとっての「いつもの朝のひととき」や「旅の思い出」に立ち会えること。\n⁡\nそして、HUG COFFEEで過ごした時間や一杯のコーヒーが、その人の一日の中の「ちょっと嬉しい時間」になっていたらいいな。そんなことを思いながら、毎朝カウンターに立っています。\n\nそして、もうひとつ私が大切にしているのが、\n毎月開催している「南町ナイトバー」🍻\nお酒好きがきっかけで始めたこのイベント🪩\n\n昼間とはまた違う南町店で、\n限定フードとお酒を囲みながら、\nスタッフも一緒になってワイワイ楽しむ時間です。\n\n「ここ、本当にカフェなの？😂」\nと思うくらい盛り上がる夜もありますが（笑）\n\nそんな自由さや、いろんな人が混ざり合えるところも、\n南町店の大好きなところです。\n\n朝はコーヒーを飲みに来てくれる"
+    },
+    {
+     "timestamp": "2026-10-04T01:45:44+0000",
+     "permalink": "https://www.instagram.com/p/DeDcszLy1gN/",
+     "caption": "HUGCOFFEE 南町店\nー6th ANNIVERSARYー\n\n11月7日(土)、\n南町店は6周年を迎えます。\n\n6周年を迎えることができるのも、\n日々HUGCOFFEEをご利用くださる皆さまのおかげです。\nいつも本当にありがとうございます。\n\nそして、6周年を迎えるにあたり\n今年も南町にて周年祭を開催いたします。\n\n今年のテーマは、\n昨年に引き続き「珈琲中毒」。\n\nこの日だけの限定ドリンクやフード、スイーツなど、\n6周年を楽しんでいただけるものをいろいろとご用意してお待ちしています。\n\nまた6周年のポスターは、\n松本健一さんにデザインしていただきました。\n(motomoto_matsumoto )\n\n当日までの準備の様子も、\n少しずつInstagramでお届けしていきたいと思います。\n\n11月7日、南町でお会いできるのを\nスタッフ一同、心よりお待ちしております。\n\n今年も「珈琲中毒」の世界を、ぜひ楽しんでください^_^\n\nHUGCOFFEE 南町店\n6th anniversary\n2026.11.7 (sat)\n11:00〜23:00\nーーーーーーーーーーーーーーー\nーHUGCOFFEE MINAMICHO 6TH ANNIVERSARYー\nNovember 7, 2026 (Sat)\n\n\"COFFEE ADDICT\"\n\nWe're celebrating 6 years of HUGCOFFEE Minamicho\nwith a special anniversary party.\n\nLimited drinks, food, sweets, and more —\nmade especially for this day. \n\nThank you for sharing so many moments with us.\nSee you at Minamicho.\n\n＊"
+    },
+    {
+     "timestamp": "2026-09-30T12:34:29+0000",
+     "permalink": "https://www.instagram.com/p/Dd6WDgfSADs/",
+     "caption": "⁡10/10(土)19:00~23:00\n南町ナイトバー\nSAUSAGE & CRAFT BEER NIGHTを開催します。\n\nソーセージ3種と、\nクラフトビールを楽しむ秋の夜。\n\n焼きたてのソーセージをつまみに、\n今夜はちょっと寄り道しませんか？"
+    },
+    {
+     "timestamp": "2026-09-29T12:00:05+0000",
+     "permalink": "https://www.instagram.com/p/Dd3CEewShWc/",
+     "caption": "南町のカウンター席は、全6席。\n⁡\nWiFi,充電可能(角のソファ席以外、全席で可能)。\n⁡\nついつい、\n長居してしまうフカフカの椅子。\n⁡\nスタッフとお話はもちろんのこと、\nPC作業等も大歓迎です^_^\n⁡\nお待ちしております。"
+    },
+    {
+     "timestamp": "2026-09-26T10:12:38+0000",
+     "permalink": "https://www.instagram.com/p/Ddvyt0PS7NL/",
+     "caption": "ぜひモーニングは、ベーグルと一緒に。\n⁡\n朝限定のモーニングプレートをはじめ、\nベーグルサンドもご用意しております。\n⁡\nーーーーーーーーーーーーーー\nモーニングプレート￥1,200\n各種ベーグルサンド￥700\n各種スペシャルベーグルサンド￥1,100\nーーーーーーーーーーーーーー\n⁡TAKE OUTも可能。\n\nご来店お待ちしております。"
+    },
+    {
+     "timestamp": "2026-09-22T10:30:04+0000",
+     "permalink": "https://www.instagram.com/p/DdlWP5YSyn9/",
+     "caption": "南町、窓側のテーブル席は全4席。\n⁡\nWIFI,充電も完備。\n⁡\nお一人様はもちろんのこと、\n2名様以上でもご利用可能です。\n⁡\nお席のご予約は、\n店舗・お電話・dmで受け付けております。\n(店舗・お電話の方がよりスムーズに対応可能です)\n⁡\n皆様のご来店お待ちしております。"
+    },
+    {
+     "timestamp": "2026-09-21T11:00:05+0000",
+     "permalink": "https://www.instagram.com/p/DdiNzW_SCD4/",
+     "caption": "現在のエスプレッソは、\nハグブレンドのお豆を使用しております。\n⁡\nーーーーーーーーーーーーー\nHug blend\n200g ￥1,800(税込)\n1kg ￥7,500(税込)\n⁡\nBrazil,Nicaragua,Kenya,etc...\nーーーーーーーーーーーーー\n南町前の自販機では、\nHugblendのお豆が24時間365日購入可能。\n⁡\nぜひご利用ください。"
+    },
+    {
+     "timestamp": "2026-09-20T10:27:16+0000",
+     "permalink": "https://www.instagram.com/p/DdgXHvySdSk/",
+     "caption": "・\nPLANTS and COFFEE 🌿☕️\n\nhugcoffeeの理乃です！☺︎\n\n植物の魅力を通して、人と響き合い、心を耕す。\n\nそんな想いで植物と向き合う、\nCHAMのゆいくん （cham_plants ）と\nhugcoffee南町店でPOP UPを開催します🍃\n\nきっかけは、ゆいくんがお店に来てくれていたこと。\n\n話していくうちに、\nあれ？！同級生じゃん！\nそんなところから始まった今回の企画！\n\n植物がひとつあるだけで、\nいつもの暮らしがちょっと豊かになる。\n\nそこにコーヒーがあったら、\nその時間はもっと心地よくなる気がする。\n\n期間中は、アガベやサボテンをはじめ、\n個性豊かな植物たちを展示・販売します。\n\n植物を眺めながらコーヒーを飲んだり、\nお気に入りのひと鉢を探したり。\n\n植物とコーヒーが、\nまた新しい人と人とのつながりを生む時間になったら嬉しいです。\n\nPLANTS and COFFEE\n📍hugcoffee 南町店\n10/24(SAT) - 11/1(SAT)\n\n10/24 19:00 - 22:00\nOPENING EVENT\n\nhugcoffee 南町店\nhugcoffee_minamicho \n7:30 - 21:00\n\nぜひ、植物とコーヒーのある時間を楽しみに来てください🌱"
+    },
+    {
+     "timestamp": "2026-09-17T09:03:47+0000",
+     "permalink": "https://www.instagram.com/p/DdYfbtKSBHC/",
+     "caption": "南町では、夕方以降からお月見できます。\n⁡\nしかも常に満月。\n⁡\nそして、南町も流れにのって\n月見にちなんだ新作ベーグルサンドを出します。\n⁡\nお楽しみに♪"
+    },
+    {
+     "timestamp": "2026-09-14T08:48:00+0000",
+     "permalink": "https://www.instagram.com/p/DdQvfWNy5BP/",
+     "caption": "南町の名物\"静岡朝霧牛乳プリン\"。\n⁡\nむちっと、だけどぷるんと。\nそしてなめらか。\n不思議な食感に中毒性あり。\n⁡\n南町で提供しているプリンは、\n全て南町で手作りしております。\n⁡\n作成中にご来店いただいたお客様は、\n店内に広がる\"カラメル\"に香りに虜になること間違いなし。\n\nそして優しい甘さのプリンは、\nほろ苦いコーヒーがぴったり。\nおすすめのコーヒーもご案内いたします。\n\nお気軽にスタッフにお声掛けください^_^"
+    }
+   ]
+  },
+  "ing.plants": {
+   "ok": false,
+   "error": "ユーザーネームがing.plantsのユーザーが見つかりません",
+   "code": 110,
+   "checkedOn": "2026-10-10"
+  },
+  "kotetu_plants": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-05T01:41:27+0000",
+     "permalink": "https://www.instagram.com/p/DeGDX-RErVh/",
+     "caption": "☆☆\n*******************\nJR西岩国駅構内・ふれあい広場にて\n「第6回 岩国グリーンバザール」を開催します\n\n*****************************************\n2026.11/22(日)\n山口県岩国市錦見６丁目１５\nＪＲ西岩国駅内　\nふれあい広場にて\n10:00～14:00\n\n************************************\n\n************************************\n【出店者を募集しております】\n出店料1000円\nブース枠　3×3m\n\n出店希望の方は「小鉄園芸」のプロフィールに出店申込のリンクを貼り付けておりますので、そちらから申し込みをお願いいたします。\n\n参加用フォーム\nhttps://forms.gle/Y2E6FBz2E6Nmwvjp6\n\n*************************************"
+    },
+    {
+     "timestamp": "2026-10-02T12:40:22+0000",
+     "permalink": "https://www.instagram.com/p/Dd_gZW4Emz-/",
+     "caption": "☆☆\n今週末は#ぼたにっくcollection に出店します\n\n---------------------------------------\n\n日付:2026年10月4日(日)\n時間:9:30-15:00\n場所:山口県宇部市\nときわ公園内 ときわミュージアム\n住所:山口県宇部市野中3丁目4-29\n⁡\n⁡\n\n出店者様、番号順\n\n⁡1.Sunny sunny_since_2023\n\n2.はづき屋 hazukiya_soildeko ⁡\n\n3.yuzuka's succulent yuzuka.7zq ⁡\n\n4.⁡H工業園芸部 ken_htmc ⁡\n\n⁡5.Lapis lapis_garden.1112\n\n6.しくみ創造らぼ 493sozolab\n\n7.Taniphoto taniphoto.nagasaki\n\n8.シークレットベース翁 secret_base.okina ⁡\n\n⁡9.BlueLeaf blue.leaf333\n\n10.hm_plan2 hm__plan2 ⁡\n\n11.サボテンと電気 ryunosuke_saboten\n\n12.Plants_Ring plants_ring2980\n\n⁡13.gururi plants tekutukobogururi\n\n14.⁡三景堂 lumos_plantae\n\n15.⁡アトリエ来夢 atelier_raimu\n\n⁡16.selfish. selfish.kuu\n\n17.ぶりぶりのザエモン buriburinozaemonn\n\n18.もぐもぐ mogmog.ta2929\n\n19.⁡saraの樹 miroku_saranoki ⁡\n\n20.よしろう多肉園 yoshiro_succulents_farm ⁡\n\n21.⁡YOLO coffee&plants ancient.forest_from.yolo yolocoffee.j"
+    },
+    {
+     "timestamp": "2026-09-25T23:50:18+0000",
+     "permalink": "https://www.instagram.com/p/Ddurf9OEt6E/",
+     "caption": "明日はグリパ出店です\n\n天気もなんとかなりそー\n--------------------------------------\n\n📢🎪\n【福岡で開催する園芸イベント】\n第7回 福岡グリーンパーティー\n\n\\ \\ 秋は1日限定で開催決定！ //\n\nfukuoka_green_party\n\n植物好きの皆さまへ🌿\n糸島で、緑に囲まれる\n「特別な休日」をお届けします。\n\n★ 入場無料🆓\n\n⸻\n▶︎ 日程：2026年9月27日(日)\n▶︎ 時間：10:00〜16:00\n▶︎ 場所：志摩中央公園・屋根付きプロムナード（福岡県糸島市）\n▶︎ 駐車場：交流プラザ志摩館（無料）\n⸻\n\n🌵 植物の生産者・専門店・作家が全国から大集結！\n\n多肉植物・サボテン・アガベ・盆栽・塊根植物、\nビカクシダ・アロイド・花・ドライフラワーなどなど。\n\nさらに、こだわりのデザイン鉢や植物雑貨も登場！\n\n普段なかなか出会えない植物や、\nお気に入りの一鉢を探しに、ぜひお越しください🌿\n\nそして、大人気の「グリパ飯」では\nおいしいごはんやスイーツも勢ぞろい🍴☕️\n\n植物を楽しんで、おいしいものを食べて。\n緑あふれる空間で、ご家族やご友人と一緒に\nゆっくりとお買い物をお楽しみください。\n\n🎁 お楽しみ抽選企画も開催！\n\n第7回ならではの企画や最新情報は、\nInstagram「福岡グリーンパーティー」をチェック！\nfukuoka_green_party\n\n━━━━━━━━━━━\n#グリパ7\n#FukuokaGreenParty\n#福岡グリーンパーティー\n#グリパ\n#グリパ飯\n━━━━━━━━━━━"
+    },
+    {
+     "timestamp": "2026-09-18T13:25:22+0000",
+     "permalink": "https://www.instagram.com/p/DdbiatUkvvy/",
+     "caption": "☆☆\n明日は道の駅仁保の郷で開催される「緑と多肉を楽しむマルシェ」に出店します\n\n #道の駅仁保の郷 #仁保の郷\n\nチタノタメインで亀甲竜とパリーと金シャチ持っていきます\n-----------------------------------------\n\n「緑と多肉を楽しむマルシェ」初開催✨️✨️\n\nこの度、道の駅仁保の郷では、植物に特化したマルシェを開催することになり、記念すべき第１回目を9月19日(土)に開催いたします‼️\n個性あふれる植物たちが県内外から大集合✨️✨️\n出店者情報や詳細は仁保の郷のホームページでご確認いただけます‼️\n山口県内一の植物イベントを目指してまいりますので、どうぞよろしくお願いいたします🙇🙇🙇\n\n■出店者一覧\nmochi.ie29\ntekutukobogururi \nplants_ring2980 \nkotetu_plants \nlophopholand \nnagi.plants_flowers \nmiroku_saranoki \nyoshiro_succulents_farm \nhazukiya_soildeko \nhm__plan2 \nyunta46 \nusaginoakubi_usaginoakubiplus \noimoya_san \n17gaogao_ \ndeer_antler6\nルフェール\nチャバ森\ncactuswafflecafe \n\n#山口市イベント #植物イベント #道の駅仁保の郷 #仁保の郷\n\n----------------------------------------\n\n多肉植物でつながる、新しいマルシェがはじまります。\n\n道の駅仁保の郷では、このたび初めてとなる「緑と多肉を楽しむマルシェ」を開催します。個性あふれる多肉植物や寄せ植え作品、花の苗や観葉植物、鉢や雑貨など、植物の魅力をたっぷり楽しめるイベントです。\n\n"
+    },
+    {
+     "timestamp": "2026-08-31T13:10:17+0000",
+     "permalink": "https://www.instagram.com/p/DctKYhzEsiu/",
+     "caption": "-------------------------------------\n9/6(日)\n西岩国駅 POP UP　\nJR西岩国駅 旬彩館にて　\n10.00～14.00　\n※来店予約不要\n\n西岩国駅POP UP\n今回も近所のパイセンhm__plan2 さんがと共同販売です\n\n-------------------------------------\n\n※西駅POP UPで一緒に植物を販売してみたいと思う方がいらっしゃったらDMください(※とりあえず岩国市在住の方でアガベと塊根系の植物に限る)　会議用テーブル(1.8m×0.6mを2枚分用意します。※出店料は当面無料です(集客してないので)\n\n------------------------------------------\n9/19(土)\n「緑と多肉を楽しむマルシェ」が#道の駅仁保の郷 　で開催されます\n\n以下、道の駅仁保の郷のインフォメーション\n------------------------------------\nこの度、#道の駅仁保の郷 にて植物に特化したマルシェを開催することになり、記念すべき第１回目を9月19日(土)に開催いたします‼️\n個性あふれる植物たちが県内外から大集合✨️✨️\n出店者情報や詳細は仁保の郷のホームページでご確認いただけます‼️\n山口県内一の植物イベントを目指してまいりますので、どうぞよろしくお願いいたします🙇🙇🙇\n\n■出店者一覧\nmochi.ie29\ntekutukobogururi\nplants_ring2980\nkotetu_plants\nlophopholand\nnagi.plants_flowers\nmiroku_saranoki\nyoshiro_succulents_farm\nhazukiya_soildeko\nhm__plan2\nyunta46\nusaginoakubi_usag"
+    },
+    {
+     "timestamp": "2026-07-28T12:25:48+0000",
+     "permalink": "https://www.instagram.com/p/DbViRAjknJo/",
+     "caption": "-------------------------------------\n8/2\n西岩国駅 POP UP　\nJR西岩国駅 旬彩館にて　\n10.00～14.00　\n※来店予約不要\n\n西岩国駅POP UP\n\n今回も、愛知県の塊根系イベントでブイブイ言わせたhm__plan2 さんが凱旋販売されます(たぶん)\n\nあともう一人出店者がいるかもぉ。。(仮)\n\n-------------------------------------\n\n※西駅POP UPで一緒に植物を販売してみたいと思う方がいらっしゃったらDMください(※とりあえず岩国市在住の方でアガベと塊根系の植物に限る)　会議用テーブル(1.8m×0.6mを2枚分用意します。※出店料は当面無料です(集客してないので)\n\n------------------------------------------\n\n------------------------------------------\n\n------------------------------------------\n\n#西岩国駅\n#旬彩館\n#もこぷゆ\n#もこぷゆマルシェ\n#アガベ\n#アガベ時々塊根\n#ぼっちでPOPUP\n#ぼっちは植物が好き"
+    },
+    {
+     "timestamp": "2026-07-16T12:31:07+0000",
+     "permalink": "https://www.instagram.com/p/Da2i1h0S2E9/",
+     "caption": "。。\n7/18（土）\n#もこぷゆマルシェ  出店します"
+    },
+    {
+     "timestamp": "2026-06-30T23:40:58+0000",
+     "permalink": "https://www.instagram.com/p/DaOpK7oSo_y/",
+     "caption": "。。\n\nぼたにっくcollection\n今年も参加予定です\n\n#ぼたこれ\n#ぼたにっくcollection \n\n日付:2026年10月4日(日)\n時間:9:30-15:00\n場所:山口県宇部市ときわ公園内 ときわミュージアム\n住所:山口県宇部市野中3丁目4-29"
+    },
+    {
+     "timestamp": "2026-06-23T06:07:16+0000",
+     "permalink": "https://www.instagram.com/reel/DZ6u7LjS4J8/",
+     "caption": "。。\n今週末は「もこぷゆマルシェ」\n\n6月27日(土)\n11.00→15.00\n山陽小野田市中央市場\n\nてか、台風が。。💦\n\n#もこぷゆマルシェ"
+    },
+    {
+     "timestamp": "2026-06-12T17:18:50+0000",
+     "permalink": "https://www.instagram.com/p/DZfnPAVknxY/",
+     "caption": "。。。\n\n-------------------------------------\n6/21\n西岩国駅 POP UP　\nJR西岩国駅 旬彩館にて　\n10.00～14.00　\n※来店予約不要\n\n西岩国駅POP UP\n\n今回のPOP UP\nhm__plan2 さんも出品されます(たぶん)\n\nあともう一人出店者がいるかもぉ。。(仮)\n\n-------------------------------------\n\n※西駅POP UPで一緒に植物を販売してみたいと思う方がいらっしゃったらDMください(※とりあえず岩国市在住の方でアガベと塊根系の植物に限る)　会議用テーブル(1.8m×0.6mを2枚分用意します。※出店料は当面無料です(集客してないので)\n\n------------------------------------------\nじみぃーに西岩国駅でぼっちPOP UPしてきましたが、じわじわ認知されてきた感じです。。\nマメにやれって話ですねww\n------------------------------------------\n\n6/27 もこぷゆ\n　　　山陽小野田中央市場\n　　　　11:00～15:00\n\n------------------------------------------\n\n#西岩国駅\n#旬彩館\n#もこぷゆ\n#もこぷゆマルシェ \n#アガベ\n#アガベ時々塊根\n#ぼっちでPOPUP\n#ぼっちは植物が好き"
+    },
+    {
+     "timestamp": "2026-06-06T08:28:43+0000",
+     "permalink": "https://www.instagram.com/p/DZPNzCHkpAN/",
+     "caption": "————————\n\n明日はボタボム\n\n————————\n\n══ ═\n\n ✴︎ 北近畿最大の植物マーケット ✴︎\n█ ▓▒ BOTANICBOMB vol.10 ▒▓ █\n\n ═ ═══════◎═══════ ═\n\n【植物ブース】64店舗 \n【フードブース】6店舗\n【キッチンカー】6店舗\n【Music】1ブース\n\n合計77店舗が福知山三段池公園に集結！\n\n⸻\n\n【日程】\n2026年6月7日（日）\n※雨天決行\n\n【時間】\n一般入場 10:00〜16:00（無料）\n先行入場 9:00〜 （チケット制）\n\n【会場】\n三段池公園 総合体育館前広場・円形広場\n（京都府福知山市猪崎377-1）\n\n【駐車場】\n無料（約1000台）\n\n⸻\n\n■ 先行入場チケット\n5月初旬よりネット販売予定（数量限定）\n\nbotanicbomb_store \n\n【Project Produced by DAIGO】\n\n【協力企業】\n株式会社インテルナモリイ\n荒川建築設計事務所\nHIROAKIWORKS\n足立真人\n株式会社ウエダ\nUC.PRO\n株式会社SITUS\n有限会社　KN\n\n【後援】\n（株）両丹日日新聞社 ryoutan.sc2022\n\n【お願いとご案内】\n\n・ゴミは各自お持ち帰りをお願いいたします。\n・エコバッグやマイカゴの持参にご協力ください。\n・公共交通機関または乗り合わせでのご来場を推奨しております。\n・会場マップや先行入場チケット情報は当日までInstagramにて随時公開いたします。\n\n⸻\n\n植物がつなぐ、人とまち。\nBOTANICBOMBは、北近畿の京都府福知山市から植物カルチャーを発信するイベントです。\n\n#ボタニックボム \n#botanicbomb \n#福知山イベント \n植物イベント"
+    },
+    {
+     "timestamp": "2026-05-30T06:45:08+0000",
+     "permalink": "https://www.instagram.com/reel/DY9ANZrSHQE/",
+     "caption": "。。\n#岩国グリーンバザール \n-———————————\n\n実生オテロイの抜き苗\n1株500円😚で、販売\n\n—————————————————————\n\n【開催日】 　\n2026年 5月 31日(日)\n開催時間　10:00～14:00\n——————————————————————————\n開催地\n山口県岩国市\n【JR西岩国駅】 構内\n「ふれあい広場」にて\n(少雨決行)　※少雨の場合は屋内会場又は軒下での開催になります\n#JR西岩国駅\n——————————————————————————\n〇販売対象品\n　エケベリア・アガベ・コーデックス・サボテン・ビカクシダ他 )　\n〇植物にかかわる商品\n　(植木鉢・用土・オリジナルグッズ等々)\n〇ハンドメイド品・めだか他\n——————————————————————————\n大人気！今回も出品者提供の「1円プランツオークション」を開催します！\nオークション開始時間は12:30頃を予定\n——————————————————\n\n【出店予定者】\nPlants Ring\nplants_ring2980\n塊根植物、ハオルチア、その他\n\n手作り雑貨くまぷ〜　　\nkuma_pooh0109\n革小物・アクセサリー・多肉植物・リメ缶・リメ鉢\n\nWestGateLabo\ntaichan_plants\nアガベ\n\nH工業園芸部　　　\nken_htmc\nアガベ・ビカクシダ\n\nもちのいえ\nmochi.ie29\nエケベリア・アガベ・他多肉植物\n\nBlue Leaf\nblue.leaf333\n塊根植物\n\nhm__plan2\nhm__plan2\nパキポディウム実生・観葉植物\n\n小鉄園芸\nkotetu_plants\nアガベ・ 塊根"
+    }
+   ]
+  },
+  "mellow_plants_coffee": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-06T08:46:16+0000",
+     "permalink": "https://www.instagram.com/p/DeJYbTDJ0AH/",
+     "caption": "🌵🔥 AGAVE POP UP 開催決定！\n\n10/18(日)\n10:00–16:00\nMELLOW PLANTSにて開催します！\n\n今回は、アガベ、塊根、ユーフォルビア、灌木\n好きにはたまらない\n“カッコいい株”がMELLOWに集結🌵\n\n普段なかなか出会えない株や、\n「これ欲しかった！」と思える一株に\n出会えるかも。\n\nこれから始めたい方も大歓迎🙌\n\nこの日だけの特別なラインナップを\nぜひ見に来てください🔥\n\n10/18(日)はMELLOW PLANTSへ。\n\nお気に入りの一株、\n探しに来てください🌵\n⁡\n⁡\nspikybase \ntakamaru_plants \n⁡\n⁡\n⁡\n#アガベ\n#アガベ好き\n#植物のある暮らし\n#愛媛\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-09-25T00:16:34+0000",
+     "permalink": "https://www.instagram.com/p/DdsJtfTE-eo/",
+     "caption": "🌿 福岡グリパ 出店のお知らせ🌿\n\nこのたび、MELLOW PLANTSは\n福岡で開催される「グリパ」に出店いたします🌿\n\n愛媛を飛び出して、福岡へ。\n\n普段なかなかお会いできないお客さまや\n植物好きのみなさんにお会いできることを\n今から楽しみにしています🪴\n\nMELLOW PLANTSらしい植物たちを連れて\n福岡へおじゃまします🌿\n\nぜひ会場でお会いしましょう！😁\n⁡\n⁡\nfukuoka_green_party \n⁡\n詳細は⬆️のアカウントをチェック！\n⁡\n⁡\n⁡\n#グリパ7\n#FukuokaGreenParty\n#福岡グリーンパーティー\n#グリパ\n#グリパ飯"
+    },
+    {
+     "timestamp": "2026-09-22T02:34:23+0000",
+     "permalink": "https://www.instagram.com/p/DdkrGRTE-w_/",
+     "caption": "🌿 PLANTS ARRIVAL\n\n秋のガーデニングシーズンに向けて、\n植物が続々と入荷しています。\n\nオージープランツをはじめ、\nこれからの季節に楽しみたい植物たち。\n\n店頭を少しずつ充実させながら、\n皆さまをお迎えします🌿\n\nぜひ店頭でお気に入りを見つけてください😌\n⁡\n⁡\n⁡\n⁡\n⁡\n#オージープランツ\n#ネイティブプランツ\n#オージーガーデン\n#プロテア\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-09-20T06:44:48+0000",
+     "permalink": "https://www.instagram.com/p/Ddf-KrSlNpJ/",
+     "caption": "秋を彩る、ふわふわの穂🌾\n\nパンパスグラス入荷しました。\n\nお部屋に飾るだけで、\n季節感と心地よいナチュラルな雰囲気を。\n\n秋のインテリアを楽しんでみてください🤍\n\nMELLOW PLANTSにて販売中。\n⁡\n数量限定の入荷となります。\nなくなり次第終了となりますので、\n気になる方はお早めに🌿\n\nぜひ店頭でご覧ください。⁡\n⁡\n⁡\n⁡\n#パンパスグラス\n#カラーパンパス"
+    },
+    {
+     "timestamp": "2026-09-19T01:02:50+0000",
+     "permalink": "https://www.instagram.com/p/DdcyPGRkxLy/",
+     "caption": "少しずつ秋の気配を感じる季節になりました🍂\n\nこれから秋に向けて、\nどんどん入荷予定です🌿\n\nこれから育てやすくなる植物や、\n秋冬に楽しみたい植物、\n久しぶりに入荷する植物も…！\n\n入荷次第、少しずつご紹介していきます📣\n\n「こんなの探してた！」に出会えるような\n植物をたくさんご用意していきますので、\nぜひお楽しみに🌿\n\n秋のMELLOW PLANTSも\nどうぞよろしくお願いします🙇‍♂️🙇‍♀️\n⁡\nそして、秋といえばもうひとつ！\n\n11月1日(日)は\n【PLANTS FES vol.4】🌿🔥\nplants_fes_ehime \n\n植物を中心に、フード・キッチンカーなど\nたくさんの出店者さんが集まる\n植物好きにはたまらない1日です🍁\n\n植物好きの方はもちろん、\n家族で楽しめるイベントになっていますので\nぜひ予定を空けておいてください🙌\n\n秋のMELLOW PLANTS、\nそして11月1日のPLANTS FES🍂\n\nこれからますます盛り上がっていきます🌿\n\nお楽しみに！！\n⁡\n⁡\n⁡\n⁡\n#オージープランツ\n#プロテア\n#バンクシア\n#PLANTSFES\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-09-06T02:01:38+0000",
+     "permalink": "https://www.instagram.com/p/Dc7aodFkwN2/",
+     "caption": "🔥バンクシア、今アツい。\n\n個性的なフォルムに、\n存在感のある花。\n育てる楽しさも、飾る楽しさも◎\n\nオージープランツ好きなら\nやっぱり一度はハマってほしい植物。\n\n「これ、かっこいい…」と思ったら\nぜひ実物を見に来てください🌿\n\nMELLOWにもいろんなバンクシア入荷してます。\nお気に入りの1株、見つけてね☺️\n⁡\n⁡\n⁡\n#オージープランツ\n#バンクシア\n#Banksia\n#オージープランツのある暮らし \n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-08-25T01:10:17+0000",
+     "permalink": "https://www.instagram.com/p/DccbN4TCHYH/",
+     "caption": "🤤🌿\n⁡\n本日 #プロテアドナ 入荷しました🌿\n⁡\n5号2フラワーのこれから長く\n楽しめそうな株です☺️\n⁡\nInstagramより一足先に公式LINEでお知らせ📢\n有り難い事に配信5分で完売に😳‼️\n⁡\nたくさんのお問い合わせありがとうございました✨\n⁡\nまた入荷できるよう頑張ります😌🌿\nぜひ公式LINEチェックしてみてください◎\n⁡\n⁡\n⁡\n#オージープランツ\n#ネイティブプランツ\n#プロテア\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-08-18T02:38:52+0000",
+     "permalink": "https://www.instagram.com/p/DcKjyfJE7o8/",
+     "caption": "😆🌿\n⁡\n本日激レア入荷してます💕\n⁡\nBanksia Pygmy Possum×9✨✨\n⁡\nなんと9株入荷してます🥹🌿\nこんな日が来るとは、、✨\n有難い事です🙏\n⁡\nお探しだった方も多いはず🌿\n⁡\nその他にも\n#バンクシアカレイ\n#バンクシアプラジオカルパ\n#バンクシアドワーフジンジャー\n入荷してます☺️\n⁡\nただいまMELLOWはバンクシア祭りです🌿\n⁡\n今回も、それぞれ樹形・枝ぶり・表情が違います。\n\n探してた方のもとへ、届きますように😌\n\nぜひ一度実物を見に来てくださいね🌿\n⁡\n⁡\n⁡\n⁡\n#オージープランツ\n#バンクシアピグミーポッサム"
+    },
+    {
+     "timestamp": "2026-07-31T04:27:15+0000",
+     "permalink": "https://www.instagram.com/p/DbcYisST56I/",
+     "caption": "🌿 SUMMER FAIR 🌿\n\n夏の植物時間を楽しんでもらえるように\n8月は3弾に分けて開催します🌴\n\n【第1弾】\n8/1（土）〜8/9（日）\n\n🌿OUTDOOR PLANTS FAIR🌿\nオージープランツなど全ての\nアウトドアプランツ全品20%OFF！\n✨新入荷商品も対象です✨\n⁡\n\n【お盆休み】\n8/12（水）〜8/15（土）\n\n【第2弾】\n8/15（土）〜8/23（日）\n\n🪴INDOOR PLANTS FAIR🪴\nお部屋を彩る観葉植物\n店内の全品20%OFF！\n\n【第3弾】\n8/25（火）〜8/30（日）\n\n🌱PLANT GOODS FAIR🌱‬‪\n\n鉢・メルカドバッグ・土・肥料\n対象商品20%OFF！\n\n気になっていた植物やアイテムを\nお得に迎えるチャンス🌿\n\n夏の植物選び、\nぜひMELLOW PLANTSで楽しんでください☺️\n\n※ドリンクは対象外です。\n※セール対象商品につきましてはクーポン使用不可\n⁡\n⁡\n⁡\n⁡\n⁡\n#オージープランツ\n#ネイティブプランツ\n#サマーフェア\n#植物好き集まれ\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-07-22T02:45:37+0000",
+     "permalink": "https://www.instagram.com/reel/DbFCyJnzbIg/",
+     "caption": "🪨✨栗石詰め放題チャレンジ✨🪨\n\nルールは簡単！\n\n✔️ 好きな栗石を選ぶ\n✔️ 山盛り・はみ出しOK！\n✔️ 持ち上げられたら全部お持ち帰り🙌\n\n積み方は人それぞれ。\n慎重派もいれば、限界まで攻める人も…😂\n\n見ているだけでも盛り上がる人気企画です！\n\nぜひ記録更新を目指して挑戦してみてください🔥\n\n【料金】\n🪨 小カゴ　3,000円(税込)\n🪨 中カゴ　5,000円(税込)\n🪨 大カゴ　7,000円(税込)\n\n⚠️ 小さなお子さまは指を挟む恐れがありますので、保護者の方は目を離さないようお願いいたします🙏\n\nみなさんの挑戦、お待ちしています😊\n⁡\n⁡\n⁡\n#栗石詰め放題\n#ドライガーデン\n#ロックガーデン\n#真夏の挑戦\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-07-14T03:28:40+0000",
+     "permalink": "https://www.instagram.com/reel/DawhnoHk7AC/",
+     "caption": "4000人ありがとう😊抽選結果！\n\n今回もガチじゃんけんで\n抽選しました🍀\n\n当選した方はDMします！\n\nnellu_k19 \njqingyilang \nkatsu.5115 \nyu_plantzz \n\nたくさんのご応募ありがとうございました😊\nこれからもMELLOWをよろしくお願いします🍀\n\n#オージープランツ\n#ありがとう企画\n#MELLOWPLANTS"
+    },
+    {
+     "timestamp": "2026-07-13T07:58:55+0000",
+     "permalink": "https://www.instagram.com/p/DaubzIPFLSm/",
+     "caption": "🔥真夏の限界チャレンジ🔥\n⁡\nお待たせしました☺️毎回大人気の\n🪨栗石詰め放題🪨\n\n今年の夏もやります💪☀️\n\n🧺小カゴ　3,000円(税込)ちょこっと挑戦したい人🔥\n🧺中カゴ　5,000円(税込)迷ったらまずはコレ‼️\n🧺大カゴ　7,000円(税込)本気の人はコレ一択❣️\n\n「もう入らん！」と思ってからが勝負😂\n\nどれだけ詰められるか、\n自分の限界に挑戦してみませんか？💥\n⁡\n1秒でも持ち上げられたらOK😆👍\n\n庭づくりや鉢植えの仕上げに大人気の栗石を\nお得にゲットできるチャンスです✨\n\n家族で！友達と！もちろん1人でも大歓迎🙌\n\n⚠️暑いので水分補給をしながら\n無理せず楽しみましょう😊\n⁡\n📍小さいお子様は指を挟むと危ないので\n安全の為、目を離さないようお願いします🙏\n\nみなさんの本気チャレンジ、お待ちしています🔥\n⁡\n⁡\n⁡\n#栗石\n#栗石詰め放題\n#ロックガーデン\n#ドライガーデン\n#MELLOWPLANTS"
+    }
+   ]
+  },
+  "morimizuki1187": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-08T10:46:43+0000",
+     "permalink": "https://www.instagram.com/p/DeOwKTEAbHC/",
+     "caption": "🌿 10/10（土）宮川洋蘭 OPEN FARM 開催！\n\n普段は植物を育てている宮川洋蘭の農園を、1日限定でOPENします。\n\n今回は、ビカクシダが原種系から人気のドワーフ系まで勢揃い。\nオリジナルフレームに仕立てた株から、自分で育てる苗まで、実際に見比べながらお気に入りを選んでいただけます。\n\nさらに、台湾の名門ナーセリー「MIKI Orchid Collection」から届いた希少な観葉植物・レアプランツも豊富に取り揃えています。\n\nビカクシダ、モンステラ、アンスリウム、フィロデンドロン、アグラオネマ、アロカシア、フィカス、斑入りパキラ、デンドロビューム、ミニ胡蝶蘭、風蘭系、オンシジュームなど。\n\n農園ならではの豊富な植物を、農園直売価格で販売します。\n\n🪴 ワークショップ\n\n11:00　ビカクシダ板付け\n12:00　ランの苔玉づくり\n14:00　ビカクシダ板付け\n\n空きがあれば当日参加も可能です。\n予約優先となります。\n\n🎁 事前エントリー特典\n\n事前エントリーいただいた方には、\n「観葉植物1鉢」をプレゼント！\n\nさらにレアプランツが当たる抽選も予定しています。\n\n植物を見て、選んで、作って。\n生産農園ならではの時間を、ゆっくり楽しんでください。\n\n農園からすぐ近くには若宮ビーチもあります。\n海辺で過ごすのにも気持ちのいい季節ですので、植物と一緒に戸馳島での時間も楽しんでいただければと思います。\n\n【宮川洋蘭 OPEN FARM】\n\n2026年10月10日（土）\n\n8:00〜10:00　小売店限定\n10:00〜16:00　一般OPEN\n\n入場無料\n\n📍有限会社 宮川洋蘭\n熊本県宇城市三角町戸馳208-1\n\n植物好きの皆さまのご来園をお待ちしています🌿\n\n#宮川洋蘭\n#森水木のラン屋さん\n#OPENFARM\n#オープンファーム\n#ビカクシダ\n#レアプランツ\n#観葉植物"
+    },
+    {
+     "timestamp": "2026-09-27T09:56:18+0000",
+     "permalink": "https://www.instagram.com/reel/DdyVmTtkbwR/",
+     "caption": "2026年9月25日、三重県鈴鹿市のサノオーキッドさんで\n「THE GREEN MARKET BY GROWERS」を開催しました。\n\nたくさんの植物好きの皆さまにお越しいただき、\n生産者と直接話しながら、植物を見て、選んで、学んで。\n会場は一日を通してとても楽しい雰囲気になりました。\n\n台湾のMIKI ORCHIDをはじめ、\nそれぞれの生産者が育てた個性豊かな植物もたくさん並びました。\n\nご来場いただいた皆さま、\nそして一緒にイベントをつくっていただいた皆さま、\nありがとうございました！\n\nまた植物を通じて皆さんとお会いできるのを楽しみにしています。\n\n#THEGREENMARKET\n#サノオーキッド\n#宮川洋蘭\n#森尾花園\n#MIKIORCHID\n#植物イベント\n#観葉植物\n#ラン\n#三重県"
+    },
+    {
+     "timestamp": "2026-09-24T14:51:48+0000",
+     "permalink": "https://www.instagram.com/p/DdrJE__k-1i/",
+     "caption": "いよいよ明日、三重・鈴鹿で開催します！\n\n6月に熊本・宮川洋蘭で開催したGREEN MARKET。\n次のステージは、三重県鈴鹿市のサノオーキッド農場ハウスです。\n\n台湾のMIKI ORCHIDと、日本の生産者が集まり、普段なかなか出会えない植物を直接ご覧いただけます。\n\n植物を選ぶだけでなく、育て方や品種のことを生産者本人に直接聞けるのもGREEN MARKETの楽しみです。\n\nワークショップやセミナー、希少な植物が当たる無料抽選会も予定しています。\n\n開催日時：2026年9月25日（金）9:00〜16:00\n会場：サノオーキッド農場ハウス\n住所：三重県鈴鹿市土師町1130\n近鉄鈴鹿線「柳駅」より徒歩約16分\n\n農園スペースに限りがあるため、事前エントリー制です。\nカルーセル最終ページのQRコード、または下記URLからお申し込みください。\nhttps://x.gd/bDwaG\n\n明日、三重・鈴鹿で皆さまにお会いできるのを楽しみにしています。\n\n#GREENMARKET #宮川洋蘭 #MIKIORCHID #サノオーキッド #森尾花園 #植物イベント #観葉植物 #ビカクシダ #洋ラン #鈴鹿"
+    },
+    {
+     "timestamp": "2026-07-29T03:09:53+0000",
+     "permalink": "https://www.instagram.com/p/DbXHcGvmNzr/",
+     "caption": "【ご報告】\n\nたくさんの温かいメッセージをありがとうございます。\n\n7月28日の熊本地震ではここ宇城市は震度7と、経験したことのない大きな揺れがありましたが、スタッフ全員無事です。ハウスや植物にも大きな被害はありませんでした。\n現在、一部物流に影響が出ており、お届けにお時間をいただく場合があります。\n\nご心配くださった皆さま、本当にありがとうございます。\nこんな時だからこそ、私たちは花を育て、皆さまに笑顔を届け続けたいと思います。\n\n熊本から、前を向いて頑張ります。\n\n#熊本地震 #熊本 #胡蝶蘭 #森水木のラン屋さん"
+    },
+    {
+     "timestamp": "2026-07-21T11:36:38+0000",
+     "permalink": "https://www.instagram.com/p/DbDbEuCEfKY/",
+     "caption": "🐐 ブルーベリーだけじゃない、人気者がいます♪\n\nウキウキランラン園で、子どもたちに大人気なのがヤギとのふれあいです😊\n\nブルーベリー狩りを楽しんだ後は、ヤギに会いに行くのが定番コース。\n\n最初は少しドキドキしていたお子さんも、帰る頃には笑顔いっぱいです。\n\nブルーベリーを味わって、ヤギと遊んで、夏休みの思い出をつくりませんか？\n\n🫐 約30品種のブルーベリーを時間無制限で食べ比べ\n\n🎁 お一人様1パックお持ち帰り付き\n\nご予約お待ちしております😊\n\n#ウキウキランラン園\n\n#ブルーベリー狩り\n\n#ヤギ\n\n#ヤギとふれあい\n\n#熊本\n\n#宇城市\n\n#戸馳島\n\n#夏休み\n\n#家族でおでかけ\n\n#熊本観光"
+    },
+    {
+     "timestamp": "2026-07-20T13:32:11+0000",
+     "permalink": "https://www.instagram.com/p/DbBDgMVHAAw/",
+     "caption": "「🫐 こんなに採れるなんて、思っていませんでした 」\n\nブルーベリー狩りを体験されたお客様から、よくいただく言葉です😊\n\nウキウキランラン園では、約30品種のブルーベリーを食べ比べながら、自分のお気に入りの味を見つけることができます。\nおすすめは５粒くらい一気に頬張る食べ方で\n品種ごとに味がMIXされてなんとも言えない美味しさです♪\n\n時間を気にせず、ゆっくり楽しめるので、小さなお子さん連れのご家族にも好評です。\n\nブルーベリー狩りの後は、ヤギとのふれあいも楽しめます🐐\n\n夏休みの思い出づくりに、ぜひ遊びにいらしてください。\n\n🫐 時間無制限\n🎁 お一人様1パックお持ち帰り付き\n\nご予約はプロフィールのリンクからお願いします😊\n\n#ウキウキランラン園\n\n#ブルーベリー狩り\n\n#熊本\n\n#宇城市\n\n#戸馳島\n\n#熊本おでかけ\n\n#夏休み\n\n#家族でおでかけ\n\n#ブルーベリー\n\n#ヤギ"
+    },
+    {
+     "timestamp": "2026-07-20T13:25:41+0000",
+     "permalink": "https://www.instagram.com/p/DbBCwfXDBub/",
+     "caption": "🫐 ブルーベリーって、こんなに甘かったんだ。\n\nそんな驚きの声を、お客様からよくいただきます😊\n\n戸馳島にあるウキウキランラン園では、約30品種のブルーベリーを時間を気にせずゆっくり食べ比べできます。\n\n自分で摘んで、その場で味わうブルーベリーは、スーパーではなかなか味わえない特別なおいしさです。\n\nブルーベリー狩りを楽しんだ後は、ヤギとのふれあいも人気🐐\n\nこの夏、ご家族やお友達と、のんびり過ごしに来ませんか？\n\n🫐 時間無制限\n🎁 お一人様1パックお持ち帰り付き\n\nご予約お待ちしております😊\n\n🫐 ブルーベリーって、こんなに甘かったんだ。\n\nそんな驚きの声を、お客様からよくいただきます😊\n\n戸馳島にあるウキウキランラン園では、約30品種のブルーベリーを時間を気にせずゆっくり食べ比べできます。\n\n自分で摘んで、その場で味わうブルーベリーは、スーパーではなかなか味わえない特別なおいしさです。\n\nブルーベリー狩りを楽しんだ後は、ヤギとのふれあいも人気🐐\n\nこの夏、ご家族やお友達と、のんびり過ごしに来ませんか？\n\n🫐 時間無制限\n🎁 お一人様1パックお持ち帰り付き\n\nご予約お待ちしております😊\n\n#ウキウキランラン園\n\n#ブルーベリー狩り\n\n#熊本\n\n#熊本おでかけ\n\n#宇城市\n\n#戸馳島\n\n#夏休み\n\n#家族でおでかけ\n\n#ヤギとふれあい\n\n#ブルーベリー"
+    },
+    {
+     "timestamp": "2026-06-10T02:00:57+0000",
+     "permalink": "https://www.instagram.com/reel/DZY0eUET8TY/",
+     "caption": "#観葉植物イベント"
+    },
+    {
+     "timestamp": "2026-06-06T12:56:22+0000",
+     "permalink": "https://www.instagram.com/reel/DZPryKuTaHq/",
+     "caption": "#植物イベント\n#台湾MIKIOrchid来日\n#宮川洋蘭"
+    },
+    {
+     "timestamp": "2026-05-04T13:19:47+0000",
+     "permalink": "https://www.instagram.com/reel/DX6wyCAzKWR/",
+     "caption": "#森水木のラン屋さん #母の日ギフト"
+    },
+    {
+     "timestamp": "2026-03-26T14:55:44+0000",
+     "permalink": "https://www.instagram.com/reel/DWWgs8uE8N5/",
+     "caption": "#森水木のラン屋さん #宮川洋蘭 #戸馳島"
+    },
+    {
+     "timestamp": "2025-11-19T11:45:31+0000",
+     "permalink": "https://www.instagram.com/p/DRPKIUajnHl/",
+     "caption": "九州農政局から今年も若手職員さんが研修に来てくださいました🍀\n実際に農家の経験をするのはこの２週間だけ！という大切な現地研修🧑‍🌾\n\n多岐に渡る内容をしてもらいましたが、何事も楽しんで取り組んでくれて、とても助けていただきました🐐また、お家でのご飯はたくさん話をして楽しかったです😊\n今年も思うのですが、これからもそれぞれの良さはそのままに充実した毎日にしてほしいです✨ありがとうございました！\n\n最後に作ったボトルフラワーは3人らしい作品ができました♪\n\n#九州農政局 #戸馳島 #宮川洋蘭 #森水木のラン屋さん #農業 #胡蝶蘭 #ヤギ"
+    }
+   ]
+  },
+  "nagasako_farm": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-05T09:58:17+0000",
+     "permalink": "https://www.instagram.com/p/DeG8M8dJZ8p/",
+     "caption": "#ホビプラvol6 \n\nまた新たな仲間も加わり、\n秋の会を開催します！\n\n今回は、植物のジャンルが被るのも全然OK🙌🏻\nそれぞれの得意な植物やこだわりを、遠慮なく持ち寄ってもらえたらと思っています！\n\n同じ植物でも、育てる人によって個性が出たり、\n「やっぱり専門でやってる方の株は違うな〜」なんて感じてもらえたり。\n\nそんなところから、それぞれの良さやブランドの魅力が\nより伝わるきっかけになればと思い、\n今回はこんなスタイルで開催してみることにしました🌱\n\nまずは取り急ぎ、フライヤーを共有します！\n\n詳細については、これから少しずつアップしていきますので、\nぜひチェックしてもらえたら嬉しいです🙌🏻\n\n秋のホビプラも、どうぞよろしくお願いします🙏🏻\n\n日時：2026年11月14日(土) 10〜16:00\n　　　  11月15日(日) 10〜15:30\n場所：ナガサコファーム　笠岡市カブト東町172\n入場料：無料\n駐車場：無料駐車場有り\n\n主催\nnagasako_farm\nn2_plants\n\nPLANTS\nnagasako_farm\nn2_plants\nkazuki_nishi_sunbota \nshu_shues\nradice__plants \n1_1_factory\nyuto_hobbies\nwild___plants \nakebono_crazy_plants\nokada_plants\natelier_and_g \ncares__labo \ngreemo.terrarium \nhiropon_westgarden \n\n土曜日のみ出店\ngreenfield.create \nhws_plants \nkoukai168 \nikedax_plants\n\n日曜日のみ出店\nselva_hiyo3 \nohanasuki2021 \npannu_carnivoria_plants \n\nDO"
+    },
+    {
+     "timestamp": "2026-09-01T08:55:07+0000",
+     "permalink": "https://www.instagram.com/reel/DcvSESUTtGK/",
+     "caption": "オープンハウスからの花火大会BBQで楽しい週末を送ることができました！\n\n暑かったけど、例年に比べて少し過ごしやすかった印象がありましたが、それでもハウスの中はサウナにいるような汗でした😅\n\n毎回たくさんの方々に支えられて、継続できているオープンハウスです。今回は初めましての方が多い印象でとても嬉しかったです^_^\n次回は10月後半を予定しております🙏🏻ご家族、お友達グループも大歓迎です😁\n引き続きよろしくお願いします🙇🏻‍♂️"
+    },
+    {
+     "timestamp": "2026-08-30T09:45:59+0000",
+     "permalink": "https://www.instagram.com/p/DcqONQZieU5/",
+     "caption": "オープンハウスたくさんのご来園ありがとうございました🙏🏻\nお陰様で暑い熱い2日間でした！\nプラ鉢もたくさん持って来ていただきありがとうございました😁\nまた熱中症対策でドリンクの差し入れもたくさんいただき感謝です🥹\n\n今回は初めてお越しになる方の印象が多く嬉しかったです。\nそれでもまだまだ周知活動が行き届いてないので、徐々に頑張っていきたいです！\n\n次のオープンハウスは少し空きますが、お楽しみにしていただければ幸いです^_^"
+    },
+    {
+     "timestamp": "2026-08-28T02:07:07+0000",
+     "permalink": "https://www.instagram.com/p/DckQGw9CdBQ/",
+     "caption": "今週末の🌵オープンハウス販売株🌵\n\nユーフォルビアも各種あります！\nハビタットのホリダは、水晶付きの石を使ってるので、綺麗ですよ〜😁\nまたオベサとホリダのハイブリッド“オベホリ”も面白くなってきてるので販売開始しようと思っています^_^\nオベサ、バリダなどの普及種は選べるほど実生しているので、柄などお好みで選べるぐらいあります！\n\nアロエも普及種からハイブリッド各種あります！\n\n8/29 9:00-18:00\n8/30 9:00-12:00\n岡山県笠岡市です。DMより来園日時をお知らせいただいたら場所を送ります。\n\n- 現金•PayPay•クレジット各種対応しています。\n-赤札は非売株です。\n-ご予約なしでのご来園はご遠慮ください。"
+    },
+    {
+     "timestamp": "2026-08-27T02:43:57+0000",
+     "permalink": "https://www.instagram.com/p/Dchvhk2CZ0P/",
+     "caption": "-オープンハウス販売株-\n\n数年前、無加温で温室内で越冬できるんじゃないかとやってみたら全滅した経験から、当分加温しないといけない植物は手をつけてなかったんですが、ここ数年加温できるようになった今、地道に育ててたパキポディウム達の紹介です😊\n\nとは言っても株数は少ないので1トレー分ぐらいしか販売株はないですが、その中でも容姿がいい株を並べます😊\n\n実生株が多いですが、是非手に取って見てください😊\n\n8/29 9:00-18:00\n8/30 9:00-12:00\n※DMより来園日時をお知らせください❗️\n\n- 現金•PayPay•クレジット各種対応しています。\n-赤札は非売株です。\n-ご予約なしでのご来園はご遠慮ください。"
+    },
+    {
+     "timestamp": "2026-08-26T01:55:48+0000",
+     "permalink": "https://www.instagram.com/p/DcfFOH5CVfY/",
+     "caption": "今週末29-30日のオープンハウスに、生産場に置いていない自宅管理株をいくつか持っていこうと思います！\nそれをいくつか紹介します😊\n\n実生選抜オテロイのカキコです。\nステンレスタグも付いてきます😊\n管理番号は #NF007\n\nこちらも実生選抜オテロイのカキコです。\nバンド幅強めで、トップのグラデーションが綺麗になります。\nステンレスタグも付いてきます😊\n管理番号は #NF004\n\nネームド株のトリケラトプス(白犀牛)\n\n管理番号 #NF001 で個人的に1番お気に入りの株。このカキコは数株あります。ステンレスタグも付いてきます😊\n\nこちらは台湾実生株からのカキコ。\n肉厚で比較的低めに育ちます！\n\n鉢物から地植えで「本当のアガベの顔」まで見ることができて楽しい空間になると思います😁\n感謝セール10%OFFでもあるので、この機会に是非🙏🏻\n\n来園日時を必ずDMからご予約お願いします🙇🏻"
+    },
+    {
+     "timestamp": "2026-08-24T04:03:56+0000",
+     "permalink": "https://www.instagram.com/p/DcaKSykiWER/",
+     "caption": "オープンハウスのお知らせです😁\n植物に囲まれたハウスを開放します！\n\n地植えならではの大株の迫力。\n鉢植えコレクションも多数ご覧いただけます✨\n\nさらに…\n🪴 自家製モルタル鉢も多数販売！\n🪴 ご購入いただいた植物の植え替えサービスもいたします！\n\nそして前回好評だったプラ鉢企画も継続です！\n\n♻️ 不要になったプラ鉢・育苗箱・植木鉢をお持ちいただいた方には、子株（カキコ）と交換！\n\nサイズやメーカーは問いません😊\n生産者としては、使わなくなった鉢を譲っていただけるだけでも本当に助かります！\nご自宅で眠っているものがあれば、ぜひお持ちください🌱\n※割れているものや使えないものは引き取れません\n\n🦜 ハウスには大きな鳥もいますので、植物と一緒に楽しんでいただけます。\n\n⚠️ ハウス内はかなり高温になります。\n熱中症対策（水分・帽子など）を忘れずにお越しください。\n\n📅 開催日\n8/29（土）9:00〜18:00\n8/30（日）9:00〜12:00\n\n📩 ご来園希望の方は、必ずDMよりご来園日時をお知らせください。\n\n皆さまにお会いできるのを楽しみにしております🌵✨\n\n※現金、カード決済、PayPay等でお支払いできます。\n※赤札は非売です。\n※必ずDM予約してください。\n\nオープンハウス以外の時期には、基本的に見学もお断りしています。\nたまに突然訪問してくださる方がおられますが、ご遠慮下さい。\n　\n #岡山アガベ #岡山多肉植物 #広島多肉植物 #ホビプラ #福山アガベ"
+    },
+    {
+     "timestamp": "2026-08-20T12:03:24+0000",
+     "permalink": "https://www.instagram.com/reel/DcQsvX0JTuO/",
+     "caption": "ステンレスタグでカッコ付け😆\n\n自分実生セレクトに管理ナンバーを付けました😊\n1つ作るのに時間はかかるけど、自己満◉\n今後は自分実生のかっこいい株に付けて販売もしていこうと思います。\n少しでもお客さんに喜んでもらえる様に🤩"
+    },
+    {
+     "timestamp": "2026-08-10T10:47:46+0000",
+     "permalink": "https://www.instagram.com/reel/Db21InDJFZV/",
+     "caption": "ECサイト作りました！\n今まで何度か中途半端に作っては公開せずを繰り返し、やっと形になったと思うので、公開です！\nドメインも取って雰囲気から仕上げました😂\n「www.nagasako-farm.com」\nステンレスタグや刺繍アイテム、レーザー加工のものなど、まだまだ載せきれてない商品たくさんあるので、徐々にアップしていきたいと思います。\n一眼レフで綺麗に植物を撮ろうかなとも思ったんですが、ここはiPhoneのカメラで撮ることで、誤魔化しのない色味になるかなと思いました。\n(明るさは少し落として撮影してます)\n\nECサイトで販売というよりは、自分達の活動の認知活動がメインかなと思っています。\n簡潔にまとめているので、覗いて行ってもらえたらなと思います🙇🏻‍♂️\nよろしくお願いいたします🤩"
+    },
+    {
+     "timestamp": "2026-07-31T11:46:36+0000",
+     "permalink": "https://www.instagram.com/p/DbdMKiaCdoK/",
+     "caption": "【🌵オープンハウスのお知らせ🌴】\n\n前回も暑い中たくさんのご来園いただきましたが、\n今回は、真夏の感謝祭ということで全品表示価格から10%OFF！\n気持ち程度かもしれませんが、皆さんに支えられてやって来れてるので、この機会に迷ってた株、欲しかった植物を探しに来ていただければと思います^_^\nまだまだ暑い日は続きますが、秋口から冬に向けて路地植えできる最後のチャンスでもあります！\nプラ鉢企画は継続して行いたいと思っているので、持ってきていただけると嬉しいです！\n育成スタイルを伺うので、それに合いそうな子株か何かをプレゼントとして交換させていただきます。\n\nまた29土曜の夜は、笠岡花火大会です。\nホビプラ会場にてBBQをしたいなと計画中ですので、そちらの参加も是非😁\nホビプラ会場から正面に楽しめますよ〜🙌🏻\nこの日は、18:30から交通規制が始まるので、ご注意ください。\nもしオープンハウスから帰り逃した方は、強制参加でお願いします😂\n\n２９(土) 9:00-18:00\n３０(日) 9:00-12:00\n\n現金/PayPay/各種QRコード/カード決済対応しております。\n必ずDMよりご来園日時をお知らせ下さい。\n赤札は非売です。\n地植え植物の上をまたぐ行為はご遠慮ください。\n\nハウス内は高音ではなく、高温です😂\n熱中症対策もお願いします🥺\n\nまた皆さんと楽しい時間を共有できるのを楽しみにしています😁\nよろしくお願いします🙇🏻\n\n#岡山多肉植物 #広島多肉植物 #ドライガーデン"
+    },
+    {
+     "timestamp": "2026-07-24T10:02:17+0000",
+     "permalink": "https://www.instagram.com/reel/DbK9ZdmJ7_G/",
+     "caption": "自家製モルタル鉢に色々植え替え動画！\nエブレネウムやっと発根したので、適度な鉢に植え替え。\nギラウミニアナとトリコディアナはお客さんのご依頼で植え替え。\nトリコディアデマは挿木で約2年。塊根部分がいい感じ🔥\n水は金魚のグリーンウォーターを😅"
+    },
+    {
+     "timestamp": "2026-07-22T03:25:38+0000",
+     "permalink": "https://www.instagram.com/reel/DbFFa1OJSYa/",
+     "caption": "4日間のオープンハウスの様子です☺️\n本当に暑かった！笑　でも皆さんと楽しい時間を共有できて良かったです🤩\n気になった方は是非次回のオープンハウスへお越しいただければ嬉しいです^_^\n次回は、8/29-30(土日)を予定しています。ちなみに29日は笠岡市の花火大会です🤩\n\nプラ鉢も沢山持ってきて頂きました🙌🏻秋からの植え替え等に使わせていただきます🙏🏻\n\nこのオークリーのメタサングラスで撮るとめちゃくちゃ楽ちんに記録できていい感じ✌🏼"
+    }
+   ]
+  },
+  "odeplants": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-06T22:21:12+0000",
+     "permalink": "https://www.instagram.com/p/DeK2DGiE1Gp/",
+     "caption": "🎉 【1周年記念イベント開催決定！】 🎉\nおかげさまで、O.D plants & ドッグカフェLOUP は実店舗オープン1周年を迎えます！\n日頃の感謝を込めて、特別イベントを開催いたします✨\nアガベファン必見の限定株・特価販売から、わんちゃんも一緒に楽しめるカフェスペシャルメニューまで盛りだくさん！皆さまのお越しを心よりお待ちしております🐶🪴\n🗓 開催日時\n2026年10月31日（土）\n⏰ 営業時間・イベント時間\n・Agaveイベント：10:00 〜 15:00\n・ドッグカフェLOUP：10:00 〜 17:00\n📍 開催場所\n〒962-0405 福島県須賀川市季の郷１４９\n（O.D plants / ドッグカフェLOUP）\n✨ イベント内容 ✨\n🪴 【O.D plants】\n・lize株を限定特価にて販売！\n・イベントでしか手に入らない特別株も大放出特価価格！\n☕️ 【ドッグカフェ LOUP】\n・わんちゃんのおやつ＆輸入グッズ等を店内特価販売！\n・美味しいコーヒー、ケーキ、軽食もご用意してお待ちしております☕️🍰\nゲスト出店！\n🪴 【minbu_of_plants】\n・初心者さんでも手に取りやすい株から、自身が集めたコレクション株の子株まで特価にて販売予定！\n皆さまとわんちゃんとお会いできるのをスタッフ一同楽しみにしております！ぜひお気軽にお立ち寄りください🐾\n#ODplants #ドッグカフェLOUP"
+    },
+    {
+     "timestamp": "2026-07-07T01:40:19+0000",
+     "permalink": "https://www.instagram.com/p/DaeTs4lmQGX/",
+     "caption": "アガベラバーの皆様、そしてこれからアガベ沼へ飛び込みたい皆様へ！\n夏本番☀️これから植活の時期🪴\n\n運命の一株に出会える予感…🔥🌵\n\n7月18日（土）に「AGAVE POP-UP EVENT 2026」の開催が決定🎉✨\n\n今回は、マニア垂涎の「lize産 特選アガベ」や「その他アガベ選抜株」など、\nコレクションに加えたくなるような極上のレア株を多数ご用意しております！\nもちろん、これからアガベを育ててみたい初心者の方にも嬉しい、\n「普及種」や「実生苗の格安即売」も実施します🌿\n皆様の心をトゲ刺す、最高のアガベたちがお待ちしております。\n入場は無料ですので、ぜひお気軽にお立ち寄りくださいね🙌\n\n【イベント詳細】\n イベント名： AGAVE POP-UP EVENT 2026\n 日時： 2026年7月18日（土） 10:00〜17:00\n 場所： ドックカフェLOUP店舗 / O.Dplants\n 住所： 〒962-0405 福島県須賀川市季の郷149\n 参加費： 入場無料\n 参加方法： ご予約不要！当日直接店舗へお越しください。\n\n当日に向けた販売株のチラ見せなど、最新情報は随時ストーリーズでアップしていきます📲\n\n詳細はプロフィールのリンクから必ずチェックしてくださいね👇✨\nhttps://www.instagram.com/odeplants?igsh=MWNzb2ZidWJ6cGRudw=="
+    },
+    {
+     "timestamp": "2026-02-15T02:19:58+0000",
+     "permalink": "https://www.instagram.com/reel/DUwvMybE4g1/",
+     "caption": "ライズ産　白犀牛🐮"
+    },
+    {
+     "timestamp": "2026-01-23T13:13:07+0000",
+     "permalink": "https://www.instagram.com/p/DT2ro7Uk_lo/",
+     "caption": "ー\n\n2026年も育成コンテストやっちゃいます！\n\n現在Lize産　白犀牛の育成コンテスト中では、ありますが、、、\n\nLize産　圓葉拇指の育成コンテスト開催します！\n\n・品種\n\n　　Lize産  圓葉拇指\n\n・企画期間\n　 一年半\n(2026年2〜2027年8月末)\n\n今回のコンテスト賞品は…\nLize gardeningにご招待\n（来年の秋ごろを予定）\n\nなおコンテスト上位2名の方とさせて頂きます。\n（ご都合等も考慮して参加の有無を確認させて頂きます）\n\n現地にて実際に見て選んで購入出来るチャンス！\n\n『当日の\"入場料\" 及び現地で購入の際に6,000TWDは、こちらで負担させて頂きます。』\n\n※羽田peach便は羽田から現地まで同行出来ます！\n\n<注意点>\n\nチケット等の交通費や現地での食費などは参加者さまの自己負担になりますので、ご了承ください。\nまた、Lize gardeningの観覧規約に順ずることを、ご了承願います。\n\n採点方法\n\n参加者の方は1年半の育成株の写真を投稿\n\n※写真の投稿は台湾5寸鉢にて撮影\n\n(正面、上面、お気に入り角度)\n\nコンテスト期間終了後に参加者全員で良いと思う育成株への投票!\n\n特別加点としてO.Dplants からの特別加点3点。 その総投票数で優勝者を決めたいと思います!\n\n※コンテスト対象株のLize産  圓葉拇指には\n\nO.D plants タグにランダムでNo.を割り当て対象株の管理をさせ て頂きます。"
+    },
+    {
+     "timestamp": "2026-01-02T00:37:01+0000",
+     "permalink": "https://www.instagram.com/p/DS_QmnBE5Tb/",
+     "caption": "今日6時からやるべしたら　新年🎍"
+    },
+    {
+     "timestamp": "2025-12-19T10:59:26+0000",
+     "permalink": "https://www.instagram.com/reel/DScUe_9E4LV/",
+     "caption": "ライズ産　豪猪\n\n#Agave\n#チタノタ"
+    },
+    {
+     "timestamp": "2025-12-14T23:32:29+0000",
+     "permalink": "https://www.instagram.com/reel/DSQylyfky2b/",
+     "caption": "ライズ産　ノーネーム　子株の販売はあります✨\n管理名はタグつけます🏷️"
+    },
+    {
+     "timestamp": "2025-12-13T05:13:48+0000",
+     "permalink": "https://www.instagram.com/reel/DSMQCKGEwtt/",
+     "caption": "ライズ産　霍利達　ホリダ　sold"
+    },
+    {
+     "timestamp": "2025-12-13T04:40:50+0000",
+     "permalink": "https://www.instagram.com/reel/DSMMTX-E60N/",
+     "caption": "リズ産　白犀牛🐮　sold"
+    },
+    {
+     "timestamp": "2025-11-28T23:42:43+0000",
+     "permalink": "https://www.instagram.com/p/DRnnXETk_RL/",
+     "caption": "ライズのオリジナル株、、、麒麟　マザー"
+    },
+    {
+     "timestamp": "2025-11-28T23:41:08+0000",
+     "permalink": "https://www.instagram.com/p/DRnnLjEk3XK/",
+     "caption": "マザー達はやはり凄かった、、、"
+    },
+    {
+     "timestamp": "2025-09-10T12:26:59+0000",
+     "permalink": "https://www.instagram.com/reel/DOa_A3jkzGq/",
+     "caption": "リズ産　crab sold 直子はありますのでお問い合わせください♪\n#Agave\n#チタノタ"
+    }
+   ]
+  },
+  "pachypo_no_en": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-08T02:07:05+0000",
+     "permalink": "https://www.instagram.com/p/DeNyO1zz_Ae/",
+     "caption": "……\n朝晩は急に寒くなってきましたね💦\n最近は秋晴れで昼間は人も植物も快適です♪\n2026.7.25　パキポの園の灼熱\n振り返ると今年1番の暑い日でした💦\n当日は関係者様、ご来場者の皆様方\n本当にありがとうございました🙏\n\nあの暑く慌ただしかったパキ園から\n今度はのんびり、まったりパキ園をやりたく…\n2026.11.23月祝日に前回と同じ場所（屋外）で\n開催する運びになりました💦\nもちろん今回もパキポがメインなのですが、\nほぼ確実に\n落葉して休眠してるはずですよね💦\nなので休眠してるパキポや冬型植物など\n色んなシチュエーションで楽しめればと思います。\n特に前回はできなかった交流、植育等の語らいを\n主に繋がりを広く太くできる環境を作りたい。\nと考えてます。\nこの冬の管理の仕方とか、春に向けた播種の準備とか\nそんな話も直に出来たらいいですね♪\nパキポの園を来年以降も繋げていきたいと思い\n少し、かなり寒くなるかもしれませんが\n出店者様を募集させてください🙏\n来月、祝日ということで日程的にも厳しいですが\nよろしくお願いします🙏"
+    },
+    {
+     "timestamp": "2026-07-22T18:20:35+0000",
+     "permalink": "https://www.instagram.com/p/DbGuGRUk6Ld/",
+     "caption": "手書きですみません💦\n\n色々なシチュエーションをイメージしていたら\nお知らせしないといけない、お願いしたいと事が\nあふれてきてしまいました。\n\nマジでもう明後日？？\n\nせっかく来ていただける出店者様、来場者様に対して大きな声では言えませんが…無事に終われる事を願う毎日です💦\n\n運営に関して、全くの素人な私です。\nそれでも、せっかくの機会をいただきましたので、皆様の笑顔を見られるために事前にお願いとご協力をしていただきたく思います。\n\n当日は願い届かず恐ろしい酷暑になりそうなので水分をしっかり摂って、うちわ、ハンディファン等で体調管理をお願いします。\n屋外には8台の工業扇を用意します。\n屋外にも素晴らしい株が並ぶので日焼け対策をしながら観覧いただければと思います。\n\n会場のすぐ隣にドラッグストアがあるので何かしらの対策品を購入されるのも良いかと思います。\n\n駐車場は敷地内とそれ以外に4ヶ所あります。\n計650台ほど停められます。場所は別投稿でご確認ください。一応誘導を息子と親戚に頼んでます。素人なので看板持って立ってるだけです。暴言などがありますと、今後の親戚づきあい、家庭内不和等の危険がありますのでお察しください。\n\n何卒、健康を第一に考え、笑顔のまま会場をアトにできますよう、会場に来ていただける皆様で良い思い出を作りましょうね😊\n\n入場順はくじ引きになります。\n来場者様の数で調整させていただきます。次のご案内を読んでご対応をお願いします。\n簡単に言いますと\n早く来ていただいても屋内会場には早く入れませんのでご了承ください。\n\n細かくてすみません💦\n\n来場者様の数で臨機応変、安全第一で\n時間の変更等を行います。\n\nたとえば\n1から50の方！お並びください！\n\n続きまして\n\n50から70の方！お並びください！\n\nお入りください！\n\nそして\n\n80から100の方！お並びください"
+    },
+    {
+     "timestamp": "2026-07-11T12:21:21+0000",
+     "permalink": "https://www.instagram.com/p/DapwPiwk6k-/",
+     "caption": "…\n東海地方のパキポ好き（パキパー）の皆様へ\n2025夏の終わり、僕の欲望が独り歩きを始め、アチコチに顔を出し、声をかけ、インスタを漁ってDMしたり。\n僕が見てみたいパキポや、会ってみたい生産者の方々に来ていただくことになりました。本当に感謝です。\n開催の目的ですが…その前に、やりたい！と思ったキッカケはやはり岡山でのパキポ祭りを体験して、パキポに熱い眼差しを向ける方々を目の当たりにし、自らも錚々たるパキポディウムを前に心を打たれた事です。これを愛知でもやりたい！\n様々な環境、育成方法があり、育成されたパキポも様々な顔をませてくれます。それぞれに良さがあり、可能性を感じさせてくれると思います。\n来場者の皆様には、そんな可能性を感じ、自分でも\nあんな株を作りたい！と刺激を受ける方が少しでも沢山いてくれたら…というのが僕の思い\nです。\n\n運営初体験ということもあり出店者の皆様、来場者の皆様には当日、ご迷惑、不手際等の問題が起きる可能性が充分に考えられます。\n何卒、広い心でご来場していただけるようご協力よろしくお願いいたします。\n\nhttps://bukkou.net/post-6847/"
+    },
+    {
+     "timestamp": "2026-07-03T09:20:18+0000",
+     "permalink": "https://www.instagram.com/p/DaU1KcLkzo8/",
+     "caption": "…\n\nkg_plants\n国産実生を広め隊\n\n兵庫の地ですくすくと育ったパキポ達を持って行きます。\nよろしくお願い致します。\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-07-02T10:41:06+0000",
+     "permalink": "https://www.instagram.com/p/DaSZnT-kwb-/",
+     "caption": "cyumasa \n\n関西の大御所\n\nパキポの名手\n\n笑顔がステキ\n\nダンディー\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-07-02T10:28:44+0000",
+     "permalink": "https://www.instagram.com/p/DaSYM1zk-Sa/",
+     "caption": "bocchi_syokudou\n\n【出店名】\nぼっち植堂 (Bocchi Syokudou)\n\n静岡から参戦！塊根植物やディッキアなど、クセの強い珍奇植物を専門に扱う趣味家です。\n皆さまとお会いできるのを楽しみにしています！\nInstagram: BOCCHI_SYOKUDOU\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-06-12T00:35:49+0000",
+     "permalink": "https://www.instagram.com/p/DZd0coYE4Hg/",
+     "caption": "...\n\nshirouto_plants\n\nなにも言わない、そばにいる植物\nがんばりすぎる部屋の片すみで、何も言わずに同じ空気を吸っている…\n\n「パキポヨ」は、そんな植物たちの魅力をぎゅっと詰め込んだオリジナルキャラクターシリーズです✨️\n\nお気に入りのパキポヨを、お迎えしてみませんか？\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-06-09T23:29:02+0000",
+     "permalink": "https://www.instagram.com/p/DZYjNw4kw9l/",
+     "caption": "…\n\nbonikai2024\n\n植物を好きな人たちとの繋がりを励みに、育成を試行錯誤しながら楽しんでます。是非、声を掛けてくださいね！\nよろしくお願いします！\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-06-07T23:20:10+0000",
+     "permalink": "https://www.instagram.com/p/DZTYnFOk8gl/",
+     "caption": "…\n\nhm__plan2\n\n初めまして hm__plan2 と申します！ \nこの度 パキポの園に 園が縁をつないで 参加させていただくことに なりました！\n パキポにハマって まだ3年の 若輩者の年配者ですが よろしくお願いします！\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-05-27T00:36:36+0000",
+     "permalink": "https://www.instagram.com/reel/DY0nxJ-TxXf/",
+     "caption": "「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-05-25T23:09:02+0000",
+     "permalink": "https://www.instagram.com/p/DYx5AKkE1Zr/",
+     "caption": "…\n\nr_y_s_m_y \n\n昔からパキポディウムが大好きで、実生からコツコツ育てています。\n我が家では、なるべく甘やかさず、太陽と風をたっぷり当てながら、時間をかけて締めていく栽培を心がけています。\n\n今回は「パキポの園」ということで、ガチッと締まった実生苗をメインにお持ちします。\n花の色や形の違いも魅力の1つです。\n\n普段のInstagramではユーフォルビアの投稿が多めですが、今回はイベントに合わせてパキポディウムをたくさん並べる予定です。\n（お気に入りのユーフォルビアも少しだけ持っていきます！）\n\n塊根植物好きの皆さまと、当日いろいろお話しできるのを楽しみにしています。\nぜひお気軽にブースを覗いてみてください。\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    },
+    {
+     "timestamp": "2026-05-25T16:44:37+0000",
+     "permalink": "https://www.instagram.com/p/DYxNApAE2kB/",
+     "caption": "…\n\nfuyu_engeiten \n\n富有園芸店は、京都を拠点に店舗設計や鉄製品の加工•施工を行うヒッタイトが手掛ける植物の育成と提案の場です。78pradomanさんによる植物管理と豊富な知識のもとに、新たな植物との関わり方を思案中。\n\n−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−\n\n「パキポの園」\n―つなげる縁―\n\npachypo_no_en\n\nパキポメインの交流ですが\n他の植物も多数あります\n\n【日時】\n2026年7月25日（土）\n10:00〜15:30\n\n【会場】\n愛知県みよし市三好町大慈山１−１\nカネヨシプレイス（みよし市勤労文化会館）\nmiyoshi_culture\n\n【管理】\nbukkou.109"
+    }
+   ]
+  },
+  "plants_journey_osaka": {
+   "ok": false,
+   "error": "ユーザーネームがplants_journey_osakaのユーザーが見つかりません",
+   "code": 110,
+   "checkedOn": "2026-10-10"
+  },
+  "shabomaniac": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-08T08:51:44+0000",
+     "permalink": "https://www.instagram.com/p/DeOjAFxk_WY/",
+     "caption": "青鬼コピアポア、やっぱりいい。濃緑の肌に太くて凶暴な刺。白いコピにはない、こちらを睨むような存在感があります。で、このKK172には面白いストーリーがあるんですが、それはこのあとのnoteに書くとして、２枚目の写真を見てください。この深鉢いっぱいにデカい塊根が詰まってます。「植物の本体は根｣と言われる通り、なるべく切らずに育てると、こういう深鉢が不可欠になります。\n【note】\nコキンバナとその姉妹群には多数の亜種変種があり、最近は新種も次々記載されている。日本ではコキンバナ（竜爪玉）ひとつに単純化されているが、これは逆鱗と黒王とコルムナを区別なく一緒に扱うようなもの。なのでここではKK172 をなんと呼ぶべきか深掘ってみたい。まず、KK（Karel Knize）が記録したNicolasa という場所は、Huasco から川沿いを内陸へ、東に進み、Freirinaを過ぎてVallenarの手前あたりの場所。実はこの町の少し南で、私はこれとよく似た青鬼コピの群落を見ており、おそらくこの辺りから来たんだな、と思っている。なのでKKの記録は正しいと仮定しよう。またKK172を検索すると、メサガーデンのサイトには、Ｃ. coquimbana ‘pepiniana' var. fiedleriana とでてくる。なぜ古い名前でオリジンも不確かなpepinianaを持ち出すのか分からないが、大括りでcoquimbana と言ってるところ、さらにfiedlerianaと言ってるところは理解できる。ほかの多くのサイトでもfiedlerianaとなっているところが多い。一方、このNicolasaのコピは、かつてRitterがCopiapoa vallenarensisと呼んだものである可能性が高い。典型的なcoquimbanaより小型で、密な群生株になるコピだ。近年このvallenarens"
+    },
+    {
+     "timestamp": "2026-10-07T09:08:04+0000",
+     "permalink": "https://www.instagram.com/reel/DeL_K_BzYCt/",
+     "caption": "🌵 Shabomaniac! 🌵\n【POP-UP SHOP & OPEN GREENHOUSE】\n⁡\n10月31日（土）と11月1日（日）、\nShabomaniac! の企画展＆ポップアップショップを、東京・自由が丘のカフェ「サボるイヌ」内ギャラリーにて2日間限定で開催します。\n\nネットオークションや配送ではなかなかお出しできない繊細な植物や大株、自生地の風景を表現したHabitatStyle（ハビタットスタイル）作品を直接手にとってご覧いただけるほか、プラ鉢植えの育成中小苗も数多く揃えます。ギャラリー展示だけでなく、日頃コレクション株を育成している第1温室も特別公開。温室内の苗も一部販売予定です。また、Shabomaniac!が作家・窯元とコラボレーションした一点物のオリジナル鉢も展示販売します。\n\n両日ともに終日在廊いたしますので、育て方やステージングのノウハウ、自生地のお話などをしながら、じっくり植物をお選びいただければ幸いです。土曜日の夜にはトークライブも予定しています。皆さまと直接お会いし、植物のお話ができることを楽しみにしています！ \n\n🗓 日時\n10月31日（土）1500～2000\n11月1日（日） 1100～1600\n※商品補充あり\n\n🌵 トークイベント\n10月31日（土）1830～1930\n※詳細は追って告知いたします\n\n📍 会場\nカフェ&ダイナー「サボるイヌ」\n店内ギャラリー＆温室\n世田谷区等々力6-5-3\n(自由が丘駅徒歩12分)\n※駐車場はありません。お車の方はコインパーキングをご利用ください。\n\n★ご参加人数把握のため、大変お手数ですが、プロフのリンクより登録フォームにご記入いただけると幸いです。\n\n#Shabomaniac #habitatstyle\n#サボテン #珍奇植物 #サボるイヌ"
+    },
+    {
+     "timestamp": "2026-10-05T08:54:50+0000",
+     "permalink": "https://www.instagram.com/p/DeG0394T4y5/",
+     "caption": "亀甲牡丹は、アリオカルプスのなかでも産地による顔違いの面白さが際立っています。連山やインターメディアも本種のなかに含まれます。園芸界はどうしても疣デカイとかゴツゴツ激しいとか一方向に邁進しがちですが、野生株オリジナルの多彩な顔を眺めて楽しむのも良いかと。\n\n🌵Yahoo!オークションは終了しました。ご参加戴いた皆さま、本当にありがとうございました\n.\n.\n.\nAriocarpus fissuratus ssp.fissuratus\n(Brewster Co.Texas)\nabout 20 years from seed.\n.\n.\n.\n#アリオカルプス #亀甲牡丹 #サボテン\n#ariocarpusfissuratus #cactusflower"
+    },
+    {
+     "timestamp": "2026-10-04T09:05:13+0000",
+     "permalink": "https://www.instagram.com/p/DeERGS9Te9R/",
+     "caption": "久しぶりの青空。久しぶりの水やり。サンラモンバレーの黒王丸が咲いていました。気持ちいい日でした。Yahooオークション、本日ラストです。\n【note】\n黒王丸、サンラモンバレーの種子からは色々な顔が出る。黒王丸には違いないけれど、なんか雰囲気が違うものが多いし、個性の幅が広い。この株は稜が少し高く、肌は磁器のようなグレー。刺はほぼ一本で、とても印象的。コピアポアを育てるなら、種子の産地には拘ったほうが面白い。\n.\n.\n.\nCopiapoa cinerea ssp.cinerea\ngrown for 15 years from seed originating in San Ramon Valley.\n\nThe seeds from San Ramon Valley yield a wide variety of forms. They are undeniably Copiapoa cinerea, but many have a distinct look, showing a remarkably broad range of individuality. This particular specimen features slightly higher ribs, porcelain-gray skin, and mostly solitary spines, making it truly striking. If you're going to grow Copiapoa, paying attention to the seed locality makes the hobby so much more fascinating.\n.\n.\n.\n#コピアポア #黒王丸 #サボテン\n#copiapoa #copiapoacinerea"
+    },
+    {
+     "timestamp": "2026-10-03T07:40:05+0000",
+     "permalink": "https://www.instagram.com/p/DeBiqNhzIol/",
+     "caption": "自生地のコピアポア・コルムナアルバ。ここまで育つのに、いったい何年かかったのか。この谷には11月にまた行くつもりだったけど、難しそう。雨の多かった年だ。乾ききった大地にも潤いがあったのだろうか。\n.\n.\n.\nCopiapoa cinerea ssp.columna-alba \nhabitat in Quebrada Cachina \n\nHow many years did it take to reach this point? I was planning to go back this November, but it seems unlikely. It’s been a rainy year. I wonder if this valley got some moisture, too.\n.\n.\n.\n#コピアポア #コルムナアルバ #サボテン\n#copiapoa #cactusinhabitat⁡"
+    },
+    {
+     "timestamp": "2026-10-02T07:09:09+0000",
+     "permalink": "https://www.instagram.com/p/Dd-6EOMTAkM/",
+     "caption": "花の美しいレブチアの中でもちょっと特別。命名者がライラックローズと形容した絶妙な色彩の花が、純白の刺に映えます。\n【note】\nいまはミヌスクラに統合されたが、ミヌスクラは宝山の名で親しまれてきた花サボテンのクラシック。基本形は朱色の花を沢山咲かせる元気で賑やかな小型種だ。一方でこのバリアントのライラックローズの花は、小さな植物にある種の優雅さを与えている。リラキノロゼア（lilacino-rosea）と名付けたくなった気持ちがわかるような気がする\n.\n.\n.\nRebutia minuscula ‘lilacino-rosea’ \n（Rebutia senilis var. lilacino-rosea） \nDH398  Tucuman, Argentina .\n.\n.\n#レブチア #ミヌスクラ #サボテン \n#rebutiaminuscla  #lilacinorosea⁡"
+    },
+    {
+     "timestamp": "2026-10-01T09:49:44+0000",
+     "permalink": "https://www.instagram.com/p/Dd8oExRk33y/",
+     "caption": "いちばん好きなコリファンタ。象牙丸や大祥冠のゆったりとした風格に、太くて尖端がフックする象牙色の刺。アリゾナの稀少種。2枚目は私が見た自生地を.記憶を頼りにGeminlに再現して貰ったもの。なかなか雰囲気出ています。\n\nYahoo!オークションに出品中。締め日は10月3日(土)と4日(日)。プロフにリンクがあります。\n.\n.\n.\nCoryphantha robustispina ssp. robustispina  \nPima county, Arizona\nMy favorite Coryphantha. It possesses the relaxed elegance of Coryphantha poselgeriana or elephantidens, combined with thick, ivory-colored spines that curve into a hook at the tips. It is a rare species from Arizona. The second photo is a recreation by Gemini, based on my memory, of the habitat I visited. It successfully captures the atmosphere.\n.\n.\n.\n#コリファンタ #ロブスティスピナ \n#ヤフーオークション #shabomaniac \n#coryphantharobustispina⁡"
+    },
+    {
+     "timestamp": "2026-09-30T08:12:35+0000",
+     "permalink": "https://www.instagram.com/p/Dd537prT_S8/",
+     "caption": "かっこいい。アタカマ海岸山脈の険しい岩山に生きるエリオシケ。きっとこんな風に咲いているんじゃないかと思って風景を作ってみました。東京は今日で35日連続の雨。あしたこそ青空がみたい。\n【note】\nテヌイス（tenuis）は、タルタルエンシスの一型で、リッターは独立種として記載したが、いまは同一種として扱われている。このフィールドナンバーの主、WM氏（Wendelin Mächler）は、わざわざこの個体をテヌイスと呼んでリッターのつけた名前を踏襲している。そこにはどんな思いがあるのか。どちらも産地はパポソの北だが、そうはいっても広大な範囲なので、リッターとメヒラー両氏が同じ場所に立ったのかどうかはわからない。でもそんなことを想像するのはとても楽しい。 \n.\n.\n.\nEriosyce taltalensis tenuis  WM287  North of Paposo\nE.tenuis is a form of Eriosyce taltalensis. Ritter originally described it as a distinct species, but today it is treated as synonymous with taltalensis.\nThe collector behind this field number, Mr. WM (Wendelin Mächler), went out of his way to refer to this specimen as tenuis, adopting the name given by Ritter. Although both recorded their locality as north of Paposo, it is a vast area, so we can never know "
+    },
+    {
+     "timestamp": "2026-09-28T07:43:32+0000",
+     "permalink": "https://www.instagram.com/p/Dd0rLbhz5Wg/",
+     "caption": "奇抜なフォルムの葉だと思いませんか？ロンボフィルムという属のメセンで快刀乱麻と呼ばれています。この個体は砂子斑とよばれるタイプで、よくみると白い絣模様のような斑が入り、渋い味わいがあります。来春出版予定の「メセン科図鑑（仮）」ではこうしたマイナーなメセンも色々紹介します。こんな面白いもの持っているよ！という方はぜひ教えてください。\n【note】\n葉ものメセンとしてひとまとめに扱われることが多いが、コノフィツムやリトープスなどと同様、生き抜くための適応は実に多様で面白い。玉型メセンの表面積を減らして乾燥地を生き延びる戦略に対し、本種の縦向きの葉と先端が二又に分かれた特異な多肉葉は、強光を避けて朝夕の光を側面で受けることや、水分増減に耐える構造的強度を備えるために役立つと考えられている。\n.\n.\n.\nRhombophyllum nelii 'variegata'\nOften grouped simply under the umbrella of \"leafy mesembs,\" their survival adaptations are just as diverse and fascinating as those of Conophytum or Lithops. While stone-like spherical mesembs survive arid climates by minimizing their surface area, this species takes a completely different approach. Its unique, vertically oriented succulent leaves with forked tips are thought to be highly functional: they deflec"
+    },
+    {
+     "timestamp": "2026-09-27T06:14:35+0000",
+     "permalink": "https://www.instagram.com/reel/Ddx65MIzmsW/",
+     "caption": "Yahoo!オークション 出品中です。締め日は10月3日(土)と4日(日)で、全30品目。私が育てた自生地情報（フィールドナンバー）のある植物が大半で、他所では入手困難な珍種や稀少種、人気種も確かな株をセレクトして出品します。植物ひとつひとつに詳しい解説を書いたので、読み物としても楽しんで戴けると思います。インスタのプロフにリンクを張りました。またすべての株に Shabo とつけるので検索も可能です。発送は国内のみとなりますのでご了承ください🌵\n.\n.\n.\n#サボテン #コーデックス #コピアポア\n#ヤフーオークション #shabomaniac"
+    },
+    {
+     "timestamp": "2026-09-26T06:20:40+0000",
+     "permalink": "https://www.instagram.com/reel/DdvX2UHzEnA/",
+     "caption": "青空がみたい！せっかくの週末なのにまた雨です。ってことで、チリの雲ひとつない青空の下、コピアポアとエリオシケが並んで佇んでいる風景です。\n【note】\n左のコピはグリセオビオラケア、と言っていいと思う。ただ、コラレンシスの産地に限りなく近づいているので、そっちの顔つきもちょっと混じっている感じ。典型的なグリセオから典型的なコラレンシスまでが混生しているトランジショナルな個体群。そもそも分ける必要あるのか？とも感じてしまう。右のエリオシケ、アトロビリディスも個体差の幅広い種で、花色は黄白～濃オレンジまで、刺も長かったり短かったり、ほとんどなかったり。それらが混生している自生地を見なかったら別種にしか思えない。こういうことだから、国内の栽培品のラベルがめちゃめちゃ混乱しているのも仕方ないことかも。信頼できる産地情報（フィールドナンバー）は死活的に大事です。\n.\n.\n.\nL: Copiapoa corralensis/griseoviolacea\nR: Eriosyce atroviridis\n⁡\nIs the Copiapoa on the left griseoviolacea or corallensis? It’s a transitional population from roughly mid-way between their distribution ranges, showing characteristics of both. The Eriosyce atroviridis on the right is also a species with a wide range of variation—flower colors span from yellow to deep orange, and spines can be long, short, or "
+    },
+    {
+     "timestamp": "2026-09-25T08:24:21+0000",
+     "permalink": "https://www.instagram.com/p/DdtBiKqk8GM/",
+     "caption": "🌵きっと、あまり見たことのない植物だと思います。\n\nあす9月26日（土）からYahoo!オークションを開催します。自生地情報（フィールドナンバー）のある植物が大半で、他所では入手困難な珍種や稀少種、また人気種も確かな株をセレクトして出品します。植物ひとつひとつに詳しい解説を書いたので、読み物としても楽しんで戴けると思います。当日になったら、こちらのプロフにオークションページのリンクを張りますね。すべての株に Shabo とつけるので、このワードで検索も可能です。\n\n写真は今回出品する種です。\n珍しいテフロと塊根サボテン。\n他にも色々、30種を出品する予定です。\n\n１）Tephrocactus verschaffeltii MK464\nゴムのような柔らかい茎節で刺はほぼない。驚くほど甘やかな多色花を咲かせる特異なクローン\n\n２）Peniocereus viperinus  Oaxaca\n大和魂と同属の塊根柱（紐）サボテン。独特の赤花でハチドリを呼び寄せる\n.\n.\n.\n#サボテン #コーデックス #コピアポア\n#ヤフーオークション #shabomaniac"
+    }
+   ]
+  },
+  "suezawa_ryokuchi.thepark": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-05T05:15:15+0000",
+     "permalink": "https://www.instagram.com/p/DeGb12nD1wP/",
+     "caption": "​【Plants Party!特別企画のおしらせ】\n\n前もってお知らせしておりましたが、\n​🌴秋のPlants Party!に、全国でも大人気の DOLCE'S さんがやってきます！ \n​多くのファンを魅了するDOLCE'Sさんの多肉やアイテムを、香川で直接見られるまたとない大チャンスです✨\n\n今回ワクワクが止まらない2つの特別企画を準備してくださいます！\n\n​① 元祖 多肉すくい\n​お祭り気分で大人も子どもも夢中になれる大人気企画！ポイを使ってお気に入りの苗をすくいあげてくださいね。 \n  料金:1回1000円\n\n​② 元祖 多肉ポン（ガチャマシンくじ）\n​おしゃれなアンティーク調ガチャを回して、秋の特別な出会いを！ ハズレなしの豪華くじです。 \n  料金:1回3000円\n​​すべて定価3,000円以上のアイテム確定！\n​エケベリア、アエオニウム、鉢・リメイク鉢など、豪華スペシャルアイテムが当たります。 \n\n​DOLCE'Sさんの世界観を香川で体感できる特別な2日間🍁\nファンの方はもちろん、多肉植物を育ててみたい方もぜひお気軽にお立ち寄りください😊\n​\n🌴​秋のPlants Party!🌴\n​日程：10月17日(土)・18日(日)\n時間：10:00～16:00\n\n​#PlantsParty #DOLCES #多肉植物 #香川イベント #多肉すくい"
+    },
+    {
+     "timestamp": "2026-10-04T01:45:48+0000",
+     "permalink": "https://www.instagram.com/p/DeDfEsOv7ZE/",
+     "caption": ""
+    },
+    {
+     "timestamp": "2026-09-23T01:24:53+0000",
+     "permalink": "https://www.instagram.com/p/DdnH8KvD5l6/",
+     "caption": "2026.09.23\n\n​シルバーウィークもいよいよ最終日！\n皆さま、連休はいかがお過ごしでしたか？\n\n​THE PARKでは、因島のジョージア園芸さん georgia_engei からとっておきのトルコキキョウたちが入荷しております✨\n​この絶妙なニュアンスカラー、そしてフリルのような花びら……。画像ではなかなか伝わりづらいですが😢\n\nアンティークな雰囲気漂うこの色味は、寄せ植えやブリコラージュフラワーに、ぜひ取り入れていただきたい特別な逸品です。\n\n​シルバーウィーク最終日、お出かけの合間に、ぜひTHE PARKへお立ち寄りください。\nスタッフ一同、皆さまのご来店を心よりお待ちしております😊\n\n​#THEPARK #植物のある暮らし #因島 #トルコキキョウ"
+    },
+    {
+     "timestamp": "2026-09-20T07:27:40+0000",
+     "permalink": "https://www.instagram.com/p/DdgDEn7j8n4/",
+     "caption": "2026.09.20-2\n\nシルバーリーフに映える鮮やかなマゼンタピンク。\n「レウコフィラム」入荷しております。\n \n花がない時期も年中美しいシルバーリーフを楽しめて、暑さや乾燥にも強い頼もしい植物です。\nお庭のアクセントにはもちろん、鉢植えにもおすすめですよ。\n\nお問い合わせの多い、西洋ニンジンボクも入荷しております🌿 \n\n​\nシルバーウィーク期間中は、休まずすべて営業しております！\n🕙 営業時間：10:00〜18:00\n​連休のお出かけに、心地よい植物たちにぜひ癒されにいらしてくださいね。\n皆さまのご来店をお待ちしております✨"
+    },
+    {
+     "timestamp": "2026-09-20T06:14:42+0000",
+     "permalink": "https://www.instagram.com/reel/Ddf6R0gPkzX/",
+     "caption": "2026.09.20\n\n新しいポット、続々と入荷しております。\n​お気に入りのグリーンを、もっと特別な一鉢に。\n\n店頭にてお気に入りの組み合わせを見つけてみてくださいね✨\n\n​#みどりのある暮らし #thepark #香川の園芸店 #陶器鉢 #グリーンインテリア"
+    },
+    {
+     "timestamp": "2026-09-10T01:12:53+0000",
+     "permalink": "https://www.instagram.com/p/DdFoOmrvf3K/",
+     "caption": "​【秋のPlants Party! 開催のお知らせ📢】\n\n​10月17日(土)・18日(日)は、ThePARKの秋フェス『Plants Party!』！\n​普段は多肉植物の取り扱いが少ない当店ですが、今回は福岡の超人気多肉店 DOLCE'Sさん\n mamimamima1230 が特別出店！\n激レアな韓国苗や可愛い寄せ植え、「多肉すくい」「多肉ガチャ」などワクワクする企画が盛りだくさんです。\n​\n皆さまのご来場を心よりお待ちしております！\n​#ThePARK #プランツパーティー #多肉イベント #香川の園芸店"
+    },
+    {
+     "timestamp": "2026-09-10T01:09:08+0000",
+     "permalink": "https://www.instagram.com/p/DdFnzX7DwgZ/",
+     "caption": "【秋のPlants Party! 開催のお知らせ📢】\n\n​10月17日(土)・18日(日)は、ThePARKの秋フェス『Plants Party!』\n\n​普段は多肉植物の取り扱いが少ない当店ですが、今回は福岡の超人気多肉店 DOLCE'Sさん \n mamimamima1230 が特別出店！\n激レアな韓国苗や可愛い寄せ植え「多肉すくい」「多肉ガチャ」などワクワクする企画が盛りだくさんです。\n\n​ThePARKの植物・雑貨10%OFFセールや、\n美味しいコーヒー \n coffeegoya_pen もご用意してお待ちしております✨\n​詳細は画像をスワイプしてチェックしてくださいね👉\n皆さまのご来場を心よりお待ちしております！\n\n​#ThePARK #プランツパーティー #多肉イベント #週末イベント #高松おでかけ"
+    },
+    {
+     "timestamp": "2026-09-08T05:48:49+0000",
+     "permalink": "https://www.instagram.com/p/DdA-OKDD3dU/",
+     "caption": "2026.9.8\n\n【自社農園より】今年もフレッシュな国産ライムが実りました！\n​ノーワックスだから皮まで安心・安全。\n果汁たっぷりで香り高い、希少な国産ライムです。\n皮ごとグラスに入れてお酒に合わせたり、お料理の香りづけやドレッシングにもたっぷり使えます。\n今年も太陽の光をたっぷり浴びて、とても良い仕上がりです！\n\n​販売開始：11日(金)より\n​販売場所：THE PARK 店頭\n\n🍋​ラインナップ\n・​国産ノーワックスライム（Lサイズ3個詰）：300円\n・​リスボン グリーンレモン（4個）：200円\n​・璃の香 -りのか-（3個）：200円\n※消費税別\n※お得なまとめ売りもご用意しています\n\n​自社農園だからこそお届けできる、採れたて＆安心の旬の柑橘たち。\nこの時期だけのフレッシュな香りをぜひお楽しみください！\n皆さまのご来店をお待ちしております。\n\n​#国産ライム  #ノーワックスライム #グリーンレモン #璃の香"
+    },
+    {
+     "timestamp": "2026-08-31T09:29:41+0000",
+     "permalink": "https://www.instagram.com/p/DcsxIisPHg1/",
+     "caption": "​【9月営業日のお知らせ ＆ 秋のビッグイベント告知🌿】\n\n​いつもご来店ありがとうございます！\n9月も夏季休業に伴い、営業日が不規則となっております。\nご来店の際は、カレンダーをご確認の上お越しくださいませ。\n※営業時間：10:00〜18:00\n​そして！来月はお待ちかねのビッグイベントを開催します🎉\n​┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n🎪 Plants Party! 2026 秋\n🗓 10月17日(土)・18日(日)\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n​今回はなんと、福岡から大人気多肉植物専門店の DOLCE'Sさん（mamimamima1230） がやってきます！✨\n​レアな苗や寄せ植えはもちろん、大人気の「多肉すくい」「多肉ガチャ」など楽しい企画が盛りだくさん！\n​ThePARKでも日替わり目玉商品をご用意してお待ちしております。\n\n​ぜひ今のうちに10/17(土)・18(日)のカレンダーにチェックを入れて、予定をあけておいてくださいね！\n\n​#ThePARK #plantsparty # DOLCES  #多肉植物イベント #植物のある暮らし"
+    },
+    {
+     "timestamp": "2026-08-16T02:43:09+0000",
+     "permalink": "https://www.instagram.com/p/DcFasFbj0db/",
+     "caption": "2026.8.16\n\n​今が見頃のサルスベリ \"ブラックダイアモンド\"\n​宝石のように真っ赤に輝くビビッドな花はもちろん、\n何と言ってもこの「銅葉（黒葉）」が文句なくカッコいい！\n​他の花が休みがちなこの暑い時期に、\nこれだけ鮮やかに咲いてくれる木は本当に貴重です。\n\n比較的ウドン粉病にも強く、手入れも必要とせず、自然な樹形を楽しむことができます。\n​1本あるだけで、お庭の雰囲気がグッと引き締まります。\n\n​#サルスベリ #ブラックリーフダイアモンド\n#みどりのある暮らし\n#香川の園芸店"
+    },
+    {
+     "timestamp": "2026-08-14T06:29:45+0000",
+     "permalink": "https://www.instagram.com/p/DcArCAgD8QT/",
+     "caption": "2026.8.14\n\n​花寂しい今の季節におすすめ。\n置くだけでお庭の主役になる、素敵なオーナメントが入荷しました。\n\n​この使い込まれたようなシャビシャビ感がカッコよすぎです。\n風にそよぐグラスの中に忍ばせたり、\n壁際にさりげなく置いたり。\n​植物だけでは出せない、大人っぽい雰囲気を演出してくれますよ。\nたくさん入荷してます。ぜひお気に入りを見つけに来てください。\n\n🍧かき氷サービスあります🍧\n\n​#ガーデンオーナメント #庭のアクセサリー　\n#みどりのある暮らしashgrey_company"
+    },
+    {
+     "timestamp": "2026-08-08T04:42:44+0000",
+     "permalink": "https://www.instagram.com/p/DbxCAunPEBo/",
+     "caption": "2026.08.08\n\nオーダーいただいた、胡蝶蘭の寄せ植え。\n​白い胡蝶蘭に、数種類のグリーンを合わせて\nボリュームたっぷりに仕上げました。\n\n​華やかでありながら落ち着きのある佇まいは、\nお祝いの場にはもちろん、\n大切な方へのご供養としても。\n様々な用途でお使いいただけます。\n​気に入っていただけますように。\n\n​#胡蝶蘭 #寄せ植え #フラワーギフト\n#みどりのある暮らし"
+    }
+   ]
+  },
+  "toyohashicactus": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-07T10:05:15+0000",
+     "permalink": "https://www.instagram.com/p/DeMGnqfE8YT/",
+     "caption": ".\n🌵 豊橋カクタスクラブ 出展のお知らせ\n\n10月17日(土)・18日(日)の2日間、\n豊橋市民文化会館で開催される\n「秋の市民茶会」に、豊橋カクタスクラブとして出展します。\n\n当日は、会員が大切に育てた\nサボテン・多肉植物を展示し、\n品評会も行います。\n\n普段なかなか見ることのできない植物や、\n会員が丹精込めて育てた植物を\nぜひゆっくりとご覧ください🌵\n\nサボテンに詳しくない方も大歓迎です。\nお茶会とあわせて、気軽にお立ち寄りください。\n\nまた、会場では\n「豊橋総合いけばな展」も開催されています。\nこちらもあわせてお楽しみいただけます。\n\n📅 10月17日(土)・18日(日)\n⏰ 豊橋カクタスクラブ\n　両日 9:00〜16:30\n📍 豊橋市民文化会館\n　愛知県豊橋市向山大池町20-1\n\n※一部、植物の販売も予定しています。\n\n━━━━━━━━━━━━━━\n\n【お問い合わせについて】\n\nイベント・展示内容についてのお問い合わせは、\n豊橋カクタスクラブのInstagram DMまたは\n公式LINEまでお願いいたします。\n\n※会場・主催者への直接のお問い合わせは\nお控えください。"
+    },
+    {
+     "timestamp": "2026-02-09T04:41:11+0000",
+     "permalink": "https://www.instagram.com/p/DUhiv6VE2Lv/",
+     "caption": ".\n豊橋カクタスクラブの2026年年間行事計画です。\n2026年も皆様宜しくお願いします。\n#cactus #succulents #サボテン #多肉植物 #豊橋カクタスクラブ"
+    },
+    {
+     "timestamp": "2026-01-18T10:15:17+0000",
+     "permalink": "https://www.instagram.com/p/DTpff7mE9rE/",
+     "caption": ".\n本日は新年会にご参加下さってありがとうございました。\n豊橋カクタスクラブへの今後とも変わらぬご愛顧を賜りますよう、お願い申し上げます。\n写真は本日の新年会での表彰苗となります。"
+    },
+    {
+     "timestamp": "2025-10-04T01:18:19+0000",
+     "permalink": "https://www.instagram.com/p/DPXlyPkk-VV/",
+     "caption": "今年の豊橋まつり展示即売会中止となりました。\n9月例会でその旨をお伝えした所、通常例会を行う事で話しが纏りましたので10月は通常例会を行います。\n\n10/19（日） 13時より 国府市民館2F図書室\n\n皆様のご参加お待ちしております。"
+    },
+    {
+     "timestamp": "2025-07-20T12:02:37+0000",
+     "permalink": "https://www.instagram.com/p/DMVDGvoTteu/",
+     "caption": ".\n本日は豊橋カクタスクラブ7月通常例会にお越しくださいましてありがとうございました。\n荷主15名\n交換苗127点\n茹だるような暑さの中13時から始まり\n会長の挨拶から連絡事項を済ませ手際よく交換会へと移りました\nおよそ3時間ほどのテンポの良い交換会となりました\n来月は例会ございませんのでご注意下さい\n#cactus #succulents #サボテン #多肉植物 #豊橋カクタスクラブ"
+    },
+    {
+     "timestamp": "2025-06-09T22:41:25+0000",
+     "permalink": "https://www.instagram.com/p/DKsnnr9TcOA/",
+     "caption": ".\n6月15日開催の3クラブ合同例会のご案内です。\n当初当会から送った案内より変更がありましたのでご案内です。\n\n受付時間\n変更前→ 9:00 ❌️\n変更後→ 8:30 ⭕️\n\n駐車場\n変更前→ 第1、第2駐車場 ❌️\n変更後→ 第3駐車場 ⭕️\n\n当日は誘導員を立てるとのことなので問題ないと思いますが、会員同士でご連絡して頂く等の情報の共有をして頂けましたら幸いです。\n訂正案内を郵送しようと準備しておりましたが作成等の時間を考慮するとお手元に届くのが間に合わない可能性がありますので今回の訂正案内の郵送は控えさせて頂きますのでご了承ください。"
+    },
+    {
+     "timestamp": "2025-02-02T05:34:03+0000",
+     "permalink": "https://www.instagram.com/p/DFjxF0YzQc7/",
+     "caption": ".\n豊橋カクタスクラブの2025年年間行事計画です。\n2025年も皆様宜しくお願いします。\n#cactus #succulents #サボテン #多肉植物 #豊橋カクタスクラブ"
+    },
+    {
+     "timestamp": "2025-01-23T10:07:39+0000",
+     "permalink": "https://www.instagram.com/p/DFKgdDOzTl3/",
+     "caption": "遅れましたが明けましておめでとうございます。\n本年も宜しくお願いします。\n新年会を滞りなく終え、豊橋カクタスクラブ2025年の幕開けです。\n新年会では昨年の振り返りから、品評会を終え昼食を挟みながらの交換会。\n荷主13名、交換苗127点\n正月らしく通常例会より多い荷主さんとなり盛況な交換会となりました。\n本年の豊橋カクタスクラブですが\n6月、8月、10月を除いた第３日曜日に豊川市にある国府市民館で13時から例会を行います。\n見学や入会希望の方はその時間までに会場にお越しになってその旨を受付へお伝え下さい。\n改めまして今年も豊橋カクタスクラブを宜しくお願いします。\n#cactus#succulents#サボテン#多肉植物#豊橋カクタスクラブ"
+    },
+    {
+     "timestamp": "2025-01-12T14:46:25+0000",
+     "permalink": "https://www.instagram.com/p/DEurnLWTVzT/",
+     "caption": "明けましておめでとうございます。本年もよろしくお願いします。\n早速ですが新年会のご案内です。\n\n日時：1月19日　10:00〜\n\n場所：国府市民館\n\n住所：豊川市国府町下河原61-2\n\n昼食代1000円、当日参加費500円\n\n会員の皆様のご参加をお待ちしております。"
+    },
+    {
+     "timestamp": "2024-07-24T01:57:58+0000",
+     "permalink": "https://www.instagram.com/p/C9ya8SfSsAe/",
+     "caption": "7月例会にご参加くださった皆様ありがとうございました。\n荷主13名\n交換苗147点\n休憩を1回挟みまして3時間程の緩やかな交換会でした。\n今月は連絡事項が多かったのでこちらにも内容を掲載しておきます。\n次回8月の豊橋カクタスクラブの通常例会は例年通りありません。\nお間違い無き様お願いします。\n10月に行う予定の豊橋まつり即売会ですが\n会場の改修工事に伴い今年の即売会が中止となりました。\n中止となりましたので通常例会を行う予定となっております。\n#豊橋カクタスクラブ #2024豊橋カクタスクラブ展示即売会"
+    },
+    {
+     "timestamp": "2024-06-19T10:57:22+0000",
+     "permalink": "https://www.instagram.com/p/C8ZQ2YcSH3U/",
+     "caption": ".\n三クラブ合同例会にご参加下さった皆様に厚く御礼申し上げます。\n\n参加者　106名\n荷　主　37  名\n交換苗　344点\n\n昼食を挟みおよそ5時間ほどの交換会となりました。\n特に大きな問題もなく滞りなく終われたのは\n皆様のご協力あっての賜物だと思います。\n次の豊橋カクタスクラブ主催の合同例会は3年後になりますがまた皆様が笑顔で参加できますよう\nこれからも精進して参りますので今後も豊橋カクタスクラブを宜しくお願いします。\n#三クラブ合同例会#2024三クラブ合同例会 #豊橋カクタスクラブ"
+    },
+    {
+     "timestamp": "2024-06-11T01:24:33+0000",
+     "permalink": "https://www.instagram.com/p/C8Do7_eSqqm/",
+     "caption": ".\n名古屋サボテンクラブ、西三河カクタスクラブとの三クラブ合同例会のお知らせです。\n\n●場所:豊川JAひまわり八幡支店\n\n●日時:6/16(日) 受付9:00より　開始時刻10:00より\n\n●交換会 一人10点回し 2番山あり\n\n●支払い 現金引き換え(歩合10%)\n\n●当日会費 1,000円(昼食、飲み物付き)\n\n※16時終了予定の為、途中で交換会を打ち切らせて頂く事がありますのでご了承下さい。\n\n尚、三クラブ合同例会開催の為、豊橋カクタスクラブの通常例会を当月は行いませんのでお気を付け下さい。\n\n#名古屋サボテンクラブ#西三河カクタスクラブ#豊橋カクタスクラブ#三クラブ合同例会#2024三クラブ合同例会"
+    }
+   ]
+  },
+  "wakayama_cactus_club": {
+   "ok": true,
+   "checkedOn": "2026-10-10",
+   "posts": [
+    {
+     "timestamp": "2026-10-06T23:59:23+0000",
+     "permalink": "https://www.instagram.com/p/DeLBRvUBJkC/",
+     "caption": ".\n🍁秋のサボテン即売会のご案内🍁\n\n【日時】\n10月24日（土）9:00〜17:00\n10月25日（日）9:00〜15:30\n\n【場所】\n和歌山県植物公園緑花センター　東展示室\n和歌山県岩出市東坂本672 \n\n🌵 思わぬ掘り出し物に出会えるチャンス！\n🌵 初心者の方も、見るだけの方も大歓迎です！\n🌵 お気に入りの一鉢を探しに来ませんか？\n\n⚫︎屋内で開催いたしますので天候に左右されず、ごゆっくりご覧いただけます。\n\n⚫︎前回も大好評だった無料コーナーを今回も設置いたします。\n\n⚫︎栽培に関するご質問、お悩みもお気軽にご相談ください。\n\n皆さまのご来場を心よりお待ちしております✨️"
+    },
+    {
+     "timestamp": "2026-09-13T14:44:41+0000",
+     "permalink": "https://www.instagram.com/p/DdOzhUageH8/",
+     "caption": "9月13日（日）\n―ｼｬﾎﾞﾃﾝ趣味の会×和歌山ｼｬﾎﾞﾃﾝｸﾗﾌﾞ合同例会―\nshabo_mascaras\nwakayama_cactus_club\n\n本日はLICはびきのにて初の合同例会を開催いたしました！\n一品コンクールお題は『白いもの』\n\n１位🥇∶兜丸\n２位🥈∶白鳥綴化\n３位🥉∶姫春星群生\n４位 ∶ボンバックス\n５位 ∶黒王丸\n\n見事受賞された方々、おめでとうございます🎉\n\nみなさんの愛培品の『白』を囲みながら\n初の試み合同例会は終始賑やかで楽しい1日となりました✨️\nご参加いただいた皆様方、お疲れ様でした🙌\n\n次回は、10/11の日本シャボテン大会はクラブ員自由参加となり、続いて10/24、25は秋の展示即売会となります。\n\n🌸入会希望も随時受け付けております❣\n#wakayama_shaboten_club"
+    },
+    {
+     "timestamp": "2026-09-07T00:38:12+0000",
+     "permalink": "https://www.instagram.com/p/Dc914LhAV05/",
+     "caption": "燃え尽きて夏、狂仙会2026🎇\n\n運営の皆様、関係者の皆様\n伝統あるイベント開催、お疲れさまでした。\n\nすばらしい株の数々で\n大変有意義な時間を過ごすことができました✨️\n\n季節もすっかり夏の気配はなく\n祭りの後の静けさに少し寂しさもありますが、\nこのエネルギーをパワーに変えてまた元気に駆け抜けましょう🙌"
+    },
+    {
+     "timestamp": "2026-09-02T23:36:46+0000",
+     "permalink": "https://www.instagram.com/p/DczbqwwgY7F/",
+     "caption": "【狂仙会のお知らせ】\n\n開催日∶令和8年9月6日(日)\n会場∶マイドームおおさか（2F展示場D）\n住所∶大阪市中央区本町橋２番5号\n\n当クラブからは自由参加となります。\n\nどなたでも気軽に楽しめるイベントです。\nクラブ会員同士の交流の場としても\nご都合のつく方はぜひご参加ください🌵\n\n#狂仙会\n#狂仙会2026"
+    },
+    {
+     "timestamp": "2026-08-26T02:32:36+0000",
+     "permalink": "https://www.instagram.com/p/DcfJbMFBtyz/",
+     "caption": "🌵 9月例会のお知らせ 🌵\n\n― シャボテン趣味の会 × 和歌山シャボテンクラブ ―\n\nshabo_mascaras\nwakayama_cactus_club\n\n初の合同例会を開催します！\n\n両クラブの親睦をさらに深めるべく、\n初の合同例会を開催いたします。\n\nたくさんの愛培品を囲みながら、楽しい一日を過ごしましょう！\n皆さま、ぜひご参加ください🎶\n\n⸻\n\n📅 日　時\n\n9月13日（日）\n13:00～16:30（予定）\n\n📍 会　場\n\n羽曳野市立生活文化情報センター\nLICはびきの 2階 大会議室\n\n〒583-0854\n大阪府羽曳野市軽里1−1−1\n\n⸻\n\n🏆 合同品評会\n\nテーマは 「白いもの」\n\nあなたが愛してやまない 「白」 をお持ちください！\n\n🌵 品種は自由\n🌵 自慢の愛培品、大歓迎！\n\n「これは白い！」と思う一鉢をぜひ出品してください。\n\n入賞者には 賞金 もあります🏆✨\n\n⸻\n\n🔄 合同交換会\n\n両クラブ合同で交換会を開催します。\n\n「所変われば品変わる」\n\n普段とは違う場所なら、\n普段とは違う植物との出会いがあるかもしれません🌵✨\n\n多種多様な愛培品や交換苗を、ぜひお持ちください。\n\nきっと、あなたの植物を待っている人がいますよ🎶\n\n⸻\n\n💰 参加費\n\n各クラブの規定によります。\n\n【受付について】\n\n受付は 各クラブごと に行います。\n\n※両クラブに所属されている方は、\nどちらか一方のクラブで受付をしてください。\n\n※非会員の方も参加できます。\n参加される場合は、いずれかの受付で\n当日会費 500円 をお支払いください。\n\n参加するクラブはご自身でお選びいただけます。\n\n⸻\n\n🌵✨ たくさんのご参加をお待ちしています！ ✨🌵\n\n植物を通じて、新しい出会いを。\n趣味を通じて、さらに広がる仲間の輪。\n\n皆さんの自慢の一鉢とともに、\n楽しい合同例会にしましょう！"
+    },
+    {
+     "timestamp": "2026-07-05T10:29:52+0000",
+     "permalink": "https://www.instagram.com/p/DaaGtwokeil/",
+     "caption": "７月5日（日）\n🍑和歌山ｼｬﾎﾞﾃﾝｸﾗﾌﾞ７月例会🍑\n\n本日はカフェ＆レンタルスペースMOMOにて例会\n一品コンクールお題は『小鉢物』\n\n１位🥇∶センナ実生株、自作鉢に植え込み\n２位🥈∶メキシカーナ輸入球、後５〜６年作り込めば名品\n３位🥉∶松露玉接ぎ木\n次点🎖️∶松露玉輸入球\n\n3号鉢に収まるような小型球サボテンだけでなく、\nあえて小さめの鉢で締めて作った風情のある株や\n小さな群生株など、\n『出品者が考える、小品としての美しさや凝縮感』を幅広く見せていただきました✨\n\n村主様から様々な興味深いお話、勉強になり\nいつもありがとうございます🍀\n\n交換会では、遠方より荷物を用意していただき感謝です🌵\nご参加いただいた皆様方も長丁場、お疲れ様でした🙌\n\n🌸入会希望も随時受け付けております❣\n#wakayama_shaboten_club\n\n⭐️次回の例会は9/13（日）、シャボテン趣味の会と合同例会を予定しております。詳細はまた後日お知らせいたします📝"
+    },
+    {
+     "timestamp": "2026-06-12T23:32:19+0000",
+     "permalink": "https://www.instagram.com/p/DZgR-GIBlPx/",
+     "caption": "【🌵７月例会のお知らせ🌵】\n\n🍑《日時》\n7月5日（日）13時〜\n\n🍑《場所》\nカフェ＆レンタルスペースMoMo\n和歌山県紀の川市桃山町市場２７３−１\n※無料駐車場あり\n⚠️前回より場所変更⚠️\n\n🍑《概要》\n①一品コンクールのお題\n『小鉢物』の品評会\n\n②一品コンクールの表彰式\n１位、２位、３位、次点をみなさんで投票🥇🥈🥉🎖️\n参加者全員に参加賞あり\n\n③交換会\n\n※今年度は参加会員さんの当日会費無料\n\n※非会員の方のご参加は通常通り当日会費500円\n入会していただければ無料となります。\n\n🌸新規加入も随時受け付けております✨\n\nたくさんのご参加、お待ちしております。"
+    },
+    {
+     "timestamp": "2026-06-07T10:45:48+0000",
+     "permalink": "https://www.instagram.com/p/DZSCR3RkdzL/",
+     "caption": "６月7日（日）\n🌵和歌山シャボテンクラブ6月例会🌵\n\n本日は雨の中、\nたくさんの方々にご参加いただきありがとうございました☔\n\n今回の一品コンクール、お題は『斑入り』でした。\n見事賞を取られた方々、おめでとうございます🎉\n\n村主さんからのお話もあり、楽しい例会となりました。\n皆様、お疲れ様でした🙌\n\n🌸入会希望も随時受け付けております❣\n#wakayama_shaboten_club\n\n🍀次回例会は７月5日（日）です。\nまた詳細は後日お知らせいたします📝"
+    },
+    {
+     "timestamp": "2026-05-11T12:34:33+0000",
+     "permalink": "https://www.instagram.com/p/DYMtQeAAcDq/",
+     "caption": "【🌵6月例会のお知らせ🌵】\n\n🌟《日時》\n６月7日（日）13時〜\n\n🌟《場所》\n羽曳野市立生活文化情報センター\nLICはびきの 2階パソコン教室\n大阪府羽曳野市軽里１丁目１−1\n\n🌟《概要》\n①一品コンクールのお題『斑入り』の品評会\n\n②一品コンクールの表彰式\n１位、２位、３位、次点をみなさんで投票🥇🥈🥉🎖️\n１位、２位、３位は賞金あり\n参加者全員にも参加賞\n\n③交換会\n\n※今年度は参加会員さんの当日会費、\n500円のところ無料キャンペーンを実施中！\n\n※当日参加の非会員の方は、通常通り当日会費500円いただきます。\n入会していただければ無料となります。\n\nたくさんのご参加、お待ちしております！"
+    },
+    {
+     "timestamp": "2026-05-06T00:23:15+0000",
+     "permalink": "https://www.instagram.com/p/DX-hmLEgdKg/",
+     "caption": "🍀\n【ご来場いただいたお客様へ】\n\n春の展示即売会 ご来場ありがとうございました🌵\n\n2日間にわたり開催いたしました「春の展示即売会」\n無事に終了いたしました。\n足をお運びいただいた皆様、誠にありがとうございました🙇‍♂️\n\n開場前からお並びいただいた方や、\n遠方からお越しいただいた方、\nそして熱心にサボテンの話をしてくださった皆様との時間は、私たち会員にとっても大変励みになるものでした🙌\n\nお迎えいただいた株たちが、皆様の元ですくすくと育つことを願っております。\nもし育て方で分からないことがあれば、ぜひ次回のイベントでお気軽にご相談ください👴👍\n\nまた次回は、秋の展示即売会で、皆様にお会いできるのを楽しみにしています！\nありがとうございました🙏\n\n🌸入会希望も随時受け付けております❣\n#wakayama_shaboten_club\n\n. . 𖥧 𖥧 𖧧 ˒˒. . 𖡼.𖤣𖥧 ⠜ . . 𖥧 𖥧 𖧧 ˒˒. . 𖡼.𖤣𖥧. . 𖥧 𖥧 𖧧 ˒˒. . 𖡼.𖤣𖥧 ⠜ . . 𖥧 𖥧 𖧧 ˒˒.\n\n【参加していただいた会員の皆様へ】\n\n会員さんたちの献身的なサポートのおかげで、\n大きなトラブルもなく、大盛況のうちに終えることができました。\n愛情込めて育てられた出品株の数々が、\n来場された多くの方を笑顔にしていました。\n会場設営から接客、片付けまで含め、ご協力をいただき心より感謝申し上げます🙇‍♂️"
+    },
+    {
+     "timestamp": "2026-04-23T09:11:51+0000",
+     "permalink": "https://www.instagram.com/reel/DXd_t53kW5R/",
+     "caption": "•\n🎦動画作成は sento_0322 さん、\n栽培風景画像をご提供いただいたクラブ員の皆様方、\nご協力ありがとうございました🙌\n\n. . 𖥧 𖥧 𖧧 ˒˒. . 𖡼.𖤣𖥧 ⠜ . . 𖥧 𖥧 𖧧 ˒˒. . 𖡼.𖤣𖥧. . 𖥧 𖥧 𖧧 ˒˒. . 𖡼.𖤣𖥧 ⠜ \n\n🍀春のサボテン即売会のご案内🍀\n\n【日時】\n5月4日（月）9:00〜17:00\n5月5日（火）9:00〜16:00\n\n【場所】\n和歌山県植物公園緑花センター\n和歌山県岩出市東坂本672 \n※入場料無料/駐車場あり\n\n【会場】\n東展示室\n天候に左右されず、ゆっくりとご覧いただけます。\n\n【出品内容】\n・熟練会員が丹精込めて育てた優良株\n・若手会員による注目株\n・お求めやすい価格の普及苗から希少株まで、多彩なラインナップ\n\n【専門業者出店】\n以下の専門業者による販売もございます。\n・CACTUS BASE　toge_to_katamari\n・Prickle　prickle_ta29\n・Cactus 裕美園　mat2u.yum1k0\n\n【特別企画】\n・サボテン関連の書籍・冊子の特価販売📚️\n・多肉植物のプレゼント（ご希望の方、お一人様一苗・数量限定）\n・親木・見本苗の展示コーナー設置（一部販売あり）\n\n【ご案内】\n栽培方法などについても、会員が丁寧にご説明いたします。\nご不明な点がございましたら、お気軽にお声がけください👴👵💁‍♂️💁‍♀️\n\n🌸入会希望も随時受け付けております❣\n#wakayama_shaboten_club\n\n新緑と花に囲まれた会場で、皆様のご来場を心よりお待ちしております🌳🌼🌵🐦️🎶"
+    },
+    {
+     "timestamp": "2026-04-17T06:48:54+0000",
+     "permalink": "https://www.instagram.com/p/DXOSoMdET5V/",
+     "caption": ".\n🍀春のサボテン即売会のご案内🍀\n\n【日時】\n5月4日（月）9:00〜17:00\n5月5日（火）9:00〜16:00\n\n【場所】\n和歌山県植物公園緑花センター\n和歌山県岩出市東坂本672 \n\n※入場料無料/駐車場あり\n\n【会場】\n東展示室と東展示室前のテント下\n\n※本年は、屋内展示室と屋外テントの2会場で開催いたします🏚️🎪\n天候に左右されず、ゆっくりとご覧いただけます。\n\n【出品内容】\n・熟練会員が丹精込めて育てた優良株\n・若手会員による注目株\n・お求めやすい価格の普及苗から希少株まで、多彩なラインナップ\n\n【専門業者出店】\n以下の専門業者による販売もございます。\n・CACTUS BASE　toge_to_katamari\n・Prickle　prickle_ta29\n・Cactus 裕美園　mat2u.yum1k0\n\n【特別企画】\n・サボテン関連の書籍・冊子の特価販売📚️\n・多肉植物のプレゼント（ご希望の方、お一人様一苗・数量限定）\n・親木・見本苗の展示コーナー設置（一部販売あり）\n\n【ご案内】\n栽培方法などについても、会員が丁寧にご説明いたします。\nご不明な点がございましたら、お気軽にお声がけください👴👵💁‍♂️💁‍♀️\n\n新緑と花に囲まれた会場で、皆様のご来場を心よりお待ちしております🌳🌼🌵🐦️🎶"
+    }
+   ]
   }
  },
  "signals": {
   "cancel": [],
   "unlisted": [
-   {
-    "username": "botanical.botanical",
-    "dates": [
-     "2026-10-17"
-    ],
-    "permalink": "https://www.instagram.com/p/DeQpiYACU1P/",
-    "postedOn": "2026-10-09",
-    "excerpt": ". BOTANICAL BOTANICAL OSAKA ABENO HARUKAS 10/31(SAT)-11/1(SUN) 2年ぶりのあべのハルカス開催となるBOTANICAL BOTANICAL OSAKA。 ハルカスウィングガーデンに"
-   },
    {
     "username": "uell_creators",
     "dates": [
@@ -16042,7 +17035,9 @@
   ]
  },
  "errors": [
+  "@ing.plants: ユーザーネームがing.plantsのユーザーが見つかりません",
   "@plants.garage.market: ユーザーネームがplants.garage.marketのユーザーが見つかりません",
+  "@plants_journey_osaka: ユーザーネームがplants_journey_osakaのユーザーが見つかりません",
   "@succutochi: ユーザーネームがsuccutochiのユーザーが見つかりません"
  ]
 }
