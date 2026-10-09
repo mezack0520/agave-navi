@@ -1399,6 +1399,30 @@
    "target": "12件",
    "action": "skipped",
    "detail": "agave-navi-eyecatch の担当"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "event-monitor",
+   "kind": "desc_span_mismatch",
+   "target": "miuraengei-aroid-protoleaf-futako-2026-09",
+   "action": "fixed",
+   "detail": "会期 9/04〜9/20 → 9/19〜9/20。daily の date verification が 09-17 に開始日を頁の別の日付で書き換えていた。出典 protoleaf.com/?p=24182 の題・本文とも 9/19(土)・9/20(日)、説明文の「2日間限定」とも一致"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "event-monitor",
+   "kind": "desc_span_mismatch",
+   "target": "ore-no-plants-collection-2026-09",
+   "action": "fixed",
+   "detail": "会期 9/14〜9/21 → 9/19〜9/21。daily の date verification が 09-24 に PR TIMES の配信日 9/14 を開始日として書いていた。告知の「開催期間 9月19日(土)〜9月21日(月・祝)」・説明文の「3日間」と一致"
+  },
+  {
+   "on": "2026-10-10",
+   "task": "event-monitor",
+   "kind": "desc_span_mismatch",
+   "target": "botanical-evening-marche-oyabe-2026-08",
+   "action": "fixed",
+   "detail": "会期 8/16 → 8/15〜8/16。daily の date verification が掲載当日 08-10 に開始日を 8/16 へ動かし単日になっていた。掲載時の値と説明文の「15日は植物25店、16日は19店」に戻した(出典の頁は削除済み)"
   }
  ]
 }

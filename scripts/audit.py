@@ -589,6 +589,22 @@ def main():
     add('desc_stale_year', '説明文が別年の日付を名指ししている(前年の告知文の使い回し)', sorted(stale_year))
     add('time_multiday_mismatch', 'timeが複数日を示すのに dateEnd が単日', sorted(time_bad))
 
+    # 9c-1b. 説明文が書く会期の長さ・日と date〜dateEnd が食い違う(2026-10-10)。
+    #     上の desc_date_mismatch は「M月D日」が会期の外にあるかしか見ないので、
+    #     日付欄の開始日だけが早められると、本文の日付は会期の中に収まったまま通る
+    #     (俺のプランツ・コレクションは本文「9月19日から21日までの3日間」/ 会期 9/14〜21)。
+    #     本文の「N日間」と会期の日数、「15日は…」と会期の隣の日を突き合わせる。
+    #     出た5件はすべて check_date_updates.py が開始日を頁の別の日付(記事の公開日・
+    #     前の記事の日付)に書き換えたもので、関門を足す前の書き込みが3件、開催日を過ぎても
+    #     残っていた。規則は sitelib.description_span_mismatches。
+    #     04-01〜10-10 の events.json 154日分に当てて、出たのはこの5件だけ(誤検知0)。
+    _span_bad = [f'{_s}: {_m}' for _s, _m in sitelib.description_span_mismatches(events)]
+    add('desc_span_mismatch', '説明文が書く会期の長さ・日と date〜dateEnd が食い違う(日付欄だけが書き換えられた疑い)',
+        sorted(_span_bad),
+        '出典の告知で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。'
+        'daily の date verification が書いた日付なら、git log -G で書き換えたコミットを引いて元の値と比べる。'
+        '会場ごとに分けた回は同じ organizerIg を入れれば合わせて数える')
+
     # 9c-2. time / access のスクレイプ由来の混入。
     #       time は詳細ページ本文・FAQ・JSON-LD(構造化データ)に直行するので、
     #       誤値は検索結果にそのまま出る。access も同じ経路でFAQに入る。

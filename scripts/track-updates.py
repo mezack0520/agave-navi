@@ -25,6 +25,9 @@
   - status の upcoming → past（時間が経てば必ず起きる。ニュースではない）
   - 説明文・imageUrl・tags・updatedAt の変化（保守であって、来場の判断は変わらない）
   - dateDisplay だけの変化（date が同じなら表記の揺れを直しただけ）
+  - 開催を終えた回の日程・会場の訂正（元の会期も直した会期も今日より前。記録の
+    訂正であって、来場の判断は変わらない。2026-10-10 に開催済みの3回の開始日を
+    直したら「日程変更」として更新欄とフィードに並ぶところだった）
 
 ## 比較のしかた
 
@@ -101,8 +104,15 @@ def span_of(e):
     return ((e.get('date') or '').strip(), (e.get('dateEnd') or '').strip())
 
 
-def diff(prev, cur):
+def ended_before(e, today):
+    """会期の最終日が today より前か(日付が無い回は False)"""
+    end = (e.get('dateEnd') or e.get('date') or '').strip()
+    return bool(end) and end < today
+
+
+def diff(prev, cur, today=None):
     """(kind, event, detail) の並びを返す"""
+    today = today or today_jst()
     p = {e.get('slug'): e for e in prev if e.get('slug')}
     c = {e.get('slug'): e for e in cur if e.get('slug')}
     out = []
@@ -112,6 +122,8 @@ def diff(prev, cur):
             out.append(('listed', e, ''))
             continue
         was, now = p[slug], e
+        # 開催を終えた回(元の会期も今の会期も今日より前)の日程・会場の訂正は採らない
+        done = ended_before(was, today) and ended_before(now, today)
         # 中止・延期になった（元が中止でなかった回だけ）
         if is_cancelled(now) and not is_cancelled(was):
             kind = 'postponed' if cancel_label(now) == '延期' else 'cancelled'
@@ -119,13 +131,15 @@ def diff(prev, cur):
             continue
         # 日程が動いた。dateDisplay だけの違いは見ない
         if span_of(was) != span_of(now):
+            if done:
+                continue
             a = was.get('dateDisplay') or was.get('date') or ''
             b = now.get('dateDisplay') or now.get('date') or ''
             out.append(('date', now, f'{a} → {b}'))
             continue
         # 会場が動いた
         if venue_of(was) != venue_of(now) and venue_of(was) and venue_of(now) \
-                and not same_place(venue_of(was), venue_of(now)):
+                and not same_place(venue_of(was), venue_of(now)) and not done:
             out.append(('venue', now, f'{venue_of(was)} → {venue_of(now)}'))
 
     for slug, e in p.items():
@@ -233,8 +247,8 @@ def self_test():
     base = {'slug': 'a', 'name': 'イベントA', 'date': '2026-10-01',
             'dateEnd': '2026-10-02', 'venue': 'A会場', 'status': 'upcoming'}
 
-    def one(prev, cur):
-        return [(k, d) for k, _, d in diff(prev, cur)]
+    def one(prev, cur, today='2026-09-01'):
+        return [(k, d) for k, _, d in diff(prev, cur, today)]
 
     print('--- 採るもの ---')
     chk('新しいslug → listed', [k for k, _ in one([], [base])], ['listed'])
@@ -270,6 +284,18 @@ def self_test():
         one([dict(tb, venue='')], [dict(tb, venue='', location='豊洲公園（東京都江東区豊洲2-3-6）')]) or
         one([dict(base, venue='', location='豊洲公園')],
             [dict(base, venue='', location='豊洲 公園（東京都江東区豊洲2-3-6）')]), [])
+    ended = dict(base, date='2026-09-04', dateEnd='2026-09-20')
+    chk('開催済みの回の開始日の訂正（9/04-20 → 9/19-20、今日 10/10）',
+        one([ended], [dict(ended, date='2026-09-19')], today='2026-10-10'), [])
+    chk('開催済みの回の会場の訂正',
+        one([ended], [dict(ended, venue='B会場')], today='2026-10-10'), [])
+    chk('終わった会期を先へ延ばした → date（延期のやり直し）',
+        [k for k, _ in one([ended], [dict(ended, date='2026-10-24', dateEnd='2026-10-25')],
+                           today='2026-10-10')], ['date'])
+    chk('今日が最終日の回の日程が動いた → date',
+        [k for k, _ in one([dict(base, dateEnd='2026-10-10')],
+                           [dict(base, date='2026-10-09', dateEnd='2026-10-10')],
+                           today='2026-10-10')], ['date'])
     chk('短い値の先頭一致は同じ場所としない（道の駅 → 道の駅しょうなん）',
         [k for k, _ in one([dict(base, venue='道の駅')], [dict(base, venue='道の駅しょうなん')])],
         ['venue'])

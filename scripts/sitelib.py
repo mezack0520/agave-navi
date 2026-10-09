@@ -2083,6 +2083,108 @@ def description_hours_missing(e):
     return out
 
 
+# --- 説明文が書く会期の長さ・日と date〜dateEnd の食い違い (2026-10-10) ---
+# 説明文は告知を読んで人が書くので「2日間」「3日間」「15日は…16日は…」が正しく残り、
+# 日付欄だけが後から書き換えられると食い違う。実例はすべて check_date_updates.py が
+# 開始日を頁の別の日付(記事の公開日・前の記事の日付)に書き換えたもので、
+# 関門(会期物は開始日を動かさない・今の開催日が頁に残っていれば動かさない)を足す前の
+# 書き込みが3件、開催日を過ぎても残っていた(三浦園芸 9/19→9/04、俺のプランツ・
+# コレクション 9/19→9/14、BOTANICAL EVENING MARCHE 8/15→8/16)。
+# 05-01〜10-10 の events.json 135日分に当てて、出たのはこの3件と、人が直した2件
+# (東海オキボタ 07-30・プレミアム ロックガーデン フェスタ 09-18)だけ。誤検知0。
+_SPAN_NUM = {'一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10}
+# 「N日間」「N日限り」。「18日のみ」「24日だけ」は日付(その日だけ出る出店者)なので数えない
+_DESC_SPAN_RE = re.compile(r'(?<![\d月/.])(\d{1,2}|[一二三四五六七八九十]{1,2})\s*日\s*(?:間|限り)')
+# 同じ文の手前にあれば、その長さは今回の会期ではない(前回・例年・通常)
+_DESC_SPAN_OTHER_EDITION = re.compile(
+    r'(前回|前年|昨年|去年|例年|過去|これまで|通常は|普段は|いつもは|初回|第\s*1\s*回は)')
+# 会期より短い長さが、会期の中の一部分を指す語(「期間中の土日2日間」「最後の2日間」)
+_DESC_SPAN_SUBPERIOD = re.compile(
+    r'(期間中|会期中|会期の|開催期間の|土日|週末|最終|最後|初日|前半|後半|祝日|連休中)')
+# 会期の隣の日を名乗る「15日は」「16日も」。搬入・前日・チケット発売などの日は会期外で当然
+_DESC_ADJ_DAY_RE = re.compile(r'(?<![\d月/.年])(\d{1,2})日(?:\s*\([^)]{1,4}\))?\s*(?:は|も)')
+_DESC_ADJ_DAY_EXCUSE = re.compile(
+    r'(予備日|延期|順延|前回|昨年|去年|翌年|来年|次回|チケット|受付|発売|販売開始|予約|申込|'
+    r'申し込み|エントリー|募集|締切|抽選|休業|休み|定休|休館|準備|搬入|搬出|設営|撤収|前日|翌|'
+    r'前夜|内覧|先行|プレ)')
+
+
+def _span_num(tok):
+    if tok.isdigit():
+        return int(tok)
+    if tok in _SPAN_NUM:
+        return _SPAN_NUM[tok]
+    if len(tok) == 2 and tok[0] == '十':
+        return 10 + _SPAN_NUM.get(tok[1], 0)
+    return None
+
+
+def description_span_mismatches(events):
+    """説明文の「N日間」・会期の隣の日が date〜dateEnd と食い違う回。[(slug, 説明)]
+
+    - 「N日間」「N日限り」の N が会期の日数と違う。同じ主催の別の回と合わせて
+      N日になるなら(会場ごとに分けた回の「2日間のうち春日店の回」)数えない。
+    - 「15日は…」の15日が、会期の外で会期の隣(前後2日以内)にある。
+    中止・延期の回は数えない(説明文が予定の会期を書くため)。
+    """
+    spans = {}
+    by_org = {}
+    for e in events:
+        d0, d1 = event_span(e)
+        try:
+            a, b = date.fromisoformat(d0), date.fromisoformat(d1 or d0)
+        except (TypeError, ValueError):
+            continue
+        spans[id(e)] = (a, b)
+        key = (e.get('organizerIg') or e.get('organizer') or '').strip().lower()
+        if key:
+            by_org.setdefault(key, []).append(e)
+    out = []
+    for e in events:
+        if id(e) not in spans or is_cancelled(e):
+            continue
+        a, b = spans[id(e)]
+        n_days = (b - a).days + 1
+        desc = unicodedata.normalize('NFKC', e.get('description') or '')
+        if not desc:
+            continue
+        key = (e.get('organizerIg') or e.get('organizer') or '').strip().lower()
+        for sent in re.split(r'(?<=。)', desc):
+            for m in _DESC_SPAN_RE.finditer(sent):
+                n = _span_num(m.group(1))
+                if not n or n == n_days:
+                    continue
+                before = sent[:m.start()]
+                if _DESC_SPAN_OTHER_EDITION.search(before):
+                    continue
+                if sent[m.end():m.end() + 3].startswith(('のうち', 'うち')):
+                    continue
+                if n < n_days and _DESC_SPAN_SUBPERIOD.search(sent[max(0, m.start() - 12):m.start()]):
+                    continue
+                days = {a + timedelta(i) for i in range(n_days)}
+                for o in by_org.get(key, ()) if key else ():
+                    if o is e or id(o) not in spans:
+                        continue
+                    oa, ob = spans[id(o)]
+                    if abs((oa - a).days) <= n and abs((ob - b).days) <= n:
+                        days |= {oa + timedelta(i) for i in range((ob - oa).days + 1)}
+                if len(days) == n and (max(days) - min(days)).days + 1 == n:
+                    continue        # 会場ごとに分けた回が揃って N日
+                ctx = sent[max(0, m.start() - 16):m.end() + 8].strip()
+                out.append((e.get('slug'), f'説明文「…{ctx}…」は{n}日 / 会期 {a}〜{b} は{n_days}日'))
+        edge = {a - timedelta(1), a - timedelta(2), b + timedelta(1), b + timedelta(2)}
+        inside = {(a + timedelta(i)).day for i in range(n_days)}
+        for m in _DESC_ADJ_DAY_RE.finditer(desc):
+            dd = int(m.group(1))
+            if dd in inside or not any(x.day == dd for x in edge):
+                continue
+            near = desc[max(0, m.start() - 20):m.end() + 20]
+            if _DESC_ADJ_DAY_EXCUSE.search(near):
+                continue
+            out.append((e.get('slug'), f'説明文「…{near.strip()}…」の{dd}日が会期 {a}〜{b} の外(隣の日)'))
+    return out
+
+
 
 # --- 出典ドメインと画像URLの受け入れ (単一情報源) ---------------------------
 # アグリゲータの一覧は listing-policy.json の blockedUrlDomains が正。

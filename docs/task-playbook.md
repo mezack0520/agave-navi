@@ -3936,6 +3936,34 @@ log-fix に reviewed を残した。**会期がまだ続く回なら、3回目�
   THE PARK・BIKAKU JUNCTION(平田ナーセリー小戸店の投稿は API の最新12件より古かった)・O.D plants
 - topsearch で主催を引いた: 緑と生き物カーニバル(@midori_to_ikimono。比率で見送り)・Plants Journey(@plants_journey_osaka)
 
+### daily の date verification が書いた開始日は、関門を足す前の分が残っていた。説明文の「N日間」で見つかる (2026-10-10)
+
+`check_date_updates.py`(daily の date verification)は 05-18〜09-26 に `date` を35回書き換えていた。
+人が直さずに残っていたのが3件で、どれも開催を終えた回だった。
+- 三浦園芸 アロイド販売会: 9/19 → 9/04(09-17)。protoleaf の記事頁の「前の記事」の日付を拾った。会期 9/04〜20 で、9/16〜18 は「開催中」に出ていた
+- 俺の！プランツ・コレクション！！: 9/19 → 9/14(09-24)。切れた出典を PR TIMES に差し替えた日の夜に、配信日「2026年9月14日」を拾った。翌朝のTOPの更新欄に「日程変更 2026.09.19-21 → 2026.09.14-21」が出た
+- BOTANICAL EVENING MARCHE(小矢部): 8/15〜16 → 8/16(08-10)。掲載した当日の夜に単日になった
+
+関門(09-12 更新日・投稿日を除く、09-23 開催期間の名乗りに絞る、09-26 今の開催日が頁に残っていれば動かさない・会期物の開始日は動かさない)は、
+それぞれ足した日より後の書き込みしか止めない。10-07 の enrich と同じく**関門を足した日に、関門の無かった期間の書き込みを洗う**。
+洗い方: `git log --author=github-actions --grep='date verification' -- events.json` の各コミットを親と比べ、date が動いた slug の今の値を出典で確かめる
+(10-10 は35回・11 slug を見て、残っていたのが上の3件。出典の頁が消えていた小矢部は、掲載時の値と説明文で戻した)。
+
+**今の check_date_updates.py は dateEnd を持つ回の date を動かせない。**会期物は開始日を動かさず、単日は早めず、dateEnd より後の候補は捨てる。
+動くのは dateEnd の無い回(10-10 時点で9件)だけ。
+
+検査 `audit.desc_span_mismatch`(urgent。規則は `sitelib.description_span_mismatches`):
+- 説明文の「N日間」「N日限り」と会期の日数を比べる。「18日のみ」「24日だけ」は日付なので数えない
+- 説明文の「15日は」「16日も」が、会期の外で会期の隣(前後2日)の日を指していれば出す。搬入・前日・チケット発売などの語がそばにあれば数えない
+- 会場ごとに分けた回(「2日間のうち春日店の回」)は「のうち」で外す。同じ主催の隣の回と合わせて N日になる回も外す
+- `desc_date_mismatch` は「M月D日」が会期の外にあるかしか見ない。開始日だけを早められると、本文の「9月19日から21日」は会期 9/14〜21 の中に収まって通る
+- 04-01〜10-10 の events.json 154日分に当てて、出たのは上の3件と人が直した2件(東海オキボタ 07-30・プレミアム ロックガーデン フェスタ 09-18)。誤検知0。5件ともこのスクリプトの書き込みだった
+
+`track-updates.py` も直した。開催を終えた回の日程・会場の訂正は、元の会期も直した会期も今日より前なら、更新欄とフィードに積まない。
+記録の訂正であって来場の判断は変わらないため。08-15〜10-10 の差分に当てて、落ちるのは開催済みの訂正6件だけ。
+なお、人が events.json を直して push した分は CI では HEAD と作業ツリーが同じなので、そもそも track-updates に出ない。
+出るのは CI の中で動いた差分(date verification・sync-events)と、手元で build-all.sh を回してから押した分。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -3976,6 +4004,7 @@ log-fix に reviewed を残した。**会期がまだ続く回なら、3回目�
 | 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
+| 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
 | リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |
