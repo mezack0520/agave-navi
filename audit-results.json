@@ -1,5 +1,5 @@
 {
-  "total": 806,
+  "total": 805,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -772,10 +772,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 1,
-      "items": [
-        "ふくやま産業交流館ビッグ・ローズ(3件) → /venue/v-45f979be/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },

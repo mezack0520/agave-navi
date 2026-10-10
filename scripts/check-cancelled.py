@@ -301,21 +301,38 @@ def main_entry(html, event=None):
 
     中止の語は従来どおり頁全体から拾う(analyze)。新着欄に
     「◯◯中止のお知らせ」が出れば強い語で鳴る。絞るのは署名だけ。
+
+    (2026-10-11) `<article>` が2つ以上でも、**この回の開始日を含む `<article>` が
+    ちょうど1つ**ならその記事に絞る。伊豆シャボテン動物公園のプレスリリース頁
+    (shaboten.co.jp/press/7561/)は本文の記事の下に関連記事3本を `<article>` で並べ、
+    新しいお知らせが出るたびに本文が +40字動いて「公式ページが変わった」で鳴った
+    (第13回 おもしろサボテン品評会。会期 10/10〜11/23 の2日目)。会期の範囲で選ぶと、
+    関連記事の日付(10/19 オープン・11/6 スタート)が45日の会期に入って絞れないので、
+    開始日で選ぶ。開始日を含む記事が2つ以上(同じ日に始まる回が並ぶ一覧)なら絞らない。
     """
-    starts = [m.start() for m in re.finditer(r'(?i)<article\b', html or '')]
-    if len(starts) != 1:
-        return None
-    m = re.search(r'(?i)</article\s*>', html[starts[0]:])
-    if not m:
-        return None
-    frag = html[starts[0]:starts[0] + m.end()]
     if event is None:
         return None
     span = event_month_days(event)
     if not span:
         return None
-    _named, found = page_dates(frag)
-    return frag if (span & found) else None
+    frags = []
+    for m0 in re.finditer(r'(?i)<article\b', html or ''):
+        m = re.search(r'(?i)</article\s*>', html[m0.start():])
+        if m:
+            frags.append(html[m0.start():m0.start() + m.end()])
+    if len(frags) == 1:
+        _named, found = page_dates(frags[0])
+        return frags[0] if (span & found) else None
+    if not frags:
+        return None
+    # 記事が複数(本文 + 関連記事)の頁は、この回の開始日を含む記事がちょうど1つのときだけ
+    # その記事に絞る。会期の範囲で選ぶと、会期の長い回では関連記事の日付が範囲に入る
+    try:
+        sd = date.fromisoformat(event_span(event)[0])
+    except ValueError:
+        return None
+    hits = [f for f in frags if (sd.month, sd.day) in page_dates(f)[1]]
+    return hits[0] if len(hits) == 1 else None
 
 
 def page_signature(html, today=None, scope=None, live_status=True):
@@ -736,6 +753,16 @@ FIX_WP_ENTRY = '''<html><head><title>ROOTS MARKET開催決定</title>
 </body></html>'''
 
 
+FIX_PRESS_RELATED = '''<html><head><title>第13回 おもしろサボテン品評会</title></head><body>
+<article><h1>「第13回 おもしろサボテン品評会」2026年10月10日（土）～開催</h1>
+<p>2026年10月10日（土）～11月23日（月・祝）まで第5温室メキシコ館内にて開催いたします。</p></article>
+<section class="related">
+<article><a href="/press/1/">屋内型ふれあい動物園 2026年10月19日(月)OPEN</a><p>2026.10.06</p></article>
+<article><a href="/press/2/">{news}</a><p>2026.09.18</p></article>
+<article><a href="/press/3/">伊豆高原グランイルミ 2026年11月6日(金)スタート</a><p>2026.09.17</p></article>
+</section></body></html>'''
+
+
 def self_test(verbose=True):
     ok = True
 
@@ -848,6 +875,21 @@ def self_test(verbose=True):
                 {'slug': 'q', 'date': '2026-11-03', 'dateEnd': '2026-11-03'})['sigScope'], 'page')
     chk('回が渡されない → 絞らない',
         analyze(FIX_WP_ENTRY.replace('{news}', 'X'))['sigScope'], 'page')
+
+    say('\n--- 本文 + 関連記事の頁は開始日を含む記事に絞る (2026-10-11) ---')
+    _evl = {'slug': 'i', 'date': '2026-10-10', 'dateEnd': '2026-11-23'}
+    _p1 = analyze(FIX_PRESS_RELATED.replace('{news}', 'みなとみらい リニューアル'), _evl)
+    _p2 = analyze(FIX_PRESS_RELATED.replace('{news}', '吉祥寺 新規オープン 10月19日 カピバラの岩風呂'), _evl)
+    chk('関連記事が並んでも開始日を含む記事が1つ → 絞る', _p1['sigScope'], 'article')
+    chk('関連記事が変わっても本文の署名は同じ',
+        _p1['signature']['text'] == _p2['signature']['text'], True)
+    _p3 = analyze(FIX_PRESS_RELATED.replace('{news}', 'X').replace('11月23日', '中止となりました'), _evl)
+    chk('記事の本文の中止は強い語で拾う(絞っても)', bool(_p3['strong']), True)
+    chk('開始日を含む記事が2つ → 絞らない',
+        analyze(FIX_PRESS_RELATED.replace('{news}', '2026年10月10日 別の催し'), _evl)['sigScope'], 'page')
+    chk('開始日を含む記事が無い → 絞らない',
+        analyze(FIX_PRESS_RELATED.replace('{news}', 'X'),
+                {'slug': 'j', 'date': '2026-10-12', 'dateEnd': '2026-11-23'})['sigScope'], 'page')
 
     say('\n--- 通販の注文のキャンセル ---')
     _s3, w3 = find_words(['エントリー受付後、ご注文は自動的にキャンセルされます。'
