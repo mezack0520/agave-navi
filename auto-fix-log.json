@@ -1546,6 +1546,22 @@
    "target": "BOTANICAL DISPLAY 2026 (2026-10-04〜11-03)",
    "action": "rejected",
    "detail": "coverage-sweep の照合の不具合で隠れていた(見送りの BOTANICA の語が Botanical の中に当たり、Botanical を名乗る見出しが全部見送り済み扱い)。照合を直し、the Farm UNIVERSAL OSAKA のスタッフ作品のフォトスポット企画なので outOfScopeGenres で見送り"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "event-monitor",
+   "kind": "desc_venue_other_prefecture",
+   "target": "第28回 花宇宙ドリームガーデン (2026-10-09〜11)",
+   "action": "fixed",
+   "detail": "説明文の「香川県三豊市の花宇宙」を、主催 @hanauchustaff の告知(場所:兵庫県川西市絹延町3-10)どおり兵庫県川西市に直した"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "event-monitor",
+   "kind": "time_vs_description",
+   "target": "開催済みで time が空だった29回 (6/7〜9/27)",
+   "action": "fixed",
+   "detail": "説明文に書いた開催時間を time に入れた(BOTARIBA 豊橋・札幌カクタスクラブ秋の展示会 ほか)。27 GALLERY の企画展(8/14〜30)は曜日ごとの開始時刻しか無いので残した"
   }
  ]
 }

@@ -2188,6 +2188,87 @@ def description_span_mismatches(events):
     return out
 
 
+# --- 説明文が会場を別の県の施設として書いている (2026-10-11) ---
+# 第28回 花宇宙ドリームガーデン(兵庫県川西市の花宇宙・10/9〜11)の説明文が
+# 「香川県三豊市の花宇宙が開く展示即売会」になっていた。09-22 に説明文を書き足したときに入り、
+# 開催の最終日まで本番に出ていた。主催の告知は「場所:兵庫県川西市絹延町3-10」で、
+# location / prefecture は正しかった。日付・時刻・会期の長さの検査は所在地を見ないので素通りした。
+# 説明文が他県の生産者・出店者の拠点を書くのは普通(「大分市の多肉植物の生産者 Lier.succulent」)なので、
+# 県名が出ること自体は数えない。**会場名そのものに付いた所在地**(「◯◯県◯◯市の<会場名>」
+# 「<会場名>（◯◯市…）」)だけを見る。市の県は events.json の住所(location / mapQuery / venue / access
+# の「◯◯県◯◯市」)から引き、2つ以上の県にある市名と区は使わない(府中市・北区・中央区)。
+# 04-07〜10-11 の events.json 157日分に当てて、出たのはこの1件だけ(誤検知0)。
+_PLACE_PREF_ALT = '|'.join(sorted(PREF_TO_REGION, key=len, reverse=True))
+_PLACE_ADDR_CITY_RE = re.compile(
+    r'(' + _PLACE_PREF_ALT + r')(?:都|道|府|県)\s*([一-龠ぁ-んァ-ヶヵ]{1,6}?(?:市|郡))')
+_PLACE_QUAL_BEFORE_RE = re.compile(
+    r'(?<![一-龠])(?:(' + _PLACE_PREF_ALT + r')(?:都|道|府|県)?)?'
+    r'([一-龠ぁ-んァ-ヶヵ]{1,6}?(?:市|町|村))?\s*の\s*$')
+_PLACE_QUAL_AFTER_RE = re.compile(
+    r'^\s*[(（]\s*(?:(' + _PLACE_PREF_ALT + r')(?:都|道|府|県)?)?([一-龠ぁ-んァ-ヶヵ]{1,6}?(?:市|町|村))?')
+# 同じ文の手前にあれば、その所在地は今回の会場ではない(前回・別の会場の話)
+_PLACE_OTHER_EDITION = re.compile(
+    r'(前回|前年|昨年|去年|例年|過去|これまで|初回|第\s*1\s*回は|に続|移転前|旧店舗)')
+
+
+def _pref_of_city_map(events):
+    """events.json の住所に出る「◯◯県◯◯市」から {市: 県}。2つ以上の県に出る市は入れない"""
+    seen = {}
+    for e in events:
+        for f in ('location', 'mapQuery', 'venue', 'access'):
+            for p, c in _PLACE_ADDR_CITY_RE.findall(unicodedata.normalize('NFKC', e.get(f) or '')):
+                seen.setdefault(c, set()).add(p)
+    return {c: next(iter(ps)) for c, ps in seen.items() if len(ps) == 1}
+
+
+def description_venue_place_mismatches(events):
+    """説明文が会場名に付けた所在地が、その回の prefecture と別の県。[(slug, 説明)]
+
+    「香川県三豊市の花宇宙」「とっとり花回廊（島根県…）」のように、会場名の直前の「◯◯県◯◯市の」と
+    直後の括弧書きだけを見る。中止・延期の回と、県が決まっていない回は数えない。
+    """
+    city_pref = _pref_of_city_map(events)
+    out = []
+    for e in events:
+        if is_cancelled(e):
+            continue
+        pref = (e.get('prefecture') or '').strip()
+        if pref not in PREF_TO_REGION:
+            pref = pref[:-1] if pref[-1:] in ('都', '道', '府', '県') else pref
+        if pref not in PREF_TO_REGION:
+            continue
+        desc = unicodedata.normalize('NFKC', e.get('description') or '')
+        if not desc:
+            continue
+        names = set()
+        for v in (e.get('venue'), e.get('location')):
+            n = unicodedata.normalize('NFKC', venue_display(v or '')).strip()
+            if len(n) >= 2 and not is_vague_venue(n):
+                names.add(n)
+        hits = set()
+        for n in sorted(names, key=len, reverse=True):
+            start = 0
+            while True:
+                i = desc.find(n, start)
+                if i < 0:
+                    break
+                start = i + 1
+                head = desc[desc.rfind('。', 0, i) + 1:i]
+                if _PLACE_OTHER_EDITION.search(head):
+                    continue
+                for m in (_PLACE_QUAL_BEFORE_RE.search(desc[max(0, i - 16):i]),
+                          _PLACE_QUAL_AFTER_RE.match(desc[i + len(n):i + len(n) + 16])):
+                    if not m or not (m.group(1) or m.group(2)):
+                        continue
+                    named = m.group(1) or city_pref.get(m.group(2) or '')
+                    if not named or named == pref:
+                        continue
+                    ctx = desc[max(0, i - 16):i + len(n) + 8].strip()
+                    hits.add(f'説明文「…{ctx}…」は会場「{n}」を{named}の施設として書いている / prefecture={pref}')
+        out.extend((e.get('slug'), h) for h in sorted(hits))
+    return out
+
+
 
 # --- 出典ドメインと画像URLの受け入れ (単一情報源) ---------------------------
 # アグリゲータの一覧は listing-policy.json の blockedUrlDomains が正。
