@@ -1538,6 +1538,14 @@
    "target": "12件",
    "action": "skipped",
    "detail": "agave-navi-eyecatch の担当"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "BOTANICAL DISPLAY 2026 (2026-10-04〜11-03)",
+   "action": "rejected",
+   "detail": "coverage-sweep の照合の不具合で隠れていた(見送りの BOTANICA の語が Botanical の中に当たり、Botanical を名乗る見出しが全部見送り済み扱い)。照合を直し、the Farm UNIVERSAL OSAKA のスタッフ作品のフォトスポット企画なので outOfScopeGenres で見送り"
   }
  ]
 }

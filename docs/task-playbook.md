@@ -4027,6 +4027,20 @@ CI の organizer-posts.json に入らず、scan-organizer-posts.py の一覧に�
   4件とも絞った先はその回の記事だった。範囲が変わった初回は既存の rescoped で変化に数えない。
 - 中止の語は従来どおり頁全体から拾う。絞るのは署名だけ。
 
+### 見送りの英字の特徴語が、見出しの共通語の中に入って「見送り済み」に落ちていた (2026-10-11)
+
+見送り「Bouquet - BOTANICA COFFEE FES」「BOTANICA DÍA DE LOS MUERTOS」(千葉の BOTANICA MUSEUM)の特徴語 botanica は、
+`coverage-sweep.matches` の部分文字列の当て方では「Botanical ◯◯」の botanical の中に入る。見送りは開催日で絞らず全件に当てるので、
+**Botanical を名乗る見出しは全部「見送り済み」に落ちていた。**Step0 で見つけた「第2回 Botanical Autumn」を照合したら
+BOTANICA の見送りに当たったことで気付いた。
+
+- 直す前後で今日の巡回(LEAFLA 45日 + NextMeet 4か月。取得した頁を固定して2回判定)に当てると、known_rejected が 130 → 106、
+  取りこぼし候補が 0 → 1(BOTANICAL DISPLAY 2026・the Farm UNIVERSAL OSAKA 10/4〜11/3。24日ぶん隠れていた。見送りに記録)。covered は 199 のまま。
+- 規則: 英字の特徴語は、見出しの中でその語を含む英数の連なりが全部 GENERIC の語(と末尾の数字付き)なら当たりに数えない
+  (`_inside_generic_word`)。「GREENHOLICinKARIYA2026」のように語を詰めて書く見出しの中の固有の語は従来どおり当たる。自己テスト5件。
+- **0件を返す見張りは、壊れていても0件を返す。**coverage-gaps が0件の日でも、stats の known_rejected が前日から大きく動いていないか、
+  見送りに当たった見出しが本当にその見送りの回かを、ときどき抜き取って見る。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは

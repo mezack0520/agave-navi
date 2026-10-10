@@ -523,10 +523,36 @@ def matches(title, name, bare=False):
         # 検算(2026-09-16): events.json の同日ペア全件で誤一致0組、
         # その日の取りこぼし候補13件のうち当たったのは On the Plants の1件だけ。
         return generic_only_match(n, name)
-    hit = [t for t in ts if norm(t) and norm(t) in n]
+    hit = [t for t in ts if norm(t) and norm(t) in n and not _inside_generic_word(t, title)]
     if len(hit) >= 2:
         return True
     return any(len(t) >= 5 for t in hit)
+
+
+_ASCII_RUN_RE = re.compile(r'[a-z0-9]+')
+
+
+def _inside_generic_word(token, title):
+    """英字の特徴語が、見出しの中では共通語の一部としてしか出ていないか。
+
+    見送りの「BOTANICA COFFEE FES」「BOTANICA MUSEUM」(千葉の施設名)の特徴語
+    botanica は、「Botanical ◯◯」と書く見出しすべての botanical の中に入る。
+    見送りの照合は開催日で絞らない(全件に当てる)ので、Botanical を名乗る
+    新しい回が全部「見送り済み」に落ちて候補に出なかった(2026-10-11 に
+    第2回 Botanical Autumn で気付いた)。
+
+    見出しの英数の連なりのうち、特徴語を含むものが**すべて** GENERIC の語
+    (またはその複数形・数字付き)なら、当たりに数えない。
+    「GREENHOLICinKARIYA2026」のように語を詰めて書く見出しの中の kariya は、
+    連なり全体が共通語ではないので従来どおり当たる。
+    """
+    if not re.fullmatch(r'[a-z0-9]+', token or ''):
+        return False
+    low = unicodedata.normalize('NFKC', title or '').lower()
+    runs = [r for r in _ASCII_RUN_RE.findall(low) if token in r]
+    if not runs:
+        return False
+    return all(r != token and re.sub(r'\d+$', '', r) in GENERIC for r in runs)
 
 
 def tokens_keep_generic(name):
@@ -893,6 +919,12 @@ def self_test(verbose=True):
         # 助詞で切っても、別の回を巻き込まないこと
         ('内田農園がアガベ食堂2026を開催、実生株と輸入株の特別価格販売やアガベ企画を実施',
          '秋のアガベ祭り', False),
+        # 2026-10-11。英字の特徴語が見出しの共通語(botanical)の一部としてしか出ないときは当てない
+        ('the Farm UNIVERSAL OSAKAでBOTANICAL DISPLAY 2026が開催、スタッフ作品が園内各所に登場',
+         'Bouquet - BOTANICA COFFEE FES', False),
+        # 語を詰めて書く見出しの中の固有の語は従来どおり当たる
+        ('GREENHOLICinKARIYA2026が刈谷市で開催、アガベや塊根植物と園芸用品を販売',
+         'GREENHOLIC in KARIYA 2026', True),
     ]
     for title, name, want in cases:
         got = matches(title, name)
@@ -926,6 +958,13 @@ def self_test(verbose=True):
         ('第四回 珍奇植物フェア', '珍奇植物フリーマーケット', False),
         # 回数・版数の印だけで一致しないこと
         ('植縁祭 5th', 'THE BOTANICAL SHOW 5th', False),
+        # 2026-10-11。見送りの「BOTANICA COFFEE FES」の特徴語 botanica が
+        # Botanical を名乗る見出しの botanical の中に入り、全部「見送り済み」に落ちていた
+        # (BOTANICAL DISPLAY 2026 が24日ぶん候補に出ていなかった)
+        ('BOTANICAL DISPLAY 2026', 'BOTANICA COFFEE FES', False),
+        ('第2回 Botanical Autumn', 'BOTANICA DÍA DE LOS MUERTOS (2026-10-31 BOTANICA MUSEUM・千葉市美浜区)', False),
+        # 同じ語が見出しに単独で出るなら従来どおり当たる
+        ('BOTANICA COFFEE FES', 'BOTANICA COFFEE FES (2026-11-21 BOTANICA MUSEUM・千葉市美浜区)', True),
     ]
     for title, name, want in bcases:
         got = matches(title, name, bare=True)
