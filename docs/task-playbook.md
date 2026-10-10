@@ -4036,6 +4036,7 @@ BOTANICA の見送りに当たったことで気付いた。
 
 - 直す前後で今日の巡回(LEAFLA 45日 + NextMeet 4か月。取得した頁を固定して2回判定)に当てると、known_rejected が 130 → 106、
   取りこぼし候補が 0 → 1(BOTANICAL DISPLAY 2026・the Farm UNIVERSAL OSAKA 10/4〜11/3。24日ぶん隠れていた。見送りに記録)。covered は 199 のまま。
+  known_rejected は日ごとの延べなので、BOTANICAL DISPLAY を記録した後の CI の巡回では 106 + 24 = 130 に戻る(同日 07:35 の daily で確認)。件数が同じでも中身は入れ替わっている。
 - 規則: 英字の特徴語は、見出しの中でその語を含む英数の連なりが全部 GENERIC の語(と末尾の数字付き)なら当たりに数えない
   (`_inside_generic_word`)。「GREENHOLICinKARIYA2026」のように語を詰めて書く見出しの中の固有の語は従来どおり当たる。自己テスト5件。
 - **0件を返す見張りは、壊れていても0件を返す。**coverage-gaps が0件の日でも、stats の known_rejected が前日から大きく動いていないか、
