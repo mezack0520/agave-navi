@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-10",
+  "sweptOn": "2026-10-11",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,22 +16,27 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1442,
-    "in_scope": 336,
-    "covered": 204,
-    "known_rejected": 132,
+    "candidates": 1411,
+    "in_scope": 329,
+    "covered": 199,
+    "known_rejected": 129,
     "truncated_resolved": 135,
     "truncated_unresolved": 2,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 244,
+    "in_scope_leafla": 239,
     "truncated_unresolved_hits": 90,
-    "in_scope_nextmeet": 92,
-    "gaps_raw": 0
+    "in_scope_nextmeet": 90,
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
     "10/09 追加 四日市市文化会館で生活文化・趣味の作品展を開催...",
     "10/09 追加 リトリートマルシェ vol.10が11月8日に..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-08",
+      "title": "艸化 第七話"
+    }
+  ]
 }

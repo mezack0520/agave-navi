@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-10 09:30 JST",
+ "generated": "2026-10-11 06:44 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 337,
-  "awaitingNextEdition": 303,
+  "awaitingNextEdition": 313,
   "officialSiteCandidates": 83,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 79,
@@ -309,16 +309,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
-  },
-  {
-   "handle": "atilab_dyc",
-   "url": "https://www.instagram.com/atilab_dyc/",
-   "eventCount": 2,
-   "lastEventName": "atilab 間借り販売会（2026年10月）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
   },
   {
    "handle": "anrigarden",
@@ -741,20 +731,20 @@
    "apiStatus": "api"
   },
   {
+   "handle": "atilab_dyc",
+   "url": "https://www.instagram.com/atilab_dyc/",
+   "eventCount": 2,
+   "lastEventName": "atilab 間借り販売会（2026年10月）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "hanauchustaff",
    "url": "https://www.instagram.com/hanauchustaff/",
    "eventCount": 1,
    "lastEventName": "第28回 花宇宙ドリームガーデン",
-   "lastEventDate": "2026-10-09",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "uell_creators",
-   "url": "https://www.instagram.com/uell_creators/",
-   "eventCount": 1,
-   "lastEventName": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
    "lastEventDate": "2026-10-09",
    "hasUpcoming": true,
    "priority": 1,
@@ -781,16 +771,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "kyoshoku_sai",
-   "url": "https://www.instagram.com/kyoshoku_sai/",
-   "eventCount": 1,
-   "lastEventName": "狂植祭 Vol.7",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "sun_in_succulents",
    "url": "https://www.instagram.com/sun_in_succulents/",
    "eventCount": 1,
@@ -805,26 +785,6 @@
    "url": "https://www.instagram.com/kagoen_nursery/",
    "eventCount": 1,
    "lastEventName": "第13回 花郷園 秋の芸術植物祭り",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "hatazao_engei",
-   "url": "https://www.instagram.com/hatazao_engei/",
-   "eventCount": 1,
-   "lastEventName": "植物と(パン) vol.1",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "kusabi_official",
-   "url": "https://www.instagram.com/kusabi_official/",
-   "eventCount": 1,
-   "lastEventName": "ROOTS & SUN",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
    "priority": 1,
@@ -871,26 +831,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "blue.ocean8484",
-   "url": "https://www.instagram.com/blue.ocean8484/",
-   "eventCount": 1,
-   "lastEventName": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "aitomargueritestation",
-   "url": "https://www.instagram.com/aitomargueritestation/",
-   "eventCount": 1,
-   "lastEventName": "多肉植物・サボテン販売会（道の駅あいとうマーガレットステーション）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "mishimarukan",
    "url": "https://www.instagram.com/mishimarukan/",
    "eventCount": 1,
@@ -905,16 +845,6 @@
    "url": "https://www.instagram.com/tomitan.nouen/",
    "eventCount": 1,
    "lastEventName": "とみたん農園 多肉植物販売会（道の駅 石神の丘）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "morimizuki1187",
-   "url": "https://www.instagram.com/morimizuki1187/",
-   "eventCount": 1,
-   "lastEventName": "宮川洋蘭 OPEN FARM",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": true,
    "priority": 1,
@@ -3394,6 +3324,76 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "uell_creators",
+   "url": "https://www.instagram.com/uell_creators/",
+   "eventCount": 1,
+   "lastEventName": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
+   "lastEventDate": "2026-10-09",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kyoshoku_sai",
+   "url": "https://www.instagram.com/kyoshoku_sai/",
+   "eventCount": 1,
+   "lastEventName": "狂植祭 Vol.7",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "hatazao_engei",
+   "url": "https://www.instagram.com/hatazao_engei/",
+   "eventCount": 1,
+   "lastEventName": "植物と(パン) vol.1",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "kusabi_official",
+   "url": "https://www.instagram.com/kusabi_official/",
+   "eventCount": 1,
+   "lastEventName": "ROOTS & SUN",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "blue.ocean8484",
+   "url": "https://www.instagram.com/blue.ocean8484/",
+   "eventCount": 1,
+   "lastEventName": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "aitomargueritestation",
+   "url": "https://www.instagram.com/aitomargueritestation/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物・サボテン販売会（道の駅あいとうマーガレットステーション）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "morimizuki1187",
+   "url": "https://www.instagram.com/morimizuki1187/",
+   "eventCount": 1,
+   "lastEventName": "宮川洋蘭 OPEN FARM",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   }
  ],
  "awaitingNextEdition": [
@@ -3416,6 +3416,17 @@
    "monthsSinceLast": 0,
    "igHandle": null,
    "officialUrl": "https://www.seibu-green.co.jp/wako-jurin/event/2026090413142312984.html",
+   "recurring": true,
+   "apiStatus": "none"
+  },
+  {
+   "series": "カダンフェス2026秋",
+   "lastSlug": "kadan-fes-2026-autumn",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://fumakilla.jp/kadanlife/kadanfes/",
    "recurring": true,
    "apiStatus": "none"
   },
@@ -3750,90 +3761,79 @@
    "apiStatus": "api"
   },
   {
-   "series": "aobouzu × 6 RACCOON コラボPOP UP",
-   "lastSlug": "aobouzu-6raccoon-popup-2026-09",
-   "lastDate": "2026-09-04",
-   "lastEnd": "2026-09-05",
-   "monthsSinceLast": 1,
-   "igHandle": "6_raccoon_",
-   "officialUrl": "https://www.instagram.com/6_raccoon_/",
+   "series": "MIDOLIEN（ミドリアン）〜珍奇植物たちとの遭遇〜",
+   "lastSlug": "midolien-hono-osaka-2026-10",
+   "lastDate": "2026-10-09",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "uell_creators",
+   "officialUrl": "https://weekend.osaka/16061/",
    "recurring": false,
    "apiStatus": "api"
   },
   {
-   "series": "TOTTORI BOTANICA 〜Plants to remember〜",
-   "lastSlug": "tottori-botanica-2026-09",
-   "lastDate": "2026-09-05",
-   "lastEnd": "2026-09-05",
-   "monthsSinceLast": 1,
-   "igHandle": "seven.seedlings2",
-   "officialUrl": "https://www.instagram.com/seven.seedlings2/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "gardens umekita 2周年記念イベント 店頭即売会",
-   "lastSlug": "gardens-umekita-2nd-anniv-2026-09",
-   "lastDate": "2026-09-05",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": null,
-   "officialUrl": "https://gardens.hc-kohnan.com/news/second_anniversary/",
-   "recurring": false,
-   "apiStatus": "none"
-  },
-  {
-   "series": "PLANTS BAZAAR なんせ植物が好きなもんで。",
-   "lastSlug": "plants-bazaar-null-kanazawa-2026-09",
-   "lastDate": "2026-09-05",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": "null_kanazawa",
-   "officialUrl": "https://www.instagram.com/reel/DcqpmRoI6Wb/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "ボタニカルフェスタ（ハオルチア界隈）",
-   "lastSlug": "botanical-festa-hawo-kumagaya-2026-09",
-   "lastDate": "2026-09-06",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": "hawo_fes",
-   "officialUrl": "https://www.instagram.com/hawo_fes/",
+   "series": "植物と(パン) vol.1",
+   "lastSlug": "shokubutsu-to-pan-vol1-mitakadai-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "hatazao_engei",
+   "officialUrl": "https://www.instagram.com/hatazao_engei/",
    "recurring": false,
    "apiStatus": "personal"
   },
   {
-   "series": "第1回 ボタニカルX",
-   "lastSlug": "botanical-x-vol1-2026",
-   "lastDate": "2026-09-06",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": "rojiuranogibousi",
-   "officialUrl": null,
-   "recurring": false,
-   "apiStatus": "personal"
-  },
-  {
-   "series": "GREEN HOLIC in KARIYA 2026",
-   "lastSlug": "green-holic-kariya-2026",
-   "lastDate": "2026-09-06",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": "greenholic_nagoya",
-   "officialUrl": "https://kariya-urbanfes.com/",
+   "series": "ROOTS & SUN",
+   "lastSlug": "roots-and-sun-esaka-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "kusabi_official",
+   "officialUrl": "https://www.instagram.com/kusabi_official/",
    "recurring": false,
    "apiStatus": "api"
   },
   {
-   "series": "Green Summit vol.22 in Yamagata",
-   "lastSlug": "green-summit-vol22-yamagata-2026",
-   "lastDate": "2026-09-06",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": "green_summit_touhoku",
-   "officialUrl": "https://www.instagram.com/green_summit_touhoku/",
+   "series": "BOTANICAL STYLE -Beppu Oita-",
+   "lastSlug": "botanical-style-beppu-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "earthwalk_plants",
+   "officialUrl": "https://www.instagram.com/p/DdKfIEck1Fa/",
+   "recurring": false,
+   "apiStatus": "api"
+  },
+  {
+   "series": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
+   "lastSlug": "blue-ocean-aki-shokubutsu-hanbaikai-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "blue.ocean8484",
+   "officialUrl": "https://www.instagram.com/p/Dd4ldh8zpzD/",
+   "recurring": false,
+   "apiStatus": "personal"
+  },
+  {
+   "series": "X-PLANTS 即売会（プロトリーフ二子玉川本店）",
+   "lastSlug": "x-plants-sokubaikai-protoleaf-futakotamagawa-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "protoleaf.shop_futakotamagawa",
+   "officialUrl": "https://www.instagram.com/p/Dd3teoaE79D/",
+   "recurring": false,
+   "apiStatus": "api"
+  },
+  {
+   "series": "多肉植物・サボテン販売会（道の駅あいとうマーガレットステーション）",
+   "lastSlug": "aito-margueritestation-taniku-saboten-hanbaikai-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "aitomargueritestation",
+   "officialUrl": "https://www.instagram.com/p/DdX0gFSE0wP/",
    "recurring": false,
    "apiStatus": "api"
   }
