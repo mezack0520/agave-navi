@@ -3421,6 +3421,12 @@ Plants garage market 2027(2027-05-29)の告知は API で取れていたが候�
 手元で audit を走らせたら commit 前に `git checkout -- audit-results.json audit-history.json`。
 commit 前に `git diff --stat` で触ったつもりのファイルだけかを見る。
 
+**その日の daily より前に手元で回すと、暦で決まる4検査が urgent で出る(2026-10-11)。**
+06:3x の起動直後は、合図の push で起きた daily(status 更新と再生成、約9分)がまだ入っていない。
+`status_date_mismatch` / `index_card_drift` / `embedded_event_set_drift` / `index_badge_count_drift` が
+前日に終わった回の数だけ出る(10-11 は 12 / 12 / 48 / 1)。daily の `chore(daily)` を pull して回し直すと4つとも0になった。
+結果を読むのも自分の変更を押すのも、daily の完了を待ってからにする。
+
 ### 見送りは会期の全日で引く。eventDate は1日しか持たない (2026-10-02)
 
 `ig-organizer-watch.py` の「見送り済みは既知」は `rejected-events.json` の `eventDate` 1日だけを引いていた。
