@@ -1458,6 +1458,86 @@
    "action": "fixed",
    "detail": "上位の催し DESIGN WEEKEND OSAKA(10/8〜11)の会期の途中に読むと範囲が翌年として外れ、会期末の10/11が2日続けて出ていた。ig-organizer-watch.umbrella_days が掲載済みの回を含む年を選ぶようにした(16日分の版で変わるのはこの2回分だけ)",
    "mailedOn": "2026-10-10"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "艸化 第七話 (2026-11-08)",
+   "action": "rejected",
+   "detail": "主催 @cusasuc の出店者紹介 DeG7SNdvmvm で全10店のうち植物は艸と花・ドライの2店。compositeEvents で見送り、listing-policy にシリーズの前例を足した"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "truncated_unresolved",
+   "target": "四日市 生活文化・趣味の作品展 / リトリートマルシェ vol.10",
+   "action": "reviewed",
+   "detail": "2件とも 10-10 に見送り記録済み(yokkaichi-seikatsu-bunka-sakuhinten-2026-10 / retreat-marche-vol10-recorso-2026-11)。切れた見出しなので照合できないだけ"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@sprout_2010817 2026-10-17 秋の外構診断会",
+   "action": "rejected",
+   "detail": "外構・庭づくりの相談会(DeQiPsESaEc)。同じ日のスプラウトの秋まつり(植物ガチャ・多肉くじ・輪投げだけ)も storeSale.exclude で見送り"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10",
+   "action": "reviewed",
+   "detail": "shaboten.co.jp/press/7561/ は会期 10/10〜11/23 のままで中止の語なし。+40字は記事の外の関連記事欄(10/06 の別の告知)。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "hananowa-marche-9th-2026-10",
+   "action": "fixed",
+   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "irie-plants-bash-5-2026-10",
+   "action": "fixed",
+   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "kazenomori-market-2026-10",
+   "action": "fixed",
+   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "polka-marche-takahashi-2026-10",
+   "action": "fixed",
+   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "botanical-botanical-okinawa / masappe 周年祭 / まるっと植物fes / BOTANICAL STYLE 福岡 / 珍奇植物FM 2回 / サンタフェ周年祭",
+   "action": "skipped",
+   "detail": "主催の最新12件に会場・時間が出ていない。まるっと植物fes は 10/08 の投稿が @fuchinobepark をメンションするだけで、正式な告知画像は10月末の予定"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "agave-event-update",
+   "kind": "eyecatch_candidates_pending",
+   "target": "12件",
+   "action": "skipped",
+   "detail": "agave-navi-eyecatch の担当"
   }
  ]
 }
