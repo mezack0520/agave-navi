@@ -1575,6 +1575,14 @@
    "action": "fixed",
    "detail": "説明文に書いた開催時間を time に入れた(BOTARIBA 豊橋・札幌カクタスクラブ秋の展示会 ほか)。27 GALLERY の企画展(8/14〜30)は曜日ごとの開始時刻しか無いので残した",
    "mailedOn": "2026-10-11"
+  },
+  {
+   "on": "2026-10-11",
+   "task": "event-monitor",
+   "kind": "instagram_embed_link_mismatch",
+   "target": "American and Plants（アメプラ） (2026-10-25)",
+   "action": "fixed",
+   "detail": "詳細頁の Instagram の埋め込みはチラシの投稿、「Instagramで見る」は出店者募集終了の投稿を指していた。リンクを埋め込みと同じ投稿にした"
   }
  ]
 }

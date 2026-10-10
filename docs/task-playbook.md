@@ -4074,6 +4074,20 @@ location / prefecture は正しかった。09-22 に説明文を書き足した�
 27 GALLERY の企画展(itakeru2・8/14〜30)は曜日ごとの開始時刻と最終日の時間しか書いておらず、time の形にならないので残した。
 開催前の回は `time_vs_description` が毎日メールに出すので、開催日を過ぎて残るのは鳴った回を直さなかったときだけ。
 
+### Instagram の埋め込みと「Instagramで見る」は同じ投稿を指す (2026-10-11)
+
+アメプラ(american-and-plants-sano-2026-10・10/25)の詳細頁は、埋め込みがチラシの投稿(DcfWyKgSfM1)、
+その下の「Instagramで見る」が出店者募集終了の投稿(DdEX9T8yKKZ)を指していた(09-23〜10-11)。
+instagramUrl は掲載時の出典の投稿のまま、09-23 にアイキャッチをチラシの投稿から採ったとき instagramPostId が
+その投稿になった。`make_instagram_section` は埋め込みを instagramPostId、リンクを instagramUrl から組んでいた。
+`sync-instagram-ids.py` の docstring が「両方に持つと必ず片方だけ直して食い違う」と書いていたとおりの形。
+
+- `make_instagram_section` は、instagramUrl が埋め込みと別の投稿を指していればリンクを埋め込みの投稿から組む。
+- 検査 `audit.instagram_embed_link_mismatch`(urgent): 生成した詳細頁の埋め込みの投稿IDと「Instagramで見る」の投稿IDを比べる。
+  直す前の頁で1件、作り直した頁で0件。04-07〜10-11 の157日分で instagramUrl と instagramPostId が別の投稿だったのはこの1回だけ。
+- データも instagramUrl をチラシの投稿に揃えた(url / sourceUrl は掲載時の出典のまま)。
+- **アイキャッチを出典と別の投稿から採ったら、instagramUrl も同じ投稿に揃えるか消す。**埋め込みは instagramPostId が正。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは

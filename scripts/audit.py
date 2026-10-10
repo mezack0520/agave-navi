@@ -4761,7 +4761,11 @@ def main():
     # 埋め込みが消えると詳細頁からその回の告知への導線が無くなる。
     # ここは「値が在るか」ではなく「頁に出ているか」を見る(機能確認)。
     _IG_ID = re.compile(r'/(?:p|reel|reels|tv)/([A-Za-z0-9_-]+)')
+    _IG_SECTION = re.compile(
+        r'detail-instagram-embed.*?/p/([A-Za-z0-9_-]+)/embed/.*?class="instagram-embed-link"[^>]*>\s*<a[^>]*href="([^"]*)"',
+        re.S)
     ig_lost = []
+    ig_link_bad = []
     for e in events:
         _sl = e.get('slug') or ''
         _pid = (e.get('instagramPostId') or '').strip()
@@ -4785,11 +4789,27 @@ def main():
             _want = _pid or _IG_ID.search(_iurl).group(1)
             if f'/p/{_want}/embed/' not in _h:
                 ig_lost.append(f'{_sl}: 埋め込みの投稿IDが events.json と違う（期待 {_want}）')
+            # 埋め込みの下の「Instagramで見る」が、埋め込んだ投稿と別の投稿を指していないか(2026-10-11)
+            _sec = _IG_SECTION.search(_h)
+            if _sec:
+                _emb, _href = _sec.group(1), _sec.group(2)
+                _hm = _IG_ID.search(_href)
+                if _hm and _hm.group(1) != _emb:
+                    ig_link_bad.append(f'{_sl}: 埋め込み {_emb} /「Instagramで見る」{_hm.group(1)}')
     add('instagram_embed_missing', 'IGの値があるのに詳細頁に埋め込みが出ていない',
         sorted(ig_lost),
         'make_instagram_section が投稿IDを取れずに空を返している。'
         'URLの形を増やしたら extractor の正規表現も足す。'
         '値だけ直して再生成しないと頁は変わらない')
+    # 埋め込みと「Instagramで見る」が別の投稿(2026-10-11)。アメプラ(10/25)は instagramUrl が
+    # 出店者募集終了の投稿のまま、アイキャッチの採用で instagramPostId がチラシの投稿になり、
+    # 頁の埋め込みはチラシ・リンクは募集終了の投稿を指していた(09-23〜10-11)。
+    # make_instagram_section はリンクを埋め込んだ投稿から組むようにした。ここはその機能確認で、生成物を見る。
+    # 04-07〜10-11 の events.json 157日分で instagramUrl と instagramPostId が別の投稿だったのはこの1回だけ
+    add('instagram_embed_link_mismatch', '詳細頁のInstagram埋め込みと「Instagramで見る」が別の投稿を指している',
+        sorted(ig_link_bad),
+        'build-detail-pages.make_instagram_section がリンクを埋め込みの投稿IDから組んでいるかを見る。'
+        'events.json の instagramUrl と instagramPostId が別の投稿なら、どちらがその回の告知かを確かめて揃える')
 
     # --- imageSource の投稿IDが instagramPostId に写っているか ----------------
     # アイキャッチを取ると imageSource にその投稿URLが残る。だが

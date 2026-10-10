@@ -121,7 +121,13 @@ def make_instagram_section(ev):
         else:
             return ''
 
-    if not ig_url:
+    # 「Instagramで見る」は埋め込んだ投稿へ飛ばす。instagramUrl が別の投稿を指していても使わない。
+    # アメプラ(american-and-plants-sano-2026-10)は instagramUrl が出店者募集終了の投稿のまま、
+    # アイキャッチの採用で instagramPostId がチラシの投稿になり、埋め込みはチラシ・リンクは募集終了の投稿を
+    # 指していた(2026-09-23〜10-11)。監査 instagram_embed_link_mismatch が頁で見る。
+    import re
+    _m = re.search(r'/(?:p|reel|reels|tv)/([A-Za-z0-9_-]+)', ig_url or '')
+    if not ig_url or (_m and _m.group(1) != post_id):
         ig_url = f'https://www.instagram.com/p/{post_id}/'
 
     return f'''        <div class="detail-section detail-instagram-embed">

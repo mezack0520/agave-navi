@@ -367,3 +367,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-10-10(event-monitor): audit.desc_span_mismatch(urgent・sitelib.description_span_mismatches)を追加。説明文の「N日間」・会期の隣の日と date〜dateEnd を突き合わせる。daily の date verification が関門を足す前に書いた開始日の誤り3件(開催済み)を直した。track-updates.py は開催を終えた回の日程・会場の訂正を更新欄とフィードに積まない
 - 2026-10-10(event-monitor): ig-organizer-watch.umbrella_days が範囲の年を、掲載済みの回を含む年から選ぶようにした(上位の催しの会期の途中に読むと翌年として外れ、会期の端が当サイトに無い日付として出ていた)
 - 2026-10-11(event-monitor): audit.desc_venue_other_prefecture(urgent・sitelib.description_venue_place_mismatches)を追加。説明文が会場名に付けた所在地(直前の「◯◯県◯◯市の」・直後の括弧書き)と prefecture を突き合わせる。開催済みで time が空の29回を説明文の開催時間で埋めた
+- 2026-10-11(event-monitor): build-detail-pages.make_instagram_section は「Instagramで見る」を埋め込んだ投稿から組む(instagramUrl が別の投稿のときは使わない)。audit.instagram_embed_link_mismatch(urgent)が生成した頁で埋め込みとリンクの投稿IDを比べる
