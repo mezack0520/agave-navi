@@ -1,5 +1,5 @@
 {
-  "total": 777,
+  "total": 775,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 129,
+      "count": 127,
       "items": [
         "agave-popup-mellow-plants-toon-2026-10",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -226,7 +226,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 277,
+      "count": 275,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 127,
+      "count": 129,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -681,7 +681,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -888,7 +888,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 127,
+      "count": 129,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
@@ -1422,11 +1422,8 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 2,
-      "items": [
-        "2027-03-20 jusai-10th-anniversary-nagoya-2027-03: static.readdy.ai（url=jusai.link / sourceUrl=jusai.link）",
-        "2027-05-29 jusai-utsunomiya-spring-2027-05: static.readdy.ai（url=jusai.link / sourceUrl=jusai.link）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },
