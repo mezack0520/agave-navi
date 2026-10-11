@@ -1582,7 +1582,8 @@
    "kind": "instagram_embed_link_mismatch",
    "target": "American and Plants（アメプラ） (2026-10-25)",
    "action": "fixed",
-   "detail": "詳細頁の Instagram の埋め込みはチラシの投稿、「Instagramで見る」は出店者募集終了の投稿を指していた。リンクを埋め込みと同じ投稿にした"
+   "detail": "詳細頁の Instagram の埋め込みはチラシの投稿、「Instagramで見る」は出店者募集終了の投稿を指していた。リンクを埋め込みと同じ投稿にした",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1590,7 +1591,8 @@
    "kind": "rejected_revisit_expired",
    "target": "ao-dryflower-bikaku-ten-hitoyoshi-2026-10",
    "action": "fixed",
-   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した"
+   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1598,7 +1600,8 @@
    "kind": "rejected_revisit_expired",
    "target": "fukuland-2026-10",
    "action": "fixed",
-   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した"
+   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1606,7 +1609,8 @@
    "kind": "rejected_revisit_expired",
    "target": "terrace-no-marche-vol17-2026-10",
    "action": "fixed",
-   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した"
+   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1614,7 +1618,8 @@
    "kind": "coverage_gaps",
    "target": "ミニ植欲祭 (2026-10-18)",
    "action": "listed",
-   "detail": "主催 @tokue_green_plants(徳江生花店)の告知 DeOo1eQqR32 で裏取り。趣味家のアガベ・ビカクシダ等の即売会"
+   "detail": "主催 @tokue_green_plants(徳江生花店)の告知 DeOo1eQqR32 で裏取り。趣味家のアガベ・ビカクシダ等の即売会",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1622,7 +1627,8 @@
    "kind": "metric_moved",
    "target": "ongoing_events 20→17 (換算28)",
    "action": "fixed",
-   "detail": "3連休最終日(スポーツの日)の開催中17件は平常。土日の中央値を遠い先の回で膨らんだ開催予定で換算した基準との比較だった。ongoing_events は暦で決まる値なので audit の _METRIC_NO_ALARM へ移した(暦が原因の誤検知3回目)"
+   "detail": "3連休最終日(スポーツの日)の開催中17件は平常。土日の中央値を遠い先の回で膨らんだ開催予定で換算した基準との比較だった。ongoing_events は暦で決まる値なので audit の _METRIC_NO_ALARM へ移した(暦が原因の誤検知3回目)",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1630,7 +1636,8 @@
    "kind": "tbd",
    "target": "masappe 周年祭 / BOTANICAL BOTANICAL OKINAWA / まるっと植物fes!! / BOTANICAL STYLE Minato / 珍奇植物フリマ 1月・4月 / サンタフェ周年祭",
    "action": "skipped",
-   "detail": "主催の最新12件に会場・時間なし。まるっと植物fes は 10/08 の投稿に #淵野辺公園 と公園のアカウントのタグだけで会場の明記は無く、正式な告知画像は10月末の予定"
+   "detail": "主催の最新12件に会場・時間なし。まるっと植物fes は 10/08 の投稿に #淵野辺公園 と公園のアカウントのタグだけで会場の明記は無く、正式な告知画像は10月末の予定",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1638,7 +1645,8 @@
    "kind": "eyecatch_candidates_pending",
    "target": "12件",
    "action": "skipped",
-   "detail": "agave-navi-eyecatch の担当"
+   "detail": "agave-navi-eyecatch の担当",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1646,7 +1654,8 @@
    "kind": "truncated_unresolved",
    "target": "四日市 生活文化・趣味の作品展 / リトリートマルシェ vol.10",
    "action": "reviewed",
-   "detail": "どちらも 10-10 に見送り記録済み"
+   "detail": "どちらも 10-10 に見送り記録済み",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1654,7 +1663,8 @@
    "kind": "time_vs_flyer",
    "target": "植物販売会（やまぐちフラワーランド・もちのいえ） (2026-10-24)",
    "action": "fixed",
-   "detail": "time を 9:00〜15:00 にし、説明文の「開始・終了の時刻は告知に無い」を消した。出典の投稿 Dd1MD2ny3HK の告知画像(アイキャッチと同じ1枚)に「10/24(土) 9:00-15:00」とある"
+   "detail": "time を 9:00〜15:00 にし、説明文の「開始・終了の時刻は告知に無い」を消した。出典の投稿 Dd1MD2ny3HK の告知画像(アイキャッチと同じ1枚)に「10/24(土) 9:00-15:00」とある",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1662,7 +1672,8 @@
    "kind": "instagram_post_predates_edition",
    "target": "第6回 KA78企画祭 (2026-11-22)",
    "action": "fixed",
-   "detail": "詳細頁が 2025-05-21 の投稿 DJ6gP1RS1ye を「この回のInstagram投稿」として埋め込んでいた。09-29 に enrich が検索で当たった投稿を書いたもの。instagramPostId / instagramUrl を外した"
+   "detail": "詳細頁が 2025-05-21 の投稿 DJ6gP1RS1ye を「この回のInstagram投稿」として埋め込んでいた。09-29 に enrich が検索で当たった投稿を書いたもの。instagramPostId / instagramUrl を外した",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1670,7 +1681,8 @@
    "kind": "eyecatch_candidates_pending",
    "target": "アガベ販売会 Agave collection 2026（Bota Bro Garden） (2026-10-25)",
    "action": "fixed",
-   "detail": "CI の候補(出典のリール Dd8rprAS7MB の表紙)を採用。回名・10.25 SUN・10:00-16:00 が読める"
+   "detail": "CI の候補(出典のリール Dd8rprAS7MB の表紙)を採用。回名・10.25 SUN・10:00-16:00 が読める",
+   "mailedOn": "2026-10-12"
   },
   {
    "on": "2026-10-12",
@@ -1678,7 +1690,8 @@
    "kind": "time_vs_source",
    "target": "俺の！プランツ・コレクション！！ (2026-09-19〜21)",
    "action": "fixed",
-   "detail": "time 9:30〜17:00 → 9:30〜16:30。出典の PR TIMES(島根県の発表)が「開園時間 9:30～16:30」。17:00 は掲載時の出典 しまね花の郷 の頁から入った値で、その頁は今 404。同サイトの見出しには当日の開園時間 9:30〜17:00 が出ている"
+   "detail": "time 9:30〜17:00 → 9:30〜16:30。出典の PR TIMES(島根県の発表)が「開園時間 9:30～16:30」。17:00 は掲載時の出典 しまね花の郷 の頁から入った値で、その頁は今 404。同サイトの見出しには当日の開園時間 9:30〜17:00 が出ている",
+   "mailedOn": "2026-10-12"
   }
  ]
 }
