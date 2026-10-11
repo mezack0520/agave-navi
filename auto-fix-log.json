@@ -1583,6 +1583,46 @@
    "target": "American and Plants（アメプラ） (2026-10-25)",
    "action": "fixed",
    "detail": "詳細頁の Instagram の埋め込みはチラシの投稿、「Instagramで見る」は出店者募集終了の投稿を指していた。リンクを埋め込みと同じ投稿にした"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "ao-dryflower-bikaku-ten-hitoyoshi-2026-10",
+   "action": "fixed",
+   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "fukuland-2026-10",
+   "action": "fixed",
+   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "terrace-no-marche-vol17-2026-10",
+   "action": "fixed",
+   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ミニ植欲祭 (2026-10-18)",
+   "action": "listed",
+   "detail": "主催 @tokue_green_plants(徳江生花店)の告知 DeOo1eQqR32 で裏取り。趣味家のアガベ・ビカクシダ等の即売会"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "metric_moved",
+   "target": "ongoing_events 20→17 (換算28)",
+   "action": "fixed",
+   "detail": "3連休最終日(スポーツの日)の開催中17件は平常。土日の中央値を遠い先の回で膨らんだ開催予定で換算した基準との比較だった。ongoing_events は暦で決まる値なので audit の _METRIC_NO_ALARM へ移した(暦が原因の誤検知3回目)"
   }
  ]
 }

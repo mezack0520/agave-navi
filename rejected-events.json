@@ -1193,11 +1193,11 @@
     "Ao. 5周年祭"
    ],
    "reasonType": "unverified",
-   "revisit": true,
+   "revisit": false,
    "eventDate": "2026-10-11",
    "decided": "2026-09-29",
-   "revisitedOn": "2026-09-29",
-   "reason": "告知はビカクシダの出展者 @shiro_ura24 の投稿のみで、会場主催 @ao.hostel_cafe_lounge の告知を確認できていない。primarySource.vendorAnnouncementsOnly"
+   "revisitedOn": "2026-10-12",
+   "reason": "告知はビカクシダの出展者 @shiro_ura24 の投稿のみで、会場主催 @ao.hostel_cafe_lounge の告知を確認できていない。primarySource.vendorAnnouncementsOnly / 2026-10-12: 会場主催の告知が出ないまま開催日を過ぎたので再評価を終了"
   },
   {
    "key": "kobe-renga-midori-kurashi-marche-2026-10",
@@ -1236,19 +1236,6 @@
    "eventDate": "2026-10-31",
    "decided": "2026-09-30",
    "reason": "出店者 @jacksongardenlove の投稿だけに日程(10/31 10:00〜17:00・11/1 10:00〜15:00)がある。会場の町田パリオ公式イベント一覧には無く、主催の告知が見つからない → vendorAnnouncementsOnly"
-  },
-  {
-   "key": "kyoto-midori-marche-benkeisou-2026-11",
-   "name": "京都みどりのマルシェ ベンケイソウ (2026-11-08 いばらきスカイパレット・大阪府茨木市)",
-   "aliases": [
-    "KYOTO MIDORI NO MARCHE BENKEISOU",
-    "京都みどりのマルシェ ベンケイソウ"
-   ],
-   "reasonType": "unverified",
-   "revisit": true,
-   "eventDate": "2026-11-08",
-   "decided": "2026-09-30",
-   "reason": "出店者2件の投稿(2026-08-06)に『2026.11.08 10:00〜15:00 いばらきスカイパレット』とあるが、主催 @midorino_marche の直近の投稿は 9/19 回と 2027-03-20 回の出店者紹介だけで、11/8 回の告知が無い → vendorAnnouncementsOnly。同じシリーズは掲載実績があるので、主催の告知が出たら掲載する"
   },
   {
    "key": "irie-plants-bash-5-2026-10",
@@ -1741,7 +1728,7 @@
   {
    "key": "fukuland-2026-10",
    "reasonType": "undisclosed",
-   "revisit": true,
+   "revisit": false,
    "name": "福LAND 2026 (2026-10-11 南あわじ市福良地区)",
    "aliases": [
     "福LAND",
@@ -1749,7 +1736,8 @@
    ],
    "decided": "2026-10-04",
    "eventDate": "2026-10-11",
-   "reason": "主催 @heavengreen_factory (Dd0G533yc5b) は福良祭と同日の街の祭りで、ハンドメイドマーケット・ワークショップ・フード・ライブステージに珍奇植物の企画を加えると告知。名称は中立で植物の出店内訳は非公開(undisclosedBreakdown.exclude)。内訳が出たら compositeEvents で数える"
+   "reason": "主催 @heavengreen_factory (Dd0G533yc5b) は福良祭と同日の街の祭りで、ハンドメイドマーケット・ワークショップ・フード・ライブステージに珍奇植物の企画を加えると告知。名称は中立で植物の出店内訳は非公開(undisclosedBreakdown.exclude)。内訳が出たら compositeEvents で数える / 2026-10-12: 植物の出店内訳が出ないまま開催日を過ぎたので再評価を終了",
+   "revisitedOn": "2026-10-12"
   },
   {
    "key": "mori-no-craft-fieldwork-2026-10",
@@ -1778,14 +1766,15 @@
   {
    "key": "terrace-no-marche-vol17-2026-10",
    "reasonType": "undisclosed",
-   "revisit": true,
+   "revisit": false,
    "name": "テラスのマルシェ vol.17 (2026-10-11〜12 長久手中央二号公園 リニモテラス)",
    "aliases": [
     "テラスのマルシェ"
    ],
    "decided": "2026-10-04",
    "eventDate": "2026-10-11",
-   "reason": "主催 @terrace.no.marche の出店者紹介はハーブティー・アクセサリー・カフェなどハンドメイドと飲食が中心で、長久手市観光の案内も『パンにスイーツ、コーヒーやフード、お花や多肉植物、雑貨』と並記。名称中立・内訳非公開"
+   "reason": "主催 @terrace.no.marche の出店者紹介はハーブティー・アクセサリー・カフェなどハンドメイドと飲食が中心で、長久手市観光の案内も『パンにスイーツ、コーヒーやフード、お花や多肉植物、雑貨』と並記。名称中立・内訳非公開 / 2026-10-12: 出店内訳が出ないまま開催日を過ぎたので再評価を終了",
+   "revisitedOn": "2026-10-12"
   },
   {
    "key": "plants2306-tsu-saboten-jiseichi-ws-2026-11",
@@ -1922,9 +1911,9 @@
     "メデルさんイベント"
    ],
    "decided": "2026-10-07",
-   "reason": "vendorAnnouncementsOnly。福岡の出店者 @the_factory_otto ほか複数の出店予定に『11/22(日)宮崎ヒナタ多肉園(メデルさん)イベントへ出店』とあるだけで、主催とみられる @succulent_room_m(めでる/ヒナタ多肉園・宮崎県日向市の生産者)の最新12投稿に当該回の告知が無い。会場も不明。主催の告知が出たら再評価する",
+   "reason": "vendorAnnouncementsOnly。福岡の出店者 @the_factory_otto ほか複数の出店予定に『11/22(日)宮崎ヒナタ多肉園(メデルさん)イベントへ出店』とあるだけで、主催とみられる @succulent_room_m(めでる/ヒナタ多肉園・宮崎県日向市の生産者)の最新12投稿に当該回の告知が無い。会場も不明。主催の告知が出たら再評価する / 2026-10-12 再評価: @succulent_room_m の最新9投稿は苗の通販だけで、11/22 の回の告知はまだ無い。継続",
    "eventDate": "2026-11-22",
-   "revisitedOn": "2026-10-07"
+   "revisitedOn": "2026-10-12"
   },
   {
    "key": "sakura-shokubutsuen-halloween-2026-10",
@@ -2423,6 +2412,82 @@
    "decided": "2026-10-11",
    "eventDate": "2026-10-04",
    "reason": "outOfScopeGenres(ガーデニング)。主催 @thefarmuniversal(DeBc5-Rmr3W)の告知は、恒例のスタッフの技能コンテストで作った植物のディスプレイ作品を園内に飾るフォトスポットの企画で、即売会・展示即売会ではなく、主題も対象ジャンルの植物ではない。coverage-sweep の照合の不具合(見送りの BOTANICA の語が Botanical の中に当たる)で24日ぶん候補に出ていなかった"
+  },
+  {
+   "key": "heartplants-osaka-ikuseijo-popup-2026-11",
+   "name": "Heartplants. 大阪育成場ポップアップ with 丹波多肉 春日堂 (2026-11-22 Heartplants. 大阪の育成場・大阪府)",
+   "aliases": [
+    "育成場ポップアップ",
+    "大阪育成場ポップアップ"
+   ],
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2026-11-22",
+   "decided": "2026-10-12",
+   "reason": "主催 @heart_plants(厳選アガベ専門店)が自分の投稿の予定欄に『11/22 大阪育成場ポップアップ with @tambataniku.kasugadou』と書いている(DeGx-nRtGwC ほか)。日付は主催の一次情報だが、育成場は普段『事前予約で来店可能』で所在地も非公開。当日が予約なしで誰でも入れる回か・時間・所在地が出ていないので、誰でも行ける回かを判断できない。詳細の告知が出たら掲載する"
+  },
+  {
+   "key": "green-link-mishima-2026-12",
+   "name": "Green Link (2026-12-13 静岡県三島市・会場未確認)",
+   "aliases": [
+    "Green Link",
+    "グリーンリンク"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-12-13",
+   "decided": "2026-10-12",
+   "reason": "出店者 @heart_plants の予定欄に『12/13(日) 静岡県三島市Green Link』とあるだけで、主催と会場が分からない(Google の検索結果も同じ文面の転載だけ。Instagram の topsearch でも主催に当たらない)。vendorAnnouncementsOnly。主催の告知が出たら再評価する"
+  },
+  {
+   "key": "monster-plants-kagawa-2027-03",
+   "name": "モンスタープランツ (2027-03-28 香川県・会場未確認)",
+   "aliases": [
+    "モンスタープランツ"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2027-03-28",
+   "decided": "2026-10-12",
+   "reason": "出店者 @heart_plants の予定欄に『3/28 香川県モンスタープランツ』とあるだけ。2026年4月の第2弾(綾歌総合文化会館アイレックス・丸亀市)は掲載しているが主催のアカウントが分からず、次の回の主催の告知を確かめられない。vendorAnnouncementsOnly"
+  },
+  {
+   "key": "natural-finkies-2nd-kitakyushu-2026-12",
+   "name": "ナチュラルフィンキーズ 2nd in 福岡 (2026-12-19 福岡県北九州市・会場未確認)",
+   "aliases": [
+    "ナチュラルフィンキーズ",
+    "フィンキーズ"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-12-19",
+   "decided": "2026-10-12",
+   "reason": "出店者 @the_factory_otto の予定に『12/19(土)福岡県!!ナチュラルフィンキーズ2nd in福岡ozcoさん!!リリィさん!!緊急来福!!』、@ozco70 の出店予定に『12月19日(土) 福岡県北九州 出店』とあるだけで、主催と会場が分からない。vendorAnnouncementsOnly"
+  },
+  {
+   "key": "otera-de-marche-komyoji-soka-14th-2026-12",
+   "name": "第14回 お寺deマルシェ in 光明寺 (2026-12-13 光明寺・埼玉県草加市柿木町)",
+   "aliases": [
+    "お寺deマルシェ",
+    "お寺マルシェ光明寺"
+   ],
+   "reasonType": "undisclosed",
+   "revisit": false,
+   "eventDate": "2026-12-13",
+   "decided": "2026-10-12",
+   "reason": "主催は八潮市のハンドメイド雑貨店 アンハウス(@ann.house.zakka / @otera.marche.soka_komyoji)で、春秋に光明寺で開く地域のマルシェ。名称は中立で、主催の雑貨と出店者の内訳は非公開。多肉の出店はあるが植物が主題とは書いていない(undisclosedBreakdown.exclude)。回を重ねるシリーズなので以後の回も同じ判断でよい"
+  },
+  {
+   "key": "makers-street-garden-2026-11",
+   "name": "MAKERS STREET GARDEN 2026 (2026-11-28 東田大通り公園・福岡県北九州市)",
+   "aliases": [
+    "MAKERS STREET GARDEN"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-11-28",
+   "decided": "2026-10-12",
+   "reason": "主催 @noblerosegardendot(バラ園とコーヒーの NOBLE ROSE GARDEN)の2回目。『薔薇をきっかけに、花から緑へ』を掲げ、募集は花苗・植物・ガーデン雑貨・野菜・果物・フードで、二次募集の案内も『観葉植物、生花、多肉、園芸資材、雑貨、フード』を並べる。主題はガーデニングと花のある暮らしで、対象の植物は品目の一つ(outOfScopeGenres)"
   }
  ],
  "_reasonTypes": {
@@ -2431,6 +2496,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-10-11",
+ "updated": "2026-10-12",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
