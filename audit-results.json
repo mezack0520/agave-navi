@@ -1,5 +1,5 @@
 {
-  "total": 763,
+  "total": 777,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 127,
+      "count": 129,
       "items": [
         "agave-popup-mellow-plants-toon-2026-10",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -226,7 +226,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 275,
+      "count": 277,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -274,13 +274,14 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 121,
+      "count": 127,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
         "bbb-snowpeak-miyakonojo-2026-11",
         "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
         "bizarre-plants-nagoya-no-jin-2026-11",
+        "bota-bro-garden-agave-collection-izumo-2026-10",
         "botanical-botanical-okinawa-2026-11",
         "botanical-journey-onomichi-2026-11",
         "botanical-life-kasama-2026-11",
@@ -314,8 +315,7 @@
         "isij-big-bazaar-2027-09-26",
         "isij-big-bazaar-2027-11-28",
         "isij-tokyo-reikai-2026-10-25",
-        "isij-tokyo-reikai-2026-12-20",
-        "iwakuni-green-bazaar-6th-2026-11"
+        "isij-tokyo-reikai-2026-12-20"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -681,7 +681,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -888,7 +888,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 121,
+      "count": 127,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
@@ -909,14 +909,17 @@
         "2026-10-17 uomachi-botanical-night-market-2026-10",
         "2026-10-18 dokidoki-ibaraki-taniku-sokubaikai-2026-10-18",
         "2026-10-18 kinshakusai-vol6-2026-10",
+        "2026-10-18 mini-shokuyokusai-tokue-inawashiro-2026-10",
         "2026-10-18 sapporo-bikaku-expo-lv3-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 lier-taniku-festival-kasai-2026-10",
+        "2026-10-24 mochinoie-shokubutsu-hanbaikai-yamaguchi-flowerland-2026-10",
         "2026-10-24 plants-and-coffee-hugcoffee-minamicho-2026-10",
         "2026-10-24 plants-box-kofu-2026-10",
         "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10",
         "2026-10-24 tanikuen-ohisama-apita-ashikaga-2026-10",
+        "2026-10-25 bota-bro-garden-agave-collection-izumo-2026-10",
         "2026-10-25 botanoichi-meets-bikaku-yokocho-2026-10",
         "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
         "2026-10-25 isij-tokyo-reikai-2026-10-25",
@@ -926,10 +929,7 @@
         "2026-10-30 tanikuen-ohisama-aeon-morioka-2026-10",
         "2026-10-30 toyama-saboten-taniku-9th-2026-10",
         "2026-10-31 lier-taniku-festival-nobeoka-2026-10",
-        "2026-10-31 od-plants-1st-anniversary-sukagawa-2026-10",
-        "2026-10-31 shabomaniac-popup-saboru-inu-2026-10",
-        "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
-        "2026-10-31 tanikuen-ohisama-aeon-hiezu-2026-10"
+        "2026-10-31 od-plants-1st-anniversary-sukagawa-2026-10"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1394,12 +1394,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 3,
-      "items": [
-        "ao-dryflower-bikaku-ten-hitoyoshi-2026-10: 開催日 2026-10-11 を過ぎた（保留 2026-09-29）",
-        "fukuland-2026-10: 開催日 2026-10-11 を過ぎた（保留 2026-10-04）",
-        "terrace-no-marche-vol17-2026-10: 開催日 2026-10-11 を過ぎた（保留 2026-10-04）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
@@ -1426,8 +1422,11 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2027-03-20 jusai-10th-anniversary-nagoya-2027-03: static.readdy.ai（url=jusai.link / sourceUrl=jusai.link）",
+        "2027-05-29 jusai-utsunomiya-spring-2027-05: static.readdy.ai（url=jusai.link / sourceUrl=jusai.link）"
+      ],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },
@@ -1524,10 +1523,8 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 1,
-      "items": [
-        "ongoing_events: 直近中央値 20 → 17（掲載644件で換算 28）（-11）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },

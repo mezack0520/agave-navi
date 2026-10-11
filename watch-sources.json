@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-12 06:45 JST",
+ "generated": "2026-10-12 07:24 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 338,
+  "igAccounts": 341,
   "awaitingNextEdition": 333,
   "officialSiteCandidates": 83,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 80,
+  "igNeedsBrowser": 83,
   "igDead": 7
  },
  "igAccounts": [
@@ -33,7 +33,7 @@
   {
    "handle": "midorino_marche",
    "url": "https://www.instagram.com/midorino_marche/",
-   "eventCount": 6,
+   "eventCount": 7,
    "lastEventName": "KYOTO MIDORI NO MARCHE IN 茨木（2027年3月）",
    "lastEventDate": "2027-03-20",
    "hasUpcoming": true,
@@ -61,16 +61,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "j_n_ishikawa",
-   "url": "https://www.instagram.com/j_n_ishikawa/",
-   "eventCount": 5,
-   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "tanikuen_ohisama",
    "url": "https://www.instagram.com/tanikuen_ohisama/",
    "eventCount": 5,
@@ -79,6 +69,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "j_n_ishikawa",
+   "url": "https://www.instagram.com/j_n_ishikawa/",
+   "eventCount": 5,
+   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "_myoko_plants_market_",
@@ -101,20 +101,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "botayoko",
-   "url": "https://www.instagram.com/botayoko/",
+   "handle": "morinotanikuen",
+   "url": "https://www.instagram.com/morinotanikuen/",
    "eventCount": 5,
-   "lastEventName": "ボタニカル横丁（2026年11月）",
+   "lastEventName": "森の多肉園販売会 BIG",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "morinotanikuen",
-   "url": "https://www.instagram.com/morinotanikuen/",
+   "handle": "botayoko",
+   "url": "https://www.instagram.com/botayoko/",
    "eventCount": 5,
-   "lastEventName": "森の多肉園販売会 BIG",
+   "lastEventName": "ボタニカル横丁（2026年11月）",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
@@ -281,6 +281,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "taniku.no.shizuku",
+   "url": "https://www.instagram.com/taniku.no.shizuku/",
+   "eventCount": 3,
+   "lastEventName": "第3回 ゆるっと多肉マルシェ",
+   "lastEventDate": "2027-01-16",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "yamaokuya_ta29",
    "url": "https://www.instagram.com/yamaokuya_ta29/",
    "eventCount": 3,
@@ -321,6 +331,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "jusai_japan",
+   "url": "https://www.instagram.com/jusai_japan/",
+   "eventCount": 3,
+   "lastEventName": "樹祭 宇都宮 春 2027",
+   "lastEventDate": "2027-05-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "anrigarden",
    "url": "https://www.instagram.com/anrigarden/",
    "eventCount": 2,
@@ -341,20 +361,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "tropicalgarden_saitama",
-   "url": "https://www.instagram.com/tropicalgarden_saitama/",
+   "handle": "iwabaegarden",
+   "url": "https://www.instagram.com/iwabaegarden/",
    "eventCount": 2,
-   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
+   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "iwabaegarden",
-   "url": "https://www.instagram.com/iwabaegarden/",
+   "handle": "tropicalgarden_saitama",
+   "url": "https://www.instagram.com/tropicalgarden_saitama/",
    "eventCount": 2,
-   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
+   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
    "priority": 0,
@@ -1051,6 +1071,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "tokue_green_plants",
+   "url": "https://www.instagram.com/tokue_green_plants/",
+   "eventCount": 1,
+   "lastEventName": "ミニ植欲祭（Flower Shop TOKUE）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "nagashima_marche",
    "url": "https://www.instagram.com/nagashima_marche/",
    "eventCount": 1,
@@ -1131,6 +1161,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "mochi.ie29",
+   "url": "https://www.instagram.com/mochi.ie29/",
+   "eventCount": 1,
+   "lastEventName": "植物販売会（やまぐちフラワーランド・もちのいえ）",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "plus__plants",
    "url": "https://www.instagram.com/plus__plants/",
    "eventCount": 1,
@@ -1199,6 +1239,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "bota_bro_garden",
+   "url": "https://www.instagram.com/bota_bro_garden/",
+   "eventCount": 1,
+   "lastEventName": "アガベ販売会 Agave collection 2026（Bota Bro Garden）",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "driftwood.smokeywood",
@@ -2866,16 +2916,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "jusai_japan",
-   "url": "https://www.instagram.com/jusai_japan/",
-   "eventCount": 1,
-   "lastEventName": "樹祭 一宮 2026 Autumn",
-   "lastEventDate": "2026-09-21",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "engei_raku",
    "url": "https://www.instagram.com/engei_raku/",
    "eventCount": 1,
@@ -3130,16 +3170,6 @@
    "url": "https://www.instagram.com/seiji4240/",
    "eventCount": 1,
    "lastEventName": "多肉屋GPK Season5 オープニングイベント",
-   "lastEventDate": "2026-10-03",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "taniku.no.shizuku",
-   "url": "https://www.instagram.com/taniku.no.shizuku/",
-   "eventCount": 1,
-   "lastEventName": "第1回 ゆるっと多肉マルシェ ONE DAY BOTANICAL ESCAPE",
    "lastEventDate": "2026-10-03",
    "hasUpcoming": false,
    "priority": 2,
@@ -3868,18 +3898,6 @@
    "eventDate": "2026-10-10"
   },
   {
-   "domain": "kagoen.co",
-   "url": "https://www.kagoen.co/",
-   "eventName": "第13回 花郷園 秋の芸術植物祭り",
-   "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "jolienursery.co.jp",
-   "url": "https://jolienursery.co.jp/pages/events",
-   "eventName": "インドアプランツ即売会（Jolie Nursery・ムサシ新潟店）",
-   "eventDate": "2026-10-10"
-  },
-  {
    "domain": "himeji-machishin.jp",
    "url": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
    "eventName": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
@@ -3896,18 +3914,6 @@
    "url": "https://shaboten.co.jp/press/7561/",
    "eventName": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
    "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "kyotocactus.syuriken.jp",
-   "url": "https://kyotocactus.syuriken.jp/project.html",
-   "eventName": "第51回 日本シャボテン大会",
-   "eventDate": "2026-10-11"
-  },
-  {
-   "domain": "figure-online.net",
-   "url": "https://figure-online.net/blogs/news/spicy-gem-feat-kakusen-en-at-figure-hanare-entry",
-   "eventName": "SPICY GEM feat. KAKUSEN-EN at FIGURE HANARE",
-   "eventDate": "2026-10-11"
   },
   {
    "domain": "narakaki.or.jp",
@@ -3964,6 +3970,12 @@
    "eventDate": "2026-10-31"
   },
   {
+   "domain": "jolienursery.co.jp",
+   "url": "https://jolienursery.co.jp/pages/events",
+   "eventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
+   "eventDate": "2026-10-31"
+  },
+  {
    "domain": "nga.or.jp",
    "url": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
    "eventName": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
@@ -4012,6 +4024,12 @@
    "eventDate": "2027-01-17"
   },
   {
+   "domain": "jusai.link",
+   "url": "https://jusai.link/news",
+   "eventName": "樹祭 10 YEAR ANNIVERSARY",
+   "eventDate": "2027-03-20"
+  },
+  {
    "domain": "raflum.com",
    "url": "https://raflum.com/",
    "eventName": "RAFLUM POP-UP（ジェイアール名古屋タカシマヤ）",
@@ -4028,6 +4046,18 @@
    "url": "https://yfg-fes.jp/",
    "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
    "eventDate": "2026-05-02"
+  },
+  {
+   "domain": "visit-oita.jp",
+   "url": "https://www.visit-oita.jp/events/detail/13493",
+   "eventName": "Plants Garage Market",
+   "eventDate": "2026-05-03"
+  },
+  {
+   "domain": "fujisanmesse.com",
+   "url": "https://www.fujisanmesse.com/",
+   "eventName": "FUJISAN FESTA",
+   "eventDate": "2026-05-03"
   }
  ],
  "unresolvedIgHandles": []
