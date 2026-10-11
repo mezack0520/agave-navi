@@ -2206,6 +2206,27 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   関数は `igPickPost`(プロフィールで当該回の投稿を選ぶ)と `igGrabHere`(投稿ページで主画像を取って積む)に分かれている。
   準備の確認は `typeof window.igGrabHere`。プロンプトの例のまま `typeof window.igEyecatch` を見ると `undefined` が返り、
   注入に失敗したと読める。プロンプトは目崎しか直せないので、呼び方はこのファイルとスクリプト冒頭を正とする。
+  10-12 に `pending-judgments.json` の `agave-navi-eyecatch:prompt-outdated` に積んだ(プロンプトに CI 候補・起動記録・レポートの段も無い)。
+
+- **ブラウザで開く回は `python3 scripts/list-missing-eyecatch.py --browser --limit 6` で出す。**(2026-10-12)
+  各行の `browserWhy` が理由。`personal` / `unchecked` / `(watch外)` に加えて、**主催が api でも次の2つは CI が候補に出さない**ので対象に入れた。
+  - `ciSkipsSource`: 出典の投稿は CI の取得範囲にあるが、本文が `eyecatchlib._NOT_FLYER` の語を含む。`pick_post` は出典の投稿でも
+    この語で落とすので、画像が来場者向けのフライヤーでも永久に候補に出ない。10-12 時点で10件。多肉園おひさまの3件は
+    別会場の「中止」を伝える10月の日程投稿、kasamajuku・dyckia-needles・iwakuni・pakipo・asamiya・soen は「募集」、
+    lier-taniku-festival-taishodo は「出店者さま」で落ちていた。
+  - `ciSourceOutOfRange`: 出典の投稿が CI の取得範囲(organizer-posts.json の最新投稿)より古い。10-11 の gamagori と同じ形。
+
+  それ以外の api の回は CI の担当のまま。ただし**候補が出ていないことは「最新12件に告知が無い」の証拠にならない。**
+  staging は `eyecatchlib.MAX_PENDING`=12 で頭打ちになり、日付順に後ろの回は照合されずに待つ。10-12 の朝は12件で満杯で、
+  出典の投稿で照合が通る api の回が lahaina-garden(11-08)以降に15件待っていた(organizer-posts.json の本文で pick_post を回した数。
+  画像の有無は見ていない)。採否を書いて空ければ翌日の CI が置く。
+  `ciSkipsSource` の判定は organizer-posts.json の本文と URL だけで見ている。動画かどうかは開くまで分からない。
+  規則の持ち主は `eyecatchlib.source_post_code`(出典の投稿)と `_NOT_FLYER`(除外語)で、list-missing はそれを読むだけ。
+
+- **`/p/<code>/` でも video 要素しか描画されない投稿は動画。記録しない。**(2026-10-12)
+  bota-bro-garden(Dd8rprAS7MB)は screenshot を挟んで visible にし、待って取り直しても img が0件で、1080x1920 の video だけだった。
+  `--reject-post` で記録すると、主催が API で読めたときに CI が `thumbnail_url`(表紙)を候補に出す道まで塞ぐ(CI は動画に
+  thumbnail_url を使う)。記録せずに残す。主催が personal と分かったら、プロフィールから別の告知投稿を探す。
 
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
@@ -3235,6 +3256,8 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
   `watch-sources.json` の各アカウントに `apiStatus`(`api` / `personal` /
   `unchecked`)が付く。**ブラウザで回るのは `api` 以外だけでよい。**
   `api` のアカウントをブラウザで開き直すのは同じ仕事の二度手間。
+  例外は、出典の投稿を CI が除外語で落とす回と、出典が取得範囲より古い回
+  (§「アイキャッチの取り方」2026-10-12。`list-missing-eyecatch.py --browser` が拾う)。
 - アイキャッチ: 候補は `staging/eyecatch/<slug>.jpg` と `staging/eyecatch/candidates.json`。
   **採否は画像を1枚ずつ見て決める**(機械の照合は根拠にならない。
   2026-09-08 の12件の誤り)。

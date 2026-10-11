@@ -96,6 +96,20 @@ def post_code(url):
     return m.group(1) if m else ''
 
 
+def source_post_code(ev):
+    """回の出典の投稿コード。instagramUrl → url → sourceUrl → instagramPostId の順。
+
+    pick_post はこの投稿が最近の投稿に入っていれば本文を照合せずに採る。
+    list-missing-eyecatch.py も同じ規則で「CI がこの回の出典を見ているか」を判定するので、
+    規則の持ち主はここだけにする(2026-10-12)。
+    """
+    for k in ('instagramUrl', 'url', 'sourceUrl'):
+        c = post_code(ev.get(k))
+        if c:
+            return c
+    return (ev.get('instagramPostId') or '').strip()
+
+
 def pick_post(ev, posts, rejected_posts=()):
     """この回の告知投稿を選ぶ。(post, 根拠dict) か (None, None)。
 
@@ -104,12 +118,7 @@ def pick_post(ev, posts, rejected_posts=()):
     4文字以上を含む特徴語2つ以上が出る投稿だけを採る。適当な最新投稿は貼らない。
     """
     rejected = {post_code(p) for p in rejected_posts}
-    want_code = ''
-    for k in ('instagramUrl', 'url', 'sourceUrl'):
-        want_code = post_code(ev.get(k))
-        if want_code:
-            break
-    want_code = want_code or (ev.get('instagramPostId') or '').strip()
+    want_code = source_post_code(ev)
     usable = [p for p in posts if p.get('image') and post_code(p.get('permalink')) not in rejected]
     # 出典の投稿でも、募集終了のお知らせや店の連絡であることがある(2026-09-23 の試走で
     # アメプラの「出展者募集終了」と toky の「オンラインショップ移転」を拾った)

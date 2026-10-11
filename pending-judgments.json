@@ -11,11 +11,26 @@
         "task-reports で確かめられる衝突は、event-listing-review が 07-31・08-18・08-20・10-04・10-10・10-12 の6回、event-monitor 10-10、site-health-check 10-04、agave-navi-eyecatch 10-10(プロンプトの clone 行が /tmp/agave 固定)。",
         "プレイブック §3「clone 先は毎回一意なディレクトリにする」は 10-04 からあるが、プロンプトが clone → record-run.py → プレイブックを読む の順なので、clone の時点では読まれていない。名義(§1 の 2)は record-run.py 側で塞げたが、clone 先は clone より前なので repo からは塞げない。",
         "10-10 のレポートに貼る文面を書いたが、レポートは読み返されず 10-12 も同じ場所に当たった。",
-        "10-12 の agave-event-update も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/tmp/an-<日時> に取り直して続行。agave-event-update のプロンプトにも clone 先の指定は無い。"
+        "10-12 の agave-event-update も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/tmp/an-<日時> に取り直して続行。agave-event-update のプロンプトにも clone 先の指定は無い。",
+        "10-12 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-<日付>-<pid> に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。"
       ],
       "proposal": "各プロンプトの clone の指示に次の一文を足す(agave-navi-eyecatch は `cd /tmp && rm -rf agave && git clone ... agave` の行を置き換える):「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave-navi\")。/tmp の固定名は前のセッションの残骸で消せないことがある。dubious ownership が出ても safe.directory は足さず、場所を変える。」 不要と判断した場合はその旨を decision に書いて resolved へ移す。",
       "whyHuman": "スケジュールタスクのプロンプトはタスク自身からは編集できない(プレイブック §1 の 7)。",
       "resolveWhen": "各タスクが自分のプロンプトに clone 先の指定が入ったのを見た回に facts へ足し、clone を指示する全タスクで揃ったら resolved へ移す。"
+    },
+    {
+      "id": "agave-navi-eyecatch:prompt-outdated",
+      "addedOn": "2026-10-12",
+      "source": "agave-navi-eyecatch",
+      "question": "スケジュールタスク agave-navi-eyecatch のプロンプト本文を、インストール済みのスキル agave-navi-eyecatch の手順に差し替えてよいか。repo 側からは直せない。",
+      "facts": [
+        "10-12 に届いたプロンプトは 09-08 版の手順のまま。(1) `window.igEyecatch` を呼び `typeof window.igEyecatch` で準備を確かめる(10-08 から ig-eyecatch.js は igPickPost / igGrabHere に分かれ、igEyecatch は無い。そのまま従うと undefined が返り、注入に失敗したと読める) (2) CI 候補(staging/eyecatch。09-23〜)を片づける段が無い (3) record-run.py の起動記録と task-reports への保存が無い (4) clone 先が /tmp/agave 固定(event-listing-review:skill-clone-dir と同じ件)。",
+        "スキル agave-navi-eyecatch は (2)(3) を持っている。10-11・10-12 の回はスキルとプレイブックに従って回したが、プロンプトだけを読む回は CI 候補を見ずにブラウザへ行き、起動記録も残さない。",
+        "プレイブックのアイキャッチ節は 10-11 から「プロンプトの igEyecatch は今のスクリプトに無い。呼び方はこのファイルとスクリプト冒頭を正とする」と書いているが、プロンプト自体は変わっていない。"
+      ],
+      "proposal": "プロンプトの本文を「スキル agave-navi-eyecatch を読み、その手順に従う。プロンプトとプレイブック(docs/task-playbook.md)が食い違えばプレイブックが正。clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave\")」に置き換える。ブラウザの対象は `python3 scripts/list-missing-eyecatch.py --browser --limit 6` で出る(10-12 追加)。不要と判断した場合はその旨を decision に書いて resolved へ移す。",
+      "whyHuman": "スケジュールタスクのプロンプトはタスク自身からは編集できない(プレイブック §1 の 7)。",
+      "resolveWhen": "agave-navi-eyecatch に届いたプロンプトが igEyecatch を含まなくなった回に resolved へ移す。"
     }
   ],
   "updated": "2026-10-12",
