@@ -2228,6 +2228,11 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   `--reject-post` で記録すると、主催が API で読めたときに CI が `thumbnail_url`(表紙)を候補に出す道まで塞ぐ(CI は動画に
   thumbnail_url を使う)。記録せずに残す。主催が personal と分かったら、プロフィールから別の告知投稿を探す。
 
+- **採った画像に時刻・入場料が書いてあって回の値に無ければ、その場で埋める。**(2026-10-12)
+  もちのいえ 植物販売会(10/24 やまぐちフラワーランド)は掲載時に「開始・終了の時刻は告知に無い」と説明文に書き、time を空にした。
+  同じ日に採った出典の投稿の画像(手書きの告知)には「9:00-15:00」があり、アイキャッチのレポートにも書いていたが、回の値は直していなかった。
+  主催が personal で本文を CI が読めない回は、時刻が画像にしか無いことがある。time を足したら説明文の「告知に無い」の一文も消す。
+
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
 `primarySource.vendorAnnouncementsOnly` は「出店者の告知は主催の告知の代わりに
@@ -4159,6 +4164,30 @@ GreeN.garage NOGATA の出店者紹介で8組中6組)、一覧で植物が主題
 - 主催の固定投稿(ピン留め)は投稿日が古くても本文が更新されている(多肉のしずく の 1月の投稿に 12/27・2027/1/16 の予定)。
   embed/captioned が `(none)` のアカウントでも、投稿頁の meta description で今の本文が読める(§3 の 2026-09-29 の手順)。
 
+### Instagram の投稿IDは投稿日時を持つ。前の回の投稿を埋め込んでいた (2026-10-12)
+
+第6回 KA78企画祭(2026-11-22)の詳細頁が、2025-05-21 の投稿 `DJ6gP1RS1ye` を「この回のInstagram投稿」として埋め込んでいた。
+09-29 に sync-events の enrich が検索で当たった投稿を `instagramPostId` / `instagramUrl` に書いたもの。Instagram の頁は
+ログイン壁で日付が読めないので、`page_is_wrong_edition` は判定を降りて素通りしていた。
+- **投稿ID(shortcode)はメディアIDで、上位ビットが投稿日時。**`sitelib.ig_post_time(code)` が開かずに日時を返す。
+  organizer-posts.json の 3,045 投稿で timestamp との差は中央値1秒・最大5.4日(予約投稿)。
+- `audit.instagram_post_predates_edition`(urgent): `instagramPostId` / `instagramUrl` / `imageSource` の投稿が開催初日の365日より前なら出す。
+  **画像は投稿の後から差し替えられない**ので、1年以上前の投稿の絵は前の回のもの。同じ投稿を1年以内の別の回も使っていれば、
+  年間の日程を1本で告知した投稿として除く(botanical X / 路地裏ボタニカル)。03-26〜10-12 の161日分で出たのはこの1件だけ。
+- **出典(url/sourceUrl)は見ない。**主催の固定投稿は本文を編集して日程を足す(ゆるっと多肉マルシェ 第2回・第3回の出典は 2026-01-10 の固定投稿)。
+- enrich は、検索で当たった IG の投稿が開催の365日より前なら、その回に頁の値をどれも書かない(SKIP-ALL。main() で自己テスト)。
+- 150〜365日前の投稿を埋め込み・アイキャッチに使う回は今21件(開催予定19)。主催が早く告知した正しい回が混ざる
+  (BOTA☆MAGIC 第2回 2027-04 の告知は 2026-07)ので鳴らさない。CI の候補選び(`eyecatchlib.MAX_LEAD_DAYS`=150)は手前で切っている。
+  **ブラウザ経路で150日より前の投稿を採るときは、画像の日付と曜日でその年の回かを確かめる。**
+
+### 出典を差し替えたら、時刻と入場料を新しい出典で読み直す (2026-10-12)
+
+俺の！プランツ・コレクション(9/19〜21 しまね花の郷)は 09-24 に消えた出典(花の郷の event-903)を PR TIMES(島根県の発表)に
+差し替えたが、time は掲載時の 9:30〜17:00 のままだった。PR TIMES は「開園時間 9:30～16:30」。花の郷のサイトの見出しには
+その日の開園時間(今日は 9:30〜17:00)が出ており、掲載時の値はそれと同じだった。10-10 の event-monitor が気付き、2日残っていた。
+同じコミットで差し替えた残り2件のうち、gardens umekita 2周年は新しい出典と一致した。JSS 北関東支部(time 9:30〜)は出典の頁から回が消えていて確かめられない。
+**url / sourceUrl を替えたら、その回の time・admission を新しい出典で読み直す。**
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4201,6 +4230,7 @@ GreeN.garage NOGATA の出店者紹介で8組中6組)、一覧で植物が主題
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
 | 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で会場の所在地を確かめ、説明文の所在地を location の住所どおりに直す。location / prefecture のほうが違っていればそちらを直す | fixed |
+| 埋め込み・アイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して image-rejected.json に記録し、この回の告知を主催の投稿で探し直す | fixed |
 | リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |

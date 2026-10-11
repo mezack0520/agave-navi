@@ -685,9 +685,18 @@ def _check_site_default_og_rule():
     return not bad
 
 
+def _check_ig_post_edition_rule():
+    """前の回の IG 投稿を、この回の投稿として書かないこと(2026-10-12)。main() が毎回呼ぶ。"""
+    bad = sitelib._self_test_ig_post_time()
+    if bad:
+        print(f"SELFTEST-FAILED ig_post_time: {bad}")
+    return not bad
+
+
 def main():
     _self_test_free_admission()
     _check_site_default_og_rule()
+    _check_ig_post_edition_rule()
     parser = argparse.ArgumentParser(description='Enrich event information')
     parser.add_argument('--write-back', action='store_true',
         help='Write discovered imageUrl/url back to events.json (for empty fields only)')
@@ -778,6 +787,16 @@ def main():
             if info.get('html') and page_is_wrong_place(info['html'], ev):
                 print(f"    SKIP-ALL for {ev['slug']}: 頁が {ev.get('prefecture')} を"
                       f"名乗っていない — {(best_url or '')[:70]}")
+                continue
+            # 検索で当たった IG の投稿が開催の1年以上前のもの(前の回の告知)なら、
+            # 頁の値をどれも信じない(2026-10-12)。IG はログイン壁で頁の日付が読めず、
+            # 上の page_is_wrong_edition は判定を降りる。第6回 KA78企画祭(2026-11)に
+            # 2025-05 の投稿を instagramPostId として書き、詳細頁に埋め込んでいた。
+            # 投稿IDは投稿日時を持つ(sitelib.ig_post_time)ので、開かずに判定できる。
+            _ig_code = sitelib.ig_post_code(best_url) if best_url else None
+            if _ig_code and sitelib.ig_post_predates_edition(_ig_code, ev):
+                print(f"    SKIP-ALL for {ev['slug']}: IG の投稿が開催の"
+                      f"{sitelib.ig_post_lead_days(_ig_code, ev)}日前のもの — {best_url[:70]}")
                 continue
             changed_fields = []
 

@@ -83,6 +83,146 @@ def is_rest_day(d):
 IG_POST_RE = re.compile(
     r'https?://(?:www\.)?instagram\.com/(?:p|reel|tv)/([A-Za-z0-9_-]+)')
 
+# --- Instagram の投稿IDは投稿日時を持っている (2026-10-12) ---
+# 投稿ID(shortcode)はメディアIDを64文字の英数記号で書いたもので、メディアIDの
+# 上位ビットは 2011-08-24 起点のミリ秒。organizer-posts.json の 3,045 投稿の
+# timestamp と照合して、差は中央値1秒・最大5.4日(予約投稿)だった。
+# つまり **投稿を開かなくても、いつの投稿かは分かる。**
+#
+# 第6回 KA78企画祭(2026-11-22)の詳細頁は 2025-05-21 の投稿を埋め込んでいた。
+# sync-events の enrich が検索で当たった投稿を instagramPostId に書いたもので、
+# Instagram の頁はログイン壁で中身が読めないため page_is_wrong_edition が判定を降り、
+# そのまま入った(09-29〜10-12)。
+# **画像は投稿の後から差し替えられない。**開催の1年以上前の投稿の絵は、
+# 前年以前の回の告知である。本文は編集できるので、出典(url/sourceUrl)に
+# 主催の固定投稿を採る回は判定しない(ゆるっと多肉マルシェ 第2回・第3回の 2026-01 の固定投稿)。
+# eyecatchlib.MAX_LEAD_DAYS(150日)は自動で候補を選ぶ側の上限で、ここは
+# 「別の回だと言い切れる」側の線。150〜365日には主催が早く告知した正しい回が混ざる
+# (BOTA☆MAGIC 第2回は 2027-04 の回を 2026-07 に告知している)。
+_IG_SHORTCODE_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+_IG_ID_EPOCH_MS = 1314220021721
+IG_POST_MAX_LEAD_DAYS = 365
+# 埋め込み・アイキャッチとして頁に「この回の投稿」と出る値。url/sourceUrl は出典で、固定投稿がある
+IG_EDITION_FIELDS = ('instagramPostId', 'instagramUrl', 'imageSource')
+
+
+def ig_post_time(code):
+    """投稿ID(shortcode)から投稿日時(UTC の datetime)。読めない形は None。
+
+    非公開投稿の共有URLのような長いIDは日時を持たないので None。
+    """
+    code = (code or '').strip()
+    if not 1 <= len(code) <= 12:
+        return None
+    n = 0
+    for ch in code:
+        i = _IG_SHORTCODE_ALPHABET.find(ch)
+        if i < 0:
+            return None
+        n = n * 64 + i
+    try:
+        t = datetime.fromtimestamp(((n >> 23) + _IG_ID_EPOCH_MS) / 1000, timezone.utc)
+    except (OverflowError, OSError, ValueError):
+        return None
+    if t.year < 2011 or t > datetime.now(timezone.utc) + timedelta(days=2):
+        return None
+    return t
+
+
+def ig_post_code(value):
+    """投稿URLか投稿IDから投稿ID。プロフィールURLなどは None。"""
+    v = (value or '').strip()
+    if not v:
+        return None
+    m = IG_POST_RE.search(v)
+    if m:
+        return m.group(1)
+    return v if re.fullmatch(r'[A-Za-z0-9_-]{6,12}', v) else None
+
+
+def ig_post_lead_days(code, e):
+    """投稿から開催初日までの日数(JST の暦日)。日時の読めない投稿・日付の無い回は None。"""
+    t = ig_post_time(code)
+    try:
+        start = date.fromisoformat((e.get('date') or '')[:10])
+    except ValueError:
+        return None
+    if not t:
+        return None
+    return (start - t.astimezone(JST).date()).days
+
+
+def ig_post_predates_edition(code, e, max_lead=IG_POST_MAX_LEAD_DAYS):
+    """その投稿が開催の max_lead 日より前に出ているか(前年以前の回の告知)。"""
+    lead = ig_post_lead_days(code, e)
+    return lead is not None and lead > max_lead
+
+
+def ig_posts_predating_edition(events, max_lead=IG_POST_MAX_LEAD_DAYS):
+    """埋め込み・アイキャッチの投稿が開催の1年以上前のもの。[(slug, 項目, 投稿ID, 投稿日, 日数)]
+
+    同じ投稿を別の回も使っていて、その回が投稿から max_lead 日以内なら除く。
+    1本の投稿で年間の日程をまとめて告知している形(botanical X / 路地裏ボタニカル)で、
+    遠い回の値も同じ告知から来ている。
+    """
+    users = {}
+    for e in events:
+        for f in IG_EDITION_FIELDS + ('url', 'sourceUrl'):
+            c = ig_post_code(e.get(f))
+            if c:
+                users.setdefault(c, set()).add(e.get('slug'))
+    by_slug = {e.get('slug'): e for e in events}
+    out = []
+    for e in events:
+        seen = set()
+        for f in IG_EDITION_FIELDS:
+            c = ig_post_code(e.get(f))
+            if not c or c in seen:
+                continue
+            seen.add(c)
+            lead = ig_post_lead_days(c, e)
+            if lead is None or lead <= max_lead:
+                continue
+            near = [s for s in users.get(c, ()) if s != e.get('slug') and s in by_slug
+                    and (ig_post_lead_days(c, by_slug[s]) or 10 ** 6) <= max_lead]
+            if near:
+                continue
+            t = ig_post_time(c).astimezone(JST).date().isoformat()
+            out.append((e.get('slug'), f, c, t, lead))
+    return out
+
+
+def _self_test_ig_post_time():
+    """投稿IDの日時と、前の回の投稿の判定。ネットワークは張らない。"""
+    bad = []
+    # organizer-posts.json の実測(permalink → timestamp)
+    for code, want in (('Dd8rprAS7MB', '2026-10-01'), ('DJ6gP1RS1ye', '2025-05-21'),
+                       ('DTVOyauEvE8', '2026-01-10')):
+        t = ig_post_time(code)
+        if not t or t.astimezone(JST).date().isoformat() != want:
+            bad.append((code, want, t))
+    for v in ('', 'x' * 30, 'Dd8rp@AS7MB', None):
+        if ig_post_time(v) is not None:
+            bad.append(('不正な形', v))
+    ev = {'slug': 'a', 'date': '2026-11-22', 'dateEnd': '2026-11-22'}
+    cases = [('https://www.instagram.com/p/DJ6gP1RS1ye/', True),     # 2025-05-21 の投稿
+             ('DJ6gP1RS1ye', True),
+             ('https://www.instagram.com/reel/Dd8rprAS7MB/', False),  # 2026-10-01 の投稿
+             ('https://www.instagram.com/someshop/', False),          # プロフィール
+             ('', False)]
+    for v, want in cases:
+        c = ig_post_code(v)
+        if bool(c and ig_post_predates_edition(c, ev)) != want:
+            bad.append(('predates', v, want))
+    evs = [dict(ev, instagramPostId='DJ6gP1RS1ye'),                                     # 出る
+           {'slug': 'b', 'date': '2027-01-16', 'url': 'https://www.instagram.com/p/DTVOyauEvE8/'},  # 出典は見ない
+           {'slug': 'c', 'date': '2027-06-01', 'imageSource': 'https://www.instagram.com/p/DTVOyauEvE8/'},
+           {'slug': 'd', 'date': '2026-10-03', 'instagramPostId': 'DTVOyauEvE8'}]           # c と同じ投稿・1年以内
+    got = [(s, f) for s, f, *_ in ig_posts_predating_edition(evs)]
+    if got != [('a', 'instagramPostId')]:
+        bad.append(('predating_edition', got))
+    return bad
+
 # 「会場」として意味をなさない曖昧値(venueページ・同会場セクションの対象外)
 # 都道府県名そのものは会場名ではないので全県ぶんを下で追加する(2026-08-12)。
 # 従来は東京・大阪・名古屋だけを列挙しており、venue="岩手"/"広島"/"和歌山" の回が

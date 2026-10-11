@@ -4839,6 +4839,23 @@ def main():
         'build-all.sh の生成より前で呼ぶ。写さないと埋め込みが出ず、'
         'instagram_embed_missing の監視下にも入らない')
 
+    # --- 埋め込み・アイキャッチの投稿が前の回のもの (2026-10-12) ---------------
+    # 投稿IDは投稿日時を持つ(sitelib.ig_post_time)。第6回 KA78企画祭(2026-11-22)の
+    # 詳細頁は 2025-05-21 の投稿を「この回のInstagram投稿」として埋め込んでいた。
+    # sync-events の enrich が検索で当たった投稿を書いたもので、IG はログイン壁で
+    # 頁の日付を読めず page_is_wrong_edition が判定を降りていた(09-29〜10-12)。
+    # 画像は投稿後に差し替えられないので、開催の1年以上前の投稿は前の回の絵。
+    # 出典(url/sourceUrl)は主催の固定投稿(本文を編集して日程を足す)があるので見ない。
+    # 03-26〜10-12 の events.json 161日分で出たのはこの1件だけ。
+    add('instagram_post_predates_edition',
+        'Instagramの埋め込み・アイキャッチが開催の1年以上前の投稿(前の回の告知)',
+        [f'{sl}: {f} {c}({t} 投稿・開催の{lead}日前)'
+         for sl, f, c, t, lead in sitelib.ig_posts_predating_edition(events)],
+        '前の回の投稿。instagramPostId / instagramUrl なら外す(頁の埋め込みが消える)。'
+        'imageSource なら imageUrl と images/events/ の画像も外し image-rejected.json に記録。'
+        'この回の告知を主催の投稿で探し直す。年間の日程を1本で告知した投稿は、'
+        '同じ投稿を近い回にも当てれば出なくなる')
+
     # --- カレンダー・マップの埋め込み集合 -------------------------------------
     # build-static-html.py は既存HTMLへの挿入で作る。置換に失敗すると
     # 消さずに足すだけになり、過去に calendar/map が 4.2MB まで肥大した。
