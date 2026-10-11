@@ -677,8 +677,17 @@ def _self_test_free_admission():
     return not bad
 
 
+def _check_site_default_og_rule():
+    """サイト共通の既定画像を個別頁の画像として採らないこと(2026-10-12)。main() が毎回呼ぶ。"""
+    bad = sitelib._self_test_site_default_og()
+    if bad:
+        print(f"SELFTEST-FAILED og_image_is_site_default: {bad}")
+    return not bad
+
+
 def main():
     _self_test_free_admission()
+    _check_site_default_og_rule()
     parser = argparse.ArgumentParser(description='Enrich event information')
     parser.add_argument('--write-back', action='store_true',
         help='Write discovered imageUrl/url back to events.json (for empty fields only)')
@@ -810,6 +819,12 @@ def main():
             if ogp_image and best_url and not _same_host_as_event(best_url, ev):
                 print(f"    IMG-REJECTED for {ev['slug']}: 頁を url/sourceUrl に"
                       f"持たない — {best_url[:70]}")
+                ogp_image = None
+            # 出典の頁が自分の画像を持たずサイト共通の既定画像を出しているときは採らない
+            # (2026-10-12 樹祭2027。jusai.link/news の og:image はトップ頁と同じ)
+            if (ogp_image and best_url and _is_empty(ev.get('imageUrl'))
+                    and sitelib.og_image_is_site_default(best_url, ogp_image)):
+                print(f"    IMG-REJECTED for {ev['slug']}: サイト共通の既定画像 — {ogp_image[:70]}")
                 ogp_image = None
             if ogp_image and _is_empty(ev.get('imageUrl')):
                 if not is_quality_image_url(ogp_image):

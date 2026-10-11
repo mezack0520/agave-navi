@@ -198,6 +198,10 @@ def find_image_for_event(ev):
         if not is_quality_image_url(img):
             yield (source, page_url, img, 'rejected: aggregator/generic')
             continue
+        # 頁が自分の画像を持たず、サイト共通の既定画像を出している(2026-10-12)
+        if source != 'instagram' and sitelib.og_image_is_site_default(page_url, img, fetch=lambda u: fetch_html(u)[0]):
+            yield (source, page_url, img, 'rejected: site-wide default og:image')
+            continue
         ok, err = verify_image(img)
         if not ok:
             yield (source, page_url, img, f'verify failed: {err}')

@@ -2481,6 +2481,70 @@ def extract_og_image(html, base_url=None):
     return None
 
 
+_SITE_DEFAULT_OG = {}
+
+
+def site_default_og_image(page_url, fetch=None):
+    """page_url のサイトのトップ頁(scheme://host/)が出す og:image。取れなければ None。
+
+    ホストごとに1回だけ取りに行く(同じ巡回の中で同じサイトの回が並んでも1回)。
+    fetch は (url) -> html。既定は fetch_text。自己テストは偽の fetch を渡す。
+    """
+    from urllib.parse import urlsplit
+    sp = urlsplit(page_url or '')
+    if not sp.scheme or not sp.netloc:
+        return None
+    root = f'{sp.scheme}://{sp.netloc}/'
+    if root not in _SITE_DEFAULT_OG:
+        try:
+            html = (fetch or fetch_text)(root)
+        except Exception:
+            html = None
+        _SITE_DEFAULT_OG[root] = extract_og_image(html, root) if html else None
+    return _SITE_DEFAULT_OG[root]
+
+
+def og_image_is_site_default(page_url, img, fetch=None):
+    """個別頁の og:image が、サイトのトップ頁と同じ既定画像か(2026-10-12)。
+
+    樹祭の2027年の2回は出典が jusai.link/news(SPA。サーバが返すのは全頁共通の枠)で、
+    enrich がその og:image(サイト共通の既定画像)を imageUrl に入れた。出典と同じホストなので
+    _same_host_as_event も、画像の規則(is_quality_image_url)も通る。**同じ画像を全頁が出している**
+    ことはトップ頁と比べないと分からない。
+    トップ頁そのものを出典にしている回は判定しない。1回きりの催しの公式サイトは
+    トップの画像がその回のチラシで、比べると自分自身と一致して必ず捨てることになる。
+    """
+    from urllib.parse import urlsplit
+    if not img or not page_url:
+        return False
+    sp = urlsplit(page_url)
+    if (sp.path or '/') in ('/', '/index.html', '/index.php') and not sp.query:
+        return False
+    d = site_default_og_image(page_url, fetch)
+    if not d:
+        return False
+    strip = lambda u: urlsplit(u)._replace(query='', fragment='').geturl()
+    return img == d or strip(img) == strip(d)
+
+
+def _self_test_site_default_og():
+    """偽の fetch で当てる。ネットワークは張らない。"""
+    pages = {'https://ex.example/': '<meta property="og:image" content="https://cdn.example/site.jpg?v=1">',
+             'https://one.example/': '<meta property="og:image" content="https://one.example/flyer.jpg">'}
+    f = lambda u: pages.get(u)
+    _SITE_DEFAULT_OG.clear()
+    cases = [
+        (('https://ex.example/news', 'https://cdn.example/site.jpg?v=1'), True),    # 一覧頁が既定画像
+        (('https://ex.example/news', 'https://cdn.example/site.jpg?v=2'), True),    # 版数の付け替えだけ
+        (('https://ex.example/event/1', 'https://cdn.example/ev1.jpg'), False),     # 個別頁が自分の画像
+        (('https://one.example/', 'https://one.example/flyer.jpg'), False),         # トップ頁が出典
+        (('https://nosite.example/a', 'https://nosite.example/a.jpg'), False),      # トップが取れない
+    ]
+    bad = [args for args, want in cases if og_image_is_site_default(*args, fetch=f) != want]
+    _SITE_DEFAULT_OG.clear()
+    return bad
+
+
 def page_text_blob(html):
     """頁の散文。本文 + title/og:title/og:description/description。
 

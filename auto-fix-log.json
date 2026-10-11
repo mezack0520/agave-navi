@@ -1623,6 +1623,30 @@
    "target": "ongoing_events 20→17 (換算28)",
    "action": "fixed",
    "detail": "3連休最終日(スポーツの日)の開催中17件は平常。土日の中央値を遠い先の回で膨らんだ開催予定で換算した基準との比較だった。ongoing_events は暦で決まる値なので audit の _METRIC_NO_ALARM へ移した(暦が原因の誤検知3回目)"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "masappe 周年祭 / BOTANICAL BOTANICAL OKINAWA / まるっと植物fes!! / BOTANICAL STYLE Minato / 珍奇植物フリマ 1月・4月 / サンタフェ周年祭",
+   "action": "skipped",
+   "detail": "主催の最新12件に会場・時間なし。まるっと植物fes は 10/08 の投稿に #淵野辺公園 と公園のアカウントのタグだけで会場の明記は無く、正式な告知画像は10月末の予定"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "eyecatch_candidates_pending",
+   "target": "12件",
+   "action": "skipped",
+   "detail": "agave-navi-eyecatch の担当"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "agave-event-update",
+   "kind": "truncated_unresolved",
+   "target": "四日市 生活文化・趣味の作品展 / リトリートマルシェ vol.10",
+   "action": "reviewed",
+   "detail": "どちらも 10-10 に見送り記録済み"
   }
  ]
 }
