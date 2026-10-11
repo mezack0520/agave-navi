@@ -12,7 +12,8 @@
         "プレイブック §3「clone 先は毎回一意なディレクトリにする」は 10-04 からあるが、プロンプトが clone → record-run.py → プレイブックを読む の順なので、clone の時点では読まれていない。名義(§1 の 2)は record-run.py 側で塞げたが、clone 先は clone より前なので repo からは塞げない。",
         "10-10 のレポートに貼る文面を書いたが、レポートは読み返されず 10-12 も同じ場所に当たった。",
         "10-12 の agave-event-update も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/tmp/an-<日時> に取り直して続行。agave-event-update のプロンプトにも clone 先の指定は無い。",
-        "10-12 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-<日付>-<pid> に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。"
+        "10-12 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-<日付>-<pid> に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。",
+        "10-12 の event-monitor も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/sessions/<自分>/repo に取り直して続行。event-monitor のプロンプトにも clone 先の指定は無い。"
       ],
       "proposal": "各プロンプトの clone の指示に次の一文を足す(agave-navi-eyecatch は `cd /tmp && rm -rf agave && git clone ... agave` の行を置き換える):「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave-navi\")。/tmp の固定名は前のセッションの残骸で消せないことがある。dubious ownership が出ても safe.directory は足さず、場所を変える。」 不要と判断した場合はその旨を decision に書いて resolved へ移す。",
       "whyHuman": "スケジュールタスクのプロンプトはタスク自身からは編集できない(プレイブック §1 の 7)。",

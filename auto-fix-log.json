@@ -1647,6 +1647,38 @@
    "target": "四日市 生活文化・趣味の作品展 / リトリートマルシェ vol.10",
    "action": "reviewed",
    "detail": "どちらも 10-10 に見送り記録済み"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "event-monitor",
+   "kind": "time_vs_flyer",
+   "target": "植物販売会（やまぐちフラワーランド・もちのいえ） (2026-10-24)",
+   "action": "fixed",
+   "detail": "time を 9:00〜15:00 にし、説明文の「開始・終了の時刻は告知に無い」を消した。出典の投稿 Dd1MD2ny3HK の告知画像(アイキャッチと同じ1枚)に「10/24(土) 9:00-15:00」とある"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "event-monitor",
+   "kind": "instagram_post_predates_edition",
+   "target": "第6回 KA78企画祭 (2026-11-22)",
+   "action": "fixed",
+   "detail": "詳細頁が 2025-05-21 の投稿 DJ6gP1RS1ye を「この回のInstagram投稿」として埋め込んでいた。09-29 に enrich が検索で当たった投稿を書いたもの。instagramPostId / instagramUrl を外した"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "event-monitor",
+   "kind": "eyecatch_candidates_pending",
+   "target": "アガベ販売会 Agave collection 2026（Bota Bro Garden） (2026-10-25)",
+   "action": "fixed",
+   "detail": "CI の候補(出典のリール Dd8rprAS7MB の表紙)を採用。回名・10.25 SUN・10:00-16:00 が読める"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "event-monitor",
+   "kind": "time_vs_source",
+   "target": "俺の！プランツ・コレクション！！ (2026-09-19〜21)",
+   "action": "fixed",
+   "detail": "time 9:30〜17:00 → 9:30〜16:30。出典の PR TIMES(島根県の発表)が「開園時間 9:30～16:30」。17:00 は掲載時の出典 しまね花の郷 の頁から入った値で、その頁は今 404。同サイトの見出しには当日の開園時間 9:30〜17:00 が出ている"
   }
  ]
 }
