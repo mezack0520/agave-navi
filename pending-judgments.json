@@ -1,7 +1,23 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [],
-  "updated": "2026-10-08",
+  "items": [
+    {
+      "id": "event-listing-review:skill-clone-dir",
+      "addedOn": "2026-10-12",
+      "source": "event-listing-review",
+      "question": "clone を指示しているスケジュールタスクのプロンプト(SKILL.md)に、clone 先を毎回新しいディレクトリにする一文を足してよいか。repo 側からは直せない。",
+      "facts": [
+        "10-12 の event-listing-review が /tmp/agave-navi(別ユーザー所有の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/sessions/<自分>/ 配下に取り直して続行した。",
+        "task-reports で確かめられる衝突は、event-listing-review が 07-31・08-18・08-20・10-04・10-10・10-12 の6回、event-monitor 10-10、site-health-check 10-04、agave-navi-eyecatch 10-10(プロンプトの clone 行が /tmp/agave 固定)。",
+        "プレイブック §3「clone 先は毎回一意なディレクトリにする」は 10-04 からあるが、プロンプトが clone → record-run.py → プレイブックを読む の順なので、clone の時点では読まれていない。名義(§1 の 2)は record-run.py 側で塞げたが、clone 先は clone より前なので repo からは塞げない。",
+        "10-10 のレポートに貼る文面を書いたが、レポートは読み返されず 10-12 も同じ場所に当たった。"
+      ],
+      "proposal": "各プロンプトの clone の指示に次の一文を足す(agave-navi-eyecatch は `cd /tmp && rm -rf agave && git clone ... agave` の行を置き換える):「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave-navi\")。/tmp の固定名は前のセッションの残骸で消せないことがある。dubious ownership が出ても safe.directory は足さず、場所を変える。」 不要と判断した場合はその旨を decision に書いて resolved へ移す。",
+      "whyHuman": "スケジュールタスクのプロンプトはタスク自身からは編集できない(プレイブック §1 の 7)。",
+      "resolveWhen": "各タスクが自分のプロンプトに clone 先の指定が入ったのを見た回に facts へ足し、clone を指示する全タスクで揃ったら resolved へ移す。"
+    }
+  ],
+  "updated": "2026-10-12",
   "resolved": [
     {
       "id": "agave-navi-eyecatch:flyer-with-child-photo",

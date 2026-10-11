@@ -1671,6 +1671,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `^\d{4}/\d{1,2}/\d{1,2} \d{1,2}:\d{2}:\d{2}$` に一致する行だけを数える。
   **戻り値に氏名・メールを含めない。** 列は タイムスタンプ / メールアドレス / お名前 /
   お問い合わせ種別 / イベント概要 / イベント名 の順で、2・3列目が連絡先。
+  **CSV の列数で設問の変化を見ない(2026-10-12)。**この日の CSV は1行が12列で、7〜12列目は見出しもデータも全行空だった
+  (以前から空列が付いていたのかは記録が無く分からない)。設問が変わったかは、見出しのある列の数と名前で見る。
+  空でない列が7列目以降に出たら、そのときは設問の追加を疑う。
   数えたら `sheetRows` / `sheetCheckedOn` に書いて push する。読めなかった回は日付を進めない。
 
 - **トリガー画面の「前回の実行」を、シート最新行のタイムスタンプと突き合わせる（2026-09-14）。**
@@ -3495,6 +3498,10 @@ clone の一手の時点ではまだ読まれていない。§1 の 2 の名義�
 置き場を最初から外すには、各タスクの SKILL.md の clone の行に置き場を書くしかない(目崎しか触れない)。
 同じ 10-10 に agave-navi-eyecatch も、スケジュールのプロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で
 `/tmp/agave` の残骸に当たり `dubious ownership` で止まった(`/sessions/<自分>/agave` に取り直して続行)。
+**10-12 も同じ `/tmp/agave-navi` に当たった(event-listing-review で6回目)。**10-10 のレポートに SKILL.md へ貼る文面を書いたが、
+レポートは目崎に届かないので何も変わらなかった。目崎にしか直せないことは、レポートではなく `pending-judgments.json` に積む
+(日次メールの「判断が必要」に出る)。10-12 に `event-listing-review:skill-clone-dir` として積んだ。
+同じ id があるうちは積み直さず、facts に日付を足すだけにする。自分のプロンプトに clone 先の指定が入っていたら、そう facts に書く。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
