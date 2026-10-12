@@ -1699,7 +1699,8 @@
    "kind": "enrich_desc_offsource",
    "target": "LOVE GReeN MARKeT Vol.3 (2026-12-12)",
    "action": "fixed",
-   "detail": "10-11 の週次エンリッチが出典でないブログ taniwansibatani.com の定型文「…開催予定。時間、会場、出店内容、過去開催を紹介します。」で上書きしていた。主催の出店者発表 DdTupRWK9nr・DdTutSMK4TK で書き直した(出店者70組超)"
+   "detail": "10-11 の週次エンリッチが出典でないブログ taniwansibatani.com の定型文「…開催予定。時間、会場、出店内容、過去開催を紹介します。」で上書きしていた。主催の出店者発表 DdTupRWK9nr・DdTutSMK4TK で書き直した(出店者70組超)",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-12",
@@ -1707,7 +1708,8 @@
    "kind": "enrich_desc_offsource",
    "target": "Seedpot Summer Fair 2026 (2026-07-17〜19)",
    "action": "fixed",
-   "detail": "07-19 の週次エンリッチが店のトップ頁 seedpot.co.jp の店舗紹介で上書きしていた。上書き前の説明文に戻した"
+   "detail": "07-19 の週次エンリッチが店のトップ頁 seedpot.co.jp の店舗紹介で上書きしていた。上書き前の説明文に戻した",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-12",
@@ -1715,7 +1717,8 @@
    "kind": "tbd",
    "target": "食虫植物祭2026 (2026-11-07〜08)",
    "action": "fixed",
-   "detail": "主催 Heli's Garden の公式頁のタイムテーブルどおり time 9:00〜17:00(開場〜閉園)、即売会の会場 花の展示ホールを venue に、organizer を入れた。入場料は頁に無いので空のまま(event-monitor 10-12 の未対応)"
+   "detail": "主催 Heli's Garden の公式頁のタイムテーブルどおり time 9:00〜17:00(開場〜閉園)、即売会の会場 花の展示ホールを venue に、organizer を入れた。入場料は頁に無いので空のまま(event-monitor 10-12 の未対応)",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-12",
@@ -1723,7 +1726,8 @@
    "kind": "needs_browser",
    "target": "Lier.多肉フェスティバル in 岡山 (2026-10-25)",
    "action": "skipped",
-   "detail": "ブラウザ要: 会場「サウスヴィレッジホール」が岡山市南区片岡のサウスヴィレッジ(ファーマーズハウスのホール)と同じ施設かを、会場か主催 @lier_succulent の告知で確かめ、venue/location を直す。event-monitor が 10-09〜12 の4回持ち越した"
+   "detail": "ブラウザ要: 会場「サウスヴィレッジホール」が岡山市南区片岡のサウスヴィレッジ(ファーマーズハウスのホール)と同じ施設かを、会場か主催 @lier_succulent の告知で確かめ、venue/location を直す。event-monitor が 10-09〜12 の4回持ち越した",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-12",
@@ -1731,7 +1735,8 @@
    "kind": "needs_browser",
    "target": "多肉だョ！全員集合 の表記(とっとり花回廊・金沢 / 津山・福山)",
    "action": "skipped",
-   "detail": "ブラウザ要: とっとり花回廊・金沢の回は「だヨ」、津山・福山の回は「だョ」。主催 @tanikudayo.zeninsyuugou の表記で name を揃える。event-monitor が 10-11・12 に持ち越した"
+   "detail": "ブラウザ要: とっとり花回廊・金沢の回は「だヨ」、津山・福山の回は「だョ」。主催 @tanikudayo.zeninsyuugou の表記で name を揃える。event-monitor が 10-11・12 に持ち越した",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1739,7 +1744,8 @@
    "kind": "coverage_gaps",
    "target": "シマムラ園芸×QSPLANT vol.9 (2026-10-31〜11-01)",
    "action": "listed",
-   "detail": "主催 @qs_plant の告知 DeRWiZUmUMQ(10/31 9:00〜17:00・11/1 9:00〜15:00 シマムラ園芸第二ハウス)で裏取りして掲載"
+   "detail": "主催 @qs_plant の告知 DeRWiZUmUMQ(10/31 9:00〜17:00・11/1 9:00〜15:00 シマムラ園芸第二ハウス)で裏取りして掲載",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1747,7 +1753,8 @@
    "kind": "coverage_gaps",
    "target": "HINOKI Replay Plants SALE Vol.01 (2026-10-09〜13)",
    "action": "rejected",
-   "detail": "HINOKI and the green の店頭の値引き販売で、品目はレンタル落ちの観葉植物。storeSale.exclude"
+   "detail": "HINOKI and the green の店頭の値引き販売で、品目はレンタル落ちの観葉植物。storeSale.exclude",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1755,7 +1762,8 @@
    "kind": "coverage_gaps",
    "target": "植物と蒸留 vol.03 (2026-10-18)",
    "action": "rejected",
-   "detail": "旧沢田牧場(富山県上市町)でハーブを水蒸気蒸留する催し。outOfScopeGenres(ハーブ・有用植物)。シリーズとして listing-policy に置いた"
+   "detail": "旧沢田牧場(富山県上市町)でハーブを水蒸気蒸留する催し。outOfScopeGenres(ハーブ・有用植物)。シリーズとして listing-policy に置いた",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1763,7 +1771,8 @@
    "kind": "cancel_suspects",
    "target": "食虫植物祭2026 (2026-11-07〜08)",
    "action": "reviewed",
-   "detail": "公式頁は会期・会場のままで中止・延期の語なし。署名の変化はタイムテーブル・バスと懇親会のチケットの追記(頁の更新日 10/12 20:18)"
+   "detail": "公式頁は会期・会場のままで中止・延期の語なし。署名の変化はタイムテーブル・バスと懇親会のチケットの追記(頁の更新日 10/12 20:18)",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1771,7 +1780,8 @@
    "kind": "cancel_suspects",
    "target": "多肉X'mas (2026-12-05〜06)",
    "action": "reviewed",
-   "detail": "flarie.jp の告知は出展者募集のまま。-1% は外枠の Recent Topics 欄の入れ替わり"
+   "detail": "flarie.jp の告知は出展者募集のまま。-1% は外枠の Recent Topics 欄の入れ替わり",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1779,7 +1789,8 @@
    "kind": "needs_browser",
    "target": "Lier.多肉フェスティバル in 岡山 (2026-10-25)",
    "action": "fixed",
-   "detail": "主催の日程表(DdszFGQBiY-)の『岡山県岡山市サウスヴィレッジホール』は、岡山市サウスヴィレッジ(南区片岡2468)のホール。southvillage.jp の催事告知が会場を『岡山市サウスヴィレッジ ホール』と書く。venue/location/mapQuery と説明文を直した"
+   "detail": "主催の日程表(DdszFGQBiY-)の『岡山県岡山市サウスヴィレッジホール』は、岡山市サウスヴィレッジ(南区片岡2468)のホール。southvillage.jp の催事告知が会場を『岡山市サウスヴィレッジ ホール』と書く。venue/location/mapQuery と説明文を直した",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1787,7 +1798,8 @@
    "kind": "needs_browser",
    "target": "多肉だョ！全員集合 の表記(とっとり花回廊・金沢 / 津山・福山)",
    "action": "fixed",
-   "detail": "主催 @tanikudayo.zeninsyuugou の告知(DeOqmcgmt5r)は『多肉だョ！全員集合』。とっとり花回廊と第15回 金沢の name を揃え、旧表記を aliases に残した"
+   "detail": "主催 @tanikudayo.zeninsyuugou の告知(DeOqmcgmt5r)は『多肉だョ！全員集合』。とっとり花回廊と第15回 金沢の name を揃え、旧表記を aliases に残した",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1795,7 +1807,8 @@
    "kind": "short_descriptions",
    "target": "アガベ展示即売会（ジョイフルエーケー屯田店） (2026-10-18)",
    "action": "fixed",
-   "detail": "主催の告知 DeXyEGuE0J- の事実(3店の日程・大森プランツ 佐々木清志郎社長・初心者歓迎)で43字→110字。大曲店・大麻店の回も掲載した"
+   "detail": "主催の告知 DeXyEGuE0J- の事実(3店の日程・大森プランツ 佐々木清志郎社長・初心者歓迎)で43字→110字。大曲店・大麻店の回も掲載した",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1803,7 +1816,8 @@
    "kind": "tbd",
    "target": "masappe 周年祭 / BENKEISOU / BOTANICAL BOTANICAL OKINAWA / まるっと植物fes / BOTANICAL STYLE Minato / ゆるっと第3回 / 珍奇植物FM 1月・4月 / サンタフェ周年祭",
    "action": "skipped",
-   "detail": "主催の最新12件に会場・時間なし。BOTANICAL BOTANICAL OKINAWA は出店者 @luckplantsokinawa の予定表に『北谷ジバゴコーヒー前』とあるが主催の告知ではない"
+   "detail": "主催の最新12件に会場・時間なし。BOTANICAL BOTANICAL OKINAWA は出店者 @luckplantsokinawa の予定表に『北谷ジバゴコーヒー前』とあるが主催の告知ではない",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1811,7 +1825,8 @@
    "kind": "eyecatch_candidates_pending",
    "target": "12件",
    "action": "skipped",
-   "detail": "agave-navi-eyecatch の担当"
+   "detail": "agave-navi-eyecatch の担当",
+   "mailedOn": "2026-10-13"
   },
   {
    "on": "2026-10-13",
@@ -1819,7 +1834,8 @@
    "kind": "truncatedUnresolved",
    "target": "NOZARASHI BONSAI STORE / Plants Plants Plants / NOHOHON HALLOWEEN / ぐんまオーガニックマルシェ",
    "action": "reviewed",
-   "detail": "盆栽・有機野菜・飲食店のハロウィンの3件は見送りに記録、Plants Plants Plants は掲載済み(10/17-18 BHMS GARDEN)"
+   "detail": "盆栽・有機野菜・飲食店のハロウィンの3件は見送りに記録、Plants Plants Plants は掲載済み(10/17-18 BHMS GARDEN)",
+   "mailedOn": "2026-10-13"
   }
  ]
 }
