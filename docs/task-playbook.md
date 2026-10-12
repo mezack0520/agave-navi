@@ -125,6 +125,13 @@
    読み書きとも拒否される。`device_request_folder_access` も通らない。
    **だから「フォルダを接続してください」と頼んではいけない。**接続しても変わらない。
    目崎に貼ってもらう文面をそのまま出す。
+   **※ 2026-10-13 に状況が変わっていた(event-listing-review)。**定期実行のセッションに
+   scheduled-tasks の `list_scheduled_tasks` / `update_scheduled_task` があり、前者は taskId と SKILL.md の場所を返し、
+   後者は定義上 `prompt` を置き換えられる。`C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` は5本とも `Read` で読めた(`Grep` は接続フォルダの外として拒否された)。
+   定期実行は頼まれていない書き込みをしないので、`update_scheduled_task` は呼んでいない(効くかは未確認)。
+   目崎の承認が要ることは変わらないが、**承認すれば会話のセッションが現行の本文を `Read` してから当てられる見込み**なので、
+   `pending-judgments.json` には「貼ってほしい」ではなく「承認すれば当てられる」と書く。
+   taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` / `agave-navi-site-health-check` は台帳の taskId と名前が違う。
 
 8. **日次メールに出る項目は、報告する前に直す（2026-09-29 目崎の指示）。**
    「積み残し・異常あり・他所に出ていて当サイトに無いイベントは、報告だけでなく
