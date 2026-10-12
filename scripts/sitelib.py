@@ -1023,6 +1023,93 @@ def normalize_series_name(name):
     s = re.sub(r'[^0-9a-zぁ-んァ-ヶ一-龠ー]+', '', s)
     return s
 
+
+# --- シリーズ名の表記の割れ (2026-10-13) ---
+# 多肉だョ！全員集合 は 10-10〜12 の3日間、とっとり花回廊・第15回 金沢が「だヨ」、第17回 津山・第18回 福山が「だョ」で
+# 載っていた。NFKC は小書きの仮名を畳まないので normalize_series_name のキーが2つに割れ、詳細頁の
+# 「このイベントの開催履歴・関連回」(build-detail-pages.make_series_history)は とっとり花回廊 に 金沢 しか出さず、
+# 開催予定の 津山・福山 が消えていた(10-12 の版の頁で確認)。同じキーで束ねる make_nearby_events の同シリーズ除外と
+# generate-watchlist の「次回開催待ちシリーズ」も割れる。どの検査も名前の書き分けを見ていなかった。
+# 仮名の書き分けだけを畳んだキーで束ね、元のキーが2つ以上あれば割れとみなす。
+# 束ねる幅は小書き/並字・ひらがな/カタカナ・長音の有無・ヴ行/バ行まで。漢字の異体字や英字の綴りは見ない。
+_SERIES_SMALL_KANA = str.maketrans('ァィゥェォッャュョヮヵヶぁぃぅぇぉっゃゅょゎ',
+                                   'アイウエオツヤユヨワカケあいうえおつやゆよわ')
+_SERIES_VU_ROW = (('ヴァ', 'バ'), ('ヴィ', 'ビ'), ('ヴェ', 'ベ'), ('ヴォ', 'ボ'), ('ヴ', 'ブ'))
+
+
+def series_name_loose_key(name):
+    """normalize_series_name のキーを、仮名の書き分け(小書き・ひらがな/カタカナ・長音・ヴ)で畳んだもの。"""
+    s = normalize_series_name(name).translate(_SERIES_SMALL_KANA)
+    s = ''.join(chr(ord(c) + 0x60) if 'ぁ' <= c <= 'ゖ' else c for c in s)
+    for a, b in _SERIES_VU_ROW:
+        s = s.replace(a, b)
+    return s.replace('ー', '')
+
+
+def series_name_variants(events, min_len=4):
+    """同じシリーズなのに normalize_series_name が別のキーを返す名前の組。
+
+    返り値: [(畳んだキー, {元のキー: [(slug, name), ...]}), ...]
+    min_len は make_series_history・generate-watchlist が束ねる下限(4字)に合わせる(それより短いキーは束ねられない)。
+    organizerIg が両方にあって違う組は数えない(別の主催がたまたま似た一般語の名前を使う場合)。
+    片方に organizerIg が無い組は数える(第15回 金沢は organizerIg が無かった)。
+    """
+    groups = {}
+    for e in events or []:
+        name = e.get('name') or ''
+        k = normalize_series_name(name)
+        if len(k) < min_len:
+            continue
+        groups.setdefault(series_name_loose_key(name), {}).setdefault(k, []).append(e)
+    out = []
+    for lk, by_key in groups.items():
+        if len(by_key) < 2:
+            continue
+        keys = sorted(by_key)
+        linked = False
+        for i, ka in enumerate(keys):
+            for kb in keys[i + 1:]:
+                for a in by_key[ka]:
+                    ia = (a.get('organizerIg') or '').strip().lower()
+                    for b in by_key[kb]:
+                        ib = (b.get('organizerIg') or '').strip().lower()
+                        if not ia or not ib or ia == ib:
+                            linked = True
+                            break
+                    if linked:
+                        break
+                if linked:
+                    break
+            if linked:
+                break
+        if linked:
+            out.append((lk, {k: [(e.get('slug'), e.get('name') or '') for e in by_key[k]] for k in keys}))
+    return sorted(out)
+
+
+def _self_test_series_name_variants():
+    """series_name_variants の自己テスト。audit.series_name_variant が毎回呼び、失敗を同じ検査の行に出す。"""
+    bad = []
+    def ev(slug, name, ig=None):
+        return {'slug': slug, 'name': name, 'organizerIg': ig}
+    cases = [
+        ('小書きと並字(10-10〜12 の実例)', [ev('a', '多肉だヨ！全員集合 in とっとり花回廊', 'x'),
+                                         ev('b', '第17回 多肉だョ！全員集合 in 津山', 'x')], 1),
+        ('片方に organizerIg が無い', [ev('a', '第15回 多肉だヨ！全員集合 in 金沢'),
+                                     ev('b', '第18回 多肉だョ！全員集合 in 福山', 'x')], 1),
+        ('ひらがなとカタカナ', [ev('a', 'たにくまーけっと vol.2', 'x'), ev('b', 'タニクマーケット vol.3', 'x')], 1),
+        ('長音の有無', [ev('a', 'ボタニカルマーケット', 'x'), ev('b', 'ボタニカルマケット', 'x')], 1),
+        ('別の主催の似た名前は数えない', [ev('a', 'グリーンマーケット', 'x'), ev('b', 'グリーンマーケツト', 'y')], 0),
+        ('同じ表記は数えない', [ev('a', '第17回 多肉だョ！全員集合 in 津山', 'x'),
+                              ev('b', '第18回 多肉だョ！全員集合 in 福山', 'x')], 0),
+        ('束ねる下限(4字)より短いキーは見ない', [ev('a', 'たにく', 'x'), ev('b', 'タニク', 'x')], 0),
+    ]
+    for label, evs, want in cases:
+        got = len(series_name_variants(evs))
+        if got != want:
+            bad.append(f'{label}: 期待 {want}組 / 実際 {got}組')
+    return bad
+
 # --- 共通HTMLフラグメント (単一情報源) ---
 
 # AdSense。2026-07-30 に撤去したが 2026-09-16 に再申請を決めて戻した。

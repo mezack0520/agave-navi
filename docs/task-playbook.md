@@ -4294,6 +4294,20 @@ Lier 岡山「サウスヴィレッジホール」の同定は 10-09〜12 の4�
 毎日取得に失敗して `cancel_watch_unreachable`(info)に出る。**検査の失敗ではなく相手の設定なので直す先は無い。**
 主催・共催の Instagram に同じ回の告知が出たら sourceUrl をそちらへ替え、公式頁は url に残す。
 
+### 同じシリーズの名前を仮名の書き分けで割ると、開催履歴から開催予定の回が消える (2026-10-13)
+
+多肉だョ！全員集合は 10-10〜12 の3日間、とっとり花回廊・第15回 金沢が「だヨ」、第17回 津山・第18回 福山が「だョ」で載っていた。
+シリーズを束ねる `normalize_series_name` は NFKC をかけるだけで小書きの仮名を畳まないので、キーが2つに割れた。
+10-12 の版の とっとり花回廊 の頁は「このイベントの開催履歴・関連回」に 金沢 しか出さず、開催予定の 津山・福山 が無かった。
+同じキーで束ねる近隣イベントの同シリーズ除外と、watch-sources の次回待ちシリーズも割れる。
+event-monitor は 10-11・12 に目で見つけてレポートの「未対応」に書いたが、名前の書き分けを見る検査は無かった。
+- `audit.series_name_variant`(urgent): 仮名の書き分け(小書き/並字・ひらがな/カタカナ・長音の有無・ヴ行/バ行)だけを畳んだキー
+  (`sitelib.series_name_loose_key`)で束ね、元のキーが2つ以上あれば出す。organizerIg が両方にあって違う組は数えない。
+  規則は `sitelib.series_name_variants`。自己テスト `_self_test_series_name_variants` を audit が毎回走らせ、落ちたら同じ検査の行に出す。
+- 03-26〜10-13 の events.json 162版で出たのはこの1組の3版だけ(誤検知0)。修正前の版で1件、今は0件。
+- **normalize_series_name 自体は畳まなかった。**畳めば開催履歴は直るが、読者に見える名前の割れが残ったまま黙る。
+  検査で出して主催の表記に揃え、使わなくなった表記は aliases に残す(10-13 に agave-event-update がそうした)。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4341,6 +4355,7 @@ Lier 岡山「サウスヴィレッジホール」の同定は 10-09〜12 の4�
 | 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で会場の所在地を確かめ、説明文の所在地を location の住所どおりに直す。location / prefecture のほうが違っていればそちらを直す | fixed |
 | 埋め込み・アイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して image-rejected.json に記録し、この回の告知を主催の投稿で探し直す | fixed |
+| 同じシリーズの回で名称の表記が割れている(`series_name_variant`) | 主催の告知の表記に揃え、使わなくなった表記は aliases に残す。本当に別のイベントなら名前で区別が付くようにする | fixed |
 | リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |

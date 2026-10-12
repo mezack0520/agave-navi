@@ -216,6 +216,28 @@ def main():
         '同一回なら片方を削除し、残す側に一次情報を寄せる。'
         '本当に同会場で別イベントなら名称で区別できるようにする')
 
+    # 2c. 同じシリーズの回で名称の表記が割れている(2026-10-13)。
+    #     多肉だョ！全員集合 は 10-10〜12、とっとり花回廊・第15回 金沢が「だヨ」、第17回 津山・第18回 福山が「だョ」だった。
+    #     NFKC は小書きの仮名を畳まないので normalize_series_name のキーが割れ、とっとり花回廊 の頁の
+    #     「このイベントの開催履歴・関連回」に開催予定の 津山・福山 が出ていなかった(10-12 の版の頁で確認)。
+    #     二重掲載の検査は同日・同会場の組しか見ず、名前の書き分けはどこも見ていなかった。event-monitor が
+    #     目で見つけて 10-11・12 のレポートの「未対応」に書き、10-13 に agave-event-update が主催の表記に揃えた。
+    #     規則は sitelib.series_name_variants(仮名の書き分けだけを畳んだキーで束ね、元のキーが2つ以上あれば出す)。
+    #     03-26〜10-13 の events.json 162版に当てて、出たのはこの1組の3版だけ(誤検知0)。自己テストを毎回走らせる。
+    _sv_bad = []
+    for _lk, _groups in sitelib.series_name_variants(events):
+        _sv_bad.append(' / '.join(sorted(_groups)) + ': ' + ' | '.join(
+            f"「{_g[0][1]}」 " + ', '.join(_sl for _sl, _nm in _g)
+            for _k, _g in sorted(_groups.items())))
+    for _bad in sitelib._self_test_series_name_variants():
+        _sv_bad.append(f'自己テスト失敗(sitelib._self_test_series_name_variants): {_bad}')
+    add('series_name_variant', '同じシリーズの回で名称の表記が割れている(小書き・ひらがな/カタカナ・長音の書き分け)',
+        sorted(_sv_bad),
+        '主催の告知の表記に揃え、使わなくなった表記は aliases に残す。'
+        '割れたままだと詳細頁の開催履歴(make_series_history)・近隣イベントの同シリーズ除外・'
+        'watch-sources の次回待ちシリーズがキーごとに分かれる。'
+        '本当に別のイベントなら名前で区別が付くようにする')
+
     # 3. 詳細ページの孤児と欠落
     files = {os.path.basename(f)[:-5] for f in glob.glob(rp('events', '*.html'))}
     add('orphan_detail_pages', 'events.jsonに無いのに残っている詳細ページ',
