@@ -629,6 +629,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   スプレッドシートを開いて同一オリジンで
   `fetch('/spreadsheets/d/1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI/gviz/tq?tqx=out:csv',{credentials:'include'})`
   を叩けば1回で全行取れる。グリッドのUIを読む手順には戻さないこと（許可待ちで止まる）。
+  URL に `&cb='+Date.now()` を付ける(2026-09-19)。古い版を掴むと新着を見落として「新着ゼロ」で終わり、気付く手段が無い。
   Chromeのログインは個人アカウント `yuji.mezaki@gmail.com`（Driveコネクタは仕事用なので見えない）。
   この日の実測: データ行2 / `inquiries-processed.json` の processed 2 → 検算通過・新着ゼロ。
   フォームの機能確認も実施済み（`viewform` は回答受付中、フォームIDの参照は `contact.html` 1件のみ）。
@@ -860,6 +861,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   (2) `grep -rlo "<フォームID>" --include=*.html .` が `contact.html` を返すこと
   (2026-08-13 実施。直近回答が 2026-07-02 で6週間空いていたため確認した。両方とも正常。
   サイト内でこのフォームIDを参照しているのは `contact.html` の1ファイルだけ)
+  `viewform` を開くと「進行状況が復元されました」と出ることがある(2026-09-21)。過去の機能確認で開いた痕跡が
+  ログイン中のアカウントに下書きとして残っているだけで、送信していないのでシートの行は増えない。
+  書きかけの申請と読まない。見るのは (1) の表示と設問が出ることだけで、テスト送信はしない。
 - **本番を見る前に `localStorage.removeItem('aen_region')` を実行してリロードする。**
   Chromeのプロファイルは前回の実行の localStorage を引きずるので、
   地域を絞った状態の画面を「本番の見え方」として読んでしまう。
@@ -4373,6 +4377,10 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
   **誤る向きは両方ある。**直したのに古い版が返れば「直っていない」と読んで
   二重に直しに行き、消したのに古い版が返れば「まだ在る」と読んで欠落を見逃す。
   公開側は `agave-navi.com`(Pages)を見る。Pages は現行版を返した。
+  **ただし web_fetch は `agave-navi.com` でも URL 単位で古い版を返す(2026-09-19 実測。この項への反映は 10-12)。**
+  素の `inquiries-processed.json` は11日前の版で、`?cb=20260919a` を付けると現行版が返った。
+  同じホストの隣のファイルが現行版でも、そのURLの鮮度の証拠にならない。**本番を読むときも必ず一意なクエリ(`?cb=<日付>`)を付ける。**
+  ファイル自身の日付欄(updated / sheetCheckedOn / reviewedOn)が期待より古ければ疑う。
 - `audit-history.json` に推移が残る。**前回より悪化していたら、自分の変更を疑う**
 - **レポートに書く件数は、前回レポートから引き写さずファイルを数え直す。**
   本タスクの 2026-08-12 と 08-13 のレポートは `pending-judgments.json` を「7件のまま」と
@@ -4443,6 +4451,8 @@ bash は 09-29 に復帰し、09-29〜10-05 の全タスクが台帳・task-repo
 監査の urgent は週を通して0。`short_descriptions` 1 と `cross_script_duplicate` 3 は不動(前者は (2)、後者は 10-05 の判断どおり放置)。
 events 536→655 は前回点検からの掲載119件(削除0。10-09 の Lier.多肉フェスティバル巡業25会場を含む)で、upcoming 177→259 と `eyecatch_backlog` 120 も同じ足し算。
 pending-judgments は2件(どちらもプロンプトの件で3件未満)。task_run_gap 0、task-reports も7日×4タスク揃っている。
+`work/*-unpushed-*.json` の残り10本(09-09〜09-26。event-listing-review 5・event-monitor 2・eyecatch 3)を開いた。台帳とデータの分は反映済みか
+期限切れで、プレイブック分の未反映3件(web_fetch は本番でも URL 単位で古い版を返す・gviz にも cb・viewform の下書き復元)を §5・§3 に当て、10本とも `work/_to_delete/` へ移した。
 
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、
