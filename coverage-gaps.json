@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-12",
+  "sweptOn": "2026-10-13",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,22 +16,39 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1326,
-    "in_scope": 315,
-    "covered": 192,
-    "known_rejected": 123,
-    "truncated_resolved": 135,
-    "truncated_unresolved": 2,
+    "candidates": 1414,
+    "in_scope": 331,
+    "covered": 196,
+    "known_rejected": 131,
+    "truncated_resolved": 90,
+    "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 225,
-    "truncated_unresolved_hits": 90,
-    "in_scope_nextmeet": 90,
-    "gaps_raw": 0
+    "in_scope_leafla": 242,
+    "truncated_unresolved_hits": 180,
+    "in_scope_nextmeet": 89,
+    "gaps_raw": 4
   },
   "errors": [],
   "truncatedUnresolved": [
-    "10/09 追加 四日市市文化会館で生活文化・趣味の作品展を開催...",
-    "10/09 追加 リトリートマルシェ vol.10が11月8日に..."
+    "10/12 追加 NOZARASHI BONSAI STORE ...",
+    "10/12 追加 Plants Plants PlantsにPL...",
+    "10/12 追加 NOHOHON HALLOWEENが野歩ほんで...",
+    "10/12 追加 ぐんまオーガニックマルシェが2026年10月2..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-10-13",
+      "title": "HINOKI Replay Plants SALE Vol.01（リプレイプランツセール）"
+    },
+    {
+      "date": "2026-10-18",
+      "title": "植物と蒸留 vol.03（アップルミントの蒸留）"
+    },
+    {
+      "date": "2026-10-31",
+      "lastSeen": "2026-11-01",
+      "days": 2,
+      "title": "シマムラ園芸×QSPLANT vol.9"
+    }
+  ]
 }

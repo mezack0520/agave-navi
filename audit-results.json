@@ -1,5 +1,5 @@
 {
-  "total": 764,
+  "total": 753,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -178,7 +178,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 139,
+      "count": 131,
       "items": [
         "agave-popup-mellow-plants-toon-2026-10",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -274,7 +274,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 120,
+      "count": 116,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -681,7 +681,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -707,25 +707,13 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 17,
+      "count": 5,
       "items": [
         "hiroshima-cactus-succulent-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)",
-        "ibatama-vol9-2026-10(2026-10-11〜2026-10-12/2日)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
         "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10(2026-10-10〜2026-11-01/23日/長期)",
-        "king-plants-shuukakusai-kesennuma-2026-10(2026-10-10〜2026-10-12/3日)",
-        "kisarazu-engei-ichi-2026-10(2026-10-12〜2026-10-12/1日)",
-        "morino-tanikuen-hanbaikai-maizuru-2026-10(2026-10-12〜2026-10-12/1日)",
-        "nara-bikaku-fes-vol2-2026-10(2026-10-12〜2026-10-12/1日)",
-        "plants-baka-4th-anniversary-2026-10(2026-10-10〜2026-10-12/3日)",
-        "plants-popup-itec-saito-niigata-2026-10(2026-10-12〜2026-10-12/1日)",
         "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10(2026-10-03〜2026-10-25/23日/長期)",
-        "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-10(2026-10-10〜2026-10-12/3日)",
-        "shimane-cactus-succulent-ten-2026-10(2026-10-10〜2026-10-12/3日)",
-        "taniku-midori-marche-flarie-2026-10(2026-10-10〜2026-10-12/3日)",
-        "tanikuen-ohisama-aeon-kofu-showa-2026-10(2026-10-10〜2026-10-12/3日)",
-        "tegarayama-aki-saboten-taniku-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)",
-        "tomitan-nouen-ishigami-no-oka-2026-10(2026-10-10〜2026-10-12/3日)"
+        "tegarayama-aki-saboten-taniku-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -858,8 +846,12 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-10-13 HINOKI Replay Plants SALE Vol.01（リプレイプランツセール）",
+        "2026-10-18 植物と蒸留 vol.03（アップルミントの蒸留）",
+        "2026-10-31 シマムラ園芸×QSPLANT vol.9"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -886,15 +878,11 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 120,
+      "count": 116,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
-        "2026-10-10 king-plants-shuukakusai-kesennuma-2026-10",
-        "2026-10-10 sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-10",
-        "2026-10-10 shimane-cactus-succulent-ten-2026-10",
         "2026-10-10 tegarayama-aki-saboten-taniku-ten-2026-10",
-        "2026-10-12 nara-bikaku-fes-vol2-2026-10",
         "2026-10-14 kakukaku-shikajika-6th-narakaki-2026-10",
         "2026-10-16 lier-taniku-festival-matsuyama-hojo-2026-10",
         "2026-10-16 suma-rikyu-cactus-succulent-tenjikai-2026-10",
@@ -927,7 +915,11 @@
         "2026-11-01 kasamajuku-tanikusai-2026-11",
         "2026-11-01 lier-taniku-festival-aira-2026-11",
         "2026-11-02 lier-taniku-festival-kumamoto-2026-11",
-        "2026-11-03 lier-taniku-festival-munakata-2026-11"
+        "2026-11-03 lier-taniku-festival-munakata-2026-11",
+        "2026-11-07 botanical-life-kasama-2026-11",
+        "2026-11-07 chuushokushobutsusai-2026",
+        "2026-11-07 green-garage-nogata-2026-11",
+        "2026-11-07 lier-taniku-festival-taishodo-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -969,8 +961,11 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-11-07 chuushokushobutsusai-2026: 公式ページが変わった(本文・画像)",
+        "2026-12-05 taniku-xmas-flarie-2026-12: 公式ページが変わった(本文: 1181→1170字 -1%)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1088,8 +1083,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-16 lier-taniku-festival-matsuyama-hojo-2026-10: https://www.instagram.com/p/DeY_73ZAfJD/（caption）",
+        "2026-10-17 plants-party-the-park-kinashi-2026-10: https://www.instagram.com/p/DdFoOmrvf3K/（caption）",
+        "2026-10-24 lier-taniku-festival-kasai-2026-10: https://www.instagram.com/p/DeY_73ZAfJD/（caption）",
+        "2026-10-25 lier-taniku-festival-okayama-2026-10: https://www.instagram.com/p/DeY_73ZAfJD/（caption）",
+        "2026-10-26 lier-taniku-festival-hiroshima-2026-10: https://www.instagram.com/p/DeY_73ZAfJD/（caption）",
+        "2026-11-08 lahaina-garden-7th-anniversary-2026-11: https://www.instagram.com/p/DeDa7EsD8VX/（sourcePost）",
+        "2026-11-14 hobby-plants-freaks-vol6-2026-11: https://www.instagram.com/p/DeG8M8dJZ8p/（sourcePost）",
+        "2026-11-15 plants-popup-rasen-coffee-osaka-2026-11: https://www.instagram.com/p/Dd--7dKzlc6/（sourcePost）",
+        "2026-11-15 nagoriba-maizuru-2026-11: https://www.instagram.com/p/DeHUJ0XE-b8/（sourcePost）",
+        "2026-11-15 yamaokuya-tandoku-hanbaikai-sakura-2026-11: https://www.instagram.com/p/DeWTwmdAZjn/（caption）",
+        "2026-11-21 marutto-shokubutsu-fes-2026-11: https://www.instagram.com/p/DeO_abhTD_u/（caption）",
+        "2026-11-21 hartn-fes-4th-hirata-kasuga-2026-11: https://www.instagram.com/p/DeOU7svERlu/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },

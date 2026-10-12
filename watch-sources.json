@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-12 09:48 JST",
+ "generated": "2026-10-13 06:45 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 344,
-  "awaitingNextEdition": 333,
+  "awaitingNextEdition": 342,
   "officialSiteCandidates": 83,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 82,
@@ -189,26 +189,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
-  },
-  {
-   "handle": "king.plants.slugger",
-   "url": "https://www.instagram.com/king.plants.slugger/",
-   "eventCount": 3,
-   "lastEventName": "キングプランツ 収穫祭（気仙沼クラブハウス）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
-   "eventCount": 3,
-   "lastEventName": "木更津園芸市（2026年10月）",
-   "lastEventDate": "2026-10-12",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
   },
   {
    "handle": "imama.jp",
@@ -681,6 +661,26 @@
    "apiStatus": "api"
   },
   {
+   "handle": "king.plants.slugger",
+   "url": "https://www.instagram.com/king.plants.slugger/",
+   "eventCount": 3,
+   "lastEventName": "キングプランツ 収穫祭（気仙沼クラブハウス）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "eventCount": 3,
+   "lastEventName": "木更津園芸市（2026年10月）",
+   "lastEventDate": "2026-10-12",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "fukuoka_effect",
    "url": "https://www.instagram.com/fukuoka_effect/",
    "eventCount": 2,
@@ -771,36 +771,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "taniku_to_midori_no_marche",
-   "url": "https://www.instagram.com/taniku_to_midori_no_marche/",
-   "eventCount": 1,
-   "lastEventName": "多肉とみどりのマルシェ in フラリエ 秋",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "sun_in_succulents",
-   "url": "https://www.instagram.com/sun_in_succulents/",
-   "eventCount": 1,
-   "lastEventName": "サボテン・多肉植物展",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "plants.baka",
-   "url": "https://www.instagram.com/plants.baka/",
-   "eventCount": 1,
-   "lastEventName": "Plants Baka 4周年祭",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "kakegawa_kachouen",
    "url": "https://www.instagram.com/kakegawa_kachouen/",
    "eventCount": 1,
@@ -809,46 +779,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "tomitan.nouen",
-   "url": "https://www.instagram.com/tomitan.nouen/",
-   "eventCount": 1,
-   "lastEventName": "とみたん農園 多肉植物販売会（道の駅 石神の丘）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ibatama.ta29",
-   "url": "https://www.instagram.com/ibatama.ta29/",
-   "eventCount": 1,
-   "lastEventName": "いばたま vol.9",
-   "lastEventDate": "2026-10-11",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "nara.bikakufes",
-   "url": "https://www.instagram.com/nara.bikakufes/",
-   "eventCount": 1,
-   "lastEventName": "ナラビカクフェス Vol.2",
-   "lastEventDate": "2026-10-12",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "still_crazy_wataru",
-   "url": "https://www.instagram.com/still_crazy_wataru/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS POP-UP（アイテックサイトウ）",
-   "lastEventDate": "2026-10-12",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "narakaki_flower",
@@ -3266,6 +3196,46 @@
    "apiStatus": "api"
   },
   {
+   "handle": "taniku_to_midori_no_marche",
+   "url": "https://www.instagram.com/taniku_to_midori_no_marche/",
+   "eventCount": 1,
+   "lastEventName": "多肉とみどりのマルシェ in フラリエ 秋",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "sun_in_succulents",
+   "url": "https://www.instagram.com/sun_in_succulents/",
+   "eventCount": 1,
+   "lastEventName": "サボテン・多肉植物展",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "plants.baka",
+   "url": "https://www.instagram.com/plants.baka/",
+   "eventCount": 1,
+   "lastEventName": "Plants Baka 4周年祭",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tomitan.nouen",
+   "url": "https://www.instagram.com/tomitan.nouen/",
+   "eventCount": 1,
+   "lastEventName": "とみたん農園 多肉植物販売会（道の駅 石神の丘）",
+   "lastEventDate": "2026-10-10",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "the_botanical_world_fukuoka",
    "url": "https://www.instagram.com/the_botanical_world_fukuoka/",
    "eventCount": 1,
@@ -3376,6 +3346,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "ibatama.ta29",
+   "url": "https://www.instagram.com/ibatama.ta29/",
+   "eventCount": 1,
+   "lastEventName": "いばたま vol.9",
+   "lastEventDate": "2026-10-11",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "tanippe2026",
    "url": "https://www.instagram.com/tanippe2026/",
    "eventCount": 1,
@@ -3464,6 +3444,26 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "nara.bikakufes",
+   "url": "https://www.instagram.com/nara.bikakufes/",
+   "eventCount": 1,
+   "lastEventName": "ナラビカクフェス Vol.2",
+   "lastEventDate": "2026-10-12",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "still_crazy_wataru",
+   "url": "https://www.instagram.com/still_crazy_wataru/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS POP-UP（アイテックサイトウ）",
+   "lastEventDate": "2026-10-12",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
   }
  ],
  "awaitingNextEdition": [
@@ -3508,6 +3508,28 @@
    "monthsSinceLast": 0,
    "igHandle": "hanauchustaff",
    "officialUrl": "https://www.instagram.com/hanauchustaff/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "木更津園芸市（2026年10月）",
+   "lastSlug": "kisarazu-engei-ichi-2026-10",
+   "lastDate": "2026-10-12",
+   "lastEnd": "2026-10-12",
+   "monthsSinceLast": 0,
+   "igHandle": "chiba_c_and_s_association",
+   "officialUrl": "https://www.instagram.com/p/DddxjcVvQ3u/",
+   "recurring": true,
+   "apiStatus": "personal"
+  },
+  {
+   "series": "森の多肉園販売会 in 京都舞鶴",
+   "lastSlug": "morino-tanikuen-hanbaikai-maizuru-2026-10",
+   "lastDate": "2026-10-12",
+   "lastEnd": "2026-10-12",
+   "monthsSinceLast": 0,
+   "igHandle": "morinotanikuen",
+   "officialUrl": "https://www.instagram.com/p/DdY2FP9H4nG/",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -3882,28 +3904,6 @@
    "monthsSinceLast": 0,
    "igHandle": "earthwalk_plants",
    "officialUrl": "https://www.instagram.com/p/DdKfIEck1Fa/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
-   "lastSlug": "blue-ocean-aki-shokubutsu-hanbaikai-2026-10",
-   "lastDate": "2026-10-10",
-   "lastEnd": "2026-10-10",
-   "monthsSinceLast": 0,
-   "igHandle": "blue.ocean8484",
-   "officialUrl": "https://www.instagram.com/p/Dd4ldh8zpzD/",
-   "recurring": false,
-   "apiStatus": "personal"
-  },
-  {
-   "series": "X-PLANTS 即売会（プロトリーフ二子玉川本店）",
-   "lastSlug": "x-plants-sokubaikai-protoleaf-futakotamagawa-2026-10",
-   "lastDate": "2026-10-10",
-   "lastEnd": "2026-10-10",
-   "monthsSinceLast": 0,
-   "igHandle": "protoleaf.shop_futakotamagawa",
-   "officialUrl": "https://www.instagram.com/p/Dd3teoaE79D/",
    "recurring": false,
    "apiStatus": "api"
   }
