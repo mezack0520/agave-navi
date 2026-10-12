@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-13 06:45 JST",
+ "generated": "2026-10-13 07:34 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 344,
-  "awaitingNextEdition": 342,
-  "officialSiteCandidates": 83,
+  "igAccounts": 352,
+  "awaitingNextEdition": 341,
+  "officialSiteCandidates": 84,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 82,
+  "igNeedsBrowser": 90,
   "igDead": 7
  },
  "igAccounts": [
@@ -101,20 +101,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "morinotanikuen",
-   "url": "https://www.instagram.com/morinotanikuen/",
+   "handle": "botayoko",
+   "url": "https://www.instagram.com/botayoko/",
    "eventCount": 5,
-   "lastEventName": "森の多肉園販売会 BIG",
+   "lastEventName": "ボタニカル横丁（2026年11月）",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "botayoko",
-   "url": "https://www.instagram.com/botayoko/",
+   "handle": "morinotanikuen",
+   "url": "https://www.instagram.com/morinotanikuen/",
    "eventCount": 5,
-   "lastEventName": "ボタニカル横丁（2026年11月）",
+   "lastEventName": "森の多肉園販売会 BIG",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
@@ -146,6 +146,16 @@
    "eventCount": 4,
    "lastEventName": "フジサンフェスタ 2026秋",
    "lastEventDate": "2026-11-03",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "joyfulak_gardencenter",
+   "url": "https://www.instagram.com/joyfulak_gardencenter/",
+   "eventCount": 4,
+   "lastEventName": "はなみちるさんプレゼンツ 第5回 多肉販売会（ジョイフルエーケー釧路店）",
+   "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -186,6 +196,16 @@
    "eventCount": 4,
    "lastEventName": "珍奇植物フリーマーケット（2027年4月）",
    "lastEventDate": "2027-04-11",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "aobouzu_caudex",
+   "url": "https://www.instagram.com/aobouzu_caudex/",
+   "eventCount": 3,
+   "lastEventName": "青坊主 明石ポップアップ（octet.）",
+   "lastEventDate": "2026-10-23",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -331,16 +351,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "38_ten_",
-   "url": "https://www.instagram.com/38_ten_/",
-   "eventCount": 2,
-   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "iwabaegarden",
    "url": "https://www.instagram.com/iwabaegarden/",
    "eventCount": 2,
@@ -385,6 +395,16 @@
    "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
    "eventCount": 2,
    "lastEventName": "PINE APPLES チランジア・ブロメリア即売会（プロトリーフ二子玉川本店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "38_ten_",
+   "url": "https://www.instagram.com/38_ten_/",
+   "eventCount": 2,
+   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": true,
    "priority": 0,
@@ -466,16 +486,6 @@
    "eventCount": 2,
    "lastEventName": "DYCKIA EVENT NEEDLES",
    "lastEventDate": "2026-11-01",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "joyfulak_gardencenter",
-   "url": "https://www.instagram.com/joyfulak_gardencenter/",
-   "eventCount": 2,
-   "lastEventName": "はなみちるさんプレゼンツ 第5回 多肉販売会（ジョイフルエーケー釧路店）",
-   "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -691,16 +701,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "aobouzu_caudex",
-   "url": "https://www.instagram.com/aobouzu_caudex/",
-   "eventCount": 2,
-   "lastEventName": "青坊主 鹿児島ポップアップ",
-   "lastEventDate": "2026-09-06",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "green_summit_touhoku",
    "url": "https://www.instagram.com/green_summit_touhoku/",
    "eventCount": 2,
@@ -879,6 +879,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "saikai.kawatana",
+   "url": "https://www.instagram.com/saikai.kawatana/",
+   "eventCount": 1,
+   "lastEventName": "REGGIO POP UP SHOP in NAGASAKI KAWATANA（西海園芸 川棚店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kikien.succulent0222",
@@ -1101,6 +1111,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "gardens_umekita",
+   "url": "https://www.instagram.com/gardens_umekita/",
+   "eventCount": 1,
+   "lastEventName": "店頭即売会 カクタスニシ・Ruchia・優木園（gardens umekita）",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "plus__plants",
    "url": "https://www.instagram.com/plus__plants/",
    "eventCount": 1,
@@ -1231,6 +1251,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "qs_plant",
+   "url": "https://www.instagram.com/qs_plant/",
+   "eventCount": 1,
+   "lastEventName": "シマムラ園芸×QSPLANT vol.9",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "burari_plants",
    "url": "https://www.instagram.com/burari_plants/",
    "eventCount": 1,
@@ -1301,6 +1331,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "scene_nagaoka",
+   "url": "https://www.instagram.com/scene_nagaoka/",
+   "eventCount": 1,
+   "lastEventName": "WALK COFFEE PLATYCERIUM EXHIBITION（scene・長岡）",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "yamanishihiryouten",
    "url": "https://www.instagram.com/yamanishihiryouten/",
    "eventCount": 1,
@@ -1369,6 +1409,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "fungarden_tobe",
+   "url": "https://www.instagram.com/fungarden_tobe/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物マーケット＠とべ（ファンガーデン砥部店）",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_wonder_market_",
@@ -1509,6 +1559,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "plump_plants078",
+   "url": "https://www.instagram.com/plump_plants078/",
+   "eventCount": 1,
+   "lastEventName": "PLUMP 3社合同コラボイベント（伊那市）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mahota029",
@@ -1661,6 +1721,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "and.plants.flower",
+   "url": "https://www.instagram.com/and.plants.flower/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL MARKET.MIE vol.11",
+   "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "tanikurevolution",
    "url": "https://www.instagram.com/tanikurevolution/",
    "eventCount": 1,
@@ -1699,6 +1769,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "shokubutsuchuudoku",
+   "url": "https://www.instagram.com/shokubutsuchuudoku/",
+   "eventCount": 1,
+   "lastEventName": "しょくぶつちゅうどく vol.3",
+   "lastEventDate": "2027-02-27",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "monster_house_nagoya",
@@ -3916,12 +3996,6 @@
    "eventDate": "2026-10-03"
   },
   {
-   "domain": "shimane-hananosato.com",
-   "url": "https://shimane-hananosato.com/event/event-906/",
-   "eventName": "サボテン・多肉植物展",
-   "eventDate": "2026-10-10"
-  },
-  {
    "domain": "hiroshima-bot.jp",
    "url": "http://www.hiroshima-bot.jp/info/%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3%E3%83%BB%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9%E5%B1%95/",
    "eventName": "サボテン・多肉植物展（広島市植物公園）",
@@ -3931,12 +4005,6 @@
    "domain": "himeji-machishin.jp",
    "url": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
    "eventName": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
-   "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "threads.com",
-   "url": "https://www.threads.com/@38_ten_/post/Dd-Hh5mE5Iv",
-   "eventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月10〜12日）",
    "eventDate": "2026-10-10"
   },
   {
@@ -3967,6 +4035,12 @@
    "domain": "tottorihanakairou.or.jp",
    "url": "https://www.tottorihanakairou.or.jp/tanikuhanbai/",
    "eventName": "多肉だヨ！全員集合 in とっとり花回廊",
+   "eventDate": "2026-10-17"
+  },
+  {
+   "domain": "threads.com",
+   "url": "https://www.threads.com/@38_ten_/post/Dd-Hh5mE5Iv",
+   "eventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
    "eventDate": "2026-10-17"
   },
   {
@@ -4028,6 +4102,12 @@
    "url": "https://rareplantsjapan.jp/2210",
    "eventName": "RARE PLANTS COLLECTION",
    "eventDate": "2026-11-18"
+  },
+  {
+   "domain": "park-tochigi.com",
+   "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
+   "eventName": "多肉植物とサボテンの展示会（井頭公園）",
+   "eventDate": "2026-11-19"
   },
   {
    "domain": "h27664.wixsite.com",

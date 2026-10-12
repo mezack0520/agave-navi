@@ -1,7 +1,127 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-12",
+  "updated": "2026-10-13",
   "items": [
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "joyfulak-omagari-agave-tenji-sokubaikai-2026-10",
+      "name": "アガベ展示即売会（ジョイフルエーケー大曲店）",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "prefecture": "北海道",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "joyfulak-ooasa-agave-tenji-sokubaikai-2026-10",
+      "name": "アガベ展示即売会（ジョイフルエーケー大麻店）",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "prefecture": "北海道",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "reggio-popup-saikai-kawatana-2026-10",
+      "name": "REGGIO POP UP SHOP in NAGASAKI KAWATANA（西海園芸 川棚店）",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "prefecture": "長崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "aobouzu-akashi-popup-2026-10",
+      "name": "青坊主 明石ポップアップ（octet.）",
+      "date": "2026-10-23",
+      "dateEnd": "2026-10-25",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "cactusnishi-gardens-umekita-2026-10",
+      "name": "店頭即売会 カクタスニシ・Ruchia・優木園（gardens umekita）",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "shimamura-engei-qsplant-vol9-2026-10",
+      "name": "シマムラ園芸×QSPLANT vol.9",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "walk-coffee-platycerium-exhibition-nagaoka-2026-11",
+      "name": "WALK COFFEE PLATYCERIUM EXHIBITION（scene・長岡）",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "prefecture": "新潟",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "taniku-market-fungarden-tobe-2026-11",
+      "name": "多肉植物マーケット＠とべ（ファンガーデン砥部店）",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
+      "name": "多肉植物とサボテンの展示会（井頭公園）",
+      "date": "2026-11-19",
+      "dateEnd": "2026-11-22",
+      "prefecture": "栃木",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "plump-plants-collab-ina-2026-11",
+      "name": "PLUMP 3社合同コラボイベント（伊那市）",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "prefecture": "長野",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "botanical-market-mie-vol11-matsusaka-2026-12",
+      "name": "BOTANICAL MARKET.MIE vol.11",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "prefecture": "三重",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-13",
+      "kind": "listed",
+      "slug": "shokubutsu-chudoku-vol3-2027-02",
+      "name": "しょくぶつちゅうどく vol.3",
+      "date": "2027-02-27",
+      "dateEnd": "2027-02-28",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
     {
       "on": "2026-10-12",
       "kind": "listed",
@@ -1080,126 +1200,6 @@
       "date": "2026-11-29",
       "dateEnd": "2026-11-29",
       "prefecture": "熊本",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-07",
-      "kind": "listed",
-      "slug": "itoshima-bariyoka-taniku-ichi-7th-2026-12",
-      "name": "第7回 糸島ばりよか多肉市",
-      "date": "2026-12-06",
-      "dateEnd": "2026-12-06",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "tanikuen-ohisama-aeon-kofu-showa-2026-10",
-      "name": "多肉園おひさま 多肉イベント in イオンモール甲府昭和",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-12",
-      "prefecture": "山梨",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "tanikuen-ohisama-aeon-shimotsuma-2026-10",
-      "name": "多肉園おひさま 多肉イベント in イオンモール下妻",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "tanikuen-ohisama-apita-ashikaga-2026-10",
-      "name": "多肉園おひさま 多肉イベント in アピタ足利店",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-25",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "yamaokuya-tandoku-hanbaikai-osaki-2026-10",
-      "name": "山奥屋の多肉 単独販売会 in 大崎",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "宮城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "tanikuen-ohisama-aeon-morioka-2026-10",
-      "name": "多肉園おひさま 多肉イベント in イオンモール盛岡",
-      "date": "2026-10-30",
-      "dateEnd": "2026-11-01",
-      "prefecture": "岩手",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "tanikuen-ohisama-aeon-hiezu-2026-10",
-      "name": "多肉園おひさま 多肉イベント in イオンモール日吉津",
-      "date": "2026-10-31",
-      "dateEnd": "2026-11-01",
-      "prefecture": "鳥取",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "yamaokuya-tandoku-hanbaikai-sakura-2026-11",
-      "name": "山奥屋の多肉 単独販売会 in さくら",
-      "date": "2026-11-15",
-      "dateEnd": "2026-11-15",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-06",
-      "kind": "listed",
-      "slug": "yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
-      "name": "山奥屋の多肉 単独販売会 in 韮崎",
-      "date": "2027-01-17",
-      "dateEnd": "2027-01-17",
-      "prefecture": "山梨",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-05",
-      "kind": "listed",
-      "slug": "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
-      "name": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
-      "date": "2026-10-03",
-      "dateEnd": "2026-10-25",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-05",
-      "kind": "listed",
-      "slug": "plat-taniku-fes-4th-shibukawa-2026-12",
-      "name": "第4回 ぷらっと 多肉フェス！",
-      "date": "2026-12-05",
-      "dateEnd": "2026-12-05",
-      "prefecture": "群馬",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-04",
-      "kind": "listed",
-      "slug": "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
-      "name": "麋角植物作業室 at pigment 名古屋",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "愛知",
       "detail": ""
     }
   ]
