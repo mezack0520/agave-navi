@@ -4441,7 +4441,7 @@ bash は 09-29 に復帰し、09-29〜10-05 の全タスクが台帳・task-repo
 (3) event-monitor のブラウザ要の持ち越し(4回・2回)→ `log-fix.py --open` で渡す。(4) `/tmp` の固定名への clone 衝突(10-10 に3件・10-12 に4件)は
 `pending-judgments` の `event-listing-review:skill-clone-dir` に積み済みで、プロンプトの持ち主しか直せない。
 監査の urgent は週を通して0。`short_descriptions` 1 と `cross_script_duplicate` 3 は不動(前者は (2)、後者は 10-05 の判断どおり放置)。
-events 538→655・upcoming 177→259 は7日間の掲載116件(10-09 の Lier.多肉フェスティバル巡業25会場を含む)で、`eyecatch_backlog` 120 も同じ足し算。
+events 536→655 は前回点検からの掲載119件(削除0。10-09 の Lier.多肉フェスティバル巡業25会場を含む)で、upcoming 177→259 と `eyecatch_backlog` 120 も同じ足し算。
 pending-judgments は2件(どちらもプロンプトの件で3件未満)。task_run_gap 0、task-reports も7日×4タスク揃っている。
 
 **このタスク自身の抜けについて(2026-08-31 追記)。**
