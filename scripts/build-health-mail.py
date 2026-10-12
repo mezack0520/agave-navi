@@ -62,7 +62,10 @@ def _hits(path, needles, n=5):
 data = _load('check-results.json', {})
 _added_doc = _load('new-events-added.json', {}) or {}
 added = _added_doc.get('events') or []
-judgments = _load('pending-judgments.json', {}).get('items', []) or []
+_queue = _load('pending-judgments.json', {}).get('items', []) or []
+# 承認済み(approvedOn)の項目は目崎の判断待ちではない。定期実行が当てて resolved に移す
+judgments = [j for j in _queue if not j.get('approvedOn')]
+_approved = [j for j in _queue if j.get('approvedOn')]
 audit = _load('audit-results.json', {})
 fixlog = _load('auto-fix-log.json', {'items': []})
 now = sitelib.now_jst()
@@ -85,6 +88,10 @@ for k, v in (audit.get('findings') or {}).items():
     if v.get('severity', 'urgent') == 'urgent' and v.get('count'):
         residual.append((f"{v.get('title', k)}: {v.get('count')}件", (v.get('items') or [])[:3]))
 _ie, _ssl = _env_int('INTEGRITY_ERR'), _env_int('SSL_DAYS', 999)
+# 承認したのに翌日になっても当たっていないもの(プレイブック §1 の 7)
+_stale = [j for j in _approved if (j.get('approvedOn') or '') < now.strftime('%Y-%m-%d')]
+if _stale:
+    residual.append((f'承認済みで未反映: {len(_stale)}件', [j.get('id') for j in _stale]))
 # リンク切れは check_events.py の dead_links(終わっていない回の url / sourceUrl)。
 # 2026-10-06 まで check-links.sh が終わった回まで叩き、主催が消した過去の告知頁を
 # 「要確認」として出していた(その日の4件は全部終了済み)。check-links.sh は廃止

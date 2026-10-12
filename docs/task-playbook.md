@@ -118,20 +118,18 @@
    `upcoming` も 144 → 163 に増えており、**残数は母数が増えれば増える。**
    差の向きだけでは働きを測れない。詳細は §3 の同題の項。
 
-   **SKILL.md は Cowork セッションからは書けない（2026-09-14 実測）。**
-   `C:\Users\yujim\iCloudDrive\Claude\Scheduled\` は Claude 内部領域で、
-   親の `Claude` フォルダを接続しても
-   「protected location (system, credential or Claude-internal data)」として
-   読み書きとも拒否される。`device_request_folder_access` も通らない。
-   **だから「フォルダを接続してください」と頼んではいけない。**接続しても変わらない。
-   目崎に貼ってもらう文面をそのまま出す。
-   **※ 2026-10-13 に状況が変わっていた(event-listing-review)。**定期実行のセッションに
-   scheduled-tasks の `list_scheduled_tasks` / `update_scheduled_task` があり、前者は taskId と SKILL.md の場所を返し、
-   後者は定義上 `prompt` を置き換えられる。`C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` は5本とも `Read` で読めた(`Grep` は接続フォルダの外として拒否された)。
-   定期実行は頼まれていない書き込みをしないので、`update_scheduled_task` は呼んでいない(効くかは未確認)。
-   目崎の承認が要ることは変わらないが、**承認すれば会話のセッションが現行の本文を `Read` してから当てられる見込み**なので、
-   `pending-judgments.json` には「貼ってほしい」ではなく「承認すれば当てられる」と書く。
-   taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` / `agave-navi-site-health-check` は台帳の taskId と名前が違う。
+   **プロンプト(SKILL.md)の変更は、目崎が承認したものだけを定期実行が当てる(2026-10-13)。**
+   定期実行のセッションには scheduled-tasks の `list_scheduled_tasks` / `update_scheduled_task` がある。
+   `C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` は `Read` で読める(書き込みは
+   `update_scheduled_task` 経由だけ。フォルダ接続では書けないので、接続を頼まない)。
+   クラウドの会話セッションにはこのツールが無く、プロンプトを直せない。
+   - 変えたいプロンプトは `pending-judgments.json` に提案として積む(本文をそのまま書く)
+   - 目崎が承認すると、その項目に `approvedOn` が付く。**次に動いた定期実行が、現行の SKILL.md を
+     `Read` し、提案の差分だけを当てた本文で `update_scheduled_task` を呼び、`list_scheduled_tasks` で
+     反映を確かめて `resolved` に移す。**自分のタスク以外のプロンプトも、承認された項目なら当てる
+   - `approvedOn` の無い項目は当てない(頼まれていない書き込みになる)
+   - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
+     `agave-navi-site-health-check` は台帳の taskId と名前が違う
 
 8. **日次メールに出る項目は、報告する前に直す（2026-09-29 目崎の指示）。**
    「積み残し・異常あり・他所に出ていて当サイトに無いイベントは、報告だけでなく
