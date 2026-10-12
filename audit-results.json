@@ -22,6 +22,13 @@
       "note": "同一回なら片方を削除し、残す側に一次情報を寄せる。本当に同会場で別イベントなら名称で区別できるようにする",
       "severity": "urgent"
     },
+    "series_name_variant": {
+      "title": "同じシリーズの回で名称の表記が割れている(小書き・ひらがな/カタカナ・長音の書き分け)",
+      "count": 0,
+      "items": [],
+      "note": "主催の告知の表記に揃え、使わなくなった表記は aliases に残す。割れたままだと詳細頁の開催履歴(make_series_history)・近隣イベントの同シリーズ除外・watch-sources の次回待ちシリーズがキーごとに分かれる。本当に別のイベントなら名前で区別が付くようにする",
+      "severity": "urgent"
+    },
     "orphan_detail_pages": {
       "title": "events.jsonに無いのに残っている詳細ページ",
       "count": 0,
@@ -681,7 +688,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
