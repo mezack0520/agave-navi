@@ -1,47 +1,54 @@
 {
- "_note": "アイキャッチ候補として見て、採らなかった投稿。eyecatchlib.stage_candidates はここにある投稿を二度と候補に出さない",
+ "_note": "アイキャッチ候補として見て、採らなかった投稿。eyecatchlib.stage_candidates はここにある投稿をその回の候補に二度と出さない。notFlyer=true の投稿(どの回の告知でもない画像)は全部の回の候補から外す(2026-10-12。apply-eyecatch.py --not-flyer が付ける。それ以前の記録は理由の文で分けて付けた)",
  "items": {
   "onokoro-green-festa-2026-09": [
    {
     "post": "https://www.instagram.com/reel/DdUvFp6Tmc2/",
     "reason": "キッチンカー企画の告知。本体の告知ではない",
-    "on": "2026-09-23"
+    "on": "2026-09-23",
+    "notFlyer": true
    }
   ],
   "dio-plants-fes-vol1-kusatsu-2026-09": [
    {
     "post": "https://www.instagram.com/reel/Ddm-SCbCdQq/",
     "reason": "出展企業紹介の3/4枚目",
-    "on": "2026-09-23"
+    "on": "2026-09-23",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Ddh0tnoo1t1/",
     "reason": "出展企業紹介の2/4枚目",
-    "on": "2026-09-24"
+    "on": "2026-09-24",
+    "notFlyer": true
    }
   ],
   "botanical-link-popup-kasugai-2026-10": [
    {
     "post": "https://www.instagram.com/p/DdOQWVaEvLb/",
     "reason": "スタンプの写真。イベントの告知ではない",
-    "on": "2026-09-23"
+    "on": "2026-09-23",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dc1x41VSv7z/",
     "reason": "スタンプ柄の紙の写真。イベントの告知画像ではない",
-    "on": "2026-09-28"
+    "on": "2026-09-28",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeIOHsoEpaC/",
     "reason": "駐車場案内の画像",
-    "on": "2026-10-06"
+    "on": "2026-10-06",
+    "notFlyer": true
    }
   ],
   "marutto-shokubutsu-fes-2026-11": [
    {
     "post": "https://www.instagram.com/p/Dcvqu4hzPDo/",
     "reason": "出店者募集の画像",
-    "on": "2026-09-23"
+    "on": "2026-09-23",
+    "notFlyer": true
    }
   ],
   "love-green-market-vol3-ichihara-2026-12": [
@@ -55,26 +62,30 @@
    {
     "post": "https://www.instagram.com/p/DdiXAu-EXiU/",
     "reason": "出店者募集の画像",
-    "on": "2026-09-23"
+    "on": "2026-09-23",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdBc-D3lAsp/",
     "reason": "出店者募集のフライヤー(暮らしをつくる人、募集。)",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    }
   ],
   "gen-x-bocchi-botanical-market-2026-10": [
    {
     "post": "https://www.instagram.com/p/Ddsq3qyiUNv/",
     "reason": "協力のよさこいチーム「愿」のロゴ画像で、イベントの告知画像ではない",
-    "on": "2026-09-28"
+    "on": "2026-09-28",
+    "notFlyer": true
    }
   ],
   "chinki-plants-flea-market-2026-10": [
    {
     "post": "https://www.instagram.com/p/DdELYx6nzjt/",
     "reason": "カルーセル中の入場時間・整理券の表。イベント名・日付が無く告知画像ではない",
-    "on": "2026-09-28"
+    "on": "2026-09-28",
+    "notFlyer": true
    }
   ],
   "taniku-moromoro-vol16-2026-10": [
@@ -86,68 +97,80 @@
    {
     "post": "https://www.instagram.com/p/DeEQyv3Dyz3/",
     "reason": "10/25の出店者一覧(チラシ裏面)。イベント名・会場が主ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    }
   ],
   "botanoichi-meets-bikaku-yokocho-2026-10": [
    {
     "post": "https://www.instagram.com/p/DdyNnbZFDcm/",
     "reason": "出店者紹介カード(コロロファクトリー)。本文も出店者の紹介文で来場告知ではない",
-    "on": "2026-09-29"
+    "on": "2026-09-29",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dds5U7DN2Vf/",
     "reason": "出店者発表シリーズの表紙。ロゴと日付のみで会場なし、出店者紹介の導入であり来場告知か判別できない",
-    "on": "2026-09-29"
+    "on": "2026-09-29",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Ddx6LH4FAUy/",
     "reason": "出店者紹介カード（kai.juuta）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    }
   ],
   "morino-tanikuen-hanbaikai-nara-2026-10": [
    {
     "post": "https://www.instagram.com/reel/Dd4uh2FzckW/",
     "reason": "ネットショップ追加のお知らせ（販売会の告知ではない）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd1A5kMJAqT/",
     "reason": "畑のハウス作業の動画表紙(長雨で停滞してた3号棟)。本文に予定一覧はあるが画像は告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd91zvGTmkq/",
     "reason": "リール表紙(人物と「見てもらいたいもの3選」)、告知フライヤーではない",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd_TfYXAdDs/",
     "reason": "ネットショップ苗紹介(エケベリア編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-03"
+    "on": "2026-10-03",
+    "notFlyer": true
    }
   ],
   "morino-tanikuen-hanbaikai-hiroshima-2026-10": [
    {
     "post": "https://www.instagram.com/reel/Dd4uh2FzckW/",
     "reason": "ネットショップ追加のお知らせ（販売会の告知ではない）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd1A5kMJAqT/",
     "reason": "畑のハウス作業の動画表紙(長雨で停滞してた3号棟)。本文に予定一覧はあるが画像は告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd91zvGTmkq/",
     "reason": "リール表紙(人物と「見てもらいたいもの3選」)、告知フライヤーではない",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd_TfYXAdDs/",
     "reason": "ネットショップ苗紹介(エケベリア編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-03"
+    "on": "2026-10-03",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeBxF-WHysM/",
@@ -157,7 +180,8 @@
    {
     "post": "https://www.instagram.com/reel/Dd81xwFgi4N/",
     "reason": "ネットショップ苗紹介(アガベ編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdjF9JYn9xK/",
@@ -169,22 +193,26 @@
    {
     "post": "https://www.instagram.com/reel/Dd4uh2FzckW/",
     "reason": "ネットショップ追加のお知らせ（販売会の告知ではない）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd1A5kMJAqT/",
     "reason": "畑のハウス作業の動画表紙(長雨で停滞してた3号棟)。本文に予定一覧はあるが画像は告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd91zvGTmkq/",
     "reason": "リール表紙(人物と「見てもらいたいもの3選」)、告知フライヤーではない",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd_TfYXAdDs/",
     "reason": "ネットショップ苗紹介(エケベリア編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-03"
+    "on": "2026-10-03",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeBxF-WHysM/",
@@ -194,7 +222,8 @@
    {
     "post": "https://www.instagram.com/reel/Dd81xwFgi4N/",
     "reason": "ネットショップ苗紹介(アガベ編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdjF9JYn9xK/",
@@ -206,22 +235,26 @@
    {
     "post": "https://www.instagram.com/reel/Dd4uh2FzckW/",
     "reason": "ネットショップ追加のお知らせ（販売会の告知ではない）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd1A5kMJAqT/",
     "reason": "畑のハウス作業の動画表紙(長雨で停滞してた3号棟)。本文に予定一覧はあるが画像は告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd91zvGTmkq/",
     "reason": "リール表紙(人物と「見てもらいたいもの3選」)、告知フライヤーではない",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd_TfYXAdDs/",
     "reason": "ネットショップ苗紹介(エケベリア編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-03"
+    "on": "2026-10-03",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeBxF-WHysM/",
@@ -231,7 +264,8 @@
    {
     "post": "https://www.instagram.com/reel/Dd81xwFgi4N/",
     "reason": "ネットショップ苗紹介(アガベ編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdjF9JYn9xK/",
@@ -243,17 +277,20 @@
    {
     "post": "https://www.instagram.com/reel/Dd4uh2FzckW/",
     "reason": "ネットショップ追加のお知らせ（販売会の告知ではない）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd1A5kMJAqT/",
     "reason": "畑のハウス作業の動画表紙(長雨で停滞してた3号棟)。本文に予定一覧はあるが画像は告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd91zvGTmkq/",
     "reason": "リール表紙(人物と「見てもらいたいもの3選」)、告知フライヤーではない",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeBxF-WHysM/",
@@ -263,91 +300,106 @@
    {
     "post": "https://www.instagram.com/reel/Dd_TfYXAdDs/",
     "reason": "ネットショップ苗紹介(エケベリア編)のリール表紙。販売会の告知画像ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    }
   ],
   "imama-ennichi-kagurazaka-2026-10": [
    {
     "post": "https://www.instagram.com/reel/DdwCbdqNuax/",
     "reason": "コラボ相手の紹介リール表紙。イベント名・日付・会場が無い",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    }
   ],
   "plants-plants-plants-bhms-2026-10": [
    {
     "post": "https://www.instagram.com/p/Dd3ZSVRmDaA/",
     "reason": "出店者紹介カード（草男の小部屋）",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdqgIkQGPwP/",
     "reason": "出店者紹介カード(Cactus M 10/17)。来場告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Ddkp96mGGyu/",
     "reason": "出店者紹介カード(barbe cactus 10/18)",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdySj3smGd9/",
     "reason": "出店者(Plants Junction)紹介のロゴカード。イベントの告知ではない",
-    "on": "2026-10-03"
+    "on": "2026-10-03",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeBZIJcGPq8/",
     "reason": "出店者紹介カード(ホシノボタニカル)",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeEWVHimAjM/",
     "reason": "出店者紹介カード(PLANE PLANTS 10/18)",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeWT3UNGMI3/",
     "reason": "お買い物リレー(くじ引き企画)の説明画像。回の告知ではない",
-    "on": "2026-10-12"
+    "on": "2026-10-12",
+    "notFlyer": true
    }
   ],
   "ka78-kikakusai-6th-shimada-2026-11": [
    {
     "post": "https://www.instagram.com/p/DdQxcsWFEte/",
     "reason": "主催KA78企画のロゴ画像。イベント名・日付・会場が無い",
-    "on": "2026-09-30"
+    "on": "2026-09-30",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdgS7rglECl/",
     "reason": "出店者募集のフライヤー。回名・日付・会場はあるが下半分が「出店者様募集中!」で、本文も出店者向けの募集",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "sapporo-bikaku-expo-lv3-2026-10": [
    {
     "post": "https://www.instagram.com/p/Dd6bdqTk5a9/",
     "reason": "『出展者一覧』投稿の表紙。日付・会場が無く告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    }
   ],
   "botanoichi-senju-2026-11": [
    {
     "post": "https://www.instagram.com/p/DcnhLqoNUAX/",
     "reason": "『ボタの市とは②』の紹介イラスト(神社)。日付・会場が無く当回の告知ではない",
-    "on": "2026-10-01"
+    "on": "2026-10-01",
+    "notFlyer": true
    }
   ],
   "lier-taniku-festival-taishodo-2026-11": [
    {
     "post": "https://www.instagram.com/p/Dd9FxB_NQPU/",
     "reason": "入荷告知の商品写真(パープルヘイズ)、イベントと無関係",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    }
   ],
   "armeria-tokimeki-ichi-2026-10": [
    {
     "post": "https://www.instagram.com/p/Dd0jajiHzUh/",
     "reason": "トキメキBOX(1箱¥1000)の商品写真。イベント名・日付・会場なし",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    }
   ],
   "plants-garage-market-2027-05": [
@@ -361,237 +413,278 @@
    {
     "post": "https://www.instagram.com/p/Ddz6YJuj2U4/",
     "reason": "出店者紹介カード(ぶりぶりのザエモン)",
-    "on": "2026-10-02"
+    "on": "2026-10-02",
+    "notFlyer": true
    }
   ],
   "aito-margueritestation-taniku-saboten-hanbaikai-2026-10": [
    {
     "post": "https://www.instagram.com/p/Dd7sr3fk6An/",
     "reason": "近江牛岡喜の2周年祭チラシ(無関係)",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dd5uvXyzWRi/",
     "reason": "愛LANDカード5倍ポイントセールのチラシ。販売会の告知ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    }
   ],
   "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10": [
    {
     "post": "https://www.instagram.com/reel/Dd8bLUhS04q/",
     "reason": "リール表紙がグラノーラ商品写真(告知フライヤーでない)",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dd0syGwSjkv/",
     "reason": "熊本での板付ワークショップの様子(リール表紙)。名古屋回の告知ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DdxeFwIygOv/",
     "reason": "熊本会場のワークショップ動画",
-    "on": "2026-10-06"
+    "on": "2026-10-06",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdoKsvmyNCD/",
     "reason": "imamaのrecording bookと御朱印の商品写真。名古屋回の告知ではない",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdkHoHdzkhv/",
     "reason": "fern bowl(販売する鉢)の商品写真。イベント名・日付・会場なし",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeN0t0kyUVw/",
     "reason": "recording bookと御朱印(彩)の商品写真。名古屋回の告知ではない",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    }
   ],
   "dokidoki-ibaraki-taniku-sokubaikai-2026-10-18": [
    {
     "post": "https://www.instagram.com/p/Dd8wJMdDWl6/",
     "reason": "店舗の10月イベントカレンダー(即売会専用の告知でない)",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "notFlyer": true
    }
   ],
   "dokidoki-ibaraki-taniku-sokubaikai-2026-10-25": [
    {
     "post": "https://www.instagram.com/p/Dd8wJMdDWl6/",
     "reason": "店舗の10月イベントカレンダー(即売会専用の告知でない)",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "notFlyer": true
    }
   ],
   "plant-addict-festa-ishiuchi-pennon-2026-11": [
    {
     "post": "https://www.instagram.com/p/DdjBCO7zECV/",
     "reason": "出店者ロゴ(「福」)の紹介カード",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "notFlyer": true
    }
   ],
   "taniku-moromoro-vol16-2026-11": [
    {
     "post": "https://www.instagram.com/p/DeEXrt2gdhS/",
     "reason": "11/15の出店者一覧(チラシ裏面)。イベント名・会場が主ではない",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    }
   ],
   "spine-note-vol2-geek-of-fools-shimonoseki-2026-11": [
    {
     "post": "https://www.instagram.com/p/DdfOwHfyHfI/",
     "reason": "Vol.2のタイトルロゴのみ(カルーセル1枚目)。日付・会場なし",
-    "on": "2026-10-05"
+    "on": "2026-10-05",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdtFp9Qktqi/",
     "reason": "【ARCHIVE】Vol.1 の会場写真(カルーセル1枚目、screenshot を挟み修正後の igGrabHere で取り直して確認)。Vol.2 の告知ではない",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "nara-bikaku-fes-vol2-2026-10": [
    {
     "post": "https://www.instagram.com/p/DeGM5-aEubi/",
     "reason": "車両進入ルートの地図",
-    "on": "2026-10-06"
+    "on": "2026-10-06",
+    "notFlyer": true
    }
   ],
   "tanikuen-ohisama-aeon-shimotsuma-2026-10": [
    {
     "post": "https://www.instagram.com/reel/DeHsX-4sCbW/",
     "reason": "苗の仕入れ案内リール",
-    "on": "2026-10-06"
+    "on": "2026-10-06",
+    "notFlyer": true
    }
   ],
   "tanikuen-ohisama-apita-ashikaga-2026-10": [
    {
     "post": "https://www.instagram.com/reel/DeHsX-4sCbW/",
     "reason": "苗の仕入れ案内リール",
-    "on": "2026-10-06"
+    "on": "2026-10-06",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DeJbScasIUd/",
     "reason": "ハウスの苗の写真(秋の作業リール表紙)。告知ではない",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeMSYhRFKyY/",
     "reason": "ハウスの苗の写真(秋の西陽多肉の投稿)。告知ではない",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dd7v7QkmBG1/",
     "reason": "イベントに持っていく苗を並べた写真。告知ではない",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdyPPRhlJRL/",
     "reason": "エケベリア(ブラックサバス)の株写真のみ。イベント名・日付・会場が無い",
-    "on": "2026-10-10"
+    "on": "2026-10-10",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Ddvqe0jlNGr/",
     "reason": "エケベリア苗のトレー写真のみ(本文は卸の案内とアリオ上尾の告知)",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdqMT7MlFmB/",
     "reason": "多肉弁当の苗の写真。回の告知ではない",
-    "on": "2026-10-12"
+    "on": "2026-10-12",
+    "notFlyer": true
    }
   ],
   "yamaokuya-tandoku-hanbaikai-osaki-2026-10": [
    {
     "post": "https://www.instagram.com/p/DanB2o1hXiQ/",
     "reason": "店の汎用『販売会情報』カードで回の日時・会場が無い",
-    "on": "2026-10-06"
+    "on": "2026-10-06",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DdQUqrfhIDz/",
     "reason": "葉挿しの植え替えライブ切り抜きリール表紙。告知ではない",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DcpZRLWB-lT/",
     "reason": "「葉挿しのコツ 親葉めちゃ大事」リール表紙。告知ではない",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/Dcfl-izB1F7/",
     "reason": "「ドロサンが臭い!?要注意」リール表紙。告知ではない",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DeRKkRRBR_h/",
     "reason": "胴切りのコツ動画(リール)の表紙。イベント告知ではない",
-    "on": "2026-10-10"
+    "on": "2026-10-10",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Db27cnLgQjF/",
     "reason": "「ポットの中の土の温度測ってみた」記事の表紙。イベントと無関係",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "tanikuen-ohisama-aeon-morioka-2026-10": [
    {
     "post": "https://www.instagram.com/reel/DeJbScasIUd/",
     "reason": "ハウスの苗の写真(秋の作業リール表紙)。告知ではない",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeMSYhRFKyY/",
     "reason": "ハウスの苗の写真(秋の西陽多肉の投稿)。告知ではない",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DeHsX-4sCbW/",
     "reason": "苗の仕入れ案内リールの表紙(苗の棚の写真)。告知ではない",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dd7v7QkmBG1/",
     "reason": "出品苗の写真のみ(本文は10/3からの別イベント向けの苗選び)。イベント名・日付・会場が無い",
-    "on": "2026-10-10"
+    "on": "2026-10-10",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdyPPRhlJRL/",
     "reason": "苗の写真(ブラックサバスの紹介)。回の告知ではない",
-    "on": "2026-10-12"
+    "on": "2026-10-12",
+    "notFlyer": true
    }
   ],
   "tanikuen-ohisama-aeon-hiezu-2026-10": [
    {
     "post": "https://www.instagram.com/reel/DeJbScasIUd/",
     "reason": "ハウスの苗の写真(秋の作業リール表紙)。告知ではない",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeMSYhRFKyY/",
     "reason": "ハウスの苗の写真(秋の西陽多肉の投稿)。告知ではない",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/reel/DeHsX-4sCbW/",
     "reason": "卸売(仕入れ)案内リールの表紙。苗の陳列写真のみでイベント告知ではない",
-    "on": "2026-10-10"
+    "on": "2026-10-10",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dd7v7QkmBG1/",
     "reason": "出品苗の写真。回の告知ではない",
-    "on": "2026-10-12"
+    "on": "2026-10-12",
+    "notFlyer": true
    }
   ],
   "yamaokuya-tandoku-hanbaikai-sakura-2026-11": [
    {
     "post": "https://www.instagram.com/p/DanB2o1hXiQ/",
     "reason": "店の汎用『販売会情報』カードで回の日時・会場が無い",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    }
   ],
   "yamaokuya-tandoku-hanbaikai-nirasaki-2027-01": [
    {
     "post": "https://www.instagram.com/p/DanB2o1hXiQ/",
     "reason": "店の汎用『販売会情報』カードで回の日時・会場が無い",
-    "on": "2026-10-07"
+    "on": "2026-10-07",
+    "notFlyer": true
    }
   ],
   "gamagori-taniku-festa-6th-2026-11": [
@@ -605,60 +698,70 @@
    {
     "post": "https://www.instagram.com/reel/DdyuHBKpl5b/",
     "reason": "告知リールの表紙だが畑のアガベ1株の写真のみ。イベント名・日付・会場なし",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeOo0LIEiTa/",
     "reason": "姫乱れ雪 白中斑1株の商品写真。イベント名・日付・会場なし",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeQmmfMktu_/",
     "reason": "ユッカ・ロストラータの鉢植えの写真のみ。イベント名・日付・会場が無く告知画像ではない",
-    "on": "2026-10-10"
+    "on": "2026-10-10",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DeTMxn4ktBn/",
     "reason": "来場客が株を掘る写真(収穫祭スタートの報告)。日付・会場なし",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "lahaina-rahachu-holiday-2026-10": [
    {
     "post": "https://www.instagram.com/p/Dd7cjBLkijG/",
     "reason": "店の10月営業カレンダー。らはちゅ〜は11日の1マスのみで告知画像ではない",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    }
   ],
   "kakukaku-shikajika-6th-narakaki-2026-10": [
    {
     "post": "https://www.instagram.com/p/DdsPbFfmGXy/",
     "reason": "出展者紹介カード(14 大和プラ販)",
-    "on": "2026-10-08"
+    "on": "2026-10-08",
+    "notFlyer": true
    }
   ],
   "kinshakusai-vol6-2026-10": [
    {
     "post": "https://www.instagram.com/p/DeOWP1XTYYo/",
     "reason": "出品株(パキポディウム・ウィンゾリー)1株の写真のみ。イベント名・日付・会場なし",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    }
   ],
   "sunny-drop-5th-anniversary-kato-2026-10": [
    {
     "post": "https://www.instagram.com/p/Dd7UMbIzFxQ/",
     "reason": "周年のタイトルカード(sunny drop 5th Anniversary)のみ。日付・会場なし",
-    "on": "2026-10-09"
+    "on": "2026-10-09",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/Dd-ds_LE98V/",
     "reason": "sunny drop 5th Anniversary の題字カードのみ(雑貨編の予告投稿)。日付・会場が無い",
-    "on": "2026-10-10"
+    "on": "2026-10-10",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DdKq-M2zXC_/",
     "reason": "葉の写真に「イベント等予定」の題字のみ。日付・会場なし",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "taniku-garden-marche-arakogawa-2026-10": [
@@ -840,47 +943,54 @@
    {
     "post": "https://www.instagram.com/p/DeGb12nD1wP/",
     "reason": "出店者DOLCE'Sの多肉ポン(ガチャ)企画のフライヤー。イベント名・日付・会場なし",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    },
    {
     "post": "https://www.instagram.com/p/DcsxIisPHg1/",
     "reason": "9月の営業日カレンダー。回の告知は一行の注記だけ",
-    "on": "2026-10-12"
+    "on": "2026-10-12",
+    "notFlyer": true
    }
   ],
   "plants-and-coffee-hugcoffee-minamicho-2026-10": [
    {
     "post": "https://www.instagram.com/p/DeMGt2iEnHK/",
     "reason": "サボテン・アガベの鉢の写真のみ。イベント名・日付・会場なし",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "botanical-x-2027-03": [
    {
     "post": "https://www.instagram.com/p/DeJqpwfzOt6/",
     "reason": "手書きの来年の日程メモ(3回分の日付・会場)。出店者募集の予告と落書きつきで、来場者向けの告知ではない。回ごとのチラシが出たら取り直す",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "rojiura-botanical-2027-08": [
    {
     "post": "https://www.instagram.com/p/DeJqpwfzOt6/",
     "reason": "手書きの来年の日程メモ(3回分の日付・会場)。出店者募集の予告と落書きつきで、来場者向けの告知ではない。回ごとのチラシが出たら取り直す",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "botanical-x-2027-09": [
    {
     "post": "https://www.instagram.com/p/DeJqpwfzOt6/",
     "reason": "手書きの来年の日程メモ(3回分の日付・会場)。出店者募集の予告と落書きつきで、来場者向けの告知ではない。回ごとのチラシが出たら取り直す",
-    "on": "2026-10-11"
+    "on": "2026-10-11",
+    "notFlyer": true
    }
   ],
   "green-garage-nogata-2026-11": [
    {
     "post": "https://www.instagram.com/p/DeOA2fDmnPX/",
     "reason": "出店者紹介(2935GUILD)のカード。回の告知ではない",
-    "on": "2026-10-12"
+    "on": "2026-10-12",
+    "notFlyer": true
    }
   ]
  }

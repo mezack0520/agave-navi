@@ -5,6 +5,7 @@
         --target "ボタの市 meets ビカク横丁 (2026-10-25)" --action listed \\
         --detail "主催 @botanoichi の告知で裏取り。new-events.json に追加"
     python3 scripts/log-fix.py --list            # 直近の記録を出す
+    python3 scripts/log-fix.py --open --kind needs_browser   # 片づいていない skipped(翌朝の担当が拾う)
 
 なぜあるか(2026-09-29):
   日次メールは「他所にあって当サイトに無い」「積み残し」「異常あり」を並べる
@@ -69,12 +70,29 @@ def main():
     ap.add_argument('--action', choices=ACTIONS)
     ap.add_argument('--detail', default='')
     ap.add_argument('--list', action='store_true')
+    # 直せなかった項目を次の担当へ渡す口(2026-10-12)。event-monitor はブラウザを使わないので、
+    # 一次情報が Instagram にしか無い項目をレポートの「未対応」に書いて持ち越していた
+    # (Lier 岡山の会場の同定は 10-09〜12 の4回)。レポートは翌朝のタスクの入力ではなく、
+    # skipped もメールに出ない。同じ kind・target の最新の記録が skipped のものを出す。
+    # 片づけた担当は同じ kind・target で fixed / reviewed などを書けば、ここから消える
+    ap.add_argument('--open', action='store_true',
+                    help='最新の記録が skipped のまま(片づいていない)項目を出す')
     a = ap.parse_args()
     d = read_fix_log()
     today = sitelib.today_jst()
     if a.list:
         for i in d.get('items', [])[-40:]:
             print(json.dumps(i, ensure_ascii=False))
+        return 0
+    if a.open:
+        last = {}
+        for i in d.get('items', []):   # 追記順。同じ kind・target は後の記録が勝つ
+            last[(i.get('kind'), i.get('target'))] = i
+        opened = [i for i in last.values() if i.get('action') == 'skipped'
+                  and (not a.kind or i.get('kind') == a.kind)]
+        for i in opened:
+            print(json.dumps(i, ensure_ascii=False))
+        print(f'log-fix: 片づいていない skipped {len(opened)}件')
         return 0
     if not (a.task and a.kind and a.target and a.action):
         ap.error('--task --kind --target --action が要る')

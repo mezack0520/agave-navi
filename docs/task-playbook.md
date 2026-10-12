@@ -2233,6 +2233,11 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   同じ日に採った出典の投稿の画像(手書きの告知)には「9:00-15:00」があり、アイキャッチのレポートにも書いていたが、回の値は直していなかった。
   主催が personal で本文を CI が読めない回は、時刻が画像にしか無いことがある。time を足したら説明文の「告知に無い」の一文も消す。
 
+- **画像がどの回の告知でもないときは `--not-flyer` を付けて捨てる。**(2026-10-12)
+  `apply-eyecatch.py --not-flyer --reject "slug=理由"`(`--reject-post` も同じ)。苗・商品の写真、店の案内やカレンダー、
+  出店者紹介、募集、ロゴだけの画像が対象で、その投稿は全部の回の候補から外れる。付けないと、同じ主催の別の回の候補として
+  翌日以降にまた出る(10-05〜12 に9回。§3 の同日の項)。**別回・別イベントの告知には付けない。**その回には使える画像なので回ごとの記録のままにする。
+
 ### 出店者の告知は「主催は誰か」を書いている (2026-09-14)
 
 `primarySource.vendorAnnouncementsOnly` は「出店者の告知は主催の告知の代わりに
@@ -4191,6 +4196,52 @@ time と出典の web 頁の時刻を突き合わせる検査は足していな�
 `announced_hours_for_event` を当てると、時刻のある13頁は全部 time と一致し、外れたのは講演会の時刻を拾った1頁(食虫植物祭)だけだった。
 この件は開催を終えてから出典を替えたので、巡回の外にあり検査でも拾えない。**効く手当ては差し替えの手順の側。**
 
+### 週次エンリッチが、出典でない頁の文で説明文を上書きしていた (2026-10-12)
+
+10-11 の weekly-enrichment が LOVE GReeN MARKeT Vol.3(12/12 市原)の説明文を、主催の出店者発表から書いた66字から、
+出典でないブログ(taniwansibatani.com)の定型文「…で開催予定。時間、会場、出店内容、過去開催を紹介します。」(69字)に置き換え、本番に出ていた。
+`updatedAt`(09-23)から14日の保護が切れた直後で、`long_enough`(現状80字未満なら長いほうが勝つ)を満たしていた。
+画像(09-29)と時間・入場料・アクセス(10-07)には「その頁を url / sourceUrl / organizerUrl に持つ回にだけ採る」関門があったが、説明文には無かった。
+Actions ログ90日分の `WRITE-BACK ← description` は7件。出典を持つ回に出典外の頁から書いた2件(LOVE GReeN と seedpot-summer-fair。後者は店のトップ頁の店舗紹介)は、2件とも誤ったまま残っていた。
+出典の無い回で検索の頁を url ごと採った4件は4件とも後で人が書き直しており、書いたまま残ったのは出典の頁から書いた MOLLIS の1件だけ。
+
+- `enrich_events._desc_decision` が、出典外の頁の候補を `DESC-REJECTED: 頁を url/sourceUrl に持たない` で落とす。上書き保護より先に見る。`main` が自己テストし、旧い判定では落ちることを確かめた。
+- LOVE GReeN は主催の出店者発表(DdTupRWK9nr・DdTutSMK4TK)で書き直し、seedpot は上書き前の文に戻した。
+- 洗い方は 10-07 の項と同じ(ログの `Found:` を slug ごとに持ち、`WRITE-BACK` の slug で引く)。**ログの取得は curl で。**
+  urllib はリダイレクト先の blob に Authorization を付けたまま行き、401 になる。
+
+**「short_descriptions は週次エンリッチの範囲」と毎日書いて持ち越さない。**ジョイフルエーケー屯田(10/18)は 10-06 から毎日そう書かれていたが、
+10-11 の週次は `DESC-KEPT` だった(登録時に入れた updatedAt 10-03 の保護。`desc_is_protected` の50字未満の例外は addedDate だけの回にしか効かない)。
+次の週次は開催当日で、候補の頁も店の紹介サイトなので今は関門でも落ちる。出典が IG だけの回は、検索で当たる頁がほぼ出典外なので週次エンリッチでは伸びない。
+listing-policy `shortDescriptions` どおり、主催の一次情報(organizer-posts.json の本文・告知画像)に出店数・ジャンル・企画があれば日次タスクが書き足し、
+無ければ短いままにして、レポートにはそう書く。
+
+### enrich_events.py を手元で試すと、見つからなかった回を events.json から消していた (2026-10-12)
+
+`--slug <slug>` だけで試したら、検索が当たらなかった LOVE GReeN を events.json と詳細頁から消した(needs_manual の回を消すのが既定だった)。
+CI の2経路(sync-events・weekly-enrichment)は `--no-remove` を渡しているので本番では起きていない。1件の消失は `event_set_shrunk`(3件以上)にも整合検査にも掛からない。
+既定を「消さない」にし、消すのは `--remove` のときだけにした。`/tmp/enrich-report.md` が別セッションの残骸で書けないときは mkstemp に逃がす(最後に例外で落ちていた)。
+
+### アイキャッチの不採用が回ごとだったので、告知でない投稿が同じ主催の別の回に出直していた (2026-10-12)
+
+`eyecatch-rejected.json` は回ごとの記録で、`stage_candidates` はその回で捨てた投稿だけを外していた。苗・商品の写真や店の案内のように
+どの回の告知でもない画像が、同じ主催の別の回の候補として翌日以降にまた出た。10-05〜12 に9回(多肉園おひさま6・山奥屋2・森の多肉園1)。
+多肉園おひさまの会場だけで毎朝1〜3枠を使い、10-12 は `MAX_PENDING`=12 が満杯で15件が待った。
+
+- 記録に `notFlyer: true` を足した。`eyecatchlib.rejected_posts_for` が、その回で捨てた投稿に加えて notFlyer の投稿を全部の回の候補から外す。
+  `list-missing-eyecatch.py` の `hintRejected` も同じ。付けるのは `apply-eyecatch.py --not-flyer`(アイキャッチ節)。
+- 既存の146件は理由の文で分け、別回・別イベント・前回・会期違い・片日の8投稿(36件)を除く110件に付けた。理由の語で機械的に分けると
+  「本文は別イベント向けの苗選び」のような苗の写真を取りこぼすので、実行時は印だけを見る。
+- `ig-organizer-watch.py --self-test` に2件(notFlyer は別の回でも外す・印の無い不採用はその回だけ)。旧い判定で NG になることを確かめた。
+
+### event-monitor の「未対応」は翌朝の担当に届いていなかった (2026-10-12)
+
+event-monitor はブラウザを使わないので、一次情報が Instagram にしか無い項目をレポートの「未対応」に書いて持ち越す。
+Lier 岡山「サウスヴィレッジホール」の同定は 10-09〜12 の4回、多肉だョ！全員集合の表記の割れは 10-11・12 の2回。
+ブラウザを使う agave-event-update の入力は監査とメールで、event-monitor のレポートは読まない。`log-fix.py` の skipped もメールに出ない(build-health-mail は fixed だけを読む)。
+`log-fix.py --open [--kind K]` を足した(同じ kind・target の最新の記録が skipped のものを出す)。渡し方は「誰がいつ」。今の2件は 10-12 に `needs_browser` で入れた。
+同じ日の未対応のうち食虫植物祭2026(time・会場が空)はブラウザ不要で、主催の公式頁のタイムテーブルで埋めた。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4220,6 +4271,10 @@ time と出典の web 頁の時刻を突き合わせる検査は足していな�
 - 始める前に `python3 scripts/audit.py` と
   `python3 scripts/build-health-mail.py`(ローカルで本文が出る)で**今日のメールに出る
   予定の一覧**を作り、それを処理の入力にする。
+- **event-monitor が直せずブラウザが要る項目は `log-fix.py --kind needs_browser --action skipped` で渡す。**(2026-10-12)
+  `--detail` は「ブラウザ要: 何をどこで確かめるか」。agave-event-update は本業の前に
+  `python3 scripts/log-fix.py --open --kind needs_browser` を見て拾い、片づけたら同じ kind・target で fixed / reviewed を書く(一覧から消える)。
+  event-monitor のレポートの「未対応」は翌朝のタスクの入力ではない(§3 の同日の項)。
 
 ### 何をどう直すか
 
@@ -4379,6 +4434,15 @@ bash は 09-29 に復帰し、09-29〜10-05 の全タスクが台帳・task-repo
 `work/*-unpushed-*.json` を開いて残りを当てる。**控えは各タスクの持ち物ではなく週次の回収対象として扱う。
 台帳の転記も同様に、各タスクの自己申告に任せず `task-reports/` のファイル名を走査して入れる(09-28 に event-monitor の8回が漏れていた)。
 `cross_script_duplicate` 3 は 10-01 から不動だが info で、関数名の重複(_load/diff/render)なので放置でよい。
+
+**2026-10-12 の週次点検の記録。**
+2回以上出た失敗は4つで、3つはコードで塞いだ(§3 の同日の4項)。(1) アイキャッチの CI 候補に、別の回で捨てた告知でない投稿が出直す(9回)→ notFlyer。
+(2) 「short_descriptions は週次エンリッチの範囲」の持ち越し(event-monitor 10-06・10・11・12)→ 週次エンリッチは届いていなかった。追ったら説明文の関門の欠落が見つかり、本番の2件を直した。
+(3) event-monitor のブラウザ要の持ち越し(4回・2回)→ `log-fix.py --open` で渡す。(4) `/tmp` の固定名への clone 衝突(10-10 に3件・10-12 に4件)は
+`pending-judgments` の `event-listing-review:skill-clone-dir` に積み済みで、プロンプトの持ち主しか直せない。
+監査の urgent は週を通して0。`short_descriptions` 1 と `cross_script_duplicate` 3 は不動(前者は (2)、後者は 10-05 の判断どおり放置)。
+events 538→655・upcoming 177→259 は7日間の掲載116件(10-09 の Lier.多肉フェスティバル巡業25会場を含む)で、`eyecatch_backlog` 120 も同じ足し算。
+pending-judgments は2件(どちらもプロンプトの件で3件未満)。task_run_gap 0、task-reports も7日×4タスク揃っている。
 
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、

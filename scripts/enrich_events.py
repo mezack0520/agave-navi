@@ -685,6 +685,52 @@ def _check_site_default_og_rule():
     return not bad
 
 
+def _desc_decision(ok, cand, cur, long_enough, page_is_event_own, protected):
+    """説明文の候補をどう扱うか。'write' / 'reject_page' / 'kept' / 'skip'。
+
+    出典外の頁(page_is_event_own=False)の候補は、品質と長さを満たしても書かない
+    (2026-10-12)。上書き保護(protected)より先に見る。保護が切れた日に出典外の頁の
+    文が入るのを止めるのが目的で、保護の有無とは独立した関門。
+    """
+    if not (ok and cand != cur and long_enough):
+        return 'skip'
+    if not page_is_event_own:
+        return 'reject_page'
+    if protected:
+        return 'kept'
+    return 'write'
+
+
+def _check_desc_page_rule():
+    """出典外の頁の説明文を書かないこと(2026-10-12)。main() が毎回呼ぶ。
+
+    10-11 の LOVE GReeN MARKeT Vol.3(IG が出典・taniwansibatani.com の定型文)を含む。
+    """
+    love = {'url': 'https://www.instagram.com/love_greenmarket/',
+            'sourceUrl': 'https://www.instagram.com/love_greenmarket/p/DdTupRWK9nr/'}
+    kinto = {'url': 'https://kinto.co.jp/blogs/news/mollis-exhibit-2026'}
+    cases = [
+        # (頁, 回, protected, 期待)
+        ('https://taniwansibatani.com/love-green-market/', love, False, 'reject_page'),
+        ('https://taniwansibatani.com/love-green-market/', love, True, 'reject_page'),
+        ('https://www.instagram.com/love_greenmarket/p/DdTupRWK9nr/', love, False, 'write'),
+        ('https://www.kinto.co.jp/blogs/news/mollis-exhibit-2026', kinto, False, 'write'),
+        ('https://seedpot.co.jp/', {'url': 'https://x.com/seedpot'}, False, 'reject_page'),
+        ('https://kinto.co.jp/blogs/news/mollis-exhibit-2026', kinto, True, 'kept'),
+    ]
+    bad = []
+    for page, ev, prot, want in cases:
+        own = _same_host_as_event(page, ev)
+        got = _desc_decision(True, 'x' * 69, 'y' * 66, True, own, prot)
+        if got != want:
+            bad.append((page, prot, want, got))
+    if _desc_decision(False, 'x' * 69, 'y' * 66, True, True, False) != 'skip':
+        bad.append(('quality-failed', 'skip'))
+    if bad:
+        print(f"SELFTEST-FAILED desc page rule: {bad}")
+    return not bad
+
+
 def _check_ig_post_edition_rule():
     """前の回の IG 投稿を、この回の投稿として書かないこと(2026-10-12)。main() が毎回呼ぶ。"""
     bad = sitelib._self_test_ig_post_time()
@@ -697,11 +743,19 @@ def main():
     _self_test_free_admission()
     _check_site_default_og_rule()
     _check_ig_post_edition_rule()
+    _check_desc_page_rule()
     parser = argparse.ArgumentParser(description='Enrich event information')
     parser.add_argument('--write-back', action='store_true',
         help='Write discovered imageUrl/url back to events.json (for empty fields only)')
+    # 見つからなかった回を events.json から消すのは --remove のときだけ(2026-10-12)。
+    # 以前は既定で消していた。CI(sync-events / weekly-enrichment)は2つとも --no-remove を
+    # 渡しているので挙動は変わらないが、手元で `--slug <slug>` だけで試すと、検索が当たらない
+    # 回(IG が出典の回の大半)を events.json と詳細頁から黙って消す。1件の消失は
+    # event_set_shrunk(3件以上)にも、詳細頁の有無の整合検査にも掛からない。
+    parser.add_argument('--remove', action='store_true',
+        help='Remove events that have no findings from events.json (default: keep them)')
     parser.add_argument('--no-remove', action='store_true',
-        help='Do not remove events that have no findings (default: remove them)')
+        help='Keep events that have no findings (default since 2026-10-12; kept for compatibility)')
     parser.add_argument('--slug', help='Process specific event by slug')
     parser.add_argument('--missing-only', action='store_true',
                         help='Only process events with missing info')
@@ -935,10 +989,31 @@ def main():
             _recent_hand_written = _desc_is_protected(ev)
             _upd = (ev.get('updatedAt') or ev.get('addedDate') or '').strip()
 
-            if ok and candidate_desc != cur_desc and long_enough and not _recent_hand_written:
+            # 説明文も、画像(09-29)・時間と入場料(10-07)と同じく「その回の頁」からだけ採る
+            # (2026-10-12)。10-11 の週次エンリッチが LOVE GReeN MARKeT Vol.3 の説明文
+            # (主催の告知から書いた66字。出店者約60組・大半が多肉とサボテン)を、出典でない
+            # ブログ taniwansibatani.com の定型文「…で開催予定。時間、会場、出店内容、
+            # 過去開催を紹介します。」(69字)で上書きした。07-19 には seedpot-summer-fair の
+            # 説明文が店のトップ頁の店舗紹介に置き換わっていた。Actions ログ90日分の
+            # WRITE-BACK ← description は7件。出典を持つ回に出典外の頁から書いたのはこの2件で、
+            # 2件とも誤ったまま本番に残っていた。出典の無い回で検索の頁を url ごと採った4件は、
+            # 4件とも後で人が書き直している。書いたまま残ったのは出典の頁から書いた MOLLIS の1件だけ。
+            # **出典に採らない頁の文は、その回の説明である根拠を持たない**
+            # (listing-policy descriptionProvenance)。判定は _desc_decision に寄せ、main が自己テストする。
+            page_is_event_own = (not best_url) or _same_host_as_event(best_url, ev)
+            _desc_act = _desc_decision(ok, candidate_desc, cur_desc, long_enough,
+                                       page_is_event_own, _recent_hand_written)
+
+            if _desc_act == 'write':
                 ev['description'] = candidate_desc[:500]
                 changed_fields.append('description')
-            elif _recent_hand_written and ok and long_enough:
+            elif _desc_act == 'reject_page':
+                print(f"    DESC-REJECTED for {ev['slug']}: 頁を url/sourceUrl に"
+                      f"持たない — {(best_url or '')[:70]}")
+                if len(cur_desc) < 70 and ev.get('status') == 'upcoming':
+                    DESC_SKIPS.append((ev['slug'], len(cur_desc), len(candidate_desc),
+                                       'page is not url/sourceUrl'))
+            elif _desc_act == 'kept':
                 print(f"    DESC-KEPT for {ev['slug']}: {_upd} は14日以内。"
                       f"手で書いた本文を優先して上書きしない")
             elif len(cur_desc) < 70 and ev.get('status') == 'upcoming':
@@ -1039,7 +1114,10 @@ def main():
         else:
             print('  No new fields to write back.')
 
-    if needs_manual_slugs and not args.no_remove:
+    do_remove = bool(needs_manual_slugs) and args.remove and not args.no_remove
+    if needs_manual_slugs and not do_remove:
+        print(f"\n  {len(needs_manual_slugs)} event(s) had no findings; kept (pass --remove to delete)")
+    if do_remove:
         print(f"\n=== Removing {len(needs_manual_slugs)} events with no official info ===")
         original_count = len(events)
 
@@ -1066,13 +1144,22 @@ def main():
         removed_names = []
 
     report = generate_report(results, removed_names)
-    with open(REPORT_PATH, 'w', encoding='utf-8') as f:
-        f.write(report)
-    print(f"\nReport saved to {REPORT_PATH}")
+    report_path = REPORT_PATH
+    try:
+        with open(report_path, 'w', encoding='utf-8') as f:
+            f.write(report)
+    except PermissionError:
+        # 手元では /tmp の固定名に別セッションの残骸が居て書けないことがある
+        # (プレイブック §3「clone 先は毎回一意なディレクトリにする」と同じ型)。CI は新しい runner なので当たらない
+        import tempfile
+        fd, report_path = tempfile.mkstemp(prefix='enrich-report-', suffix='.md')
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(report)
+    print(f"\nReport saved to {report_path}")
 
 
     enriched = len([r for r in results if r and r.get('category') == 'enriched'])
-    removed = len(needs_manual_slugs)
+    removed = len(needs_manual_slugs) if do_remove else 0
     print(f"\n=== Summary: ✅{enriched} enriched / 🗑️{removed} removed ===")
 
 

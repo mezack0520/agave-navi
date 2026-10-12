@@ -810,6 +810,15 @@ def self_test():
         ('https://www.instagram.com/p/B2/', 'sourcePost'))
     got, _ = ec.pick_post(dict(e2, date='2026-09-01'), posts)
     chk('会期後の投稿は採らない', got, None)
+    # どの回の告知でもない投稿(notFlyer)は、別の回で捨てたものでも出さない(2026-10-12)。
+    # 別回の告知として捨てた投稿(印なし)は、その回では出す
+    c3 = 'https://www.instagram.com/p/C3/'
+    rej = {'other-slug': [{'post': c3, 'reason': '苗の写真', 'notFlyer': True}]}
+    got, _ = ec.pick_post(e2, posts, ec.rejected_posts_for(rej, 's'))
+    chk('notFlyer は全部の回で外す', got, None)
+    rej = {'other-slug': [{'post': c3, 'reason': '別回の告知'}]}
+    got, _ = ec.pick_post(e2, posts, ec.rejected_posts_for(rej, 's'))
+    chk('印の無い不採用はその回だけ', (got or {}).get('permalink'), c3)
     print('self-test', 'OK' if ok else 'NG')
     return ok
 

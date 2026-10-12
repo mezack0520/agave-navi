@@ -1692,6 +1692,46 @@
    "action": "fixed",
    "detail": "time 9:30〜17:00 → 9:30〜16:30。出典の PR TIMES(島根県の発表)が「開園時間 9:30～16:30」。17:00 は掲載時の出典 しまね花の郷 の頁から入った値で、その頁は今 404。同サイトの見出しには当日の開園時間 9:30〜17:00 が出ている",
    "mailedOn": "2026-10-12"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "site-health-check",
+   "kind": "enrich_desc_offsource",
+   "target": "LOVE GReeN MARKeT Vol.3 (2026-12-12)",
+   "action": "fixed",
+   "detail": "10-11 の週次エンリッチが出典でないブログ taniwansibatani.com の定型文「…開催予定。時間、会場、出店内容、過去開催を紹介します。」で上書きしていた。主催の出店者発表 DdTupRWK9nr・DdTutSMK4TK で書き直した(出店者70組超)"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "site-health-check",
+   "kind": "enrich_desc_offsource",
+   "target": "Seedpot Summer Fair 2026 (2026-07-17〜19)",
+   "action": "fixed",
+   "detail": "07-19 の週次エンリッチが店のトップ頁 seedpot.co.jp の店舗紹介で上書きしていた。上書き前の説明文に戻した"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "site-health-check",
+   "kind": "tbd",
+   "target": "食虫植物祭2026 (2026-11-07〜08)",
+   "action": "fixed",
+   "detail": "主催 Heli's Garden の公式頁のタイムテーブルどおり time 9:00〜17:00(開場〜閉園)、即売会の会場 花の展示ホールを venue に、organizer を入れた。入場料は頁に無いので空のまま(event-monitor 10-12 の未対応)"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "site-health-check",
+   "kind": "needs_browser",
+   "target": "Lier.多肉フェスティバル in 岡山 (2026-10-25)",
+   "action": "skipped",
+   "detail": "ブラウザ要: 会場「サウスヴィレッジホール」が岡山市南区片岡のサウスヴィレッジ(ファーマーズハウスのホール)と同じ施設かを、会場か主催 @lier_succulent の告知で確かめ、venue/location を直す。event-monitor が 10-09〜12 の4回持ち越した"
+  },
+  {
+   "on": "2026-10-12",
+   "task": "site-health-check",
+   "kind": "needs_browser",
+   "target": "多肉だョ！全員集合 の表記(とっとり花回廊・金沢 / 津山・福山)",
+   "action": "skipped",
+   "detail": "ブラウザ要: とっとり花回廊・金沢の回は「だヨ」、津山・福山の回は「だョ」。主催 @tanikudayo.zeninsyuugou の表記で name を揃える。event-monitor が 10-11・12 に持ち越した"
   }
  ]
 }

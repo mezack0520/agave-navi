@@ -6,6 +6,7 @@
     python3 scripts/apply-eyecatch.py --approve slug-a slug-b
     python3 scripts/apply-eyecatch.py --reject "slug-c=出店者募集の投稿"
     python3 scripts/apply-eyecatch.py --reject-post "slug-d=https://www.instagram.com/p/XXXX/=出店者募集の投稿"
+    python3 scripts/apply-eyecatch.py --not-flyer --reject "slug-e=苗の写真。告知ではない"
 
 候補は CI(ig-organizer-watch.py → eyecatchlib.stage_candidates)が
 Business Discovery の原寸画像から作る。**採否は画像を1枚ずつ目で見て決める。**
@@ -14,6 +15,10 @@ Business Discovery の原寸画像から作る。**採否は画像を1枚ずつ�
 採用: 画像を images/events/<slug>.jpg に移し、imageUrl / imageSource / updatedAt を書く。
 不採用: scripts/eyecatch-rejected.json に投稿URLと理由を残す。
         同じ投稿は二度と候補に出ない。同じ主催の別の投稿は出る。
+--not-flyer: 画像がどの回の告知でもない(苗・商品の写真、店の案内やカレンダー、出店者紹介、
+        募集、ロゴだけ)ときに付ける。その投稿は**全部の回の**候補から外れる(2026-10-12)。
+        付けないと、同じ主催の別の回の候補として翌日以降にまた出る(10-05〜12 に9回)。
+        別回・別イベントの告知(その回には使える画像)には付けない。
 --reject-post: staging に無い投稿(ブラウザ経路で取って捨てたもの)を同じ台帳に書く。
         --reject は staging の候補からしか投稿URLを引けない。ブラウザで捨てた投稿を
         書かずにいると list-missing-eyecatch.py の hintRejected が付かず、翌日以降の回が
@@ -40,6 +45,8 @@ def main():
     ap.add_argument('--reject', nargs='*', default=[], help='slug=理由')
     ap.add_argument('--reject-post', nargs='*', default=[],
                     help='slug=投稿URL=理由(staging に無い投稿。ブラウザ経路で捨てたもの)')
+    ap.add_argument('--not-flyer', action='store_true',
+                    help='この呼び出しの不採用を「どの回の告知でもない」として全部の回の候補から外す')
     a = ap.parse_args()
 
     stage = ec.load_json(ec.STAGE_JSON, {'items': {}})
@@ -82,8 +89,10 @@ def main():
         if not it:
             print(f'✗ {sl}: 候補が無い')
             continue
-        ritems.setdefault(sl, []).append({'post': it['post'], 'reason': reason or '(理由なし)',
-                                          'on': today})
+        row = {'post': it['post'], 'reason': reason or '(理由なし)', 'on': today}
+        if a.not_flyer:
+            row['notFlyer'] = True
+        ritems.setdefault(sl, []).append(row)
         try:
             os.remove(os.path.join(ec.STAGE_DIR, f'{sl}.jpg'))
         except OSError:
@@ -100,7 +109,10 @@ def main():
         if any(ec.post_code(r.get('post')) == code for r in rows):
             print(f'– {sl}: 記録済み {post}')
             continue
-        rows.append({'post': post, 'reason': reason or '(理由なし)', 'on': today})
+        row = {'post': post, 'reason': reason or '(理由なし)', 'on': today}
+        if a.not_flyer:
+            row['notFlyer'] = True
+        rows.append(row)
         print(f'– {sl}: 不採用 {reason} ← {post}')
     if a.reject or a.reject_post:
         ec.write_json(ec.REJECTED_JSON, rej)

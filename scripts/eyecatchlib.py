@@ -110,6 +110,23 @@ def source_post_code(ev):
     return (ev.get('instagramPostId') or '').strip()
 
 
+def rejected_posts_for(rejected_items, slug):
+    """この回の候補から外す投稿URL。この回で捨てた投稿と、どの回の告知でもない投稿(notFlyer)。
+
+    不採用は回ごとに記録していたので、苗の写真・商品写真・店の案内のように
+    **どの回の告知でもない画像**が、同じ主催の別の回の候補として翌日以降に出直していた。
+    2026-10-05〜12 に多肉園おひさま・山奥屋・森の多肉園で9回(同じ投稿を別の回でまた捨てた)。
+    多肉園おひさまの会場だけで毎朝1〜3枠を使い、MAX_PENDING=12 の枠が埋まって
+    出典で照合が通る api の回が15件待った(10-12)。
+    別回・別イベントの告知は、その回の告知としては正しいので回ごとのまま
+    (森の多肉園の奈良回の告知は奈良回には使える)。印は apply-eyecatch.py --not-flyer が付ける。
+    """
+    own = [r.get('post') for r in (rejected_items.get(slug) or [])]
+    everywhere = [r.get('post') for rows in rejected_items.values() for r in (rows or [])
+                  if r.get('notFlyer')]
+    return own + everywhere
+
+
 def pick_post(ev, posts, rejected_posts=()):
     """この回の告知投稿を選ぶ。(post, 根拠dict) か (None, None)。
 
@@ -243,7 +260,7 @@ def stage_candidates(events, fresh_posts, today):
     for sl in list(items):
         e = by_slug.get(sl)
         d, de = sitelib.event_span(e) if e else ('', '')
-        done = {post_code(r.get('post')) for r in rejected.get(sl, [])}
+        done = {post_code(u) for u in rejected_posts_for(rejected, sl)}
         # 採否を書いた後に、それより前から走っていた巡回が古い一覧を書き戻すことがある
         if (not e or e.get('imageUrl') or sitelib.is_cancelled(e)
                 or not d or (de or d) < today
@@ -275,7 +292,7 @@ def stage_candidates(events, fresh_posts, today):
         posts = fresh_posts.get(u)
         if not posts:
             continue
-        p, why = pick_post(e, posts, [r.get('post') for r in rejected.get(sl, [])])
+        p, why = pick_post(e, posts, rejected_posts_for(rejected, sl))
         if not p:
             continue
         dest = os.path.join(STAGE_DIR, f'{sl}.jpg')

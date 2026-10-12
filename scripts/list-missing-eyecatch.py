@@ -175,7 +175,10 @@ def main():
         # 2026-10-09: Lier.多肉フェスティバル24会場の出典 DdszFGQBiY- は花友フェスタの
         # フライヤーで、一覧からは分からず1枠を使って開いた。主催のプロフィールから
         # その回の告知を探すか、翌日以降に回す
-        why = rejected_hint(rejected.get(e.get('slug')) or [], hint) if kind == 'igPost' else ''
+        # どの回の告知でもないと決めた投稿(notFlyer)は、別の回で捨てたものでも当てる(2026-10-12)
+        rows = (rejected.get(e.get('slug')) or []) + [
+            r for rs in rejected.values() for r in (rs or []) if r.get('notFlyer')]
+        why = rejected_hint(rows, hint) if kind == 'igPost' else ''
         if why:
             row['hintRejected'] = why
         if kind in ('igPost', 'igProfile'):
