@@ -3239,6 +3239,10 @@ def main():
             _posts_by_acc[_u.lower()] = _r.get('posts') or []
     _time_post_bad = []
     _time_post_slugs = set()
+    # 同じ日に複数の会場の時刻を並べた投稿は、その回の会場の行だけを比べる(2026-10-13)。
+    # 規則の自己テストを毎回走らせ、落ちたらこの検査の行として出す(呼ぶ側の無いテストにしない)
+    for _bad in sitelib._self_test_dated_hours_place():
+        _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_dated_hours_place): {_bad}")
     for e in events:
         _t = e.get('time') or ''
         _end = e.get('dateEnd') or e.get('date')

@@ -341,7 +341,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キー�
                 # 2026-10-10 ビザールプランツ 名古屋ノ陣・DYCKIA EVENT NEEDLES(11/1)の掲載で3件になった
                 '坪井健樹園':'tsuboi-kenjuen',
                 # 2026-10-11 第18回 多肉だョ！全員集合 in 福山(11/22)の掲載で3件になった
-                'ふくやま産業交流館 ビッグ・ローズ':'fukuyama-big-rose'}
+                'ふくやま産業交流館 ビッグ・ローズ':'fukuyama-big-rose',
+                # 2026-10-13 Lier.多肉フェスティバル in 岡山(10/25)の会場を「サウスヴィレッジホール」から同定して3件になった
+                '岡山市サウスヴィレッジ':'okayama-south-village'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -352,6 +354,8 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    # 2026-10-13 岡山市サウスヴィレッジが3件になりローマ字へ(2件で立っていたハッシュの頁)
+    'v-ff6d6682': '岡山市サウスヴィレッジ',
     # 2026-10-09 location の区画を落として施設で束ね直した(audit venue_key_split)。
     # 区画ごとに立っていた頁と、3件以上になってローマ字に移ったハッシュの頁
     'v-becb83de': '志摩中央公園',
@@ -2023,14 +2027,23 @@ def _single_month_day(text):
     return next(iter(ds)) if len(ds) == 1 else None
 
 
-def announced_dated_hours(caption, month_days, min_minutes=120):
+def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
     """告知本文から「会期内の1日 → その日の開催時間」を拾う。{(月, 日): {(開始の分, 終了の分)}}
 
     日付は、その範囲の前(同じ行で、前の範囲より後ろ)か、範囲を持たない直前の行(空行は飛ばす)から取る。
     1つの日付に決まらない行・会期の外の日付・2時間未満の範囲・営業時間の行・
     企画の見出し(ANNOUNCED_SUBEVENT_WORDS)の下の行は数えない。
+
+    place(その回の venue・location・name を繋いだ文字列)を渡すと、同じ日に別の会場の時刻を並べた
+    投稿から、この回の会場の行だけを採る(2026-10-13)。ジョイフルエーケーの告知(DeXyEGuE0J-)は
+    「⚫︎大曲店10/17(土)10:00〜12:00 ⚫︎大麻店10/17(土)14:00〜16:00 ⚫︎屯田店10/18(日)10:00〜12:00」と
+    3店を1投稿に並べ、大曲店の回が大麻店の時刻を「告知にあるのに time に無い」で鳴らした。
+    行の日付の前の語(会場の見出し)を _dated_place_label で取り、同じ日に2つ以上の見出しがあって
+    そのうち place に入っているものがあれば、その見出しの行と見出しの無い行だけを残す。
+    どの見出しも place に無ければ従来どおり全部を採る(会場の書き方が違うだけで時刻を落とさない)。
     """
     out = {}
+    labeled = {}
     lines = unicodedata.normalize('NFKC', caption or '').splitlines()
     for i, ln in enumerate(lines):
         if any(w in ln for w in ANNOUNCED_HOURS_SKIP):
@@ -2058,7 +2071,57 @@ def announced_dated_hours(caption, month_days, min_minutes=120):
                 d = _single_month_day(head)
             if d is not None and d in month_days:
                 out.setdefault(d, set()).add(rr[0])
+                labeled.setdefault(d, []).append((_dated_place_label(seg), rr[0]))
+    if place:
+        pk = _dated_place_norm(place)
+        for d, xs in labeled.items():
+            labels = {lb for lb, _ in xs if lb}
+            mine = {lb for lb in labels if lb in pk}
+            if len(labels) >= 2 and mine:
+                out[d] = {r for lb, r in xs if not lb or lb in mine}
     return out
+
+
+# 行の日付の前に書いた会場の見出しを取るときに落とす語(日時・場所などの項目名と曜日・記号)
+_PLACE_LABEL_DROP = re.compile(r'(?:日時|日程|開催日|開催時間|開催|時間|場所|会場|営業|予定|毎週|\d+|[月日年]'
+                               r'|[(（][^)）]{0,4}[)）]|[^\w])')
+
+
+def _dated_place_norm(s):
+    return re.sub(r'\s+', '', unicodedata.normalize('NFKC', s or ''))
+
+
+def _dated_place_label(seg):
+    """「⚫︎大曲店10/17(土)」の日付より前の語(大曲店)。会場名とみなせる2字以上の語が無ければ空"""
+    t = unicodedata.normalize('NFKC', seg or '')
+    m = re.search(r'\d{1,2}\s*(?:/|月)\s*\d{1,2}', t)
+    t = t[:m.start()] if m else ''
+    t = _PLACE_LABEL_DROP.sub('', t)
+    return t if len(t) >= 2 else ''
+
+
+def _self_test_dated_hours_place():
+    """同じ日に複数の会場の時刻を並べた投稿の照合(2026-10-13)。返り値は食い違いの一覧(空なら合格)"""
+    cap = ('🪴アガベ展示即売会 開催！🪴\n⚫︎大曲店10/17(土)10:00〜12:00\n'
+           '⚫︎大麻店10/17(土)14:00〜16:00\n⚫︎屯田店10/18(日)10:00〜12:00')
+    bad = []
+    cases = [
+        ('大曲の回', {(10, 17)}, 'ジョイフルエーケー大曲店 アガベ展示即売会', {(10, 17): {(600, 720)}}),
+        ('大麻の回', {(10, 17)}, 'ジョイフルエーケー大麻店（北海道江別市大麻198-3）', {(10, 17): {(840, 960)}}),
+        ('屯田の回(その日は1店だけ)', {(10, 18)}, 'ジョイフルエーケー屯田店', {(10, 18): {(600, 720)}}),
+        ('会場の書き方が違えば全部', {(10, 17)}, '別の店', {(10, 17): {(600, 720), (840, 960)}}),
+        ('place なしは従来どおり', {(10, 17)}, None, {(10, 17): {(600, 720), (840, 960)}}),
+    ]
+    for label, md, place, want in cases:
+        got = announced_dated_hours(cap, md, place=place)
+        if got != want:
+            bad.append((label, got, want))
+    # 見出しが項目名だけの行は会場の見出しにならない
+    one = '日時：10月31日（土）14:00〜20:00\n日時：11月1日（日）10:00〜15:00'
+    got = announced_dated_hours(one, {(10, 31), (11, 1)}, place='NIGHTWALKER 堀江')
+    if got != {(10, 31): {(840, 1200)}, (11, 1): {(600, 900)}}:
+        bad.append(('項目名だけの見出し', got))
+    return bad
 
 
 def coexisting_pairs(events):
@@ -2160,7 +2223,8 @@ def organizer_post_hours_missing(e, posts_by_account):
             if keys and not any(k in name_key_text(cap) for k in keys):
                 continue
             ts = p.get('timestamp') or ''
-            for d, rs in announced_dated_hours(cap, md).items():
+            place = ' '.join(str(e.get(k) or '') for k in ('venue', 'location', 'name'))
+            for d, rs in announced_dated_hours(cap, md, place=place).items():
                 if d not in latest or ts > latest[d][0]:
                     latest[d] = (ts, rs, p.get('permalink') or '')
     out = []
