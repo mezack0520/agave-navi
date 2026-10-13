@@ -20,8 +20,8 @@
    "url": "https://pukubook.jp/events/",
    "staleDays": 7,
    "why": "3社目のアグリゲータ。LEAFLA(coverage-sweep が自動巡回)と NextMeet(月別)のどちらにも出ない回を拾う。2026-09-07 の巡回で THE BOTANICAL SHOW 6th・トハメルカド境赤レンガ倉庫・アジア有用植物祭がここにだけ出ていた。プレイブック §3 に『pukubook の一覧を必ず1回読む』と 2026-08-12 から書いてあるが、回ったかを残す場所が無く、やらなくても誰も気づかない状態だった",
-   "lastSweptOn": "2026-10-09",
-   "lastScope": "一覧23件(注目3・今後20)。日付つきは THE BOTANICAL SHOW 6th(11/14-15・掲載済み)のみで、残りは仮予定/非公式。京都みどりのマルシェ ベンケイソウ(見送り unverified・主催の告知なし)、グリーントレジャー・金鯱祭・Plants garage market は掲載済み、寝屋川・廃屋倶楽部・IRIE・アウトドアフェスティバルは見送り記録あり。取りこぼし0",
+   "lastSweptOn": "2026-10-14",
+   "lastScope": "一覧22件(注目3・今後19)。日付つきは 東海エコフェスタ 2026 Autumn(10/24-25・見送り undisclosed)と GREEN×EXPO 2027(見送り policy)だけで、残りは仮予定/非公式(日付なし)。天下一植物界・廃屋倶楽部・寝屋川・IRIE・アウトドアフェスティバルは見送り記録あり、ベンケイソウ・金鯱祭・グリーントレジャー・Plants BOX・ツンツンぷくぷくは掲載済み。トナリグミ・BOTANICAL PARTY 七ヶ浜・FUKUI GREEN FESTA・TOKYO BOTANICAL MEETING・農マルシェ・館林サキュレントフェスティバルは日付の告知が無く候補にならない。取りこぼし0",
    "history": [
     "2026-09-07",
     "2026-09-12",
@@ -34,7 +34,8 @@
     "2026-10-06",
     "2026-10-07",
     "2026-10-08",
-    "2026-10-09"
+    "2026-10-09",
+    "2026-10-14"
    ]
   },
   "nextmeet-monthly-check": {
@@ -56,14 +57,15 @@
    "staleDays": 14,
    "why": "watch-sources.json の officialSiteCandidates は、**最後に掲載した回の個別ページのURL**しか持たない。個別ページを開いても同じ主催の別の回は出ないので、主催が自分のサイトに並べている次の回が丸ごと見えない。2026-09-18、GreenSnap Marche 豊洲 2026 Autumn(10/31-11/1)と お台場 2026(11/28-29)がこれに当たった。アグリゲータ3社(LEAFLA / NextMeet / PUKUBOOK)にも無く coverage-gaps も0件で、主催公式の /event/ を開いて初めて2件とも見えた。**一覧を持っている主催は、一覧のほうを見る。**",
    "how": "officialSiteCandidates の domain ごとに、個別ページの1〜2階層上(イベント一覧)を開いて events.json と並べる。まず greensnap.jp/event/(GreenSnap Marche・カダンフェス)。新しく一覧を持つ主催が見つかったらこの url に足す",
-   "lastSweptOn": "2026-10-01",
-   "lastScope": "greensnap.jp/event/(4件・前回と同じ)、jolienursery.co.jp/pages/events(開催予定2件)、kagoen.co、figure-online.net/blogs/news、flarie.jp/news、soransai.com を events.json と照合。未掲載0",
+   "lastSweptOn": "2026-10-14",
+   "lastScope": "greensnap.jp/event/ で未掲載1件(GreenSnapMarche ABCハウジング八王子住宅公園 11/21-22)を見つけて掲載。jolienursery.co.jp/pages/events の開催予定4件(新潟・三郷・金沢・花友フェスタ)は掲載済み、kagoen.co は 10/10-11 の芸術植物祭り(終了)のみ、soransai.com は 10/4(終了)のまま、figure-online.net/blogs/news は服の新着だけ。flarie.jp/news は web_fetch で本文が空(描画が要る頁)で読めず、フラリエの回は Step0 と主催の IG で拾った(CAMP PARK Garden #3 を掲載)",
    "history": [
     "2026-09-18",
-    "2026-10-01"
+    "2026-10-01",
+    "2026-10-14"
    ]
   }
  },
- "updated": "2026-10-09",
+ "updated": "2026-10-14",
  "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
 }
