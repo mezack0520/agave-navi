@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-14 06:44 JST",
+ "generated": "2026-10-14 07:25 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 352,
-  "awaitingNextEdition": 341,
-  "officialSiteCandidates": 84,
+  "igAccounts": 357,
+  "awaitingNextEdition": 340,
+  "officialSiteCandidates": 85,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 83,
+  "igNeedsBrowser": 88,
   "igDead": 7
  },
  "igAccounts": [
@@ -581,6 +581,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "kagoshima_volcano_market",
+   "url": "https://www.instagram.com/kagoshima_volcano_market/",
+   "eventCount": 2,
+   "lastEventName": "KAGOSHIMA VOLCANO MARKET ボルマ vol.4",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "tokimeki_marche",
    "url": "https://www.instagram.com/tokimeki_marche/",
    "eventCount": 2,
@@ -891,6 +901,26 @@
    "apiStatus": "api"
   },
   {
+   "handle": "mimosa_4161",
+   "url": "https://www.instagram.com/mimosa_4161/",
+   "eventCount": 1,
+   "lastEventName": "HELLO！マルシェ～多肉植物の会～",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "hako.taniku",
+   "url": "https://www.instagram.com/hako.taniku/",
+   "eventCount": 1,
+   "lastEventName": "第2回 はこだて多肉マルシェ",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "kikien.succulent0222",
    "url": "https://www.instagram.com/kikien.succulent0222/",
    "eventCount": 1,
@@ -1019,6 +1049,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "cross.h2244",
+   "url": "https://www.instagram.com/cross.h2244/",
+   "eventCount": 1,
+   "lastEventName": "CROSS アガベ販売会（松阪ワークセンター）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagashima_marche",
@@ -1639,6 +1679,26 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "campparkworld",
+   "url": "https://www.instagram.com/campparkworld/",
+   "eventCount": 1,
+   "lastEventName": "CAMP PARK Garden #3（CPG#3）",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
+   "handle": "taniku.pot",
+   "url": "https://www.instagram.com/taniku.pot/",
+   "eventCount": 1,
+   "lastEventName": "至福の多肉物語（仮称）",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "chinki_syokubutu_5",
@@ -2561,16 +2621,6 @@
    "eventCount": 1,
    "lastEventName": "YAMAYAMA｜山山",
    "lastEventDate": "2026-08-08",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kagoshima_volcano_market",
-   "url": "https://www.instagram.com/kagoshima_volcano_market/",
-   "eventCount": 1,
-   "lastEventName": "KAGOSHIMA VOLCANO MARKET ボルマ vol.3",
-   "lastEventDate": "2026-08-09",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
@@ -4044,6 +4094,12 @@
    "eventDate": "2026-10-17"
   },
   {
+   "domain": "mirai-kohboh.co.jp",
+   "url": "https://www.mirai-kohboh.co.jp/post-30439/",
+   "eventName": "HELLO！マルシェ～多肉植物の会～",
+   "eventDate": "2026-10-17"
+  },
+  {
    "domain": "seibu-la.co.jp",
    "url": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
    "eventName": "秋のサボテン展（草津市立水生植物公園みずの森）",
@@ -4161,12 +4217,6 @@
    "domain": "visit-oita.jp",
    "url": "https://www.visit-oita.jp/events/detail/13493",
    "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
-  },
-  {
-   "domain": "fujisanmesse.com",
-   "url": "https://www.fujisanmesse.com/",
-   "eventName": "FUJISAN FESTA",
    "eventDate": "2026-05-03"
   }
  ],
