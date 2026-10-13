@@ -1,5 +1,5 @@
 {
-  "total": 780,
+  "total": 779,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -688,7 +688,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1086,6 +1086,13 @@
       "note": "主催の告知で確かめて、time(と食い違っていれば説明文)を直す。日ごとに違えば「14:00〜20:00（11/1は10:00〜15:00）」の形。説明文の時刻が企画や常設の店の時間なら、同じ文にその語(オークション・営業 など)を書けば数えない",
       "severity": "urgent"
     },
+    "desc_claims_unannounced": {
+      "title": "説明文が「未発表・告知待ち」と書く項目に値が入っている",
+      "count": 0,
+      "items": [],
+      "note": "値の出所を確かめる。出典の告知にあれば説明文のその一文を消し、無ければ値を消す。enrich が書いた値なら sync-events / weekly-enrichment のログの Found: で頁が分かる(一覧の頁から別の回の値を拾っていないか)",
+      "severity": "urgent"
+    },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
       "count": 0,
@@ -1414,10 +1421,8 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 1,
-      "items": [
-        "2026-11-21 greensnap-marche-abc-hachioji-2026-11: d3pbyuzcd27kd.cloudfront.net（url=greensnap.jp / sourceUrl=greensnap.jp）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },
