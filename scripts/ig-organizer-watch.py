@@ -98,6 +98,11 @@ _SETUP_BEFORE = re.compile(r'(?:搬入|設営|搬出|撤収)(?:日|作業)?\s*(?
 # 見出しは日付の前の行に来るので、前の24字(改行を含む)を見る。「販売開始」だけでは
 # 当日の苗の販売開始と区別できないので、チケット・前売・整理券・入場券の語があるときだけ
 _TICKET_BEFORE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)[^\n]{0,14}(?:販売|発売|受付|予約)(?:開始)?(?:日)?\s*[：:]?\s*$')
+# 休館日・定休日の日付も開催日ではない(2026-10-14)。道の駅やまがた蔵王(@m_yzao)は全投稿の末尾の
+# 施設情報に「【休館日】1月1日」を貼っており、scan-organizer-posts.py の一覧に 01-01 が毎朝14行並んでいた。
+# 締切・搬入と同じく、日付の直前(同じ行)の見出しと、直後(同じ行)の「は休館」「定休日」で落とす
+_CLOSED_BEFORE = re.compile(r'(?:休館日?|休園日?|定休日|店休日?|休業日?|休業期間|臨時休業)\s*[】\]］」)）]?\s*(?:[：:]|は)?\s*$')
+_CLOSED_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:は|も)?\s*(?:臨時)?(?:休館|休園|定休|店休|休業)')
 
 
 def month_days(text):
@@ -115,6 +120,10 @@ def month_days(text):
         if _SETUP_BEFORE.search(text[max(0, m.start() - 8):m.start()]):
             continue
         if _TICKET_BEFORE.search(text[max(0, m.start() - 24):m.start()]):
+            continue
+        if _CLOSED_BEFORE.search(text[max(0, m.start() - 12):m.start()].split('\n')[-1]):
+            continue
+        if _CLOSED_AFTER.search(text[m.end():m.end() + 12].split('\n')[0]):
             continue
         mo = int(m.group(1))
         d = int(m.group(2) or m.group(3))
@@ -728,6 +737,10 @@ def self_test():
         month_days('ABENO HARUKAS 10/31(SAT)-11/1(SUN)\n🎫オンラインチケット販売開始\n10月17日(土)20:00〜'),
         {(10, 31), (11, 1)})
     chk('苗の販売開始の時刻は落とさない', month_days('販売開始\n10月18日(日)9:30〜'), {(10, 18)})
+    chk('休館日の見出しの後の日付は数えない',
+        month_days('【日にち】2026/10/31（土）・11/1（日）\n【休館日】1月1日'), {(10, 31), (11, 1)})
+    chk('「は定休日」の前の日付は数えない', month_days('10月14日(水)は定休日です。10月18日(日)開催'), {(10, 18)})
+    chk('休業の語が別の行なら開催日は落とさない', month_days('11月3日(火)開催\n翌日は臨時休業'), {(11, 3)})
     # 別イベントへの出店告知は取りこぼし候補にしない
     p = [{'timestamp': '2026-09-21T01:00:00+0000', 'permalink': 'u4b',
           'caption': 'イベント出店のお知らせ 11/22 開催 会場はどこそこ'}]
