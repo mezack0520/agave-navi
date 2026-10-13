@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-14 07:28 JST",
+ "generated": "2026-10-14 07:33 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 357,
+  "igAccounts": 358,
   "awaitingNextEdition": 340,
   "officialSiteCandidates": 85,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 88,
+  "igNeedsBrowser": 89,
   "igDead": 7
  },
  "igAccounts": [
@@ -1239,6 +1239,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "richard_greenservice",
+   "url": "https://www.instagram.com/richard_greenservice/",
+   "eventCount": 1,
+   "lastEventName": "ワクリエマルシェ vol.4",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "driftwood.smokeywood",
