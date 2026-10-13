@@ -180,6 +180,8 @@ def extract_page_info(url):
 
     # --- Page text for analysis ---
     text = soup.get_text(separator='\n', strip=True)
+    # 時刻をこの回の日付に紐づけて選ぶのに要る(_time_for_event。2026-10-14)
+    info['text'] = text
 
     # --- Date extraction ---
     date_patterns = [
@@ -685,6 +687,66 @@ def _check_site_default_og_rule():
     return not bad
 
 
+def _time_for_event(text, ev, times_found):
+    """頁の時刻のうち、この回の time として書いてよいもの。(値, 書かない理由) を返す(2026-10-14)。
+
+    主催のイベント一覧の頁は、回ごとの日付の下にその回の時刻を並べる。Jolie Nursery の新潟の回
+    (10/10-11)は出典が jolienursery.co.jp/pages/events(一覧)で、新潟の回には時刻が無く、先頭に
+    並んでいた茨木の回(9/19)の 9:00〜16:00 を、頁の最初の時刻として time に書いていた(09-16)。
+    説明文は「開始時刻は主催の告知待ち。」のまま会期を過ぎた。
+    頁に「この回の会期の外の日付」に紐づいた時刻があれば一覧の頁とみなし、この回の日付に紐づいた
+    時刻か、どの日付にも紐づかない時刻(sitelib.announced_hours_for_event)だけを採る。無ければ書かない。
+    会期の外の日付に紐づいた時刻が無い頁(1回だけの告知頁)は従来どおり頁の最初の時刻。
+    ただし2時間未満の範囲(整理券の配布・企画・経路検索の時刻)は採らない。audit.time_implausible が
+    後から鳴らしていた形(2026-08-04 の 09:25〜09:40)を、書く側で止める。
+    """
+    if not times_found:
+        return None, 'no time on page'
+    days = sitelib.event_month_days(ev)
+    dated = sitelib.announced_dated_hours(text or '', sitelib.find_month_days(text or ''))
+    other = sorted(d for d in dated if d not in days)
+    if not other:
+        long_ = [t for t in times_found
+                 if any(r[1] - r[0] >= 120 for r in sitelib.time_ranges(t))]
+        if not long_:
+            return None, '頁の時刻はどれも2時間未満(整理券・企画の時刻)'
+        return long_[0], None
+    mine = sitelib.announced_hours_for_event(text or '', days)
+    if mine:
+        return sitelib.format_time_range(mine[0]), None
+    shown = ', '.join(f'{m}/{d}' for m, d in other[:4])
+    return None, f'頁の時刻は別の日付({shown})の回のものしか無い(一覧の頁)'
+
+
+def _check_listing_time_rule():
+    """一覧の頁から別の回の時刻を書かないこと(2026-10-14)。main() が毎回呼ぶ。"""
+    listing = ('イベント・即売会情報\n開催予定\n2026年10月10日（土）・11日（日）\n新潟県新潟市｜ホームセンタームサシ 新潟店\n'
+               '開催日\n10月10日（土）・11日（日）\n住所\n〒950-0923 新潟県新潟市中央区姥ヶ山45-1\n'
+               '開催予定\n2026年12月19日（土）\n第9回 花友フェスタ in 大阪\n開催日時\n12月19日（土）9:00〜16:00\n'
+               '終了\n2026年9月19日（土）・20日（日）\nOSAKA インドアプランツ大集合 即売会\n開催日時\n'
+               '9月19日（土）9:00〜16:00\n9月20日（日）9:00〜15:00')
+    one = '多肉の即売会\n日時 10月10日（土）10:00〜16:00\n会場 ムサシ新潟店'
+    plain = '多肉の即売会を開きます。\n営業時間とは別に 10:00〜16:00 に販売します。'
+    short = '整理券は 9:25〜9:40 に配ります。\n会場は13階。'
+    cases = [
+        ('一覧の頁で、この回に時刻が無い(Jolie 新潟)', listing, {'date': '2026-10-10', 'dateEnd': '2026-10-11'}, None),
+        ('一覧の頁で、この回の時刻はある', listing, {'date': '2026-12-19', 'dateEnd': '2026-12-19'}, '9:00〜16:00'),
+        ('1回だけの告知頁', one, {'date': '2026-10-10', 'dateEnd': '2026-10-10'}, '10:00〜16:00'),
+        ('日付の無い頁は従来どおり', plain, {'date': '2026-10-10', 'dateEnd': '2026-10-10'}, '10:00〜16:00'),
+        ('2時間未満の時刻しか無い頁', short, {'date': '2026-11-22', 'dateEnd': '2026-11-22'}, None),
+    ]
+    bad = []
+    for label, text, ev, want in cases:
+        found = [f"{h}:{m}〜{h2}:{m2}" for h, m, h2, m2 in
+                 re.findall(r'(\d{1,2})\s*[：:]\s*(\d{2})\s*[～〜~ー−–-]\s*(\d{1,2})\s*[：:]\s*(\d{2})', text)]
+        got, _why = _time_for_event(text, ev, found)
+        if got != want:
+            bad.append((label, want, got))
+    if bad:
+        print(f"SELFTEST-FAILED listing time rule: {bad}")
+    return not bad
+
+
 def _desc_decision(ok, cand, cur, long_enough, page_is_event_own, protected):
     """説明文の候補をどう扱うか。'write' / 'reject_page' / 'kept' / 'skip'。
 
@@ -744,6 +806,7 @@ def main():
     _check_site_default_og_rule()
     _check_ig_post_edition_rule()
     _check_desc_page_rule()
+    _check_listing_time_rule()
     parser = argparse.ArgumentParser(description='Enrich event information')
     parser.add_argument('--write-back', action='store_true',
         help='Write discovered imageUrl/url back to events.json (for empty fields only)')
@@ -1044,8 +1107,13 @@ def main():
                       f"url/sourceUrl に持たない頁から採らない — {best_url[:70]}")
             times_found = (info.get('times_found') or []) if page_is_event_own else []
             if times_found and _is_empty(ev.get('time')):
-                ev['time'] = sitelib.strip_field_label(times_found[0])
-                changed_fields.append('time')
+                # 一覧の頁は別の回の時刻を先頭に持つ(2026-10-14 Jolie 新潟)。_time_for_event
+                _tpick, _twhy = _time_for_event(info.get('text') or '', ev, times_found)
+                if _tpick:
+                    ev['time'] = sitelib.strip_field_label(_tpick)
+                    changed_fields.append('time')
+                else:
+                    print(f"    TIME-REJECTED for {ev['slug']}: {_twhy} — {(best_url or '')[:70]}")
 
             # admission (only if empty)
             prices = (info.get('prices_found') or []) if page_is_event_own else []

@@ -2329,17 +2329,27 @@ def organizer_post_hours_missing(e, posts_by_account):
 # 説明文が名乗る「その日」。「11月1日は」「27日は」「9/26」「初日」「最終日」「2日目」
 _DESC_DAYREF = re.compile(r'(?:(\d{1,2})\s*月\s*)?(\d{1,2})\s*日(?!間|目)|(\d{1,2})/(\d{1,2})'
                           r'|(初日|最終日)|([2-9])日目')
-# 説明文の時刻のうち、催しの開催時間ではないもの(常設の店の営業時間・企画の時刻)
-_DESC_NOT_HOURS = ANNOUNCED_SUBEVENT_WORDS + ('営業',)
+# 説明文の時刻のうち、催しの開催時間ではないもの(常設の店の営業時間・企画の時刻・問い合わせ窓口の受付時間)。
+# 問い合わせ窓口は 2026-10-14 に足した。植祭 Global Botanical Jam 2026夏 の説明文
+# 「問い合わせは静岡第一テレビ事業部が平日10時から17時まで受け付けている」を開催時間と読んだ
+_DESC_NOT_HOURS = ANNOUNCED_SUBEVENT_WORDS + ('営業', '問い合わせ', '問合せ', '受け付け', '受付', '窓口')
 
 
-def description_hours_missing(e):
-    """説明文に書いた開催時間が time に無い。[(会期内の日 or None, 範囲)]。None は time が空の回
+def description_hours_missing(e, undated=False):
+    """説明文に書いた開催時間が time に無い。[(会期内の日 or None, 範囲)]
 
     説明文は告知を読んで書いているので、そこに出た開催時間は time にも入っているはず。
     time が空なのに説明文が「10時から16時」と書く回(7〜9月に30件)と、
     説明文の「11月1日は10時から15時まで」が time に無い回を出す。2時間未満の範囲と、
-    同じ文に企画・営業の語がある範囲は数えない。
+    同じ文に企画・営業・問い合わせの語がある範囲は数えない。
+    time が空の回は [(None, 範囲)] の1件だけを返す。
+
+    undated=True なら、日を名乗らない範囲(「10時から16時まで開く」)も time と比べる(2026-10-14)。
+    これまでは time が入っている回だと日を名乗る範囲しか比べず、1日だけの回の説明文の
+    「11時から16時まで」と time の 7:00〜16:00 が食い違っても通っていた(PICNIC GARDEN vol.23。
+    enrich が施設のイベント一覧の頁から別の催しの時刻を書いた)。日を名乗らない範囲は会期の
+    全日に掛かるとみなし、範囲の両端が time の時刻に無ければ (None, 範囲) で返す。
+    呼ぶ側は time が空かどうかを e で見ること(None だけでは区別しない)。
     """
     d0, d1 = event_span(e)
     try:
@@ -2363,6 +2373,8 @@ def description_hours_missing(e):
             return [(None, rr[0])]
         refs = list(_DESC_DAYREF.finditer(pre[-16:]))
         if not refs:
+            if undated and not {rr[0][0], rr[0][1]} <= have:
+                out.append((None, rr[0]))
             continue
         g = refs[-1].groups()
         day = None
@@ -2379,6 +2391,119 @@ def description_hours_missing(e):
         if day is not None and not {rr[0][0], rr[0][1]} <= have:
             out.append((day, rr[0]))
     return out
+
+
+def _self_test_description_hours():
+    """description_hours_missing の自己テスト(2026-10-14)。audit.time_vs_description が毎回呼び、失敗を同じ検査の行に出す"""
+    def ev(t, d, a='2026-08-02', b=None):
+        return {'slug': 'x', 'date': a, 'dateEnd': b or a, 'time': t, 'description': d}
+    cases = [
+        ('日を名乗らない範囲が time と違う(PICNIC GARDEN vol.23)',
+         ev('7:00〜16:00', 'ビッグルーフ滝沢小ホールに10店舗が出店し、11時から16時まで多肉植物と関連物販を行う。'),
+         True, [(None, (660, 960))]),
+        ('undated=False なら従来どおり見ない',
+         ev('7:00〜16:00', '11時から16時まで多肉植物と関連物販を行う。'), False, []),
+        ('一致していれば出さない', ev('11:00〜16:00', '11時から16時まで開く。'), True, []),
+        ('問い合わせ窓口の受付時間は開催時間ではない(植祭 Global Botanical Jam)',
+         ev('10:00〜16:00（最終入場15:30）', '2日間、いずれも10時から16時まで。問い合わせは静岡第一テレビ事業部が'
+            '平日10時から17時まで受け付けている。', '2026-08-15', '2026-08-16'), True, []),
+        ('最終日の時刻を括弧で持つ time', ev('10:00〜16:00（18日は15:00まで）', '10時から16時(18日は15時まで)開く。',
+                                          '2026-10-17', '2026-10-18'), True, []),
+        ('販売と競りの時刻を持つ time(富士多肉 8/29)',
+         ev('10:00〜14:00（14:00から競り）', '10時から14時まで多肉植物とサボテンを販売し、14時からは競りを行う。',
+            '2026-08-29'), True, []),
+        ('time が空なら1件だけ', ev('', '10時から16時まで開く。'), True, [(None, (600, 960))]),
+    ]
+    bad = []
+    for label, e, und, want in cases:
+        got = description_hours_missing(e, undated=und)
+        if got != want:
+            bad.append(f'{label}: 期待 {want} / 実際 {got}')
+    return bad
+
+
+# --- 説明文が「未発表」と書く項目に値が入っている (2026-10-14) ---
+# Jolie Nursery の新潟の回(10/10-11)は、掲載時の説明文が「開始時刻は主催の告知待ち。」で time は空だった。
+# 同じ朝の sync-events の enrich が、出典の一覧頁(jolienursery.co.jp/pages/events)に並ぶ別の回
+# (茨木 9/19 の 9:00〜16:00)の時刻を time に書き、説明文と time が食い違ったまま会期を過ぎた。
+# time と説明文の時刻の照合(description_hours_missing)は、説明文に時刻が無いので働かない。
+# 値を埋める側(enrich・アイキャッチの回・手の修正)が説明文の「未発表」の一文を消し忘れても同じ形になる。
+# 文ごとに「◯◯は未発表/告知待ち/告知に無い/後日…」の主題(は・と・・・や の前の語)を取り、
+# その項目に値が入っていれば出す。
+_UNANN_NEG = re.compile(
+    r'(?:未発表|未定|未公表|告知(?:時点)?に(?:は)?(?:まだ)?(?:無|な)(?:い|く|かった)|告知されていな|'
+    r'発表されていな|公表されていな|明らかにされていな|決まっていな|出ていな|書かれていな|載っていな|'
+    r'(?:後日|追って)(?:の)?(?:告知|発表|案内|お知らせ|知らせ)|決まり(?:しだい|次第)|告知待ち|発表待ち)')
+# (項目の別名, 主題の語)。出店時間・配布時間・受付時間などは回の開催時間ではないので、
+# 直前の語(_UNANN_NOT_EVENT_TIME)で外す
+_UNANN_SUBJ = (
+    ('time_end', r'終了(?:の)?(?:時刻|時間)'),
+    ('time', r'(?:開催時間|開催時刻|開始・終了の時刻|開始・終了時刻|開始時刻|開始時間|販売の時間帯|時間帯|時刻|時間)'),
+    ('venue', r'(?:会場|開催場所)'),
+    ('admission', r'(?:入場料|入場の料金|料金|参加費)'),
+)
+_UNANN_FIELD = {'time_end': 'time', 'time': 'time', 'venue': 'venue', 'admission': 'admission'}
+_UNANN_NOT_EVENT_TIME = ('終了', '配布', '受付', '受け付け', '抽選', '整理券', '入場', '出店', '営業', '集合', '搬入',
+                         '設営', '撤収', 'ワークショップ', '体験', '講習', 'セリ', '競り', 'オークション', '先行')
+_UNANN_TOPIC = r'(?=\s*(?:は|も|と|・|、|や|が|および|及び))'
+_UNANN_EMPTY = ('', '調整中', '記録なし', '未定')
+
+
+def description_claims_unannounced(e):
+    """説明文が「未発表・告知待ち」と書く項目(time / venue / admission)に値が入っている。[(項目, 文)]
+
+    「開催時間はこの会場の告知が出ていない」の「会場」は主題ではない(後ろが「の」)ので venue には数えない。
+    「終了時刻は告知に無い」は終わりの無い time(「9:00〜」)とは両立するので、終わりのある time だけを数える。
+    """
+    out = []
+    d = unicodedata.normalize('NFKC', e.get('description') or '')
+    for sent in re.split(r'(?<=。)', d):
+        for nm in _UNANN_NEG.finditer(sent):
+            head = sent[:nm.start()][-60:]
+            seen = set()
+            for f, sp in _UNANN_SUBJ:
+                if f in seen or _UNANN_FIELD[f] in seen:
+                    continue
+                for sm in re.finditer(sp + _UNANN_TOPIC, head):
+                    if f == 'time' and head[:sm.start()].rstrip('の').endswith(_UNANN_NOT_EVENT_TIME):
+                        continue
+                    seen.add(f)
+                    v = str(e.get(_UNANN_FIELD[f]) or '').strip()
+                    if v in _UNANN_EMPTY:
+                        break
+                    if f == 'time_end' and not re.search(r'[〜~～\-－–]\s*\d', v):
+                        break
+                    item = (_UNANN_FIELD[f], sent.strip())
+                    if item not in out:
+                        out.append(item)
+                    break
+    return out
+
+
+def _self_test_description_claims_unannounced():
+    """description_claims_unannounced の自己テスト。audit.desc_claims_unannounced が毎回呼び、失敗を同じ検査の行に出す"""
+    cases = [
+        ('Jolie 新潟(10-14 の実例)', {'time': '9:00〜16:00', 'description': '観葉植物まで持ち込む。開始時刻は主催の告知待ち。'},
+         ['time']),
+        ('time が空なら一致', {'description': '開始時刻は主催の告知待ち。'}, []),
+        ('「この会場の告知」の会場は主題でない', {'venue': '北条市民会館', 'description': '開催時間はこの会場の告知が出ていない。'}, []),
+        ('会場と時間を並べた主題', {'venue': 'いばらきスカイパレット', 'time': '10:00〜15:00',
+                                    'description': '会場と時間は主催の告知にまだ無い。'}, ['venue', 'time']),
+        ('出店時間は回の時間ではない(PLANTS SHOW 桐生)', {'time': '10:00〜16:00',
+                                                         'description': '出店場所・出店時間・駐車場等の詳細は追って告知してまいります。'}, []),
+        ('配布時間は回の時間ではない', {'time': '9:45〜16:30', 'description': '整理券の配布時間は未定。'}, []),
+        ('終了時刻だけが未発表で time に終わりが無い', {'time': '9:00〜', 'description': '終了時刻は告知に無い。'}, []),
+        ('終了時刻が未発表なのに time に終わりがある', {'time': '9:00〜16:00', 'description': '終了時刻は告知に無い。'}, ['time']),
+        ('入場料', {'admission': '入場無料', 'description': '入場料は未発表。'}, ['admission']),
+        ('会場が調整中なら一致', {'venue': '調整中', 'description': '会場は未発表。'}, []),
+        ('詳細は後日、だけでは項目を名乗らない', {'time': '10:00〜16:00', 'description': '詳細は追って案内される。'}, []),
+    ]
+    bad = []
+    for label, e, want in cases:
+        got = sorted(f for f, _ in description_claims_unannounced(e))
+        if got != sorted(want):
+            bad.append(f'{label}: 期待 {want} / 実際 {got}')
+    return bad
 
 
 # --- 説明文が書く会期の長さ・日と date〜dateEnd の食い違い (2026-10-10) ---

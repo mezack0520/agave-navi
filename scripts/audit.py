@@ -3320,28 +3320,62 @@ def main():
     #        2件あった(DIO PLANTS FES は time が両日とも1時間ずれたまま開催日を過ぎた)。
     #        規則は sitelib.description_hours_missing。上の検査に出た回は引く(同じ事実を2行に出さない)。
     #        07-01〜10-08 の events.json 84日分に当てて34回分が出て、誤検知は0(上の検査に出る回を除く)。
+    #        2026-10-14: 日を名乗らない範囲も比べ(undated)、time が入っている回は開催済みも見る。
+    #        PICNIC GARDEN vol.23(8/2)は説明文「11時から16時まで」/ time 7:00〜16:00、富士多肉(8/29)は
+    #        「10時から14時まで販売」/ 10:00〜16:00 のまま会期を過ぎていた。どちらも 07-27 の enrich が
+    #        出典でない一覧の頁から書いた time で、1日だけの回は日を名乗らないので、この検査は time が
+    #        入っていると素通しだった(10-08 に足したときは開催前だけを見たので、それより前に終わった回も外れた)。
+    #        time が空の開催済みの回は 10-11 に説明文で埋めた残り(曜日ごとの時刻で time の形にならない回)なので数えない。
+    #        03-26〜10-14 の486版で、出たのは今回の2件と、後で直された4件(uomachi・NIGHTWALKER・ロビン・DIO)だけ(誤検知0)。
+    #        植祭 Global Botanical Jam の「問い合わせは…10時から17時まで受け付けている」は _DESC_NOT_HOURS で外した。
     _time_desc_bad = []
     for e in events:
         _end = e.get('dateEnd') or e.get('date')
-        if (e.get('status') != 'upcoming' or sitelib.is_cancelled(e)
-                or (_end and _end < today) or e.get('slug') in _time_post_slugs):
-            continue
-        _iss = sitelib.description_hours_missing(e)
-        if not _iss:
+        if sitelib.is_cancelled(e) or e.get('slug') in _time_post_slugs:
             continue
         _t = e.get('time') or ''
-        if _iss[0][0] is None:
+        _ahead = e.get('status') == 'upcoming' and not (_end and _end < today)
+        if not _t.strip() and not _ahead:
+            continue
+        _iss = sitelib.description_hours_missing(e, undated=True)
+        if not _iss:
+            continue
+        if not _t.strip():
             _time_desc_bad.append(f"{e.get('slug')}: time が空 / 説明文に "
                                   f"{sitelib.format_time_range(_iss[0][1])}")
         else:
             _time_desc_bad.append(
                 f"{e.get('slug')}: time「{_t[:40]}」/ 説明文に "
-                + '・'.join(f'{_d.month}/{_d.day} {sitelib.format_time_range(_r)}' for _d, _r in _iss))
+                + '・'.join((f'{_d.month}/{_d.day} ' if _d else '') + sitelib.format_time_range(_r)
+                           for _d, _r in _iss))
+    for _bad in sitelib._self_test_description_hours():
+        _time_desc_bad.append(f'自己テスト失敗(sitelib._self_test_description_hours): {_bad}')
     add('time_vs_description', 'time が説明文に書いた開催時間と食い違う・欠けている',
         sorted(_time_desc_bad),
         '主催の告知で確かめて、time(と食い違っていれば説明文)を直す。日ごとに違えば'
         '「14:00〜20:00（11/1は10:00〜15:00）」の形。説明文の時刻が企画や常設の店の時間なら、'
         '同じ文にその語(オークション・営業 など)を書けば数えない')
+
+    # 16z1d. 説明文が「未発表・告知待ち」と書く項目に値が入っている(2026-10-14)。
+    #        Jolie Nursery の新潟の回(10/10-11)は説明文が「開始時刻は主催の告知待ち。」のまま、time に
+    #        9:00〜16:00 が入って会期を過ぎていた。09-16 の sync-events の enrich が、出典の一覧頁
+    #        (jolienursery.co.jp/pages/events)に並ぶ別の回(茨木 9/19)の時刻を書いたもの。説明文に
+    #        時刻が無いので time_vs_description は働かない。値を埋める側(enrich・アイキャッチの回・手の修正)が
+    #        「未発表」の一文を消し忘れても同じ形になる。規則は sitelib.description_claims_unannounced。
+    #        03-26〜10-14 の486版で出たのはこの1件だけ(誤検知0。出店時間・配布時間は主題から外した)。
+    _unann_bad = []
+    for e in events:
+        if sitelib.is_cancelled(e):
+            continue
+        for _f, _sent in sitelib.description_claims_unannounced(e):
+            _unann_bad.append(f"{e.get('slug')}: {_f}「{str(e.get(_f))[:30]}」/ 説明文「{_sent[:60]}」")
+    for _bad in sitelib._self_test_description_claims_unannounced():
+        _unann_bad.append(f'自己テスト失敗(sitelib._self_test_description_claims_unannounced): {_bad}')
+    add('desc_claims_unannounced', '説明文が「未発表・告知待ち」と書く項目に値が入っている',
+        sorted(_unann_bad),
+        '値の出所を確かめる。出典の告知にあれば説明文のその一文を消し、無ければ値を消す。'
+        'enrich が書いた値なら sync-events / weekly-enrichment のログの Found: で頁が分かる'
+        '(一覧の頁から別の回の値を拾っていないか)')
 
     # 16z2. アイキャッチ候補(2026-09-23)。ig-organizer-watch.py が主催の最新投稿の
     #       原寸画像から staging/eyecatch/ に置く。採否は人が画像を見て決める
@@ -5065,6 +5099,21 @@ def main():
                        (json.load(_f).get('accepted') or {}).items()}
     except FileNotFoundError:
         pass
+    # 人が一度認めた「頁のホスト → 画像のホスト」の組は、同じ組の別の回でも認める(2026-10-14)。
+    # GreenSnap は回の頁(greensnap.jp)の og:image を自社の CloudFront(d3pbyuzcd27kd.cloudfront.net)に置く。
+    # 09-29 に豊洲・お台場の2回を accepted に入れたが、回ごとの記録なので 10-14 に掲載した八王子で
+    # 同じ組がまた出た(画像は頁の og:image で、トップ頁の既定画像とは別だった)。
+    # 組は accepted の回の url / sourceUrl / organizerUrl のホストから作る。Instagram の頁は持ち主を表さないので使わない
+    _img_pairs = set()
+    _ev_by_slug_img = {e.get('slug'): e for e in events}
+    for _sl, _u in _img_ok.items():
+        _ae = _ev_by_slug_img.get(_sl)
+        if not _ae or not _u:
+            continue
+        for _k in ('url', 'sourceUrl', 'organizerUrl'):
+            _ph = _h(_ae.get(_k))
+            if _ph and 'instagram' not in _ph and 'threads' not in _ph and _ph != _h(_u):
+                _img_pairs.add((_ph, _h(_u)))
     for e in events:
         if _img_ok.get(e.get('slug')) and _img_ok[e['slug']] == e.get('imageUrl'):
             continue
@@ -5078,6 +5127,8 @@ def main():
         # wix / wordpress 等は画像が別ホスト(static.wixstatic.com)に出る。
         # 自サイトが wixsite なら wixstatic は同じ持ち主とみなす
         if _ih in _own or ('wixstatic.com' in _ih and any('wix' in o for o in _own)):
+            continue
+        if any((_o, _ih) in _img_pairs for _o in _own):
             continue
         _orphan_img.append(f"{e.get('date')} {e.get('slug')}: {_ih}"
                            f"（url={_h(e.get('url')) or '-'} / "

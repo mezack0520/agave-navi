@@ -4318,6 +4318,49 @@ seg = seg.replace(/\\u0026/g, '&').replace(/u00253D/g, '%3D').replace(/u0026/g, 
 ワクリエマルシェ vol.4 は4枚(フライヤーと出店者紹介3枚)が取れ、出店者13組がすべて多肉の販売と数えられたので掲載に移した。
 戻り値に URL を返すとブロックされる環境では `replace(/https:\/\//g, 'H//')` で潰して返し、コンテナ側で戻す。
 
+### 主催のイベント一覧の頁を出典にすると、enrich は一覧の先頭に並ぶ別の回の時刻を書く (2026-10-14)
+
+Jolie Nursery の新潟の回(10/10-11)は出典が `jolienursery.co.jp/pages/events`(主催のイベント一覧)で、掲載時の説明文は
+「開始時刻は主催の告知待ち。」・time は空だった。09-16 の sync-events の enrich が、一覧の先頭に並んでいた茨木の回(9/19)の
+`9:00〜16:00` を「頁の最初の時刻」として time に書き(ログの `✓ Venue:` も茨木の住所だった)、説明文と time が食い違ったまま会期を過ぎた。
+10-07 の関門(出典の頁以外から書かない)は、**出典の頁そのものが別の回を並べていると効かない。**
+- `enrich_events._time_for_event`: 頁に「この回の会期の外の日付」に紐づいた時刻があれば一覧の頁とみなし、この回の日付に紐づいた
+  時刻か、どの日付にも紐づかない時刻(`sitelib.announced_hours_for_event`)だけを採る。無ければ `TIME-REJECTED` を出して書かない。
+  1回だけの告知頁は従来どおり先頭の時刻。ただし2時間未満の範囲(整理券の配布・企画)は採らない。自己テスト `_check_listing_time_rule`
+  を main() が毎回走らせ、旧い判定では2件落ちることを確かめた。実際の頁(Jolie の一覧・GreenSnap・花友フェスタ・咲くやこの花)で、
+  一覧の新潟と金沢は書かず、1回だけの頁は今の time と同じ値を選ぶ。
+- `audit.desc_claims_unannounced`(urgent): 説明文が「◯◯は未発表・告知待ち・告知に無い・後日…」と書く項目(time / venue / admission)に
+  値が入っている回。規則は `sitelib.description_claims_unannounced`(主題は「は・と・・・や」の前の語。「この会場の告知」の会場、
+  出店時間・配布時間は数えない)。03-26〜10-14 の486版で出たのは Jolie 新潟の1件だけ。
+- 主催の一覧の頁を出典にしない。回ごとの告知頁があればそちらにする(新潟の回は `blogs/events/musashi-niigata-20261010` に替えた)。
+
+### 10-07 の enrich の洗い直しは開催前の回だけだった。開催済みの回に出典でない頁の値が残っていた (2026-10-14)
+
+10-07 に「出典の頁以外から書かれた time/admission/access」を洗ったのは開催前の回だけで、開催済みの回はそのまま残っていた。
+`time_vs_description`(10-08)も開催前だけを見て、しかも time が入っている回は「日を名乗る範囲」しか比べなかったので、
+1日だけの回の説明文「11時から16時まで」と time `7:00〜16:00` の食い違いは素通しだった。
+- PICNIC GARDEN vol.23(8/2)の time は施設のイベント一覧(`bigroof.jp/event/`)の別の催しの時刻、富士多肉(8/29)の time・入場料は
+  第三者のイベント一覧ブログ(kuro-shiba.net)の値。主催の告知・回の頁・説明文で直した。
+- Actions のログ(90日)の `WRITE-BACK ← time/admission` を回ごとに引き、今も同じ値で残る開催済みの回を洗った。
+  &TEAM の POP-UP の頁(カトーエンゲー東京 POP UP)・trip.com の農園の旅行ガイド(PARADISE GARAGE)・2025年の回の記事(倉敷)・
+  4月の回の頁(高の宮市)の time と、一覧の頁の入場料2件を消した。主催の告知と一致した値(BOTANICAL LIFE 有田・奈良ビカクフェス・
+  タニッペ Final)と、施設の頁の access は残した。90日より前の書き込みはログが無く追えない。
+- `time_vs_description` は日を名乗らない範囲も比べ(`description_hours_missing(e, undated=True)`)、time が入っている回は開催済みも見る。
+  time が空の開催済みの回(10-11 に埋めた残り)は数えない。`_DESC_NOT_HOURS` に問い合わせ窓口・受付を足した
+  (植祭 Global Botanical Jam の「問い合わせは…平日10時から17時まで受け付けている」を開催時間と読んでいた)。
+  03-26〜10-14 の486版で出たのは今回の2件と、後で直された4件(誤検知0)。自己テスト `_self_test_description_hours`。
+- **関門を足した日の洗い直しは、開催済みの回も含める。**開催日を過ぎても詳細頁は残り、値は誰も見直さない。
+- 開催済みの回の画像にも同じ形が残っている(出典でない頁の og:image。`image_host_unrelated` は開催前だけを見る)。
+  10-14 の時点で開催済み44回。画像を目で見て決める必要があるので、この日は洗っていない。
+
+### 人が一度認めた「頁のホスト → 画像のホスト」の組は、同じ組の別の回でも認める (2026-10-14)
+
+GreenSnap は回の頁(greensnap.jp)の og:image を自社の CloudFront(`d3pbyuzcd27kd.cloudfront.net`)に置く。09-29 に豊洲・お台場を
+`scripts/image-rejected.json` の `accepted` に入れたが回ごとの記録なので、10-14 に掲載した八王子で `image_host_unrelated` がまた出た
+(画像は回の頁の og:image で、トップ頁の既定画像 `greensnap.jp/assets/images/sys/og-image.png` とは別だった)。
+audit は accepted の回の url / sourceUrl / organizerUrl のホストと画像のホストの組を作り、同じ組の回を黙らせる(Instagram の頁は持ち主を
+表さないので組にしない)。今の accepted 5件から出来る組は GreenSnap の1組だけ。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4363,6 +4406,7 @@ seg = seg.replace(/\\u0026/g, '&').replace(/u00253D/g, '%3D').replace(/u0026/g, 
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
 | 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
+| 説明文が「未発表・告知待ち」と書く項目に値がある(`desc_claims_unannounced`) | 値の出所を確かめる。出典の告知にあれば説明文の一文を消し、無ければ値を消す。enrich が一覧の頁から別の回の値を拾っていないかをログの `Found:` で見る | fixed |
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で会場の所在地を確かめ、説明文の所在地を location の住所どおりに直す。location / prefecture のほうが違っていればそちらを直す | fixed |
 | 埋め込み・アイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して image-rejected.json に記録し、この回の告知を主催の投稿で探し直す | fixed |
 | 同じシリーズの回で名称の表記が割れている(`series_name_variant`) | 主催の告知の表記に揃え、使わなくなった表記は aliases に残す。本当に別のイベントなら名前で区別が付くようにする | fixed |
