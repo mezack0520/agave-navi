@@ -634,6 +634,8 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
     列は タイムスタンプ / メールアドレス / お名前 / お問い合わせ種別 / イベント概要 / イベント名。
     設問が変わったかは1行目の見出しの数と名前で見る
   - 10-13 の実測: データ行7 = processed 7
+  - 10-14 の定期実行(06:3x)で初めてコネクタで読めた。データ行7 = processed 7、見出し6列、シートは「フォームの回答 1」の1枚だけ。
+    戻り値の `range` は `A1:A108` とグリッドの行数まで伸びて返るが、`values` には値のある行しか入らない。数えるのは `values` の行で、`range` の終端ではない
 - **だから `sheetRows` は GAS 側が書く（2026-09-01 変更）。**
   `onFormSubmit` が `countSheetRows()` の結果を `sheetRows` / `sheetCheckedOn` に書く。
   ブラウザで数えて手で入れる手順は廃止。読めないのに数えようとすると、
@@ -1019,6 +1021,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   (前3日はプレイブックに既記の Chrome 許可待ちの回と一致する)
 
 - **新着ゼロの日でも `new-inquiries.json` の `lastChecked` は必ず当日にして push する。**
+  **※ この項は古い（2026-10-14 注記）。`lastChecked` は 08-24 以降 GAS だけが書く値で、タスクは触らない(同じ §3 の「`reviewedOn` を毎回書く」)。
+  タスクが動いた痕跡は `reviewedOn` / `reviewedHistory` で、起動直後の `record-run.py` が書く。以下の `lastChecked` はそう読み替える。
+  タスクが `lastChecked` を当日にすると、GAS が最後に送信を受けた日という唯一の手掛かりが消える。**
   これが「event-listing-review が動いた」ことのリポジトリ側の唯一の痕跡。
   タスクが起動しなかった日も、起動したがフォームを読む前に落ちた日も、
   repo には何も残らないので次に動いた日まで誰も気づけない。
@@ -3509,6 +3514,12 @@ clone の一手の時点ではまだ読まれていない。§1 の 2 の名義�
 同じ id があるうちは積み直さず、facts に日付を足すだけにする。自分のプロンプトに clone 先の指定が入っていたら、そう facts に書く。
 **10-13 に目崎が承認し、同日の event-monitor が `update_scheduled_task` で5本のプロンプトに clone 先の指定を入れた**(4本は「リポジトリを clone したら…」の直前に1段落、
 agave-navi-eyecatch は本文の置き換えで)。10-14 以降に固定名の残骸に当たったら、プロンプトの指定に従ったかを先に見る。
+**10-14、その指定どおり `D=$(mktemp -d)` で取ったら clone が `No space left on device` で落ちた。**`mktemp -d` は `$TMPDIR`(`/sessions/<自分>/tmp`)に作り、
+`/sessions` は全セッション共用の 9.8G のボリュームで、この朝は空き 68M(100%)だった。`/tmp` はルート(9.6G・空き 3.7G)で、
+`D=$(mktemp -d -p /tmp)` で取り直したら通った(.git 142M・作業ツリー 71M)。名前が毎回一意なので `/tmp` の固定名の残骸には当たらない。
+上の「`/sessions/<自分>/` 配下へ取り直す」も同じボリュームなので、満杯の日は効かない。clone が落ちたら `df -h /tmp "$TMPDIR"` を見て空きのある側へ取る。
+10-12・10-13 は `/sessions/<自分>/repo` で通っているので、満杯は常時ではない。5本のプロンプトの例を `mktemp -d -p /tmp` に変える提案を
+`event-listing-review:skill-clone-tmpdir-full` に積んだ。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
