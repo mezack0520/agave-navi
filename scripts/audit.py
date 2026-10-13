@@ -3673,7 +3673,7 @@ def main():
         inq_sheet,
         note='回答シートのデータ行数は sheetRows / sheetCheckedOn に入る。'
              '書くのは GAS の onFormSubmit(送信時)と、event-listing-review が'
-             'Claude in Chrome で gviz CSV を読んだ実測(毎回)。'
+             'Google Sheets コネクタで読んだ実測(毎回)。'
              '行数が処理済み+未処理と一致するのが正常。'
              '多ければGASの取りこぼし(backfillFromSheet)、少なければ読み取りか書き込みの失敗。'
              'sheetCheckedOn が lastChecked より古い回は、送信は受けているのに'

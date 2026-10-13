@@ -32,7 +32,7 @@ schedule はどちらも合図が来なかった日の保険で、合図で済�
 ```
 06:30  [Claude] event-listing-review
        起動記録(record-run.py)がその日最初なら crawl-request.json を書く → 一緒に push
-       回答シート(Google Form)をChromeで読取 → 新着は種別問わず new-inquiries.json に書いてpush
+       回答シート(Google Form)を Sheets コネクタで読取 → 新着は種別問わず new-inquiries.json に書いてpush
        → 掲載リクエスト:裏取り→new-events.json+sync-events / 修正・訂正:キュー積み(自動書換なし)
 06:3x  [GitHub] daily.yml (crawl-request.json の push で起動。約8分)
        check_date_updates.py / coverage-sweep.py(未掲載) / check-cancelled.py(中止) /
