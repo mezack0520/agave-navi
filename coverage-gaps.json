@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-13",
+  "sweptOn": "2026-10-14",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,17 +16,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1414,
-    "in_scope": 331,
-    "covered": 196,
-    "known_rejected": 131,
+    "candidates": 1395,
+    "in_scope": 328,
+    "covered": 201,
+    "known_rejected": 126,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 242,
+    "in_scope_leafla": 237,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 89,
-    "gaps_raw": 4
+    "in_scope_nextmeet": 91,
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -37,18 +37,8 @@
   ],
   "gaps": [
     {
-      "date": "2026-10-13",
-      "title": "HINOKI Replay Plants SALE Vol.01（リプレイプランツセール）"
-    },
-    {
-      "date": "2026-10-18",
-      "title": "植物と蒸留 vol.03（アップルミントの蒸留）"
-    },
-    {
-      "date": "2026-10-31",
-      "lastSeen": "2026-11-01",
-      "days": 2,
-      "title": "シマムラ園芸×QSPLANT vol.9"
+      "date": "2026-11-28",
+      "title": "KAGOSHIMA VOLCANO MARKET vol.4"
     }
   ]
 }
