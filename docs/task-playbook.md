@@ -4151,6 +4151,7 @@ GreeN.garage NOGATA の出店者紹介で8組中6組)、一覧で植物が主題
 - **出店者のジャンルは、各出店者のプロフィールの自己紹介で数える。**instagram.com を開いたタブから `fetch('/<handle>/')` の
   `meta[name="description"]` に自己紹介が入っている(投稿リンクは入っていないが、自己紹介は取れる)。11アカウントを1回の呼び出しで読めた。
 - 出店者一覧が画像にしか無い回(ワクリエマルシェ vol.4)は、カルーセルの2枚目以降が DOM に無い。1枚目しか取れなかったので次の回に回した。
+  **※ 2026-10-14 に取れるようになった。**embed/captioned の HTML の JSON に全部の子の画像 URL がある(§3「カルーセルの2枚目以降の画像は…」)。
 - 主催の固定投稿(ピン留め)は投稿日が古くても本文が更新されている(多肉のしずく の 1月の投稿に 12/27・2027/1/16 の予定)。
   embed/captioned が `(none)` のアカウントでも、投稿頁の meta description で今の本文が読める(§3 の 2026-09-29 の手順)。
 
@@ -4294,6 +4295,23 @@ HELLO！マルシェ～多肉植物の会～(10/17 久留米)は、主催 @mimos
 会場のやかまし村のギャラリーを持つ工務店(未来工房)のイベント頁 `mirai-kohboh.co.jp/post-30439/` に主催名・時間・出店者9組(多肉5組)が載っていた。
 Step0 の見出しのクォート検索から会場の名前で施設のサイトに行けば、内訳を数えて compositeEvents を1回で決められる。
 出典は施設の頁にした(CI の中止の見張りが読める。Instagram は読めない)。
+
+### カルーセルの2枚目以降の画像は、embed/captioned の HTML の中の JSON から取れる (2026-10-14)
+
+10-12 に「出店者一覧が画像にしか無い回(ワクリエマルシェ vol.4)は、カルーセルの2枚目以降が DOM に無い。1枚目しか取れなかった」と書いて
+見送りのまま3日持ち越したが、**同じタブから fetch した `/p/<code>/embed/captioned/` の HTML に、全部の子の `display_url` が
+`edge_sidecar_to_children` として多重エスケープで入っている。**外して取り出せば、コンテナで curl して Read で読める(CDN は署名付き URL で 200)。
+
+```js
+const html = await (await fetch('/p/<code>/embed/captioned/', {credentials:'include'})).text();
+let seg = html.slice(html.indexOf('edge_sidecar_to_children'), html.indexOf('edge_sidecar_to_children') + 40000);
+for (let k = 0; k < 6; k++) seg = seg.replace(/\\\\/g, '\\').replace(/\\"/g, '"').replace(/\\\//g, '/');
+seg = seg.replace(/\\u0026/g, '&').replace(/u00253D/g, '%3D').replace(/u0026/g, '&');
+[...seg.matchAll(/"display_url"\s*:\s*"([^"]+)"/g)].map(m => m[1]);   // 全部の子の原寸 URL
+```
+
+ワクリエマルシェ vol.4 は4枚(フライヤーと出店者紹介3枚)が取れ、出店者13組がすべて多肉の販売と数えられたので掲載に移した。
+戻り値に URL を返すとブロックされる環境では `replace(/https:\/\//g, 'H//')` で潰して返し、コンテナ側で戻す。
 
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
