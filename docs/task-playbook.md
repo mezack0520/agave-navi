@@ -2217,6 +2217,8 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   準備の確認は `typeof window.igGrabHere`。プロンプトの例のまま `typeof window.igEyecatch` を見ると `undefined` が返り、
   注入に失敗したと読める。プロンプトは目崎しか直せないので、呼び方はこのファイルとスクリプト冒頭を正とする。
   10-12 に `pending-judgments.json` の `agave-navi-eyecatch:prompt-outdated` に積んだ(プロンプトに CI 候補・起動記録・レポートの段も無い)。
+  **10-13 に目崎が承認し、同日の event-monitor が `update_scheduled_task` でプロンプトの本文を「スキル agave-navi-eyecatch を読み、その手順に従う…」に置き換えた。**
+  10-14 以降のプロンプトに igEyecatch の例は無い。
 
 - **ブラウザで開く回は `python3 scripts/list-missing-eyecatch.py --browser --limit 6` で出す。**(2026-10-12)
   各行の `browserWhy` が理由。`personal` / `unchecked` / `(watch外)` に加えて、**主催が api でも次の2つは CI が候補に出さない**ので対象に入れた。
@@ -3552,6 +3554,8 @@ clone の一手の時点ではまだ読まれていない。§1 の 2 の名義�
 レポートは目崎に届かないので何も変わらなかった。目崎にしか直せないことは、レポートではなく `pending-judgments.json` に積む
 (日次メールの「判断が必要」に出る)。10-12 に `event-listing-review:skill-clone-dir` として積んだ。
 同じ id があるうちは積み直さず、facts に日付を足すだけにする。自分のプロンプトに clone 先の指定が入っていたら、そう facts に書く。
+**10-13 に目崎が承認し、同日の event-monitor が `update_scheduled_task` で5本のプロンプトに clone 先の指定を入れた**(4本は「リポジトリを clone したら…」の直前に1段落、
+agave-navi-eyecatch は本文の置き換えで)。10-14 以降に固定名の残骸に当たったら、プロンプトの指定に従ったかを先に見る。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**

@@ -1,48 +1,6 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "event-listing-review:skill-clone-dir",
-      "addedOn": "2026-10-12",
-      "source": "event-listing-review",
-      "question": "clone を指示しているスケジュールタスクのプロンプト(SKILL.md)に、clone 先を毎回新しいディレクトリにする一文を足してよいか。repo 側からは直せない。",
-      "facts": [
-        "10-12 の event-listing-review が /tmp/agave-navi(別ユーザー所有の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/sessions/<自分>/ 配下に取り直して続行した。",
-        "task-reports で確かめられる衝突は、event-listing-review が 07-31・08-18・08-20・10-04・10-10・10-12 の6回、event-monitor 10-10、site-health-check 10-04、agave-navi-eyecatch 10-10(プロンプトの clone 行が /tmp/agave 固定)。",
-        "プレイブック §3「clone 先は毎回一意なディレクトリにする」は 10-04 からあるが、プロンプトが clone → record-run.py → プレイブックを読む の順なので、clone の時点では読まれていない。名義(§1 の 2)は record-run.py 側で塞げたが、clone 先は clone より前なので repo からは塞げない。",
-        "10-10 のレポートに貼る文面を書いたが、レポートは読み返されず 10-12 も同じ場所に当たった。",
-        "10-12 の agave-event-update も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/tmp/an-<日時> に取り直して続行。agave-event-update のプロンプトにも clone 先の指定は無い。",
-        "10-12 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-<日付>-<pid> に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。",
-        "10-12 の event-monitor も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/sessions/<自分>/repo に取り直して続行。event-monitor のプロンプトにも clone 先の指定は無い。",
-        "10-13 の event-listing-review も /tmp/agave-navi(別ユーザー所有の残骸)に当たった(このタスクで7回目)。rm -rf が Permission denied・dubious ownership。/sessions/<自分>/repo に取り直して続行。",
-        "10-13 に5本の SKILL.md の現物を Read で読めた(プレイブック §1 の 7 は 09-14 に読み書きとも拒否と記録)。clone 先の指定は agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check の4本とも無く、agave-navi-eyecatch は /tmp/agave 固定のまま。定期実行のセッションにも scheduled-tasks の update_scheduled_task があり、定義上 prompt を置き換えられる。定期実行は頼まれていない書き込みをしないので呼んでいない。taskId は list_scheduled_tasks の値で、台帳の event-monitor / site-health-check とは名前が違う。",
-        "10-13 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-1013 に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。"
-      ],
-      "proposal": "各プロンプトの clone の指示に次の一文を足す(agave-navi-eyecatch は `cd /tmp && rm -rf agave && git clone ... agave` の行を置き換える):「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave-navi\")。/tmp の固定名は前のセッションの残骸で消せないことがある。dubious ownership が出ても safe.directory は足さず、場所を変える。」 不要と判断した場合はその旨を decision に書いて resolved へ移す。",
-      "whyHuman": "プロンプトの変更は定期実行からはしない(頼まれていない書き込みになる)ので、目崎の承認が要る。承認すれば、会話のセッションが現行の SKILL.md を Read してから update_scheduled_task で当てられる見込みで、手で貼らずに済む(10-13 確認・update は未実行。プレイブック §1 の 7)。",
-      "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)",
-      "approvedOn": "2026-10-13",
-      "approvedBy": "目崎(「提案通りで」)"
-    },
-    {
-      "id": "agave-navi-eyecatch:prompt-outdated",
-      "addedOn": "2026-10-12",
-      "source": "agave-navi-eyecatch",
-      "question": "スケジュールタスク agave-navi-eyecatch のプロンプト本文を、インストール済みのスキル agave-navi-eyecatch の手順に差し替えてよいか。repo 側からは直せない。",
-      "facts": [
-        "10-12 に届いたプロンプトは 09-08 版の手順のまま。(1) `window.igEyecatch` を呼び `typeof window.igEyecatch` で準備を確かめる(10-08 から ig-eyecatch.js は igPickPost / igGrabHere に分かれ、igEyecatch は無い。そのまま従うと undefined が返り、注入に失敗したと読める) (2) CI 候補(staging/eyecatch。09-23〜)を片づける段が無い (3) record-run.py の起動記録と task-reports への保存が無い (4) clone 先が /tmp/agave 固定(event-listing-review:skill-clone-dir と同じ件)。",
-        "スキル agave-navi-eyecatch は (2)(3) を持っている。10-11・10-12 の回はスキルとプレイブックに従って回したが、プロンプトだけを読む回は CI 候補を見ずにブラウザへ行き、起動記録も残さない。",
-        "プレイブックのアイキャッチ節は 10-11 から「プロンプトの igEyecatch は今のスクリプトに無い。呼び方はこのファイルとスクリプト冒頭を正とする」と書いているが、プロンプト自体は変わっていない。",
-        "10-13(event-listing-review が確認): SKILL.md の現物を Read で読めた。clone 行は /tmp/agave 固定、準備の確かめ方は typeof window.igEyecatch のまま。update_scheduled_task は定義上 prompt を置き換えられるので、目崎が会話で承認すれば、そのセッションが proposal を当てられる見込み。",
-        "10-13 に届いたプロンプトも 09-08 版のまま(igEyecatch・CI 候補の段なし・起動記録とレポートの段なし・/tmp/agave 固定)。インストール済みのスキル agave-navi-eyecatch とプレイブックに従って回した。"
-      ],
-      "proposal": "プロンプトの本文を「スキル agave-navi-eyecatch を読み、その手順に従う。プロンプトとプレイブック(docs/task-playbook.md)が食い違えばプレイブックが正。clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave\")」に置き換える。ブラウザの対象は `python3 scripts/list-missing-eyecatch.py --browser --limit 6` で出る(10-12 追加)。不要と判断した場合はその旨を decision に書いて resolved へ移す。",
-      "whyHuman": "スケジュールタスクのプロンプトはタスク自身からは編集できない(プレイブック §1 の 7)。",
-      "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)",
-      "approvedOn": "2026-10-13",
-      "approvedBy": "目崎(「提案通りで」)"
-    }
-  ],
+  "items": [],
   "updated": "2026-10-13",
   "resolved": [
     {
@@ -105,6 +63,51 @@
       "lastVerifiedOn": "2026-09-17",
       "resolvedOn": "2026-09-18",
       "resolution": "検査側を直して解消。手順の2行追加は任意(目崎がアプリのタスク画面から入れる場合のみ)"
+    },
+    {
+      "id": "event-listing-review:skill-clone-dir",
+      "addedOn": "2026-10-12",
+      "source": "event-listing-review",
+      "question": "clone を指示しているスケジュールタスクのプロンプト(SKILL.md)に、clone 先を毎回新しいディレクトリにする一文を足してよいか。repo 側からは直せない。",
+      "facts": [
+        "10-12 の event-listing-review が /tmp/agave-navi(別ユーザー所有の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/sessions/<自分>/ 配下に取り直して続行した。",
+        "task-reports で確かめられる衝突は、event-listing-review が 07-31・08-18・08-20・10-04・10-10・10-12 の6回、event-monitor 10-10、site-health-check 10-04、agave-navi-eyecatch 10-10(プロンプトの clone 行が /tmp/agave 固定)。",
+        "プレイブック §3「clone 先は毎回一意なディレクトリにする」は 10-04 からあるが、プロンプトが clone → record-run.py → プレイブックを読む の順なので、clone の時点では読まれていない。名義(§1 の 2)は record-run.py 側で塞げたが、clone 先は clone より前なので repo からは塞げない。",
+        "10-10 のレポートに貼る文面を書いたが、レポートは読み返されず 10-12 も同じ場所に当たった。",
+        "10-12 の agave-event-update も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/tmp/an-<日時> に取り直して続行。agave-event-update のプロンプトにも clone 先の指定は無い。",
+        "10-12 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-<日付>-<pid> に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。",
+        "10-12 の event-monitor も最初の clone で同じ /tmp/agave-navi に当たった(rm -rf が Permission denied・dubious ownership)。/sessions/<自分>/repo に取り直して続行。event-monitor のプロンプトにも clone 先の指定は無い。",
+        "10-13 の event-listing-review も /tmp/agave-navi(別ユーザー所有の残骸)に当たった(このタスクで7回目)。rm -rf が Permission denied・dubious ownership。/sessions/<自分>/repo に取り直して続行。",
+        "10-13 に5本の SKILL.md の現物を Read で読めた(プレイブック §1 の 7 は 09-14 に読み書きとも拒否と記録)。clone 先の指定は agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check の4本とも無く、agave-navi-eyecatch は /tmp/agave 固定のまま。定期実行のセッションにも scheduled-tasks の update_scheduled_task があり、定義上 prompt を置き換えられる。定期実行は頼まれていない書き込みをしないので呼んでいない。taskId は list_scheduled_tasks の値で、台帳の event-monitor / site-health-check とは名前が違う。",
+        "10-13 の agave-navi-eyecatch も、プロンプトの `cd /tmp && rm -rf agave && git clone ... agave` で /tmp/agave(nobody 所有・10-11 08:03 の残骸)に当たり、rm -rf が Permission denied、git が dubious ownership で止まった。/tmp/agave-1013 に取り直して続行。このタスクのプロンプトには今も /tmp/agave 固定の clone 先が入っている。"
+      ],
+      "proposal": "各プロンプトの clone の指示に次の一文を足す(agave-navi-eyecatch は `cd /tmp && rm -rf agave && git clone ... agave` の行を置き換える):「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave-navi\")。/tmp の固定名は前のセッションの残骸で消せないことがある。dubious ownership が出ても safe.directory は足さず、場所を変える。」 不要と判断した場合はその旨を decision に書いて resolved へ移す。",
+      "whyHuman": "プロンプトの変更は定期実行からはしない(頼まれていない書き込みになる)ので、目崎の承認が要る。承認すれば、会話のセッションが現行の SKILL.md を Read してから update_scheduled_task で当てられる見込みで、手で貼らずに済む(10-13 確認・update は未実行。プレイブック §1 の 7)。",
+      "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)",
+      "approvedOn": "2026-10-13",
+      "approvedBy": "目崎(「提案通りで」)",
+      "resolvedOn": "2026-10-13",
+      "decision": "2026-10-13 08:5x の event-monitor(定期実行)が update_scheduled_task で当てた。agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check の4本は「リポジトリを clone したら…」の段の直前に proposal の一文を1段落として足した(他の行は変えていない)。agave-navi-eyecatch は agave-navi-eyecatch:prompt-outdated の本文の置き換えで clone 行ごと替わった。5本とも SKILL.md を Read して反映を確かめ、list_scheduled_tasks で cron・enabled が変わっていないことを見た。"
+    },
+    {
+      "id": "agave-navi-eyecatch:prompt-outdated",
+      "addedOn": "2026-10-12",
+      "source": "agave-navi-eyecatch",
+      "question": "スケジュールタスク agave-navi-eyecatch のプロンプト本文を、インストール済みのスキル agave-navi-eyecatch の手順に差し替えてよいか。repo 側からは直せない。",
+      "facts": [
+        "10-12 に届いたプロンプトは 09-08 版の手順のまま。(1) `window.igEyecatch` を呼び `typeof window.igEyecatch` で準備を確かめる(10-08 から ig-eyecatch.js は igPickPost / igGrabHere に分かれ、igEyecatch は無い。そのまま従うと undefined が返り、注入に失敗したと読める) (2) CI 候補(staging/eyecatch。09-23〜)を片づける段が無い (3) record-run.py の起動記録と task-reports への保存が無い (4) clone 先が /tmp/agave 固定(event-listing-review:skill-clone-dir と同じ件)。",
+        "スキル agave-navi-eyecatch は (2)(3) を持っている。10-11・10-12 の回はスキルとプレイブックに従って回したが、プロンプトだけを読む回は CI 候補を見ずにブラウザへ行き、起動記録も残さない。",
+        "プレイブックのアイキャッチ節は 10-11 から「プロンプトの igEyecatch は今のスクリプトに無い。呼び方はこのファイルとスクリプト冒頭を正とする」と書いているが、プロンプト自体は変わっていない。",
+        "10-13(event-listing-review が確認): SKILL.md の現物を Read で読めた。clone 行は /tmp/agave 固定、準備の確かめ方は typeof window.igEyecatch のまま。update_scheduled_task は定義上 prompt を置き換えられるので、目崎が会話で承認すれば、そのセッションが proposal を当てられる見込み。",
+        "10-13 に届いたプロンプトも 09-08 版のまま(igEyecatch・CI 候補の段なし・起動記録とレポートの段なし・/tmp/agave 固定)。インストール済みのスキル agave-navi-eyecatch とプレイブックに従って回した。"
+      ],
+      "proposal": "プロンプトの本文を「スキル agave-navi-eyecatch を読み、その手順に従う。プロンプトとプレイブック(docs/task-playbook.md)が食い違えばプレイブックが正。clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave\")」に置き換える。ブラウザの対象は `python3 scripts/list-missing-eyecatch.py --browser --limit 6` で出る(10-12 追加)。不要と判断した場合はその旨を decision に書いて resolved へ移す。",
+      "whyHuman": "スケジュールタスクのプロンプトはタスク自身からは編集できない(プレイブック §1 の 7)。",
+      "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)",
+      "approvedOn": "2026-10-13",
+      "approvedBy": "目崎(「提案通りで」)",
+      "resolvedOn": "2026-10-13",
+      "decision": "2026-10-13 08:5x の event-monitor(定期実行)が update_scheduled_task で、本文を proposal の「」内の文(スキル agave-navi-eyecatch を読み、その手順に従う。…clone 先は毎回新しく作る…)に置き換えた。frontmatter(name・description)はそのまま。SKILL.md を Read して反映を確かめ、list_scheduled_tasks で cron 45 7 * * *・enabled が変わっていないことを見た。効いたかは明朝 07:45 の回のレポートで分かる。"
     }
   ]
 }
