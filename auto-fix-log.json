@@ -1962,6 +1962,14 @@
    "action": "fixed",
    "detail": "enrich がイベント一覧の頁(hanaprime.jp・walkerplus)から書いた『入場無料』。主催の投稿で読めた分(@taniku.no.shizuku の 10/1〜3 の告知・@picnic.king.plants の vol.25 の告知 Db-Lj-CE1Zs)に入場料の記載は無いので消した",
    "mailedOn": "2026-10-14"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "event-monitor",
+   "kind": "image_host_unrelated",
+   "target": "開催済み24回の画像",
+   "action": "fixed",
+   "detail": "出典でない頁から enrich が入れた画像を目で見て外した(09-29 の洗い直しは開催前だけだった)。別の催しの告知7件(オギボン祭り・粉博・FUJINUMA GREEN DAYS・GREEN FLASH Fes・玉川高島屋の催事ほか)・前の回の告知3件(2025年の倉敷・2024年の NOVA CULTURA・2024年の SUMORI FESTIVAL)・ロゴやブランド画像6件・無関係の写真やまとめ記事の画像8件。image-rejected.json に記録したので enrich は書き戻さない"
   }
  ]
 }
