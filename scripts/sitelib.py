@@ -343,7 +343,9 @@ _VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キー�
                 # 2026-10-11 第18回 多肉だョ！全員集合 in 福山(11/22)の掲載で3件になった
                 'ふくやま産業交流館 ビッグ・ローズ':'fukuyama-big-rose',
                 # 2026-10-13 Lier.多肉フェスティバル in 岡山(10/25)の会場を「サウスヴィレッジホール」から同定して3件になった
-                '岡山市サウスヴィレッジ':'okayama-south-village'}
+                '岡山市サウスヴィレッジ':'okayama-south-village',
+                # 2026-10-14 京都みどりのマルシェ BENKEISOU(11/8)の会場が主催の告知画像に出て3件になった
+                'いばらきスカイパレット':'ibaraki-sky-palette'}
 
 # ローマ字URLに切り替える掲載件数のしきい値。audit がこの値で候補を出す。
 VENUE_ROMAJI_MIN_EVENTS = 3
@@ -354,6 +356,8 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    # 2026-10-14 いばらきスカイパレットが3件になりローマ字へ(2件で立っていたハッシュの頁)
+    'v-b9c479a2': 'いばらきスカイパレット',
     # 2026-10-13 岡山市サウスヴィレッジが3件になりローマ字へ(2件で立っていたハッシュの頁)
     'v-ff6d6682': '岡山市サウスヴィレッジ',
     # 2026-10-09 location の区画を落として施設で束ね直した(audit venue_key_split)。

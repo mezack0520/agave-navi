@@ -2202,6 +2202,11 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   もちのいえ 植物販売会(10/24 やまぐちフラワーランド)は掲載時に「開始・終了の時刻は告知に無い」と説明文に書き、time を空にした。
   同じ日に採った出典の投稿の画像(手書きの告知)には「9:00-15:00」があり、アイキャッチのレポートにも書いていたが、回の値は直していなかった。
   主催が personal で本文を CI が読めない回は、時刻が画像にしか無いことがある。time を足したら説明文の「告知に無い」の一文も消す。
+  **会場が画像に出た tbd の回は、venue / location を埋めて eventStatus を confirmed にする**(listing-policy `venueUnannounced`、
+  `audit.tbd_with_named_venue`)。location は同じ施設の既存の回と同じ書き方にし、`sitelib.venue_slug()` で既存の会場ページに入るかを見る。
+  **埋めた結果その施設が3件に届いたら、同じ回で `_VENUE_ROMAJI_RAW` と `_VENUE_REDIRECTS_RAW`(2件で立っていたハッシュの頁)を足す**(§「会場ページのURL」)。
+  2026-10-14 の京都みどりのマルシェ BENKEISOU(会場「調整中」)は、カルーセル2枚目の告知にいばらきスカイパレットと時刻が出て3件目になり、
+  ビルドが `venue_slug_romaji_candidates 0→1` の悪化を出した。
 
 - **画像がどの回の告知でもないときは `--not-flyer` を付けて捨てる。**(2026-10-12)
   `apply-eyecatch.py --not-flyer --reject "slug=理由"`(`--reject-post` も同じ)。苗・商品の写真、店の案内やカレンダー、
