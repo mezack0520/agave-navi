@@ -1,5 +1,5 @@
 {
-  "total": 779,
+  "total": 756,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -80,7 +80,7 @@
     },
     "thin_past_with_source": {
       "title": "薄い判定で終了済み(出典あり)",
-      "count": 33,
+      "count": 34,
       "items": [
         "agavista-vol2-matsuyama-2026-06(22字)",
         "bop-with-needles-nagoya-2026-06(44字)",
@@ -99,6 +99,7 @@
         "kominka-saboten-openhouse-2026-06(46字)",
         "kumagaya-taniku-fes-2026(22字)",
         "kyoshokuranbu-tokyo-2026-05(45字)",
+        "kyoto-midori-marche-bangaihen-natsumatsuri-2026-07(49字)",
         "kyoto-midorino-marche-bangaihen-vol9(42字)",
         "mini-soransai-june-2026(37字)",
         "miyashita-park-popup-2026(25字)",
@@ -231,7 +232,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 313,
+      "count": 289,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -263,16 +264,16 @@
         "botalife-4th-anniversary-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
         "botanic-front-fes-shikokuzouen-2026-11",
-        "botanical-ajito-fukuoka-2026-07",
         "botanical-auction-3rd-hamamatsu-2026-09",
         "botanical-botanical-fukuoka-2026-10",
         "botanical-botanical-osaka-2026-10",
-        "botanical-circus-7-2026",
         "botanical-fes-yuki-2026-10",
         "botanical-hara-shogakko-2026-09",
         "botanical-life-arita-2026-09",
         "botanical-marche-niigata-2026-10",
-        "botanical-marche-toyama-2026-10"
+        "botanical-marche-toyama-2026-10",
+        "botanical-style-beppu-2026-10",
+        "botanical-tamba-2026"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
@@ -688,7 +689,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
