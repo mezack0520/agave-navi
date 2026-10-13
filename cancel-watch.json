@@ -2,35 +2,14 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-10-14",
   "stats": {
-    "targets": 26,
-    "fetched": 25
+    "targets": 28,
+    "fetched": 27
   },
   "errors": [
     "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
   ],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "chuushokushobutsusai-2026",
-      "name": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
-      "date": "2026-11-07",
-      "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
-      "why": "公式ページが変わった(本文: 2890→2889字 -1%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "isij-big-bazaar-2026-11-22",
-      "name": "11月のサボテン・多肉植物ビッグバザール",
-      "date": "2026-11-22",
-      "url": "http://isij.net/",
-      "why": "公式ページが変わった(本文: 4504→4685字 +4%)",
-      "changed": [
-        "本文"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10": {
       "url": "https://qusamura.com/information/exhibition/",
@@ -230,6 +209,28 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
+    "hello-marche-taniku-yakamashimura-2026-10": {
+      "url": "https://www.mirai-kohboh.co.jp/post-30439/",
+      "checkedOn": "2026-10-14",
+      "signature": {
+        "text": "99104c0fb1237885",
+        "images": "cbcec87ba380459b",
+        "textLen": 1379,
+        "imageCount": 20
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-14",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
     "mizunomori-aki-saboten-ten-2026-10": {
       "url": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
       "checkedOn": "2026-10-14",
@@ -415,7 +416,7 @@
         "textLen": 2889,
         "imageCount": 8
       },
-      "prevTextLen": 2890,
+      "prevTextLen": 2889,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -472,6 +473,28 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
+    "greensnap-marche-abc-hachioji-2026-11": {
+      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
+      "checkedOn": "2026-10-14",
+      "signature": {
+        "text": "1a90d1292615bc49",
+        "images": "0a82c534436640b7",
+        "textLen": 633,
+        "imageCount": 7
+      },
+      "prevTextLen": null,
+      "sigScope": "article",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 2,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-14",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
     "isij-big-bazaar-2026-11-22": {
       "url": "http://isij.net/",
       "checkedOn": "2026-10-14",
@@ -481,7 +504,7 @@
         "textLen": 4685,
         "imageCount": 9
       },
-      "prevTextLen": 4504,
+      "prevTextLen": 4685,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
