@@ -1836,6 +1836,62 @@
    "action": "reviewed",
    "detail": "盆栽・有機野菜・飲食店のハロウィンの3件は見送りに記録、Plants Plants Plants は掲載済み(10/17-18 BHMS GARDEN)",
    "mailedOn": "2026-10-13"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "enjoy place 5th (10/17)",
+   "action": "fixed",
+   "detail": "主催 @taniten_kengo202 の告知 DebVDHPFHEm の【日時】10月17日(土)10時〜16時で time を埋め、sourceUrl をこの投稿にした"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "KAGOSHIMA VOLCANO MARKET vol.4 (2026-11-28)",
+   "action": "listed",
+   "detail": "主催 @kagoshima_volcano_market の告知 DeYFxw0E4Jr(第4回 11/28 10:00-16:00・キラメキ南国ビル2F・入場無料)で裏取り"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "食虫植物祭2026 (11/7-8)",
+   "action": "reviewed",
+   "detail": "公式頁の更新日時が 10/13 8:47 に進んだだけで、会期・会場は同じ。中止・延期の語なし"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "11月のサボテン・多肉植物ビッグバザール (11/22)",
+   "action": "fixed",
+   "detail": "isij.net が 10/13 に整理券の配布を 9:20 に変更。time・admission・説明文を bbtoc3.html に合わせた(9:45〜16:30・15時以降無料・小中高生無料)"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "cancel_watch_unreachable",
+   "target": "多肉植物とサボテンの展示会（井頭公園） (11/19-22)",
+   "action": "skipped",
+   "detail": "park-tochigi.com の中間証明書の欠落で CI から読めない。相手の設定で直す先が無い。主催・共催の IG 告知が出たら sourceUrl を替える"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "eyecatch_candidates_pending",
+   "target": "12件",
+   "action": "skipped",
+   "detail": "agave-navi-eyecatch の担当"
+  },
+  {
+   "on": "2026-10-14",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "masappe 周年祭 / BENKEISOU / BOTANICAL BOTANICAL OKINAWA / BOTANICAL STYLE Minato / ゆるっと第3回 / 珍奇植物FM 1月・4月 / サンタフェ周年祭",
+   "action": "skipped",
+   "detail": "organizer-posts.json の各主催の最新投稿(10/14 取得)に会場・時間の告知なし。BENKEISOU の主催 @midorino_marche は API で読めない"
   }
  ]
 }
