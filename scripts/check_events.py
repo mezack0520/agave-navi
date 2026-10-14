@@ -62,7 +62,29 @@ def check_url(url, timeout=15):
         except Exception:
             return -1
 
+def status_is_alive(code):
+    """check_url の返り値が「生存」か。docstring の約束どおり 2xx/3xx はすべて生存。
+
+    2026-10-15 まで 200 と 301/302/303/307/308 しか生存に数えておらず、2xx の残りが
+    「サーバが無いと答えた」側に落ちていた。BORDER BREAK!! 11th の出典(blogspot)が
+    CI の HEAD に 204 を返し、日次メールに「開催前の回の公式リンク切れ」として出た
+    (手元からは HEAD・GET とも 200・本文 17.7KB)。204 は成功の応答で、消えた頁の返事ではない。
+    """
+    return code == 0 or 200 <= code < 400
+
+
+def _self_test_status_is_alive():
+    """status_is_alive の自己テスト。main() が毎回呼ぶ。失敗しても巡回は止めない
+    (health の後段のメールごと落ちるため)。警告を出し、check-results.json の selfTestErrors に残す"""
+    cases = [(0, True), (200, True), (204, True), (206, True), (301, True), (308, True),
+             (404, False), (410, False), (429, False), (500, False), (-1, False)]
+    return [f'{c}: 期待 {w}' for c, w in cases if status_is_alive(c) != w]
+
+
 def main():
+    _bad = _self_test_status_is_alive()
+    if _bad:
+        print('::warning::check_events: status_is_alive の自己テスト失敗: ' + ' / '.join(_bad), file=sys.stderr)
     with open(EVENTS_JSON, 'r', encoding='utf-8') as f:
         events = json.load(f)
 
@@ -79,7 +101,8 @@ def main():
         'url_results': [],
         'implausible': [],
         'short_descriptions': [],
-        'unresolved_ig': []
+        'unresolved_ig': [],
+        'selfTestErrors': _bad,
     }
 
     for ev in events:
@@ -148,7 +171,7 @@ def main():
                 'sourceUrl': _chk,
                 'field': _field,
                 'statusCode': status_code,
-                'alive': status_code in (0, 200, 301, 302, 303, 307, 308)
+                'alive': status_is_alive(status_code)
             }
             results['url_results'].append(url_result)
 

@@ -104,6 +104,9 @@ if _dead:
                       for d in _dead[:5]]))
 if _ssl < 30:
     residual.append((f'SSL証明書の残り: {_ssl}日', []))
+# check_events.status_is_alive の自己テスト(2026-10-15)。崩れるとリンク切れの判定ごと信用できない
+if data.get('selfTestErrors'):
+    residual.append(('リンクの死活判定の自己テストが失敗', list(data['selfTestErrors'])[:3]))
 # 掲載の一覧を git の差分で取れなかった回(2026-10-09)。detect-added-events.py が addedDate で
 # 代用した印。10-07・10-09 は比較元が取れず掲載0件になり、載せるものが無くてメールが出なかった
 if _added_doc.get('fallback'):

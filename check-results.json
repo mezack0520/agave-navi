@@ -1,16 +1,7 @@
 {
   "check_date": "2026-10-15",
   "total_events": 689,
-  "dead_links": [
-    {
-      "slug": "border-break-11th-2026-12",
-      "name": "BORDER BREAK!! 11th",
-      "sourceUrl": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
-      "field": "sourceUrl",
-      "statusCode": 204,
-      "alive": false
-    }
-  ],
+  "dead_links": [],
   "unreachable": [
     {
       "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
@@ -5300,7 +5291,7 @@
       "sourceUrl": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
       "field": "sourceUrl",
       "statusCode": 204,
-      "alive": false
+      "alive": true
     },
     {
       "slug": "hanatomofesta-2026",
@@ -5361,5 +5352,6 @@
   ],
   "implausible": [],
   "short_descriptions": [],
-  "unresolved_ig": []
+  "unresolved_ig": [],
+  "selfTestErrors": []
 }

@@ -4427,6 +4427,15 @@ tbd_with_named_venue は開催前しか見ず、desc_claims_unannounced は「�
 - 仮置きの値の集合は `sitelib.PLACEHOLDER_VALUES` / `is_placeholder_value` に寄せた。enrich_events.py と data-integrity-check.py が同じ集合を写して持っていた。
 - **開催前の回に「未定」を値として入れない。**未発表の項目は空のまま説明文に「未発表」と書く(listing-policy venueUnannounced と同じ)。値で入れると、その回が終わった翌日からこの検査が鳴る。
 
+### 204 を「リンク切れ」に数えていた。check_events の docstring は 2xx を生存と書いていた (2026-10-15)
+
+10-15 の日次メールの「開催前の回の公式リンク切れ」に BORDER BREAK!! 11th の出典(blogspot)が statusCode 204 で出た。
+手元からは HEAD・GET とも 200(本文 17.7KB)。同じ朝の中止の見張りは同じ URL で HTTP 429。blogspot は CI にだけ 204 / 429 を返す。
+`check_url` の docstring は「2xx/3xx 生存」なのに、判定は `status_code in (0, 200, 301, 302, 303, 307, 308)` で、204 が「サーバが無いと答えた」側に落ちていた。
+- `check_events.status_is_alive`(0 か 200〜399)に直した。自己テスト11件を main() が毎回走らせ、失敗は check-results.json の selfTestErrors からメールの「残っていること」に出す(巡回は止めない)。
+- その日の check-results.json の判定も同じ関数で直した(翌朝の agave-event-update が同じ調べ直しをしないため)。log-fix は dead_links / reviewed。
+- **リンク切れが出たら、まず手元から HEAD と GET で引き直す。**CI にだけ違う返事をする相手がある(blogspot・threads)。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4477,7 +4486,7 @@ tbd_with_named_venue は開催前しか見ず、desc_claims_unannounced は「�
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で会場の所在地を確かめ、説明文の所在地を location の住所どおりに直す。location / prefecture のほうが違っていればそちらを直す | fixed |
 | 埋め込み・アイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して image-rejected.json に記録し、この回の告知を主催の投稿で探し直す | fixed |
 | 同じシリーズの回で名称の表記が割れている(`series_name_variant`) | 主催の告知の表記に揃え、使わなくなった表記は aliases に残す。本当に別のイベントなら名前で区別が付くようにする | fixed |
-| リンク切れ(開催前の回) | 主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / skipped |
+| リンク切れ(開催前の回) | まず手元から HEAD と GET で引き直す(CI にだけ 204 / 429 を返す相手がある。生きていれば reviewed)。本当に切れていれば主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / reviewed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |
 | その他の urgent | 監査の note のとおり直す | fixed / skipped |

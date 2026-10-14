@@ -2070,6 +2070,14 @@
    "action": "fixed",
    "detail": "2026-04 の取り込みから入場料「未定」のままだった。キーごと消した。データで見る2026年の頁の『入場料の情報が確認できた』件数も 139→137 に直る",
    "mailedOn": "2026-10-15"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "event-monitor",
+   "kind": "dead_links",
+   "target": "BORDER BREAK!! 11th (2026-12-05) sourceUrl",
+   "action": "reviewed",
+   "detail": "リンク切れではない。blogspot が CI の HEAD に 204 を返しただけで、手元の HEAD・GET は 200(本文 17.7KB・題名『次回開催【11th】2026 12/5,6』)。check_events が 2xx のうち 200 しか生存に数えていなかったのを status_is_alive に直し、check-results.json の判定も直した"
   }
  ]
 }
