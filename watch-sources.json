@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-15 06:43 JST",
+ "generated": "2026-10-15 07:30 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 358,
-  "awaitingNextEdition": 340,
-  "officialSiteCandidates": 85,
+  "igAccounts": 365,
+  "awaitingNextEdition": 338,
+  "officialSiteCandidates": 87,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 86,
+  "igNeedsBrowser": 93,
   "igDead": 7
  },
  "igAccounts": [
@@ -23,9 +23,9 @@
   {
    "handle": "nagomitaniku",
    "url": "https://www.instagram.com/nagomitaniku/",
-   "eventCount": 7,
-   "lastEventName": "ナゴリバ in 舞鶴赤レンガパーク",
-   "lastEventDate": "2026-11-15",
+   "eventCount": 8,
+   "lastEventName": "ナゴリバ in 鳴門ウチノ海総合公園",
+   "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -41,6 +41,26 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "picnic.king.plants",
+   "url": "https://www.instagram.com/picnic.king.plants/",
+   "eventCount": 6,
+   "lastEventName": "ピクニックガーデン（せんだい農業園芸センター・2026年11月）",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "gamagori_taniku_festa",
+   "url": "https://www.instagram.com/gamagori_taniku_festa/",
+   "eventCount": 6,
+   "lastEventName": "第5回 がまごおり多肉フェスタ in 兵庫",
+   "lastEventDate": "2027-04-18",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "rojiuranogibousi",
    "url": "https://www.instagram.com/rojiuranogibousi/",
    "eventCount": 6,
@@ -49,16 +69,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "picnic.king.plants",
-   "url": "https://www.instagram.com/picnic.king.plants/",
-   "eventCount": 5,
-   "lastEventName": "ピクニックガーデン vol.26 in ガーデンプラザ華 福島店",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
   },
   {
    "handle": "tanikuen_ohisama",
@@ -91,16 +101,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "gamagori_taniku_festa",
-   "url": "https://www.instagram.com/gamagori_taniku_festa/",
-   "eventCount": 5,
-   "lastEventName": "第6回 蒲郡多肉フェスタ",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "botayoko",
    "url": "https://www.instagram.com/botayoko/",
    "eventCount": 5,
@@ -116,6 +116,16 @@
    "eventCount": 5,
    "lastEventName": "森の多肉園販売会 BIG",
    "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "king.plants.slugger",
+   "url": "https://www.instagram.com/king.plants.slugger/",
+   "eventCount": 5,
+   "lastEventName": "キングプランツ in ホームセンターサンデー 卸町店",
+   "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -316,6 +326,16 @@
    "eventCount": 3,
    "lastEventName": "叢宴 〜春の陣〜（春のボタニカルマーケット in 富士市中央公園）",
    "lastEventDate": "2027-03-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bizarre_farm",
+   "url": "https://www.instagram.com/bizarre_farm/",
+   "eventCount": 3,
+   "lastEventName": "bizarrefarm SPRING FES 10th",
+   "lastEventDate": "2027-03-27",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -681,16 +701,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "king.plants.slugger",
-   "url": "https://www.instagram.com/king.plants.slugger/",
-   "eventCount": 3,
-   "lastEventName": "キングプランツ 収穫祭（気仙沼クラブハウス）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "chiba_c_and_s_association",
    "url": "https://www.instagram.com/chiba_c_and_s_association/",
    "eventCount": 3,
@@ -746,16 +756,6 @@
    "eventCount": 2,
    "lastEventName": "鹿鳥風月（ゆくはし植物園 会場）",
    "lastEventDate": "2026-09-20",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bizarre_farm",
-   "url": "https://www.instagram.com/bizarre_farm/",
-   "eventCount": 2,
-   "lastEventName": "bizarre farm AUTUMN FES 9th",
-   "lastEventDate": "2026-09-26",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -919,6 +919,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "himeji_cactus",
+   "url": "https://www.instagram.com/himeji_cactus/",
+   "eventCount": 1,
+   "lastEventName": "姫路カクタス 合同即売会（2026年10月）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kikien.succulent0222",
@@ -1251,6 +1261,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "gotouen5100",
+   "url": "https://www.instagram.com/gotouen5100/",
+   "eventCount": 1,
+   "lastEventName": "後藤園 プチイベント（アガベ・2026年10月）",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "driftwood.smokeywood",
    "url": "https://www.instagram.com/driftwood.smokeywood/",
    "eventCount": 1,
@@ -1399,6 +1419,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "ethan_plants",
+   "url": "https://www.instagram.com/ethan_plants/",
+   "eventCount": 1,
+   "lastEventName": "イーサンプランツ 多肉植物販売会（イーサン祭）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botajam2026",
@@ -1571,6 +1601,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "sand_hiroshima",
+   "url": "https://www.instagram.com/sand_hiroshima/",
+   "eventCount": 1,
+   "lastEventName": "垚 Sand（吹きガラス・民藝陶器・ビザールプランツの合同企画展）",
+   "lastEventDate": "2026-11-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "moro2_plants",
    "url": "https://www.instagram.com/moro2_plants/",
    "eventCount": 1,
@@ -1619,6 +1659,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "noharaengei",
+   "url": "https://www.instagram.com/noharaengei/",
+   "eventCount": 1,
+   "lastEventName": "NOHARA green marche vol.10",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mahota029",
@@ -1709,6 +1759,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "tonysplantsnakano",
+   "url": "https://www.instagram.com/tonysplantsnakano/",
+   "eventCount": 1,
+   "lastEventName": "年忘れTony'sFES2026",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "chinki_syokubutu_5",
@@ -1849,6 +1909,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "on_the_plants",
+   "url": "https://www.instagram.com/on_the_plants/",
+   "eventCount": 1,
+   "lastEventName": "On the Plants 10th Anniversary",
+   "lastEventDate": "2027-10-02",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "monster_house_nagoya",
@@ -3718,17 +3788,6 @@
    "apiStatus": "api"
   },
   {
-   "series": "bizarre farm AUTUMN FES 9th",
-   "lastSlug": "bizarre-farm-autumn-fes-9th-2026-09",
-   "lastDate": "2026-09-26",
-   "lastEnd": "2026-09-27",
-   "monthsSinceLast": 1,
-   "igHandle": "bizarre_farm",
-   "officialUrl": null,
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
    "series": "GreenSnap Marche YOKOHAMA 2026 Autumn",
    "lastSlug": "greensnap-marche-yokohama-2026-autumn",
    "lastDate": "2026-09-26",
@@ -3747,17 +3806,6 @@
    "monthsSinceLast": 1,
    "igHandle": "_myoko_plants_market_",
    "officialUrl": "https://www.instagram.com/_myoko_plants_market_/",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
-   "series": "第4回 がまごおり多肉フェスタ in 兵庫",
-   "lastSlug": "gamagori-taniku-festa-hyogo-2026-09",
-   "lastDate": "2026-09-27",
-   "lastEnd": "2026-09-27",
-   "monthsSinceLast": 1,
-   "igHandle": "gamagori_taniku_festa",
-   "officialUrl": null,
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4046,6 +4094,28 @@
    "officialUrl": "https://www.instagram.com/p/DdKfIEck1Fa/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
+   "lastSlug": "blue-ocean-aki-shokubutsu-hanbaikai-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "blue.ocean8484",
+   "officialUrl": "https://www.instagram.com/p/Dd4ldh8zpzD/",
+   "recurring": false,
+   "apiStatus": "personal"
+  },
+  {
+   "series": "X-PLANTS 即売会（プロトリーフ二子玉川本店）",
+   "lastSlug": "x-plants-sokubaikai-protoleaf-futakotamagawa-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "protoleaf.shop_futakotamagawa",
+   "officialUrl": "https://www.instagram.com/p/Dd3teoaE79D/",
+   "recurring": false,
+   "apiStatus": "api"
   }
  ],
  "officialSiteCandidates": [
@@ -4176,6 +4246,12 @@
    "eventDate": "2026-11-19"
   },
   {
+   "domain": "sendai-nogyo-engei-center.jp",
+   "url": "https://www.sendai-nogyo-engei-center.jp/event/entry/470/",
+   "eventName": "ピクニックガーデン（せんだい農業園芸センター・2026年11月）",
+   "eventDate": "2026-11-29"
+  },
+  {
    "domain": "h27664.wixsite.com",
    "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
    "eventName": "オキボタ December 2026 in サンシャインシティ",
@@ -4185,6 +4261,12 @@
    "domain": "flarie.jp",
    "url": "https://www.flarie.jp/news/succulents-xmas.html",
    "eventName": "多肉X'mas",
+   "eventDate": "2026-12-05"
+  },
+  {
+   "domain": "borderbreak121415.blogspot.com",
+   "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
+   "eventName": "BORDER BREAK!! 11th",
    "eventDate": "2026-12-05"
   },
   {
@@ -4216,18 +4298,6 @@
    "url": "https://www.fumakilla.co.jp/new/6926/",
    "eventName": "カダンフェス2026 春",
    "eventDate": "2026-04-25"
-  },
-  {
-   "domain": "yfg-fes.jp",
-   "url": "https://yfg-fes.jp/",
-   "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
-   "eventDate": "2026-05-02"
-  },
-  {
-   "domain": "visit-oita.jp",
-   "url": "https://www.visit-oita.jp/events/detail/13493",
-   "eventName": "Plants Garage Market",
-   "eventDate": "2026-05-03"
   }
  ],
  "unresolvedIgHandles": []

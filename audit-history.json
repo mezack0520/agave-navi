@@ -1291,7 +1291,10 @@
   },
   {
    "date": "2026-10-15",
-   "urgent": {},
+   "urgent": {
+    "venue_slug_romaji_candidates": 2,
+    "desc_claims_unannounced": 1
+   },
    "info": {
     "duplicate_event_same_source": 1,
     "coverage_gaps": 2,
@@ -1305,13 +1308,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 161,
     "events_with_image": 289,
-    "upcoming_no_image": 106,
+    "upcoming_no_image": 120,
     "ongoing_events": 6,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 106
+    "eyecatch_backlog": 120
    },
-   "events": 675,
-   "upcoming": 267
+   "events": 689,
+   "upcoming": 281
   }
  ]
 }

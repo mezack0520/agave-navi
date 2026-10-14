@@ -1,7 +1,147 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-14",
+  "updated": "2026-10-15",
   "items": [
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "himeji-cactus-goudou-sokubaikai-2026-10",
+      "name": "姫路カクタス 合同即売会（2026年10月）",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "king-plants-sunday-iwaki-izumi-2026-10",
+      "name": "キングプランツ in ホームセンターサンデー いわき泉店",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "福島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "gotouen-petit-event-fujieda-2026-10",
+      "name": "後藤園 プチイベント（アガベ・2026年10月）",
+      "date": "2026-10-25",
+      "dateEnd": "2026-10-25",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "ethan-plants-hanbaikai-ichikawa-2026-11",
+      "name": "イーサンプランツ 多肉植物販売会（イーサン祭）",
+      "date": "2026-11-03",
+      "dateEnd": "2026-11-03",
+      "prefecture": "千葉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "sand-hiroshima-2026-11",
+      "name": "垚 Sand（吹きガラス・民藝陶器・ビザールプランツの合同企画展）",
+      "date": "2026-11-20",
+      "dateEnd": "2026-11-22",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "nagoriba-naruto-uchinoumi-2026-11",
+      "name": "ナゴリバ in 鳴門ウチノ海総合公園",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-21",
+      "prefecture": "徳島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "nohara-green-marche-vol10-2026-11",
+      "name": "NOHARA green marche vol.10",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "tonys-fes-toshiwasure-2026-11",
+      "name": "年忘れTony'sFES2026",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-28",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "picnic-garden-sendai-2026-11",
+      "name": "ピクニックガーデン（せんだい農業園芸センター・2026年11月）",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "宮城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "king-plants-sunday-oroshimachi-2026-12",
+      "name": "キングプランツ in ホームセンターサンデー 卸町店",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-06",
+      "prefecture": "宮城",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "border-break-11th-2026-12",
+      "name": "BORDER BREAK!! 11th",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-06",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "bizarrefarm-spring-fes-10th-2027-03",
+      "name": "bizarrefarm SPRING FES 10th",
+      "date": "2027-03-27",
+      "dateEnd": "2027-03-28",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "gamagori-taniku-festa-hyogo-5th-2027-04",
+      "name": "第5回 がまごおり多肉フェスタ in 兵庫",
+      "date": "2027-04-18",
+      "dateEnd": "2027-04-18",
+      "prefecture": "兵庫",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-15",
+      "kind": "listed",
+      "slug": "on-the-plants-10th-anniversary-2027-10",
+      "name": "On the Plants 10th Anniversary",
+      "date": "2027-10-02",
+      "dateEnd": "2027-10-03",
+      "prefecture": "福岡",
+      "detail": ""
+    },
     {
       "on": "2026-10-14",
       "kind": "venue",
@@ -1060,146 +1200,6 @@
       "date": "2026-10-18",
       "dateEnd": "2026-10-18",
       "prefecture": "岡山",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "sunny-drop-5th-anniversary-kato-2026-10",
-      "name": "sunny drop 5th Anniversary 感謝祭",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-26",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "taniku-garden-marche-arakogawa-2026-10",
-      "name": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
-      "date": "2026-10-31",
-      "dateEnd": "2026-11-01",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "kasamajuku-tanikusai-2026-11",
-      "name": "まちの駅 笠間宿 多肉祭（2026年11月）",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "kitakyushu-botanical-market-vol3-2026-11",
-      "name": "KITAKYUSHU BOTANICAL MARKET Vol.03",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "ceramall-hanbaikai-2026-11",
-      "name": "セラモール販売会（2026年11月）",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-07",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "lahaina-garden-7th-anniversary-2026-11",
-      "name": "LahainaGarden 7周年記念祭",
-      "date": "2026-11-08",
-      "dateEnd": "2026-11-08",
-      "prefecture": "滋賀",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "botanical-popup-ondo-kurate-2026-11",
-      "name": "BOTANICAL POP UP（ONDO・鞍手町）",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "granterrace-chikusei-tanikusai-2026-11",
-      "name": "グランテラスin多肉祭",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-29",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "botanical-style-fukuoka-minato-2026-12",
-      "name": "BOTANICAL STYLE -Fukuoka Minato-",
-      "date": "2026-12-19",
-      "dateEnd": "2026-12-20",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "asamiya-tanikusai-xmas-market-2026-12",
-      "name": "あさみやin多肉祭 Xmasマーケット",
-      "date": "2026-12-20",
-      "dateEnd": "2026-12-20",
-      "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-08",
-      "kind": "listed",
-      "slug": "fukuoka-green-party-8th-2027-05",
-      "name": "第8回 福岡グリーンパーティー",
-      "date": "2027-05-03",
-      "dateEnd": "2027-05-04",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-07",
-      "kind": "listed",
-      "slug": "rare-plants-collection-hankyu-umeda-2026-11",
-      "name": "RARE PLANTS COLLECTION",
-      "date": "2026-11-18",
-      "dateEnd": "2026-11-24",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-07",
-      "kind": "listed",
-      "slug": "king-plants-shuukakusai-kesennuma-2026-10",
-      "name": "キングプランツ 収穫祭（気仙沼クラブハウス）",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-12",
-      "prefecture": "宮城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-07",
-      "kind": "listed",
-      "slug": "tropical-garden-house-hanbai-kamikawa-2026-10",
-      "name": "トロピカルガーデン ハウス販売（2026年10月）",
-      "date": "2026-10-11",
-      "dateEnd": "2026-10-11",
-      "prefecture": "埼玉",
       "detail": ""
     }
   ]
