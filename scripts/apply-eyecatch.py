@@ -60,7 +60,8 @@ def main():
 
     today = sitelib.today_jst()
     with open(EVENTS_JSON, encoding='utf-8') as f:
-        events = json.load(f)
+        raw = f.read()
+    events = json.loads(raw)
     by_slug = {e.get('slug'): e for e in events}
     changed = False
     for sl in a.approve:
@@ -120,6 +121,9 @@ def main():
     if changed:
         with open(EVENTS_JSON, 'w', encoding='utf-8') as f:
             json.dump(events, f, ensure_ascii=False, indent=2)
+            # 元の末尾改行を保つ。落とすと採用のたびに末尾1行の差分が混じる(2026-10-15)
+            if raw.endswith('\n'):
+                f.write('\n')
     return 0
 
 

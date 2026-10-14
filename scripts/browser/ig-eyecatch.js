@@ -57,9 +57,10 @@
 //    キャプションで当該回を選び、投稿コードを返す
 // 3. navigate で https://www.instagram.com/p/<code>/ を開く
 // 4. window.igGrabHere(slug, post) を呼ぶ。主画像を取って積む
-// 5. 結果は localStorage['__acc'] に積まれる。全件終わったら
-//    JSON.parse(localStorage.__acc) を返し、上限超えでファイルに落ちたものを
-//    サンドボックス側で読んでデコードする
+// 5. 結果は localStorage['__acc'] に積まれる。**ただし __acc を読んで返す操作は
+//    2026-10-15 に auto mode の分類器に拒否された(Credential Materialization)。**
+//    バイト列は embed/captioned の画像URLをコンテナで curl して取る
+//    (docs/task-playbook.md のアイキャッチ節 2026-10-15 の項)。__acc は最後に '[]' に戻す
 //
 // imageSource に投稿URLが既にあるなら 1〜2 は要らない。直接 3 から。
 //
