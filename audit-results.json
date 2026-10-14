@@ -1,5 +1,5 @@
 {
-  "total": 801,
+  "total": 797,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -689,7 +689,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -757,11 +757,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 2,
-      "items": [
-        "せんだい農業園芸センターみどりの杜(3件) → /venue/v-4c816a50/",
-        "道の駅いちごの里よしみ(3件) → /venue/v-037377ac/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -858,10 +855,9 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 2,
+      "count": 1,
       "items": [
-        "2026-11-28 年忘れTony'sFES2026",
-        "2026-12-05 BORDER BREAK!! 11th"
+        "2026-10-15 花のある暮らし ボタニカルアートとデザイン"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -972,10 +968,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文・画像)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1023,8 +1017,9 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 1,
+      "count": 2,
       "items": [
+        "取得できなかった: border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
         "取得できなかった: igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
       ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
@@ -1095,10 +1090,8 @@
     },
     "desc_claims_unannounced": {
       "title": "説明文が「未発表・告知待ち」と書く項目に値が入っている",
-      "count": 1,
-      "items": [
-        "picnic-garden-sendai-2026-11: time「9:00〜17:00」/ 説明文「回の番号・出店者・時間はまだ発表されていない。」"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値の出所を確かめる。出典の告知にあれば説明文のその一文を消し、無ければ値を消す。enrich が書いた値なら sync-events / weekly-enrichment のログの Found: で頁が分かる(一覧の頁から別の回の値を拾っていないか)",
       "severity": "urgent"
     },

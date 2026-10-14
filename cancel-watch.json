@@ -2,26 +2,15 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-10-15",
   "stats": {
-    "targets": 28,
-    "fetched": 27
+    "targets": 30,
+    "fetched": 28
   },
   "errors": [
-    "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
+    "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
+    "border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html"
   ],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "greensnap-marche-toyosu-2026-autumn",
-      "name": "GreenSnap Marche 豊洲 2026 Autumn",
-      "date": "2026-10-31",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10": {
       "url": "https://qusamura.com/information/exhibition/",
@@ -362,7 +351,7 @@
         "textLen": 3700,
         "imageCount": 63
       },
-      "prevTextLen": 2486,
+      "prevTextLen": 3700,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -571,6 +560,28 @@
       "firstSeenOn": "2026-09-29",
       "badChars": 0,
       "textOnlyChanges": 1,
+      "imageOnlyChanges": 0
+    },
+    "picnic-garden-sendai-2026-11": {
+      "url": "https://www.sendai-nogyo-engei-center.jp/event/entry/470/",
+      "checkedOn": "2026-10-15",
+      "signature": {
+        "text": "796514e29aae036f",
+        "images": "4b0155f68f1de386",
+        "textLen": 1015,
+        "imageCount": 11
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 8,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-15",
+      "badChars": 0,
+      "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
     "okibota-december-2026-sunshine": {
