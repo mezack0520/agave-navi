@@ -1,5 +1,5 @@
 {
-  "total": 756,
+  "total": 770,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -689,7 +689,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -855,8 +855,11 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-11-28 年忘れTony'sFES2026",
+        "2026-12-05 BORDER BREAK!! 11th"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -966,8 +969,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文・画像)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1059,10 +1064,8 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
-      "items": [
-        "@robingarden02 2026-10-28: 10/28開催!植物の無料相談会のご案内 資材メーカー「花ごころ」より竹川さんをお招きして植物の無料相談会を開催いたしま https://www.instagram.com/p/Deat7b4k7xE/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1096,8 +1099,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-16 lier-taniku-festival-matsuyama-hojo-2026-10: https://www.instagram.com/p/DefWWGpyZwC/（caption）",
+        "2026-10-17 lier-taniku-festival-mitoyo-2026-10: https://www.instagram.com/p/DefWWGpyZwC/（caption）",
+        "2026-11-08 lahaina-garden-7th-anniversary-2026-11: https://www.instagram.com/p/DeYCir7D3Wg/（caption）",
+        "2026-11-28 camp-park-garden-3-flarie-2026-11: https://www.instagram.com/p/DebFs3IE2bT/（sourcePost）",
+        "2026-11-28 kagoshima-volcano-market-vol4-2026-11: https://www.instagram.com/p/DeYFxw0E4Jr/（sourcePost）",
+        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/reel/DbZuLsxTzlD/（caption）",
+        "2026-11-29 santa29-festa-vol20-anforet-2026-11: https://www.instagram.com/p/DeKvIN6k6d2/（sourcePost）",
+        "2026-11-29 tokimeki-marche-gunma-kenchomae-2026-11: https://www.instagram.com/p/DeT0gp8kwRI/（caption）",
+        "2026-11-29 iizuka-noen-popup-engeiya-tanaka-2026-11: https://www.instagram.com/p/Dd3ZbIyEiX2/（sourcePost）",
+        "2026-12-19 botanical-style-fukuoka-minato-2026-12: https://www.instagram.com/p/Ddz9MZXhJfz/（sourcePost）",
+        "2026-12-20 asamiya-tanikusai-xmas-market-2026-12: https://www.instagram.com/reel/DeDUqlfvTuz/（caption）",
+        "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12: https://www.instagram.com/p/Dea3bZ0H6dm/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },

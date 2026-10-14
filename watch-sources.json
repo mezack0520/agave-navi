@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-14 09:09 JST",
+ "generated": "2026-10-15 06:43 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 358,
   "awaitingNextEdition": 340,
   "officialSiteCandidates": 85,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 87,
+  "igNeedsBrowser": 86,
   "igDead": 7
  },
  "igAccounts": [
@@ -1248,7 +1248,7 @@
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "driftwood.smokeywood",
