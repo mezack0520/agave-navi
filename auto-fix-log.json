@@ -2034,6 +2034,14 @@
    "target": "ピクニックガーデン（せんだい農業園芸センター・2026年11月） time",
    "action": "fixed",
    "detail": "sync-events の enrich が出典の施設頁の全頁共通の見出し『営業時間［3月～10月］9:00～17:00』を time に書いた。消して、enrich_events._time_for_event が施設の営業時間・開園時間の行の時刻を採らないようにした(自己テスト2件)"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "花のある暮らし ボタニカルアートとデザイン (2026-10-15)",
+   "action": "rejected",
+   "detail": "府中市美術館・東京新聞主催の植物画とウィリアム・モリスの展覧会(9/19〜11/29)。artworkShows.exclude。照合を直した daily で初めて候補に出た(それまで見送りの『ボタニカル』に当たって隠れていた)"
   }
  ]
 }

@@ -2658,6 +2658,18 @@
    "eventDate": "2026-11-07",
    "decided": "2026-10-15",
    "reason": "Step0 で当たった。PW Japan(花苗ブランド)の告知は『PWの注目の植物たちが勢揃い 秋のガーデニングを彩る』即売会で、主題は花苗・ガーデニング(outOfScopeGenres)"
+  },
+  {
+   "key": "hananoaru-kurashi-botanical-art-fuchu-2026",
+   "name": "花のある暮らし ボタニカルアートとデザイン (2026-09-19〜11-29 府中市美術館・東京都府中市)",
+   "aliases": [
+    "花のある暮らし ボタニカルアートとデザイン"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-09-19",
+   "decided": "2026-10-15",
+   "reason": "coverage_gaps(LEAFLA topics6166)。府中市美術館と東京新聞が主催する美術館の展覧会で、植物画の生い立ちからウィリアム・モリスまで、花や植物が美術とデザインに取り入れられてきた歴史を紹介する。作品の主題は花・植物一般で対象の植物ではない(artworkShows.exclude)。10-15 に coverage-sweep の見送りの照合を直すまで、見送り側の『ボタニカル』に当たって known_rejected に隠れていた"
   }
  ],
  "_reasonTypes": {
