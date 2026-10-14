@@ -3525,6 +3525,7 @@ agave-navi-eyecatch は本文の置き換えで)。10-14 以降に固定名の�
 上の「`/sessions/<自分>/` 配下へ取り直す」も同じボリュームなので、満杯の日は効かない。clone が落ちたら `df -h /tmp "$TMPDIR"` を見て空きのある側へ取る。
 10-12・10-13 は `/sessions/<自分>/repo` で通っているので、満杯は常時ではない。5本のプロンプトの例を `mktemp -d -p /tmp` に変える提案を
 `event-listing-review:skill-clone-tmpdir-full` に積んだ。
+**10-15 も同じ朝に `/sessions` が満杯だった(空き 67M)。2日続いた。**`mktemp -d -p /tmp` で通った。同じ id の facts に日付を足した。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
