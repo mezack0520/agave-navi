@@ -294,7 +294,9 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
 # 'サンシャインシティ' は削除(2026-08-21)。実データの location は
 # 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
 # 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
-_VENUE_ROMAJI_RAW = {'五反田TOCビル':'gotanda-toc',   # 2026-10-08 キーを建物に(フロアは回ごとに変わる。旧キーは「五反田TOCビル 13階」)
+_VENUE_ROMAJI_RAW = {'せんだい農業園芸センター みどりの杜':'sendai-nogyo-engei-center',   # 2026-10-15 ピクニックガーデン11月の回で3件
+                '道の駅いちごの里よしみ':'michinoeki-ichigonosato-yoshimi',   # 2026-10-15 bizarrefarm SPRING FES 10th で3件
+                '五反田TOCビル':'gotanda-toc',   # 2026-10-08 キーを建物に(フロアは回ごとに変わる。旧キーは「五反田TOCビル 13階」)
                 '久屋大通庭園フラリエ':'flarie','研究学園駅前公園（つくば市）':'kenkyu-gakuen-park',
                 '千住本氷川神社':'senju-hikawa-jinja',
                 # 掲載3件以上の会場だけローマ字URLにする(2026-08-20)。
@@ -356,6 +358,9 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    # 2026-10-15 せんだい農業園芸センター・道の駅いちごの里よしみが3件になりローマ字へ(2件で立っていたハッシュの頁)
+    'v-4c816a50': 'せんだい農業園芸センター みどりの杜',
+    'v-037377ac': '道の駅いちごの里よしみ',
     # 2026-10-14 いばらきスカイパレットが3件になりローマ字へ(2件で立っていたハッシュの頁)
     'v-b9c479a2': 'いばらきスカイパレット',
     # 2026-10-13 岡山市サウスヴィレッジが3件になりローマ字へ(2件で立っていたハッシュの頁)

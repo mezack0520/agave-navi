@@ -163,8 +163,40 @@ GENERIC = {
     'イベント', '開催', '販売', '販売会', '即売', '即売会', '出店',
     'マルシェ', '展示', '展示会', 'フェス', 'フェスタ', '第', '記念',
     'プランツ',
+    # 2026-10-15。英字の botanical / market / green / garden は前から共通語なのに、
+    # 仮名の書き方だけ特徴語として残っていた。見送り「トハメルカド境赤レンガ倉庫
+    # 第15回 ボタニカル × オータムフェス」の『ボタニカル』が、NextMeet の
+    # 「魚町ボタニカルマーケット」「ボタニカルモンスターズ2027」に、見送り
+    # 「風の森マーケット2026」の『マーケット』が「みどりマーケット 2026」に当たり、
+    # 見送りの照合(開催日で絞らない)が別の回を「見送り済み」に落としていた
+    'ボタニカル', 'マーケット', 'グリーン', 'ガーデン',
     '2026', '2027', '2025',
 }
+
+# 共通語だけを詰めて書いた英字の語(greenmarche・plantsmarket など)。
+# 2026-10-15。見送り「芝の香り×エケベリア＆アガベ Greenmarche」の特徴語
+# greenmarche が、NextMeet の「NOHARA green marche vol.10」の正規化
+# (noharagreenmarchevol10)の中に入って当たり、掲載相当の回が
+# known_rejected に落ちて候補に出なかった(NextMeet の目視で見つけた)。
+# 1語ずつなら GENERIC で落ちる語が、詰めて書くと特徴語に化ける。
+_GENERIC_ASCII = sorted((g for g in GENERIC if re.fullmatch(r'[a-z]+', g)),
+                        key=len, reverse=True)
+
+
+def _generic_compound(low):
+    """英字の語が GENERIC の英字の語だけで出来ているか(2語以上の連結)。"""
+    if not re.fullmatch(r'[a-z]+', low or ''):
+        return False
+    n = len(low)
+    ok = [False] * (n + 1)
+    ok[0] = True
+    for i in range(n):
+        if not ok[i]:
+            continue
+        for g in _GENERIC_ASCII:
+            if low.startswith(g, i):
+                ok[i + len(g)] = True
+    return ok[n]
 
 
 def norm(s):
@@ -231,7 +263,7 @@ def tokens(name):
         # 『THE BOTANICAL SHOW 5th』が 5th だけで一致する
         if re.fullmatch(r'\d+(?:st|nd|rd|th)|ver', low):
             continue
-        if low in GENERIC:
+        if low in GENERIC or _generic_compound(low):
             continue
         out.append(low)
     return out
@@ -965,6 +997,21 @@ def self_test(verbose=True):
         ('第2回 Botanical Autumn', 'BOTANICA DÍA DE LOS MUERTOS (2026-10-31 BOTANICA MUSEUM・千葉市美浜区)', False),
         # 同じ語が見出しに単独で出るなら従来どおり当たる
         ('BOTANICA COFFEE FES', 'BOTANICA COFFEE FES (2026-11-21 BOTANICA MUSEUM・千葉市美浜区)', True),
+        # 2026-10-15。共通語を詰めて書いた語(greenmarche)と、仮名の共通語
+        # (ボタニカル・マーケット)で、見送りの別の回に当たっていた
+        ('NOHARA green marche vol.10',
+         '芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13 道の駅たかねざわ 元気あっぷむら・栃木県高根沢町)', False),
+        ('魚町ボタニカルマーケット',
+         'トハメルカド境赤レンガ倉庫 第15回 ボタニカル × オータムフェス (2026-09-26 境赤レンガ倉庫・茨城県猿島郡境町)', False),
+        ('ボタニカルモンスターズ2027',
+         'トハメルカド境赤レンガ倉庫 第15回 ボタニカル × オータムフェス (2026-09-26 境赤レンガ倉庫・茨城県猿島郡境町)', False),
+        ('みどりマーケット 2026', '風の森マーケット2026 (2026-10-10 風の森・佐賀県)', False),
+        # 同じ回は従来どおり当たる
+        ('芝の香り×エケベリア&アガベGreenmarche',
+         '芝の香り×エケベリア＆アガベ Greenmarche (2026-12-13 道の駅たかねざわ 元気あっぷむら・栃木県高根沢町)', True),
+        ('風の森マーケット2026', '風の森マーケット2026 (2026-10-10 風の森・佐賀県)', True),
+        ('みどりマーケット 2026', 'みどりマーケット 2026 (2026-10-25 アイランドシティ中央公園・福岡市)', True),
+        ('第13回「多肉とみどりのマルシェ in なばなの里」', '多肉とみどりのマルシェ in なばなの里 (第13回・秋)', True),
     ]
     for title, name, want in bcases:
         got = matches(title, name, bare=True)

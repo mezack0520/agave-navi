@@ -1994,6 +1994,46 @@
    "target": "NOHARA green marche vol.10 (2026-11-21)",
    "action": "listed",
    "detail": "NextMeet の月別の目視で、coverage-sweep が見送り『芝の香り×エケベリア＆アガベ Greenmarche』に誤って当てて known_rejected に落としていたのを見つけた。主催 @noharaengei DeD1FGIpKZ7 と公式サイト(11/21-22 9:00〜15:00)で裏取り"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "GreenSnap Marche 豊洲 2026 Autumn (10/31-11/1)",
+   "action": "reviewed",
+   "detail": "公式頁の変化は出展者リストの追加。日時・会場のまま中止・延期の語なし。cancel-reviewed に2回目を記録し、説明文に植物の出展者を書き足した"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "cancel_watch_unreachable",
+   "target": "多肉植物とサボテンの展示会（井頭公園） (11/19-22)",
+   "action": "skipped",
+   "detail": "park-tochigi.com の中間証明書の欠落で CI から読めない(相手の設定)。主催・共催の IG 告知は今日も見つかっていない"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "eyecatch_candidates_pending",
+   "target": "12件",
+   "action": "skipped",
+   "detail": "agave-navi-eyecatch の担当"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "tbd",
+   "target": "masappe 周年祭 / BOTANICAL BOTANICAL OKINAWA / BOTANICAL STYLE Minato / ゆるっと第3回 / 珍奇植物FM 1月・4月 / サンタフェ周年祭",
+   "action": "skipped",
+   "detail": "organizer-posts.json の各主催の最新投稿(10/15 取得)に会場・時間の告知なし。ゆるっと第3回は主催の出店予定(Dea3bZ0H6dm)にも1/16の回の会場が無い"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "enrich_offsource_value",
+   "target": "ピクニックガーデン（せんだい農業園芸センター・2026年11月） time",
+   "action": "fixed",
+   "detail": "sync-events の enrich が出典の施設頁の全頁共通の見出し『営業時間［3月～10月］9:00～17:00』を time に書いた。消して、enrich_events._time_for_event が施設の営業時間・開園時間の行の時刻を採らないようにした(自己テスト2件)"
   }
  ]
 }

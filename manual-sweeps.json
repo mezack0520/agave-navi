@@ -43,12 +43,13 @@
    "url": "https://nextmeet.app/plants/monthly/",
    "staleDays": 10,
    "why": "NextMeet は 2026-09-10 に coverage-sweep.py へ機械化したが、**機械が拾えるのは『判定を通った候補』だけ**で、一覧をそのまま events.json と並べて見る回が無かった。2026-09-17 に10月の一覧(46件)を目で突き合わせたら、coverage-gaps が出していない未掲載が1件(Green marche 花の湯)あった。coverage_source_missing は『自動で回った』で満たされてしまうので、この台帳で別に数える。",
-   "lastSweptOn": "2026-10-07",
-   "lastScope": "2026年10月(10/7以降)・11月・12月・2027年1月の月別ページ89件を events.json・rejected-events.json と日付+名称/会場で照合。未掲載0件(照合が外れたのは名前3文字の「ONE」1件で、one-wakayama-2026-10 として掲載済み)",
+   "lastSweptOn": "2026-10-15",
+   "lastScope": "2026年10月(10/15以降)・11月・12月・2027年1月の月別ページ94件を、coverage-sweep の照合(開催日で絞った掲載済み+見送り)に通して、当たった相手を1件ずつ目で見た。見送りに誤って当たっていた5件のうち、NOHARA green marche vol.10(11/21-22)は未掲載だったので掲載。魚町ボタニカルマーケット・ボタニカルモンスターズ2027 は掲載済みの回の書き方違い(aliases を足した)、みどりマーケット・saboten misyonokai は別の見送りに当たっていただけで、自分の見送りもあった。ほかに未掲載は年忘れTony'sFES2026・BORDER BREAK!! 11th(coverage_gaps と同じ。どちらも掲載)。誤って当たる原因(見送りの仮名の共通語ボタニカル・マーケットと、詰めて書いた greenmarche)は coverage-sweep.py の GENERIC と _generic_compound で直した",
    "history": [
     "2026-09-17",
     "2026-09-28",
-    "2026-10-07"
+    "2026-10-07",
+    "2026-10-15"
    ]
   },
   "organizer-official-index": {
@@ -66,6 +67,6 @@
    ]
   }
  },
- "updated": "2026-10-14",
+ "updated": "2026-10-15",
  "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
 }

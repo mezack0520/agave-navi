@@ -18,6 +18,7 @@ Output: /tmp/enrich-report.md (Markdown report, weekly-enrichment.yml がメー�
 import json
 import os
 import re
+import unicodedata
 import sys
 import time
 import argparse
@@ -687,6 +688,30 @@ def _check_site_default_og_rule():
     return not bad
 
 
+# 施設の営業時間・開園時間の行(2026-10-15)。せんだい農業園芸センターの年間の展示・販売会の案内頁
+# (event/entry/470)を出典にしたピクニックガーデン(11/29)に、sync-events の enrich が全頁共通の
+# 見出しの「営業時間［3月～10月］9:00～17:00 ／［11月～2月］9:00～16:00）」から 9:00〜17:00 を書いた。
+# 頁は回ごとの時刻を持たない一覧で(日付に紐づく時刻が無い)、1回だけの告知頁の扱いに落ちて
+# 頁の最初の時刻を採っていた(10-07 の The販売会 の店の頁と同じ形を、出典の頁そのもので踏んだ)。
+# 「営業時間とは別に 10:00〜16:00」のような文は落とさないよう、見出しの直後に時刻(か季節の括弧)が
+# 来る形だけを施設の時間とみなす。
+_FACILITY_HOURS_RE = re.compile(
+    r'(?:営業時間|開園時間|開館時間|営業日時)\s*[：:]?\s*'
+    r'(?:[［\[（(【][^］\]）)】]{0,14}[］\]）)】]\s*)?\d{1,2}\s*[：:時]')
+
+
+def _facility_hour_ranges(text):
+    """施設の営業時間・開園時間の行にある時刻の範囲(分)の集合。"""
+    out = set()
+    for line in (text or '').splitlines():
+        if _FACILITY_HOURS_RE.search(line):
+            # 「営業時間：9:30〜18:00」は見出しのコロンが時刻に付いて time_ranges が読めないので、
+            # 数字の後ろでないコロンを空白にしてから読む(9:30 のコロンは残る)
+            flat = re.sub(r'(?<=\D)[：:](?=\s*\d)', ' ', unicodedata.normalize('NFKC', line))
+            out.update(tuple(r) for r in sitelib.time_ranges(flat))
+    return out
+
+
 def _time_for_event(text, ev, times_found):
     """頁の時刻のうち、この回の time として書いてよいもの。(値, 書かない理由) を返す(2026-10-14)。
 
@@ -706,9 +731,12 @@ def _time_for_event(text, ev, times_found):
     dated = sitelib.announced_dated_hours(text or '', sitelib.find_month_days(text or ''))
     other = sorted(d for d in dated if d not in days)
     if not other:
+        fac = _facility_hour_ranges(text)
         long_ = [t for t in times_found
-                 if any(r[1] - r[0] >= 120 for r in sitelib.time_ranges(t))]
+                 if any(r[1] - r[0] >= 120 and tuple(r) not in fac for r in sitelib.time_ranges(t))]
         if not long_:
+            if any(tuple(r) in fac for t in times_found for r in sitelib.time_ranges(t)):
+                return None, '頁の時刻は施設の営業時間・開園時間だけ'
             return None, '頁の時刻はどれも2時間未満(整理券・企画の時刻)'
         return long_[0], None
     mine = sitelib.announced_hours_for_event(text or '', days)
@@ -728,12 +756,18 @@ def _check_listing_time_rule():
     one = '多肉の即売会\n日時 10月10日（土）10:00〜16:00\n会場 ムサシ新潟店'
     plain = '多肉の即売会を開きます。\n営業時間とは別に 10:00〜16:00 に販売します。'
     short = '整理券は 9:25〜9:40 に配ります。\n会場は13階。'
+    facility = ('営業時間［3月～10月］9:00～17:00 ／［11月～2月］9:00～16:00）\n休園日:毎週月曜\n'
+                '■ピクニックガーデン（多肉植物販売会）\n日程：11月29日（日）\n会場：管理研修棟 研修室1・２')
+    facility2 = '営業時間：9:30〜18:00\n多肉の即売会\n開催時間 10:00〜15:00'
     cases = [
         ('一覧の頁で、この回に時刻が無い(Jolie 新潟)', listing, {'date': '2026-10-10', 'dateEnd': '2026-10-11'}, None),
         ('一覧の頁で、この回の時刻はある', listing, {'date': '2026-12-19', 'dateEnd': '2026-12-19'}, '9:00〜16:00'),
         ('1回だけの告知頁', one, {'date': '2026-10-10', 'dateEnd': '2026-10-10'}, '10:00〜16:00'),
         ('日付の無い頁は従来どおり', plain, {'date': '2026-10-10', 'dateEnd': '2026-10-10'}, '10:00〜16:00'),
         ('2時間未満の時刻しか無い頁', short, {'date': '2026-11-22', 'dateEnd': '2026-11-22'}, None),
+        # 2026-10-15。施設の営業時間の見出しの時刻しか無い頁(せんだい農業園芸センター)
+        ('施設の営業時間しか無い頁', facility, {'date': '2026-11-29', 'dateEnd': '2026-11-29'}, None),
+        ('施設の営業時間と開催時間がある頁', facility2, {'date': '2026-11-29', 'dateEnd': '2026-11-29'}, '10:00〜15:00'),
     ]
     bad = []
     for label, text, ev, want in cases:
