@@ -1970,6 +1970,30 @@
    "target": "開催済み24回の画像",
    "action": "fixed",
    "detail": "出典でない頁から enrich が入れた画像を目で見て外した(09-29 の洗い直しは開催前だけだった)。別の催しの告知6件(オギボン祭り・粉博・FUJINUMA GREEN DAYS・GREEN FLASH Fes・玉川高島屋の催事・2024年の SUMORI FESTIVAL)・前の回の告知2件(2025年の倉敷・2024年の NOVA CULTURA)・ロゴやブランド画像7件・無関係の写真やまとめ記事の画像9件。image-rejected.json に記録したので enrich は書き戻さない"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "年忘れTony'sFES2026 (2026-11-28)",
+   "action": "listed",
+   "detail": "主催 @tonysplantsnakano の告知 DeZMjalEr6w(11/28 9:00〜15:30予定・シマムラ園芸第2ハウス・出店者18組)で裏取り"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "BORDER BREAK!! 11th (2026-12-05)",
+   "action": "listed",
+   "detail": "公式ブログ borderbreak121415.blogspot.com の 07-28 の告知(12/5-6・会場 神戸(予定)・入場無料)で裏取り。会場未発表なので tbd。天下一植物界(掲載済み)と同じ主催系の総合展示即売会"
+  },
+  {
+   "on": "2026-10-15",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "NOHARA green marche vol.10 (2026-11-21)",
+   "action": "listed",
+   "detail": "NextMeet の月別の目視で、coverage-sweep が見送り『芝の香り×エケベリア＆アガベ Greenmarche』に誤って当てて known_rejected に落としていたのを見つけた。主催 @noharaengei DeD1FGIpKZ7 と公式サイト(11/21-22 9:00〜15:00)で裏取り"
   }
  ]
 }
