@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS = os.path.join(ROOT, 'events.json')
 
 from sitelib import PREF_TO_REGION, pref_to_region  # 地域分類の単一情報源
-PLACEHOLDER = {'', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表'}
+from sitelib import PLACEHOLDER_VALUES as PLACEHOLDER  # 仮置きの値の単一情報源(2026-10-15)
 
 def main():
     ap = argparse.ArgumentParser()

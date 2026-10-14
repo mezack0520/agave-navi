@@ -59,9 +59,8 @@ SKIP_DOMAINS = {'instagram.com', 'twitter.com', 'x.com', 'facebook.com',
 # ここに写しを置かない。同じ一覧が6スクリプトに散り、判定関数も3通りに
 # 割れていて、片方だけ直す事故を繰り返した。足すのは listing-policy.json。
 
-_PLACEHOLDER_VALUES = {
-    '', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表',
-}
+# 仮置きの値の集合は sitelib が唯一の持ち主(2026-10-15。data-integrity-check.py と2つの写しになっていた)。
+_PLACEHOLDER_VALUES = sitelib.PLACEHOLDER_VALUES
 
 
 def _host(u):

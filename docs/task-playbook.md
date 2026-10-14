@@ -3535,7 +3535,7 @@ agave-navi-eyecatch は本文の置き換えで)。10-14 以降に固定名の�
 上の「`/sessions/<自分>/` 配下へ取り直す」も同じボリュームなので、満杯の日は効かない。clone が落ちたら `df -h /tmp "$TMPDIR"` を見て空きのある側へ取る。
 10-12・10-13 は `/sessions/<自分>/repo` で通っているので、満杯は常時ではない。5本のプロンプトの例を `mktemp -d -p /tmp` に変える提案を
 `event-listing-review:skill-clone-tmpdir-full` に積んだ。
-**10-15 も同じ朝に `/sessions` が満杯だった(空き 67M)。2日続いた。**`mktemp -d -p /tmp` で通った。同じ id の facts に日付を足した。
+**10-15 も同じ朝に `/sessions` が満杯だった(空き 67M)。2日続いた。**`mktemp -d -p /tmp` で通った。同じ id の facts に日付を足した。08:20 の event-monitor も同じ形で落ち(同じ朝に3本目)、`mktemp -d /tmp/<名前>.XXXXXXXX` で通った。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
@@ -4412,6 +4412,21 @@ NextMeet の月別の目視(nextmeet-monthly-check)で、coverage-sweep の照�
 `venue_slug_romaji_candidates`(urgent)が出た。`_VENUE_ROMAJI_RAW` にローマ字、`_VENUE_REDIRECTS_RAW` に2件で立っていたハッシュの頁を足し、同じ回の後の push で入れた
 (sitelib を new-events.json と同じ push に入れると daily と sync-events が同時に走るので分けた)。
 
+### 終わった回に入場料「未定」が半年残っていた。「記録なし」は会場の表示にしか無い (2026-10-15)
+
+プランツジャンキー 12th(4/5)と 多肉もろもろ市場 2026春(4/15)は、2026-04 の取り込みから admission「未定」のままで、
+終わった回の頁に「入場料 未定」、FAQ と準備リストに「入場料は『未定』です。…主催者の公式案内をご確認ください」と出ていた。
+listing-policy の venueRecord.unknownVenue(未定は「これから決まる」の意味で、終わった回には当てはまらない)は
+会場だけの規則で、build-detail-pages._venue_placeholder が会場を「記録なし」に落とす。**time / admission / access は生の値で出る。**
+tbd_with_named_venue は開催前しか見ず、desc_claims_unannounced は「未定」を空として扱うので、どの検査も黙っていた。
+「データで見る2026年」の頁も「未定」を「入場料の情報が確認できた」に数えていた(139件 → 直して137件)。
+- 2件とも実際の額は確かめられないので、値の無い項目と同じくキーごと消した(updatedAt を付けた)。
+- 検査 `audit.past_placeholder_value`(urgent・`sitelib.past_placeholder_values`): 終わった回(中止を除く)の time / admission / access が仮置きの値そのものなら出す。
+  「前売りの有無は未定・当日500円」のように値の中に「未定」を含むだけの文は数えない。自己テスト10件を毎回走らせる。
+  03-26〜10-15 の events.json 490版に当てて出たのはこの2件だけ(誤検知0)。直す前の版で2件、直した版で0件。
+- 仮置きの値の集合は `sitelib.PLACEHOLDER_VALUES` / `is_placeholder_value` に寄せた。enrich_events.py と data-integrity-check.py が同じ集合を写して持っていた。
+- **開催前の回に「未定」を値として入れない。**未発表の項目は空のまま説明文に「未発表」と書く(listing-policy venueUnannounced と同じ)。値で入れると、その回が終わった翌日からこの検査が鳴る。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4458,6 +4473,7 @@ NextMeet の月別の目視(nextmeet-monthly-check)で、coverage-sweep の照�
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
 | 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
 | 説明文が「未発表・告知待ち」と書く項目に値がある(`desc_claims_unannounced`) | 値の出所を確かめる。出典の告知にあれば説明文の一文を消し、無ければ値を消す。enrich が一覧の頁から別の回の値を拾っていないかをログの `Found:` で見る | fixed |
+| 終わった回に「未定」などの仮置きの値(`past_placeholder_value`) | 出典に実際の値があれば入れ、無ければキーごと消す(会場は表示側が「記録なし」に落とすので対象外) | fixed |
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で会場の所在地を確かめ、説明文の所在地を location の住所どおりに直す。location / prefecture のほうが違っていればそちらを直す | fixed |
 | 埋め込み・アイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して image-rejected.json に記録し、この回の告知を主催の投稿で探し直す | fixed |
 | 同じシリーズの回で名称の表記が割れている(`series_name_variant`) | 主催の告知の表記に揃え、使わなくなった表記は aliases に残す。本当に別のイベントなら名前で区別が付くようにする | fixed |

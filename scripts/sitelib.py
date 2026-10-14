@@ -2511,6 +2511,69 @@ def _self_test_description_claims_unannounced():
     return bad
 
 
+# --- 仮置きの値と、終わった回に残った仮置き (2026-10-15) ---
+# 「調整中」「未定」などは値ではなく「まだ決まっていない」の印。enrich_events.py(上書きしてよい値)と
+# data-integrity-check.py(地域の照合から外す値)が同じ集合をそれぞれ写して持っていたので、ここを唯一の持ち主にした。
+PLACEHOLDER_VALUES = frozenset({'', '調整中', '未定', 'TBD', 'TBA', '-', '−', '—', '?', '？', '不明', '未発表'})
+
+
+def is_placeholder_value(v):
+    """値が仮置き(未定・調整中など)か。None と空文字も仮置きに数える。"""
+    if v is None:
+        return True
+    return isinstance(v, str) and v.strip() in PLACEHOLDER_VALUES
+
+
+# 終わった回の頁にそのまま出る項目。time は日時の行、admission はスペック表と FAQ と準備リスト、
+# access はスペック表に生の値で出る。venue / location は build-detail-pages._venue_placeholder が
+# 終わった回を「記録なし」に落とすので数えない(listing-policy venueRecord.unknownVenue)。
+PAST_PLACEHOLDER_FIELDS = ('time', 'admission', 'access')
+
+
+def past_placeholder_values(events, today=None):
+    """終了した回に仮置きの値が残っている項目。[(slug, 項目, 値)]
+
+    「未定」は「これから決まる」の意味で、終わった回には当てはまらない(venueRecord.unknownVenue と同じ理屈)。
+    2026-04 の取り込みで入った プランツジャンキー 12th(4/5)と 多肉もろもろ市場 2026春(4/15)が
+    admission「未定」のまま半年残り、頁は「入場料 未定」「入場料は『未定』です。…主催者の公式案内をご確認ください」と
+    出していた。値の無い項目と同じく、キーごと消す。空の値は blank_optional_fields が見るので数えない。
+    """
+    out = []
+    for e in events:
+        if is_cancelled(e) or event_phase(e, today) != 'past':
+            continue
+        for f in PAST_PLACEHOLDER_FIELDS:
+            v = e.get(f)
+            if isinstance(v, str) and v.strip() and is_placeholder_value(v):
+                out.append((e.get('slug'), f, v))
+    return out
+
+
+def _self_test_past_placeholder_values():
+    """past_placeholder_values の自己テスト。audit.past_placeholder_value が毎回呼び、失敗を同じ検査の行に出す"""
+    today = '2026-10-15'
+    cases = [
+        ('終わった回の入場料「未定」(10-15 の実例)', {'slug': 'a', 'date': '2026-04-05', 'admission': '未定'}, [('a', 'admission')]),
+        ('前後の空白があっても仮置き', {'slug': 'b', 'date': '2026-04-15', 'time': ' 調整中 '}, [('b', 'time')]),
+        ('開催前の「未定」は今の告知どおり', {'slug': 'c', 'date': '2026-11-01', 'admission': '未定'}, []),
+        ('開催中は終わっていない', {'slug': 'd', 'date': '2026-10-10', 'dateEnd': '2026-10-18', 'time': '未定'}, []),
+        ('会期の最終日が昨日なら終わった回', {'slug': 'e', 'date': '2026-10-10', 'dateEnd': '2026-10-14', 'access': '不明'}, [('e', 'access')]),
+        ('値の入った入場料は数えない', {'slug': 'f', 'date': '2026-04-05', 'admission': '入場無料'}, []),
+        ('「未定」を含むだけの文は値', {'slug': 'g', 'date': '2026-04-05', 'admission': '前売りの有無は未定・当日500円'}, []),
+        ('会場は「記録なし」表示に任せる', {'slug': 'h', 'date': '2026-04-05', 'venue': '調整中', 'location': '調整中'}, []),
+        ('空文字は blank_optional_fields の担当', {'slug': 'i', 'date': '2026-04-05', 'time': ''}, []),
+        ('中止の回は数えない', {'slug': 'j', 'date': '2026-04-05', 'eventStatus': 'cancelled', 'admission': '未定'}, []),
+    ]
+    bad = []
+    for label, e, want in cases:
+        got = [(s, f) for s, f, _ in past_placeholder_values([e], today)]
+        if got != want:
+            bad.append(f'{label}: 期待 {want} / 実際 {got}')
+    if is_placeholder_value('入場無料') or not is_placeholder_value('未定') or not is_placeholder_value(None):
+        bad.append('is_placeholder_value の判定が崩れている')
+    return bad
+
+
 # --- 説明文が書く会期の長さ・日と date〜dateEnd の食い違い (2026-10-10) ---
 # 説明文は告知を読んで人が書くので「2日間」「3日間」「15日は…16日は…」が正しく残り、
 # 日付欄だけが後から書き換えられると食い違う。実例はすべて check_date_updates.py が

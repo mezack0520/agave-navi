@@ -986,6 +986,21 @@ def main():
         '出ていなければ venue と location を「調整中」にする(前の回の会場を写さない)',
         severity='urgent')
 
+    # 9c-3. 終わった回に仮置きの値(未定・調整中など)が残っている(2026-10-15)
+    #       プランツジャンキー 12th(4/5)と 多肉もろもろ市場 2026春(4/15)は 2026-04 の取り込みから admission「未定」のままで、
+    #       頁は半年間「入場料 未定」「入場料は『未定』です。…主催者の公式案内をご確認ください」と出していた。
+    #       会場は _venue_placeholder が終わった回を「記録なし」に落とすが、time / admission / access は生の値で出る。
+    #       tbd_with_named_venue は開催前しか見ず、desc_claims_unannounced は「未定」を空として扱うのでどちらも黙る。
+    #       規則は sitelib.past_placeholder_values。03-26〜10-15 の events.json 490版に当てて出たのはこの2件だけ(誤検知0)。
+    _past_ph = [f"{e_slug}: {f}「{v}」" for e_slug, f, v in sitelib.past_placeholder_values(events, today_s)]
+    for _bad in sitelib._self_test_past_placeholder_values():
+        _past_ph.append(f'自己テスト失敗(sitelib._self_test_past_placeholder_values): {_bad}')
+    add('past_placeholder_value', '終わった回に「未定」などの仮置きの値が残っている(頁に「これから決まる」と出る)',
+        sorted(_past_ph),
+        '未定は「これから決まる」の意味で、終わった回には当てはまらない。主催の告知(出典)に実際の値があれば入れ、'
+        '無ければキーごと消す(値の無い項目と同じ扱い)',
+        severity='urgent')
+
     # 9d. スクレイプ結果の貼り付け残り(ページタイトル+URL、出典表記の前置き)。
     #     本文は詳細ページ本文とmeta descriptionに直行するので閲覧者と検索結果に露出する
     junk = []
