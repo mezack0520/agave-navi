@@ -24,6 +24,8 @@
    **同日の event-monitor でも別名義で入った(この追記の後)。**手順を書いても、プロンプトの順序が
    「clone → record-run.py」なので読む前にコミットされる。そこで `record-run.py` 自身が
    repo ローカルの名義を規定値に揃えるようにした(`ensure_git_identity`)。全タスクが最初のコミットの前に呼ぶので、ここで効く。
+   **終わったら clone を消す(`rm -rf "$D"`)。**/tmp も /sessions も全セッションで共有で、残骸が積もると次の回の clone が
+   容量不足で落ちる(10-14〜16 に /sessions が満杯)。自分が作ったものは消せる
 3. このファイル、`docs/architecture-2026-07.md`、`listing-policy.json` を読む
 4. プロンプトとここに差異があれば**こちらが正**
 5. **起動直後に `python3 scripts/record-run.py <taskId>` を実行し、その変更を含めて push する。**
@@ -118,26 +120,20 @@
    `upcoming` も 144 → 163 に増えており、**残数は母数が増えれば増える。**
    差の向きだけでは働きを測れない。詳細は §3 の同題の項。
 
-   **プロンプト(SKILL.md)の変更は、目崎が承認したものだけを定期実行が当てる(2026-10-13)。**
-   定期実行のセッションには scheduled-tasks の `list_scheduled_tasks` / `update_scheduled_task` がある。
-   `C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` は `Read` で読める(書き込みは
-   `update_scheduled_task` 経由だけ。フォルダ接続では書けないので、接続を頼まない)。
-   クラウドの会話セッションにはこのツールが無く、プロンプトを直せない。
-   - 変えたいプロンプトは `pending-judgments.json` に提案として積む(本文をそのまま書く)
-   - 目崎が承認すると、その項目に `approvedOn` が付く。**次に動いた定期実行が、現行の SKILL.md を
-     `Read` し、提案の差分だけを当てた本文で `update_scheduled_task` を呼び、`list_scheduled_tasks` で
-     反映を確かめて `resolved` に移す。**自分のタスク以外のプロンプトも、承認された項目なら当てる
-   - `approvedOn` の無い項目は当てない(頼まれていない書き込みになる)
+   **プロンプト(SKILL.md)の変更は、目崎が承認したものだけを、PC の Cowork の会話で当てる(2026-10-16 改定)。**
+   - プロンプトに置くのは起動(clone の場所・record-run.py・このファイルを読む)だけにする。手順・規則は
+     このファイルに書く。プロンプトを変える必要が出るのは起動が壊れたときだけ
+   - 変えたいプロンプトは `pending-judgments.json` に提案として積む(差分をそのまま書く)。
+     目崎が承認すると `approvedOn` が付き、日次メールの「PCで当ててほしいプロンプト変更」に出る
+   - **定期実行は `update_scheduled_task` を呼ばない。**10-16 に承認者不在で自動拒否され
+     (「declined automatically because no one was available to approve it during this scheduled run」)、
+     拒否が返るまで約2時間止まって朝の後続がずれた。10-13 に通ったのは目崎がその場で承認できたからとみられる
+   - 当てるのは目崎が PC の Claude デスクトップで開いた Cowork の会話。「アガナビの承認済みプロンプト変更を当てて」と
+     頼まれたら、`approvedOn` のある項目ごとに現行の `C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` を
+     `Read` し、提案の差分だけを当てた本文で `update_scheduled_task` を呼び、`list_scheduled_tasks` と `Read` で確かめて
+     `resolved` に移して push する。クラウドの会話にはこのツールが無い
    - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
      `agave-navi-site-health-check` は台帳の taskId と名前が違う
-   - **定期実行の `update_scheduled_task` は承認者不在で自動拒否されることがある(2026-10-16)。**
-     文面は「This tool request was declined automatically because no one was available to approve it during this scheduled run」。
-     10-13 の event-monitor は同じツールで通っている(その場で目崎が承認したのかは記録が無い)。拒否されたらその回は
-     残りのタスクのぶんも呼ばずに止め、項目に `applyBlocked`(日付と一文)と facts を書く。日次メールの
-     「承認済みで未反映」の行に `applyBlocked` が並ぶ(`build-health-mail.py`)。次の回もまた1回だけ試す
-     (目崎が居合わせれば承認できる)。当てられたら `applyBlocked` を消して `resolved` へ移す
-     この回は呼んだ 06:40 から次に時刻を見た 08:42 まで約2時間空いた。拒否が返るまで承認待ちで止まっていた可能性がある(未確認)。
-     止まるなら朝の後続タスクより後ろにずれるので、**呼ぶ直前と直後に `date` を出し、止まっていた時間をレポートに書く**
 
 8. **日次メールに出る項目は、報告する前に直す（2026-09-29 目崎の指示）。**
    「積み残し・異常あり・他所に出ていて当サイトに無いイベントは、報告だけでなく

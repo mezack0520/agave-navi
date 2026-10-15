@@ -88,14 +88,6 @@ for k, v in (audit.get('findings') or {}).items():
     if v.get('severity', 'urgent') == 'urgent' and v.get('count'):
         residual.append((f"{v.get('title', k)}: {v.get('count')}件", (v.get('items') or [])[:3]))
 _ie, _ssl = _env_int('INTEGRITY_ERR'), _env_int('SSL_DAYS', 999)
-# 承認したのに翌日になっても当たっていないもの(プレイブック §1 の 7)
-_stale = [j for j in _approved if (j.get('approvedOn') or '') < now.strftime('%Y-%m-%d')]
-# 当てられなかった理由(applyBlocked)を id に添える(2026-10-16)。定期実行の update_scheduled_task は
-# 承認者不在で自動拒否されることがあり、id だけでは「当てる回が来ていない」のか「当てられない」のかが分からない
-if _stale:
-    residual.append((f'承認済みで未反映: {len(_stale)}件',
-                     [j.get('id') + (f" … {j['applyBlocked']}" if j.get('applyBlocked') else '')
-                      for j in _stale]))
 # リンク切れは check_events.py の dead_links(終わっていない回の url / sourceUrl)。
 # 2026-10-06 まで check-links.sh が終わった回まで叩き、主催が消した過去の告知頁を
 # 「要確認」として出していた(その日の4件は全部終了済み)。check-links.sh は廃止
@@ -131,6 +123,22 @@ if judgments:
     lines.append('Cowork で Claude に指示してください（例:「キューの◯◯を承認」）。')
     lines.append('')
 
+# 承認済みのプロンプト変更(プレイブック §1 の 7)。定期実行は update_scheduled_task を
+# 承認者不在で自動拒否され、拒否まで約2時間止まった(2026-10-16)。当てるのは PC の会話だけ
+if _approved:
+    lines.append(f'━━━ 🖥 PCで当ててほしいプロンプト変更（{len(_approved)}件）━━━')
+    lines.append('PCのClaudeデスクトップでCoworkの会話を開き、次の枠内をそのまま送ってください。')
+    lines.append('----')
+    lines.append('スケジュール済みタスクのプロンプトを update_scheduled_task で次のとおり変更して。'
+                 '変える前に各タスクの SKILL.md を読み、指定の箇所以外は変えない。'
+                 '終わったら list_scheduled_tasks で反映を確かめ、'
+                 'github.com/mezack0520/agave-navi の pending-judgments.json で該当 id を resolved に移して push して'
+                 '(手順は docs/task-playbook.md §1 の 7)。')
+    for j in _approved:
+        lines.append(f"[{j.get('id')}] {j.get('proposal', '')}")
+    lines.append('----')
+    lines.append('')
+
 if added or site_fixes:
     lines.append(f'━━━ 🛠 サイトに反映したこと（{len(added) + len(site_fixes)}件）━━━')
     for e in added:
@@ -152,7 +160,7 @@ if residual:
             lines.append(f'    - {str(it)[:160]}')
     lines.append('')
 
-send = bool(judgments or added or site_fixes or residual)
+send = bool(judgments or _approved or added or site_fixes or residual)
 
 # 1日1通(2026-10-06)。メールは朝の最後のタスク(event-monitor)が終わったところで
 # mail-request.json を push して起こす(scripts/request-run.py。タスクの PAT は Actions 権限が無く dispatch は 403)。
@@ -192,7 +200,7 @@ with open('email-body.txt', 'w', encoding='utf-8') as f:
 
 if judgments:
     subject = f'【要判断{len(judgments)}件】アガベイベントナビ {today}'
-elif residual:
+elif residual or _approved:
     subject = f'【要確認】アガベイベントナビ {today}'
 else:
     subject = f'アガベイベントナビ 今日の反映{len(added) + len(site_fixes)}件 {today}'
