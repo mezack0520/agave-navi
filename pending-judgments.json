@@ -19,7 +19,9 @@
       ],
       "proposal": "5本のプロンプトの clone の例の `D=$(mktemp -d)` を `D=$(mktemp -d -p /tmp)` に変え、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足す(他の行は変えない)。不要と判断した場合はその旨を decision に書いて resolved へ移す。",
       "whyHuman": "プロンプトの変更は定期実行からはしない(頼まれていない書き込みになる)ので、目崎の承認が要る。承認されれば次に動いた定期実行が update_scheduled_task で当てる(プレイブック §1 の 7)。",
-      "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、SKILL.md の Read と list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)"
+      "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、SKILL.md の Read と list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)",
+      "approvedOn": "2026-10-15",
+      "approvedBy": "目崎(「提案通りで」)"
     }
   ],
   "updated": "2026-10-15",
