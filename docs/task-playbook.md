@@ -130,6 +130,12 @@
    - `approvedOn` の無い項目は当てない(頼まれていない書き込みになる)
    - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
      `agave-navi-site-health-check` は台帳の taskId と名前が違う
+   - **定期実行の `update_scheduled_task` は承認者不在で自動拒否されることがある(2026-10-16)。**
+     文面は「This tool request was declined automatically because no one was available to approve it during this scheduled run」。
+     10-13 の event-monitor は同じツールで通っている(その場で目崎が承認したのかは記録が無い)。拒否されたらその回は
+     残りのタスクのぶんも呼ばずに止め、項目に `applyBlocked`(日付と一文)と facts を書く。日次メールの
+     「承認済みで未反映」の行に `applyBlocked` が並ぶ(`build-health-mail.py`)。次の回もまた1回だけ試す
+     (目崎が居合わせれば承認できる)。当てられたら `applyBlocked` を消して `resolved` へ移す
 
 8. **日次メールに出る項目は、報告する前に直す（2026-09-29 目崎の指示）。**
    「積み残し・異常あり・他所に出ていて当サイトに無いイベントは、報告だけでなく
@@ -3536,6 +3542,8 @@ agave-navi-eyecatch は本文の置き換えで)。10-14 以降に固定名の�
 10-12・10-13 は `/sessions/<自分>/repo` で通っているので、満杯は常時ではない。5本のプロンプトの例を `mktemp -d -p /tmp` に変える提案を
 `event-listing-review:skill-clone-tmpdir-full` に積んだ。
 **10-15 も同じ朝に `/sessions` が満杯だった(空き 67M)。2日続いた。**`mktemp -d -p /tmp` で通った。同じ id の facts に日付を足した。08:20 の event-monitor も同じ形で落ち(同じ朝に3本目)、`mktemp -d /tmp/<名前>.XXXXXXXX` で通った。
+**10-16 も同じ朝に満杯(空き 51M)。3日続いた。**`mktemp -d -p /tmp` で通った。10-15 に承認された提案を当てようとした `update_scheduled_task` は
+定期実行で自動拒否された(§1 の 7)。プロンプトは5本とも `D=$(mktemp -d)` のまま。当たるまでは、clone が落ちたら `-p /tmp` で取り直す。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**

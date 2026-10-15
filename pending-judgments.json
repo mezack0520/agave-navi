@@ -15,16 +15,19 @@
         "clone は record-run.py とプレイブックより前なので、repo 側の手順では塞げない。",
         "10-15 06:35 の event-listing-review も同じ形で落ちた。`D=$(mktemp -d)` が $TMPDIR(/sessions/<自分>/tmp)に作り、clone が `No space left on device`。df -h は /sessions 使用 9.2G・空き 67M・100%、/tmp(ルート)は空き 3.6G。`mktemp -d -p /tmp` で取り直して通った。2日続けて同じ朝に満杯だった。",
         "10-15 07:53 の agave-navi-eyecatch もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 空き 66M・/tmp 空き 3.4G)。`mktemp -d -p /tmp` で取り直して通った。同じ朝に2本目。",
-        "10-15 08:20 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 66M・100%、/tmp(ルート)空き 3.2G)。`mktemp -d /tmp/<名前>.XXXXXXXX` で取り直して通った。同じ朝に3本目(event-listing-review・agave-navi-eyecatch・event-monitor)。"
+        "10-15 08:20 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 66M・100%、/tmp(ルート)空き 3.2G)。`mktemp -d /tmp/<名前>.XXXXXXXX` で取り直して通った。同じ朝に3本目(event-listing-review・agave-navi-eyecatch・event-monitor)。",
+        "10-16 06:37 の event-listing-review もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた。/sessions 使用 9.2G・空き 51M・100%、/tmp(ルート)空き 3.6G。`mktemp -d -p /tmp` で取り直して通った。3日続けて同じ朝に満杯。",
+        "10-16 06:4x、approvedOn を受けて event-listing-review(定期実行)が5本の SKILL.md を Read した(5本とも `D=$(mktemp -d)` のまま)。自分の event-listing-review に update_scheduled_task を呼んだが「This tool request was declined automatically because no one was available to approve it during this scheduled run」で拒否された。残り4本は同じ拒否になるので呼んでいない。5本とも未適用。"
       ],
       "proposal": "5本のプロンプトの clone の例の `D=$(mktemp -d)` を `D=$(mktemp -d -p /tmp)` に変え、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足す(他の行は変えない)。不要と判断した場合はその旨を decision に書いて resolved へ移す。",
       "whyHuman": "プロンプトの変更は定期実行からはしない(頼まれていない書き込みになる)ので、目崎の承認が要る。承認されれば次に動いた定期実行が update_scheduled_task で当てる(プレイブック §1 の 7)。",
       "resolveWhen": "次に動いた定期実行が update_scheduled_task で proposal を当て、SKILL.md の Read と list_scheduled_tasks で反映を確かめたら resolved へ移す(プレイブック §1 の 7)",
       "approvedOn": "2026-10-15",
-      "approvedBy": "目崎(「提案通りで」)"
+      "approvedBy": "目崎(「提案通りで」)",
+      "applyBlocked": "10-16 定期実行の update_scheduled_task が承認者不在で自動拒否。会話のセッションで当てるか、定期実行でこのツールを許可する"
     }
   ],
-  "updated": "2026-10-15",
+  "updated": "2026-10-16",
   "resolved": [
     {
       "id": "agave-navi-eyecatch:flyer-with-child-photo",

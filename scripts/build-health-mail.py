@@ -90,8 +90,12 @@ for k, v in (audit.get('findings') or {}).items():
 _ie, _ssl = _env_int('INTEGRITY_ERR'), _env_int('SSL_DAYS', 999)
 # 承認したのに翌日になっても当たっていないもの(プレイブック §1 の 7)
 _stale = [j for j in _approved if (j.get('approvedOn') or '') < now.strftime('%Y-%m-%d')]
+# 当てられなかった理由(applyBlocked)を id に添える(2026-10-16)。定期実行の update_scheduled_task は
+# 承認者不在で自動拒否されることがあり、id だけでは「当てる回が来ていない」のか「当てられない」のかが分からない
 if _stale:
-    residual.append((f'承認済みで未反映: {len(_stale)}件', [j.get('id') for j in _stale]))
+    residual.append((f'承認済みで未反映: {len(_stale)}件',
+                     [j.get('id') + (f" … {j['applyBlocked']}" if j.get('applyBlocked') else '')
+                      for j in _stale]))
 # リンク切れは check_events.py の dead_links(終わっていない回の url / sourceUrl)。
 # 2026-10-06 まで check-links.sh が終わった回まで叩き、主催が消した過去の告知頁を
 # 「要確認」として出していた(その日の4件は全部終了済み)。check-links.sh は廃止
