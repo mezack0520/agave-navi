@@ -2077,7 +2077,8 @@
    "kind": "dead_links",
    "target": "BORDER BREAK!! 11th (2026-12-05) sourceUrl",
    "action": "reviewed",
-   "detail": "リンク切れではない。blogspot が CI の HEAD に 204 を返しただけで、手元の HEAD・GET は 200(本文 17.7KB・題名『次回開催【11th】2026 12/5,6』)。check_events が 2xx のうち 200 しか生存に数えていなかったのを status_is_alive に直し、check-results.json の判定も直した"
+   "detail": "リンク切れではない。blogspot が CI の HEAD に 204 を返しただけで、手元の HEAD・GET は 200(本文 17.7KB・題名『次回開催【11th】2026 12/5,6』)。check_events が 2xx のうち 200 しか生存に数えていなかったのを status_is_alive に直し、check-results.json の判定も直した",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2085,7 +2086,8 @@
    "kind": "coverage_gaps",
    "target": "PLANTS MARKET（植物即売会） (2026-11-07)",
    "action": "listed",
-   "detail": "出店する Bear's palm(@bears_palm DefVveZzlc3)と garden.116(@garden.116)の2組が宇都宮のブルーベリー園 H&M Garden で開く販売会。plants-market-hm-garden-utsunomiya-2026-11"
+   "detail": "出店する Bear's palm(@bears_palm DefVveZzlc3)と garden.116(@garden.116)の2組が宇都宮のブルーベリー園 H&M Garden で開く販売会。plants-market-hm-garden-utsunomiya-2026-11",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2093,7 +2095,8 @@
    "kind": "coverage_gaps",
    "target": "アガベ会（アガベの交流・販売・トレードイベント） (2026-10-17)",
    "action": "rejected",
-   "detail": "主催 @elle_plants(DeWPKK6PtW0)が可児市の美容室で毎月夜に開く植物のオフ会。販売・トレードは付随で、告知の中心は交流。closedGatherings.exclude。月例なので aliases『アガベ会』で以後の回も落ちる"
+   "detail": "主催 @elle_plants(DeWPKK6PtW0)が可児市の美容室で毎月夜に開く植物のオフ会。販売・トレードは付随で、告知の中心は交流。closedGatherings.exclude。月例なので aliases『アガベ会』で以後の回も落ちる",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2101,7 +2104,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "@tokimeki_marche 2026-11-28",
    "action": "reviewed",
-   "detail": "ボランティアスタッフ募集の投稿(Deg8FFJncmC)の11/28は会場を作る設営の日。開催は群馬会場の11/29だけで掲載済み(tokimeki-marche-gunma-kenchomae-2026-11)"
+   "detail": "ボランティアスタッフ募集の投稿(Deg8FFJncmC)の11/28は会場を作る設営の日。開催は群馬会場の11/29だけで掲載済み(tokimeki-marche-gunma-kenchomae-2026-11)",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2109,7 +2113,8 @@
    "kind": "cancel_suspects",
    "target": "多肉X'mas (2026-12-05)",
    "action": "reviewed",
-   "detail": "本文 1170→1202字は記事の外の Recent Topics 欄に『花 Night YOGA』『Wellsis Marche』10/28 が足されただけ。記事は【出展者募集】多肉X'mas 12/5〜6 のままで中止・延期の語なし。cancel-reviewed 2回目"
+   "detail": "本文 1170→1202字は記事の外の Recent Topics 欄に『花 Night YOGA』『Wellsis Marche』10/28 が足されただけ。記事は【出展者募集】多肉X'mas 12/5〜6 のままで中止・延期の語なし。cancel-reviewed 2回目",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2117,7 +2122,8 @@
    "kind": "cancel_watch_unreachable",
    "target": "井頭公園 展示会情報 (igashira-park-taniku-saboten-tenjikai-2026-11)",
    "action": "skipped",
-   "detail": "park-tochigi.com は中間証明書が欠けており CI からは読めない(§3 2026-10-13)。相手の設定なので直す先は無い"
+   "detail": "park-tochigi.com は中間証明書が欠けており CI からは読めない(§3 2026-10-13)。相手の設定なので直す先は無い",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2125,7 +2131,8 @@
    "kind": "eyecatch_candidates_pending",
    "target": "アイキャッチ候補 12件",
    "action": "skipped",
-   "detail": "07:45 の agave-navi-eyecatch が画像を見て採否する"
+   "detail": "07:45 の agave-navi-eyecatch が画像を見て採否する",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2133,7 +2140,8 @@
    "kind": "tbd",
    "target": "masappe 周年祭 / BOTANICAL BOTANICAL OKINAWA / BORDER BREAK!! 11th / BOTANICAL STYLE Minato / ゆるっと第3回 / 珍奇植物FM 1月・4月 / サンタフェ周年祭 / On the Plants 10th",
    "action": "skipped",
-   "detail": "organizer-posts.json の各主催の最新投稿(10/16 取得)に会場・時間の告知なし。BOTANICAL BOTANICAL OKINAWA の『北谷ジバゴコーヒー前』は出店者 @luckplantsokinawa の予定表にだけ出ている"
+   "detail": "organizer-posts.json の各主催の最新投稿(10/16 取得)に会場・時間の告知なし。BOTANICAL BOTANICAL OKINAWA の『北谷ジバゴコーヒー前』は出店者 @luckplantsokinawa の予定表にだけ出ている",
+   "mailedOn": "2026-10-16"
   },
   {
    "on": "2026-10-16",
@@ -2141,7 +2149,8 @@
    "kind": "rejected_revisit_stale",
    "target": "SHIZUOKA Bizarre Plants Market (shizuoka-bizarre-plants-market-2026)",
    "action": "fixed",
-   "detail": "PUKUBOOK の『仮予定／非公式・9月』のまま9月を過ぎ、Google にも2026年回の痕跡が無い。revisit=false で再評価を終えた"
+   "detail": "PUKUBOOK の『仮予定／非公式・9月』のまま9月を過ぎ、Google にも2026年回の痕跡が無い。revisit=false で再評価を終えた",
+   "mailedOn": "2026-10-16"
   }
  ]
 }
