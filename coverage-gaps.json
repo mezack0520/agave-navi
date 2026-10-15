@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-15",
+  "sweptOn": "2026-10-16",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,31 +16,33 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1332,
-    "in_scope": 326,
-    "covered": 206,
-    "known_rejected": 81,
-    "truncated_resolved": 45,
+    "candidates": 1390,
+    "in_scope": 337,
+    "covered": 214,
+    "known_rejected": 121,
+    "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 233,
+    "in_scope_leafla": 244,
     "truncated_unresolved_hits": 180,
     "in_scope_nextmeet": 93,
-    "gaps_raw": 39
+    "gaps_raw": 2
   },
   "errors": [],
   "truncatedUnresolved": [
-    "10/12 追加 NOZARASHI BONSAI STORE ...",
-    "10/12 追加 Plants Plants PlantsにPL...",
-    "10/12 追加 NOHOHON HALLOWEENが野歩ほんで...",
-    "10/12 追加 ぐんまオーガニックマルシェが2026年10月2..."
+    "10/15 追加 森の展示室 秋 Marketがわち山野草の森で...",
+    "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
+    "10/15 追加 秋の緑風展が岡崎城公園で開催 盆栽即売会や50...",
+    "10/15 追加 第55回 植木まつりが鈴鹿フラワーパークで開催..."
   ],
   "gaps": [
     {
-      "date": "2026-10-15",
-      "lastSeen": "2026-11-28",
-      "days": 39,
-      "title": "花のある暮らし ボタニカルアートとデザイン"
+      "date": "2026-10-17",
+      "title": "アガベ会（アガベの交流・販売・トレードイベント）"
+    },
+    {
+      "date": "2026-11-07",
+      "title": "PLANTS MARKET（植物即売会）"
     }
   ]
 }

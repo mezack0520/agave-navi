@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-15 08:43 JST",
+ "generated": "2026-10-16 06:45 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 365,
-  "awaitingNextEdition": 338,
+  "awaitingNextEdition": 339,
   "officialSiteCandidates": 87,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 88,
@@ -786,16 +786,6 @@
    "eventCount": 1,
    "lastEventName": "第8回 サボテン・多肉植物展 2026（掛川花鳥園）",
    "lastEventDate": "2026-10-10",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "narakaki_flower",
-   "url": "https://www.instagram.com/narakaki_flower/",
-   "eventCount": 1,
-   "lastEventName": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
-   "lastEventDate": "2026-10-14",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
@@ -3674,6 +3664,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "narakaki_flower",
+   "url": "https://www.instagram.com/narakaki_flower/",
+   "eventCount": 1,
+   "lastEventName": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
+   "lastEventDate": "2026-10-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   }
  ],
  "awaitingNextEdition": [

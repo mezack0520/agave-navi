@@ -1,5 +1,5 @@
 {
-  "total": 785,
+  "total": 801,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -280,7 +280,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 107,
+      "count": 106,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -722,13 +722,16 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 6,
+      "count": 9,
       "items": [
         "hiroshima-cactus-succulent-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
         "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10(2026-10-10〜2026-11-01/23日/長期)",
-        "kakukaku-shikajika-6th-narakaki-2026-10(2026-10-14〜2026-10-15/2日)",
+        "lier-taniku-festival-matsuyama-hojo-2026-10(2026-10-16〜2026-10-16/1日)",
+        "okinawa-shi-aki-no-dai-uekiichi-2026(2026-10-16〜2026-10-25/10日/長期)",
         "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10(2026-10-03〜2026-10-25/23日/長期)",
+        "shoku-to-the-future-2026-10(2026-10-16〜2026-10-18/3日)",
+        "suma-rikyu-cactus-succulent-tenjikai-2026-10(2026-10-16〜2026-10-18/3日)",
         "tegarayama-aki-saboten-taniku-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -862,9 +865,10 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
+      "count": 2,
       "items": [
-        "2026-10-15 花のある暮らし ボタニカルアートとデザイン"
+        "2026-10-17 アガベ会（アガベの交流・販売・トレードイベント）",
+        "2026-11-07 PLANTS MARKET（植物即売会）"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -892,12 +896,11 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 107,
+      "count": 106,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
         "2026-10-10 tegarayama-aki-saboten-taniku-ten-2026-10",
-        "2026-10-14 kakukaku-shikajika-6th-narakaki-2026-10",
         "2026-10-16 suma-rikyu-cactus-succulent-tenjikai-2026-10",
         "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
         "2026-10-17 himeji-cactus-goudou-sokubaikai-2026-10",
@@ -933,7 +936,8 @@
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-15 yamaokuya-tandoku-hanbaikai-sakura-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
-        "2026-11-20 sand-hiroshima-2026-11"
+        "2026-11-20 sand-hiroshima-2026-11",
+        "2026-11-21 botanical-popup-ondo-kurate-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -975,8 +979,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-12-05 taniku-xmas-flarie-2026-12: 公式ページが変わった(本文: 1170→1202字 +2%)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1024,9 +1030,8 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 2,
+      "count": 1,
       "items": [
-        "取得できなかった: border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
         "取得できなかった: igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
       ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
@@ -1069,8 +1074,10 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "@tokimeki_marche 2026-11-28: . ❤︎ボランティアスタッフ大募集❤︎ ◆11/28(土) ◆11/29(日) イベント会場を作る・整備する体験をしてみ https://www.instagram.com/p/Deg8FFJncmC/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1104,8 +1111,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-17 plants-plants-plants-bhms-2026-10: https://www.instagram.com/p/DegY_eSmCVO/（caption）",
+        "2026-10-17 himeji-cactus-goudou-sokubaikai-2026-10: https://www.instagram.com/p/DeEq6Q1BOLM/（sourcePost）",
+        "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10: https://www.instagram.com/p/Deffj1-kkvm/（caption）",
+        "2026-11-20 sand-hiroshima-2026-11: https://www.instagram.com/p/DdgiY15GEEr/（sourcePost）",
+        "2026-11-21 nagoriba-naruto-uchinoumi-2026-11: https://www.instagram.com/p/DeWazGxEy7T/（sourcePost）",
+        "2026-11-22 morino-tanikuen-hanbaikai-big-nabari-2026-11: https://www.instagram.com/p/Deg8CA1H-Q8/（caption）",
+        "2026-11-28 tonys-fes-toshiwasure-2026-11: https://www.instagram.com/p/DeZMjalEr6w/（sourcePost）",
+        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/reel/DbPNteBzSxm/（caption）",
+        "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12: https://www.instagram.com/p/Dd-9p71n8kY/（caption）",
+        "2027-01-16 yurutto-taniku-marche-3rd-2027-01: https://www.instagram.com/p/Dd-9p71n8kY/（caption）",
+        "2027-01-17 chinki-plants-flea-market-2027-01: https://www.instagram.com/reel/DeGApJNyZW_/（sourcePost）",
+        "2027-02-20 santafe-shunensai-2027-02: https://www.instagram.com/reel/DdsTfJ1SV41/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1409,8 +1429,10 @@
     },
     "rejected_revisit_stale": {
       "title": "再評価待ちの見送りが30日以上動いていない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "shizuoka-bizarre-plants-market-2026: 最終評価 2026-09-16（30日前）"
+      ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
     },
