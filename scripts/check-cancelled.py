@@ -324,7 +324,7 @@ def main_entry(html, event=None):
         _named, found = page_dates(frags[0])
         return frags[0] if (span & found) else None
     if not frags:
-        return None
+        return entry_container(html, span)
     # 記事が複数(本文 + 関連記事)の頁は、この回の開始日を含む記事がちょうど1つのときだけ
     # その記事に絞る。会期の範囲で選ぶと、会期の長い回では関連記事の日付が範囲に入る
     try:
@@ -333,6 +333,46 @@ def main_entry(html, event=None):
         return None
     hits = [f for f in frags if (sd.month, sd.day) in page_dates(f)[1]]
     return hits[0] if len(hits) == 1 else None
+
+
+# 本文の入れ物の class / id。`<article>` を使わない頁(手書きの HTML や古い CMS)の本文を探す。
+# 2026-10-16。久屋大通庭園フラリエの告知頁(flarie.jp/news/succulents-xmas.html・多肉X'mas)は
+# `<article>` が無く、本文 `<div class="news_box">` の横に「Recent Topics」欄を出す。新しいお知らせが
+# 1本載るたびに本文が動き、10-13 と 10-16 に「公式ページが変わった」で鳴った(記事は1字も変わっていない)。
+# 会期 12/5 まで、お知らせが出るたびに鳴り続ける形(10-05 の ROOTS MARKET・10-11 の伊豆シャボテンと同じ型)。
+ENTRY_CONTAINER = re.compile(
+    r'(?i)<(div|section|main)\b[^>]*\b(?:class|id)\s*=\s*["\'][^"\']*?'
+    r'(?<![\w-])(entry-content|entry_content|entry-body|entry_body|post-content|post_content|'
+    r'post-body|post_body|single-content|article-body|article_body|news_box|news-box|'
+    r'news-body|news_body|news-detail|news_detail|blog-body|blog_body)(?![\w-])[^"\']*["\'][^>]*>')
+
+
+def element_fragment(html, start, tag):
+    """html[start:] の `<tag ...>` から対応する閉じタグまで。同名タグの入れ子を数える。"""
+    depth = 0
+    for m in re.finditer(r'(?i)<(/?)%s\b[^>]*>' % re.escape(tag), html[start:]):
+        depth += -1 if m.group(1) else 1
+        if depth == 0:
+            return html[start:start + m.end()]
+    return None
+
+
+def entry_container(html, span):
+    """`<article>` の無い頁で、本文の入れ物がこの回の開催日を含むならそれを返す。
+
+    絞るのは、開催日を含む入れ物がちょうど1つのときだけ(入れ子は内側を採る)。
+    一覧の頁は同じ入れ物が並ぶので2つ以上になり、絞らない。
+    中止の語は従来どおり頁全体から拾う(analyze)。絞るのは署名だけ。
+    """
+    if not span:
+        return None
+    hits = []
+    for m in ENTRY_CONTAINER.finditer(html or ''):
+        f = element_fragment(html, m.start(), m.group(1))
+        if f and span & page_dates(f)[1]:
+            hits.append(f)
+    inner = [f for f in hits if not any(g is not f and g in f for g in hits)]
+    return inner[0] if len(inner) == 1 else None
 
 
 def page_signature(html, today=None, scope=None, live_status=True):
@@ -753,6 +793,19 @@ FIX_WP_ENTRY = '''<html><head><title>ROOTS MARKET開催決定</title>
 </body></html>'''
 
 
+# 2026-10-16。`<article>` の無い頁(久屋大通庭園フラリエのお知らせ頁の形)。本文の入れ物
+# `<div class="news_box">` の横に「Recent Topics」欄がある。{news} を差し替えて新着の入れ替わりを作る
+FIX_NEWS_BOX = '''<html><head><title>【出展者募集】多肉X'mas 12月5日(土)～6日(日)</title></head><body>
+<div id="ContBox"><div id="CenterBox"><h3 class="news01">【出展者募集】多肉X'mas 12月5日(土)～6日(日)</h3>
+<div class="date_area">2026/09/07 庭園事務所</div>
+<div class="news_box ClearFix"><p><big>2026年12月5日(土)～6日(日)</big></p>
+<p><big>多肉X'masを開催します！</big></p><div class="inner"><p>開催にあたり出店者を募集しています。</p></div>
+<p><img src="https://example.jp/wp/wp-content/uploads/2026/09/xmas.png"></p></div></div>
+<div id="RightBox"><h3>Recent Topics</h3><ul><li><a href="/a">{news}</a></li>
+<li><a href="/b">第11回 フラリエ 花さんぽマルシェ 10月24日(土)</a></li></ul></div></div>
+</body></html>'''
+
+
 FIX_PRESS_RELATED = '''<html><head><title>第13回 おもしろサボテン品評会</title></head><body>
 <article><h1>「第13回 おもしろサボテン品評会」2026年10月10日（土）～開催</h1>
 <p>2026年10月10日（土）～11月23日（月・祝）まで第5温室メキシコ館内にて開催いたします。</p></article>
@@ -890,6 +943,33 @@ def self_test(verbose=True):
     chk('開始日を含む記事が無い → 絞らない',
         analyze(FIX_PRESS_RELATED.replace('{news}', 'X'),
                 {'slug': 'j', 'date': '2026-10-12', 'dateEnd': '2026-11-23'})['sigScope'], 'page')
+
+    say('\n--- <article> の無い頁は本文の入れ物に絞る (2026-10-16) ---')
+    _evx = {'slug': 'x', 'date': '2026-12-05', 'dateEnd': '2026-12-06'}
+    _x1 = analyze(FIX_NEWS_BOX.replace('{news}', '『花 Night YOGA』10月28日(水)'), _evx)
+    _x2 = analyze(FIX_NEWS_BOX.replace('{news}', 'クリスマスリース教室 12月12日'), _evx)
+    chk('本文の入れ物に開催日 → 絞る', _x1['sigScope'], 'article')
+    chk('Recent Topics が変わっても本文の署名は同じ',
+        _x1['signature']['text'] == _x2['signature']['text'], True)
+    _x3 = analyze(FIX_NEWS_BOX.replace('{news}', 'X').replace('開催にあたり出店者を募集しています。',
+                                                               '開催を中止いたします。'), _evx)
+    chk('入れ物の本文が変われば本文の署名は変わる',
+        _x1['signature']['text'] != _x3['signature']['text'], True)
+    chk('入れ物の本文の中止は強い語で拾う', bool(_x3['strong']), True)
+    _x4 = analyze(FIX_NEWS_BOX.replace('{news}', '多肉X\'mas 中止のお知らせ'), _evx)
+    chk('Recent Topics に出た中止の告知も語は拾う', bool(_x4['strong'] or _x4['weak']), True)
+    chk('入れ物に開催日が無い → 絞らない',
+        analyze(FIX_NEWS_BOX.replace('{news}', 'X'),
+                {'slug': 'y', 'date': '2026-11-03', 'dateEnd': '2026-11-03'})['sigScope'], 'page')
+    _two_box = FIX_NEWS_BOX.replace('{news}', 'X').replace(
+        '<div id="RightBox">', '<div class="news_box"><p>別の催し 2026年12月5日</p></div><div id="RightBox">')
+    chk('開催日を含む入れ物が2つ(一覧) → 絞らない', analyze(_two_box, _evx)['sigScope'], 'page')
+    _nest = FIX_NEWS_BOX.replace('{news}', 'X').replace('<div class="inner">', '<div class="entry-content">')
+    _nest = _nest.replace('開催にあたり', '2026年12月5日 開催にあたり')
+    chk('入れ子の入れ物 → 内側に絞る', analyze(_nest, _evx)['sigScope'], 'article')
+    chk('class 名の一部だけの一致(my-news_boxes)は入れ物に数えない',
+        analyze(FIX_NEWS_BOX.replace('{news}', 'X').replace('news_box ClearFix', 'my-news_boxes'), _evx)['sigScope'],
+        'page')
 
     say('\n--- 通販の注文のキャンセル ---')
     _s3, w3 = find_words(['エントリー受付後、ご注文は自動的にキャンセルされます。'

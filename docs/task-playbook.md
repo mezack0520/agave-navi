@@ -127,7 +127,7 @@
      目崎が承認すると `approvedOn` が付き、日次メールの「PCで当ててほしいプロンプト変更」に出る
    - **定期実行は `update_scheduled_task` を呼ばない。**10-16 に承認者不在で自動拒否され
      (「declined automatically because no one was available to approve it during this scheduled run」)、
-     拒否が返るまで約2時間止まって朝の後続がずれた。10-13 に通ったのは目崎がその場で承認できたからとみられる
+     拒否が返るまで約2時間止まって朝の後続がずれた(agave-event-update でも呼ぶ直前 07:30:51・直後 09:32:06 を date で実測)。10-13 に通ったのは目崎がその場で承認できたからとみられる
    - 当てるのは目崎が PC の Claude デスクトップで開いた Cowork の会話。「アガナビの承認済みプロンプト変更を当てて」と
      頼まれたら、`approvedOn` のある項目ごとに現行の `C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` を
      `Read` し、提案の差分だけを当てた本文で `update_scheduled_task` を呼び、`list_scheduled_tasks` と `Read` で確かめて
@@ -4475,6 +4475,28 @@ hugcoffee 南町店の PLANTS and COFFEE は、09-20・10-07 の投稿が 10/24�
 11/28 が `organizer_unlisted_dates` に出た。BOTAJAM の「11/6の前日搬入・設営」は日付の直後の語で落としたが、今回は設営の語が
 別の段落で「会場を作る」と書く。`ig-organizer-watch.staff_work_days`: ボランティア・スタッフ募集の投稿で、同じ投稿に並べた
 掲載済みの開催日の前日・翌日を落とす。50版で変わるのはこの1件だけ。募集でない投稿の前日(2日開催の片日落ち)は残る。
+
+### `<article>` の無い頁は、本文の入れ物(news_box・entry-content など)に署名を絞る (2026-10-16 / 10-05・10-11 と同じ型)
+
+多肉X'mas(12/5-6 久屋大通庭園フラリエ)の出典 `flarie.jp/news/succulents-xmas.html` が 10-13 と 10-16 に「公式ページが変わった」で cancel_suspects に出た。
+2回とも記事(09/07 の出展者募集)は1字も変わらず、横の「Recent Topics」欄に新しいお知らせが載っただけだった(10-16 は +32字)。
+頁に `<article>` が無いので main_entry では絞れず、会期の 12/5 までお知らせが出るたびに鳴る形。3回目を cancel-reviewed に書く前に規則を直した。
+- `check-cancelled.entry_container`: `<article>` が1つも無い頁で、本文の入れ物の class / id(`ENTRY_CONTAINER`。entry-content・post-content・news_box など)を持つ要素のうち、
+  この回の開催日を含むものがちょうど1つならそこに署名を絞る(入れ子は内側)。一覧の頁は入れ物が並ぶので絞らない。中止の語は従来どおり頁全体から拾う。
+- 自己テスト9件(旧い挙動では3件が落ちる)。10-16 の巡回対象29頁に新旧を当てて、範囲が変わるのはフラリエの1頁だけ。範囲が変わった初回は既存の rescoped で変化に数えない。
+- class 名は語の境界で当てる(`my-news_boxes` は数えない)。**新しい CMS の入れ物の名前は、鳴った頁の HTML を見てから `ENTRY_CONTAINER` に足す。**推測で足すと一覧の頁を絞りうる。
+
+### 出店者が自分たちで開く合同の販売会は、出店者の告知が主催の告知 (2026-10-16)
+
+coverage_gaps の「PLANTS MARKET（植物即売会）」(11/7 宇都宮)は、ブルーベリー園 H&M Garden を会場に Bear's palm と garden.116 の2組が開く販売会だった。
+2組とも「出店」と書くので vendorAnnouncementsOnly に見えるが、園は場所を貸すだけで(同じ園の のほほんマルシェ・パンまつりは園の投稿に「主催者さん @…」と別の主催が出る)、
+この回に2組の外の主催はいない。listing-policy の `primarySource.vendorRunMarket` に書いた。**会場の投稿に別の主催が出ていないか、出店者の全員が告知しているかを見て決める。**
+
+### 共同投稿(コラボ)は共同投稿者のグリッドにも出る。会場が共同投稿者なら会場の告知 (2026-10-16)
+
+ちいさな植物園 vol.3(11/3 福山)の告知 DeY_IU9uTbF は本文の書き手が vandaka_plants だが、会場 @nakano_plants_lab と @plant_container_products のプロフィールのグリッドにも同じコードで並んでいた。
+Instagram のコラボ投稿で、会場が共同投稿者として名前を出しているので会場の告知として扱った。出店者の投稿に見えても、**主催・会場のグリッドに同じコードがあれば共同投稿を疑う。**
+embed/captioned の本文の先頭のハンドルは書き手だけを出し、共同投稿者は出さない。
 
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
