@@ -105,6 +105,33 @@ _CLOSED_BEFORE = re.compile(r'(?:休館日?|休園日?|定休日|店休日?|休�
 _CLOSED_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:は|も)?\s*(?:臨時)?(?:休館|休園|定休|店休|休業)')
 
 
+# ボランティア・スタッフの募集の投稿は、開催日の前日・翌日(会場の設営・撤収)を作業日として並べる(2026-10-16)。
+# ときめきマルシェ(@tokimeki_marche)の「❤︎ボランティアスタッフ大募集❤︎ / ◆11/28(土) / ◆11/29(日) /
+# イベント会場を作る・整備する体験をしてみたい!」は、群馬会場(11/29・掲載済み)の前日の 11/28 を
+# 「当サイトに無い先の日付」として出した。搬入・設営の語は日付と別の段落にあり _SETUP_AFTER では落ちない。
+# 募集の投稿で、同じ投稿に並べた掲載済みの開催日の前日・翌日だけを落とす(開催日そのものの取りこぼしは残る)
+_STAFF_CALL = re.compile(r'(?:ボランティア|スタッフ|お手伝い)[^\n。]{0,8}募集|募集[^\n。]{0,6}(?:ボランティア|スタッフ)')
+
+
+def staff_work_days(cap, mds, known_md, today):
+    """スタッフ募集の投稿に並ぶ、掲載済みの開催日(同じ投稿に書かれたもの)の前日・翌日。{(月, 日)}"""
+    if not _STAFF_CALL.search(cap or ''):
+        return set()
+    anchor = mds & known_md
+    out = set()
+    for (mo, d) in mds - known_md:
+        y = today.year if (mo, d) >= (today.month, today.day) else today.year + 1
+        try:
+            c = datetime(y, mo, d)
+        except ValueError:
+            continue
+        for n in (-1, 1):
+            x = c + timedelta(days=n)
+            if (x.month, x.day) in anchor:
+                out.add((mo, d))
+    return out
+
+
 def month_days(text):
     """本文に出る (月, 日)。『9月26日』『9/26』。年やURLの数字は拾わない"""
     out = set()
@@ -352,7 +379,8 @@ def analyze_posts(username, posts, org_events, all_org_events, today, day_index=
                                        'by': 'date' if hit_date else 'name'})
         if age <= UNLISTED_LOOKBACK and _looks_like_own_announcement(cap):
             fut = []
-            for (mo, d) in sorted(mds - known_md - umbrella_days(cap, all_org_events, today)):
+            for (mo, d) in sorted(mds - known_md - umbrella_days(cap, all_org_events, today)
+                                  - staff_work_days(cap, mds, known_md, today)):
                 y = today.year if (mo, d) >= (today.month, today.day) else today.year + 1
                 try:
                     cand = datetime(y, mo, d)
@@ -733,6 +761,24 @@ def self_test():
         {(11, 7)})   # 「・8」は月の無い日なので元から読まない(既存の挙動)
     chk('設営日の見出しの後の日付も数えない', month_days('設営日：10月30日\n開催 10月31日(土)'), {(10, 31)})
     chk('開催日の後の設営以外の語は落とさない', month_days('10月31日(土)開催 11月1日(日)も開催'), {(10, 31), (11, 1)})
+    # ボランティア募集の投稿に並ぶ、掲載済みの開催日の前日は候補にしない(2026-10-16 ときめきマルシェ)
+    ev_g = {'slug': 'g-2026-11', 'name': '多肉と雑貨のときめきマルシェ（群馬県庁前）', 'date': '2026-11-29',
+            'dateEnd': '2026-11-29'}
+    _cap_v = ('❤︎ボランティアスタッフ大募集❤︎\n\n◆11/28(土)\n◆11/29(日)\n\nイベント会場を作る・整備する体験をしてみたい!\n'
+              '↓協力依頼イベント詳細↓\n🌸群馬会場\n日程:2026.11.29(SUN)\n場所:群馬県庁県民広場\n時間:10:00~16:00\n#多肉')
+    p = [{'timestamp': '2026-10-15T12:17:12+0000', 'permalink': 'uv', 'caption': _cap_v}]
+    _, n = analyze_posts('org', p, [ev_g], [ev_g], datetime(2026, 10, 16))
+    chk('ボランティア募集の前日は候補にしない', n, [])
+    # 募集の投稿でも、掲載済みの日と隣り合わない日は候補のまま
+    p = [{'timestamp': '2026-10-15T12:17:12+0000', 'permalink': 'uv2',
+          'caption': _cap_v.replace('◆11/28(土)', '◆11/21(土)')}]
+    _, n = analyze_posts('org', p, [ev_g], [ev_g], datetime(2026, 10, 16))
+    chk('募集の投稿でも隣り合わない日は候補', [x['dates'] for x in n], [['2026-11-21']])
+    # 募集の投稿でなければ、掲載済みの日の前日も候補のまま(2日開催の片日落ちを隠さない)
+    p = [{'timestamp': '2026-10-15T12:17:12+0000', 'permalink': 'uv3',
+          'caption': '【多肉マルシェ開催】日程 ◆11/28(土) ◆11/29(日) 会場 群馬県庁県民広場'}]
+    _, n = analyze_posts('org', p, [ev_g], [ev_g], datetime(2026, 10, 16))
+    chk('募集でなければ前日も候補', [x['dates'] for x in n], [['2026-11-28']])
     chk('チケットの販売開始日は数えない',
         month_days('ABENO HARUKAS 10/31(SAT)-11/1(SUN)\n🎫オンラインチケット販売開始\n10月17日(土)20:00〜'),
         {(10, 31), (11, 1)})

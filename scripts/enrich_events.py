@@ -727,7 +727,7 @@ def _time_for_event(text, ev, times_found):
     if not times_found:
         return None, 'no time on page'
     days = sitelib.event_month_days(ev)
-    dated = sitelib.announced_dated_hours(text or '', sitelib.find_month_days(text or ''))
+    dated = sitelib.announced_dated_hours(text or '', sitelib.announced_month_days(text or ''))
     other = sorted(d for d in dated if d not in days)
     if not other:
         fac = _facility_hour_ranges(text)

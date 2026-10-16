@@ -3280,6 +3280,13 @@ def main():
     # 規則の自己テストを毎回走らせ、落ちたらこの検査の行として出す(呼ぶ側の無いテストにしない)
     for _bad in sitelib._self_test_dated_hours_place():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_dated_hours_place): {_bad}")
+    # 2026-10-16。告知の日付の行の「10月24日(土)・25日(日)」(月を省いた2日目)と、2日を並べた見出しの下の
+    # 「⏰ 10:00〜17:00」を読めず、多肉園おひさまのアピタ足利・イオンモール日吉津は告知に時刻があるのに
+    # time が空のまま通っていた。日だけの見出し(「▶︎ 5日(土) 17:00-22:00」)と、会期の中の1晩の企画
+    # (OPENING EVENT)の時刻も同じ規則で読む。organizer-posts.json の50版(09-23〜10-16)に当てて、
+    # 増えたのは5回分(開催前3・開催済み1・後で直った1)ですべて実際の欠け・食い違い。消えた行は0
+    for _bad in sitelib._self_test_dated_hours_multi():
+        _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_dated_hours_multi): {_bad}")
     for e in events:
         _t = e.get('time') or ''
         _end = e.get('dateEnd') or e.get('date')
@@ -3326,6 +3333,39 @@ def main():
         '告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、'
         '時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。'
         'enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる')
+
+    # 16z1b. 主催の最新の告知が書く会期が、掲載の会期と1〜3日ずれている(2026-10-16)。
+    #        hugcoffee 南町店の PLANTS and COFFEE は 10-15 の告知が「CHAM POP UP 10月23日(金)〜11月1日(日)」、
+    #        掲載は 09-20・10-07 の投稿どおり 10/24 からのままだった。organizer_unlisted_dates は 10/23 を
+    #        「掲載済みの回を含む上位の会期」とみなして黙るので、主催が会期を動かしても誰も見ていなかった。
+    #        規則は sitelib.organizer_post_span_drift(名前の鍵を書いた最新の投稿・上位の催しの語と
+    #        同じ主催の別の回で埋まる日は除く)。organizer-posts.json の50版(09-23〜10-16)に当てて出たのは3回:
+    #        PLANTS and COFFEE(10/23 からに直した)、BOTANICAL STYLE 別府(掲載は1日・主催の年内予定の投稿は 10/10-11。
+    #        開催済みで確かめていない)、ジョイフルエーケー屯田(3店を並べた投稿の 10/17-18。翌日に残り2店を掲載)。
+    #        どちらの投稿が正しいかは人が決めるので info
+    _span_bad = []
+    _by_acc_ev = {}
+    for e in events:
+        for _acc in sitelib.event_ig_accounts(e):
+            _by_acc_ev.setdefault(_acc, []).append(e)
+    for _bad in sitelib._self_test_organizer_post_span():
+        _span_bad.append(f"自己テスト失敗(sitelib._self_test_organizer_post_span): {_bad}")
+    for e in events:
+        _end = e.get('dateEnd') or e.get('date')
+        if (e.get('status') != 'upcoming' or sitelib.is_cancelled(e) or not e.get('date')
+                or (_end and _end < today)):
+            continue
+        _others = [o for _acc in sitelib.event_ig_accounts(e) for o in _by_acc_ev.get(_acc, [])]
+        for _x, _y, _link, _ts in sitelib.organizer_post_span_drift(e, _posts_by_acc, _others):
+            _code = (sitelib.IG_POST_RE.search(_link) or [None, _link])[1]
+            _span_bad.append(f"{e.get('slug')}: 掲載 {e.get('date')}〜{_end} / 主催の {_ts} の告知は "
+                             f"{_x}〜{_y} ({_code})")
+    add('organizer_post_span_differs', '主催の最新の告知が、掲載の会期と1〜3日ずれた会期を書いている',
+        sorted(_span_bad),
+        '投稿を開いて、主催が会期を動かしたのか、別の回・上位の催しの会期なのかを見る。動かしたなら '
+        'date / dateEnd / dateDisplay と説明文の会期を直し、出典をその投稿に替える。掲載が正しければ何もしない'
+        '(投稿が最新12件から外れるか、会期を過ぎれば消える)',
+        severity='info')
 
     # 16z1c. time が、説明文に書いた開催時間と食い違う・欠けている(2026-10-08)。
     #        説明文は告知を読んで書いているので、そこに出た開催時間は time にもあるはず。

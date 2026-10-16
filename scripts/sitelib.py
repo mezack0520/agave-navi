@@ -2100,7 +2100,10 @@ def format_time_range(r):
 # 見出しの行か同じ行にあれば、その行の時刻は数えない
 ANNOUNCED_SUBEVENT_WORDS = ('キャンドル', 'ワークショップ', 'オークション', 'セリ', '競り', '先行',
                             '整理券', 'トーク', 'ライブ', '抽選', '講習', '教室', '説明会',
-                            'セミナー', '搬入', '設営', '搬出')
+                            'セミナー', '搬入', '設営', '搬出',
+                            # 会期の中の1晩だけの企画(2026-10-16)。hugcoffee 南町店の PLANTS and COFFEE
+                            # (10/24-11/1)は「🌙 OPENING EVENT / 10月24日(土) 19:00–22:00」を書く
+                            'オープニング', 'OPENING', 'Opening', '前夜祭', 'レセプション')
 # 出店者の募集の投稿。書いてある時刻は出店者の搬入・営業の時刻で、来場の時刻ではない
 # (富士山フェスタの二次募集は「時間 8:30～15:30」、来場の告知は 9:15〜)
 ANNOUNCED_RECRUIT_WORDS = ('出店者募集', '出店募集', '出店者様募集', '出店者さま募集', '募集要項',
@@ -2121,6 +2124,99 @@ def clock_minutes(text):
 def _single_month_day(text):
     ds = find_month_days(text)
     return next(iter(ds)) if len(ds) == 1 else None
+
+
+# --- 告知の日付の行の、月を省いた2日目以降 (2026-10-16) ------------------------
+# 告知の日付の行は「📅 10月24日(土)・25日(日)」のように2日目以降の月を省く。find_month_days は
+# 月の無い「25日」を拾わないので、多肉園おひさまのアピタ足利(10/24-25)・イオンモール下妻(10/17-18)の
+# 告知は「会期の全日を書いた投稿」に入らず、organizer_post_hours_missing の照合の外に居た。
+# また日付の行に2日を並べ、その下の行に「⏰ 10:00〜17:00」を1つだけ書く形(イオンモール日吉津
+# 10/31-11/1)は、見出しの日付が1つに決まらないので時刻がどの日にも紐づかなかった。
+# 2回とも time が空のまま、主催の告知に時刻があった。
+# 続きの日は「・、,&と」で繋いだ日、範囲は「〜」で繋いだ会期の間の日。昇順でない続き・時刻
+# (「・10:00」)・別の月の日付(「・11月1日」は find_month_days が拾う)は続きに数えない。
+_ANN_WD = r'(?:\s*[(（][^)）\d]{1,6}[)）])?'
+_ANN_FULL = re.compile(r'(?<![\d/:.])(?:\d{4}\s*[./-]\s*(?P<ym>\d{1,2})\s*[./-]\s*(?P<yd>\d{1,2})(?![\d/:.])'
+                       r'|(?P<m>\d{1,2})\s*(?:月\s*(?P<kd>\d{1,2})\s*日|/\s*(?P<sd>\d{1,2})(?![\d/:])))' + _ANN_WD)
+_ANN_CONT = re.compile(r'\s*[・、,&＆と]\s*(\d{1,2})\s*日?(?!\s*(?:[/月:.\d]|時))' + _ANN_WD)
+_ANN_RANGE = re.compile(r'\s*[〜~～\-–—]\s*(?:(\d{1,2})\s*[月/]\s*)?(\d{1,2})\s*日?(?!\s*(?:[/月:.\d]|時))' + _ANN_WD)
+
+
+def announced_month_days(text):
+    """告知の本文から (月, 日) の集合を拾う。find_month_days に、月を省いた続きの日
+    (「10月24日(土)・25日(日)」の25日)と、範囲の間の日(「10月30日(金)〜11月1日(日)」の31日)を足す。
+    範囲は62日まで。年をまたぐ範囲は数えない。"""
+    t = unicodedata.normalize('NFKC', text or '')
+    out = set(find_month_days(t))
+    for m in _ANN_FULL.finditer(t):
+        mo = int(m.group('ym') or m.group('m'))
+        d = int(m.group('yd') or m.group('kd') or m.group('sd'))
+        if not _md_ok(mo, d):
+            continue
+        out.add((mo, d))
+        pos, last = m.end(), d
+        while True:
+            c = _ANN_CONT.match(t, pos)
+            if not c:
+                break
+            d2 = int(c.group(1))
+            if not (last < d2 <= 31) or not _md_ok(mo, d2):
+                break
+            out.add((mo, d2))
+            pos, last = c.end(), d2
+        r = _ANN_RANGE.match(t, pos)
+        if not r:
+            continue
+        mo2 = int(r.group(1)) if r.group(1) else mo
+        d2 = int(r.group(2))
+        if not _md_ok(mo2, d2) or mo2 < mo:
+            continue
+        try:
+            a = date(2000, mo, last)
+            b = date(2000, mo2, d2)
+        except ValueError:
+            continue
+        if not (a < b and (b - a).days <= 62):
+            continue
+        x = a
+        while x <= b:
+            out.add((x.month, x.day))
+            x += timedelta(days=1)
+    return out
+
+
+# 月を書かずに日だけで指す見出し(「▶︎ 5日(土) 17:00-22:00」)。日数・何日目・前後は日付ではない
+_DAY_ONLY = re.compile(r'(?<![\d/月.])(\d{1,2})\s*日(?!\s*(?:間|目|前|後|以|頃|ごろ))')
+
+
+def _day_only_days(text, month_days):
+    """日だけで指した日を month_days の中から引く。どれか1つでも引けない・2つに当たる日があれば空。
+
+    goodthings.jp のビザールプランツナイト(&デイ)の告知は「日程：2026年12月5日・6日 /
+    ▶︎ 5日(土) 17:00-22:00 / ▶︎ 6日(日) 11:00-16:00」と書く。見出しの2日に時刻を紐づけると
+    5日の時刻が6日にも付くので、行が日だけで名乗っていればそちらを使う。"""
+    out = set()
+    for m in _DAY_ONLY.finditer(unicodedata.normalize('NFKC', text or '')):
+        n = int(m.group(1))
+        hit = [md for md in (month_days or ()) if md[1] == n]
+        if len(hit) != 1:
+            return set()
+        out.add(hit[0])
+    return out
+
+
+def _dated_days(text, month_days):
+    """行(またはその見出しの行)が名乗る日のうち、時刻を紐づけてよい日。
+
+    1日だけならその日(会期の外なら空)。2日以上を並べた行は、どれも month_days に入るときだけ
+    全部の日に紐づける(「📅 10月31日(土)・11月1日(日)」の下の「⏰ 10:00〜17:00」)。
+    1つでも外の日を含む行は、別の回の日付を並べた行かもしれないので紐づけない。"""
+    ds = announced_month_days(text)
+    if len(ds) == 1:
+        return ds & set(month_days or ())
+    if len(ds) >= 2 and ds <= set(month_days or ()):
+        return ds
+    return set()
 
 
 def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
@@ -2153,7 +2249,15 @@ def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
                 if not TIME_RANGE_RE.search(lines[j]):
                     head = lines[j]
                 break
-        if any(w in ln or w in head for w in ANNOUNCED_SUBEVENT_WORDS):
+        # 企画の見出しは時刻の行の下に来ることもある(「10/24 19:00 - 22:00 / OPENING EVENT」)。
+        # 直後の行が数字を持たない短い見出しなら、その語も見る(2026-10-16)
+        tail = ''
+        for j in range(i + 1, min(len(lines), i + 3)):
+            if lines[j].strip():
+                if len(lines[j].strip()) <= 20 and not re.search(r'\d', lines[j]):
+                    tail = lines[j]
+                break
+        if any(w in ln or w in head or w in tail for w in ANNOUNCED_SUBEVENT_WORDS):
             continue
         prev_end = 0
         for k, m in enumerate(ms):
@@ -2162,10 +2266,13 @@ def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
             prev_end = m.end()
             if not rr or rr[0][1] - rr[0][0] < min_minutes:
                 continue
-            d = _single_month_day(seg)
-            if d is None and k == 0 and head:
-                d = _single_month_day(head)
-            if d is not None and d in month_days:
+            ds = _dated_days(seg, month_days)
+            if not ds and not announced_month_days(seg):
+                # 月を書かずに日だけで指す行「▶︎ 5日(土) 17:00-22:00」(2026-10-16)
+                ds = _day_only_days(seg, month_days)
+                if not ds and k == 0 and head and not _DAY_ONLY.search(seg):
+                    ds = _dated_days(head, month_days)
+            for d in sorted(ds):
                 out.setdefault(d, set()).add(rr[0])
                 labeled.setdefault(d, []).append((_dated_place_label(seg), rr[0]))
     if place:
@@ -2220,6 +2327,56 @@ def _self_test_dated_hours_place():
     return bad
 
 
+def _self_test_dated_hours_multi():
+    """日付の行に2日を並べる告知・月を省いた2日目・日だけの見出し・会期の中の企画(2026-10-16)。
+    返り値は食い違いの一覧(空なら合格)。audit.time_vs_organizer_post が毎回呼ぶ"""
+    bad = []
+    md_cases = [
+        ('📅 10月24日(土)・25日(日)', {(10, 24), (10, 25)}),
+        ('📅 10月31日(土)・11月1日(日)', {(10, 31), (11, 1)}),
+        ('10月30日(金)〜11月1日(日)', {(10, 30), (10, 31), (11, 1)}),
+        ('2026.10/10(土)〜10/12(月)', {(10, 10), (10, 11), (10, 12)}),
+        ('10/3（土）・4（日）・24（土）・25（日）', {(10, 3), (10, 4), (10, 24), (10, 25)}),
+        ('10月24日(土) 10:00〜18:00', {(10, 24)}),
+        ('10/24(土)・10:00〜', {(10, 24)}),
+        ('10月25日(日)・24日(土)', {(10, 25)}),
+        ('12月30日〜1月3日', {(12, 30), (1, 3)}),
+    ]
+    for text, want in md_cases:
+        got = announced_month_days(text)
+        if got != want:
+            bad.append(('announced_month_days', text, got, want))
+    hours_cases = [
+        ('月を省いた2日目(アピタ足利)', '📅 10月24日(土)・25日(日)\n⏰ 10:00〜18:00（2日目17:00終了）\n📍 アピタ足利',
+         {(10, 24), (10, 25)}, {(10, 24): {(600, 1080)}, (10, 25): {(600, 1080)}}),
+        ('2日を並べた見出し(イオンモール日吉津)', '📅 10月31日(土)・11月1日(日)\n⏰ 10:00〜17:00',
+         {(10, 31), (11, 1)}, {(10, 31): {(600, 1020)}, (11, 1): {(600, 1020)}}),
+        ('日だけの見出し(ビザールプランツナイト)',
+         '日程：2026年12月5日・6日\n▶︎ 5日(土) 17:00-22:00\n▶︎ 6日(日) 11:00-16:00',
+         {(12, 5), (12, 6)}, {(12, 5): {(1020, 1320)}, (12, 6): {(660, 960)}}),
+        ('企画の見出しが上', '🌵 POP UP\n10月23日(金)〜11月1日(日)\n\n🌙 OPENING EVENT\n10月24日(土) 19:00–22:00',
+         {(10, 24)}, {}),
+        ('企画の見出しが下', '10/24(SAT) - 11/1(SAT)\n\n10/24 19:00 - 22:00\nOPENING EVENT', {(10, 24)}, {}),
+        ('見出しに会期の外の日がある', '10/17(土)・10/18(日)\n10:00〜16:00', {(10, 17)}, {}),
+        ('1日だけの見出しは従来どおり', '10月18日(日)\n開催時間 10:00〜16:00', {(10, 18)}, {(10, 18): {(600, 960)}}),
+    ]
+    for label, cap, md, want in hours_cases:
+        got = announced_dated_hours(cap, md)
+        if got != want:
+            bad.append((label, got, want))
+    ev = {'slug': 't', 'name': '多肉園おひさま 多肉イベント in アピタ足利店', 'date': '2026-10-24',
+          'dateEnd': '2026-10-25', 'organizerIg': 'tanikuen_ohisama'}
+    posts = {'tanikuen_ohisama': [{'timestamp': '2026-10-15T16:11:15+0000', 'permalink': 'u1',
+                                   'caption': '🪴✨ 10月24日(土)・25日(日) 栃木県足利市にて多肉イベント開催 ✨🪴多肉園おひさま☀️\n\n'
+                                              '📅 10月24日(土)・25日(日)\n⏰ 10:00〜18:00（2日目17:00終了）\n📍 アピタ足利'}]}
+    if len(organizer_post_hours_missing(ev, posts)) != 2:
+        bad.append(('time が空なら両日を出す', organizer_post_hours_missing(ev, posts)))
+    ev2 = dict(ev, time='10:00〜18:00（最終日は17:00まで）')
+    if organizer_post_hours_missing(ev2, posts):
+        bad.append(('time が告知どおりなら出さない', organizer_post_hours_missing(ev2, posts)))
+    return bad
+
+
 def coexisting_pairs(events):
     """同じ会場・同じ日に並べて開く別の回の組。{frozenset((slug, slug))}(2026-10-10)
 
@@ -2248,7 +2405,7 @@ def announced_hours_for_event(caption, event_days, min_minutes=120):
     event_days は event_month_days(e) の (月, 日) の集合。
     """
     all_r = announced_hours(caption, min_minutes)
-    dated = announced_dated_hours(caption, find_month_days(caption or ''), min_minutes)
+    dated = announced_dated_hours(caption, announced_month_days(caption or ''), min_minutes)
     mine, other = set(), set()
     for d, rs in dated.items():
         (mine if d in (event_days or set()) else other).update(rs)
@@ -2314,7 +2471,7 @@ def organizer_post_hours_missing(e, posts_by_account):
             cap = p.get('caption') or ''
             if any(w in cap for w in ANNOUNCED_RECRUIT_WORDS):
                 continue
-            if not md <= find_month_days(cap):
+            if not md <= announced_month_days(cap):
                 continue
             if keys and not any(k in name_key_text(cap) for k in keys):
                 continue
@@ -2329,6 +2486,150 @@ def organizer_post_hours_missing(e, posts_by_account):
             if not {r[0], r[1]} <= have:
                 out.append((d, r, link, ts[:10]))
     return out
+
+
+# --- 主催の最新の告知が書く会期と、掲載の会期のずれ (2026-10-16) ------------------------
+# hugcoffee 南町店の PLANTS and COFFEE は 09-20・10-07 の投稿が「10/24〜11/1」、10-15 の投稿が
+# 「🌵 CHAM POP UP 10月23日(金)〜11月1日(日)」で、掲載は 10/24 からのままだった。主催が後から
+# 会期を動かしても、どの検査も見ていなかった(organizer_unlisted_dates は 10/23 を「掲載済みの回を
+# 含む上位の会期」として黙らせる)。範囲の端が会期の端から3日以内でずれている投稿だけを出す。
+# 上位の催しの会期(デザイン週間・フェアの期間)と、同じ主催の別の回で埋まる日(巡業)は除く。
+SPAN_UMBRELLA_WORDS = ('期間', '枠組', 'フェア', '週間', 'ウィーク', 'WEEK', 'Week', 'week', '会期中', '開催中')
+
+
+def announced_ranges(text, year):
+    """告知本文の会期の範囲 [(開始日, 終了日, 範囲の前後の文)]。「〜」で繋いだ範囲と、
+    続きの日で連続する2日以上(「10月24日(土)・25日(日)」)。年は year(年をまたぐ範囲は数えない)"""
+    t = unicodedata.normalize('NFKC', text or '')
+    out = []
+    for m in _ANN_FULL.finditer(t):
+        mo = int(m.group('ym') or m.group('m'))
+        d = int(m.group('yd') or m.group('kd') or m.group('sd'))
+        pos, last, contiguous = m.end(), d, True
+        while True:
+            c = _ANN_CONT.match(t, pos)
+            if not c:
+                break
+            d2 = int(c.group(1))
+            if not (last < d2 <= 31):
+                break
+            contiguous = contiguous and d2 == last + 1
+            pos, last = c.end(), d2
+        r = _ANN_RANGE.match(t, pos)
+        try:
+            a = date(year, mo, d)
+            if r:
+                b = date(year, int(r.group(1)) if r.group(1) else mo, int(r.group(2)))
+                tail = r.end()
+            elif last != d and contiguous:
+                b = date(year, mo, last)
+                tail = pos
+            else:
+                continue
+        except ValueError:
+            continue
+        if a < b and (b - a).days <= 62:
+            out.append((a, b, t[max(0, m.start() - 30):tail + 30]))
+    return out
+
+
+def organizer_post_span_drift(e, posts_by_account, org_events=(), max_shift=3):
+    """主催の最新の告知(名前の鍵を書き、会期と重なる範囲を持つ投稿のうち一番新しいもの)が、
+    掲載と1〜max_shift 日ずれた会期を書いていれば [(開始日, 終了日, permalink, 投稿日)]。
+
+    その投稿が掲載どおりの範囲も書いていれば出さない。範囲の前後の文に上位の催しの語
+    (SPAN_UMBRELLA_WORDS)がある範囲と、ずれた日が同じ主催の別の回(org_events)の会期に
+    入る範囲(巡業の日程を並べた投稿)は数えない。"""
+    d0, d1 = event_span(e)
+    try:
+        a, b = date.fromisoformat(d0), date.fromisoformat(d1)
+    except (TypeError, ValueError):
+        return []
+    keys = event_name_keys(e)
+    other_days = set()
+    for o in org_events or ():
+        if o.get('slug') == e.get('slug') or is_cancelled(o):
+            continue
+        try:
+            oa, ob = date.fromisoformat(event_span(o)[0]), date.fromisoformat(event_span(o)[1])
+        except (TypeError, ValueError):
+            continue
+        x = oa
+        while x <= ob and (x - oa).days <= 62:
+            other_days.add(x)
+            x += timedelta(days=1)
+    best = None
+    for acc in event_ig_accounts(e):
+        for p in posts_by_account.get(acc) or []:
+            cap = p.get('caption') or ''
+            if any(w in cap for w in ANNOUNCED_RECRUIT_WORDS):
+                continue
+            if keys and not any(k in name_key_text(cap) for k in keys):
+                continue
+            rs = [(x, y, ctx) for x, y, ctx in announced_ranges(cap, a.year) if x <= b and y >= a]
+            if not rs:
+                continue
+            ts = p.get('timestamp') or ''
+            if best is None or ts > best[0]:
+                best = (ts, p.get('permalink') or '', rs)
+    if not best:
+        return []
+    ts, link, rs = best
+    if any((x, y) == (a, b) for x, y, _ in rs):
+        return []
+    out = []
+    for x, y, ctx in rs:
+        if abs((x - a).days) > max_shift or abs((y - b).days) > max_shift:
+            continue
+        if any(w in ctx for w in SPAN_UMBRELLA_WORDS):
+            continue
+        extra = set()
+        z = x
+        while z <= y:
+            if not (a <= z <= b):
+                extra.add(z)
+            z += timedelta(days=1)
+        if extra and extra <= other_days:
+            continue
+        out.append((x.isoformat(), y.isoformat(), link, ts[:10]))
+    return out
+
+
+def _self_test_organizer_post_span():
+    """organizer_post_span_drift の規則(2026-10-16)。返り値は食い違いの一覧(空なら合格)"""
+    bad = []
+    ev = {'slug': 'pc', 'name': 'PLANTS and COFFEE（CHAM × hugcoffee 南町店）', 'date': '2026-10-24',
+          'dateEnd': '2026-11-01', 'organizerIg': 'hugcoffee_minamicho'}
+    def posts(*caps):
+        return {'hugcoffee_minamicho': [{'timestamp': f'2026-10-{10 + i:02d}T00:00:00+0000', 'permalink': f'u{i}',
+                                         'caption': c} for i, c in enumerate(caps)]}
+    new = 'PLANTS and COFFEE\n🌵 CHAM POP UP\n10月23日(金)〜11月1日(日)\n\n🌙 OPENING EVENT\n10月24日(土) 19:00–22:00'
+    old = 'PLANTS and COFFEE\n10/24(SAT) - 11/1(SAT)'
+    cases = [
+        ('最新の告知が開始日を1日前に', posts(old, new), [], [('2026-10-23', '2026-11-01', 'u1', '2026-10-11')]),
+        ('最新の告知が掲載どおり', posts(new, old), [], []),
+        ('上位の会期の語', posts('PLANTS and COFFEE は 10月23日(金)〜11月1日(日)の期間に開かれる週間の企画'), [], []),
+        ('ずれた日が同じ主催の別の回', posts(new),
+         [{'slug': 'x', 'date': '2026-10-23', 'dateEnd': '2026-10-23'}], []),
+        ('4日以上のずれは出さない', posts('PLANTS and COFFEE 10月17日(土)〜11月1日(日)'), [], []),
+        ('名前の無い投稿は見ない', posts('🌵 CHAM POP UP\n10月23日(金)〜11月1日(日)'), [], []),
+    ]
+    for label, pba, others, want in cases:
+        got = organizer_post_span_drift(ev, pba, others)
+        if got != want:
+            bad.append((label, got, want))
+    one = {'slug': 'b', 'name': 'BOTANICAL STYLE -Beppu Oita-', 'date': '2026-10-10', 'dateEnd': '2026-10-10',
+           'organizerIg': 'earthwalk_plants'}
+    pba = {'earthwalk_plants': [{'timestamp': '2026-09-28T01:06:40+0000', 'permalink': 'e1',
+                                 'caption': '10/10-11\nBOTANICAL STYLE-Beppu Oita-\n大分県別府市 別府駅市場'}]}
+    if organizer_post_span_drift(one, pba) != [('2026-10-10', '2026-10-11', 'e1', '2026-09-28')]:
+        bad.append(('1日の回に2日の範囲', organizer_post_span_drift(one, pba)))
+    if announced_ranges('10/3（土）・4（日）・24（土）・25（日）', 2026):
+        bad.append(('連続しない続きの日は範囲にしない', announced_ranges('10/3（土）・4（日）・24（土）・25（日）', 2026)))
+    if [(x.isoformat(), y.isoformat()) for x, y, _ in announced_ranges('📅 10月24日(土)・25日(日)', 2026)] != [
+            ('2026-10-24', '2026-10-25')]:
+        bad.append(('連続する続きの日は範囲', announced_ranges('📅 10月24日(土)・25日(日)', 2026)))
+    return bad
 
 
 # 説明文が名乗る「その日」。「11月1日は」「27日は」「9/26」「初日」「最終日」「2日目」

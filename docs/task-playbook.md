@@ -3542,6 +3542,8 @@ agave-navi-eyecatch は本文の置き換えで)。10-14 以降に固定名の�
 **10-15 も同じ朝に `/sessions` が満杯だった(空き 67M)。2日続いた。**`mktemp -d -p /tmp` で通った。同じ id の facts に日付を足した。08:20 の event-monitor も同じ形で落ち(同じ朝に3本目)、`mktemp -d /tmp/<名前>.XXXXXXXX` で通った。
 **10-16 も同じ朝に満杯(空き 51M)。3日続いた。**`mktemp -d -p /tmp` で通った。10-15 に承認された提案を当てようとした `update_scheduled_task` は
 定期実行で自動拒否された(§1 の 7)。プロンプトは5本とも `D=$(mktemp -d)` のまま。当たるまでは、clone が落ちたら `-p /tmp` で取り直す。
+同じ朝 08:46 の event-monitor も `D=$(mktemp -d)` で落ちた(/sessions 空き 50M・/tmp 空き 2.7G)。**`$TMPDIR` は /sessions/<自分>/tmp を指すので、
+`mktemp -d` には必ず `-p /tmp` を付ける**(付けずに2回落ちた)。
 
 **中間出力も同じ（2026-10-05 / 10-04 に続き2回目）。** `python3 scripts/audit.py > /tmp/audit.out; tail /tmp/audit.out` が
 リダイレクトで Permission denied になり、**tail は 10-04 の別セッションが残した `/tmp/audit.out` を表示した。**
@@ -4442,6 +4444,38 @@ tbd_with_named_venue は開催前しか見ず、desc_claims_unannounced は「�
 - その日の check-results.json の判定も同じ関数で直した(翌朝の agave-event-update が同じ調べ直しをしないため)。log-fix は dead_links / reviewed。
 - **リンク切れが出たら、まず手元から HEAD と GET で引き直す。**CI にだけ違う返事をする相手がある(blogspot・threads)。
 
+### 告知の日付の行が月を省くと、time の照合が投稿ごと素通りしていた (2026-10-16)
+
+多肉園おひさまのアピタ足利(10/24-25)とイオンモール日吉津(10/31-11/1)は、主催の告知に時刻があるのに time が空だった。
+`organizer_post_hours_missing` は「会期の全日を書いた投稿」だけを見るが、`find_month_days` は
+「📅 10月24日(土)・25日(日)」の月の無い25日を拾わず、足利の告知は照合の外だった。日吉津の告知は
+「📅 10月31日(土)・11月1日(日)」の下に「⏰ 10:00〜17:00」を1行だけ書く形で、見出しの日付が1つに決まらず
+時刻がどの日にも紐づかなかった(`_single_month_day` は2日あると None)。
+- `sitelib.announced_month_days`: 続きの日(・、,&と)と範囲(〜)の間の日を足す。昇順でない続き・時刻・別の月の日付は続きに数えない
+- `announced_dated_hours`: 2日以上を並べた行は、どれも会期の日なら全部に紐づける(1つでも外の日があれば紐づけない)。
+  月の無い「▶︎ 5日(土) 17:00-22:00」は会期の日から日だけで引く(ビザールプランツナイト(&デイ)の 5日夜・6日昼)
+- 会期の中の1晩の企画(OPENING EVENT・前夜祭・レセプション)を企画の語に足し、時刻の行の直後の短い見出しも見る
+- organizer-posts.json の50版に当てて、増えたのは5回分(開催前3・開催済み1・後で直った下妻の 10:00〜21:00)で、全部実際の欠け。消えた行は0。
+  enrich の一覧頁の自己テストも通る。自己テスト `_self_test_dated_hours_multi` は実装を戻すと1〜6件落ちる
+- **時刻の照合が0件のとき、照合に入った投稿が0件でないかを疑う。**日付の書き方1つで投稿ごと外れる
+
+### 主催が会期を後から動かしても、どの検査も見ていなかった (2026-10-16)
+
+hugcoffee 南町店の PLANTS and COFFEE は、09-20・10-07 の投稿が 10/24〜11/1、10-15 の投稿が「🌵 CHAM POP UP 10月23日(金)〜11月1日(日)」
+(曜日も合う)。掲載は 10/24 からのままだった。`organizer_unlisted_dates` は 10/23 を「掲載済みの回を含む上位の会期」(`umbrella_days`)
+とみなして黙る。上位の会期の規則は正しいが、同じ形で主催自身の会期の変更も消していた。
+`audit.organizer_post_span_differs`(info・`sitelib.organizer_post_span_drift`)を足した。名前の鍵を書いた最新の投稿が、会期と重なり
+端が1〜3日ずれた範囲を書いていれば出す。範囲の前後に上位の催しの語(期間・枠組・フェア・週間)がある範囲と、ずれた日が同じ主催の
+別の回で埋まる範囲(巡業)は除く。50版で出たのは3回(PLANTS and COFFEE・BOTANICAL STYLE 別府の 10/10-11・ジョイフルエーケー屯田の3店の投稿)。
+どちらが正しいかは人が決めるので info。素の「隣の日が投稿にある」で当てると巡業・上位の会期で50版に40行出たので、範囲と除外が要る。
+
+### ボランティア募集の投稿は、開催日の前日を作業日として並べる (2026-10-16 / 10-10 の再発)
+
+ときめきマルシェ(@tokimeki_marche)の「❤︎ボランティアスタッフ大募集❤︎ / ◆11/28(土) / ◆11/29(日) / イベント会場を作る・整備する体験」の
+11/28 が `organizer_unlisted_dates` に出た。BOTAJAM の「11/6の前日搬入・設営」は日付の直後の語で落としたが、今回は設営の語が
+別の段落で「会場を作る」と書く。`ig-organizer-watch.staff_work_days`: ボランティア・スタッフ募集の投稿で、同じ投稿に並べた
+掲載済みの開催日の前日・翌日を落とす。50版で変わるのはこの1件だけ。募集でない投稿の前日(2日開催の片日落ち)は残る。
+
 ## 日次メールの項目は、報告する前に直す (2026-09-29)
 
 **目崎の指示: 「積み残しとか異常あり、他所に出ていて当サイトに無いイベントは
@@ -4486,6 +4520,7 @@ tbd_with_named_venue は開催前しか見ず、desc_claims_unannounced は「�
 | 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
+| 主催の最新の告知と会期が1〜3日ずれる(`organizer_post_span_differs`・info) | 投稿を開き、主催が会期を動かしたのか、上位の催し・別の回の会期なのかを見る。動かしたなら date / dateEnd / dateDisplay・説明文の会期・出典を直す | fixed / reviewed |
 | 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄(date / dateEnd / dateDisplay)か説明文を直す。daily の date verification が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
 | 説明文が「未発表・告知待ち」と書く項目に値がある(`desc_claims_unannounced`) | 値の出所を確かめる。出典の告知にあれば説明文の一文を消し、無ければ値を消す。enrich が一覧の頁から別の回の値を拾っていないかをログの `Found:` で見る | fixed |
 | 終わった回に「未定」などの仮置きの値(`past_placeholder_value`) | 出典に実際の値があれば入れ、無ければキーごと消す(会場は表示側が「記録なし」に落とすので対象外) | fixed |
