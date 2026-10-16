@@ -1,5 +1,5 @@
 {
-  "total": 820,
+  "total": 817,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -696,7 +696,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -866,11 +866,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 2,
-      "items": [
-        "2026-10-17 アガベ会（アガベの交流・販売・トレードイベント）",
-        "2026-11-07 PLANTS MARKET（植物即売会）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1073,10 +1070,8 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
-      "items": [
-        "@tokimeki_marche 2026-11-28: . ❤︎ボランティアスタッフ大募集❤︎ ◆11/28(土) ◆11/29(日) イベント会場を作る・整備する体験をしてみ https://www.instagram.com/p/Deg8FFJncmC/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1093,6 +1088,13 @@
       "items": [],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
+    },
+    "organizer_post_span_differs": {
+      "title": "主催の最新の告知が、掲載の会期と1〜3日ずれた会期を書いている",
+      "count": 0,
+      "items": [],
+      "note": "投稿を開いて、主催が会期を動かしたのか、別の回・上位の催しの会期なのかを見る。動かしたなら date / dateEnd / dateDisplay と説明文の会期を直し、出典をその投稿に替える。掲載が正しければ何もしない(投稿が最新12件から外れるか、会期を過ぎれば消える)",
+      "severity": "info"
     },
     "time_vs_description": {
       "title": "time が説明文に書いた開催時間と食い違う・欠けている",

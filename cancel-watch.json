@@ -2,25 +2,14 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-10-16",
   "stats": {
-    "targets": 29,
-    "fetched": 28
+    "targets": 30,
+    "fetched": 29
   },
   "errors": [
     "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
   ],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "taniku-xmas-flarie-2026-12",
-      "name": "多肉X'mas",
-      "date": "2026-12-05",
-      "url": "https://www.flarie.jp/news/succulents-xmas.html",
-      "why": "公式ページが変わった(本文: 1170→1202字 +2%)",
-      "changed": [
-        "本文"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10": {
       "url": "https://qusamura.com/information/exhibition/",
@@ -110,6 +99,28 @@
       "textOnlyChanges": 1,
       "imageOnlyChanges": 0
     },
+    "ofuna-flower-center-saboten-taniku-ten-2026-10": {
+      "url": "https://www.fcofuna-kanagawa.jp/events/exhibition/10205",
+      "checkedOn": "2026-10-16",
+      "signature": {
+        "text": "644c2dd91f9f1a49",
+        "images": "6f501fc7bf47ac41",
+        "textLen": 936,
+        "imageCount": 39
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-16",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
     "suma-rikyu-cactus-succulent-tenjikai-2026-10": {
       "url": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
       "checkedOn": "2026-10-16",
@@ -119,7 +130,7 @@
         "textLen": 1372,
         "imageCount": 36
       },
-      "prevTextLen": 1383,
+      "prevTextLen": 1372,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -603,7 +614,7 @@
         "textLen": 1202,
         "imageCount": 4
       },
-      "prevTextLen": 1170,
+      "prevTextLen": 1202,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -625,7 +636,7 @@
         "textLen": 51,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 51,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],

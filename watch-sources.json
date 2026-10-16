@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-16 08:33 JST",
+ "generated": "2026-10-16 09:18 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 372,
   "awaitingNextEdition": 339,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 95,
+  "igNeedsBrowser": 88,
   "igDead": 7
  },
  "igAccounts": [
@@ -148,7 +148,7 @@
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "felicita_plants",
@@ -808,7 +808,7 @@
    "lastEventDate": "2026-10-14",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "green_prickle",
@@ -1111,6 +1111,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "hugcoffee_minamicho",
+   "url": "https://www.instagram.com/hugcoffee_minamicho/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS and COFFEE（CHAM × hugcoffee 南町店）",
+   "lastEventDate": "2026-10-23",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "garden_link_festa",
    "url": "https://www.instagram.com/garden_link_festa/",
    "eventCount": 1,
@@ -1151,16 +1161,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "hugcoffee_minamicho",
-   "url": "https://www.instagram.com/hugcoffee_minamicho/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS and COFFEE（CHAM × hugcoffee 南町店）",
-   "lastEventDate": "2026-10-24",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "mochi.ie29",
    "url": "https://www.instagram.com/mochi.ie29/",
    "eventCount": 1,
@@ -1188,7 +1188,7 @@
    "lastEventDate": "2026-10-24",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "plus__plants",
@@ -1458,7 +1458,7 @@
    "lastEventDate": "2026-11-03",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "botajam2026",
@@ -1538,7 +1538,7 @@
    "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "_wonder_market_",
@@ -1588,7 +1588,7 @@
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -1648,7 +1648,7 @@
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "rareplantsjapan2025",
