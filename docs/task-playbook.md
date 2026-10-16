@@ -132,6 +132,9 @@
    - 当てるのは目崎(スケジュール済みタスクの編集画面)。クラウドの会話には scheduled-tasks のツールが無く、
      10-16 に会話へ貼ってもらった依頼は当てられなかった。定期実行は `approvedOn` のある項目について
      SKILL.md を `Read` するだけにし、書き換えが入っていたら `resolved` に移して push する
+   - **PC の Cowork の会話からは `update_scheduled_task` で当てられる(2026-10-16 実施)。**目崎がその会話に居て、ツールの承認をその場で出せるから。
+     手順: 対象の SKILL.md を `Read` → proposal の差分だけを当てた本文(frontmatter は含めない)で `update_scheduled_task` →
+     もう一度 `Read` で差分が指定の箇所だけかを見る → `list_scheduled_tasks` → 項目を `resolved` に移して push。frontmatter はツールが残す
    - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
      `agave-navi-site-health-check` は台帳の taskId と名前が違う
 

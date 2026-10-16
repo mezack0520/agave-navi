@@ -1,33 +1,6 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "event-listing-review:skill-clone-tmpdir-full",
-      "addedOn": "2026-10-14",
-      "source": "event-listing-review",
-      "question": "5本のスケジュールタスクのプロンプトにある clone 先の例 `D=$(mktemp -d)` を `D=$(mktemp -d -p /tmp)` に変え、空き容量で落ちたときの一文を足してよいか。repo 側からは直せない。",
-      "facts": [
-        "10-14 06:35 の event-listing-review がプロンプトの例どおり `D=$(mktemp -d)` で clone したら `fatal: write error: No space left on device` で落ちた。mktemp -d は $TMPDIR(/sessions/<自分>/tmp)に作る。",
-        "同時刻の df -h: /sessions(全セッション共用・9.8G)が使用 9.2G・空き 68M・100%。/tmp はルート(9.6G)で空き 3.7G。",
-        "`D=$(mktemp -d -p /tmp)` で取り直したら通った(.git 142M・作業ツリー 71M)。名前が毎回一意なので、10-13 までに7回当たった /tmp の固定名の残骸とは衝突しない。",
-        "10-12・10-13 は /sessions/<自分>/repo に取り直して通っているので、満杯は常時ではない。プレイブック §3 の『/sessions/<自分>/ 配下へ取り直す』も同じボリュームなので、満杯の日は効かない。",
-        "5本とも同じ例を持つ(10-14 に SKILL.md を Read で確認)。agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check は「clone 先は毎回新しく作る(例: D=$(mktemp -d); …)」の段、agave-navi-eyecatch は本文の「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave\")」。例は 10-13 承認の event-listing-review:skill-clone-dir で入った。",
-        "clone は record-run.py とプレイブックより前なので、repo 側の手順では塞げない。",
-        "10-15 06:35 の event-listing-review も同じ形で落ちた。`D=$(mktemp -d)` が $TMPDIR(/sessions/<自分>/tmp)に作り、clone が `No space left on device`。df -h は /sessions 使用 9.2G・空き 67M・100%、/tmp(ルート)は空き 3.6G。`mktemp -d -p /tmp` で取り直して通った。2日続けて同じ朝に満杯だった。",
-        "10-15 07:53 の agave-navi-eyecatch もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 空き 66M・/tmp 空き 3.4G)。`mktemp -d -p /tmp` で取り直して通った。同じ朝に2本目。",
-        "10-15 08:20 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 66M・100%、/tmp(ルート)空き 3.2G)。`mktemp -d /tmp/<名前>.XXXXXXXX` で取り直して通った。同じ朝に3本目(event-listing-review・agave-navi-eyecatch・event-monitor)。",
-        "10-16 06:37 の event-listing-review もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた。/sessions 使用 9.2G・空き 51M・100%、/tmp(ルート)空き 3.6G。`mktemp -d -p /tmp` で取り直して通った。3日続けて同じ朝に満杯。",
-        "10-16 06:4x、approvedOn を受けて event-listing-review(定期実行)が5本の SKILL.md を Read した(5本とも `D=$(mktemp -d)` のまま)。自分の event-listing-review に update_scheduled_task を呼んだが「This tool request was declined automatically because no one was available to approve it during this scheduled run」で拒否された。残り4本は同じ拒否になるので呼んでいない。5本とも未適用。",
-        "10-16 08:46 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 50M・100%、/tmp(ルート)空き 2.7G)。`mktemp -d -p /tmp` で取り直して通った。同じ朝に2本目(event-listing-review・event-monitor)。",
-        "10-16 07:04 の agave-event-update もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 空き 51M・/tmp 空き 3.4G)。`mktemp -d -p /tmp` で通った。07:31 に改定前の §1-7 を読んで自分の agave-event-update に update_scheduled_task を呼び、同じ文面で自動拒否された。呼ぶ直前の date が 07:30:51、直後が 09:32:06 で、拒否が返るまで約2時間止まっていたことを確かめた(event-listing-review の『可能性』の裏付け)。"
-      ],
-      "proposal": "5本(agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check / agave-navi-eyecatch)のプロンプトで `D=$(mktemp -d)` → `D=$(mktemp -d -p /tmp)` に置換し、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足す(他の行は変えない)",
-      "whyHuman": "プロンプトは目崎がアプリの編集画面で書き換える(定期実行は承認者不在で自動拒否・クラウドの会話にはツールが無い。プレイブック §1 の 7)",
-      "resolveWhen": "定期実行が5本の SKILL.md を Read して `mktemp -d -p /tmp` が入っていたら resolved へ移す",
-      "approvedOn": "2026-10-15",
-      "approvedBy": "目崎(「提案通りで」)"
-    }
-  ],
+  "items": [],
   "updated": "2026-10-16",
   "resolved": [
     {
@@ -135,6 +108,34 @@
       "approvedBy": "目崎(「提案通りで」)",
       "resolvedOn": "2026-10-13",
       "decision": "2026-10-13 08:5x の event-monitor(定期実行)が update_scheduled_task で、本文を proposal の「」内の文(スキル agave-navi-eyecatch を読み、その手順に従う。…clone 先は毎回新しく作る…)に置き換えた。frontmatter(name・description)はそのまま。SKILL.md を Read して反映を確かめ、list_scheduled_tasks で cron 45 7 * * *・enabled が変わっていないことを見た。効いたかは明朝 07:45 の回のレポートで分かる。"
+    },
+    {
+      "id": "event-listing-review:skill-clone-tmpdir-full",
+      "addedOn": "2026-10-14",
+      "source": "event-listing-review",
+      "question": "5本のスケジュールタスクのプロンプトにある clone 先の例 `D=$(mktemp -d)` を `D=$(mktemp -d -p /tmp)` に変え、空き容量で落ちたときの一文を足してよいか。repo 側からは直せない。",
+      "facts": [
+        "10-14 06:35 の event-listing-review がプロンプトの例どおり `D=$(mktemp -d)` で clone したら `fatal: write error: No space left on device` で落ちた。mktemp -d は $TMPDIR(/sessions/<自分>/tmp)に作る。",
+        "同時刻の df -h: /sessions(全セッション共用・9.8G)が使用 9.2G・空き 68M・100%。/tmp はルート(9.6G)で空き 3.7G。",
+        "`D=$(mktemp -d -p /tmp)` で取り直したら通った(.git 142M・作業ツリー 71M)。名前が毎回一意なので、10-13 までに7回当たった /tmp の固定名の残骸とは衝突しない。",
+        "10-12・10-13 は /sessions/<自分>/repo に取り直して通っているので、満杯は常時ではない。プレイブック §3 の『/sessions/<自分>/ 配下へ取り直す』も同じボリュームなので、満杯の日は効かない。",
+        "5本とも同じ例を持つ(10-14 に SKILL.md を Read で確認)。agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check は「clone 先は毎回新しく作る(例: D=$(mktemp -d); …)」の段、agave-navi-eyecatch は本文の「clone 先は毎回新しく作る(例: D=$(mktemp -d); git clone <URL> \"$D/agave\")」。例は 10-13 承認の event-listing-review:skill-clone-dir で入った。",
+        "clone は record-run.py とプレイブックより前なので、repo 側の手順では塞げない。",
+        "10-15 06:35 の event-listing-review も同じ形で落ちた。`D=$(mktemp -d)` が $TMPDIR(/sessions/<自分>/tmp)に作り、clone が `No space left on device`。df -h は /sessions 使用 9.2G・空き 67M・100%、/tmp(ルート)は空き 3.6G。`mktemp -d -p /tmp` で取り直して通った。2日続けて同じ朝に満杯だった。",
+        "10-15 07:53 の agave-navi-eyecatch もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 空き 66M・/tmp 空き 3.4G)。`mktemp -d -p /tmp` で取り直して通った。同じ朝に2本目。",
+        "10-15 08:20 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 66M・100%、/tmp(ルート)空き 3.2G)。`mktemp -d /tmp/<名前>.XXXXXXXX` で取り直して通った。同じ朝に3本目(event-listing-review・agave-navi-eyecatch・event-monitor)。",
+        "10-16 06:37 の event-listing-review もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた。/sessions 使用 9.2G・空き 51M・100%、/tmp(ルート)空き 3.6G。`mktemp -d -p /tmp` で取り直して通った。3日続けて同じ朝に満杯。",
+        "10-16 06:4x、approvedOn を受けて event-listing-review(定期実行)が5本の SKILL.md を Read した(5本とも `D=$(mktemp -d)` のまま)。自分の event-listing-review に update_scheduled_task を呼んだが「This tool request was declined automatically because no one was available to approve it during this scheduled run」で拒否された。残り4本は同じ拒否になるので呼んでいない。5本とも未適用。",
+        "10-16 08:46 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 50M・100%、/tmp(ルート)空き 2.7G)。`mktemp -d -p /tmp` で取り直して通った。同じ朝に2本目(event-listing-review・event-monitor)。",
+        "10-16 07:04 の agave-event-update もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 空き 51M・/tmp 空き 3.4G)。`mktemp -d -p /tmp` で通った。07:31 に改定前の §1-7 を読んで自分の agave-event-update に update_scheduled_task を呼び、同じ文面で自動拒否された。呼ぶ直前の date が 07:30:51、直後が 09:32:06 で、拒否が返るまで約2時間止まっていたことを確かめた(event-listing-review の『可能性』の裏付け)。"
+      ],
+      "proposal": "5本(agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check / agave-navi-eyecatch)のプロンプトで `D=$(mktemp -d)` → `D=$(mktemp -d -p /tmp)` に置換し、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足す(他の行は変えない)",
+      "whyHuman": "プロンプトは目崎がアプリの編集画面で書き換える(定期実行は承認者不在で自動拒否・クラウドの会話にはツールが無い。プレイブック §1 の 7)",
+      "resolveWhen": "定期実行が5本の SKILL.md を Read して `mktemp -d -p /tmp` が入っていたら resolved へ移す",
+      "approvedOn": "2026-10-15",
+      "approvedBy": "目崎(「提案通りで」)",
+      "resolvedOn": "2026-10-16",
+      "decision": "2026-10-16、目崎の依頼で PC の Cowork の会話から update_scheduled_task を5本に当てた(agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check / agave-navi-eyecatch。目崎がその場で承認)。clone の例を `D=$(mktemp -d -p /tmp)` にし、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足した。agave-navi-eyecatch は例の文の末尾に句点が無かったので「。」を補ってから足した。ほかの行と frontmatter(name・description)は変えていない。当てる前と後に5本の SKILL.md を Read して差分が clone の段だけであることを確かめ、list_scheduled_tasks で5本とも enabled・スケジュール不変を確かめた"
     }
   ]
 }
