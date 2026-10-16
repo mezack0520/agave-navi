@@ -21,9 +21,9 @@
         "10-16 08:46 の event-monitor もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 使用 9.2G・空き 50M・100%、/tmp(ルート)空き 2.7G)。`mktemp -d -p /tmp` で取り直して通った。同じ朝に2本目(event-listing-review・event-monitor)。",
         "10-16 07:04 の agave-event-update もプロンプトの例どおり `D=$(mktemp -d)` で clone して `No space left on device` で落ちた(/sessions 空き 51M・/tmp 空き 3.4G)。`mktemp -d -p /tmp` で通った。07:31 に改定前の §1-7 を読んで自分の agave-event-update に update_scheduled_task を呼び、同じ文面で自動拒否された。呼ぶ直前の date が 07:30:51、直後が 09:32:06 で、拒否が返るまで約2時間止まっていたことを確かめた(event-listing-review の『可能性』の裏付け)。"
       ],
-      "proposal": "5本のプロンプトの clone の例の `D=$(mktemp -d)` を `D=$(mktemp -d -p /tmp)` に変え、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足す(他の行は変えない)。不要と判断した場合はその旨を decision に書いて resolved へ移す。",
-      "whyHuman": "プロンプトの変更は PC の Cowork の会話でしか当てられない(定期実行は承認者不在で自動拒否・プレイブック §1 の 7)",
-      "resolveWhen": "PC の Cowork の会話が update_scheduled_task で5本に当て、Read と list_scheduled_tasks で確かめたら resolved へ移す",
+      "proposal": "5本(agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check / agave-navi-eyecatch)のプロンプトで `D=$(mktemp -d)` → `D=$(mktemp -d -p /tmp)` に置換し、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足す(他の行は変えない)",
+      "whyHuman": "プロンプトは目崎がアプリの編集画面で書き換える(定期実行は承認者不在で自動拒否・クラウドの会話にはツールが無い。プレイブック §1 の 7)",
+      "resolveWhen": "定期実行が5本の SKILL.md を Read して `mktemp -d -p /tmp` が入っていたら resolved へ移す",
       "approvedOn": "2026-10-15",
       "approvedBy": "目崎(「提案通りで」)"
     }

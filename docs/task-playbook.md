@@ -120,18 +120,18 @@
    `upcoming` も 144 → 163 に増えており、**残数は母数が増えれば増える。**
    差の向きだけでは働きを測れない。詳細は §3 の同題の項。
 
-   **プロンプト(SKILL.md)の変更は、目崎が承認したものだけを、PC の Cowork の会話で当てる(2026-10-16 改定)。**
+   **プロンプト(SKILL.md)の変更は、目崎が承認したものを、目崎がアプリの編集画面で書き換える(2026-10-16 改定)。**
    - プロンプトに置くのは起動(clone の場所・record-run.py・このファイルを読む)だけにする。手順・規則は
      このファイルに書く。プロンプトを変える必要が出るのは起動が壊れたときだけ
-   - 変えたいプロンプトは `pending-judgments.json` に提案として積む(差分をそのまま書く)。
-     目崎が承認すると `approvedOn` が付き、日次メールの「PCで当ててほしいプロンプト変更」に出る
+   - 変えたいプロンプトは `pending-judgments.json` に提案として積む。**proposal は人がそのまま手で当てられる形に書く:**
+     対象のタスク名と、置換前の文字列 → 置換後の文字列。目崎が承認すると `approvedOn` が付き、
+     日次メールの「プロンプトの書き換えをお願いします」に proposal がそのまま出る
    - **定期実行は `update_scheduled_task` を呼ばない。**10-16 に承認者不在で自動拒否され
      (「declined automatically because no one was available to approve it during this scheduled run」)、
      拒否が返るまで約2時間止まって朝の後続がずれた(agave-event-update でも呼ぶ直前 07:30:51・直後 09:32:06 を date で実測)。10-13 に通ったのは目崎がその場で承認できたからとみられる
-   - 当てるのは目崎が PC の Claude デスクトップで開いた Cowork の会話。「アガナビの承認済みプロンプト変更を当てて」と
-     頼まれたら、`approvedOn` のある項目ごとに現行の `C:\Users\yujim\iCloudDrive\Claude\Scheduled\<taskId>\SKILL.md` を
-     `Read` し、提案の差分だけを当てた本文で `update_scheduled_task` を呼び、`list_scheduled_tasks` と `Read` で確かめて
-     `resolved` に移して push する。クラウドの会話にはこのツールが無い
+   - 当てるのは目崎(スケジュール済みタスクの編集画面)。クラウドの会話には scheduled-tasks のツールが無く、
+     10-16 に会話へ貼ってもらった依頼は当てられなかった。定期実行は `approvedOn` のある項目について
+     SKILL.md を `Read` するだけにし、書き換えが入っていたら `resolved` に移して push する
    - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
      `agave-navi-site-health-check` は台帳の taskId と名前が違う
 
