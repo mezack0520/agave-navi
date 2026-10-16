@@ -129,12 +129,11 @@
    - **定期実行は `update_scheduled_task` を呼ばない。**10-16 に承認者不在で自動拒否され
      (「declined automatically because no one was available to approve it during this scheduled run」)、
      拒否が返るまで約2時間止まって朝の後続がずれた(agave-event-update でも呼ぶ直前 07:30:51・直後 09:32:06 を date で実測)。10-13 に通ったのは目崎がその場で承認できたからとみられる
-   - 当てるのは目崎(スケジュール済みタスクの編集画面)。クラウドの会話には scheduled-tasks のツールが無く、
-     10-16 に会話へ貼ってもらった依頼は当てられなかった。定期実行は `approvedOn` のある項目について
-     SKILL.md を `Read` するだけにし、書き換えが入っていたら `resolved` に移して push する
-   - **PC の Cowork の会話からは `update_scheduled_task` で当てられる(2026-10-16 実施)。**目崎がその会話に居て、ツールの承認をその場で出せるから。
-     手順: 対象の SKILL.md を `Read` → proposal の差分だけを当てた本文(frontmatter は含めない)で `update_scheduled_task` →
-     もう一度 `Read` で差分が指定の箇所だけかを見る → `list_scheduled_tasks` → 項目を `resolved` に移して push。frontmatter はツールが残す
+   - **当てるのは、目崎が居合わせている PC の Cowork の会話(2026-10-16 実施)。**ツールの承認をその場で出せるので
+     `update_scheduled_task` が通る。手順: 対象の SKILL.md を `Read` → proposal の差分だけを当てた本文(frontmatter は含めない。
+     ツールが残す)で `update_scheduled_task` → もう一度 `Read` で差分が指定の箇所だけかを見る → `list_scheduled_tasks` →
+     項目を `resolved` に移して push。クラウドの会話には scheduled-tasks のツールが無く当てられない(10-16 に一度失敗)。
+     目崎がアプリの編集画面で手で書き換えてもよい。その場合は次の定期実行が SKILL.md を `Read` して確かめ、`resolved` に移す
    - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
      `agave-navi-site-health-check` は台帳の taskId と名前が違う
 

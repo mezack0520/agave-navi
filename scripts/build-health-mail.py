@@ -125,13 +125,19 @@ if judgments:
 
 # 承認済みのプロンプト変更(プレイブック §1 の 7)。定期実行は update_scheduled_task を
 # 承認者不在で自動拒否され、拒否まで約2時間止まった(2026-10-16)。クラウドの会話にはこのツールが無い。
-# 書き換えは目崎がアプリの編集画面でやる
+# 当てるのは目崎が居合わせる PC の Cowork の会話(手で編集画面から書き換えてもよい)
 if _approved:
     lines.append(f'━━━ 🖥 プロンプトの書き換えをお願いします（{len(_approved)}件）━━━')
-    lines.append('Claudeデスクトップのスケジュール済みタスクの編集画面で、次のとおり書き換えてください。'
-                 '書き換え後は次の定期実行が反映を確かめて片づけます。')
+    lines.append('PCのClaudeデスクトップで開いたCoworkの会話(10/16に当てたのと同じ開き方)に、次の枠内をそのまま送ってください。')
+    lines.append('----')
+    lines.append('スケジュール済みタスクのプロンプトを update_scheduled_task で次のとおり変更して。'
+                 '変える前に各タスクの SKILL.md を読み、指定の箇所以外は変えない。'
+                 '終わったら list_scheduled_tasks で反映を確かめ、'
+                 'github.com/mezack0520/agave-navi の pending-judgments.json で該当 id を resolved に移して push して'
+                 '(手順は docs/task-playbook.md §1 の 7)。')
     for j in _approved:
-        lines.append(f"・{j.get('proposal', '')}")
+        lines.append(f"[{j.get('id')}] {j.get('proposal', '')}")
+    lines.append('----')
     lines.append('')
 
 if added or site_fixes:
