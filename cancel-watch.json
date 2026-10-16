@@ -3,10 +3,12 @@
   "sweptOn": "2026-10-16",
   "stats": {
     "targets": 30,
-    "fetched": 29
+    "fetched": 27
   },
   "errors": [
-    "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
+    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475",
+    "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
+    "border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html"
   ],
   "logicErrors": [],
   "suspects": [],
@@ -108,7 +110,7 @@
         "textLen": 936,
         "imageCount": 39
       },
-      "prevTextLen": null,
+      "prevTextLen": 936,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -125,9 +127,9 @@
       "url": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
       "checkedOn": "2026-10-16",
       "signature": {
-        "text": "0595e8783171bdf2",
+        "text": "a8008d90ed1e2f55",
         "images": "611aa72a3f0d6f5b",
-        "textLen": 1372,
+        "textLen": 1361,
         "imageCount": 36
       },
       "prevTextLen": 1372,
@@ -140,7 +142,7 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-03",
       "badChars": 0,
-      "textOnlyChanges": 3,
+      "textOnlyChanges": 4,
       "imageOnlyChanges": 0
     },
     "uomachi-botanical-night-market-2026-10": {
@@ -251,28 +253,6 @@
       "firstSeenOn": "2026-10-04",
       "badChars": 0,
       "textOnlyChanges": 1,
-      "imageOnlyChanges": 0
-    },
-    "jurian-aki-taniku-cactus-2026-10": {
-      "url": "https://www.jurian.or.jp/event/article/?id=1475",
-      "checkedOn": "2026-10-16",
-      "signature": {
-        "text": "bf7de8e13bbf97cd",
-        "images": "8859875c86a5399f",
-        "textLen": 1287,
-        "imageCount": 20
-      },
-      "prevTextLen": 1287,
-      "sigScope": "page",
-      "sigRule": 2,
-      "strong": [],
-      "weak": [],
-      "datesNamed": 1,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-10-10",
-      "badChars": 0,
-      "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
     "roots-market-inage-2026-10": {
@@ -609,13 +589,13 @@
       "url": "https://www.flarie.jp/news/succulents-xmas.html",
       "checkedOn": "2026-10-16",
       "signature": {
-        "text": "08da91b186dcfc28",
-        "images": "ae03939f996bfed8",
-        "textLen": 1202,
-        "imageCount": 4
+        "text": "e22b3842628d9879",
+        "images": "8e4b84c765f8f332",
+        "textLen": 160,
+        "imageCount": 3
       },
-      "prevTextLen": 1202,
-      "sigScope": "page",
+      "prevTextLen": null,
+      "sigScope": "article",
       "sigRule": 2,
       "strong": [],
       "weak": [],
@@ -625,28 +605,6 @@
       "firstSeenOn": "2026-10-06",
       "badChars": 0,
       "textOnlyChanges": 2,
-      "imageOnlyChanges": 0
-    },
-    "border-break-11th-2026-12": {
-      "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
-      "checkedOn": "2026-10-16",
-      "signature": {
-        "text": "2dc8f0b75264992d",
-        "images": "e3b0c44298fc1c14",
-        "textLen": 51,
-        "imageCount": 0
-      },
-      "prevTextLen": 51,
-      "sigScope": "page",
-      "sigRule": 2,
-      "strong": [],
-      "weak": [],
-      "datesNamed": 0,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-10-16",
-      "badChars": 0,
-      "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     }
   }
