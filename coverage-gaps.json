@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-16",
+  "sweptOn": "2026-10-17",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,16 +16,16 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1390,
-    "in_scope": 337,
+    "candidates": 1357,
+    "in_scope": 332,
     "covered": 219,
-    "known_rejected": 118,
+    "known_rejected": 113,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 244,
+    "in_scope_leafla": 238,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 93,
+    "in_scope_nextmeet": 94,
     "gaps_raw": 0
   },
   "errors": [],
