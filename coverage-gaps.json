@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-17",
+  "sweptOn": "2026-10-18",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,24 +16,23 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1357,
-    "in_scope": 332,
-    "covered": 219,
-    "known_rejected": 113,
+    "candidates": 1214,
+    "in_scope": 298,
+    "covered": 194,
+    "known_rejected": 104,
     "truncated_resolved": 90,
-    "truncated_unresolved": 4,
+    "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 238,
-    "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 94,
+    "in_scope_leafla": 215,
+    "truncated_unresolved_hits": 135,
+    "in_scope_nextmeet": 83,
     "gaps_raw": 0
   },
   "errors": [],
   "truncatedUnresolved": [
     "10/15 追加 森の展示室 秋 Marketがわち山野草の森で...",
     "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
-    "10/15 追加 秋の緑風展が岡崎城公園で開催 盆栽即売会や50...",
-    "10/15 追加 第55回 植木まつりが鈴鹿フラワーパークで開催..."
+    "10/15 追加 秋の緑風展が岡崎城公園で開催 盆栽即売会や50..."
   ],
   "gaps": []
 }

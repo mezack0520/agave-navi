@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-17 13:02 JST",
+ "generated": "2026-10-18 08:02 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 372,
-  "awaitingNextEdition": 339,
+  "awaitingNextEdition": 350,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 88,
@@ -401,16 +401,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "kato_engei_tokyo",
-   "url": "https://www.instagram.com/kato_engei_tokyo/",
-   "eventCount": 2,
-   "lastEventName": "Direct U.S. Style POP UP at カトーエンゲー東京",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "tompots_501",
    "url": "https://www.instagram.com/tompots_501/",
    "eventCount": 2,
@@ -801,6 +791,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "kato_engei_tokyo",
+   "url": "https://www.instagram.com/kato_engei_tokyo/",
+   "eventCount": 2,
+   "lastEventName": "Direct U.S. Style POP UP at カトーエンゲー東京",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "kakegawa_kachouen",
    "url": "https://www.instagram.com/kakegawa_kachouen/",
    "eventCount": 1,
@@ -831,26 +831,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "sol_green.ryuchan",
-   "url": "https://www.instagram.com/sol_green.ryuchan/",
-   "eventCount": 1,
-   "lastEventName": "空と太陽のマルシェ ぷちvol.2",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "fujisan_gardenmarche",
-   "url": "https://www.instagram.com/fujisan_gardenmarche/",
-   "eventCount": 1,
-   "lastEventName": "富士山Garden marche",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "bhms_garden",
    "url": "https://www.instagram.com/bhms_garden/",
    "eventCount": 1,
@@ -869,16 +849,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "lelienvelt.staff",
-   "url": "https://www.instagram.com/lelienvelt.staff/",
-   "eventCount": 1,
-   "lastEventName": "八王子ジャングル vol.7",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "ban_ryoku",
@@ -911,26 +881,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "saikai.kawatana",
-   "url": "https://www.instagram.com/saikai.kawatana/",
-   "eventCount": 1,
-   "lastEventName": "REGGIO POP UP SHOP in NAGASAKI KAWATANA（西海園芸 川棚店）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "mimosa_4161",
-   "url": "https://www.instagram.com/mimosa_4161/",
-   "eventCount": 1,
-   "lastEventName": "HELLO！マルシェ～多肉植物の会～",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "hako.taniku",
    "url": "https://www.instagram.com/hako.taniku/",
    "eventCount": 1,
@@ -939,16 +889,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "himeji_cactus",
-   "url": "https://www.instagram.com/himeji_cactus/",
-   "eventCount": 1,
-   "lastEventName": "姫路カクタス 合同即売会（2026年10月）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
   },
   {
    "handle": "kikien.succulent0222",
@@ -3741,6 +3681,66 @@
    "eventCount": 1,
    "lastEventName": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
    "lastEventDate": "2026-10-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "sol_green.ryuchan",
+   "url": "https://www.instagram.com/sol_green.ryuchan/",
+   "eventCount": 1,
+   "lastEventName": "空と太陽のマルシェ ぷちvol.2",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "fujisan_gardenmarche",
+   "url": "https://www.instagram.com/fujisan_gardenmarche/",
+   "eventCount": 1,
+   "lastEventName": "富士山Garden marche",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "lelienvelt.staff",
+   "url": "https://www.instagram.com/lelienvelt.staff/",
+   "eventCount": 1,
+   "lastEventName": "八王子ジャングル vol.7",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "saikai.kawatana",
+   "url": "https://www.instagram.com/saikai.kawatana/",
+   "eventCount": 1,
+   "lastEventName": "REGGIO POP UP SHOP in NAGASAKI KAWATANA（西海園芸 川棚店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "mimosa_4161",
+   "url": "https://www.instagram.com/mimosa_4161/",
+   "eventCount": 1,
+   "lastEventName": "HELLO！マルシェ～多肉植物の会～",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "himeji_cactus",
+   "url": "https://www.instagram.com/himeji_cactus/",
+   "eventCount": 1,
+   "lastEventName": "姫路カクタス 合同即売会（2026年10月）",
+   "lastEventDate": "2026-10-17",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"

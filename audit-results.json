@@ -1,5 +1,5 @@
 {
-  "total": 848,
+  "total": 847,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -184,7 +184,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 182,
+      "count": 171,
       "items": [
         "agave-popup-mellow-plants-toon-2026-10",
         "agave-shokudo-2026-autumn-uchidanouen",
@@ -221,11 +221,11 @@
         "chinki-tenretsu-shokubutsu-vol5-akashi-2026-10",
         "cross-agave-hanbaikai-matsusaka-2026-10",
         "crossover-hybrid-titanota-shinyokohama-2026-10",
-        "direct-us-style-popup-kato-engei-2026-10",
         "dyckia-needles-tsuboikenjuen-2026-11",
         "engei-yarouzei-12th-2026-10",
-        "enjoy-place-5th-2026-10",
-        "enjoy-place-outside-2nd-2026-11"
+        "enjoy-place-outside-2nd-2026-11",
+        "ethan-plants-hanbaikai-ichikawa-2026-11",
+        "fujisan-festa-2026-autumn"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -280,7 +280,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 108,
+      "count": 107,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
@@ -306,7 +306,6 @@
         "fukuoka-green-party-8th-2027-05",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
         "grace-succulents-hanbaikai-koriyama-2026-10",
-        "grace-succulents-hanbaikai-oshu-2026-10",
         "grace-succulents-hanbaikai-rifu-2026-10",
         "grace-succulents-hanbaikai-yonezawa-2026-10",
         "green-garage-nogata-2026-11",
@@ -321,7 +320,8 @@
         "isij-big-bazaar-2027-11-28",
         "isij-tokyo-reikai-2026-10-25",
         "isij-tokyo-reikai-2026-12-20",
-        "jurian-aki-taniku-cactus-2026-10"
+        "jurian-aki-taniku-cactus-2026-10",
+        "jusai-10th-anniversary-nagoya-2027-03"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -696,7 +696,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -722,46 +722,48 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 38,
+      "count": 46,
       "items": [
+        "agave-popup-mellow-plants-toon-2026-10(2026-10-18〜2026-10-18/1日)",
+        "anthurium-festival-tokyo-2026-10(2026-10-18〜2026-10-18/1日)",
         "banryoku-popup-vol6-setagaya-2026-10(2026-10-17〜2026-10-18/2日)",
         "bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10(2026-10-17〜2026-10-18/2日)",
-        "direct-us-style-popup-kato-engei-2026-10(2026-10-17〜2026-10-17/1日)",
+        "bizarre-plants-maniax-tottori-2026-10(2026-10-18〜2026-10-18/1日)",
+        "botanical-fes-yuki-2026-10(2026-10-18〜2026-10-18/1日)",
+        "cross-agave-hanbaikai-matsusaka-2026-10(2026-10-18〜2026-10-18/1日)",
+        "crossover-hybrid-titanota-shinyokohama-2026-10(2026-10-18〜2026-10-18/1日)",
+        "dokidoki-ibaraki-taniku-sokubaikai-2026-10-18(2026-10-18〜2026-10-18/1日)",
         "engei-yarouzei-12th-2026-10(2026-10-17〜2026-10-18/2日)",
-        "enjoy-place-5th-2026-10(2026-10-17〜2026-10-17/1日)",
-        "fujisan-garden-marche-2026-10(2026-10-17〜2026-10-17/1日)",
-        "grace-succulents-hanbaikai-oshu-2026-10(2026-10-17〜2026-10-17/1日)",
-        "hachioji-jungle-vol7-2026-10(2026-10-17〜2026-10-17/1日)",
+        "grace-succulents-hanbaikai-rifu-2026-10(2026-10-18〜2026-10-18/1日)",
+        "green-base-market-vol1-nishikata-2026-10(2026-10-18〜2026-10-18/1日)",
         "hakodate-taniku-marche-2nd-2026-10(2026-10-17〜2026-10-18/2日)",
-        "hello-marche-taniku-yakamashimura-2026-10(2026-10-17〜2026-10-17/1日)",
-        "himeji-cactus-goudou-sokubaikai-2026-10(2026-10-17〜2026-10-17/1日)",
         "hiroshima-cactus-succulent-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
-        "joyfulak-omagari-agave-tenji-sokubaikai-2026-10(2026-10-17〜2026-10-17/1日)",
-        "joyfulak-ooasa-agave-tenji-sokubaikai-2026-10(2026-10-17〜2026-10-17/1日)",
+        "joyfulak-tonden-agave-tenji-sokubaikai-2026-10(2026-10-18〜2026-10-18/1日)",
+        "kairos-popup-hinoki-matsuyama-2026-10(2026-10-18〜2026-10-18/1日)",
         "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10(2026-10-10〜2026-11-01/23日/長期)",
-        "lier-taniku-festival-mitoyo-2026-10(2026-10-17〜2026-10-17/1日)",
+        "kamimusubi-1st-obihiro-2026-10(2026-10-18〜2026-10-18/1日)",
+        "kinshakusai-vol6-2026-10(2026-10-18〜2026-10-18/1日)",
+        "lier-taniku-festival-kochi-tsutaya-2026-10(2026-10-18〜2026-10-18/1日)",
+        "mini-shokuyokusai-tokue-inawashiro-2026-10(2026-10-18〜2026-10-18/1日)",
         "nagasaki-bizarre-meetup-7th-2026-10(2026-10-17〜2026-10-18/2日)",
         "ofuna-flower-center-saboten-taniku-ten-2026-10(2026-10-14〜2026-10-18/5日/長期)",
+        "okayama-green-treasure-5th-2026-10(2026-10-18〜2026-10-18/1日)",
         "okinawa-shi-aki-no-dai-uekiichi-2026(2026-10-16〜2026-10-25/10日/長期)",
         "picnic-garden-vol26-plaza-hana-fukushima-2026-10(2026-10-17〜2026-10-18/2日)",
         "pineapples-bromeliad-protoleaf-futako-2026-10(2026-10-17〜2026-10-18/2日)",
         "plant-freaks-olinas-2026-10(2026-10-17〜2026-10-18/2日)",
+        "plants-journey-vol5-yao-2026-10(2026-10-18〜2026-10-18/1日)",
         "plants-party-the-park-kinashi-2026-10(2026-10-17〜2026-10-18/2日)",
         "plants-plants-plants-bhms-2026-10(2026-10-17〜2026-10-18/2日)",
         "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10(2026-10-03〜2026-10-25/23日/長期)",
-        "reggio-popup-saikai-kawatana-2026-10(2026-10-17〜2026-10-17/1日)",
+        "saidaiji-garden-taniku-event-2026-10(2026-10-18〜2026-10-18/1日)",
         "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-17(2026-10-17〜2026-10-18/2日)",
+        "sapporo-bikaku-expo-lv3-2026-10(2026-10-18〜2026-10-18/1日)",
         "shoku-to-the-future-2026-10(2026-10-16〜2026-10-18/3日)",
-        "sora-to-taiyo-marche-puchi-vol2-2026-10(2026-10-17〜2026-10-17/1日)",
         "suma-rikyu-cactus-succulent-tenjikai-2026-10(2026-10-16〜2026-10-18/3日)",
         "taniku-the-hanbaikai-aki-kibiji-2026-10(2026-10-17〜2026-10-18/2日)",
-        "tanikudayo-zeninshugo-tottori-hanakairou-2026-10(2026-10-17〜2026-10-18/2日)",
-        "tanikuen-ohisama-aeon-shimotsuma-2026-10(2026-10-17〜2026-10-18/2日)",
-        "tegarayama-aki-saboten-taniku-ten-2026-10(2026-10-10〜2026-10-18/9日/長期)",
-        "toyohashi-cactus-club-tenjikai-2026-10(2026-10-17〜2026-10-18/2日)",
-        "tropical-garden-konan-kohoku-2026-10(2026-10-17〜2026-10-18/2日)",
-        "uomachi-botanical-night-market-2026-10(2026-10-17〜2026-10-18/2日)"
+        "tanikudayo-zeninshugo-tottori-hanakairou-2026-10(2026-10-17〜2026-10-18/2日)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -922,7 +924,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 108,
+      "count": 107,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-10 hiroshima-cactus-succulent-ten-2026-10",
@@ -930,7 +932,6 @@
         "2026-10-14 ofuna-flower-center-saboten-taniku-ten-2026-10",
         "2026-10-16 suma-rikyu-cactus-succulent-tenjikai-2026-10",
         "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10",
-        "2026-10-17 grace-succulents-hanbaikai-oshu-2026-10",
         "2026-10-17 plants-plants-plants-bhms-2026-10",
         "2026-10-17 sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-17",
         "2026-10-17 tanikudayo-zeninshugo-tottori-hanakairou-2026-10",
@@ -963,7 +964,8 @@
         "2026-11-07 green-garage-nogata-2026-11",
         "2026-11-07 plants-market-hm-garden-utsunomiya-2026-11",
         "2026-11-08 lahaina-garden-7th-anniversary-2026-11",
-        "2026-11-08 yatchiro-plants-yatsushiro-2026-11"
+        "2026-11-08 yatchiro-plants-yatsushiro-2026-11",
+        "2026-11-14 botanical-botanical-okinawa-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1005,11 +1007,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
-      "items": [
-        "2026-10-17 hello-marche-taniku-yakamashimura-2026-10: 公式ページが変わった(本文・画像)",
-        "2026-11-29 picnic-garden-sendai-2026-11: 公式ページが変わった(本文: 1015→952字 -7%)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1146,14 +1145,16 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 10,
+      "count": 12,
       "items": [
         "2026-10-14 ofuna-flower-center-saboten-taniku-ten-2026-10: https://www.instagram.com/p/Ded0RAYj68G/（caption）",
-        "2026-10-17 grace-succulents-hanbaikai-oshu-2026-10: https://www.instagram.com/p/DeS4-JbS9aA/（sourcePost）",
+        "2026-10-17 bikaku-shokubutsu-sagyoshitsu-nagoya-2026-10: https://www.instagram.com/reel/DemSV_HyK0C/（caption）",
         "2026-10-18 grace-succulents-hanbaikai-rifu-2026-10: https://www.instagram.com/p/DeS4-JbS9aA/（sourcePost）",
         "2026-10-24 grace-succulents-hanbaikai-yonezawa-2026-10: https://www.instagram.com/p/DeS4-JbS9aA/（sourcePost）",
         "2026-10-24 stan-botanical-gallery-team-abc-2026-10: https://www.instagram.com/p/DeYTa4VkgDd/（sourcePost）",
+        "2026-10-24 lier-taniku-festival-kasai-2026-10: https://www.instagram.com/p/DelEXgJhGez/（caption）",
         "2026-10-25 grace-succulents-hanbaikai-koriyama-2026-10: https://www.instagram.com/p/DeS4-JbS9aA/（sourcePost）",
+        "2026-10-25 lier-taniku-festival-okayama-2026-10: https://www.instagram.com/p/DelEXgJhGez/（caption）",
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/DejJFhziT7H/（caption）",
         "2026-11-07 plants-market-hm-garden-utsunomiya-2026-11: https://www.instagram.com/p/DefVveZzlc3/（sourcePost）",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/reel/Da1mSedTrdZ/（caption）",
@@ -1248,8 +1249,10 @@
     },
     "inquiry_review_gap": {
       "title": "event-listing-review の実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "event-listing-review が動かなかった日: 2026-10-17（直近7日で1日）"
+      ],
       "note": "reviewedHistory は起動日の記録で、scripts/record-run.py が起動直後に書く。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。ただし 2026-09-02 までの空白は「走らなかった」ではなく「走ったが記録できていなかった」で、reviewedSince より前は判定しない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
     },
@@ -1269,8 +1272,12 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "agave-event-update(daily) が動かなかった日: 2026-10-17（直近7日で1日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-17（直近7日で1日）",
+        "event-monitor(daily) が動かなかった日: 2026-10-17（直近7日で1日）"
+      ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
