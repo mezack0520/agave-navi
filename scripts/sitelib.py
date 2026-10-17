@@ -2452,13 +2452,18 @@ def event_ig_accounts(e):
     return out
 
 
-def organizer_post_hours_missing(e, posts_by_account):
+def organizer_post_hours_missing(e, posts_by_account, org_events=()):
     """主催の投稿に書かれた日付つきの開催時間のうち、time に無いもの。[(月日, 範囲, permalink, 投稿日)]
 
     見る投稿は、その回の名前(event_name_keys)と会期の全日を書いている主催の投稿だけ。
     出店者の募集の投稿は見ない。同じ日を書いた投稿が複数あれば新しいほうだけを見る
     (6月の速報「10:00〜16:00(仮)」を、9月の確定の告知「10:00～15:30」が上書きする)。
     time 側は時刻の点(clock_minutes)で比べるので「（27日は16:00まで）」の形も通る。
+
+    同じ主催の別の回(org_events)が、その日にその時刻を time に持っていれば、その時刻は
+    別の回のものとして数えない(2026-10-17)。ジョイフルエーケーは同じ日に大曲店 10:00〜12:00・
+    大麻店 14:00〜16:00 を開き、大麻店だけを書いた告知(DejLwSkkyGQ)の 14:00〜16:00 で
+    大曲店の回が鳴った。投稿が店名を見出しにしていない文中の書き方だと、place では切れない。
     """
     md = event_month_days(e)
     if not md:
@@ -2480,12 +2485,44 @@ def organizer_post_hours_missing(e, posts_by_account):
             for d, rs in announced_dated_hours(cap, md, place=place).items():
                 if d not in latest or ts > latest[d][0]:
                     latest[d] = (ts, rs, p.get('permalink') or '')
+    sibling = {}
+    for o in org_events or ():
+        if o is e or (o.get('slug') and o.get('slug') == e.get('slug')) or is_cancelled(o):
+            continue
+        o_have = clock_minutes(o.get('time') or '')
+        for d in event_month_days(o):
+            sibling.setdefault(d, set()).update(o_have)
     out = []
     for d, (ts, rs, link) in sorted(latest.items()):
         for r in sorted(rs):
-            if not {r[0], r[1]} <= have:
+            if not {r[0], r[1]} <= have and not {r[0], r[1]} <= sibling.get(d, set()):
                 out.append((d, r, link, ts[:10]))
     return out
+
+
+def _self_test_hours_sibling():
+    """同じ主催・同じ日の別の回の時刻を、この回の欠けとして出さない(2026-10-17)。
+    返り値は食い違いの一覧(空なら合格)。audit.time_vs_organizer_post が毎回呼ぶ"""
+    bad = []
+    acc = 'joyfulak_gardencenter'
+    posts = {acc: [{'timestamp': '2026-10-16T09:12:39+0000', 'permalink': 'u1',
+                    'caption': 'アガベ展示即売会、いよいよ明日！\nジョイフルエーケー大麻店です！\n'
+                               '大麻店は明日10/17(土)14:00〜16:00開催\nぜひお越しください！'}]}
+    omagari = {'slug': 'om', 'name': 'アガベ展示即売会（ジョイフルエーケー大曲店）', 'date': '2026-10-17',
+               'time': '10:00〜12:00', 'venue': 'ジョイフルエーケー大曲店', 'organizerIg': acc}
+    ooasa = {'slug': 'oo', 'name': 'アガベ展示即売会（ジョイフルエーケー大麻店）', 'date': '2026-10-17',
+             'time': '14:00〜16:00', 'venue': 'ジョイフルエーケー大麻店', 'organizerIg': acc}
+    if not organizer_post_hours_missing(omagari, posts):
+        bad.append(('別の回を渡さなければ従来どおり出る(検査が空振りしていない)',))
+    got = organizer_post_hours_missing(omagari, posts, [omagari, ooasa])
+    if got:
+        bad.append(('別の回の時刻は出さない', got))
+    if organizer_post_hours_missing(ooasa, posts, [omagari, ooasa]):
+        bad.append(('時刻を持つ回は出ない', organizer_post_hours_missing(ooasa, posts, [omagari, ooasa])))
+    other_day = dict(ooasa, slug='od', date='2026-10-18')
+    if not organizer_post_hours_missing(omagari, posts, [omagari, other_day]):
+        bad.append(('別の日の回の時刻では消さない',))
+    return bad
 
 
 # --- 主催の最新の告知が書く会期と、掲載の会期のずれ (2026-10-16) ------------------------

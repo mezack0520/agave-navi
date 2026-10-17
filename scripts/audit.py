@@ -3287,6 +3287,15 @@ def main():
     # 増えたのは5回分(開催前3・開催済み1・後で直った1)ですべて実際の欠け・食い違い。消えた行は0
     for _bad in sitelib._self_test_dated_hours_multi():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_dated_hours_multi): {_bad}")
+    # 2026-10-17。同じ主催が同じ日に別の店で開く回(ジョイフルエーケー 大曲 10:00〜12:00・大麻 14:00〜16:00)は、
+    # 1店だけを書いた告知の時刻を、もう一方の回の欠けとして出していた。同じ主催の別の回の time にある時刻は除く
+    for _bad in sitelib._self_test_hours_sibling():
+        _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_hours_sibling): {_bad}")
+    # 主催のアカウントごとの回(この検査と、下の会期のずれの検査が使う)
+    _by_acc_ev = {}
+    for e in events:
+        for _acc in sitelib.event_ig_accounts(e):
+            _by_acc_ev.setdefault(_acc, []).append(e)
     for e in events:
         _t = e.get('time') or ''
         _end = e.get('dateEnd') or e.get('date')
@@ -3319,7 +3328,8 @@ def main():
                     f"({', '.join(_src)})")
                 _time_post_slugs.add(e.get('slug'))
                 continue
-        _miss = sitelib.organizer_post_hours_missing(e, _posts_by_acc)
+        _miss = sitelib.organizer_post_hours_missing(
+            e, _posts_by_acc, [o for _acc in sitelib.event_ig_accounts(e) for o in _by_acc_ev.get(_acc, [])])
         if _miss:
             _links = sorted({(sitelib.IG_POST_RE.search(_l) or [None, _l])[1] for _, _, _l, _ in _miss})
             _time_post_bad.append(
@@ -3344,10 +3354,6 @@ def main():
     #        開催済みで確かめていない)、ジョイフルエーケー屯田(3店を並べた投稿の 10/17-18。翌日に残り2店を掲載)。
     #        どちらの投稿が正しいかは人が決めるので info
     _span_bad = []
-    _by_acc_ev = {}
-    for e in events:
-        for _acc in sitelib.event_ig_accounts(e):
-            _by_acc_ev.setdefault(_acc, []).append(e)
     for _bad in sitelib._self_test_organizer_post_span():
         _span_bad.append(f"自己テスト失敗(sitelib._self_test_organizer_post_span): {_bad}")
     for e in events:
