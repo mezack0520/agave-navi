@@ -1,7 +1,47 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-16",
+  "updated": "2026-10-19",
   "items": [
+    {
+      "on": "2026-10-19",
+      "kind": "listed",
+      "slug": "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10",
+      "name": "DOLCE’S 多肉植物販売会（オザキフラワーパーク）",
+      "date": "2026-10-31",
+      "dateEnd": "2026-11-01",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-19",
+      "kind": "listed",
+      "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
+      "name": "草木日和（BloomGARDEN）",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-19",
+      "kind": "listed",
+      "slug": "agavejam-3rd-as-green-garden-2026-11",
+      "name": "agaveJAM 3rd（A’s Green Garden）",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-14",
+      "prefecture": "新潟",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-19",
+      "kind": "listed",
+      "slug": "fehn-5th-kakusen-en-ikebukuro-2026-11",
+      "name": "FEHN -Far East Haworthia Network- 第5回（鶴仙園池袋店）",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "prefecture": "東京",
+      "detail": ""
+    },
     {
       "on": "2026-10-16",
       "kind": "listed",
@@ -1160,46 +1200,6 @@
       "date": "2027-01-09",
       "dateEnd": "2027-01-09",
       "prefecture": "熊本",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-nagasaki-2027-01",
-      "name": "Lier.多肉フェスティバル in 長崎",
-      "date": "2027-01-10",
-      "dateEnd": "2027-01-10",
-      "prefecture": "長崎",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-kitakyushu-2027-01",
-      "name": "Lier.多肉フェスティバル in 北九州",
-      "date": "2027-01-11",
-      "dateEnd": "2027-01-11",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-ube-2027-01",
-      "name": "Lier.多肉フェスティバル in 宇部",
-      "date": "2027-01-23",
-      "dateEnd": "2027-01-23",
-      "prefecture": "山口",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-oda-2027-01",
-      "name": "Lier.多肉フェスティバル in 大田",
-      "date": "2027-01-24",
-      "dateEnd": "2027-01-24",
-      "prefecture": "島根",
       "detail": ""
     }
   ]

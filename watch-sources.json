@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-19 06:49 JST",
+ "generated": "2026-10-19 07:08 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 372,
+  "igAccounts": 375,
   "awaitingNextEdition": 387,
-  "officialSiteCandidates": 88,
+  "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 88,
+  "igNeedsBrowser": 91,
   "igDead": 7
  },
  "igAccounts": [
@@ -401,16 +401,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "dokidoki_ibaraki",
-   "url": "https://www.instagram.com/dokidoki_ibaraki/",
-   "eventCount": 2,
-   "lastEventName": "多肉植物即売会 10月25日（ポケットファームどきどき茨城町店）",
-   "lastEventDate": "2026-10-25",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "hokuriku.saboten.club",
    "url": "https://www.instagram.com/hokuriku.saboten.club/",
    "eventCount": 2,
@@ -419,6 +409,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "dokidoki_ibaraki",
+   "url": "https://www.instagram.com/dokidoki_ibaraki/",
+   "eventCount": 2,
+   "lastEventName": "多肉植物即売会 10月25日（ポケットファームどきどき茨城町店）",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "0269plants",
@@ -751,16 +751,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "tropicalgarden_saitama",
-   "url": "https://www.instagram.com/tropicalgarden_saitama/",
-   "eventCount": 2,
-   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "kato_engei_tokyo",
    "url": "https://www.instagram.com/kato_engei_tokyo/",
    "eventCount": 2,
@@ -781,6 +771,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "38_ten_",
+   "url": "https://www.instagram.com/38_ten_/",
+   "eventCount": 2,
+   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "protoleaf.shop_futakotamagawa",
    "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
    "eventCount": 2,
@@ -791,10 +791,10 @@
    "apiStatus": "api"
   },
   {
-   "handle": "38_ten_",
-   "url": "https://www.instagram.com/38_ten_/",
+   "handle": "tropicalgarden_saitama",
+   "url": "https://www.instagram.com/tropicalgarden_saitama/",
    "eventCount": 2,
-   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
+   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": false,
    "priority": 1,
@@ -1271,6 +1271,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "bloom_gardendesign",
+   "url": "https://www.instagram.com/bloom_gardendesign/",
+   "eventCount": 1,
+   "lastEventName": "草木日和（BloomGARDEN）",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "_wonder_market_",
    "url": "https://www.instagram.com/_wonder_market_/",
    "eventCount": 1,
@@ -1319,6 +1329,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "as_green_garden_seiko",
+   "url": "https://www.instagram.com/as_green_garden_seiko/",
+   "eventCount": 1,
+   "lastEventName": "agaveJAM 3rd（A’s Green Garden）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -1459,6 +1479,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "plants_work",
+   "url": "https://www.instagram.com/plants_work/",
+   "eventCount": 1,
+   "lastEventName": "FEHN -Far East Haworthia Network- 第5回（鶴仙園池袋店）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mahota029",
@@ -4196,58 +4226,10 @@
    "eventDate": "2026-10-03"
   },
   {
-   "domain": "hiroshima-bot.jp",
-   "url": "http://www.hiroshima-bot.jp/info/%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3%E3%83%BB%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9%E5%B1%95/",
-   "eventName": "サボテン・多肉植物展（広島市植物公園）",
-   "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "himeji-machishin.jp",
-   "url": "https://himeji-machishin.jp/midori/greenhouse/event2.html/?id=201",
-   "eventName": "秋のサボテンと多肉植物展（姫路市立手柄山温室植物園）",
-   "eventDate": "2026-10-10"
-  },
-  {
    "domain": "shaboten.co.jp",
    "url": "https://shaboten.co.jp/press/7561/",
    "eventName": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
    "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "fcofuna-kanagawa.jp",
-   "url": "https://www.fcofuna-kanagawa.jp/events/exhibition/10205",
-   "eventName": "サボテン・多肉植物展（大船フラワーセンター）",
-   "eventDate": "2026-10-14"
-  },
-  {
-   "domain": "kobe-park.or.jp",
-   "url": "https://www.kobe-park.or.jp/rikyu/event/event-27448/",
-   "eventName": "サボテン・多肉植物展示会（神戸市立須磨離宮公園）",
-   "eventDate": "2026-10-16"
-  },
-  {
-   "domain": "uomachi-mirai.com",
-   "url": "https://uomachi-mirai.com/news/2026-10-17/",
-   "eventName": "魚町ボダニカルナイトマーケット",
-   "eventDate": "2026-10-17"
-  },
-  {
-   "domain": "tottorihanakairou.or.jp",
-   "url": "https://www.tottorihanakairou.or.jp/tanikuhanbai/",
-   "eventName": "多肉だョ！全員集合 in とっとり花回廊",
-   "eventDate": "2026-10-17"
-  },
-  {
-   "domain": "threads.com",
-   "url": "https://www.threads.com/@38_ten_/post/Dd-Hh5mE5Iv",
-   "eventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
-   "eventDate": "2026-10-17"
-  },
-  {
-   "domain": "mirai-kohboh.co.jp",
-   "url": "https://www.mirai-kohboh.co.jp/post-30439/",
-   "eventName": "HELLO！マルシェ～多肉植物の会～",
-   "eventDate": "2026-10-17"
   },
   {
    "domain": "seibu-la.co.jp",
@@ -4304,6 +4286,12 @@
    "eventDate": "2026-11-07"
   },
   {
+   "domain": "bloomgarden.jp",
+   "url": "https://bloomgarden.jp/event/post-595/",
+   "eventName": "草木日和（BloomGARDEN）",
+   "eventDate": "2026-11-07"
+  },
+  {
    "domain": "rareplantsjapan.jp",
    "url": "https://rareplantsjapan.jp/2210",
    "eventName": "RARE PLANTS COLLECTION",
@@ -4314,6 +4302,12 @@
    "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
    "eventName": "多肉植物とサボテンの展示会（井頭公園）",
    "eventDate": "2026-11-19"
+  },
+  {
+   "domain": "threads.com",
+   "url": "https://www.threads.com/@honoka.kakogawa",
+   "eventName": "緑楽宴",
+   "eventDate": "2026-11-22"
   },
   {
    "domain": "sendai-nogyo-engei-center.jp",
@@ -4368,6 +4362,42 @@
    "url": "https://www.fumakilla.co.jp/new/6926/",
    "eventName": "カダンフェス2026 春",
    "eventDate": "2026-04-25"
+  },
+  {
+   "domain": "yfg-fes.jp",
+   "url": "https://yfg-fes.jp/",
+   "eventName": "横浜フラワー&ガーデンフェスティバル 2026",
+   "eventDate": "2026-05-02"
+  },
+  {
+   "domain": "visit-oita.jp",
+   "url": "https://www.visit-oita.jp/events/detail/13493",
+   "eventName": "Plants Garage Market",
+   "eventDate": "2026-05-03"
+  },
+  {
+   "domain": "fujisanmesse.com",
+   "url": "https://www.fujisanmesse.com/",
+   "eventName": "FUJISAN FESTA",
+   "eventDate": "2026-05-03"
+  },
+  {
+   "domain": "jiyugaoka.net",
+   "url": "https://jiyugaoka.net/event/",
+   "eventName": "Jiyugaoka Botanical Market",
+   "eventDate": "2026-05-04"
+  },
+  {
+   "domain": "city.aizuwakamatsu.fukushima.jp",
+   "url": "https://www.city.aizuwakamatsu.fukushima.jp/index_php/event_callen/show_callen.php",
+   "eventName": "ピクニックガーデン vol.21 in I'S NEW BASE",
+   "eventDate": "2026-05-10"
+  },
+  {
+   "domain": "fmfm.jp",
+   "url": "https://fmfm.jp/event/marche/saitama",
+   "eventName": "HAZE -various genres marche",
+   "eventDate": "2026-05-23"
   }
  ],
  "unresolvedIgHandles": []
