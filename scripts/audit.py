@@ -4111,6 +4111,34 @@ def main():
              'repo 側からは直せない。入れなくても稼働は成果物で追える',
         severity='info')
 
+    # PC の定期タスクが前日1本も動いていない(2026-10-18)。
+    # 10-16 夜に Cowork の「Delete Cowork VM Sessions and Restart」を押したあと、10-17・10-18 の朝の
+    # 4本が揃って起動しなかった(/sessions に起動の跡も無い。スケジュール済みタスクごと消えたとみられ、
+    # GitHub にも同じ報告がある)。1本ずつの抜けは task_run_gap(info)に出るが、全滅は環境側の停止で
+    # PC で人が直すしかない。CI の保険(daily / health の schedule)で巡回とメールは続くので、
+    # 日次メールに出さないと気づかない。だから urgent
+    _pc_all = []
+    if _tday is not None:
+        _y = (_tday - _dtm.timedelta(days=1)).isoformat()
+        _daily = [t for t in sorted(_tr) if t not in _never_tids
+                  and str((_tr[t] or {}).get('cadence') or '').strip() == 'daily'
+                  and str((_tr[t] or {}).get('since') or '') <= _y]
+        _ran = [t for t in _daily
+                if _y in ({str(h) for h in ((_tr[t] or {}).get('history') or [])}
+                          | (_footprints.get(t) or set()))]
+        _ni_hist = {str(h) for h in (load_json('new-inquiries.json', {}).get('reviewedHistory') or [])}
+        if _daily and not _ran and _y not in _ni_hist:
+            _last = max([str(h) for t in _daily for h in ((_tr[t] or {}).get('history') or [])
+                         if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))] or ['なし'])
+            _pc_all.append(f'{_y} に PC の定期タスクが1本も動いていない'
+                           f'({"・".join(_daily)}・event-listing-review。最後の記録 {_last})')
+    add('pc_tasks_all_stopped', 'PC の定期タスクが前日1本も動いていない', _pc_all,
+        note='スケジューラが止まったか消えた(またはPCが前日ずっと止まっていた)。Claude デスクトップの'
+             'スケジュール済みタスク一覧に agave 系5本が時刻つきで残っているかを見る。消えていれば PC の '
+             'Cowork の会話で作り直す(時刻は docs/architecture-2026-07.md §2)。'
+             '巡回とメールは CI の保険で続くが、掲載・修正・アイキャッチ・問い合わせの処理は止まっている',
+        severity='urgent')
+
     add('task_run_gap', 'スケジュールタスクの実行が抜けた日', task_gap,
         note='task-runs.json はタスクが毎回自分の実行日を書く台帳。'
              'スケジュール側の lastRunAt は最新1回しか持たないので、'
