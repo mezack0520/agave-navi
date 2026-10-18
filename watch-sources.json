@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-18 14:42 JST",
+ "generated": "2026-10-19 06:49 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 372,
-  "awaitingNextEdition": 350,
+  "awaitingNextEdition": 387,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 88,
@@ -381,56 +381,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "iwabaegarden",
-   "url": "https://www.instagram.com/iwabaegarden/",
-   "eventCount": 2,
-   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "tropicalgarden_saitama",
-   "url": "https://www.instagram.com/tropicalgarden_saitama/",
-   "eventCount": 2,
-   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "tompots_501",
-   "url": "https://www.instagram.com/tompots_501/",
-   "eventCount": 2,
-   "lastEventName": "麋角植物作業室 at pigment 名古屋",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "protoleaf.shop_futakotamagawa",
-   "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
-   "eventCount": 2,
-   "lastEventName": "PINE APPLES チランジア・ブロメリア即売会（プロトリーフ二子玉川本店）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "38_ten_",
-   "url": "https://www.instagram.com/38_ten_/",
-   "eventCount": 2,
-   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "_and_plants",
    "url": "https://www.instagram.com/_and_plants/",
    "eventCount": 2,
@@ -791,10 +741,60 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "iwabaegarden",
+   "url": "https://www.instagram.com/iwabaegarden/",
+   "eventCount": 2,
+   "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tropicalgarden_saitama",
+   "url": "https://www.instagram.com/tropicalgarden_saitama/",
+   "eventCount": 2,
+   "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "kato_engei_tokyo",
    "url": "https://www.instagram.com/kato_engei_tokyo/",
    "eventCount": 2,
    "lastEventName": "Direct U.S. Style POP UP at カトーエンゲー東京",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tompots_501",
+   "url": "https://www.instagram.com/tompots_501/",
+   "eventCount": 2,
+   "lastEventName": "麋角植物作業室 at pigment 名古屋",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "protoleaf.shop_futakotamagawa",
+   "url": "https://www.instagram.com/protoleaf.shop_futakotamagawa/",
+   "eventCount": 2,
+   "lastEventName": "PINE APPLES チランジア・ブロメリア即売会（プロトリーフ二子玉川本店）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "38_ten_",
+   "url": "https://www.instagram.com/38_ten_/",
+   "eventCount": 2,
+   "lastEventName": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": false,
    "priority": 1,
@@ -809,226 +809,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "ofunaflower",
-   "url": "https://www.instagram.com/ofunaflower/",
-   "eventCount": 1,
-   "lastEventName": "サボテン・多肉植物展（大船フラワーセンター）",
-   "lastEventDate": "2026-10-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "green_prickle",
-   "url": "https://www.instagram.com/green_prickle/",
-   "eventCount": 1,
-   "lastEventName": "植トゥザ・フューチャー2026",
-   "lastEventDate": "2026-10-16",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bhms_garden",
-   "url": "https://www.instagram.com/bhms_garden/",
-   "eventCount": 1,
-   "lastEventName": "Plants Plants Plants（BHMS GARDEN 秋）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "engei_yarouzei",
-   "url": "https://www.instagram.com/engei_yarouzei/",
-   "eventCount": 1,
-   "lastEventName": "園藝野郎勢 第十二回大会 〜2026 秋の陣〜",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ban_ryoku",
-   "url": "https://www.instagram.com/ban_ryoku/",
-   "eventCount": 1,
-   "lastEventName": "万緑 POP-UP STORE VOL.6",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "toyohashicactus",
-   "url": "https://www.instagram.com/toyohashicactus/",
-   "eventCount": 1,
-   "lastEventName": "豊橋カクタスクラブ サボテン・多肉植物展示会・品評会",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "suezawa_ryokuchi.thepark",
-   "url": "https://www.instagram.com/suezawa_ryokuchi.thepark/",
-   "eventCount": 1,
-   "lastEventName": "秋のPlants Party!（THE PARK × DOLCE'S）",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "hako.taniku",
-   "url": "https://www.instagram.com/hako.taniku/",
-   "eventCount": 1,
-   "lastEventName": "第2回 はこだて多肉マルシェ",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "kikien.succulent0222",
-   "url": "https://www.instagram.com/kikien.succulent0222/",
-   "eventCount": 1,
-   "lastEventName": "GREEN BASE MARKET vol.1",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "tigerplants44",
-   "url": "https://www.instagram.com/tigerplants44/",
-   "eventCount": 1,
-   "lastEventName": "TIGER PLANTS HUNTERS",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bo_plants",
-   "url": "https://www.instagram.com/bo_plants/",
-   "eventCount": 1,
-   "lastEventName": "金鯱祭 VOL.6",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "plant8shrine",
-   "url": "https://www.instagram.com/plant8shrine/",
-   "eventCount": 1,
-   "lastEventName": "神結び 第一章",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "seven.seedlings.shop",
-   "url": "https://www.instagram.com/seven.seedlings.shop/",
-   "eventCount": 1,
-   "lastEventName": "Bizarre Plants Maniax⇄",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "jj.raider",
-   "url": "https://www.instagram.com/jj.raider/",
-   "eventCount": 1,
-   "lastEventName": "おかやまグリーントレジャー 5th",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "ysgarden2025",
-   "url": "https://www.instagram.com/ysgarden2025/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICALFES in 結城",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "saidaijigarden",
-   "url": "https://www.instagram.com/saidaijigarden/",
-   "eventCount": 1,
-   "lastEventName": "西大寺ガーデン 多肉イベント（2026秋）",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "mellow_plants_coffee",
-   "url": "https://www.instagram.com/mellow_plants_coffee/",
-   "eventCount": 1,
-   "lastEventName": "AGAVE POP UP（MELLOW PLANTS）",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "plants_journey_osaka",
-   "url": "https://www.instagram.com/plants_journey_osaka/",
-   "eventCount": 1,
-   "lastEventName": "Plants Journey Vol.5",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "goodtaniku",
-   "url": "https://www.instagram.com/goodtaniku/",
-   "eventCount": 1,
-   "lastEventName": "CrossOver hybrid × titanota 〜次の時代へ行くぞ！〜",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kairos.035",
-   "url": "https://www.instagram.com/kairos.035/",
-   "eventCount": 1,
-   "lastEventName": "kairos POP UP（HINOKI and the green）",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "tokue_green_plants",
-   "url": "https://www.instagram.com/tokue_green_plants/",
-   "eventCount": 1,
-   "lastEventName": "ミニ植欲祭（Flower Shop TOKUE）",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "cross.h2244",
-   "url": "https://www.instagram.com/cross.h2244/",
-   "eventCount": 1,
-   "lastEventName": "CROSS アガベ販売会（松阪ワークセンター）",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "nagashima_marche",
@@ -3676,11 +3456,31 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "ofunaflower",
+   "url": "https://www.instagram.com/ofunaflower/",
+   "eventCount": 1,
+   "lastEventName": "サボテン・多肉植物展（大船フラワーセンター）",
+   "lastEventDate": "2026-10-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "narakaki_flower",
    "url": "https://www.instagram.com/narakaki_flower/",
    "eventCount": 1,
    "lastEventName": "第6回 赫赫鹿自花（かくかくしかじか）PLANTS × MATERIALS",
    "lastEventDate": "2026-10-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "green_prickle",
+   "url": "https://www.instagram.com/green_prickle/",
+   "eventCount": 1,
+   "lastEventName": "植トゥザ・フューチャー2026",
+   "lastEventDate": "2026-10-16",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
@@ -3706,6 +3506,26 @@
    "apiStatus": "api"
   },
   {
+   "handle": "bhms_garden",
+   "url": "https://www.instagram.com/bhms_garden/",
+   "eventCount": 1,
+   "lastEventName": "Plants Plants Plants（BHMS GARDEN 秋）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "engei_yarouzei",
+   "url": "https://www.instagram.com/engei_yarouzei/",
+   "eventCount": 1,
+   "lastEventName": "園藝野郎勢 第十二回大会 〜2026 秋の陣〜",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "lelienvelt.staff",
    "url": "https://www.instagram.com/lelienvelt.staff/",
    "eventCount": 1,
@@ -3714,6 +3534,36 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "ban_ryoku",
+   "url": "https://www.instagram.com/ban_ryoku/",
+   "eventCount": 1,
+   "lastEventName": "万緑 POP-UP STORE VOL.6",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "toyohashicactus",
+   "url": "https://www.instagram.com/toyohashicactus/",
+   "eventCount": 1,
+   "lastEventName": "豊橋カクタスクラブ サボテン・多肉植物展示会・品評会",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "suezawa_ryokuchi.thepark",
+   "url": "https://www.instagram.com/suezawa_ryokuchi.thepark/",
+   "eventCount": 1,
+   "lastEventName": "秋のPlants Party!（THE PARK × DOLCE'S）",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "saikai.kawatana",
@@ -3736,6 +3586,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "hako.taniku",
+   "url": "https://www.instagram.com/hako.taniku/",
+   "eventCount": 1,
+   "lastEventName": "第2回 はこだて多肉マルシェ",
+   "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "himeji_cactus",
    "url": "https://www.instagram.com/himeji_cactus/",
    "eventCount": 1,
@@ -3744,6 +3604,146 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "kikien.succulent0222",
+   "url": "https://www.instagram.com/kikien.succulent0222/",
+   "eventCount": 1,
+   "lastEventName": "GREEN BASE MARKET vol.1",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "tigerplants44",
+   "url": "https://www.instagram.com/tigerplants44/",
+   "eventCount": 1,
+   "lastEventName": "TIGER PLANTS HUNTERS",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bo_plants",
+   "url": "https://www.instagram.com/bo_plants/",
+   "eventCount": 1,
+   "lastEventName": "金鯱祭 VOL.6",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "plant8shrine",
+   "url": "https://www.instagram.com/plant8shrine/",
+   "eventCount": 1,
+   "lastEventName": "神結び 第一章",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "seven.seedlings.shop",
+   "url": "https://www.instagram.com/seven.seedlings.shop/",
+   "eventCount": 1,
+   "lastEventName": "Bizarre Plants Maniax⇄",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "jj.raider",
+   "url": "https://www.instagram.com/jj.raider/",
+   "eventCount": 1,
+   "lastEventName": "おかやまグリーントレジャー 5th",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "ysgarden2025",
+   "url": "https://www.instagram.com/ysgarden2025/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICALFES in 結城",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "saidaijigarden",
+   "url": "https://www.instagram.com/saidaijigarden/",
+   "eventCount": 1,
+   "lastEventName": "西大寺ガーデン 多肉イベント（2026秋）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "mellow_plants_coffee",
+   "url": "https://www.instagram.com/mellow_plants_coffee/",
+   "eventCount": 1,
+   "lastEventName": "AGAVE POP UP（MELLOW PLANTS）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "plants_journey_osaka",
+   "url": "https://www.instagram.com/plants_journey_osaka/",
+   "eventCount": 1,
+   "lastEventName": "Plants Journey Vol.5",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "goodtaniku",
+   "url": "https://www.instagram.com/goodtaniku/",
+   "eventCount": 1,
+   "lastEventName": "CrossOver hybrid × titanota 〜次の時代へ行くぞ！〜",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kairos.035",
+   "url": "https://www.instagram.com/kairos.035/",
+   "eventCount": 1,
+   "lastEventName": "kairos POP UP（HINOKI and the green）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "tokue_green_plants",
+   "url": "https://www.instagram.com/tokue_green_plants/",
+   "eventCount": 1,
+   "lastEventName": "ミニ植欲祭（Flower Shop TOKUE）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "cross.h2244",
+   "url": "https://www.instagram.com/cross.h2244/",
+   "eventCount": 1,
+   "lastEventName": "CROSS アガベ販売会（松阪ワークセンター）",
+   "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
   }
  ],
  "awaitingNextEdition": [
@@ -3810,6 +3810,39 @@
    "monthsSinceLast": 0,
    "igHandle": "morinotanikuen",
    "officialUrl": "https://www.instagram.com/p/DdY2FP9H4nG/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "魚町ボダニカルナイトマーケット",
+   "lastSlug": "uomachi-botanical-night-market-2026-10",
+   "lastDate": "2026-10-17",
+   "lastEnd": "2026-10-18",
+   "monthsSinceLast": 0,
+   "igHandle": null,
+   "officialUrl": "https://uomachi-mirai.com/news/2026-10-17/",
+   "recurring": true,
+   "apiStatus": "none"
+  },
+  {
+   "series": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
+   "lastSlug": "nagasaki-bizarre-meetup-7th-2026-10",
+   "lastDate": "2026-10-17",
+   "lastEnd": "2026-10-18",
+   "monthsSinceLast": 0,
+   "igHandle": "iwabaegarden",
+   "officialUrl": "https://www.instagram.com/p/Dd75R5wAenM/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
+   "lastSlug": "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-17",
+   "lastDate": "2026-10-17",
+   "lastEnd": "2026-10-18",
+   "monthsSinceLast": 0,
+   "igHandle": "38_ten_",
+   "officialUrl": "https://www.threads.com/@38_ten_/post/Dd-Hh5mE5Iv",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4151,39 +4184,6 @@
    "monthsSinceLast": 0,
    "igHandle": "kusabi_official",
    "officialUrl": "https://www.instagram.com/kusabi_official/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "BOTANICAL STYLE -Beppu Oita-",
-   "lastSlug": "botanical-style-beppu-2026-10",
-   "lastDate": "2026-10-10",
-   "lastEnd": "2026-10-10",
-   "monthsSinceLast": 0,
-   "igHandle": "earthwalk_plants",
-   "officialUrl": "https://www.instagram.com/p/DdKfIEck1Fa/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "秋の植物販売会（cafe BLUE OCEAN / フクイパーム）",
-   "lastSlug": "blue-ocean-aki-shokubutsu-hanbaikai-2026-10",
-   "lastDate": "2026-10-10",
-   "lastEnd": "2026-10-10",
-   "monthsSinceLast": 0,
-   "igHandle": "blue.ocean8484",
-   "officialUrl": "https://www.instagram.com/p/Dd4ldh8zpzD/",
-   "recurring": false,
-   "apiStatus": "personal"
-  },
-  {
-   "series": "X-PLANTS 即売会（プロトリーフ二子玉川本店）",
-   "lastSlug": "x-plants-sokubaikai-protoleaf-futakotamagawa-2026-10",
-   "lastDate": "2026-10-10",
-   "lastEnd": "2026-10-10",
-   "monthsSinceLast": 0,
-   "igHandle": "protoleaf.shop_futakotamagawa",
-   "officialUrl": "https://www.instagram.com/p/Dd3teoaE79D/",
    "recurring": false,
    "apiStatus": "api"
   }
