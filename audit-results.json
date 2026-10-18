@@ -1245,7 +1245,7 @@
       "title": "PC の定期タスクが前日1本も動いていない",
       "count": 1,
       "items": [
-        "2026-10-18 に PC の定期タスクが1本も動いていない(agave-event-update・agave-navi-eyecatch・event-monitor・event-listing-review。最後の記録 2026-10-16)"
+        "2026-10-18 に PC の定期タスクが1本も動いていない(agave-event-update・agave-navi-eyecatch・event-monitor・event-listing-review。最後の記録 2026-10-19)"
       ],
       "note": "スケジューラが止まったか消えた(またはPCが前日ずっと止まっていた)。Claude デスクトップのスケジュール済みタスク一覧に agave 系5本が時刻つきで残っているかを見る。消えていれば PC の Cowork の会話で作り直す(時刻は docs/architecture-2026-07.md §2)。巡回とメールは CI の保険で続くが、掲載・修正・アイキャッチ・問い合わせの処理は止まっている",
       "severity": "urgent"
