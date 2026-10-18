@@ -2407,7 +2407,45 @@ def main():
     _cov_gaps = _cov.get('gaps') or []
     _cov_err = _cov.get('errors') or []
     _swept = str(_cov.get('sweptOn') or '')
+    # 2026-10-19: coverage-gaps.json は daily の巡回時点のスナップショット。
+    # 巡回の後に朝のタスクが掲載すると、載せた回が翌日まで「無い」候補に残り、
+    # 次のタスクが裏取りをやり直す(agaveJAM 3rd・福山deマルシェ第8回で発生)。
+    # 現在の events.json と coverage-sweep.matches で引き直し、載っていれば
+    # 候補から外して coverage_gap_stale に分ける。
+    _cov_stale_items = []
+    try:
+        import importlib.util as _ilu
+        _sp = _ilu.spec_from_file_location(
+            '_cov_sweep', os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                       'coverage-sweep.py'))
+        _csm = _ilu.module_from_spec(_sp)
+        _sp.loader.exec_module(_csm)
+        _keep = []
+        for g in _cov_gaps:
+            _gd = str(g.get('date') or '')
+            _hit = False
+            for _e in events:
+                _d0 = str(_e.get('date') or '')
+                _d1 = str(_e.get('dateEnd') or _d0)
+                if not _d0 or not (_d0 <= _gd <= _d1):
+                    continue
+                _names = [_e.get('name', '')] + list(_e.get('aliases') or [])
+                if any(_csm.matches(str(g.get('title') or ''), n, bare=True)
+                       for n in _names if n):
+                    _hit = True
+                    break
+            if _hit:
+                _cov_stale_items.append(f"{_gd} {str(g.get('title'))[:90]}")
+            else:
+                _keep.append(g)
+        _cov_gaps = _keep
+    except Exception as _ex:
+        _cov_stale_items = []
     _cov_items = [f"{g.get('date')} {str(g.get('title'))[:90]}" for g in _cov_gaps]
+    add('coverage_gap_stale', '取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)',
+        sorted(_cov_stale_items),
+        '対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す',
+        severity='info')
     add('coverage_gaps', '他所に出ていて当サイトに無いイベント候補',
         sorted(_cov_items),
         '一次情報で裏取りして、掲載するか rejected-events.json に落とす。'

@@ -2255,6 +2255,22 @@
    "target": "草木日和 (2026-11-07〜08 BloomGARDEN)",
    "action": "listed",
    "detail": "BloomGARDEN公式サイトのイベント頁で裏取り"
+  },
+  {
+   "on": "2026-10-19",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "POPUP POPUP-STORE (2026-10-24)",
+   "action": "skipped",
+   "detail": "ブラウザ要: LEAFLA/NextMeet の掲載元から主催の一次告知を開き、掲載基準で可否判断。event-monitor はブラウザ不使用のため未確認"
+  },
+  {
+   "on": "2026-10-19",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "COLLABORATION (2026-11-21)",
+   "action": "skipped",
+   "detail": "ブラウザ要: LEAFLA/NextMeet の掲載元から主催の一次告知を開き、掲載基準で可否判断。event-monitor はブラウザ不使用のため未確認"
   }
  ]
 }
