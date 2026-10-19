@@ -1,5 +1,5 @@
 {
-  "total": 767,
+  "total": 755,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -184,7 +184,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 151,
+      "count": 154,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -232,7 +232,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 320,
+      "count": 323,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -280,7 +280,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 90,
+      "count": 87,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -319,9 +319,9 @@
         "ka78-kikakusai-6th-shimada-2026-11",
         "kasamajuku-tanikusai-2026-11",
         "king-plants-sunday-oroshimachi-2026-12",
-        "kusa-paradise-hirata-nursery-odo-2026-11",
         "lahaina-garden-7th-anniversary-2026-11",
-        "lier-taniku-festival-aira-2026-11"
+        "lier-taniku-festival-aira-2026-11",
+        "lier-taniku-festival-fukuyama-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -901,13 +901,12 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 90,
+      "count": 87,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 lier-taniku-festival-kasai-2026-10",
-        "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10",
         "2026-10-25 botanoichi-meets-bikaku-yokocho-2026-10",
         "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
         "2026-10-25 isij-tokyo-reikai-2026-10-25",
@@ -923,7 +922,6 @@
         "2026-11-03 lier-taniku-festival-munakata-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
-        "2026-11-07 kusa-paradise-hirata-nursery-odo-2026-11",
         "2026-11-08 lahaina-garden-7th-anniversary-2026-11",
         "2026-11-08 yatchiro-plants-yatsushiro-2026-11",
         "2026-11-14 botanical-botanical-okinawa-2026-11",
@@ -942,7 +940,9 @@
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 plant-freaks-olinas-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
-        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11"
+        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
+        "2026-11-29 botanoichi-senju-2026-11",
+        "2026-11-29 picnic-garden-sendai-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1126,21 +1126,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 12,
-      "items": [
-        "2026-10-24 lier-taniku-festival-kasai-2026-10: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
-        "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10: https://www.instagram.com/p/Deq2yfQE2Oo/（caption）",
-        "2026-10-25 lier-taniku-festival-okayama-2026-10: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
-        "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25: https://www.instagram.com/p/DerGdUniPeq/（caption）",
-        "2026-10-26 lier-taniku-festival-hiroshima-2026-10: https://www.instagram.com/p/DelEXgJhGez/（caption）",
-        "2026-10-31 lier-taniku-festival-nobeoka-2026-10: https://www.instagram.com/p/DelEXgJhGez/（caption）",
-        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/DenvhlziSt7/（caption）",
-        "2026-11-01 lier-taniku-festival-aira-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
-        "2026-11-02 lier-taniku-festival-kumamoto-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
-        "2026-11-03 lier-taniku-festival-munakata-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
-        "2026-11-08 lahaina-garden-7th-anniversary-2026-11: https://www.instagram.com/p/DerJ3NYlATH/（caption）",
-        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
