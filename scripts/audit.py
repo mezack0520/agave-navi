@@ -1244,8 +1244,18 @@ def main():
             u = _norm_src(e.get(k))
             if u:
                 _by_src.setdefault((e.get('date') or '', u), set()).add(e.get('slug') or '')
+    _ev_by_slug = {e.get('slug'): e for e in events}
     for (d, u), slugs in _by_src.items():
         if d and len(slugs) > 1:
+            # 1つの告知が複数店舗を回る催し(別の住所・別の時間帯)は二重登録ではない。
+            # 住所と time が全組で食い違い、time が両方入っている場合だけ除く
+            # (表記違いの二重登録は同じ time を持つので外れない。2026-10-20 ジョイフルエーケー3店の誤検知から)
+            _es = [_ev_by_slug.get(sl) or {} for sl in slugs]
+            _locs = {x.get('location') for x in _es}
+            _tms = {x.get('time') for x in _es}
+            if (len(_locs) == len(_es) and None not in _locs and
+                    len(_tms) == len(_es) and None not in _tms and '' not in _tms):
+                continue
             dup_src.append(f"{d}: {', '.join(sorted(slugs))} が同じ出典 {u[:60]} を持つ")
     # 9k-3. 詳細頁の本文が「入場は無料です。」と言っているのに admission が有料。
     #     build-detail-pages は同じ規則を2か所に持っていて、FAQ側だけが

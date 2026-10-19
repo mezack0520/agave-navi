@@ -2293,6 +2293,30 @@
    "target": "POPUP-STORE (2026-10-24 STAN) / COLLABORATION (2026-11-21 PLUMP)",
    "action": "reviewed",
    "detail": "どちらも掲載済み(stan-botanical-gallery-team-abc-2026-10 / plump-plants-collab-ina-2026-11)。監査の照合漏れ"
+  },
+  {
+   "on": "2026-10-20",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "king-plants-sunday-iwaki-izumi-2026-10",
+   "action": "fixed",
+   "detail": "主催投稿Deq9soJEhtRの時刻(10/24 9-20時・10/25 9時-夕方)をtimeと説明文に反映"
+  },
+  {
+   "on": "2026-10-20",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "2026-10-24 POPUP POPUP-STORE",
+   "action": "skipped",
+   "detail": "ブラウザ要: leafla/nextmeetの該当日の掲載から主催・会場・出典URLを取り、一次情報で裏取り。載せるかrejectedか決める"
+  },
+  {
+   "on": "2026-10-20",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "2026-11-21 COLLABORATION",
+   "action": "skipped",
+   "detail": "ブラウザ要: leafla/nextmeetの該当日の掲載から主催・会場・出典URLを取り、一次情報で裏取り。載せるかrejectedか決める"
   }
  ]
 }

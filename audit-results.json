@@ -1,5 +1,5 @@
 {
-  "total": 755,
+  "total": 754,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -545,10 +545,8 @@
     },
     "duplicate_event_same_source": {
       "title": "同日の別slugが同じ出典URLを指している",
-      "count": 1,
-      "items": [
-        "2026-10-17: joyfulak-omagari-agave-tenji-sokubaikai-2026-10, joyfulak-ooasa-agave-tenji-sokubaikai-2026-10 が同じ出典 instagram.com/p/dexyegue0j- を持つ"
-      ],
+      "count": 0,
+      "items": [],
       "note": "表記違い(ローマ字/カタカナ)や会場名の1字違いで duplicate_event_entry をすり抜けた二重登録の候補。同じ回なら情報量の多い側に寄せて片方を消す。同じ主催が同じ会場で併催する別イベントは正常に出るのでゼロにはならず info。urgent にすると併催のたびに鳴る。**「併催の実例」として第6回 天下一植物界 と BORDER BREAK!! 6th を挙げていたが、これは誤りだった(2026-09-12 訂正)。**no1plantae.com は「BORDER BREAK!! は13年を迎え」「次回イベント 第六回 天下一植物界」と書いており、改称した同じ回。border-break-6th-2026 を削除して tenkaichi-2026 に寄せた。併催と決める前に必ず出典を開くこと",
       "severity": "info"
     },
@@ -696,7 +694,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -832,8 +830,10 @@
     },
     "index_card_body_drift": {
       "title": "トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "king-plants-sunday-iwaki-izumi-2026-10: 説明文が古い"
+      ],
       "note": "来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
@@ -1096,10 +1096,8 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 1,
-      "items": [
-        "king-plants-sunday-iwaki-izumi-2026-10: time「(空)」/ 告知に 10/24 9:00〜20:00 がある (Deq9soJEhtR)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
