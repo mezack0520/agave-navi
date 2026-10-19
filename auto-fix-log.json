@@ -2277,6 +2277,22 @@
    "action": "skipped",
    "detail": "ブラウザ要: LEAFLA/NextMeet の掲載元から主催の一次告知を開き、掲載基準で可否判断。event-monitor はブラウザ不使用のため未確認",
    "mailedOn": "2026-10-19"
+  },
+  {
+   "on": "2026-10-20",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "Kusa paradise in hirata nursery (2026-11-07〜08 平田ナーセリー小戸店)",
+   "action": "listed",
+   "detail": "主催 @kusa_paradise 共同の告知 DeqBwYpgXYr で裏取り。new-events.json に追加"
+  },
+  {
+   "on": "2026-10-20",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "POPUP-STORE (2026-10-24 STAN) / COLLABORATION (2026-11-21 PLUMP)",
+   "action": "reviewed",
+   "detail": "どちらも掲載済み(stan-botanical-gallery-team-abc-2026-10 / plump-plants-collab-ina-2026-11)。監査の照合漏れ"
   }
  ]
 }
