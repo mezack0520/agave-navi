@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-19",
+  "updated": "2026-10-20",
   "items": [
+    {
+      "on": "2026-10-20",
+      "kind": "listed",
+      "slug": "kusa-paradise-hirata-nursery-odo-2026-11",
+      "name": "Kusa paradise in hirata nursery（平田ナーセリー小戸店）",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "prefecture": "福岡",
+      "detail": ""
+    },
     {
       "on": "2026-10-19",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2027-01-08",
       "dateEnd": "2027-01-08",
       "prefecture": "宮崎",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-tamana-2027-01",
-      "name": "Lier.多肉フェスティバル in 玉名",
-      "date": "2027-01-09",
-      "dateEnd": "2027-01-09",
-      "prefecture": "熊本",
       "detail": ""
     }
   ]
