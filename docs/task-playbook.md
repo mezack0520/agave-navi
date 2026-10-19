@@ -4719,6 +4719,12 @@ pending-judgments は2件(どちらもプロンプトの件で3件未満)。task
 `work/*-unpushed-*.json` の残り10本(09-09〜09-26。event-listing-review 5・event-monitor 2・eyecatch 3)を開いた。台帳とデータの分は反映済みか
 期限切れで、プレイブック分の未反映3件(web_fetch は本番でも URL 単位で古い版を返す・gviz にも cb・viewform の下書き復元)を §5・§3 に当て、10本とも `work/_to_delete/` へ移した。
 
+**2026-10-19 の週次点検の記録。**
+2回以上出た失敗は2つ。(1) clone 先の `mktemp -d` が /sessions 満杯で落ちる(10-14〜16)→ 5本のプロンプトが `-p /tmp` に直り、10-19 は全タスクで通った。解消扱いで §3 の記述は残すだけでよい。
+(2) 10-17・10-18 に agave-event-update・event-monitor・event-listing-review が全日、eyecatch が 10-17 に抜けた。task-reports も無い。全タスク同日なので PC 側の停止(土日)で、repo にもタスクにも原因は無い。追わない。
+監査の urgent は週を通して0。`image_host_unrelated` は 10-14 から別の回で出続け、今回は wraptas の画像ホストで、検査側に例外を足して0にした。`cross_script_duplicate` 3 は不動で放置のまま。
+pending-judgments は0件。`work/` の `*-unpushed-*.json` は無く、task-runs-unpushed.json の runs は空。
+
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、
 **08-25 の回は成果物ゼロで終わっていた。** スケジュールは enabled のままで
@@ -4836,3 +4842,15 @@ JSTの閲覧者では -9h と +9h が打ち消し合ってUTCの暦日が返る�
 daily の巡回の後に朝のタスクが掲載すると、載せた回が翌日まで `coverage_gaps` に残る。
 `audit.py` が現在の events.json で引き直し、載っている回は `coverage_gap_stale`(info) に分ける。
 `coverage_gaps` に残るのは本当に未掲載のものだけ。2026-10-19: 4件中2件(福山deマルシェ第8回・agaveJAM 3rd)が該当。
+
+### 組み込みブラウザでの本番確認は、ビューポートとスクロールイベントを疑う (2026-10-19)
+
+組み込みブラウザのペインが非表示だと、`innerWidth/innerHeight` が 0・`scroll` イベントが 0 回で、`.aff-bar` が `is-shown` にならない。
+サイトの不具合ではない(affiliate.js は `scroll` イベントで判定する)。`resize_window` で 375x812 にしてから
+`scrollTo({behavior:'instant'})` のあと `window.dispatchEvent(new Event('scroll'))` を足して 0.5 以降で見る。終わったら `preset:"desktop"` に戻して tab を閉じる。
+Claude in Chrome は複数ブラウザ接続で選択を求められ、定期実行では答える人がいない。週次の本番確認は組み込みブラウザで通る。
+
+### 画像ホストの照合に wraptas を足した (2026-10-19)
+
+wraptas のサイトは画像を共有バケット(`s3.../wraptas-prod/<サイト名>/`)に置くため `image_host_unrelated` が出る。
+自サイトが `<サイト名>.wraptas.site` でパスのサイト名が同じなら持ち主は同じとみなす(wix と同じ扱い)。

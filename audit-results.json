@@ -1,5 +1,5 @@
 {
-  "total": 753,
+  "total": 752,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -1463,10 +1463,8 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 1,
-      "items": [
-        "2026-11-07 chuushokushobutsusai-2026: s3.ap-northeast-1.amazonaws.com（url=helisgarden.wraptas.site / sourceUrl=-）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },
