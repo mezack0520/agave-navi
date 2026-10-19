@@ -1,5 +1,5 @@
 {
-  "total": 752,
+  "total": 765,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -696,7 +696,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -860,19 +860,19 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 2,
+      "count": 1,
       "items": [
-        "2026-11-01 第8回 多肉と雑貨 福山deマルシェ",
-        "2026-11-14 agaveJAM 3rd"
+        "2026-11-01 第8回 多肉と雑貨 福山deマルシェ"
       ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 2,
+      "count": 3,
       "items": [
         "2026-10-24 POPUP POPUP-STORE",
+        "2026-11-07 Kusa paradise in hirata nursery",
         "2026-11-21 COLLABORATION"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -1096,8 +1096,10 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "king-plants-sunday-iwaki-izumi-2026-10: time「(空)」/ 告知に 10/24 9:00〜20:00 がある (Deq9soJEhtR)"
+      ],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1124,8 +1126,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-24 lier-taniku-festival-kasai-2026-10: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
+        "2026-10-24 sunny-drop-5th-anniversary-kato-2026-10: https://www.instagram.com/p/Deq2yfQE2Oo/（caption）",
+        "2026-10-25 lier-taniku-festival-okayama-2026-10: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
+        "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25: https://www.instagram.com/p/DerGdUniPeq/（caption）",
+        "2026-10-26 lier-taniku-festival-hiroshima-2026-10: https://www.instagram.com/p/DelEXgJhGez/（caption）",
+        "2026-10-31 lier-taniku-festival-nobeoka-2026-10: https://www.instagram.com/p/DelEXgJhGez/（caption）",
+        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/DenvhlziSt7/（caption）",
+        "2026-11-01 lier-taniku-festival-aira-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
+        "2026-11-02 lier-taniku-festival-kumamoto-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
+        "2026-11-03 lier-taniku-festival-munakata-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）",
+        "2026-11-08 lahaina-garden-7th-anniversary-2026-11: https://www.instagram.com/p/DerJ3NYlATH/（caption）",
+        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1240,7 +1255,7 @@
       "title": "PC の定期タスクが前日1本も動いていない",
       "count": 0,
       "items": [],
-      "note": "スケジューラが止まったか消えた(またはPCが前日ずっと止まっていた)。Claude デスクトップのスケジュール済みタスク一覧に agave 系5本が時刻つきで残っているかを見る。消えていれば PC の Cowork の会話で作り直す(時刻は docs/architecture-2026-07.md §2)。巡回とメールは CI の保険で続くが、掲載・修正・アイキャッチ・問い合わせの処理は止まっている",
+      "note": "スケジューラが止まったか消えた(またはPCが前日ずっと止まっていた)。list_triggers で agave 系5本が有効のまま残っているか、last_run が前日に動いたかを見る。消えていれば会話から create_trigger で作り直す(時刻は docs/architecture-2026-07.md §2)。巡回とメールは CI の保険で続くが、掲載・修正・アイキャッチ・問い合わせの処理は止まっている",
       "severity": "urgent"
     },
     "task_run_gap": {
@@ -1248,7 +1263,7 @@
       "count": 3,
       "items": [
         "agave-event-update(daily) が動かなかった日: 2026-10-17 2026-10-18（直近7日で2日）",
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-17（直近7日で1日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-17 2026-10-18（直近7日で2日）",
         "event-monitor(daily) が動かなかった日: 2026-10-17 2026-10-18（直近7日で2日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
