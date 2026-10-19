@@ -3984,10 +3984,13 @@ def main():
         if not cfg:
             return set()
         try:
+            # 日付は JST で取る(2026-10-19)。--date=short は UTC の日付で、朝 9時前の JST のコミット
+            # (07:51 のアイキャッチ)が前日に数えられ、10-18 に1本も動いていないのに動いたことになっていた
             log = subprocess.run(
                 ['git', 'log', f'--since={since}', '--format=%H\t%ad\t%s',
-                 '--date=short', '--'] + cfg['paths'],
-                cwd=REPO, capture_output=True, text=True).stdout
+                 '--date=format-local:%Y-%m-%d', '--'] + cfg['paths'],
+                cwd=REPO, capture_output=True, text=True,
+                env=dict(os.environ, TZ='Asia/Tokyo')).stdout
         except Exception:                           # noqa: BLE001
             return set()
         days, pat = set(), re.compile(cfg['subject'])
@@ -4165,16 +4168,18 @@ def main():
                 if _y in ({str(h) for h in ((_tr[t] or {}).get('history') or [])}
                           | (_footprints.get(t) or set()))]
         _ni_hist = {str(h) for h in (load_json('new-inquiries.json', {}).get('reviewedHistory') or [])}
-        if _daily and not _ran and _y not in _ni_hist:
+        # 当日に1本でも動いていれば、もう戻っているので出さない(直す作業が残っていない)
+        _t = _tday.isoformat()
+        _back = _t in _ni_hist or any(
+            _t in ({str(h) for h in ((_tr[t] or {}).get('history') or [])} | (_footprints.get(t) or set()))
+            for t in _daily)
+        if _daily and not _ran and _y not in _ni_hist and not _back:
             _last = max([str(h) for t in _daily for h in ((_tr[t] or {}).get('history') or [])
                          if re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(h))] or ['なし'])
             _pc_all.append(f'{_y} に PC の定期タスクが1本も動いていない'
                            f'({"・".join(_daily)}・event-listing-review。最後の記録 {_last})')
     add('pc_tasks_all_stopped', 'PC の定期タスクが前日1本も動いていない', _pc_all,
-        note='スケジューラが止まったか消えた(またはPCが前日ずっと止まっていた)。Claude デスクトップの'
-             'スケジュール済みタスク一覧に agave 系5本が時刻つきで残っているかを見る。消えていれば PC の '
-             'Cowork の会話で作り直す(時刻は docs/architecture-2026-07.md §2)。'
-             '巡回とメールは CI の保険で続くが、掲載・修正・アイキャッチ・問い合わせの処理は止まっている',
+        note='スケジューラが止まったか消えた(またはPCが前日ずっと止まっていた)。list_triggers で agave 系5本が有効のまま残っているか、last_run が前日に動いたかを見る。消えていれば会話から create_trigger で作り直す(時刻は docs/architecture-2026-07.md §2)。巡回とメールは CI の保険で続くが、掲載・修正・アイキャッチ・問い合わせの処理は止まっている',
         severity='urgent')
 
     add('task_run_gap', 'スケジュールタスクの実行が抜けた日', task_gap,

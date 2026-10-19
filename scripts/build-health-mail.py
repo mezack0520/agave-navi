@@ -125,19 +125,13 @@ if judgments:
 
 # 承認済みのプロンプト変更(プレイブック §1 の 7)。定期実行は update_scheduled_task を
 # 承認者不在で自動拒否され、拒否まで約2時間止まった(2026-10-16)。クラウドの会話にはこのツールが無い。
-# 当てるのは目崎が居合わせる PC の Cowork の会話(手で編集画面から書き換えてもよい)
+# 定期タスクは 10-18 からクラウドの trigger。当てるのは会話のセッションの update_trigger
 if _approved:
-    lines.append(f'━━━ 🖥 プロンプトの書き換えをお願いします（{len(_approved)}件）━━━')
-    lines.append('PCのClaudeデスクトップで開いたCoworkの会話(10/16に当てたのと同じ開き方)に、次の枠内をそのまま送ってください。')
-    lines.append('----')
-    lines.append('スケジュール済みタスクのプロンプトを update_scheduled_task で次のとおり変更して。'
-                 '変える前に各タスクの SKILL.md を読み、指定の箇所以外は変えない。'
-                 '終わったら list_scheduled_tasks で反映を確かめ、'
-                 'github.com/mezack0520/agave-navi の pending-judgments.json で該当 id を resolved に移して push して'
-                 '(手順は docs/task-playbook.md §1 の 7)。')
+    lines.append(f'━━━ 🖥 承認済みのプロンプト変更（{len(_approved)}件）━━━')
+    lines.append('Claude(どの会話でもよい)に「アガナビの承認済みプロンプト変更を当てて」と送ってください。'
+                 'update_trigger で当てて片づけます(手順は docs/task-playbook.md §1 の 7)。')
     for j in _approved:
-        lines.append(f"[{j.get('id')}] {j.get('proposal', '')}")
-    lines.append('----')
+        lines.append(f"・[{j.get('id')}] {j.get('proposal', '')}")
     lines.append('')
 
 if added or site_fixes:

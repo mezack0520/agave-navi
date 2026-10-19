@@ -127,22 +127,20 @@
    `upcoming` も 144 → 163 に増えており、**残数は母数が増えれば増える。**
    差の向きだけでは働きを測れない。詳細は §3 の同題の項。
 
-   **プロンプト(SKILL.md)の変更は、目崎が承認したものを、目崎がアプリの編集画面で書き換える(2026-10-16 改定)。**
-   - プロンプトに置くのは起動(clone の場所・record-run.py・このファイルを読む)だけにする。手順・規則は
-     このファイルに書く。プロンプトを変える必要が出るのは起動が壊れたときだけ
-   - 変えたいプロンプトは `pending-judgments.json` に提案として積む。**proposal は人がそのまま手で当てられる形に書く:**
-     対象のタスク名と、置換前の文字列 → 置換後の文字列。目崎が承認すると `approvedOn` が付き、
-     日次メールの「プロンプトの書き換えをお願いします」に proposal がそのまま出る
-   - **定期実行は `update_scheduled_task` を呼ばない。**10-16 に承認者不在で自動拒否され
-     (「declined automatically because no one was available to approve it during this scheduled run」)、
-     拒否が返るまで約2時間止まって朝の後続がずれた(agave-event-update でも呼ぶ直前 07:30:51・直後 09:32:06 を date で実測)。10-13 に通ったのは目崎がその場で承認できたからとみられる
-   - **当てるのは、目崎が居合わせている PC の Cowork の会話(2026-10-16 実施)。**ツールの承認をその場で出せるので
-     `update_scheduled_task` が通る。手順: 対象の SKILL.md を `Read` → proposal の差分だけを当てた本文(frontmatter は含めない。
-     ツールが残す)で `update_scheduled_task` → もう一度 `Read` で差分が指定の箇所だけかを見る → `list_scheduled_tasks` →
-     項目を `resolved` に移して push。クラウドの会話には scheduled-tasks のツールが無く当てられない(10-16 に一度失敗)。
-     目崎がアプリの編集画面で手で書き換えてもよい。その場合は次の定期実行が SKILL.md を `Read` して確かめ、`resolved` に移す
-   - taskId は `list_scheduled_tasks` の値を使う。`agave-navi-event-monitor` /
-     `agave-navi-site-health-check` は台帳の taskId と名前が違う
+   **定期タスクは 2026-10-18 からクラウドのスケジュール済みタスク(claude-code-remote の trigger)で動いている。**
+   10-16 夜に Cowork の「Delete Cowork VM Sessions and Restart」を押したらローカルの定期タスクが消え(10-17・10-18 の朝は
+   1本も起動しなかった)、10-18 に8本(agave 系5本・rhs 系3本)を登録し直した。時刻は docs/architecture-2026-07.md §2。
+   - 一覧・本文・最後の実行は `list_triggers` で見られる。クラウドの会話からも見える。プロンプトの変更は `update_trigger`。
+     ローカルの `list_scheduled_tasks` / `update_scheduled_task` と `Claude\Scheduled\<id>\SKILL.md` はもう使っていない
+   - プロンプトに置くのは起動(clone の場所・record-run.py・このファイルを読む)だけにする。手順・規則はこのファイルに書く。
+     プロンプトを変える必要が出るのは起動が壊れたときだけ
+   - 変えたいプロンプトは `pending-judgments.json` に提案として積む(対象のタスク名と、置換前 → 置換後)。目崎が承認すると
+     `approvedOn` が付き、日次メールに出る。**当てるのは会話のセッション**(どの会話でもよい): `list_triggers` で現行の
+     本文を取り、差分だけを当てた本文で `update_trigger` → もう一度 `list_triggers` で指定の箇所だけ変わったかを見る →
+     `resolved` に移して push。**定期実行はプロンプトを書き換えない**(自分のものも他のものも。頼まれていない書き込みになる)
+   - 実行は PC が起きていることが前提(device_bash・Claude in Chrome・組み込みブラウザを使う)。PC が止まっていた日は
+     翌日のメールに `pc_tasks_all_stopped` が出る。`last_run` の SUCCEEDED は会話が終わったことで、仕事が済んだことではない。
+     済んだかは成果物(コミット・レポート)で見る
 
 8. **日次メールに出る項目は、報告する前に直す（2026-09-29 目崎の指示）。**
    「積み残し・異常あり・他所に出ていて当サイトに無いイベントは、報告だけでなく
