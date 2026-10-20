@@ -607,14 +607,14 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20260922b)と違うページ",
+      "title": "CSS版数が正規値(20261020a)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
       "severity": "urgent"
     },
     "js_version_drift": {
-      "title": "JS版数が正規値(20260923a)と違う/付いていないページ",
+      "title": "JS版数が正規値(20261020a)と違う/付いていないページ",
       "count": 0,
       "items": [],
       "note": "版数なしだとJSの変更がキャッシュを越えず届かない",
@@ -1166,7 +1166,21 @@
       "title": "設定に無いトラッキングIDのAmazonリンクが頁に残っている",
       "count": 0,
       "items": [],
-      "note": "amazon-links.json の asp.amazon.tag と違う ID。成果が付かない。ガイドは build-guides.py で作り直す。手書き頁なら直接直す",
+      "note": "affiliate-links.json の asp.amazon.tag と違う ID。成果が付かない。ガイドは build-guides.py で作り直す。手書き頁なら直接直す",
+      "severity": "urgent"
+    },
+    "amazon_disclosure_missing": {
+      "title": "Amazonアソシエイトの表記がフッターに無い頁",
+      "count": 0,
+      "items": [],
+      "note": "運営規約第5条の表記。無いとアカウントを止められうる。表記は sitelib.amazon_disclosure_html、全頁へは site_footer() 経由で入る(手書き頁は sync-footers.py)。build-all.sh で作り直す",
+      "severity": "urgent"
+    },
+    "mercari_link_missing": {
+      "title": "メルカリのリンクが欠けている・生成した形でない",
+      "count": 0,
+      "items": [],
+      "note": "https://jp.mercari.com/ambassador/dashboard の「リンク生成」で作り、affiliate-links.json の asp.mercari.links にそのまま貼る。URLを手で組み立てない(規約違反)",
       "severity": "urgent"
     },
     "affiliate_label_season_mismatch": {
