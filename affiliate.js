@@ -251,10 +251,10 @@
     }
 
     function update() {
-      var doc = document.documentElement;
-      var scrolled = (window.scrollY || doc.scrollTop);
-      var total = Math.max(1, doc.scrollHeight - window.innerHeight);
-      var past = (scrolled / total) > 0.45;   // 1画面目は日時・会場を読む場所なので出さない
+      var scrolled = window.scrollY || document.documentElement.scrollTop;
+      // 少し読み進めたら出す(2026-10-20 目崎「もっと早くていい」)。
+      // それまでは頁の45%まで出さず、長い詳細頁では最後のほうまで出なかった
+      var past = scrolled > window.innerHeight * 0.25;
       bar.classList.toggle('is-shown', past && !boxVisible);
     }
     window.addEventListener('scroll', update, { passive: true });

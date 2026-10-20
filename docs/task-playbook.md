@@ -882,9 +882,10 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   **`.aff-bar` は何もしなくてもDOMに出る**。下の「デスクトップ幅では出ないのが正常」は
   実Chrome(Claude in Chrome)の話で、組み込みブラウザには当てはまらない。
   matchMedia を差し替えて `affiliate.js` を再注入する手順は要らず、
-  50%までスクロールして `.aff-bar.is-shown` と実商品リンクを見れば足りる
-  (**「50%」は目安で不正確。**条件は `scrolled/total > 0.45 && !boxVisible`。商品枠が threshold 0.15 で
-  見えている間は出ない。下の 2026-10-05 の項の手順で 0.3/0.5/0.7/0.9/1.0 を順に見る)
+  少しスクロールして `.aff-bar.is-shown` と Amazon の検索リンクを見れば足りる
+  (条件は `scrollY > innerHeight * 0.25 && !boxVisible`。2026-10-20 までは頁の45%だった。
+  商品枠が threshold 0.15 で見えている間は出ない。組み込みブラウザは `innerHeight` が 0 なので、
+  少しでも動けば閾値を超える)
 - **組み込みブラウザは `document.hidden === true` のまま動く。
   スクロールイベントも IntersectionObserver も一切発火しない（2026-09-14）。**
   `window.scrollTo()` は `scrollY` を動かすが、ページは描画されないので
@@ -892,7 +893,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   そのためスクロールで出し入れするUIは、実物が正常でも「出ない」と見える。
   実測: `scrollTo` を10段階、各600ms待って `scroll` 0回 / IO 0回。
   `.aff-bar` は `update()` がスクロールで呼ばれないため `is-shown` が付かず、
-  **上の「50%までスクロールして見る」だけでは壊れていると誤読する。**
+  **上の「少しスクロールして見る」だけでは壊れていると誤読する。**
   手で発火させること:
 
   ```js
@@ -906,7 +907,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `style.css` が `html{scroll-behavior:smooth}` を持つので、引数なしの `scrollTo` は滑らかスクロールになり、
   描画しないペインでは1pxも進まない(`scrollY` が 0 のまま)。10-05 にこれで 0.3〜1.0 全部 `is-shown` なしを観測し、
   `scrollingElement.scrollTop` 代入も 0 のままだった。`window.scrollTo({top:y, behavior:'instant'})` で即座に動き、
-  0.3 で無し・0.5 以降で `is-shown`(実商品リンク `hb.afl.rakuten.co.jp`)。
+  旧閾値(頁の45%)では 0.3 で無し・0.5 以降で `is-shown` だった。
   **併せて `resize_window` の `mobile` で 375x812 にしてから再読込する。**素の組み込みブラウザは
   `innerWidth`/`innerHeight` が 0 で、`total = scrollHeight - 0` になり閾値の位置がずれる(09-21 に 55% 不可・60% 可と出た原因)。
   終わったら `preset:'desktop'` に戻す。**判定の順序: `scrollY` が動いたかを先に見る。** 動いていなければ環境。
@@ -934,7 +935,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `affiliate.js` が `matchMedia('(max-width: 720px)')` で生成自体を止めている。
   かつ `resize_window` は効かない(420px を指定しても `innerWidth` は 1478 のまま)。
   機能確認は **matchMedia を差し替えてから `affiliate.js` を再注入**し、
-  45%までスクロールして `.aff-bar.is-shown` と Amazon の検索リンク(`tag=aganavi-22`)が
+  画面の1/4を超えてスクロールして `.aff-bar.is-shown` と Amazon の検索リンク(`tag=aganavi-22`)が
   出ることを見る(2026-10-20 に楽天の実商品から替えた。tag が空の間だけ楽天に戻る)。
   `display:none` は min-width:721px のCSSによるもので異常ではない
 - **weekly-enrichment のスケジュール実行は毎回20件しか処理しない。**
