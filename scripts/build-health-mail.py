@@ -13,7 +13,8 @@
      (new-events-added.json。タスクの記録の書き忘れに左右されない)、
      修正は朝のタスクの修正記録(auto-fix-log.json の fixed。仕組み側の修正は除く)
   3. タスクが直せずに残っていること。監査の urgent と、健全性チェック
-     (データ整合性・外部リンク切れ・SSL)の検出。本来は朝のタスクが直すので、
+     (データ整合性・外部リンク切れ・SSL)の検出。監査は health.yml が送る直前に
+     作り直して回し直したもの(2026-10-20)。本来は朝のタスクが直すので、
      残っているのはタスクが止まっているか直し方が決まっていない兆候
 どれも無い日は送らない(GITHUB_OUTPUT の send=false)。
 詳細未定・今後の一覧・見送り・直せなかった理由などは、直す担当(朝のタスク)が
@@ -59,6 +60,15 @@ def _hits(path, needles, n=5):
         return []
 
 
+def _tail(path, n=3):
+    """落ちたコマンドのログの末尾。set -e で止まるので、最後の行が落ちた理由"""
+    try:
+        with open(path, encoding='utf-8', errors='replace') as f:
+            return [l.strip() for l in f if l.strip()][-n:]
+    except OSError:
+        return []
+
+
 data = _load('check-results.json', {})
 _added_doc = _load('new-events-added.json', {}) or {}
 added = _added_doc.get('events') or []
@@ -84,6 +94,11 @@ site_fixes = [i for i in unsent
 
 # タスクが直せずに残っていること
 residual = []
+# 送る前の作り直し(health.yml の 3)が落ちた回(2026-10-20)。下の監査は作り直す前の頁を
+# 見ており、daily が作り直せば消える不一致も混じる。だから先頭に置く
+if os.environ.get('BUILD_RESULT') == 'failure':
+    residual.append(('サイトの作り直し(build-all.sh)が落ちた。下の監査は作り直す前の頁のもの',
+                     _tail('/tmp/build.log')))
 for k, v in (audit.get('findings') or {}).items():
     if v.get('severity', 'urgent') == 'urgent' and v.get('count'):
         residual.append((f"{v.get('title', k)}: {v.get('count')}件", (v.get('items') or [])[:3]))

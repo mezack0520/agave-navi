@@ -47,6 +47,7 @@ schedule はどちらも合図が来なかった日の保険で、合図で済�
        events.json不整合検査 → 確定できるものは自動修正 → 確定不能はキューへ
        → 最後に request-run.py mail で mail-request.json を push(メールの合図)
 08:3x  [GitHub] health.yml (mail-request.json の push で起動。約10分) → 日次メール(9時までに届く)
+       build-all.sh で作り直して監査し直す(メールの「残っていること」はこの監査)
        check_events.py: 本日開催/URL死活(終わっていない回のみ)/TBD(開催前のみ)/内容妥当性
        → 判断が必要なこと・サイトに反映したこと・直せず残ったことだけを送る。無い日は送らない
 保険    daily.yml schedule 21:00 UTC(実際 9〜11時)/ health.yml schedule 00:00 UTC(実際 11時台)
@@ -382,3 +383,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-10-16(event-monitor): sitelib.announced_month_days(月を省いた2日目「10月24日(土)・25日(日)」と範囲の間の日)を追加し、organizer_post_hours_missing の「会期の全日を書いた投稿」と announced_dated_hours の日付の解決に使う。2日を並べた見出しの下の時刻は全部の日に、日だけの見出し(「▶︎ 5日(土) 17:00-22:00」)はその日に紐づける。ANNOUNCED_SUBEVENT_WORDS にオープニング・前夜祭・レセプションを足し、時刻の行の直後の短い見出しも見る。自己テスト _self_test_dated_hours_multi を audit.time_vs_organizer_post が毎回走らせる。enrich_events._time_for_event も同じ日付の解決を使う
 - 2026-10-16(event-monitor): audit.organizer_post_span_differs(info・sitelib.organizer_post_span_drift / announced_ranges)を追加。主催の最新の告知が掲載と1〜3日ずれた会期を書いていれば出す(上位の催しの語と、同じ主催の別の回で埋まる日は除く)。ig-organizer-watch.staff_work_days: ボランティア・スタッフ募集の投稿に並ぶ、掲載済みの開催日の前日・翌日を未掲載の日付から落とす
 - 2026-10-16(agave-event-update): check-cancelled.entry_container を追加。`<article>` の無い頁でも、本文の入れ物(ENTRY_CONTAINER: entry-content・news_box など)が開催日を含むならそこに署名を絞る。フラリエの告知頁が Recent Topics 欄の入れ替わりで「公式ページが変わった」と鳴り続ける形を止めた(巡回対象29頁で範囲が変わるのは1頁)
+- 2026-10-20: health.yml はメールを組む前に build-all.sh で作り直して監査し直す。合図の push に載る audit-results.json はタスクが生成物を作り直す前に回したもので、event-monitor が説明文を直した king-plants が index_card_body_drift としてメールに出た(直後の daily の作り直しで解消済み)。image health の部分的な作り直しはこれに置き換えた。作り直しが落ちた回はメールの「残っていること」の先頭に出る

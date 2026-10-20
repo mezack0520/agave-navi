@@ -3,7 +3,8 @@ name: Health Check
 # 統合元: event-check.yml + link-check.yml + image-health.yml + domain-check.yml + data-integrity.yml
 # 朝の最後のタスク(event-monitor)の合図 mail-request.json の push で全ヘルスチェックとメール(08時台)
 # 1. データ整合性チェック (events.json)
-# 3. 画像生死監視 + dead URL クリア (image-health-check.py)
+# 2. 画像生死監視 + dead URL クリア (image-health-check.py)
+# 3. 作り直して監査し直す (build-all.sh。メールの「残っていること」はこの監査)
 # 4. SSL/ドメイン残日数
 # 5. 各イベント詳細の生死 (check_events.py)
 # 結果はメールで送る。判断・反映・残った異常が無い日は送らない(2026-09-30)。Issue は 2026-09-25 に廃止
@@ -71,20 +72,24 @@ jobs:
           ERR=$(grep -c "ERROR\|FAIL" /tmp/integrity.log || true)
           echo "errors=$ERR" >> $GITHUB_OUTPUT
 
-      - name: 3. Image health (clear dead imageUrls)
+      - name: 2. Image health (clear dead imageUrls)
         if: steps.mode.outputs.full == 'true'
-        run: |
-          # 死んだ imageUrl は自分で外す(直す側の処理)。件数をメールに載せる理由は無い
-          python3 scripts/image-health-check.py || true
+        # 死んだ imageUrl は自分で外す(直す側の処理)。件数をメールに載せる理由は無い。
+        # 外した回の頁は次の作り直しが反映する
+        run: python3 scripts/image-health-check.py || true
 
-          # If events.json changed, regen detail pages + sync index
-          if ! git diff --quiet events.json; then
-            python3 build-detail-pages.py
-            python3 scripts/sync-index-cards.py
-            # 終了30日超に入った回は build-detail-pages.py で noindex になるが、
-            # sitemap を作り直さないと翌朝の daily まで載り続ける(2026-08-04に4件)。
-            python3 scripts/generate_sitemap.py
-          fi
+      # メールは audit-results.json を読む。合図の push に載っているのはタスクが手元で
+      # 回した監査で、生成物は CI が作り直すため、タスクが直した回の頁はその時点では古い。
+      # それを読むと、直後の daily が作り直せば消える不一致を「直せずに残っている」と
+      # 送る(2026-10-20 king-plants の index_card_body_drift)。送る前に作り直して監査し直す。
+      # 落ちてもメールは止めない。落ちたことはメールの先頭に出る(build-health-mail.py)
+      - name: 3. Rebuild and re-audit
+        id: rebuild
+        if: steps.mode.outputs.full == 'true'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          bash scripts/build-all.sh 2>&1 | tee /tmp/build.log
 
       - name: 4. Domain/SSL check
         id: domain
@@ -113,6 +118,7 @@ jobs:
           INTEGRITY_ERR: ${{ steps.integrity.outputs.errors || 0 }}
           SSL_DAYS: ${{ steps.domain.outputs.ssl_days_left || 999 }}
           MAIL_RUN: ${{ steps.mode.outputs.full }}
+          BUILD_RESULT: ${{ steps.rebuild.outcome }}
         run: |
           if [ -f check-results.json ]; then
             echo "results_exist=true" >> $GITHUB_OUTPUT
@@ -144,4 +150,5 @@ jobs:
           # push は scripts/ci-push.sh に集約(2026-09-07)。生成物を含むコミットで
           # rebase を使うと必ず衝突し、`|| true` が握り潰して detached HEAD に残り、
           # 以後の再試行が全て失敗していた(daily #160)。詳細はスクリプト冒頭。
-          bash scripts/ci-push.sh "chore(health): auto cleanup [skip ci]"
+          # 3 で作り直した生成物も載るので、拒否されたら remote の版で作り直して押し直す
+          bash scripts/ci-push.sh "chore(health): auto cleanup [skip ci]" "bash scripts/build-all.sh"

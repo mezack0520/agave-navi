@@ -4525,7 +4525,9 @@ embed/captioned の本文の先頭のハンドルは書き手だけを出し、�
 - **メールは `event-monitor` の最後に送る。**直し終えたら
   `python3 scripts/request-run.py mail --task event-monitor` で `mail-request.json` を書き、
   他の変更と一緒に push する。health.yml は push の paths にこのファイルを持ち、
-  全チェックを回してメールを送る(約10分)。**忘れるとその日のメールは昼の保険まで出ない。**
+  作り直して監査し直したうえで全チェックを回してメールを送る(約10分)。
+  手元の audit に出る生成物の古さ(直した回の index_card_body_drift など)はメールに出ない。
+  **忘れるとその日のメールは昼の保険まで出ない。**
   GitHub の schedule は時刻を当てにできない: 00:00 UTC 指定が 11時台、03:00 指定が
   18〜19時台に走り、10/5・10/6 は1回も走らず「メール来ないよ」と言われた。
   PAT は Actions 権限が無く dispatch は 403 なので、push で起こす。
