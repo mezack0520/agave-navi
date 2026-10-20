@@ -1436,7 +1436,9 @@
   {
    "date": "2026-10-21",
    "urgent": {
-    "time_vs_organizer_post": 1
+    "required_field_empty": 1,
+    "time_vs_organizer_post": 1,
+    "index_card_drift": 1
    },
    "info": {
     "coverage_gap_stale": 1,
@@ -1454,13 +1456,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 154,
     "events_with_image": 322,
-    "upcoming_no_image": 87,
+    "upcoming_no_image": 88,
     "ongoing_events": 4,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 87
+    "eyecatch_backlog": 88
    },
-   "events": 705,
-   "upcoming": 241
+   "events": 706,
+   "upcoming": 242
   }
  ]
 }

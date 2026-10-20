@@ -1,5 +1,5 @@
 {
-  "total": 769,
+  "total": 773,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -280,7 +280,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 87,
+      "count": 88,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -482,8 +482,10 @@
     },
     "required_field_empty": {
       "title": "必須フィールドが空(キーは在るが値が無い)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "temonone-hanbaikai-hitotubu-vintage-2026-10: status が空"
+      ],
       "note": "description が空だと meta/og/JSON-LD の説明が空文字で出る。一次情報から埋める。埋められないなら出典を外して薄頁(noindex)に落とす",
       "severity": "urgent"
     },
@@ -898,12 +900,13 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 87,
+      "count": 88,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
         "2026-10-24 jurian-aki-taniku-cactus-2026-10",
         "2026-10-24 lier-taniku-festival-kasai-2026-10",
+        "2026-10-24 temonone-hanbaikai-hitotubu-vintage-2026-10",
         "2026-10-25 botanoichi-meets-bikaku-yokocho-2026-10",
         "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25",
         "2026-10-25 isij-tokyo-reikai-2026-10-25",
@@ -938,8 +941,7 @@
         "2026-11-28 plant-freaks-olinas-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
-        "2026-11-29 botanoichi-senju-2026-11",
-        "2026-11-29 picnic-garden-sendai-2026-11"
+        "2026-11-29 botanoichi-senju-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1376,8 +1378,10 @@
     },
     "index_card_drift": {
       "title": "index.htmlのカードがevents.jsonの想定集合と不一致",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "カードが無い: temonone-hanbaikai-hitotubu-vintage-2026-10"
+      ],
       "note": "sync-index-cards.py を再実行する。重複が出ているときは THUMB_RE がthumb の中身に一致しなくなっている(置換されず挿入だけが起きる)",
       "severity": "urgent"
     },
