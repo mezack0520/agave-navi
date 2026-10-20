@@ -925,12 +925,18 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
 - **`.aff-shop-btn` は Amazon(`tag=aganavi-22`)と Yahoo!ショッピング(`ck.jp.ap.valuecommerce.com`)が正常（2026-10-06 Amazon アソシエイト再開）。**
   2026-09-23〜10-05 は旧アカウント終了で Amazon を止めていた(575c8cf)。旧ID `agavenavi-22` が出たら旧版の配信か戻りを疑う
   (監査 `affiliate_dead_tag` も拾う)。新アカウントも登録から180日以内に適格販売3件が要る。
+  全頁のフッターに運営規約第5条の表記(「Amazonのアソシエイトとして…」)が要る。欠けは監査 `amazon_disclosure_missing`
+- **メルカリの行(`.aff-mercari`)は枠の先頭。イベント詳細・タグ頁・品種ガイドにだけ出る(2026-10-20)。**
+  開催前の回は売り切れ(相場)、終わった回・タグ頁・ガイドは出品中。リンクは `affiliate-links.json` の
+  `asp.mercari.links` に、アンバサダーのダッシュボードで生成したものをそのまま持つ。規約でURLの変更・自作は禁止なので、
+  検索語を足すときはダッシュボードの「リンク生成」で作る。欠けは監査 `mercari_link_missing`
 - **`.aff-bar`(スマホ固定バー)はデスクトップ幅ではDOMに存在しないのが正常。**
   `affiliate.js` が `matchMedia('(max-width: 720px)')` で生成自体を止めている。
   かつ `resize_window` は効かない(420px を指定しても `innerWidth` は 1478 のまま)。
   機能確認は **matchMedia を差し替えてから `affiliate.js` を再注入**し、
-  45%までスクロールして `.aff-bar.is-shown` と実商品リンク(`hb.afl.rakuten.co.jp`)が
-  出ることを見る。`display:none` は min-width:721px のCSSによるもので異常ではない
+  45%までスクロールして `.aff-bar.is-shown` と Amazon の検索リンク(`tag=aganavi-22`)が
+  出ることを見る(2026-10-20 に楽天の実商品から替えた。tag が空の間だけ楽天に戻る)。
+  `display:none` は min-width:721px のCSSによるもので異常ではない
 - **weekly-enrichment のスケジュール実行は毎回20件しか処理しない。**
   `LIMIT="${{ github.event.inputs.limit || '20' }}"` は cron 実行だと inputs が空なので常に20。
   `enrich_events.py` の `_priority` が短文の開催予定を先頭に並べるため、
@@ -2370,7 +2376,7 @@ Python 側しか見ていなかった。**経路はブラウザの中にも伸�
 
 ### 商品枠の説明文は季節の語を持つが、出す月は season が決める (2026-09-14)
 
-`amazon-links.json` の品目は `season`(旬の月の配列)で順位が上がるが、
+`affiliate-links.json` の品目は `season`(旬の月の配列)で順位が上がるが、
 利用者が読む `label` は季節の語を直に書いている。両者がずれると
 **その季節が終わってからも同じ文が本番に出続ける。**
 2026-09-14 に詳細ページの最上位が「梅雨と夏の蒸れ対策に効く送風」だった。9月に梅雨は無い。

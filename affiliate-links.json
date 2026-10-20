@@ -4,7 +4,7 @@
       "tag": "aganavi-22",
       "searchUrl": "https://www.amazon.co.jp/s?k={keyword}&tag={tag}",
       "label": "Amazon",
-      "_note": "2026-10-06 アソシエイトを取り直し、トラッキングID aganavi-22 で再開した。旧ID agavenavi-22 は 2026-09-23 にアカウント終了(登録から180日以内に適格販売3件に届かず)で無効。新アカウントも同じ条件なので、180日以内に3件が要る。tag が空のあいだ affiliate.js はAmazonのボタンを出さず、ガイド本文の文中リンクは build-guides.py が楽天に切り替える"
+      "_note": "2026-10-06 アソシエイトを取り直し、トラッキングID aganavi-22 で再開した。旧ID agavenavi-22 は 2026-09-23 にアカウント終了(登録から180日以内に適格販売3件に届かず)で無効。新アカウントも同じ条件なので、180日以内に3件が要る。tag が空のあいだ affiliate.js はAmazonのボタンを出さず、ガイド本文の文中リンクは build-guides.py が楽天に切り替える。スマホの固定バーは Amazon(2026-10-20 目崎指定)。Amazon の商品画像と価格は Creators API からしか出せず、使えるのは過去30日に適格販売10件以上のときだけなので、届くまでは文字とサイトのアイコンで出す。サイトのフッターに「Amazonのアソシエイトとして…」の表記が要る(運営規約第5条。sitelib.site_footer が tag のあるときだけ出す)"
     },
     "rakuten": {
       "affiliateId": "5251fbf3.21164c54.5251fbf4.7818a8f3",
@@ -23,12 +23,90 @@
       "label": "Yahoo!ショッピング",
       "_note": "バリューコマース経由。vcpid/sid/pid取得後に設定。URL形式は https://ck.jp.ap.valuecommerce.com/servlet/referral?sid={sid}&pid={pid}&vc_url=https://shopping.yahoo.co.jp/search?p={keyword}"
     },
-    "yahuoku": {
-      "sid": "",
-      "pid": "",
-      "searchUrl": "https://auctions.yahoo.co.jp/search/search?p={keyword}",
-      "label": "ヤフオク",
-      "_note": "バリューコマースの Yahoo!オークション プログラム。提携承認後に sid/pid を入れると表示が有効になる。空のままなら出ない。リンク形式は Yahoo!ショッピングと同じ ck.jp.ap.valuecommerce.com 経由で vc_url に auctions.yahoo.co.jp の検索URLを渡す。"
+    "mercari": {
+      "label": "メルカリ",
+      "_note": "メルカリアンバサダー(ID 1693745906。2026-10-20 開始)。株そのものはメルカリで動くので、資材(Amazon・楽天)の前、枠の先頭に1行出す。links はダッシュボード https://jp.mercari.com/ambassador/dashboard の「リンク生成」で作ったものをそのまま貼る。規約(メルカリアンバサダーご利用ガイドライン)でリンク先URLの変更・自作は禁止なので、検索語を足すときも必ずダッシュボードで生成する。報酬は購入額の2%(メルカリポイント。1商品P1,000・同一購入者から月P3,000が上限)。購入者がログイン状態でクリックしてから24時間以内の購入が対象で、紹介した商品以外も含む。ヤフオクは報酬が出品者のアフィリエイトオプション(個人1%)を付けた商品の落札に限られ、ほぼ発生しないので入れない(2026-10-20 目崎判断)",
+      "_modes": "onSale=出品中(株を探す)、soldOut=売り切れ(相場を見る)。開催前・開催中の回は soldOut、終わった回・タグ頁・品種ガイドは onSale",
+      "genres": ["アガベ", "塊根植物", "珍奇植物", "ビカクシダ", "サボテン", "ブロメリア", "アロイド", "着生植物", "多肉植物", "観葉植物"],
+      "_genresNote": "タグからジャンルを選ぶ優先順。アガベが先頭なのはサイトの読者の中心だから。イベントの頁でタグにどれも無ければ fallback",
+      "aliases": {"コーデックス": "塊根植物", "多肉": "多肉植物"},
+      "fallback": "アガベ",
+      "_guidesNote": "株の話をしているガイドだけ。土・薬剤・ライト・越冬の道具の話には出さない(資材の枠で足りる)",
+      "guides": {
+        "agave-titanota-care": {"keyword": "アガベ チタノタ", "mode": "onSale"},
+        "titanota-oteroi-labels": {"keyword": "アガベ オテロイ", "mode": "onSale"},
+        "pachypodium-gracilius": {"keyword": "パキポディウム グラキリス", "mode": "onSale"},
+        "adenium-wintering": {"keyword": "アデニウム", "mode": "onSale"},
+        "caudex-intro": {"keyword": "塊根植物", "mode": "onSale"},
+        "agave-seedling": {"keyword": "アガベ 実生", "mode": "onSale"},
+        "offsets-guide": {"keyword": "アガベ 子株", "mode": "onSale"},
+        "agave-bareroot-rooting": {"keyword": "アガベ ベアルート", "mode": "onSale"},
+        "agave-winter-hardiness": {"keyword": "アガベ", "mode": "onSale"},
+        "sokubaikai-tips": {"keyword": "アガベ", "mode": "soldOut"}
+      },
+      "links": {
+        "アガベ": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99&status=sold_out%7Ctrading"
+        },
+        "塊根植物": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E5%A1%8A%E6%A0%B9%E6%A4%8D%E7%89%A9&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E5%A1%8A%E6%A0%B9%E6%A4%8D%E7%89%A9&status=sold_out%7Ctrading"
+        },
+        "珍奇植物": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E7%8F%8D%E5%A5%87%E6%A4%8D%E7%89%A9&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E7%8F%8D%E5%A5%87%E6%A4%8D%E7%89%A9&status=sold_out%7Ctrading"
+        },
+        "ビカクシダ": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%83%93%E3%82%AB%E3%82%AF%E3%82%B7%E3%83%80&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%83%93%E3%82%AB%E3%82%AF%E3%82%B7%E3%83%80&status=sold_out%7Ctrading"
+        },
+        "サボテン": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3&status=sold_out%7Ctrading"
+        },
+        "ブロメリア": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%83%96%E3%83%AD%E3%83%A1%E3%83%AA%E3%82%A2&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%83%96%E3%83%AD%E3%83%A1%E3%83%AA%E3%82%A2&status=sold_out%7Ctrading"
+        },
+        "アロイド": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%83%AD%E3%82%A4%E3%83%89&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%83%AD%E3%82%A4%E3%83%89&status=sold_out%7Ctrading"
+        },
+        "着生植物": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E7%9D%80%E7%94%9F%E6%A4%8D%E7%89%A9&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E7%9D%80%E7%94%9F%E6%A4%8D%E7%89%A9&status=sold_out%7Ctrading"
+        },
+        "多肉植物": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E5%A4%9A%E8%82%89%E6%A4%8D%E7%89%A9&status=sold_out%7Ctrading"
+        },
+        "観葉植物": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E8%A6%B3%E8%91%89%E6%A4%8D%E7%89%A9&status=on_sale",
+          "soldOut": "https://jp.mercari.com/search?afid=1693745906&keyword=%E8%A6%B3%E8%91%89%E6%A4%8D%E7%89%A9&status=sold_out%7Ctrading"
+        },
+        "アガベ チタノタ": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99+%E3%83%81%E3%82%BF%E3%83%8E%E3%82%BF&status=on_sale"
+        },
+        "アガベ オテロイ": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99+%E3%82%AA%E3%83%86%E3%83%AD%E3%82%A4&status=on_sale"
+        },
+        "パキポディウム グラキリス": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%83%91%E3%82%AD%E3%83%9D%E3%83%87%E3%82%A3%E3%82%A6%E3%83%A0+%E3%82%B0%E3%83%A9%E3%82%AD%E3%83%AA%E3%82%B9&status=on_sale"
+        },
+        "アデニウム": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%83%87%E3%83%8B%E3%82%A6%E3%83%A0&status=on_sale"
+        },
+        "アガベ 実生": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99+%E5%AE%9F%E7%94%9F&status=on_sale"
+        },
+        "アガベ 子株": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99+%E5%AD%90%E6%A0%AA&status=on_sale"
+        },
+        "アガベ ベアルート": {
+          "onSale": "https://jp.mercari.com/search?afid=1693745906&keyword=%E3%82%A2%E3%82%AC%E3%83%99+%E3%83%99%E3%82%A2%E3%83%AB%E3%83%BC%E3%83%88&status=on_sale"
+        }
+      }
     }
   },
   "common": [

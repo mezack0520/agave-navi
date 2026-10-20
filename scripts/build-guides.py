@@ -4,7 +4,7 @@
 各記事は guides_content/*.py からタイトル・メタ・本文(Markdown風)を読み込み
 HTML化する。スタイルはサイト共通の style.css に揃える。
 """
-import os, re, json, glob, importlib.util
+import os, re, glob, importlib.util
 from datetime import datetime
 
 import sitelib
@@ -115,18 +115,6 @@ def render_markdown(md):
     return '\n'.join(out)
 
 
-_ASP = None
-
-
-def _asp_config():
-    """amazon-links.json の asp 設定を読む(主リンク = Amazon)。"""
-    global _ASP
-    if _ASP is None:
-        with open(os.path.join(REPO_ROOT, 'amazon-links.json'), encoding='utf-8') as f:
-            _ASP = json.load(f).get('asp', {})
-    return _ASP
-
-
 def aff_url(keyword):
     """文中リンクの行き先。使えるASPを上から1つ選ぶ。
 
@@ -135,7 +123,7 @@ def aff_url(keyword):
     tag / affiliateId が空のASPは使わない。affiliate.js の buildAspLinks と同じ規則。
     """
     from urllib.parse import quote
-    asp = _asp_config()
+    asp = sitelib.affiliate_config().get('asp') or {}
     amz = asp.get('amazon') or {}
     if amz.get('tag'):
         url = amz.get('searchUrl') or 'https://www.amazon.co.jp/s?k={keyword}&tag={tag}'

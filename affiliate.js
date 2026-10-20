@@ -1,9 +1,9 @@
 /**
- * Multi-ASP Affiliate Dynamic Link Generator
- * - Loads amazon-links.json (supports Amazon, Rakuten, Yahoo!)
- * - Picks random items based on page category (data-tags)
- * - Each item shows links to all configured ASPs
- * - Renders into .affiliate-section container
+ * アフィリエイト枠。設定の単一情報源は affiliate-links.json
+ * - .affiliate-section に、頁の文脈(data-tags / data-guide)に合う資材を3点出す。
+ *   楽天の商品検索APIで取れた品は画像・価格つきのカード、各行に Amazon などの検索ボタン
+ * - 同じ枠の先頭に、株そのものをメルカリで見る1行(イベント詳細・タグ頁・品種ガイド)
+ * - スマホは画面下に Amazon の固定バー
  */
 (function () {
   'use strict';
@@ -15,20 +15,12 @@
   var DISPLAY_COUNT = 3;
   var ICONS = {
     pot:   '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-    soil:  '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+    soil:  '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 20h18"/><path d="M5 20c1.2-4.8 3.8-8 7-8s5.8 3.2 7 8"/><path d="M9.5 16.5h.01M12 14.8h.01M14.5 16.8h.01"/></svg>',
     tool:  '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
     light: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/><circle cx="12" cy="12" r="5"/></svg>',
     plant: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 20h10"/><path d="M10 20c5.5-2.5 8-8.5 8-12a1 1 0 0 0-1-1c-3.5 0-7.5 2-10 6"/><path d="M10 20c-3-2-5-6-5-9a1 1 0 0 1 1-1c2.5 0 5 1.5 7 4"/></svg>',
     shelf: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>',
     book:  '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
-  };
-
-  // ASP brand colors for badges
-  var ASP_COLORS = {
-    amazon:  '#ff9900',
-    rakuten: '#bf0000',
-    yahoo:   '#ff0033',
-    yahuoku: '#ff0033'
   };
 
   // Detect base path
@@ -98,7 +90,7 @@
       .catch(function () { return null; });
   }
 
-  fetch(basePath + 'amazon-links.json?v=' + Date.now())
+  fetch(basePath + 'affiliate-links.json?v=' + Date.now())
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var rk = (data.asp || {}).rakuten || {};
@@ -111,7 +103,8 @@
         var guide = el.getAttribute('data-guide') || '';
         var items = pickItems(data, tags, guide);
         plan.push({ el: el, items: items, guide: guide,
-                    heading: el.getAttribute('data-heading') || '' });
+                    heading: el.getAttribute('data-heading') || '',
+                    mercari: mercariPick(data, el, tags, guide) });
       });
 
       data._products = {};
@@ -131,7 +124,7 @@
 
       function draw() {
         plan.forEach(function (p) {
-          render(data, [], p.el, p.guide, p.heading, p.items);
+          render(data, p.el, p.guide, p.heading, p.items, p.mercari);
         });
         buildStickyBar(data, plan);
       }
@@ -184,7 +177,43 @@
   }
 
   // ===== スマホ用の固定バー =====
+  // Amazon を出す(2026-10-20 目崎の指定。売れているのは Amazon)。
+  // Amazon の商品画像と価格は Creators API からしか出せず、使えるのは過去30日に
+  // 適格販売10件以上のときだけなので、届くまでは文字とサイトのアイコンで出す。
+  // tag が空(アソシエイト停止中)の間だけ、楽天の実商品に戻す。
   var stickyDone = false;
+
+  function stickyAmazon(data, it) {
+    var url = amazonUrl((data.asp || {}).amazon, it.keyword);
+    if (!url) return '';
+    return '<a class="aff-bar-link" href="' + url + '" target="_blank" rel="noopener sponsored" data-shop="amazon">'
+      + '<span class="aff-bar-icon">' + (ICONS[it.icon] || ICONS.plant) + '</span>'
+      + '<span class="aff-bar-body">'
+      + '<span class="aff-bar-why">' + it.label + '<span class="aff-bar-pr">PR</span></span>'
+      + '<span class="aff-bar-meta"><span class="aff-bar-shop is-amazon">Amazon</span></span>'
+      + '</span>'
+      + '<span class="aff-bar-go">探す</span></a>';
+  }
+
+  function stickyRakuten(data, items) {
+    var products = data._products || {};
+    for (var i = 0; i < items.length; i++) {
+      var p = products[items[i].keyword];
+      if (!(p && p.image && p.url)) continue;
+      return '<a class="aff-bar-link" href="' + p.url + '" target="_blank" rel="noopener sponsored" data-shop="rakuten">'
+        + '<img class="aff-bar-img" src="' + p.image + '" alt="" loading="lazy"'
+        + ' onerror="this.style.visibility=\'hidden\'">'
+        + '<span class="aff-bar-body">'
+        + '<span class="aff-bar-why">' + items[i].label + '<span class="aff-bar-pr">PR</span></span>'
+        + '<span class="aff-bar-meta">'
+        + (p.price ? '<span class="aff-bar-price">'
+            + Number(p.price).toLocaleString('ja-JP') + '円</span>' : '')
+        + '<span class="aff-bar-shop">楽天市場</span></span>'
+        + '</span>'
+        + '<span class="aff-bar-go">見る</span></a>';
+    }
+    return '';   // 実商品が取れないうちは出さない
+  }
 
   function buildStickyBar(data, plan) {
     if (stickyDone) return;
@@ -192,33 +221,16 @@
     try {
       if (sessionStorage.getItem('agn_aff_bar_closed') === '1') return;
     } catch (e) {}
-    if (!plan.length) return;
+    if (!plan.length || !plan[0].items.length) return;
 
-    var products = data._products || {};
-    var pick = null;
-    for (var i = 0; i < plan[0].items.length && !pick; i++) {
-      var it = plan[0].items[i];
-      var p = products[it.keyword];
-      if (p && p.image && p.url) pick = { item: it, prod: p };
-    }
-    if (!pick) return;   // 実商品が取れないうちは出さない
+    var inner = stickyAmazon(data, plan[0].items[0]) || stickyRakuten(data, plan[0].items);
+    if (!inner) return;
     stickyDone = true;
 
     var bar = document.createElement('div');
     bar.className = 'aff-bar';
     bar.setAttribute('aria-label', '広告');
-    bar.innerHTML =
-      '<a class="aff-bar-link" href="' + pick.prod.url + '" target="_blank" rel="noopener sponsored">'
-      + '<img class="aff-bar-img" src="' + pick.prod.image + '" alt="" loading="lazy"'
-      + ' onerror="this.style.visibility=\'hidden\'">'
-      + '<span class="aff-bar-body">'
-      + '<span class="aff-bar-why">' + pick.item.label + '<span class="aff-bar-pr">PR</span></span>'
-      + '<span class="aff-bar-meta">'
-      + (pick.prod.price ? '<span class="aff-bar-price">'
-          + Number(pick.prod.price).toLocaleString('ja-JP') + '円</span>' : '')
-      + '<span class="aff-bar-shop">楽天市場</span></span>'
-      + '</span>'
-      + '<span class="aff-bar-go">見る</span></a>'
+    bar.innerHTML = inner
       + '<button class="aff-bar-close" type="button" aria-label="閉じる">×</button>';
     document.body.appendChild(bar);
 
@@ -284,14 +296,6 @@
     initSidebarControl();
   }
 
-  function shopKey(label) {
-    if (label.indexOf('Amazon') >= 0) return 'amazon';
-    if (label.indexOf('楽天') >= 0) return 'rakuten';
-    if (label.indexOf('ヤフオク') >= 0) return 'yahuoku';
-    if (label.indexOf('Yahoo') >= 0) return 'yahoo';
-    return 'other';
-  }
-
   var RND_STATE = seed();
   function rnd() {
     // xorshift。種が同じなら同じ順序になる
@@ -309,7 +313,7 @@
     return a;
   }
 
-  // 季節の重み付け。amazon-links.json の season(旬の月の配列)を持つ品目だけ、
+  // 季節の重み付け。affiliate-links.json の season(旬の月の配列)を持つ品目だけ、
   // 旬なら rank を上げ、旬を外れていれば下げる。season の無い品目は通年扱いで不変。
   // 8月に「冬の室内管理で徒長させないための育成LED」「取り込み株をまとめて置ける簡易温室」が
   // 最上位に出ていたため導入(2026-08-10)。判定は閲覧者の時計ではなく JST の月で行う。
@@ -384,74 +388,111 @@
     return lead.concat(narrow(rest, DISPLAY_COUNT - lead.length));
   }
 
+  // Amazon の検索リンク。tag が空なら出さない(2026-09-23 に旧アカウントが終了した)
+  function amazonUrl(amz, keyword) {
+    if (!amz || !amz.tag) return '';
+    return amz.searchUrl.replace('{keyword}', encodeURIComponent(keyword)).replace('{tag}', amz.tag);
+  }
+
   /**
-   * Build search URLs for all configured ASPs.
-   * Returns array of {label, url, color} only for ASPs that have credentials configured.
+   * 資材の検索リンクを店ごとに作る。ID が設定されている店だけ返す。
+   * key は data-shop(CSS の店の色と GA4 の shop)にそのまま使う。
    */
-  function buildAspLinks(keyword, aspConfig) {
+  function buildAspLinks(keyword, asp) {
     var links = [];
-    var kw = encodeURIComponent(keyword);
 
-    // Amazon (tag が空なら出さない。2026-09-23 にアソシエイト終了)
-    var amz = aspConfig.amazon;
-    if (amz && amz.tag) {
-      links.push({
-        label: amz.label || 'Amazon',
-        url: amz.searchUrl.replace('{keyword}', kw).replace('{tag}', amz.tag),
-        color: ASP_COLORS.amazon
-      });
-    }
+    var amz = amazonUrl(asp.amazon, keyword);
+    if (amz) links.push({ key: 'amazon', label: asp.amazon.label || 'Amazon', url: amz });
 
-    // Rakuten
-    var rak = aspConfig.rakuten;
+    var rak = asp.rakuten;
     if (rak) {
-      var rakUrl;
-      if (rak.affiliateId) {
-        rakUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + rak.affiliateId
-          + '/?pc=' + encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + keyword + '/');
-      } else {
-        rakUrl = 'https://search.rakuten.co.jp/search/mall/' + kw + '/';
-      }
       links.push({
+        key: 'rakuten',
         label: rak.label || '楽天市場',
-        url: rakUrl,
-        color: ASP_COLORS.rakuten
+        url: rak.affiliateId
+          ? 'https://hb.afl.rakuten.co.jp/hgc/' + rak.affiliateId
+            + '/?pc=' + encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + keyword + '/')
+          : 'https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(keyword) + '/'
       });
     }
 
-    // Yahoo! Shopping (ValueCommerce) — sid/pid が設定済みの場合のみ表示
-    var yah = aspConfig.yahoo;
+    // Yahoo!ショッピング(バリューコマース)。sid/pid が設定済みのときだけ
+    var yah = asp.yahoo;
     if (yah && yah.sid && yah.pid) {
-      var yahUrl = 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + yah.sid
-        + '&pid=' + yah.pid
-        + '&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=' + keyword);
       links.push({
+        key: 'yahoo',
         label: yah.label || 'Yahoo!ショッピング',
-        url: yahUrl,
-        color: ASP_COLORS.yahoo
-      });
-    }
-
-    // ヤフオク(バリューコマース) — sid/pid が設定済みの場合のみ表示。
-    // 株そのものが数千〜数万円で動く場なので、相場を見る導線として効く。
-    var auc = aspConfig.yahuoku;
-    if (auc && auc.sid && auc.pid) {
-      links.push({
-        label: auc.label || 'ヤフオク',
-        url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + auc.sid
-          + '&pid=' + auc.pid
-          + '&vc_url=' + encodeURIComponent('https://auctions.yahoo.co.jp/search/search?p=' + keyword),
-        color: ASP_COLORS.yahuoku
+        url: 'https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=' + yah.sid
+          + '&pid=' + yah.pid
+          + '&vc_url=' + encodeURIComponent('https://shopping.yahoo.co.jp/search?p=' + keyword)
       });
     }
 
     return links;
   }
 
-  function render(data, tags, el, guideSlug, heading, presetItems) {
-    var items = presetItems || pickItems(data, tags, guideSlug);
+  // ===== メルカリ(株そのもの)の1行 =====
+  // 資材は Amazon・楽天で足りるが、株そのものはメルカリで動いている(2026-10-20)。
+  // リンクは affiliate-links.json に、アンバサダーのダッシュボードで生成したものを
+  // そのまま持つ。規約でリンク先URLの変更・自作は禁止なので、ここで組み立てない。
+  // 開催前・開催中の回は売り切れ(行く前の相場)、終わった回・タグ頁・品種ガイドは出品中。
+  function todayJST() {
+    // status-auto.js の todayJST と同じく getTimezoneOffset は使わない
+    return new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+  }
+
+  // イベント詳細なら終わったかどうか。それ以外の頁は null
+  function eventOver() {
+    var b = document.querySelector('.detail-status-badge');
+    if (!b) return null;
+    var end = b.getAttribute('data-date-end') || b.getAttribute('data-date') || '';
+    return /^\d{4}-\d{2}-\d{2}$/.test(end) ? end < todayJST() : null;
+  }
+
+  function mercariPick(data, el, tags, guide) {
+    var m = (data.asp || {}).mercari;
+    if (!m || !m.links) return null;
+    var kw = '', mode = 'onSale', over = null;
+    if (guide) {
+      var g = (m.guides || {})[guide];
+      if (!g) return null;   // 株の話でないガイド(土・薬剤・ライト)
+      kw = g.keyword;
+      mode = g.mode || 'onSale';
+    } else {
+      over = eventOver();
+      // 置くのはイベント詳細・タグ頁・品種ガイドだけ(2026-10-20 目崎指定)。
+      // タグ頁は generate-landing-pages.py が data-mercari を付ける
+      if (over === null && !el.hasAttribute('data-mercari')) return null;
+      var alias = m.aliases || {};
+      var have = tags.map(function (t) { return alias[t] || t; });
+      (m.genres || []).some(function (x) {
+        if (have.indexOf(x) < 0) return false;
+        kw = x;
+        return true;
+      });
+      // 即売会としか書いていない回が多い。イベント詳細だけ既定のジャンルで埋める
+      if (!kw && over !== null) kw = m.fallback || '';
+      if (over === false) mode = 'soldOut';
+    }
+    var url = kw && (m.links[kw] || {})[mode];
+    return url ? { keyword: kw, mode: mode, over: over, url: url } : null;
+  }
+
+  // 枠の先頭に置く。読者が来ているのは株のためで、資材はその次(2026-10-20)
+  function mercariRow(mer) {
+    var sold = mer.mode === 'soldOut';
+    return '<div class="aff-mercari">'
+      + '<div class="aff-head"><h3>'
+      + (sold ? '行く前に相場を見る' : mer.over ? '次の開催まで待てないとき' : '株を探す')
+      + '</h3><span class="aff-pr">PR</span></div>'
+      + '<a class="aff-mercari-btn" href="' + mer.url + '" target="_blank" rel="noopener sponsored" data-shop="mercari">'
+      + 'メルカリで「' + mer.keyword + '」の' + (sold ? '相場' : '出品') + 'を見る</a>'
+      + (sold ? '<p class="aff-mercari-note">売り切れた株の値段は、会場で値札を見るときの目安になります</p>' : '')
+      + '</div>';
+  }
+
+  function render(data, el, guideSlug, heading, items, mer) {
     if (!items.length) return;
-    // 既定のトラッキングIDは持たない。旧ID agavenavi-22 は2026-09-23にアカウント終了で無効
     var aspConfig = data.asp || {};
 
     var title = heading || (guideSlug ? 'この記事で使う道具・資材' : '株を持ち帰る前に揃えるもの');
@@ -459,15 +500,25 @@
       ? '本文で触れた資材を各ショップで探せます'
       : '当日の運搬と、帰宅後の植え替え・発根管理で必要になるもの';
 
-    var html = '<div class="aff-head"><h3>' + title + '</h3>'
+    var html = (mer ? mercariRow(mer) : '')
+             + '<div class="aff-head"><h3>' + title + '</h3>'
              + '<span class="aff-pr">PR</span></div>';
     html += '<p class="affiliate-desc">' + desc + '</p>';
     html += '<div class="affiliate-links">';
 
     var products = data._products || {};
 
-    items.forEach(function (item, idx) {
-      var icon = ICONS[item.icon] || ICONS.plant;
+    function shopButtons(links) {
+      // 先頭(Amazon)を主動線にする。実測でAmazonだけが売れている
+      // (2026-08-24: 過去30日 Amazon 14クリック/5点/¥214、楽天 16クリック/0件/¥0)。
+      return '<div class="aff-shop-btns">' + links.map(function (asp, i) {
+        return '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
+          + ' class="aff-shop-btn' + (i === 0 ? ' is-primary' : '') + '"'
+          + ' data-shop="' + asp.key + '">' + asp.label + 'で探す</a>';
+      }).join('') + '</div>';
+    }
+
+    items.forEach(function (item) {
       var aspLinks = buildAspLinks(item.keyword, aspConfig);
       if (!aspLinks.length) return;
 
@@ -475,7 +526,7 @@
       var p = products[item.keyword];
       if (p && p.image && p.url) {
         html += '<div class="affiliate-item">';
-        html += '<a class="rk-card" href="' + p.url + '" target="_blank" rel="noopener sponsored">';
+        html += '<a class="rk-card" href="' + p.url + '" target="_blank" rel="noopener sponsored" data-shop="rakuten">';
         html += '<img class="rk-card-img" src="' + p.image + '" alt="" loading="lazy"'
              +  ' referrerpolicy="no-referrer-when-downgrade"'
              +  ' onerror="this.style.visibility=\'hidden\'">';
@@ -487,55 +538,33 @@
         if (p.reviewCount) html += '<span class="rk-card-rev">レビュー' + p.reviewCount + '件</span>';
         html += '<span class="rk-card-shop">楽天市場</span>';
         html += '</span></span></a>';
-        // 楽天以外(Amazon / Yahoo!ショッピング / ヤフオク)も残す。
+        // 楽天以外(Amazon / Yahoo!ショッピング)も残す。
         // カードだけ出して他店リンクを消していたのは実装漏れ。
-        var others = aspLinks.filter(function (a) { return a.label !== '楽天市場'; });
-        if (others.length) {
-          html += '<div class="aff-shop-btns">';
-          others.forEach(function (asp, i) {
-            // 先頭(Amazon)を主動線にする。実測でAmazonだけが売れている
-            // (2026-08-24: 過去30日 Amazon 14クリック/5点/¥214、楽天 16クリック/0件/¥0)。
-            html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-              + ' class="aff-shop-btn' + (i === 0 ? ' is-primary' : '') + '"'
-              + ' data-shop="' + shopKey(asp.label) + '">'
-              + asp.label + 'で探す</a>';
-          });
-          html += '</div>';
-        }
+        var others = aspLinks.filter(function (a) { return a.key !== 'rakuten'; });
+        if (others.length) html += shopButtons(others);
         html += '</div>';
         return;
       }
 
-      // 主リンク(先頭ASP)を行の主動線にする。店を選ばせる前に商品へ向かわせる
-      var primary = aspLinks[0];
-      var alts = aspLinks.slice(1);
-
       // 商品が取れなかった行。カード行と見た目を揃え、店は全部ボタンで並べる。
       html += '<div class="affiliate-item">';
       html += '<div class="aff-row aff-row-plain">';
-      html += '<span class="affiliate-icon">' + icon + '</span>';
+      html += '<span class="affiliate-icon">' + (ICONS[item.icon] || ICONS.plant) + '</span>';
       html += '<span class="aff-row-body">';
       html += '<span class="affiliate-item-label">' + item.label + '</span>';
       html += '</span></div>';
-      html += '<div class="aff-shop-btns">';
-      aspLinks.forEach(function (asp, i) {
-        html += '<a href="' + asp.url + '" target="_blank" rel="noopener sponsored"'
-          + ' class="aff-shop-btn' + (i === 0 ? ' is-primary' : '') + '"'
-          + ' data-shop="' + shopKey(asp.label) + '">'
-          + asp.label + 'で探す</a>';
-      });
-      html += '</div>';
+      html += shopButtons(aspLinks);
       html += '</div>';
     });
 
     html += '</div>';
 
-    // Build notice text
+    // 枠の注記。Amazon の「アソシエイトとして…」の表記はサイト共通のフッターが持つ
     var notices = [];
-    if (aspConfig.amazon && aspConfig.amazon.tag) notices.push('Amazon.co.jpアソシエイト');
+    if (aspConfig.amazon && aspConfig.amazon.tag) notices.push('Amazonアソシエイト');
     if (aspConfig.rakuten) notices.push('楽天アフィリエイト');
-    if ((aspConfig.yahoo && aspConfig.yahoo.sid && aspConfig.yahoo.pid)
-        || (aspConfig.yahuoku && aspConfig.yahuoku.sid && aspConfig.yahuoku.pid)) notices.push('バリューコマース');
+    if (aspConfig.yahoo && aspConfig.yahoo.sid && aspConfig.yahoo.pid) notices.push('バリューコマース');
+    if (mer) notices.push('メルカリアンバサダー');
     var priceShown = items.some(function (it) {
       var p = (data._products || {})[it.keyword];
       return p && p.image && p.url && p.price;
@@ -553,33 +582,26 @@
   // 各モールの管理画面を突き合わせないと判断できなかった。
   // モール側は自分の分しか見えないので、同じ土俵で比べるにはこちら側で数える必要がある。
   // document 単位で1回だけ張る（カードは後から差し替わるので委譲で拾う）。
+  // 店は全リンクの data-shop、置き場所はクラスで分ける。
   var _trackBound = false;
   function bindClickTracking() {
     if (_trackBound) return;
     _trackBound = true;
     document.addEventListener('click', function (ev) {
       var a = ev.target && ev.target.closest
-        ? ev.target.closest('a.aff-shop-btn, a.rk-card, .aff-bar a')
+        ? ev.target.closest('a.aff-shop-btn, a.rk-card, a.aff-mercari-btn, .aff-bar a')
         : null;
       if (!a) return;
       if (typeof window.gtag !== 'function') return;
 
-      var shop = a.getAttribute('data-shop');
-      if (!shop) {
-        // 楽天カードと固定バーは data-shop を持たない。リンク先から判定する
-        var h = a.getAttribute('href') || '';
-        shop = h.indexOf('rakuten') >= 0 ? 'rakuten'
-             : h.indexOf('amazon') >= 0 ? 'amazon'
-             : h.indexOf('valuecommerce') >= 0 ? 'valuecommerce'
-             : 'other';
-      }
       var placement = a.classList.contains('rk-card') ? 'product_card'
                     : a.closest('.aff-bar') ? 'sticky_bar'
+                    : a.classList.contains('aff-mercari-btn') ? 'mercari_row'
                     : a.classList.contains('is-primary') ? 'primary_button'
                     : 'shop_button';
       try {
         window.gtag('event', 'affiliate_click', {
-          shop: shop,
+          shop: a.getAttribute('data-shop') || 'other',
           placement: placement,
           page_path: location.pathname
         });

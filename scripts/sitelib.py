@@ -17,8 +17,8 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20260922b'
-JS_VERSION = '20260923a'
+CSS_VERSION = '20261020a'
+JS_VERSION = '20261020a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -1727,6 +1727,29 @@ def updates_scopes(items, limit=UPDATES_MAX, root=''):
     return out
 
 
+_AFFILIATE_CONFIG = None
+
+
+def affiliate_config():
+    """affiliate-links.json(アフィリエイトの設定の単一情報源)。affiliate.js も同じものを読む。"""
+    global _AFFILIATE_CONFIG
+    if _AFFILIATE_CONFIG is None:
+        repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        with open(os.path.join(repo, 'affiliate-links.json'), encoding='utf-8') as f:
+            _AFFILIATE_CONFIG = json.load(f)
+    return _AFFILIATE_CONFIG
+
+
+def amazon_disclosure_html():
+    """Amazon アソシエイトの表記。運営規約第5条で、サイトに目立つように出すことが求められる。
+    2026-10-20 まで全頁のどこにも無かった(枠の注記の「Amazon.co.jpアソシエイト」は規約の文言ではない)。
+    tag が空(アソシエイト停止中)のときは事実と違うので出さない。"""
+    if not ((affiliate_config().get('asp') or {}).get('amazon') or {}).get('tag'):
+        return ''
+    return ('      <p class="footer-aff">Amazonのアソシエイトとして、'
+            'アガベイベントナビは適格販売により収入を得ています。</p>\n')
+
+
 def site_footer():
     """正規フッター(全ページ共通・単一情報源)。404含む全静的ページは sync-footers.py で同期。"""
     year = now_jst().year
@@ -1757,7 +1780,7 @@ def site_footer():
         <a href="/terms.html">利用規約</a>
         <a href="/disclaimer.html">免責事項</a>
       </nav>
-      <p class="footer-copy">&copy; 2025-{year} アガベイベントナビ</p>
+{amazon_disclosure_html()}      <p class="footer-copy">&copy; 2025-{year} アガベイベントナビ</p>
     </div>
   </footer>"""
 

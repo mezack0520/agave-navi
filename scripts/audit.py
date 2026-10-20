@@ -1614,13 +1614,33 @@ def main():
         pb = open(rp('docs', 'task-playbook.md'), encoding='utf-8').read()
     except OSError:
         pb = ''
-    unused = []
-    for f in sorted(glob.glob(rp('scripts', '*.py'))) + [rp('build-detail-pages.py')]:
-        bn = os.path.basename(f)
-        if bn in ('sitelib.py', 'audit.py') or bn in MANUAL_ONLY:
-            continue
-        if bn not in ba and bn not in wf and bn not in pb:
-            unused.append(bn)
+    _scripts = {os.path.basename(f): f for f in glob.glob(rp('scripts', '*.py'))}
+    _scripts['build-detail-pages.py'] = rp('build-detail-pages.py')
+    _used = {bn for bn in _scripts
+             if bn in ('sitelib.py', 'audit.py') or bn in MANUAL_ONLY
+             or bn in ba or bn in wf or bn in pb}
+
+    # 使われているスクリプトが import しているライブラリも使われている(2026-10-20)。
+    # 名前が出てくるかだけで数えていたので、daily.yml の paths から eyecatchlib.py を
+    # 外した途端に「誰も参照していない」になった。実際は ig-organizer-watch.py と
+    # list-missing-eyecatch.py が import している
+    def _local_imports(path):
+        try:
+            src = open(path, encoding='utf-8').read()
+        except OSError:
+            return set()
+        mods = set(re.findall(r'^\s*from\s+([A-Za-z_]\w*)', src, re.M))
+        for line in re.findall(r'^\s*import\s+([^\n#]+)', src, re.M):
+            mods.update(x.strip().split(' ')[0].split('.')[0] for x in line.split(','))
+        return {m + '.py' for m in mods if m}
+
+    _stack = list(_used)
+    while _stack:
+        for _dep in _local_imports(_scripts[_stack.pop()]) & set(_scripts):
+            if _dep not in _used:
+                _used.add(_dep)
+                _stack.append(_dep)
+    unused = sorted(set(_scripts) - _used)
     add('unreferenced_scripts',
         'build-all.shもworkflowもプレイブックも参照していないスクリプト',
         unused, '使われていないか、呼び出しが失われている。'
@@ -2267,7 +2287,7 @@ def main():
         '定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION')
 
     # 15. 楽天商品キャッシュの網羅率
-    links = load_json('amazon-links.json', {})
+    links = load_json('affiliate-links.json', {})
     kws = set()
     for it in (links.get('common') or []):
         kws.add(it.get('keyword'))
@@ -3596,30 +3616,70 @@ def main():
         missing_cfg, f'検索語 {len([k for k in kws if k])} 件がこの設定に依存する', severity='info')
 
     # 使えないトラッキングIDのリンクが頁に残っていないか(2026-09-23 追加)。
-    # Amazon アソシエイトが終了して amazon-links.json の tag を空にしても、
+    # Amazon アソシエイトが終了して affiliate-links.json の tag を空にしても、
     # 生成し直していない頁や手書きの頁に旧ID agavenavi-22 のリンクが残ると、
     # 成果の付かない送客を続ける。設定と違う tag= を持つ Amazon リンクを全頁で探す
     _amz_tag = ((links.get('asp') or {}).get('amazon') or {}).get('tag') or ''
     _amz_dead = []
+    # Amazon アソシエイトの表記(運営規約第5条。2026-10-20 追加)。「Amazonのアソシエイトとして、
+    # [名称]は適格販売により収入を得ています」をサイトに目立つように出すことが求められるのに、
+    # 2026-10-20 まで全頁のどこにも無かった。sitelib.site_footer が出すので、フッターを持つ頁で
+    # 欠けていれば、その頁の生成経路がフッターを sitelib から取っていない
+    _amz_disc_missing = []
     _AMZ_TAG_RE = re.compile(r'amazon\.co\.jp/[^"\'\s>]*[?&]tag=([A-Za-z0-9_-]+)')
     for f in sorted(glob.glob(rp('**', '*.html'), recursive=True)):
         rel = os.path.relpath(f, REPO).replace(os.sep, '/')
-        if rel.startswith(('archive/', 'staging/', 'templates/')):
+        if rel.startswith(('staging/', 'templates/')):
             continue
         try:
             _txt = open(f, encoding='utf-8').read()
         except OSError:
+            continue
+        if _amz_tag and '<footer class="footer">' in _txt and 'Amazonのアソシエイトとして' not in _txt:
+            _amz_disc_missing.append(rel)
+        if rel.startswith('archive/'):
             continue
         _bad = sorted({t for t in _AMZ_TAG_RE.findall(_txt) if t != _amz_tag})
         if _bad:
             _amz_dead.append(f"{rel}: tag={','.join(_bad)}")
     add('affiliate_dead_tag', '設定に無いトラッキングIDのAmazonリンクが頁に残っている',
         _amz_dead,
-        'amazon-links.json の asp.amazon.tag と違う ID。成果が付かない。'
+        'affiliate-links.json の asp.amazon.tag と違う ID。成果が付かない。'
         'ガイドは build-guides.py で作り直す。手書き頁なら直接直す')
+    add('amazon_disclosure_missing', 'Amazonアソシエイトの表記がフッターに無い頁',
+        _amz_disc_missing,
+        '運営規約第5条の表記。無いとアカウントを止められうる。表記は sitelib.amazon_disclosure_html、'
+        '全頁へは site_footer() 経由で入る(手書き頁は sync-footers.py)。build-all.sh で作り直す',
+        severity='urgent')
+
+    # メルカリのリンク(2026-10-20 追加)。asp.mercari.links はアンバサダーのダッシュボードで
+    # 生成したものをそのまま持つ(規約でリンク先URLの変更・自作は禁止)。見るのは「生成した形を
+    # していない」「出す先(genres・fallback・guides)の検索にリンクが無い」の2つ。
+    # 無いと affiliate.js はその行を黙って出さないので、誰も気づかない
+    _mer = (links.get('asp') or {}).get('mercari') or {}
+    _mer_bad = []
+    if _mer:
+        _mer_links = _mer.get('links') or {}
+        for _kw, _modes in sorted(_mer_links.items()):
+            for _mode, _u in sorted((_modes or {}).items()):
+                if not re.match(r'https://jp\.mercari\.com/search\?afid=\d+&', _u or ''):
+                    _mer_bad.append(f'{_kw}/{_mode}: 生成したリンクの形でない({(_u or "")[:60]})')
+        _need = {(g, m) for g in (_mer.get('genres') or []) + [_mer.get('fallback') or '']
+                 if g for m in ('onSale', 'soldOut')}
+        for _slug, _g in sorted((_mer.get('guides') or {}).items()):
+            _need.add((_g.get('keyword') or '', _g.get('mode') or 'onSale'))
+            if not os.path.exists(rp('guides', f'{_slug}.html')):
+                _mer_bad.append(f'guides.{_slug}: そのガイドが無い')
+        for _kw, _mode in sorted(_need):
+            if not (_mer_links.get(_kw) or {}).get(_mode):
+                _mer_bad.append(f'{_kw}/{_mode}: リンクが無い(その頁ではメルカリの行が出ない)')
+    add('mercari_link_missing', 'メルカリのリンクが欠けている・生成した形でない', _mer_bad,
+        'https://jp.mercari.com/ambassador/dashboard の「リンク生成」で作り、affiliate-links.json の '
+        'asp.mercari.links にそのまま貼る。URLを手で組み立てない(規約違反)',
+        severity='urgent')
 
     # 商品枠の説明文が、その品目を出す月と食い違っていないか(2026-09-14 追加)。
-    # affiliate.js は amazon-links.json の season(旬の月の配列)を見て順位を上げるが、
+    # affiliate.js は affiliate-links.json の season(旬の月の配列)を見て順位を上げるが、
     # label(利用者が読む1行)は季節の語を直に書いている。season の窓と label の語が
     # ずれていると、**その季節が終わってからも同じ文が出続ける。**
     # 2026-09-14 に本番の詳細ページで「梅雨と夏の蒸れ対策に効く送風」が

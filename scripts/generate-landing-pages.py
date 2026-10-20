@@ -160,7 +160,7 @@ CANONICALIZED_PATHS = []  # canonicalを他URLに向けた頁。noindexではな
 def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
            noindex=False, intro_html='', fallback_evs=None, rel_path=None,
            canonical_of=None, feed_href=None,
-           upd_region=None, upd_prefecture=None):
+           upd_region=None, upd_prefecture=None, aff_tags='', aff_mercari=False):
     # canonical_of: 別URLと内容が完全に重複する頁で、正規URLをそちらに寄せる。
     # noindexにはしない(利用者には見える・リンクも辿らせる)が、
     # 自分自身を指さないcanonicalとsitemap掲載は矛盾するのでsitemapからは外す。
@@ -209,18 +209,20 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
             prefecture=upd_prefecture, show_feed=False, root=root)
         if upd:
             upd = '\n  ' + upd
-    aff, aff_js = aff_block(root, noindex=noindex)
+    aff, aff_js = aff_block(root, noindex=noindex, tags=aff_tags, mercari=aff_mercari)
     body = (f'<body>\n{HEADER}\n{bch}\n  <main>\n  <section class="landing-hero"><h1>{h1}</h1>'
             f'<p class="lead">{lead}</p></section>{intro}\n{grid}{aff}\n  </main>\n{upd}\n{FOOTER}\n'
             f'{aff_js}  <script src="{root}status-auto.js?v={sitelib.JS_VERSION}"></script>\n'
             f'</body>\n</html>\n')
     return head + '\n' + body
 
-def aff_block(root, noindex=False, tags=''):
-    """アフィリエイト枠。noindexの薄いページには出さない(薄頁×広告を避ける)。"""
+def aff_block(root, noindex=False, tags='', mercari=False):
+    """アフィリエイト枠。noindexの薄いページには出さない(薄頁×広告を避ける)。
+    mercari: メルカリで株を見る1行を出す頁(タグ頁だけ。2026-10-20 目崎指定)。
+    どの検索を出すかは affiliate.js が data-tags と affiliate-links.json で決める"""
     if noindex:
         return '', ''
-    attr = f' data-tags="{tags}"' if tags else ''
+    attr = (f' data-tags="{tags}"' if tags else '') + (' data-mercari' if mercari else '')
     return (f'\n  <section class="affiliate-section"{attr} style="max-width:960px;margin:1.5rem auto 0;"></section>',
             f'  <script src="{root}affiliate.js?v={sitelib.JS_VERSION}"></script>\n')
 
@@ -342,7 +344,7 @@ def main():
                    f'タグ: {t}', f'「{t}」のイベント一覧。直近の開催から過去の実績まで。', upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'tag/{sl}/index.html',
-                   feed_href=f'/feeds/tag-{sl}.xml'))
+                   feed_href=f'/feeds/tag-{sl}.xml', aff_tags=t, aff_mercari=True))
         counters['tag']+=1
 
     # Pref pages

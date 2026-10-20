@@ -21,22 +21,18 @@ on:
       - 'events.json'
       # 朝の巡回の合図(scripts/request-run.py crawl)。push で入っても巡回を全部回す
       - 'crawl-request.json'
-      # 巡回スクリプトを直したら回して結果を確かめられるようにする。
-      # CI側(GITHUB_TOKEN)のpushはワークフローを再起動しない仕様なので、
-      # sync-events が events.json を更新しても daily は発火しない。
-      # 手で直したときに確認する経路が無いと、動くかどうかを翌朝まで待つことになる。
-      - 'scripts/coverage-sweep.py'
-      - 'scripts/check-cancelled.py'
-      - 'scripts/ig-organizer-watch.py'
-      - 'scripts/iglib.py'
-      - 'scripts/eyecatchlib.py'
-      # sitelib は生成物すべての単一情報源(会場スラッグ・CSS/JS版数・
-      # 日付整形)。ここを直しても再生成が走らないので、翌朝まで本番は
-      # 旧版のままだった。2026-09-17、会場ローマ字URLを2件足した直後に
-      # venue_redirect_broken(urgent) が鳴り、宛先の頁はビルドされていなかった。
-      # **「直した」と「本番に出ている」が別なのは §5 に書いてあるが、
-      # 出す経路そのものが無かった。**
-      - 'scripts/sitelib.py'
+      # サイトの作り(スクリプト・テンプレート・ガイド原稿・アフィリエイト設定)を直した push。
+      # CI側(GITHUB_TOKEN)のpushはワークフローを再起動しない仕様なので、ここに無い
+      # ファイルを直しても、次に events.json が動くまで本番は旧版のままになる。
+      # 2026-09-17 に sitelib.py だけ足した(会場ローマ字URLを足した直後に
+      # venue_redirect_broken が鳴り、宛先の頁はビルドされていなかった)が、
+      # 生成スクリプト・テンプレート・ガイド原稿は残っていた。2026-10-20 に作りの入力をまとめて足した。
+      # 巡回するのは巡回スクリプトを直した回だけ(下の Decide crawl)
+      - 'scripts/**'
+      - 'templates/**'
+      - 'guides_content/**'
+      - 'build-detail-pages.py'
+      - 'affiliate-links.json'
   repository_dispatch:
     types: [daily]
   workflow_dispatch:
