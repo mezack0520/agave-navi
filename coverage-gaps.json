@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-20",
+  "sweptOn": "2026-10-21",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,17 +16,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1232,
-    "in_scope": 267,
-    "covered": 173,
-    "known_rejected": 90,
+    "candidates": 1217,
+    "in_scope": 268,
+    "covered": 178,
+    "known_rejected": 87,
     "truncated_resolved": 45,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 180,
+    "in_scope_leafla": 175,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 87,
-    "gaps_raw": 4
+    "in_scope_nextmeet": 93,
+    "gaps_raw": 3
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -43,10 +43,6 @@
     {
       "date": "2026-11-01",
       "title": "第8回 多肉と雑貨 福山deマルシェ"
-    },
-    {
-      "date": "2026-11-07",
-      "title": "Kusa paradise in hirata nursery"
     },
     {
       "date": "2026-11-21",

@@ -1,5 +1,5 @@
 {
-  "total": 752,
+  "total": 769,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -858,10 +858,9 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 2,
+      "count": 1,
       "items": [
-        "2026-11-01 第8回 多肉と雑貨 福山deマルシェ",
-        "2026-11-07 Kusa paradise in hirata nursery"
+        "2026-11-01 第8回 多肉と雑貨 福山deマルシェ"
       ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
@@ -982,8 +981,14 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 5,
+      "items": [
+        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文・画像)",
+        "2026-11-07 chuushokushobutsusai-2026: 公式ページが変わった(本文: 2889→3171字 +9%)",
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
+        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)",
+        "2026-12-20 isij-tokyo-reikai-2026-12-20: 中止・延期の語: 中止のお知らせ"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1078,7 +1083,7 @@
       "count": 4,
       "items": [
         "@lier_succulent 2026-11-07,2026-11-14,2026-11-15,2026-11-16: 愛媛フェスありがとうございました❤️ 会場内高菜臭かったですね~(笑) YouTubeの苗紹介が間に合わなくてごめんなさ https://www.instagram.com/p/DejF2IBhnwb/",
-        "@nagasako_farm 2026-10-23,2026-10-25,2026-10-30: 本日から合計10日間のオープンハウス! DMでのご来園予約ありがとうございます😊 場所は、岡山県笠岡市です。初めての方に https://www.instagram.com/p/DeonrlVCSTn/",
+        "@nagasako_farm 2026-10-23,2026-10-25,2026-10-30: 大きくてなかなかサイズ感が伝わらないシリーズ😅 ユーフォルビア達はいつ子株を外そうかタイミング失ってます😭 オープンハウ https://www.instagram.com/p/DetrluuiZ75/",
         "@notreatelier.29 2026-11-21: * 🎄 Succulents Noël 特別企画 🎄 kurumiさん × notre atelier 限定30枚!古材 https://www.instagram.com/p/Dek9juZk6IX/",
         "@sprout_2010817 2026-10-24: 🍂🎨 芸術の秋 ~初めて作るモスアート~ 色とりどりのプリザーブドモスを使って、 自分だけのオリジナルアートを作ってみま https://www.instagram.com/p/Dek5egWErfP/"
       ],
@@ -1094,8 +1099,10 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plant-freaks-olinas-2026-11: time「(空)」/ 告知に 11/28 10:00〜16:00 がある (DeuFk9ruru9)"
+      ],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1122,8 +1129,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-10-24 lier-taniku-festival-kasai-2026-10: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-10-25 lier-taniku-festival-okayama-2026-10: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-10-25 botanoichi-meets-bikaku-yokocho-2026-10: https://www.instagram.com/p/DetNUXWtR7R/（caption）",
+        "2026-10-25 dokidoki-ibaraki-taniku-sokubaikai-2026-10-25: https://www.instagram.com/p/DetrPX7jOS6/（caption）",
+        "2026-10-26 lier-taniku-festival-hiroshima-2026-10: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-10-31 lier-taniku-festival-nobeoka-2026-10: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/Des3VYXiTQc/（caption）",
+        "2026-11-01 lier-taniku-festival-aira-2026-11: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-11-02 lier-taniku-festival-kumamoto-2026-11: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-11-03 lier-taniku-festival-munakata-2026-11: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/reel/DetAVSFhkTp/（caption）",
+        "2026-11-22 lier-taniku-festival-hamada-2026-11: https://www.instagram.com/p/DenaSdTBOaW/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
