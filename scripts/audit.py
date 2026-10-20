@@ -5280,6 +5280,24 @@ def main():
         '本文が消える心配は無いが、以後この回を直したとき「最終更新」が動かない',
         severity='info')
 
+    # 日付の拠り所(addedDate / updatedAt / enrichedAt)が1つも無い開催予定(2026-10-21)。
+    # 2026-10-20 に手書きの new-events.json から1件が status・eventStatus・addedDate・
+    # updatedAt すべて無しで入った。updated_at_missing_on_new は addedDate が無い回を
+    # 飛ばすので鳴らず、required_field_empty(status)だけが拾った。RSS の pubDate や
+    # 説明文の上書き保護はこの3つから作るので、全部無いと根拠が残らない。
+    # 取り込み側(merge-new-events.py)が入口で埋めるようにしたので、出たら取り込みを疑う。
+    _no_anchor = []
+    for e in events:
+        if e.get('status') == 'past':
+            continue          # status 無しも対象(status が無い回こそ漏れる)
+        if not any(str(e.get(k) or '').strip()
+                   for k in ('addedDate', 'updatedAt', 'enrichedAt')):
+            _no_anchor.append(e.get('slug') or '(slug無し)')
+    add('no_date_anchor_on_upcoming', '過去でない回で addedDate・updatedAt・enrichedAt が1つも無い',
+        sorted(_no_anchor),
+        'addedDate に登録日、updatedAt に本文を書いた日を入れる。'
+        '新規なら merge-new-events.py の取り込みが埋めているはずなので、通っていない経路を探す')
+
     # 開催予定の imageUrl が、その回のどの頁とも関係の無いホストにある(2026-09-29)。
     # enrich は url が IG で埋まっている回にも検索結果の og:image を書いていた。
     # 頁の URL はどこにも残らないので、画像だけが出所なしで本番に出る。

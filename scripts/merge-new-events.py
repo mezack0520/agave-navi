@@ -12,6 +12,7 @@ workflow の `run: |` に直書きされていて、ローカルで実行も検�
 - slug が無ければ追加する。**空のキーは落としてから積む**
 - slug が既にあれば、**値のあるキーだけ**上書きする。空で潰さない
 - imageUrl は `sitelib.is_quality_image_url` を通らなければ落とす
+- 新規で status / eventStatus / addedDate / updatedAt が無ければ取り込みの入口で埋める
 - 並びは 開催予定を先、その中は日付昇順
 
 Usage:
@@ -20,6 +21,7 @@ Usage:
   python3 scripts/merge-new-events.py --self-test   # 判定だけ検証(ファイル不要)
 """
 import argparse
+import datetime
 import json
 import os
 import sys
@@ -75,7 +77,20 @@ def merge(events, new_events):
             # addedDate を写す(2026-09-29)。09-28 に手書きの new-events.json
             # から3件が updatedAt 無しで入り、audit.updated_at_missing_on_new が
             # 鳴った。書き手ごとに付け忘れるので、取り込みの入口で埋める。
-            if not ne.get('updatedAt') and ne.get('addedDate'):
+            # status / eventStatus / addedDate も同じ形で付け忘れる(2026-10-21)。
+            # 10-20 に手書きの new-events.json から1件が status 無しで入り、
+            # status が空のまま index.html にカードが作られず
+            # audit.required_field_empty / index_card_drift が鳴った。
+            today = datetime.datetime.now(
+                datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%d')
+            if not ne.get('status'):
+                end = ne.get('dateEnd') or ne.get('date') or ''
+                ne['status'] = 'past' if end and end < today else 'upcoming'
+            if not ne.get('eventStatus'):
+                ne['eventStatus'] = 'confirmed'
+            if not ne.get('addedDate'):
+                ne['addedDate'] = today
+            if not ne.get('updatedAt'):
                 ne['updatedAt'] = ne['addedDate']
             events.append(ne)
             existing.add(slug)
@@ -125,7 +140,16 @@ def self_test():
                             'tags': []}])
     got = sorted(k for e in out if e['slug'] == 'c' for k in e)
     chk('新規追加でも空のキーは持ち込まない', got,
-        ['date', 'name', 'slug', 'status'])
+        ['addedDate', 'date', 'eventStatus', 'name', 'slug', 'status',
+         'updatedAt'])
+    out, add, upd = merge([dict(x) for x in ev],
+                          [{'slug': 'n', 'name': 'N', 'date': '2999-01-01'}])
+    chk('status 無しの新規は開催日から埋める',
+        next(e for e in out if e['slug'] == 'n').get('status'), 'upcoming')
+    out, add, upd = merge([dict(x) for x in ev],
+                          [{'slug': 'o', 'name': 'O', 'date': '2000-01-01'}])
+    chk('過去日の新規は past',
+        next(e for e in out if e['slug'] == 'o').get('status'), 'past')
 
     out, add, upd = merge([dict(x) for x in ev],
                           [{'slug': 'd', 'name': 'D', 'date': '2026-11-02',

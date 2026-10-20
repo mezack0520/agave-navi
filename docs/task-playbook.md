@@ -4583,6 +4583,16 @@ listing-policy に規則が無い類型に出会ったときだけ(`doNotEscalat
 `auto-fix-log.json` は運ぶデータ(`audit._CI_CARRY_DATA`)。
 `log-fix.py` の変更も push に含めること。push しない記録はメールに届かない。
 
+### 手書きの new-events.json は status・addedDate・eventStatus を付け忘れる (2026-10-21)
+
+10-20 に手書きの1件が `status` / `eventStatus` / `addedDate` / `updatedAt` すべて無しで取り込まれ、
+`status` が空のため index.html にカードが作られなかった(`required_field_empty` と `index_card_drift` が鳴った)。
+`updated_at_missing_on_new` は addedDate が無い回を飛ばすので鳴らなかった。
+**書き手ごとに付け忘れる項目は、検査より先に取り込みの入口で埋める**(09-29 の updatedAt と同じ形)。
+`merge-new-events.py` が新規の status(開催日から)・eventStatus・addedDate・updatedAt を埋める。
+検査 `no_date_anchor_on_upcoming` は status 無しも含めて、日付の拠り所が1つも無い回を拾う。
+events.json の直し(status 付与・時刻の補完)だけでは次の手書きで再発する。
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。
