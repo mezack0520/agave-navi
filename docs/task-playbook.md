@@ -4593,6 +4593,15 @@ listing-policy に規則が無い類型に出会ったときだけ(`doNotEscalat
 検査 `no_date_anchor_on_upcoming` は status 無しも含めて、日付の拠り所が1つも無い回を拾う。
 events.json の直し(status 付与・時刻の補完)だけでは次の手書きで再発する。
 
+### Step0 の Google fetch は30本前後で止まる。止まったら続けない (2026-10-22)
+
+タブ内 fetch で14クエリ×2頁(28本)を引いた直後、続けた5本が3KB前後の空ページ(h3 が0件)になった。レート制限の応答と読み、
+CAPTCHA は突破せずそこで打ち切った。**見出しの取得は1回の呼び出しにまとめ、`window` に積んで小分けに読む**
+(`javascript_tool` の戻り値は約1,000字で切れる)。個別の裏取りは Google ではなく、一覧ページ(LEAFLA / NextMeet の月別 HTML を device_bash の curl で)
+と、Chrome の Instagram タブ(`get_page_text` で全キャプションが読める)で行う。
+coverage-gaps の候補は、NextMeet 月別 HTML を curl して名称で grep すると主催・会場が取れ、既存の slug と突き合わせるだけで片づく回が多い
+(10-22 は3件とも掲載済みだった)。
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。

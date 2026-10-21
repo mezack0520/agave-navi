@@ -2322,6 +2322,78 @@
    "action": "skipped",
    "detail": "ブラウザ要: leafla/nextmeetの該当日の掲載から主催・会場・出典URLを取り、一次情報で裏取り。載せるかrejectedか決める",
    "mailedOn": "2026-10-20"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "botanical-botanical-okinawa-2026-11",
+   "action": "fixed",
+   "detail": "主催 @botanical.botanical の告知 DewN-7SCeg8 で会場(アメリカンビレッジ)・時間・入場無料を確定。植物は約半数で基準内"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_expired",
+   "target": "more-coffee-more-plants-2026",
+   "action": "fixed",
+   "detail": "開催中に入ったが植物ブース内訳は未発表のまま。revisit=false"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "POPUP POPUP-STORE (2026-10-24)",
+   "action": "reviewed",
+   "detail": "STAN BOTANICAL GALLERY の stan-botanical-gallery-team-abc-2026-10 として掲載済み"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "COLLABORATION (2026-11-21)",
+   "action": "reviewed",
+   "detail": "plump-plants-collab-ina-2026-11 として掲載済み"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "第8回 多肉と雑貨 福山deマルシェ (2026-11-01)",
+   "action": "reviewed",
+   "detail": "fukuyama-de-marche-8th-2026-11 として掲載済み"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@notreatelier.29 2026-11-21",
+   "action": "listed",
+   "detail": "Succulents Noël 2026(主催 @succulentsnoel の告知 DeHRuaTv5Mv)を new-events.json に追加"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@lier_succulent 2026-11-07,2026-11-14,2026-11-15,2026-11-16",
+   "action": "reviewed",
+   "detail": "11/7 TaiShoDo は掲載済み。11/14-16 は日比谷公園ガーデニングショー等の出展告知で当サイトの対象外(ガーデニング・造園)"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@nagasako_farm 2026-10-23,2026-10-25,2026-10-30",
+   "action": "reviewed",
+   "detail": "オープンハウスの日常投稿。単独の催事告知ではない"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@sprout_2010817 2026-10-24",
+   "action": "rejected",
+   "detail": "モスアート体験のワークショップ単独(workshopOnly)"
   }
  ]
 }
