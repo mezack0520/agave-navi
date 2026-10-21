@@ -2,11 +2,11 @@
  "generated": "2026-10-22 07:15 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 375,
+  "igAccounts": 376,
   "awaitingNextEdition": 387,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 88,
+  "igNeedsBrowser": 89,
   "igDead": 7
  },
  "igAccounts": [
@@ -1499,6 +1499,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "succulentsnoel",
+   "url": "https://www.instagram.com/succulentsnoel/",
+   "eventCount": 1,
+   "lastEventName": "Succulents Noël 2026",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "mahota029",

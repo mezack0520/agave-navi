@@ -1,5 +1,5 @@
 {
-  "total": 774,
+  "total": 775,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -280,7 +280,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 88,
+      "count": 89,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -694,7 +694,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -898,7 +898,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 88,
+      "count": 89,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
@@ -929,6 +929,7 @@
         "2026-11-21 botanical-popup-ondo-kurate-2026-11",
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
         "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
+        "2026-11-21 succulents-noel-showa-kinen-2026-11",
         "2026-11-22 isij-big-bazaar-2026-11-22",
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
         "2026-11-22 lier-taniku-festival-hamada-2026-11",
@@ -938,8 +939,7 @@
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 plant-freaks-olinas-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
-        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
-        "2026-11-29 botanoichi-senju-2026-11"
+        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1007,10 +1007,8 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 1,
-      "items": [
-        "2026-11-21 succulents-noel-showa-kinen-2026-11: new-events.json に残ったまま events.json に無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
