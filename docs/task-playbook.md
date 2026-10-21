@@ -4602,6 +4602,14 @@ CAPTCHA は突破せずそこで打ち切った。**見出しの取得は1回の
 coverage-gaps の候補は、NextMeet 月別 HTML を curl して名称で grep すると主催・会場が取れ、既存の slug と突き合わせるだけで片づく回が多い
 (10-22 は3件とも掲載済みだった)。
 
+### 「掲載済み」と記録しても、候補は消えない (2026-10-22)
+
+coverage-gaps の候補が「掲載済み・監査の照合漏れ」と分かったら、`auto-fix-log` に書くだけで終わらせない。
+`coverage-sweep.matches` は events.json の `name` と `aliases` だけを見るので、アグリゲータ側の呼び名
+(`POPUP POPUP-STORE`・`COLLABORATION` など会場名・主催名を含まない題)を **該当イベントの `aliases` に足す**のが直し方。
+10-20 に記録だけして 10-22 まで毎日候補に出た。`audit.coverage_gap_logged_but_open`(urgent・0が正常)が、
+記録済みなのに候補に残る回を出す。
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。

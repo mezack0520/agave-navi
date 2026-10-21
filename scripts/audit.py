@@ -2471,6 +2471,32 @@ def main():
         _cov_gaps = _keep
     except Exception as _ex:
         _cov_stale_items = []
+    # 2026-10-22: 裏取り済み(auto-fix-log に「掲載済み」と記録)なのに、アグリゲータ側の呼び名が
+    # events.json の name/aliases と合わず候補に残り続ける型。10-20 に「監査の照合漏れ」と記録したまま
+    # events.json の aliases を直さなかったため、POPUP-STORE(STAN)・COLLABORATION(PLUMP) が
+    # 10-22 まで毎日候補に出て、次の回が裏取りをやり直した。記録だけでは照合は直らない。
+    _cov_logged = []
+    try:
+        _fl = load_json('auto-fix-log.json', {}).get('items') or []
+        for g in _cov_gaps:
+            _gd = str(g.get('date') or '')
+            _gt = str(g.get('title') or '')
+            for it in _fl:
+                if it.get('kind') != 'coverage_gaps':
+                    continue
+                _tg = str(it.get('target') or '')
+                if _gd and _gd in _tg and (_gt in _tg or any(
+                        len(w) >= 6 and w in _tg for w in _gt.split())) and (
+                        it.get('action') == 'listed' or '掲載済み' in str(it.get('detail') or '')):
+                    _cov_logged.append(f"{_gd} {_gt[:60]} ← {it.get('on')} に掲載済みと記録済み")
+                    break
+    except Exception:
+        _cov_logged = []
+    add('coverage_gap_logged_but_open', '掲載済みと記録したのに取りこぼし候補に残っている回(events.json の aliases に他所での呼び名を足す)',
+        sorted(_cov_logged),
+        '該当イベントの aliases にアグリゲータ側の呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。'
+        '記録を書くだけでは翌日も候補に出る',
+        severity='urgent')
     _cov_items = [f"{g.get('date')} {str(g.get('title'))[:90]}" for g in _cov_gaps]
     add('coverage_gap_stale', '取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)',
         sorted(_cov_stale_items),
