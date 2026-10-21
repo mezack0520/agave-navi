@@ -1,5 +1,5 @@
 {
-  "total": 776,
+  "total": 774,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -1007,8 +1007,10 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-21 succulents-noel-showa-kinen-2026-11: new-events.json に残ったまま events.json に無い"
+      ],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
@@ -1103,10 +1105,8 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 1,
-      "items": [
-        "botanical-botanical-okinawa-2026-11: time「(空)」/ 告知に 11/14 11:00〜17:00・11/15 11:00〜17:00 がある (DewN-7SCeg8)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1292,10 +1292,8 @@
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 1,
-      "items": [
-        "pukubook-events(PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）): 最後に回ったのは 2026-10-14（8日前 / 上限7日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。NextMeet と まとめブログは CI から読めないので coverage-sweep.py に入れられず、回ったかどうかを残せるのはこのファイルだけ。coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない(あれは LEAFLA しか見ていない)。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
@@ -1473,10 +1471,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 1,
-      "items": [
-        "more-coffee-more-plants-2026: 開催日 2026-10-21 を過ぎた（保留 2026-10-03）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
