@@ -1,7 +1,16 @@
 {
-  "check_date": "2026-10-21",
-  "total_events": 706,
-  "dead_links": [],
+  "check_date": "2026-10-22",
+  "total_events": 707,
+  "dead_links": [
+    {
+      "slug": "botanical-life-kasama-2026-11",
+      "name": "第10回 ボタニカルライフ",
+      "sourceUrl": "https://bookkasama.com/bot2611.html",
+      "field": "sourceUrl",
+      "statusCode": 502,
+      "alive": false
+    }
+  ],
   "unreachable": [
     {
       "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
@@ -18,13 +27,6 @@
       "name": "masappe多肉 周年祭（2周年）",
       "date": "2026-11-03",
       "sourceUrl": "https://www.instagram.com/p/DdyOGNTv5Io/",
-      "note": "日時・詳細未確定"
-    },
-    {
-      "slug": "botanical-botanical-okinawa-2026-11",
-      "name": "BOTANICAL BOTANICAL OKINAWA",
-      "date": "2026-11-14",
-      "sourceUrl": "https://www.instagram.com/botanical.botanical/",
       "note": "日時・詳細未確定"
     },
     {
@@ -3802,12 +3804,12 @@
     },
     {
       "slug": "botanical-botanical-okinawa-2026-11",
-      "name": "BOTANICAL BOTANICAL OKINAWA",
+      "name": "BOTANICAL BOTANICAL OKINAWA（第3回）",
       "date": "2026-11-14",
       "dateEnd": "2026-11-15",
-      "location": "調整中",
-      "eventStatus": "tbd",
-      "sourceUrl": "https://www.instagram.com/botanical.botanical/"
+      "location": "アメリカンビレッジ（沖縄県中頭郡北谷町美浜34-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DewN-7SCeg8/"
     },
     {
       "slug": "jss-aki-taniku-ichi-takasaki-2026-11",
@@ -5005,6 +5007,15 @@
       "location": "ヒトツブヴィンテージ（香川県観音寺市大野原町大野原1473-3）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/hitotubuvintage/p/DedR0Z1TwxG/"
+    },
+    {
+      "slug": "succulents-noel-showa-kinen-2026-11",
+      "name": "Succulents Noël 2026",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-23",
+      "location": "国営昭和記念公園 花みどり文化センター（東京都立川市緑町3173）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/succulentsnoel/p/DeHRuaTv5Mv/"
     }
   ],
   "today_events": [
@@ -5155,8 +5166,8 @@
       "name": "第10回 ボタニカルライフ",
       "sourceUrl": "https://bookkasama.com/bot2611.html",
       "field": "sourceUrl",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 502,
+      "alive": false
     },
     {
       "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
