@@ -1,5 +1,5 @@
 {
-  "total": 769,
+  "total": 776,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -694,7 +694,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -981,13 +981,12 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 5,
+      "count": 4,
       "items": [
+        "2026-10-31 dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10: 公式ページが変わった(本文・画像)",
         "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文・画像)",
-        "2026-11-07 chuushokushobutsusai-2026: 公式ページが変わった(本文: 2889→3171字 +9%)",
         "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
-        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)",
-        "2026-12-20 isij-tokyo-reikai-2026-12-20: 中止・延期の語: 中止のお知らせ"
+        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -1036,9 +1035,14 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 1,
+      "count": 6,
       "items": [
-        "取得できなかった: igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
+        "取得できなかった: botanical-life-kasama-2026-11: HTTP 502 https://bookkasama.com/bot2611.html",
+        "取得できなかった: igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
+        "取得できなかった: isij-big-bazaar-2026-11-22: HTTP 502 http://isij.net/",
+        "取得できなかった: isij-tokyo-reikai-2026-10-25: HTTP 502 http://isij.net/reikai.html",
+        "取得できなかった: isij-tokyo-reikai-2026-12-20: HTTP 502 http://isij.net/event",
+        "取得できなかった: izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10: HTTP 404 https://shaboten.co.jp/press/7561/"
       ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
@@ -1099,8 +1103,10 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "botanical-botanical-okinawa-2026-11: time「(空)」/ 告知に 11/14 11:00〜17:00・11/15 11:00〜17:00 がある (DewN-7SCeg8)"
+      ],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1278,7 +1284,7 @@
       "count": 3,
       "items": [
         "agave-event-update(daily) が動かなかった日: 2026-10-17 2026-10-18（直近7日で2日）",
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-17 2026-10-18（直近7日で2日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-17 2026-10-18 2026-10-21（直近7日で3日）",
         "event-monitor(daily) が動かなかった日: 2026-10-17 2026-10-18（直近7日で2日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
@@ -1286,8 +1292,10 @@
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "pukubook-events(PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）): 最後に回ったのは 2026-10-14（8日前 / 上限7日）"
+      ],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。NextMeet と まとめブログは CI から読めないので coverage-sweep.py に入れられず、回ったかどうかを残せるのはこのファイルだけ。coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない(あれは LEAFLA しか見ていない)。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
@@ -1465,8 +1473,10 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "more-coffee-more-plants-2026: 開催日 2026-10-21 を過ぎた（保留 2026-10-03）"
+      ],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },

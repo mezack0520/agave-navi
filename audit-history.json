@@ -1459,6 +1459,37 @@
    },
    "events": 706,
    "upcoming": 242
+  },
+  {
+   "date": "2026-10-22",
+   "urgent": {
+    "time_vs_organizer_post": 1,
+    "manual_sweep_stale": 1,
+    "rejected_revisit_expired": 1
+   },
+   "info": {
+    "coverage_gap_stale": 1,
+    "coverage_gaps": 2,
+    "cancel_suspects": 4,
+    "cancel_watch_unreachable": 6,
+    "organizer_unlisted_dates": 4,
+    "eyecatch_candidates_pending": 12,
+    "inquiry_review_gap": 1,
+    "task_run_gap": 3,
+    "cross_script_duplicate": 3
+   },
+   "metric": {
+    "thin_past_with_source": 34,
+    "thin_archived": 48,
+    "upcoming_with_image": 154,
+    "events_with_image": 321,
+    "upcoming_no_image": 88,
+    "ongoing_events": 4,
+    "workflow_secrets": 6,
+    "eyecatch_backlog": 88
+   },
+   "events": 706,
+   "upcoming": 242
   }
  ]
 }
