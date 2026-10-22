@@ -4,12 +4,13 @@
   "dead_links": [],
   "unreachable": [
     {
-      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
-      "name": "多肉植物とサボテンの展示会（井頭公園）",
-      "sourceUrl": "https://www.park-tochigi.com/igashira/greensalon/tenji",
+      "slug": "mizunomori-aki-saboten-ten-2026-10",
+      "name": "秋のサボテン展（草津市立水生植物公園みずの森）",
+      "sourceUrl": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
       "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false
+      "statusCode": 503,
+      "alive": false,
+      "failingSince": "2026-10-22"
     },
     {
       "slug": "botanical-life-kasama-2026-11",
@@ -17,6 +18,15 @@
       "sourceUrl": "https://bookkasama.com/bot2611.html",
       "field": "sourceUrl",
       "statusCode": 502,
+      "alive": false,
+      "failingSince": "2026-10-22"
+    },
+    {
+      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
+      "name": "多肉植物とサボテンの展示会（井頭公園）",
+      "sourceUrl": "https://www.park-tochigi.com/igashira/greensalon/tenji",
+      "field": "sourceUrl",
+      "statusCode": -1,
       "alive": false,
       "failingSince": "2026-10-22"
     }
@@ -5086,8 +5096,9 @@
       "name": "秋のサボテン展（草津市立水生植物公園みずの森）",
       "sourceUrl": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
       "field": "sourceUrl",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 503,
+      "alive": false,
+      "failingSince": "2026-10-22"
     },
     {
       "slug": "jurian-aki-taniku-cactus-2026-10",
