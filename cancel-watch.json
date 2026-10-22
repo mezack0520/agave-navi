@@ -6,7 +6,7 @@
     "fetched": 21
   },
   "errors": [
-    "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10: HTTP 404 https://shaboten.co.jp/press/7561/",
+    "mizunomori-aki-saboten-ten-2026-10: HTTP 503 https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
     "isij-tokyo-reikai-2026-10-25: HTTP 502 http://isij.net/reikai.html",
     "botanical-life-kasama-2026-11: HTTP 502 https://bookkasama.com/bot2611.html",
     "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
@@ -16,28 +16,6 @@
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "greensnap-marche-toyosu-2026-autumn",
-      "name": "GreenSnap Marche 豊洲 2026 Autumn",
-      "date": "2026-10-31",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10",
-      "name": "DOLCE’S 多肉植物販売会（オザキフラワーパーク）",
-      "date": "2026-10-31",
-      "url": "https://ozaki-flowerpark.co.jp/news/dolceshanbaikai",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
       "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
       "name": "草木日和（BloomGARDEN）",
       "date": "2026-11-07",
@@ -45,16 +23,6 @@
       "why": "弱い語(延期)＋ページが変わった",
       "changed": [
         "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "hanatomofesta-2026",
-      "name": "第9回 花友フェスタ",
-      "date": "2026-12-19",
-      "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(画像)",
-      "changed": [
         "画像"
       ]
     }
@@ -82,26 +50,26 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
-    "mizunomori-aki-saboten-ten-2026-10": {
-      "url": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
+    "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
+      "url": "https://shaboten.co.jp/press/7561/",
       "checkedOn": "2026-10-22",
       "signature": {
-        "text": "223d59617c98d191",
-        "images": "e3b0c44298fc1c14",
-        "textLen": 1641,
-        "imageCount": 0
+        "text": "514ebb68e6da76f4",
+        "images": "fe4c6d76032c77c3",
+        "textLen": 476,
+        "imageCount": 13
       },
-      "prevTextLen": 1641,
-      "sigScope": "page",
+      "prevTextLen": null,
+      "sigScope": "article",
       "sigRule": 2,
       "strong": [],
       "weak": [],
-      "datesNamed": 0,
+      "datesNamed": 3,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
-      "firstSeenOn": "2026-10-04",
+      "firstSeenOn": "2026-10-22",
       "badChars": 0,
-      "textOnlyChanges": 1,
+      "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
     "jurian-aki-taniku-cactus-2026-10": {
@@ -179,7 +147,7 @@
         "textLen": 4583,
         "imageCount": 77
       },
-      "prevTextLen": 4466,
+      "prevTextLen": 4583,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -245,7 +213,7 @@
         "textLen": 974,
         "imageCount": 20
       },
-      "prevTextLen": 969,
+      "prevTextLen": 974,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -284,19 +252,19 @@
       "url": "https://bloomgarden.jp/event/post-595/",
       "checkedOn": "2026-10-22",
       "signature": {
-        "text": "adc20368ab06b57b",
-        "images": "c46e0c3418da271b",
-        "textLen": 1416,
-        "imageCount": 28
+        "text": "cc6e22dec911e8f4",
+        "images": "fbb78c77b95e4809",
+        "textLen": 1380,
+        "imageCount": 27
       },
-      "prevTextLen": 1396,
+      "prevTextLen": 1416,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
       "weak": [
         "延期"
       ],
-      "datesNamed": 7,
+      "datesNamed": 6,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-20",
@@ -485,7 +453,7 @@
       "checkedOn": "2026-10-22",
       "signature": {
         "text": "dd1a143059002f6d",
-        "images": "0a4b84f4313affdc",
+        "images": "c7468276d07a4ca2",
         "textLen": 1187,
         "imageCount": 41
       },
@@ -500,7 +468,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 2
+      "imageOnlyChanges": 3
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
