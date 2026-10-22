@@ -2412,6 +2412,14 @@
    "action": "fixed",
    "detail": "events.json の aliases に他所での呼び名を追加(stan-botanical-gallery-team-abc-2026-10 / plump-plants-collab-ina-2026-11)。10-20 の記録だけでは照合が直らず候補に残り続けた",
    "mailedOn": "2026-10-22"
+  },
+  {
+   "on": "2026-10-22",
+   "task": "claude-session",
+   "kind": "dead_links",
+   "target": "第10回 ボタニカルライフ (2026-11-07) sourceUrl",
+   "action": "reviewed",
+   "detail": "リンク切れではない。bookkasama.com は 10-06〜10-21 の16回すべて 200 で、10-22 の1回だけ 502(一時的な障害)。check_events が 429/5xx を引き直さずにリンク切れに数えていたのを直した(sitelib.probe_status で引き直し、429/5xx は3日続いたときだけリンク切れ)"
   }
  ]
 }

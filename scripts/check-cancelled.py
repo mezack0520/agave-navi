@@ -58,8 +58,7 @@ from sitelib import (today_jst, is_cancelled, event_span,   # noqa: E402
                      find_month_days, event_month_days)
 
 WATCH_JSON = os.path.join(REPO, 'cancel-watch.json')
-UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-      '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+UA = sitelib.BROWSER_UA
 
 # 開催まで何日先まで見るか。過ぎた回と遠い回は毎日取りに行っても意味が薄い
 HORIZON_DAYS = 60

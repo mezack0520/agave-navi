@@ -111,7 +111,9 @@ if _ie:
     residual.append((f'データ整合性エラー: {_ie}件', _hits('/tmp/integrity.log', ('ERROR', 'FAIL'))))
 if _dead:
     residual.append((f'開催前の回の公式リンク切れ: {len(_dead)}件',
-                     [f"{d.get('name')} {d.get('field')}: {d.get('sourceUrl')} ({d.get('statusCode')})"
+                     [f"{d.get('name')} {d.get('field')}: {d.get('sourceUrl')} ({d.get('statusCode')}"
+                      + (f"、{d['failingSince']}から" if (d.get('failingSince') or today_iso) < today_iso else '')
+                      + ')'
                       for d in _dead[:5]]))
 if _ssl < 30:
     residual.append((f'SSL証明書の残り: {_ssl}日', []))

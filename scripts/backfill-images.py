@@ -35,8 +35,7 @@ from sitelib import is_aggregator_url, is_quality_image_url  # noqa: F401
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVENTS_JSON = os.path.normpath(os.path.join(SCRIPT_DIR, '..', 'events.json'))
 
-UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-      '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+UA = sitelib.BROWSER_UA
 HEADERS = {'User-Agent': UA, 'Accept-Language': 'ja,en;q=0.8'}
 TIMEOUT = 12
 

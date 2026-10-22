@@ -2929,6 +2929,14 @@ events.json は生成物ではない(作り直せない)ので `ci-generated-pat
 **「相手の返事だから引き直さない」は、返事の中身を見ていない。**
 status は3桁の数字ではなく指示で、4xx と 5xx では指示が違う。
 
+**公式リンクと画像の死活は、2026-10-22 までこの規則の外にいた。**
+`check_events.check_url` と `image-health-check.py` が自前で取っていて、`fetch_text` に寄せたときに漏れた。
+10-22 の日次メールに「公式リンク切れ」として bookkasama.com の 502 が出た(10-06〜10-21 の16回はすべて 200)。
+画像はほぼ毎回1件ずつ、5xx・タイムアウトの1回で events.json から `imageUrl` を消していた。
+死活の確認は `sitelib.probe_status`(HEAD→GET、429/5xx は引き直す)に寄せた。
+公式リンクは 429/5xx が3日続いたときだけリンク切れに数え(`check_events.link_state`。初日は `failingSince`)、
+画像は 429/5xx と接続できない回では消さない。UA も `sitelib.BROWSER_UA` に寄せた(7本が写して持っていた)。
+
 
 ### 新着ゼロの回は、そのタスクの「成果物」が動かない (2026-09-17)
 

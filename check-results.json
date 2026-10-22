@@ -1,16 +1,7 @@
 {
   "check_date": "2026-10-22",
   "total_events": 707,
-  "dead_links": [
-    {
-      "slug": "botanical-life-kasama-2026-11",
-      "name": "第10回 ボタニカルライフ",
-      "sourceUrl": "https://bookkasama.com/bot2611.html",
-      "field": "sourceUrl",
-      "statusCode": 502,
-      "alive": false
-    }
-  ],
+  "dead_links": [],
   "unreachable": [
     {
       "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
@@ -19,6 +10,15 @@
       "field": "sourceUrl",
       "statusCode": -1,
       "alive": false
+    },
+    {
+      "slug": "botanical-life-kasama-2026-11",
+      "name": "第10回 ボタニカルライフ",
+      "sourceUrl": "https://bookkasama.com/bot2611.html",
+      "field": "sourceUrl",
+      "statusCode": 502,
+      "alive": false,
+      "failingSince": "2026-10-22"
     }
   ],
   "tbd_events": [
@@ -5167,7 +5167,8 @@
       "sourceUrl": "https://bookkasama.com/bot2611.html",
       "field": "sourceUrl",
       "statusCode": 502,
-      "alive": false
+      "alive": false,
+      "failingSince": "2026-10-22"
     },
     {
       "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
@@ -5191,7 +5192,8 @@
       "sourceUrl": "https://www.park-tochigi.com/igashira/greensalon/tenji",
       "field": "sourceUrl",
       "statusCode": -1,
-      "alive": false
+      "alive": false,
+      "failingSince": "2026-10-22"
     },
     {
       "slug": "greensnap-marche-abc-hachioji-2026-11",

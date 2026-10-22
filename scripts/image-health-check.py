@@ -1,30 +1,28 @@
 #!/usr/bin/env python3
 """
-image-health-check.py — events.json の imageUrl 全件 HEAD チェック。
-404/500/タイムアウト等 → null化して再取得対象にする。
+image-health-check.py — events.json の imageUrl 全件の死活を見て、無くなった画像のキーを消す。
+消した回はアイキャッチの取り直しの対象になる。
+
+消すのは「無い」と言い切った返事(429/5xx 以外の 4xx)だけ(2026-10-22)。
+それまでは 5xx・タイムアウトの1回でも消しており、ほぼ毎回1件ずつ外部の画像が
+events.json から落ちていた。取り方(HEAD→GET・429/5xx の引き直し)は sitelib.probe_status。
 
 Usage:
   python3 scripts/image-health-check.py [--dry-run]
 """
-import argparse, json, os, requests
+import argparse, json, os, sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sitelib  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVENTS = os.path.join(ROOT, 'events.json')
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                  '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-}
 
-def check(url):
-    try:
-        r = requests.head(url, headers=HEADERS, timeout=10, allow_redirects=True)
-        if r.status_code >= 400:
-            r = requests.get(url, headers=HEADERS, timeout=10, allow_redirects=True, stream=True)
-            r.close()
-        return r.status_code
-    except Exception as e:
-        return f'err:{type(e).__name__}'
+
+def is_gone(code):
+    """画像が無くなったと言える返事か。429/5xx と接続できない(-1)は相手の一時的な不調でも起きる"""
+    return code >= 400 and not sitelib.should_retry_status(code)
 
 def main():
     ap = argparse.ArgumentParser()
@@ -36,13 +34,15 @@ def main():
     print(f'Checking {len(with_img)} image URLs...')
     dead = []
     with ThreadPoolExecutor(max_workers=8) as ex:
-        futs = {ex.submit(check, e['imageUrl']): (i, e) for i, e in with_img}
+        futs = {ex.submit(sitelib.probe_status, e['imageUrl'], 10): (i, e) for i, e in with_img}
         for fut in as_completed(futs):
             i, e = futs[fut]
             status = fut.result()
-            if isinstance(status, str) or status >= 400:
+            if is_gone(status):
                 dead.append((i, e['slug'], e['imageUrl'], status))
                 print(f'  DEAD ({status}): {e["slug"]} ← {e["imageUrl"][:80]}')
+            elif status == -1 or status >= 400:
+                print(f'  判定不能・残す ({status}): {e["slug"]} ← {e["imageUrl"][:80]}')
     if dead:
         print(f'\n{len(dead)} dead image(s). Clearing imageUrl...')
         if not args.dry_run:

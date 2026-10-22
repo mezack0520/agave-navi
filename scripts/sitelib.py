@@ -421,6 +421,11 @@ _VENUE_REDIRECTS_RAW = {
 # 引き直す status は「あとで来い」を意味するものだけ。404/403 は引き直さない。
 RETRY_HTTP_STATUS = frozenset({429, 500, 502, 503, 504})
 
+# 外部の頁を取るときの User-Agent。素の urllib / requests の UA を弾く相手が多いので
+# ブラウザに寄せる。7本のスクリプトが同じ文字列を写して持っていた(2026-10-22 に集約)
+BROWSER_UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+              '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+
 
 def should_retry_status(code):
     """この HTTP status は引き直してよいか。
@@ -535,6 +540,42 @@ def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
             if attempt == retries:
                 raise
             _time.sleep(wait)
+
+
+def probe_status(url, timeout=15, retries=2, wait=3.0):
+    """URL の HTTP status を返す。接続できなければ -1。本文は使わない死活の確認用。
+
+    check_events(公式リンク)と image-health-check(画像)が使う(2026-10-22)。それまで
+    両方が自前で取っていて、fetch_text の引き直しの規則の外にいた。10-22 は bookkasama.com が
+    10-06〜10-21 の16回すべて 200 のあと1回だけ 502 を返し、日次メールに「公式リンク切れ」で出た。
+    画像は 5xx・タイムアウトの1回で events.json から imageUrl を消していた。
+      - HEAD を拒むサーバ(403/405/501・接続断)があるので、HEAD が駄目なら GET で引き直す
+      - RETRY_HTTP_STATUS(429/5xx)は「今は無理、あとで来い」なので待って引き直す
+      - 接続できない(-1)は引き直さない。待っても変わらないことが多く、1回で最大30秒かかる
+    """
+    import time as _time
+    import urllib.request as _ureq
+    import urllib.error as _uerr
+
+    def once(method):
+        req = _ureq.Request(url, method=method, headers={'User-Agent': BROWSER_UA})
+        try:
+            with _ureq.urlopen(req, timeout=timeout) as r:
+                return r.getcode()
+        except _uerr.HTTPError as ex:
+            return ex.code
+        except Exception:                             # noqa: BLE001
+            return -1
+
+    code = -1
+    for attempt in range(retries + 1):
+        code = once('HEAD')
+        if code == -1 or code >= 400:
+            code = once('GET')
+        if not should_retry_status(code) or attempt == retries:
+            return code
+        _time.sleep(wait)
+    return code
 
 
 # --- 基本ユーティリティ ---

@@ -83,8 +83,7 @@ BASE = 'https://leaf-laboratory.com/blogs/media/event-list-'
 
 # 月別ページ。1ページに全国のその月の会期が並ぶ。
 NEXTMEET = 'https://nextmeet.app/plants/monthly/'
-UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-      '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+UA = sitelib.BROWSER_UA
 
 # 当サイトの対象。これを含まない候補は範囲外として捨てる。
 # LEAFLA は植物全般を載せるので、この絞りが無いと候補の大半がノイズになる
