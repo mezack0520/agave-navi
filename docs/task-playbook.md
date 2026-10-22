@@ -4902,3 +4902,9 @@ Claude in Chrome は複数ブラウザ接続で選択を求められ、定期実
 
 wraptas のサイトは画像を共有バケット(`s3.../wraptas-prod/<サイト名>/`)に置くため `image_host_unrelated` が出る。
 自サイトが `<サイト名>.wraptas.site` でパスのサイト名が同じなら持ち主は同じとみなす(wix と同じ扱い)。
+
+### 新規掲載直後の time 欠け・「N月N日時点」・3件目の会場 (2026-10-23)
+
+- 10-23 朝に追加した3回(cactusの宴#2・Collect Plants 2027-04・多肉園おひさま盛岡)は time が空のまま入り、`time_vs_organizer_post` / `time_vs_description` が悪化した。説明文か告知に時刻が書いてあれば events.json の time を直接埋める(updatedAt も更新)
+- 説明文の「10月22日時点で8組の出店」は現況の基準日で、開催日の誤記ではない。`desc_date_mismatch` の言い訳語に `時点|現在` を足した
+- 3件目になった会場(グランメッセ熊本)は `_VENUE_ROMAJI_RAW` と `_VENUE_REDIRECTS_RAW` を同時に足す。足した直後は `venue_redirect_broken` が daily の再生成まで1件出る(頁が無いだけ)
