@@ -2,11 +2,11 @@
  "generated": "2026-10-23 07:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 376,
+  "igAccounts": 378,
   "awaitingNextEdition": 387,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 89,
+  "igNeedsBrowser": 91,
   "igDead": 7
  },
  "igAccounts": [
@@ -651,6 +651,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "collect_plants_official",
+   "url": "https://www.instagram.com/collect_plants_official/",
+   "eventCount": 2,
+   "lastEventName": "Collect Plants Vol.？（コレクトプランツ・2027年4月）",
+   "lastEventDate": "2027-04-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "plants.garage.market",
    "url": "https://www.instagram.com/plants.garage.market/",
    "eventCount": 2,
@@ -939,6 +949,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "gotosaboten",
+   "url": "https://www.instagram.com/gotosaboten/",
+   "eventCount": 1,
+   "lastEventName": "cactusの宴#2",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "plus__plants",
@@ -1729,6 +1749,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "bakyuu.kitchen",
+   "url": "https://www.instagram.com/bakyuu.kitchen/",
+   "eventCount": 1,
+   "lastEventName": "曼荼羅多肉まつり（響灘ビオトープ・2026年12月）",
+   "lastEventDate": "2026-12-26",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "aichinn_syokusai",
@@ -2951,16 +2981,6 @@
    "eventCount": 1,
    "lastEventName": "たにくった POPUP プチマルシェ",
    "lastEventDate": "2026-09-21",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "collect_plants_official",
-   "url": "https://www.instagram.com/collect_plants_official/",
-   "eventCount": 1,
-   "lastEventName": "Collect Plants Vol.3（コレクトプランツ）",
-   "lastEventDate": "2026-09-22",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"

@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-22",
+  "updated": "2026-10-23",
   "items": [
+    {
+      "on": "2026-10-23",
+      "kind": "listed",
+      "slug": "cactus-no-utage-2-kasugai-2026-10",
+      "name": "cactusの宴#2",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-25",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-23",
+      "kind": "listed",
+      "slug": "mandara-taniku-matsuri-hibikinada-2026-12",
+      "name": "曼荼羅多肉まつり（響灘ビオトープ・2026年12月）",
+      "date": "2026-12-26",
+      "dateEnd": "",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-23",
+      "kind": "listed",
+      "slug": "collect-plants-2027-04",
+      "name": "Collect Plants Vol.？（コレクトプランツ・2027年4月）",
+      "date": "2027-04-24",
+      "dateEnd": "2027-04-25",
+      "prefecture": "熊本",
+      "detail": ""
+    },
     {
       "on": "2026-10-22",
       "kind": "listed",
@@ -1170,36 +1200,6 @@
       "date": "2026-12-04",
       "dateEnd": "2026-12-04",
       "prefecture": "愛媛",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-tokushima-2026-12",
-      "name": "Lier.多肉フェスティバル in 徳島",
-      "date": "2026-12-05",
-      "dateEnd": "2026-12-05",
-      "prefecture": "徳島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-fukuyama-2026-12",
-      "name": "Lier.多肉フェスティバル in 福山（2026年12月）",
-      "date": "2026-12-06",
-      "dateEnd": "2026-12-06",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-kariya-2026-12",
-      "name": "Lier.多肉フェスティバル in 刈谷",
-      "date": "2026-12-10",
-      "dateEnd": "2026-12-10",
-      "prefecture": "愛知",
       "detail": ""
     }
   ]
