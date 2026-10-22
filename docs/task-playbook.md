@@ -4618,6 +4618,12 @@ coverage-gaps の候補が「掲載済み・監査の照合漏れ」と分かっ
 10-20 に記録だけして 10-22 まで毎日候補に出た。`audit.coverage_gap_logged_but_open`(urgent・0が正常)が、
 記録済みなのに候補に残る回を出す。
 
+### デバイスVMの git push が今は通る。bundle は要らない (2026-10-23)
+
+`device_bash` から `git ls-remote` / `git push`(PAT)が通った。クラウドで clone → 編集 → **変更後のファイルを `SendUserFile` → `device_commit_files` で `work\` に置く** → デバイスVMの /tmp に `--depth 1` で clone して `cp` → push、で足りる。
+**パッチ(base64)を `device_bash` のコマンド文字列に写してはいけない。**手で写すと内容が変わる(今回、末尾が別物になった)。ファイル渡しは sha256 を両側で突き合わせる。
+`/sessions` は満杯でも `/tmp`(別ディスク)は空いていた。clone 先は /tmp にする。
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。
