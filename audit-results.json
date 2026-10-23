@@ -1,5 +1,5 @@
 {
-  "total": 809,
+  "total": 813,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -280,7 +280,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 87,
+      "count": 89,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -926,7 +926,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 87,
+      "count": 89,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
@@ -946,9 +946,11 @@
         "2026-11-01 lier-taniku-festival-aira-2026-11",
         "2026-11-02 lier-taniku-festival-kumamoto-2026-11",
         "2026-11-03 lier-taniku-festival-munakata-2026-11",
+        "2026-11-03 reakabu-gangsta-popup-brooklyn-projects-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
         "2026-11-08 lahaina-garden-7th-anniversary-2026-11",
+        "2026-11-08 ojisans6-kato-engei-2026-11",
         "2026-11-14 botanical-botanical-okinawa-2026-11",
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-15 yamaokuya-tandoku-hanbaikai-sakura-2026-11",
@@ -965,9 +967,7 @@
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 plant-freaks-olinas-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
-        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
-        "2026-11-29 botanoichi-senju-2026-11",
-        "2026-11-29 picnic-garden-sendai-2026-11"
+        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"

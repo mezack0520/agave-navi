@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-24 06:47 JST",
+ "generated": "2026-10-24 07:13 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 378,
+  "igAccounts": 379,
   "awaitingNextEdition": 387,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 89,
+  "igNeedsBrowser": 90,
   "igDead": 7
  },
  "igAccounts": [
@@ -246,6 +246,16 @@
    "eventCount": 3,
    "lastEventName": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター 2026年10月）",
    "lastEventDate": "2026-10-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kato_engei_tokyo",
+   "url": "https://www.instagram.com/kato_engei_tokyo/",
+   "eventCount": 3,
+   "lastEventName": "OJISANS6（カトーエンゲー東京）",
+   "lastEventDate": "2026-11-08",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -511,20 +521,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "botapara_botanical_paradise",
-   "url": "https://www.instagram.com/botapara_botanical_paradise/",
+   "handle": "temo2929",
+   "url": "https://www.instagram.com/temo2929/",
    "eventCount": 2,
-   "lastEventName": "Bota Para Vol.4",
+   "lastEventName": "多肉もぶれ vol.13",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "temo2929",
-   "url": "https://www.instagram.com/temo2929/",
+   "handle": "botapara_botanical_paradise",
+   "url": "https://www.instagram.com/botapara_botanical_paradise/",
    "eventCount": 2,
-   "lastEventName": "多肉もぶれ vol.13",
+   "lastEventName": "Bota Para Vol.4",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
@@ -775,16 +785,6 @@
    "url": "https://www.instagram.com/iwabaegarden/",
    "eventCount": 2,
    "lastEventName": "NAGASAKI BIZARRE MEET UP THE 7TH TIME",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kato_engei_tokyo",
-   "url": "https://www.instagram.com/kato_engei_tokyo/",
-   "eventCount": 2,
-   "lastEventName": "Direct U.S. Style POP UP at カトーエンゲー東京",
    "lastEventDate": "2026-10-17",
    "hasUpcoming": false,
    "priority": 1,
@@ -1229,6 +1229,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "brooklynprojects_hh",
+   "url": "https://www.instagram.com/brooklynprojects_hh/",
+   "eventCount": 1,
+   "lastEventName": "レア株ギャングスタ POPUP EVENT（BROOKLYN PROJECTS 東広島店）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botajam2026",
@@ -4370,6 +4380,12 @@
    "eventDate": "2026-12-19"
   },
   {
+   "domain": "note.com",
+   "url": "https://note.com/mandara_medaka/n/n52786d54e55c",
+   "eventName": "曼荼羅多肉まつり（響灘ビオトープ・2026年12月）",
+   "eventDate": "2026-12-26"
+  },
+  {
    "domain": "botanical-monsters.chibigo-tokai.com",
    "url": "https://botanical-monsters.chibigo-tokai.com/",
    "eventName": "BOTANICAL MONSTERS 2027",
@@ -4422,12 +4438,6 @@
    "url": "https://www.city.aizuwakamatsu.fukushima.jp/index_php/event_callen/show_callen.php",
    "eventName": "ピクニックガーデン vol.21 in I'S NEW BASE",
    "eventDate": "2026-05-10"
-  },
-  {
-   "domain": "fmfm.jp",
-   "url": "https://fmfm.jp/event/marche/saitama",
-   "eventName": "HAZE -various genres marche",
-   "eventDate": "2026-05-23"
   }
  ],
  "unresolvedIgHandles": []

@@ -1,7 +1,27 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "items": [
+    {
+      "on": "2026-10-24",
+      "kind": "listed",
+      "slug": "reakabu-gangsta-popup-brooklyn-projects-2026-11",
+      "name": "レア株ギャングスタ POPUP EVENT（BROOKLYN PROJECTS 東広島店）",
+      "date": "2026-11-03",
+      "dateEnd": "2026-11-03",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-24",
+      "kind": "listed",
+      "slug": "ojisans6-kato-engei-2026-11",
+      "name": "OJISANS6（カトーエンゲー東京）",
+      "date": "2026-11-08",
+      "dateEnd": "2026-11-08",
+      "prefecture": "東京",
+      "detail": ""
+    },
     {
       "on": "2026-10-23",
       "kind": "listed",
@@ -1180,26 +1200,6 @@
       "date": "2026-11-22",
       "dateEnd": "2026-11-22",
       "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-yonago-2026-11",
-      "name": "Lier.多肉フェスティバル in 米子",
-      "date": "2026-11-23",
-      "dateEnd": "2026-11-23",
-      "prefecture": "鳥取",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-niihama-2026-12",
-      "name": "Lier.多肉フェスティバル in 新居浜",
-      "date": "2026-12-04",
-      "dateEnd": "2026-12-04",
-      "prefecture": "愛媛",
       "detail": ""
     }
   ]
