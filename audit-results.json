@@ -1,5 +1,5 @@
 {
-  "total": 815,
+  "total": 811,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -856,20 +856,15 @@
     },
     "index_card_body_drift": {
       "title": "トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)",
-      "count": 2,
-      "items": [
-        "plants-and-coffee-hugcoffee-minamicho-2026-10: 日付 頁='2026.10.23-11.01' data='2026.10.24-11.01'",
-        "plants-and-coffee-hugcoffee-minamicho-2026-10: 説明文が古い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
     "index_card_attr_drift": {
       "title": "トップのカード属性がevents.jsonと不一致(一覧から消える)",
-      "count": 1,
-      "items": [
-        "plants-and-coffee-hugcoffee-minamicho-2026-10: data-date 頁='2026-10-23' data='2026-10-24'"
-      ],
+      "count": 0,
+      "items": [],
       "note": "status-auto.js がこの属性で開催中/終了を振り分けるため、古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
@@ -1193,10 +1188,8 @@
     },
     "jsonld_data_drift": {
       "title": "詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)",
-      "count": 1,
-      "items": [
-        "plants-and-coffee-hugcoffee-minamicho-2026-10: startDate 頁='2026-10-23' data='2026-10-24'"
-      ],
+      "count": 0,
+      "items": [],
       "note": "build-detail-pages.py を回す。差分が残るならテンプレート側を疑う",
       "severity": "urgent"
     },
