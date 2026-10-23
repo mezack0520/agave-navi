@@ -2421,6 +2421,54 @@
    "action": "reviewed",
    "detail": "bookkasama.com は 10-06〜10-21 の16回すべて 200。10-22 は 502 が続いている(中止の見張りでも 06:41・11:09 に 502)。頁が消えた返事ではなくサーバ側の障害なので、その日はリンク切れに数えない。check_events が 429/5xx を引き直さず1回でリンク切れにしていたのを直した(sitelib.probe_status で引き直し、429/5xx は3日続いたらリンク切れ)。10-24 も 502 ならメールに出る",
    "mailedOn": "2026-10-23"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "POPUP POPUP-STORE (2026-10-24)",
+   "action": "reviewed",
+   "detail": "掲載済み stan-botanical-gallery-team-abc-2026-10(aliases済み)"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "COLLABORATION (2026-11-21)",
+   "action": "reviewed",
+   "detail": "掲載済み plump-plants-collab-ina-2026-11(aliases済み)"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "2026-10-24 POPUP POPUP-STORE",
+   "action": "reviewed",
+   "detail": "掲載済み stan-botanical-gallery-team-abc-2026-10"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "2026-11-21 COLLABORATION",
+   "action": "reviewed",
+   "detail": "掲載済み plump-plants-collab-ina-2026-11"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "agave-event-update",
+   "kind": "step0",
+   "target": "OJISANS6 (2026-11-08)",
+   "action": "listed",
+   "detail": "@kato_engei_tokyo 告知 Delr1AjyRIO"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "agave-event-update",
+   "kind": "step0",
+   "target": "レア株ギャングスタ POPUP (2026-11-03)",
+   "action": "listed",
+   "detail": "@brooklynprojects_hh 告知 DeixnVmNdaj"
   }
  ]
 }
