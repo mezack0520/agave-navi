@@ -2469,6 +2469,30 @@
    "target": "レア株ギャングスタ POPUP (2026-11-03)",
    "action": "listed",
    "detail": "@brooklynprojects_hh 告知 DeixnVmNdaj"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "event-monitor",
+   "kind": "desc_span_mismatch",
+   "target": "plants-and-coffee-hugcoffee-minamicho-2026-10",
+   "action": "fixed",
+   "detail": "主催の10/23夜の投稿『いよいよ明日から 10/24(土)〜11/1(日)』に合わせ開始日を10/23→10/24、説明文を9日間に"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "rare-plants-collection-hankyu-umeda-2026-11",
+   "action": "reviewed",
+   "detail": "告知の10:00〜12:00は協賛ブランド担当者の来店枠で開催時間ではない。検査を直した(誤検知)"
+  },
+  {
+   "on": "2026-10-24",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "manual_sweep_stale: matome-blog",
+   "action": "skipped",
+   "detail": "ブラウザ要: まとめブログ(もすレコ。等)の期間まとめ記事を巡回し manual-sweeps.json を更新。最後は10/09"
   }
  ]
 }

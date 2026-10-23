@@ -1,5 +1,5 @@
 {
-  "total": 813,
+  "total": 815,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -743,7 +743,7 @@
         "mochinoie-shokubutsu-hanbaikai-yamaguchi-flowerland-2026-10(2026-10-24〜2026-10-24/1日)",
         "okinawa-shi-aki-no-dai-uekiichi-2026(2026-10-16〜2026-10-25/10日/長期)",
         "plant-and-pot-vol16-2026-10(2026-10-24〜2026-10-25/2日)",
-        "plants-and-coffee-hugcoffee-minamicho-2026-10(2026-10-23〜2026-11-01/10日/長期)",
+        "plants-and-coffee-hugcoffee-minamicho-2026-10(2026-10-24〜2026-11-01/9日/長期)",
         "plants-box-kofu-2026-10(2026-10-24〜2026-10-24/1日)",
         "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10(2026-10-03〜2026-10-25/23日/長期)",
         "stan-botanical-gallery-team-abc-2026-10(2026-10-24〜2026-10-25/2日)",
@@ -856,15 +856,20 @@
     },
     "index_card_body_drift": {
       "title": "トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "plants-and-coffee-hugcoffee-minamicho-2026-10: 日付 頁='2026.10.23-11.01' data='2026.10.24-11.01'",
+        "plants-and-coffee-hugcoffee-minamicho-2026-10: 説明文が古い"
+      ],
       "note": "来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
     "index_card_attr_drift": {
       "title": "トップのカード属性がevents.jsonと不一致(一覧から消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plants-and-coffee-hugcoffee-minamicho-2026-10: data-date 頁='2026-10-23' data='2026-10-24'"
+      ],
       "note": "status-auto.js がこの属性で開催中/終了を振り分けるため、古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
@@ -1133,19 +1138,15 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 1,
-      "items": [
-        "rare-plants-collection-hankyu-umeda-2026-11: time「(空)」/ 告知に 11/18 10:00〜12:00 がある (De1TGpiyTtG)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
     "organizer_post_span_differs": {
       "title": "主催の最新の告知が、掲載の会期と1〜3日ずれた会期を書いている",
-      "count": 1,
-      "items": [
-        "plants-and-coffee-hugcoffee-minamicho-2026-10: 掲載 2026-10-23〜2026-11-01 / 主催の 2026-10-23 の告知は 2026-10-24〜2026-11-01 (De1pc5Bmcop)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "投稿を開いて、主催が会期を動かしたのか、別の回・上位の催しの会期なのかを見る。動かしたなら date / dateEnd / dateDisplay と説明文の会期を直し、出典をその投稿に替える。掲載が正しければ何もしない(投稿が最新12件から外れるか、会期を過ぎれば消える)",
       "severity": "info"
     },
@@ -1192,8 +1193,10 @@
     },
     "jsonld_data_drift": {
       "title": "詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "plants-and-coffee-hugcoffee-minamicho-2026-10: startDate 頁='2026-10-23' data='2026-10-24'"
+      ],
       "note": "build-detail-pages.py を回す。差分が残るならテンプレート側を疑う",
       "severity": "urgent"
     },

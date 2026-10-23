@@ -3385,6 +3385,9 @@ def main():
     # 1店だけを書いた告知の時刻を、もう一方の回の欠けとして出していた。同じ主催の別の回の time にある時刻は除く
     for _bad in sitelib._self_test_hours_sibling():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_hours_sibling): {_bad}")
+    # 2026-10-24。協賛・ゲストの「来店予定 10:00〜12:00」を開催時間と読み、RARE PLANTS COLLECTION が鳴った
+    for _bad in sitelib._self_test_guest_visit_hours():
+        _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_guest_visit_hours): {_bad}")
     # 主催のアカウントごとの回(この検査と、下の会期のずれの検査が使う)
     _by_acc_ev = {}
     for e in events:

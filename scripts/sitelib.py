@@ -2165,6 +2165,27 @@ def format_time_range(r):
 # 誰も照合していなかった。
 # 催しの中の企画の時刻(キャンドルナイト・オークション等)を開催時間と読まないための語。
 # 見出しの行か同じ行にあれば、その行の時刻は数えない
+# 協賛・ゲストの「来店予定」の時刻は、その回の開催時間ではない(2026-10-24)。
+# RARE PLANTS COLLECTION(阪急うめだ)の協賛投稿は「■来店予定 / 2026年11月18日（水） / 10:00〜12:00予定」と
+# 担当者の来店枠を書き、time が空の会期7日の回が「告知に 11/18 10:00〜12:00 がある」で鳴った。
+# 見出しは時刻の行の2〜3行上(日付の行をはさむ)にあり、_head の1行では届かない。時刻の行から
+# 上へ3行(空行を除く)までに下の語があれば、その行の時刻は数えない
+ANNOUNCED_GUEST_WORDS = ('来店予定', '来場予定', '来店します', '来場します')
+
+
+def _guest_visit_context(lines, i):
+    seen = 0
+    for j in range(i, -1, -1):
+        if not lines[j].strip():
+            continue
+        if any(w in lines[j] for w in ANNOUNCED_GUEST_WORDS):
+            return True
+        seen += 1
+        if seen >= 4:
+            break
+    return False
+
+
 ANNOUNCED_SUBEVENT_WORDS = ('キャンドル', 'ワークショップ', 'オークション', 'セリ', '競り', '先行',
                             '整理券', 'トーク', 'ライブ', '抽選', '講習', '教室', '説明会',
                             'セミナー', '搬入', '設営', '搬出',
@@ -2325,6 +2346,8 @@ def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
                     tail = lines[j]
                 break
         if any(w in ln or w in head or w in tail for w in ANNOUNCED_SUBEVENT_WORDS):
+            continue
+        if _guest_visit_context(lines, i):
             continue
         prev_end = 0
         for k, m in enumerate(ms):
@@ -2565,6 +2588,26 @@ def organizer_post_hours_missing(e, posts_by_account, org_events=()):
             if not {r[0], r[1]} <= have and not {r[0], r[1]} <= sibling.get(d, set()):
                 out.append((d, r, link, ts[:10]))
     return out
+
+
+def _self_test_guest_visit_hours():
+    """協賛・ゲストの来店枠の時刻を、開催時間の欠けとして出さない(2026-10-24)。
+    返り値は食い違いの一覧(空なら合格)。audit.time_vs_organizer_post が毎回呼ぶ"""
+    bad = []
+    acc = 'rareplantsjapan2025'
+    cap = ('Senが RARE PLANTS COLLECTION に協賛します。\n\n11月18日（水）は担当者が会場に来店予定。\n\n■来店予定\n\n'
+           '2026年11月18日（水）\n10:00〜12:00予定\n\n■開催期間\n\n2026年11月18日（水）〜11月24日（火）')
+    posts = {acc: [{'timestamp': '2026-10-23T10:03:19+0000', 'permalink': 'u1', 'caption': cap}]}
+    ev = {'slug': 'rp', 'name': 'RARE PLANTS COLLECTION', 'date': '2026-11-18', 'dateEnd': '2026-11-24',
+          'venue': '阪急うめだ本店', 'organizerIg': acc}
+    got = organizer_post_hours_missing(ev, posts)
+    if got:
+        bad.append(('来店予定の時刻は開催時間の欠けにしない', got))
+    cap2 = cap.replace('■来店予定', '■開催時間').replace('来店予定', '参加')
+    posts2 = {acc: [{'timestamp': '2026-10-23T10:03:19+0000', 'permalink': 'u1', 'caption': cap2}]}
+    if not organizer_post_hours_missing(ev, posts2):
+        bad.append(('見出しが来店予定でなければ従来どおり出る(検査が空振りしていない)',))
+    return bad
 
 
 def _self_test_hours_sibling():

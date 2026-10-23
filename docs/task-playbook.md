@@ -4908,3 +4908,10 @@ wraptas のサイトは画像を共有バケット(`s3.../wraptas-prod/<サイ�
 - 10-23 朝に追加した3回(cactusの宴#2・Collect Plants 2027-04・多肉園おひさま盛岡)は time が空のまま入り、`time_vs_organizer_post` / `time_vs_description` が悪化した。説明文か告知に時刻が書いてあれば events.json の time を直接埋める(updatedAt も更新)
 - 説明文の「10月22日時点で8組の出店」は現況の基準日で、開催日の誤記ではない。`desc_date_mismatch` の言い訳語に `時点|現在` を足した
 - 3件目になった会場(グランメッセ熊本)は `_VENUE_ROMAJI_RAW` と `_VENUE_REDIRECTS_RAW` を同時に足す。足した直後は `venue_redirect_broken` が daily の再生成まで1件出る(頁が無いだけ)
+
+### 協賛・ゲストの「来店予定」の時刻は開催時間ではない (2026-10-24)
+
+RARE PLANTS COLLECTION の協賛投稿(Sen by Hachiman)は「■来店予定 / 2026年11月18日（水） / 10:00〜12:00予定」と担当者の来店枠を書き、
+time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出しが時刻の行の2〜3行上にあり、既存の企画語の判定(直前1行)に届かなかった。
+`sitelib.ANNOUNCED_GUEST_WORDS` / `_guest_visit_context` が時刻の行から上へ4行(空行除く)の「来店予定」等を見て除く。自己テスト `_self_test_guest_visit_hours` を audit が毎回呼ぶ。
+同日の plants-and-coffee は主催が 10/15 に 10/23 開始、10/23 夜に「いよいよ明日から 10/24」と書き直しており、**最新の投稿に合わせる**(`organizer_post_span_differs` が拾った)。
