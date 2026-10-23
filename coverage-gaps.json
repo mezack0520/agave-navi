@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-23",
+  "sweptOn": "2026-10-24",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -16,17 +16,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1093,
-    "in_scope": 267,
-    "covered": 186,
-    "known_rejected": 79,
+    "candidates": 1061,
+    "in_scope": 258,
+    "covered": 183,
+    "known_rejected": 75,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
-    "in_scope_leafla": 167,
+    "in_scope_leafla": 159,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 100,
-    "gaps_raw": 2
+    "in_scope_nextmeet": 99,
+    "gaps_raw": 0
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -34,14 +34,5 @@
     "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
     "10/15 追加 日本ライン花木センターで「フィンガーライム試食..."
   ],
-  "gaps": [
-    {
-      "date": "2026-10-24",
-      "title": "cactusの宴#2"
-    },
-    {
-      "date": "2026-11-01",
-      "title": "第8回 多肉と雑貨 福山deマルシェ"
-    }
-  ]
+  "gaps": []
 }

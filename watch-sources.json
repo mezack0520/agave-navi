@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-23 12:41 JST",
+ "generated": "2026-10-24 06:47 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 378,
   "awaitingNextEdition": 387,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 91,
+  "igNeedsBrowser": 89,
   "igDead": 7
  },
  "igAccounts": [
@@ -958,7 +958,7 @@
    "lastEventDate": "2026-10-24",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "plus__plants",
@@ -1758,7 +1758,7 @@
    "lastEventDate": "2026-12-26",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "aichinn_syokusai",
