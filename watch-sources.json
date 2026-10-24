@@ -1,10 +1,10 @@
 {
- "generated": "2026-10-25 06:40 JST",
+ "generated": "2026-10-25 07:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 380,
-  "awaitingNextEdition": 392,
-  "officialSiteCandidates": 89,
+  "awaitingNextEdition": 391,
+  "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 89,
   "igDead": 7
@@ -44,7 +44,7 @@
    "handle": "picnic.king.plants",
    "url": "https://www.instagram.com/picnic.king.plants/",
    "eventCount": 6,
-   "lastEventName": "ピクニックガーデン（せんだい農業園芸センター・2026年11月）",
+   "lastEventName": "ピクニックガーデン vol.28 in せんだい農業園芸センター",
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 0,
@@ -3927,17 +3927,6 @@
    "apiStatus": "api"
   },
   {
-   "series": "ピクニックガーデン vol.24",
-   "lastSlug": "picnic-garden-vol24-sendai-2026-09",
-   "lastDate": "2026-09-06",
-   "lastEnd": "2026-09-06",
-   "monthsSinceLast": 1,
-   "igHandle": "picnic.king.plants",
-   "officialUrl": "https://www.instagram.com/picnic.king.plants/",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
    "series": "PICNIC GARDEN vol.25 in 鶴岡公園",
    "lastSlug": "picnic-garden-vol25-2026-09",
    "lastDate": "2026-09-19",
@@ -4266,6 +4255,17 @@
    "officialUrl": "https://www.instagram.com/kusabi_official/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "BOTANICAL STYLE -Beppu Oita-",
+   "lastSlug": "botanical-style-beppu-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "earthwalk_plants",
+   "officialUrl": "https://www.instagram.com/p/DdKfIEck1Fa/",
+   "recurring": false,
+   "apiStatus": "api"
   }
  ],
  "officialSiteCandidates": [
@@ -4360,12 +4360,6 @@
    "eventDate": "2026-11-22"
   },
   {
-   "domain": "sendai-nogyo-engei-center.jp",
-   "url": "https://www.sendai-nogyo-engei-center.jp/event/entry/470/",
-   "eventName": "ピクニックガーデン（せんだい農業園芸センター・2026年11月）",
-   "eventDate": "2026-11-29"
-  },
-  {
    "domain": "h27664.wixsite.com",
    "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
    "eventName": "オキボタ December 2026 in サンシャインシティ",
@@ -4448,6 +4442,12 @@
    "url": "https://www.city.aizuwakamatsu.fukushima.jp/index_php/event_callen/show_callen.php",
    "eventName": "ピクニックガーデン vol.21 in I'S NEW BASE",
    "eventDate": "2026-05-10"
+  },
+  {
+   "domain": "fmfm.jp",
+   "url": "https://fmfm.jp/event/marche/saitama",
+   "eventName": "HAZE -various genres marche",
+   "eventDate": "2026-05-23"
   }
  ],
  "unresolvedIgHandles": []
