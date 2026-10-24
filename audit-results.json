@@ -1,5 +1,5 @@
 {
-  "total": 821,
+  "total": 823,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 88,
+      "count": 89,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -817,8 +817,10 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "ガーデンプラザ華福島店(3件) → /venue/v-115659ad/"
+      ],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -922,17 +924,17 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-21 ピクニックガーデンvol.27"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-11-21 ピクニックガーデンvol.27"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -959,7 +961,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 88,
+      "count": 89,
       "items": [
         "2026-10-03 qusamura-kuwata-takuro-taniku-to-purabachi-2026-10",
         "2026-10-23 mizunomori-aki-saboten-ten-2026-10",
@@ -988,6 +990,7 @@
         "2026-11-15 yamaokuya-tandoku-hanbaikai-sakura-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
+        "2026-11-21 picnic-garden-vol27-plaza-hana-fukushima-2026-11",
         "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
         "2026-11-22 isij-big-bazaar-2026-11-22",
@@ -999,8 +1002,7 @@
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 plant-freaks-olinas-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
-        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
-        "2026-11-29 botanoichi-senju-2026-11"
+        "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1067,10 +1069,8 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 1,
-      "items": [
-        "2026-11-21 picnic-garden-vol27-plaza-hana-fukushima-2026-11: new-events.json に残ったまま events.json に無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },

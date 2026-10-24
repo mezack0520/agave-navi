@@ -3,7 +3,7 @@
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 380,
-  "awaitingNextEdition": 391,
+  "awaitingNextEdition": 390,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 89,
@@ -31,6 +31,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "picnic.king.plants",
+   "url": "https://www.instagram.com/picnic.king.plants/",
+   "eventCount": 7,
+   "lastEventName": "ピクニックガーデン vol.28 in せんだい農業園芸センター",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "midorino_marche",
    "url": "https://www.instagram.com/midorino_marche/",
    "eventCount": 7,
@@ -39,16 +49,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "picnic.king.plants",
-   "url": "https://www.instagram.com/picnic.king.plants/",
-   "eventCount": 6,
-   "lastEventName": "ピクニックガーデン vol.28 in せんだい農業園芸センター",
-   "lastEventDate": "2026-11-29",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
   },
   {
    "handle": "gamagori_taniku_festa",
