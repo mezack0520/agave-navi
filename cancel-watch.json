@@ -2,26 +2,15 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-10-25",
   "stats": {
-    "targets": 26,
+    "targets": 25,
     "fetched": 23
   },
   "errors": [
     "mizunomori-aki-saboten-ten-2026-10: HTTP 503 https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
-    "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
-    "picnic-garden-sendai-2026-11: URLError https://www.sendai-nogyo-engei-center.jp/event/entry/470/"
+    "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji"
   ],
   "logicErrors": [],
   "suspects": [
-    {
-      "slug": "isij-tokyo-reikai-2026-10-25",
-      "name": "I.S.I.J. 東京例会（2026年10月）",
-      "date": "2026-10-25",
-      "url": "http://isij.net/reikai.html",
-      "why": "公式ページが変わった(本文: 1069→1058字 -2%)",
-      "changed": [
-        "本文"
-      ]
-    },
     {
       "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
       "name": "草木日和（BloomGARDEN）",
@@ -118,7 +107,7 @@
         "textLen": 1058,
         "imageCount": 0
       },
-      "prevTextLen": 1069,
+      "prevTextLen": 1058,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -184,7 +173,7 @@
         "textLen": 2968,
         "imageCount": 15
       },
-      "prevTextLen": 2957,
+      "prevTextLen": 2968,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -289,17 +278,17 @@
       "url": "https://bloomgarden.jp/event/post-595/",
       "checkedOn": "2026-10-25",
       "signature": {
-        "text": "17b75db3bb8cb928",
-        "images": "789169d20dc62f98",
-        "textLen": 1346,
+        "text": "7553e1db0499e6a4",
+        "images": "05a290629a65cc0c",
+        "textLen": 1395,
         "imageCount": 27
       },
-      "prevTextLen": 1384,
+      "prevTextLen": 1346,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
       "weak": [],
-      "datesNamed": 6,
+      "datesNamed": 7,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-20",
@@ -490,7 +479,7 @@
       "checkedOn": "2026-10-25",
       "signature": {
         "text": "dd1a143059002f6d",
-        "images": "c21461bd6366ff3a",
+        "images": "f3f16e8348e1bc34",
         "textLen": 1187,
         "imageCount": 41
       },
@@ -505,7 +494,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 7
+      "imageOnlyChanges": 8
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",

@@ -11,22 +11,29 @@
       "ok": true,
       "fetched": 4,
       "unit": "month"
+    },
+    "matome-blog": {
+      "ok": true,
+      "fetched": 1,
+      "unit": "article"
     }
   },
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 998,
-    "in_scope": 235,
-    "covered": 167,
-    "known_rejected": 67,
+    "candidates": 1006,
+    "in_scope": 243,
+    "covered": 174,
+    "known_rejected": 69,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
+    "fetched_matome": 1,
     "in_scope_leafla": 140,
     "truncated_unresolved_hits": 135,
     "in_scope_nextmeet": 95,
-    "gaps_raw": 1
+    "in_scope_matome-blog": 8,
+    "gaps_raw": 0
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -34,10 +41,5 @@
     "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
     "10/15 追加 日本ライン花木センターで「フィンガーライム試食..."
   ],
-  "gaps": [
-    {
-      "date": "2026-11-21",
-      "title": "ピクニックガーデンvol.27"
-    }
-  ]
+  "gaps": []
 }
