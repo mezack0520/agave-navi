@@ -3288,6 +3288,10 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
   目崎が出店者の投稿を見せるまで拾えなかった。出典が Web の回も主催の IG を調べて organizerIg を入れる
   (出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は `organizerIgNone: true`。
   7日以内に開かれる回で分からないものは監査 `organizer_ig_unknown_soon`(urgent)に出る。
+  公式頁のヘッダ・フッタの IG リンク(オザキフラワーパーク・GreenSnap・富山県中央植物園)と、
+  Google の `"<主催の名前>" instagram`(I.S.I.J. の @isij_taniku)で引けた(2026-10-25)。
+  主催欄に施設も並ぶ共催(富山サボテン会・富山県中央植物園)は施設の IG を入れる。
+  主催が会員の趣味家の会で施設が共催にとどまる回(滋賀サボテンサークル)は organizerIgNone
 - **読めない相手**: 個人アカウント・非公開・名前違い。開始時点で102中22。
   `watch-sources.json` の各アカウントに `apiStatus`(`api` / `personal` /
   `unchecked`)が付く。**ブラウザで回るのは `api` 以外だけでよい。**

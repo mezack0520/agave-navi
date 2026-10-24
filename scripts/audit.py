@@ -64,7 +64,7 @@ KNOWN_EVENT_FIELDS = {
     # 主催の表記(PLNTS RIDE)とアグリゲータの表記(Plants Ride)が違う回を掲載済みと判定する
     'aliases',
     # 主催の Instagram が無いと確かめた回(2026-10-24)。true のときだけ書く。
-    # 読むのは audit.organizer_ig_unknown_soon で、その回を「主催のIGが分からない」から外す
+    # 読むのは sitelib.organizer_ig_resolved で、監査 organizer_ig_unknown_soon がその回を外す
     'organizerIgNone',
     # 日程を変えた回の当初の開始日(2026-10-25)。eventStatus=rescheduled と組で書く。
     # 読むのは sitelib.previous_start_date(詳細頁の JSON-LD previousStartDate と
@@ -433,7 +433,7 @@ def main():
     _org_unknown = []
     for e in events:
         # 会期の長い展示(叢の個展・伊豆シャボテンの品評会など)は途中の中止がまず無いので外す
-        if (sitelib.organizer_ig_handles(e) or e.get('organizerIgNone') or is_cancelled(e)
+        if (sitelib.organizer_ig_resolved(e) or is_cancelled(e)
                 or is_long_run(e) or event_phase(e) not in ('upcoming', 'ongoing')):
             continue
         _s6 = event_span(e)[0] or ''
@@ -3464,7 +3464,7 @@ def main():
     # 主催のアカウントごとの回(この検査と、下の会期のずれの検査が使う)
     _by_acc_ev = {}
     for e in events:
-        for _acc in sitelib.event_ig_accounts(e):
+        for _acc in sitelib.organizer_ig_handles(e):
             _by_acc_ev.setdefault(_acc, []).append(e)
     for e in events:
         _t = e.get('time') or ''
@@ -3499,7 +3499,7 @@ def main():
                 _time_post_slugs.add(e.get('slug'))
                 continue
         _miss = sitelib.organizer_post_hours_missing(
-            e, _posts_by_acc, [o for _acc in sitelib.event_ig_accounts(e) for o in _by_acc_ev.get(_acc, [])])
+            e, _posts_by_acc, [o for _acc in sitelib.organizer_ig_handles(e) for o in _by_acc_ev.get(_acc, [])])
         if _miss:
             _links = sorted({(sitelib.IG_POST_RE.search(_l) or [None, _l])[1] for _, _, _l, _ in _miss})
             _time_post_bad.append(
@@ -3531,7 +3531,7 @@ def main():
         if (e.get('status') != 'upcoming' or sitelib.is_cancelled(e) or not e.get('date')
                 or (_end and _end < today)):
             continue
-        _others = [o for _acc in sitelib.event_ig_accounts(e) for o in _by_acc_ev.get(_acc, [])]
+        _others = [o for _acc in sitelib.organizer_ig_handles(e) for o in _by_acc_ev.get(_acc, [])]
         for _x, _y, _link, _ts in sitelib.organizer_post_span_drift(e, _posts_by_acc, _others):
             _code = (sitelib.IG_POST_RE.search(_link) or [None, _link])[1]
             _span_bad.append(f"{e.get('slug')}: 掲載 {e.get('date')}〜{_end} / 主催の {_ts} の告知は "

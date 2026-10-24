@@ -968,7 +968,9 @@ def organizer_ig_handles(e):
     プロフィールを指すときのハンドル。
 
     中止の見張り(ig-organizer-watch.upcoming_by_org)・未掲載の日付(all_by_org)・
-    監査 organizer_ig_unknown_soon が同じ規則で引く(2026-10-24)。それまで中止の見張りは
+    監査 organizer_ig_unknown_soon と、主催の投稿の時間・会期の照合が同じ規則で引く(2026-10-24)。
+    2026-10-25 に同じことをしていた event_ig_accounts と2つ目の _IG_PROFILE_RE を消した
+    (後に定義した正規表現がこちらの名前を上書きしていた)。それまで中止の見張りは
     organizerIg しか見ておらず、url だけがプロフィールの回(garden link festa・
     なばなの里の多肉マルシェ)は、未掲載の日付は見ているのに中止の告知は見ていなかった。
     """
@@ -981,6 +983,16 @@ def organizer_ig_handles(e):
         if m and m.group(1).lower() not in _IG_NON_HANDLES:
             hs.add(m.group(1).lower())
     return hs
+
+
+def organizer_ig_resolved(e):
+    """主催の Instagram が分かっているか、無いと確かめた回か(監査 organizer_ig_unknown_soon)。
+
+    organizerIgNone: true は「主催の IG は無い」と確かめた印(2026-10-24)。読み手は監査だけだったが、
+    監査は自分を読み手と数えない(event_field_unread)ので、初めて値を書いた 10-25 に
+    「どのスクリプトも読んでいない」と鳴った。判定はここに置く。
+    """
+    return bool(organizer_ig_handles(e)) or e.get('organizerIgNone') is True
 
 
 def is_cancelled(e):
@@ -2601,23 +2613,6 @@ def event_name_keys(e, width=6):
     return out
 
 
-_IG_PROFILE_RE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?(?:[?#].*)?$')
-
-
-def event_ig_accounts(e):
-    """その回の主催の Instagram アカウント。organizerIg と、url / sourceUrl がプロフィールならその名前"""
-    out = set()
-    if (e.get('organizerIg') or '').strip():
-        out.add(e['organizerIg'].strip().lstrip('@').lower())
-    for k in ('url', 'sourceUrl'):
-        u = e.get(k) or ''
-        if 'instagram.com' in u and not IG_POST_RE.search(u):
-            m = _IG_PROFILE_RE.search(u)
-            if m and m.group(1).lower() not in ('p', 'reel', 'tv', 'explore', 'stories'):
-                out.add(m.group(1).lower())
-    return out
-
-
 def organizer_post_hours_missing(e, posts_by_account, org_events=()):
     """主催の投稿に書かれた日付つきの開催時間のうち、time に無いもの。[(月日, 範囲, permalink, 投稿日)]
 
@@ -2637,7 +2632,7 @@ def organizer_post_hours_missing(e, posts_by_account, org_events=()):
     keys = event_name_keys(e)
     have = clock_minutes(e.get('time') or '')
     latest = {}
-    for acc in event_ig_accounts(e):
+    for acc in organizer_ig_handles(e):
         for p in posts_by_account.get(acc) or []:
             cap = p.get('caption') or ''
             if any(w in cap for w in ANNOUNCED_RECRUIT_WORDS):
@@ -2782,7 +2777,7 @@ def organizer_post_span_drift(e, posts_by_account, org_events=(), max_shift=3):
             other_days.add(x)
             x += timedelta(days=1)
     best = None
-    for acc in event_ig_accounts(e):
+    for acc in organizer_ig_handles(e):
         for p in posts_by_account.get(acc) or []:
             cap = p.get('caption') or ''
             if any(w in cap for w in ANNOUNCED_RECRUIT_WORDS):
