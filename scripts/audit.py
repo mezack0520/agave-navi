@@ -66,6 +66,10 @@ KNOWN_EVENT_FIELDS = {
     # 主催の Instagram が無いと確かめた回(2026-10-24)。true のときだけ書く。
     # 読むのは audit.organizer_ig_unknown_soon で、その回を「主催のIGが分からない」から外す
     'organizerIgNone',
+    # 日程を変えた回の当初の開始日(2026-10-25)。eventStatus=rescheduled と組で書く。
+    # 読むのは sitelib.previous_start_date(詳細頁の JSON-LD previousStartDate と
+    # 「日程が変わりました」の告知)と、audit の slug_date_mismatch / desc_date_mismatch
+    'previousStartDate',
 }
 
 
@@ -631,7 +635,20 @@ def main():
             # それを日付の誤りとして数えると、中止の説明が書けなくなる
             if is_cancelled(e):
                 continue
-            out = sorted(d for d in (_found - span) if not _date_excused(desc, d))
+            # 日程を変えた回は「当初10月25日の予定だったが」と当初の日付を書く(2026-10-25)。
+            # 記録した当初の開始日だけを外す。記録の無い回は従来どおり鳴らし、記録を促す
+            # 当初の会期は今の会期と同じ日数とみなす(延期で日数は普通変わらない)
+            _prev = sitelib.previous_start_date(e)
+            _span_ok = set(span)
+            if _prev:
+                try:
+                    _n = (_dt.date.fromisoformat(e.get('dateEnd') or e['date'])
+                          - _dt.date.fromisoformat(e['date'])).days
+                    _pend = (_dt.date.fromisoformat(_prev) + _dt.timedelta(days=max(_n, 0))).isoformat()
+                except ValueError:
+                    _pend = _prev
+                _span_ok |= event_month_days({'date': _prev, 'dateEnd': _pend})
+            out = sorted(d for d in (_found - _span_ok) if not _date_excused(desc, d))
             if out:
                 desc_bad.append(f"{e['slug']}: 本文 {'/'.join(f'{m}月{d}日' for m, d in out)} "
                                 f"が {e.get('date')}〜{e.get('dateEnd') or e.get('date')} の外")
@@ -640,7 +657,9 @@ def main():
             time_bad.append(f"{e['slug']}: time=\"{e.get('time')}\" だが dateEnd={e.get('dateEnd')} で単日")
 
     add('desc_date_mismatch', '説明文の日付が開催日の範囲外(予備日・前回言及は除外)', sorted(desc_bad),
-        '本文か日付欄のどちらかが古い。一次情報で確認して直す')
+        '本文か日付欄のどちらかが古い。一次情報で確認して直す。'
+        '日程を変えた回が当初の日付を書いているなら、eventStatus を rescheduled、'
+        'previousStartDate に当初の開始日を書く(その日付は外れる)')
     add('desc_stale_year', '説明文が別年の日付を名指ししている(前年の告知文の使い回し)', sorted(stale_year))
     add('time_multiday_mismatch', 'timeが複数日を示すのに dateEnd が単日', sorted(time_bad))
 
@@ -1386,36 +1405,38 @@ def main():
         '残す側は命名規約(イベント名-地名-年月)に合うほうを選ぶ')
 
     # 9l. slug に埋め込んだ年月が date とも dateEnd とも一致しない。
-    #     日付を直したのに slug(=URL)が旧月のまま残ると、URL・
-    #     /archive/{ym}/ の所属・パンくずが実際の開催月とずれる。
-    #     延期でこれが起きる(2026-08-18時点では0件)。
+    #     日付を打ち間違えたか、slug を付け間違えた回を拾う。
     #     会期が月をまたぐ回は dateEnd 側で一致すればよい
     #     (例 myoko-taniku-oichi-2026-11 は 10/31〜11/01)。
+    #     **日程を変えた回は slug を変えない**(2026-10-25)。/archive/{ym}/ の所属と
+    #     パンくずは date から作るので slug の年月はずれても害が無く、URL を変えると
+    #     当初の日付で共有されたリンクが切れる(GitHub Pages は 301 を持てない)。
+    #     slug の年月が previousStartDate(当初の開始日)と合う回は外す。
     slug_ym = []
     for e in events:
         sl = e.get('slug') or ''
         d = e.get('date') or ''
         de = e.get('dateEnd') or d
+        prev = sitelib.previous_start_date(e)
         m = re.search(r'(20\d{2})-(\d{2})(?!\d)', sl)
         if m and len(d) >= 7:
-            if m.group(1) + '-' + m.group(2) not in (d[:7], de[:7]):
+            if m.group(1) + '-' + m.group(2) not in (d[:7], de[:7], prev[:7] or d[:7]):
                 slug_ym.append(f"{sl}: slug={m.group(1)}-{m.group(2)} date={d}..{de}")
             continue
         m2 = re.search(r'-(20\d{2})$', sl)
-        if m2 and len(d) >= 4 and m2.group(1) not in (d[:4], de[:4]):
+        if m2 and len(d) >= 4 and m2.group(1) not in (d[:4], de[:4], prev[:4] or d[:4]):
             slug_ym.append(f"{sl}: slug年={m2.group(1)} date={d}..{de}")
-    add('slug_date_mismatch', 'slugの年月が開催日と不一致(日付だけ直してURLが旧月のまま)',
+    add('slug_date_mismatch', 'slugの年月が開催日と不一致(日付の打ち間違いか、日程変更の記録漏れ)',
         sorted(slug_ym),
-        '延期でずれたなら slug を作り直し、旧URLから301で送る。'
-        'slugを変えないなら archive の所属が実態とずれることを承知で残す')
+        '日程を変えた回なら slug はそのままにし、eventStatus を rescheduled、'
+        'previousStartDate に当初の開始日を書く。そうでなければ date か slug の誤り')
 
-    # 9i. eventStatus が build-detail-pages.py の status_map に無い値。
+    # 9i. eventStatus が sitelib.SCHEMA_EVENT_STATUS に無い値。
     #     知らない値は黙って EventScheduled にフォールバックするので、
     #     'canceled'(l1つ)のような綴り違いを書くと、中止のイベントを
     #     「開催予定」としてリッチリザルトに出す。tbd はサイト独自の値で
-    #     check_events.py が別途扱うため既知として許す。
-    KNOWN_EVENT_STATUS = {'confirmed', 'tbd', 'cancelled', 'postponed',
-                          'rescheduled', 'movedonline'}
+    #     check_events.py が別途扱う(対応表では EventScheduled)。
+    KNOWN_EVENT_STATUS = set(sitelib.SCHEMA_EVENT_STATUS)
     bad_status = []
     for e in events:
         v = e.get('eventStatus')
@@ -1423,8 +1444,27 @@ def main():
             bad_status.append(f"{e.get('slug')}: eventStatus = {v!r}")
     add('unknown_event_status', 'eventStatusが未知の値(黙ってEventScheduledになる)',
         sorted(bad_status),
-        'build-detail-pages.py の status_map にある値に直す。'
-        '新しい状態を足すなら status_map と この検査の両方に足す')
+        'sitelib.SCHEMA_EVENT_STATUS にある値に直す。'
+        '新しい状態を足すなら SCHEMA_EVENT_STATUS に足す(詳細頁・一覧の ItemList・この検査が同じ表を引く)')
+
+    # 9i-2. previousStartDate の書き方。Google は EventRescheduled とだけ組ませるので、
+    #     rescheduled でない回や日付の形でない値は sitelib.previous_start_date が黙って捨てる。
+    #     捨てると JSON-LD にも告知にも出ず、slug/本文の日付の除外も効かない(2026-10-25)
+    prev_bad = [f'自己テスト失敗(sitelib._self_test_rescheduled): {_b}'
+                for _b in sitelib._self_test_rescheduled()]
+    for e in events:
+        v = e.get('previousStartDate')
+        if v is None:
+            continue
+        if not sitelib.previous_start_date(e):
+            prev_bad.append(f"{e.get('slug')}: previousStartDate={v!r} eventStatus={e.get('eventStatus')!r}")
+        elif v == e.get('date'):
+            prev_bad.append(f"{e.get('slug')}: previousStartDate が date と同じ {v}")
+    add('previous_start_date_invalid',
+        'previousStartDate が使われていない(rescheduled でない・日付の形でない・date と同じ)',
+        sorted(prev_bad),
+        '日程を変えた回は eventStatus を rescheduled、previousStartDate に当初の開始日(YYYY-MM-DD)。'
+        '日程を戻したなら両方外す')
 
     # 9d. events.json のスキーマ外キー。読む側が無いキーは値が入っていても
     #     どこにも出ないので、入力ミスが黙って通る(2026-08-11に3種を検出)。

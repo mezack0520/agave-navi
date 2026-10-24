@@ -385,6 +385,28 @@ def make_cancel_notice(ev):
             + '\n          '.join(lines) + '\n        </div>')
 
 
+def make_reschedule_notice(ev):
+    """日程を変えた回の告知。中止の告知と同じ位置(概要より前)に置く(2026-10-25)。
+
+    URL は変えないので、当初の日付で共有されたリンクやブックマークから来る人がいる。
+    説明文の中ほどに「当初10月25日の予定だったが」と書くだけでは見落とす。
+    """
+    prev = sitelib.previous_start_date(ev)
+    if not prev or sitelib.is_cancelled(ev):
+        return ''
+    new = date_to_japanese(ev.get('date', ''))
+    end = ev.get('dateEnd') or ''
+    if end and end != ev.get('date'):
+        new += ' 〜 ' + date_to_japanese(end)
+    notice = (ev.get('sourceUrl') or ev.get('url') or '').strip()
+    lines = ['<span class="notice-head">日程が変わりました</span>',
+             f'<p>当初 {html_escape(date_to_japanese(prev))} → {html_escape(new)}</p>']
+    if notice:
+        lines.append('<p>' + sitelib.ext_link(notice, '主催者の告知を見る') + '</p>')
+    return ('        <div class="event-notice-rescheduled">\n          '
+            + '\n          '.join(lines) + '\n        </div>')
+
+
 def make_affiliate_block(ev):
     """アフィリエイト枠。出典(url/sourceUrl)がある回には出す。
 
@@ -495,16 +517,11 @@ def make_event_jsonld(ev):
     desc = html_escape(make_meta_description(ev))
     image_url = (ev.get('imageUrl') or '').replace('"', '&quot;')
     image_field = f',\n    "image": "{image_url}"' if image_url else ''
-    # eventStatus 動的判定
-    status_map = {
-        'confirmed': 'EventScheduled',
-        'cancelled': 'EventCancelled',
-        'postponed': 'EventPostponed',
-        'rescheduled': 'EventRescheduled',
-        'movedonline': 'EventMovedOnline',
-    }
-    ev_status_raw = (ev.get('eventStatus') or 'confirmed').lower()
-    schema_status = status_map.get(ev_status_raw, 'EventScheduled')
+    # eventStatus の対応表は sitelib が単一情報源(一覧の ItemList と同じ表)
+    schema_status = sitelib.schema_event_status(ev)
+    # 日程を変えた回は当初の開始日も出す。Google は EventRescheduled とだけ組ませる
+    prev_start = sitelib.previous_start_date(ev)
+    prev_field = f',\n    "previousStartDate": "{prev_start}"' if prev_start else ''
     # offers (admission)
     admission = (ev.get('admission') or '').strip()
     offers_field = ''
@@ -534,7 +551,7 @@ def make_event_jsonld(ev):
     "@type": "Event",
     "name": "{name}",
     "startDate": "{date}",
-    "endDate": "{end}"{image_field},
+    "endDate": "{end}"{prev_field}{image_field},
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/{schema_status}",
     "location": {{
@@ -696,7 +713,7 @@ def build_page(template, ev, ctx):
         '{{breadcrumb}}': sitelib.breadcrumb_html(breadcrumb_items(ev)),
         '{{breadcrumbJsonLd}}': sitelib.crumb_jsonld(breadcrumb_items(ev)),
         '{{affiliateBlock}}': make_affiliate_block(ev),
-        '{{cancelNotice}}': make_cancel_notice(ev),
+        '{{cancelNotice}}': make_cancel_notice(ev) or make_reschedule_notice(ev),
         '{{heroMetaNote}}': make_hero_meta_note(ev),
         '{{dataSummary}}': make_data_summary(ev, ctx),
         '{{primaryCategory}}': html_escape(detect_primary_category(ev)),

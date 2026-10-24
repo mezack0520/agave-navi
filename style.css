@@ -3771,7 +3771,8 @@ main {
     opacity: 0.55;
 }
 
-.event-notice-cancelled {
+.event-notice-cancelled,
+.event-notice-rescheduled {
     margin: 0 0 1.5rem;
     padding: 1rem 1.1rem;
     border: 2px solid var(--accent-pop);
@@ -3779,7 +3780,8 @@ main {
     background: #fff5f5;
 }
 
-.event-notice-cancelled .notice-head {
+.event-notice-cancelled .notice-head,
+.event-notice-rescheduled .notice-head {
     display: block;
     margin-bottom: 0.4rem;
     color: var(--accent-pop);
@@ -3787,13 +3789,15 @@ main {
     font-weight: 700;
 }
 
-.event-notice-cancelled p {
+.event-notice-cancelled p,
+.event-notice-rescheduled p {
     margin: 0.3rem 0 0;
     font-size: 0.9rem;
     line-height: 1.7;
 }
 
-.event-notice-cancelled a {
+.event-notice-cancelled a,
+.event-notice-rescheduled a {
     color: var(--accent-pop);
 }
 

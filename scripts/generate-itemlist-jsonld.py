@@ -36,7 +36,7 @@ def main():
                 "endDate": e.get('dateEnd') or e.get('date',''),
                 "url": f'{sitelib.DOMAIN}/events/{e["slug"]}.html',
                 "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
-                "eventStatus":"https://schema.org/EventScheduled",
+                "eventStatus": f"https://schema.org/{sitelib.schema_event_status(e)}",
                 "location":{
                     "@type":"Place",
                     "name": e.get('venue',''),

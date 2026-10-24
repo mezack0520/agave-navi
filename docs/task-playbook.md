@@ -4648,6 +4648,13 @@ Step0 の Google fetch・Instagram プロフィールの `img.alt` 読みは組�
 台風などの「日程を変更しました」は新イベントではなく既存回の date 変更。`@bota_bro_garden` の 10/25→11/1 がこれで、
 events.json の date・dateDisplay・description・出典(変更を告げた投稿)を直した。
 
+**slug は変えない。`eventStatus` を `rescheduled`、`previousStartDate` に当初の開始日(YYYY-MM-DD)を書く。**
+URL を変えると当初の日付で共有されたリンクが切れる(GitHub Pages は 301 を持てない)。
+/archive/{ym}/ の所属とパンくずは date から作るので、slug の年月がずれても害は無い。
+この2つを書くと、詳細頁の概要の前に「日程が変わりました 当初 … → …」が出て、
+JSON-LD が EventRescheduled と previousStartDate を持つ(Google の日程変更の書き方)。
+監査 `slug_date_mismatch` と `desc_date_mismatch` は当初の日付を外す。書き忘れるとこの2つが鳴る(10-25 の Bota Bro Garden)。
+
 
 ## 4. 自己改善のやり方
 

@@ -17,7 +17,7 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20261020a'
+CSS_VERSION = '20261025a'
 JS_VERSION = '20261020b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -294,7 +294,8 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
 # 'サンシャインシティ' は削除(2026-08-21)。実データの location は
 # 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
 # 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
-_VENUE_ROMAJI_RAW = {'グランメッセ熊本':'grandmesse-kumamoto',   # 2026-10-23 Collect Plants 2027-04 の回で3件
+_VENUE_ROMAJI_RAW = {'ガーデンプラザ華 福島店':'garden-plaza-hana-fukushima',   # 2026-10-25 ピクニックガーデン vol.27 で3件(読みは店の IG @gardenplazahana)
+                'グランメッセ熊本':'grandmesse-kumamoto',   # 2026-10-23 Collect Plants 2027-04 の回で3件
                 'せんだい農業園芸センター みどりの杜':'sendai-nogyo-engei-center',   # 2026-10-15 ピクニックガーデン11月の回で3件
                 '道の駅いちごの里よしみ':'michinoeki-ichigonosato-yoshimi',   # 2026-10-15 bizarrefarm SPRING FES 10th で3件
                 '五反田TOCビル':'gotanda-toc',   # 2026-10-08 キーを建物に(フロアは回ごとに変わる。旧キーは「五反田TOCビル 13階」)
@@ -359,6 +360,8 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    # 2026-10-25 ガーデンプラザ華 福島店が3件になりローマ字へ(2件で立っていたハッシュの頁)
+    'v-115659ad': 'ガーデンプラザ華 福島店',
     # 2026-10-23 グランメッセ熊本が3件になりローマ字へ(2件で立っていたハッシュの頁)
     'v-cc3defb5': 'グランメッセ熊本',
     # 2026-10-15 せんだい農業園芸センター・道の駅いちごの里よしみが3件になりローマ字へ(2件で立っていたハッシュの頁)
@@ -993,6 +996,55 @@ def is_cancelled(e):
 def cancel_label(e):
     st = str(e.get('eventStatus') or '').lower()
     return {'cancelled': '中止', 'postponed': '延期'}.get(st, '')
+
+
+# events.json の eventStatus → schema.org の eventStatus(2026-10-25 に1か所へ)。
+# 詳細頁の JSON-LD だけがこの表を持ち、トップ・地図・カレンダーの ItemList は
+# EventScheduled を書き込んでいた。tbd は会場未定の回でサイト独自の値(EventScheduled)。
+SCHEMA_EVENT_STATUS = {
+    'confirmed': 'EventScheduled',
+    'tbd': 'EventScheduled',
+    'cancelled': 'EventCancelled',
+    'postponed': 'EventPostponed',
+    'rescheduled': 'EventRescheduled',
+    'movedonline': 'EventMovedOnline',
+}
+
+
+def schema_event_status(e):
+    """schema.org の eventStatus の名前。知らない値は EventScheduled(監査 unknown_event_status が拾う)"""
+    return SCHEMA_EVENT_STATUS.get(str(e.get('eventStatus') or 'confirmed').lower(), 'EventScheduled')
+
+
+def previous_start_date(e):
+    """日程を変えた回の当初の開始日(YYYY-MM-DD)。無ければ ''。
+
+    台風などで別の日へ移した回は、slug(URL)を変えずに eventStatus を rescheduled、
+    previousStartDate に当初の開始日を書く(2026-10-25 Bota Bro Garden 10/25→11/1)。
+    Google は previousStartDate を EventRescheduled とだけ組ませるので、
+    rescheduled でない回の値は使わない(監査 previous_start_date_invalid が拾う)。
+    """
+    v = str(e.get('previousStartDate') or '').strip()
+    if (re.fullmatch(r'\d{4}-\d{2}-\d{2}', v)
+            and str(e.get('eventStatus') or '').lower() == 'rescheduled'):
+        return v
+    return ''
+
+
+def _self_test_rescheduled():
+    """schema_event_status / previous_start_date の自己テスト。失敗の説明のリスト(空なら通過)"""
+    cases = [
+        ('rescheduled', schema_event_status({'eventStatus': 'rescheduled'}), 'EventRescheduled'),
+        ('未記入は予定どおり', schema_event_status({}), 'EventScheduled'),
+        ('tbd は予定どおり', schema_event_status({'eventStatus': 'tbd'}), 'EventScheduled'),
+        ('大文字の中止', schema_event_status({'eventStatus': 'Cancelled'}), 'EventCancelled'),
+        ('当初の開始日', previous_start_date({'eventStatus': 'rescheduled', 'previousStartDate': '2026-10-25'}),
+         '2026-10-25'),
+        ('rescheduled でなければ使わない', previous_start_date({'previousStartDate': '2026-10-25'}), ''),
+        ('日付の形でなければ使わない',
+         previous_start_date({'eventStatus': 'rescheduled', 'previousStartDate': '10/25'}), ''),
+    ]
+    return [f'{name}: {got!r} != {want!r}' for name, got, want in cases if got != want]
 
 
 def event_phase(e, today=None):

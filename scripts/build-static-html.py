@@ -25,6 +25,7 @@ CAL_HTML = os.path.join(ROOT, 'calendar.html')
 
 # 地域分類の単一情報源は sitelib。独自定義で山梨・長野を「中部」としていたが
 # REGION_ROMAJI に中部が無くハッシュURLの頁を生むため統合した(2026-07-31)。
+import sitelib  # noqa: E402  ドメイン・eventStatus の対応表も sitelib が単一情報源
 from sitelib import (PREF_TO_REGION as REGION_FROM_PREFECTURE, today_jst,
                      is_upcoming, split_ongoing)
 
@@ -91,9 +92,9 @@ def render_itemlist_jsonld(events_list, page_name, page_url):
                 "name": e.get('name', ''),
                 "startDate": e.get('date', ''),
                 "endDate": e.get('dateEnd') or e.get('date', ''),
-                "url": f"https://agave-navi.com/events/{slug}.html",
+                "url": f"{sitelib.DOMAIN}/events/{slug}.html",
                 "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-                "eventStatus": "https://schema.org/EventScheduled",
+                "eventStatus": f"https://schema.org/{sitelib.schema_event_status(e)}",
                 "location": {
                     "@type": "Place",
                     "name": e.get('venue') or e.get('location', ''),
@@ -451,7 +452,7 @@ def strip_previous_insertions(html_src):
 def rewrite_map_html(html_src, events_list, inline_data_block):
     html_src = strip_previous_insertions(html_src)
     fallback = render_fallback_list(events_list, '開催予定イベント一覧（地図に表示中）')
-    jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントマップ', 'https://agave-navi.com/map.html')
+    jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントマップ', f'{sitelib.DOMAIN}/map.html')
 
     # 1) JS全体を置き換え: <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> 以降を全部置換
     leaflet_marker = '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>'
@@ -470,7 +471,7 @@ def rewrite_map_html(html_src, events_list, inline_data_block):
 def rewrite_cal_html(html_src, events_list, inline_data_block):
     html_src = strip_previous_insertions(html_src)
     fallback = render_fallback_list(events_list, '開催予定イベント一覧（カレンダーに表示中）')
-    jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントカレンダー', 'https://agave-navi.com/calendar.html')
+    jsonld = render_itemlist_jsonld(events_list, 'アガベ・植物イベントカレンダー', f'{sitelib.DOMAIN}/calendar.html')
 
     # JS全体を置き換え: 元のスクリプトを新しいCAL_JS_FIXEDに差し替え
     # マッチさせるパターン: <script>\n        // Menu toggle ... </script>
