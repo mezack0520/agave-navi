@@ -2,47 +2,22 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-10-24",
   "stats": {
-    "targets": 27,
-    "fetched": 20
+    "targets": 26,
+    "fetched": 23
   },
   "errors": [
-    "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10: URLError https://qusamura.com/information/exhibition/",
     "mizunomori-aki-saboten-ten-2026-10: HTTP 503 https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
-    "jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475",
-    "roots-market-inage-2026-10: URLError https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-    "taniku-garden-marche-arakogawa-2026-10: URLError https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
     "igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
     "picnic-garden-sendai-2026-11: URLError https://www.sendai-nogyo-engei-center.jp/event/entry/470/"
   ],
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "greensnap-marche-toyosu-2026-autumn",
-      "name": "GreenSnap Marche 豊洲 2026 Autumn",
-      "date": "2026-10-31",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "botanical-life-kasama-2026-11",
-      "name": "第10回 ボタニカルライフ",
-      "date": "2026-11-07",
-      "url": "https://bookkasama.com/bot2611.html",
-      "why": "公式ページが変わった(本文: 15721→15725字 +0%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
       "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
       "name": "草木日和（BloomGARDEN）",
       "date": "2026-11-07",
       "url": "https://bloomgarden.jp/event/post-595/",
-      "why": "公式ページが変わった(本文・画像)",
+      "why": "弱い語(延期)＋ページが変わった",
       "changed": [
         "本文",
         "画像"
@@ -58,6 +33,28 @@
     }
   ],
   "pages": {
+    "qusamura-kuwata-takuro-taniku-to-purabachi-2026-10": {
+      "url": "https://qusamura.com/information/exhibition/",
+      "checkedOn": "2026-10-24",
+      "signature": {
+        "text": "e07226678d4f0811",
+        "images": "b7a090b03e82395a",
+        "textLen": 2030,
+        "imageCount": 3
+      },
+      "prevTextLen": null,
+      "sigScope": "article",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 70,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-24",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
       "checkedOn": "2026-10-24",
@@ -76,6 +73,28 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-22",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
+    "jurian-aki-taniku-cactus-2026-10": {
+      "url": "https://www.jurian.or.jp/event/article/?id=1475",
+      "checkedOn": "2026-10-24",
+      "signature": {
+        "text": "bf7de8e13bbf97cd",
+        "images": "8859875c86a5399f",
+        "textLen": 1287,
+        "imageCount": 20
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-24",
       "badChars": 0,
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
@@ -133,7 +152,7 @@
         "textLen": 4683,
         "imageCount": 79
       },
-      "prevTextLen": 4583,
+      "prevTextLen": 4683,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -150,22 +169,44 @@
       "url": "https://jolienursery.co.jp/pages/events",
       "checkedOn": "2026-10-24",
       "signature": {
-        "text": "2b9cc1fa9c5b7776",
+        "text": "aaa09d721eb1a1df",
         "images": "e284e645fe6da741",
-        "textLen": 2724,
+        "textLen": 2957,
         "imageCount": 15
       },
-      "prevTextLen": 2735,
+      "prevTextLen": 2724,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
       "weak": [],
-      "datesNamed": 16,
+      "datesNamed": 18,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-29",
       "badChars": 0,
-      "textOnlyChanges": 4,
+      "textOnlyChanges": 5,
+      "imageOnlyChanges": 0
+    },
+    "taniku-garden-marche-arakogawa-2026-10": {
+      "url": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
+      "checkedOn": "2026-10-24",
+      "signature": {
+        "text": "0f24e69c126de2a2",
+        "images": "45c0f9f82e8fbf5d",
+        "textLen": 684,
+        "imageCount": 11
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": false,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-10-24",
+      "badChars": 0,
+      "textOnlyChanges": 0,
       "imageOnlyChanges": 0
     },
     "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10": {
@@ -221,7 +262,7 @@
         "textLen": 15725,
         "imageCount": 600
       },
-      "prevTextLen": 15721,
+      "prevTextLen": 15725,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -238,16 +279,18 @@
       "url": "https://bloomgarden.jp/event/post-595/",
       "checkedOn": "2026-10-24",
       "signature": {
-        "text": "7b1ad2cc26983b6d",
-        "images": "509658e3424246d0",
-        "textLen": 1362,
-        "imageCount": 26
+        "text": "a35118f38ab7ff61",
+        "images": "5c7e30ed3dbbe146",
+        "textLen": 1384,
+        "imageCount": 27
       },
-      "prevTextLen": 1410,
+      "prevTextLen": 1362,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
-      "weak": [],
+      "weak": [
+        "延期"
+      ],
       "datesNamed": 7,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
@@ -439,7 +482,7 @@
       "checkedOn": "2026-10-24",
       "signature": {
         "text": "dd1a143059002f6d",
-        "images": "7763c103db8dd404",
+        "images": "c156706f96dcfbba",
         "textLen": 1187,
         "imageCount": 41
       },
@@ -454,7 +497,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 5
+      "imageOnlyChanges": 6
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",

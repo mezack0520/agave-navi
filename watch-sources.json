@@ -1,8 +1,8 @@
 {
- "generated": "2026-10-24 12:35 JST",
+ "generated": "2026-10-24 18:36 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 379,
+  "igAccounts": 380,
   "awaitingNextEdition": 387,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
@@ -991,6 +991,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "vivi_succulent",
+   "url": "https://www.instagram.com/vivi_succulent/",
+   "eventCount": 1,
+   "lastEventName": "ROOTS MARKET",
+   "lastEventDate": "2026-10-25",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "fumoto_plants_market",
    "url": "https://www.instagram.com/fumoto_plants_market/",
    "eventCount": 1,
@@ -1238,7 +1248,7 @@
    "lastEventDate": "2026-11-03",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "botajam2026",

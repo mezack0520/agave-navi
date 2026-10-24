@@ -1,5 +1,5 @@
 {
-  "total": 811,
+  "total": 813,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -69,6 +69,27 @@
       "count": 0,
       "items": [],
       "note": "organizerIg を入れれば解消する",
+      "severity": "urgent"
+    },
+    "markdown_in_event_text": {
+      "title": "events.json の文に Markdown の ** が入っている(頁に記号のまま出る)",
+      "count": 0,
+      "items": [],
+      "note": "強調は使えない。** を消す",
+      "severity": "urgent"
+    },
+    "organizer_ig_unknown_soon": {
+      "title": "7日以内に開かれるのに主催のIGが分からない回(中止の告知を拾えない)",
+      "count": 6,
+      "items": [
+        "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10 (2026-10-31) 主催=オザキフラワーパーク",
+        "greensnap-marche-toyosu-2026-autumn (2026-10-31) 主催=?",
+        "isij-tokyo-reikai-2026-10-25 (2026-10-25) 主催=国際多肉植物協会（I.S.I.J.）",
+        "jurian-aki-taniku-cactus-2026-10 (2026-10-24) 主催=埼玉多肉・サボテン友の会",
+        "mizunomori-aki-saboten-ten-2026-10 (2026-10-23) 主催=滋賀サボテンサークル",
+        "toyama-saboten-taniku-9th-2026-10 (2026-10-30) 主催=?"
+      ],
+      "note": "主催の Instagram を調べて organizerIg を入れる(主催の名前・出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は organizerIgNone: true を書く",
       "severity": "urgent"
     },
     "thin_fixable": {
@@ -184,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 159,
+      "count": 158,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -694,7 +715,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -898,8 +919,10 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-21 ピクニックガーデンvol.27"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1009,11 +1032,9 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 4,
+      "count": 2,
       "items": [
-        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文・画像)",
-        "2026-11-07 botanical-life-kasama-2026-11: 公式ページが変わった(本文: 15721→15725字 +0%)",
-        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
         "2026-12-20 isij-tokyo-reikai-2026-12-20: 中止・延期の語: 中止のお知らせ"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
@@ -1063,15 +1084,11 @@
     },
     "cancel_watch_unreachable": {
       "title": "中止の見張りで取得できなかった出典",
-      "count": 7,
+      "count": 3,
       "items": [
         "取得できなかった: igashira-park-taniku-saboten-tenjikai-2026-11: URLError https://www.park-tochigi.com/igashira/greensalon/tenji",
-        "取得できなかった: jurian-aki-taniku-cactus-2026-10: URLError https://www.jurian.or.jp/event/article/?id=1475",
         "取得できなかった: mizunomori-aki-saboten-ten-2026-10: HTTP 503 https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
-        "取得できなかった: picnic-garden-sendai-2026-11: URLError https://www.sendai-nogyo-engei-center.jp/event/entry/470/",
-        "取得できなかった: qusamura-kuwata-takuro-taniku-to-purabachi-2026-10: URLError https://qusamura.com/information/exhibition/",
-        "取得できなかった: roots-market-inage-2026-10: URLError https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-        "取得できなかった: taniku-garden-marche-arakogawa-2026-10: URLError https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/"
+        "取得できなかった: picnic-garden-sendai-2026-11: URLError https://www.sendai-nogyo-engei-center.jp/event/entry/470/"
       ],
       "note": "そのサイトがボットを弾いているか一時的に落ちている。その回だけ文言の走査が効かないので、開催が近いなら手で見る。全体が止まっているわけではないので info",
       "severity": "info"
@@ -1113,11 +1130,13 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 5,
+      "count": 7,
       "items": [
         "@bota_bro_garden 2026-11-01: 台風接近のため、「アガベ販売会」の 日程を変更しました。 Bota Bro Garden ◆◆Agave collect https://www.instagram.com/reel/De0_9csAVoV/",
+        "@kinoco__inc 2026-11-25: ⁣ ⁣ ⁣ CLIP⁣ ⁣ 2022年以来、2回目となる植木鉢の展示販売⁣ イベントCLIPを開催いたします⁣ ⁣ ye https://www.instagram.com/p/De1aPIsB8EX/",
         "@minori_kaboku_interpark 2026-11-07,2026-11-08: 🎪みのり祭りイベント情報🎪 園芸雑誌でもおなじみの若松康史氏による秋球根の講習会を開催します🌷 11月7日(土)は9:0 https://www.instagram.com/p/De0tHRFAcej/",
         "@nagasako_farm 2026-10-25,2026-10-30: 大きくてなかなかサイズ感が伝わらないシリーズ😅 ユーフォルビア達はいつ子株を外そうかタイミング失ってます😭 オープンハウ https://www.instagram.com/p/DetrluuiZ75/",
+        "@sakura_shokubutsuen 2026-11-22: 🎄多肉で彩る、大人のクリスマス✨ 11月 多肉植物の寄植え講習のお知らせ 色とりどりの多肉植物を コンクリート鉢にぎゅっ https://www.instagram.com/p/De1EKVxvKGY/",
         "@sprout_2010817 2026-10-24: 🍂🎨 芸術の秋 ~初めて作るモスアート~ 色とりどりのプリザーブドモスを使って、 自分だけのオリジナルアートを作ってみま https://www.instagram.com/p/Dek5egWErfP/",
         "@the_botanical_show 2026-12-24: . \\ 同日開催!湘南キッズデイ🌈 / THE BOTANICAL SHOW 6thと同じ 11月14日(土)・15日( https://www.instagram.com/p/DewFzO4mUyt/"
       ],

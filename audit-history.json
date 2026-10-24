@@ -1515,12 +1515,14 @@
   {
    "date": "2026-10-24",
    "urgent": {
+    "organizer_ig_unknown_soon": 6,
     "manual_sweep_stale": 1
    },
    "info": {
-    "cancel_suspects": 4,
-    "cancel_watch_unreachable": 7,
-    "organizer_unlisted_dates": 5,
+    "coverage_gaps": 1,
+    "cancel_suspects": 2,
+    "cancel_watch_unreachable": 3,
+    "organizer_unlisted_dates": 7,
     "eyecatch_candidates_pending": 12,
     "inquiry_review_gap": 1,
     "task_run_gap": 3,
@@ -1530,7 +1532,7 @@
    "metric": {
     "thin_past_with_source": 34,
     "thin_archived": 48,
-    "upcoming_with_image": 159,
+    "upcoming_with_image": 158,
     "events_with_image": 325,
     "upcoming_no_image": 89,
     "ongoing_events": 30,
@@ -1538,7 +1540,7 @@
     "eyecatch_backlog": 89
    },
    "events": 712,
-   "upcoming": 248
+   "upcoming": 247
   }
  ]
 }

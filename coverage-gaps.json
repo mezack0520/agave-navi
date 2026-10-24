@@ -16,17 +16,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1061,
-    "in_scope": 258,
-    "covered": 183,
+    "candidates": 1063,
+    "in_scope": 260,
+    "covered": 184,
     "known_rejected": 75,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
     "in_scope_leafla": 159,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 99,
-    "gaps_raw": 0
+    "in_scope_nextmeet": 101,
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -34,5 +34,10 @@
     "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
     "10/15 追加 日本ライン花木センターで「フィンガーライム試食..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-21",
+      "title": "ピクニックガーデンvol.27"
+    }
+  ]
 }
