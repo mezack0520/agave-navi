@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-25 07:14 JST",
+ "generated": "2026-10-25 07:30 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 380,
@@ -1001,16 +1001,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "bota_bro_garden",
-   "url": "https://www.instagram.com/bota_bro_garden/",
-   "eventCount": 1,
-   "lastEventName": "アガベ販売会 Agave collection 2026（Bota Bro Garden）",
-   "lastEventDate": "2026-10-25",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "richard_greenservice",
    "url": "https://www.instagram.com/richard_greenservice/",
    "eventCount": 1,
@@ -1086,6 +1076,16 @@
    "eventCount": 1,
    "lastEventName": "シマムラ園芸×QSPLANT vol.9",
    "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bota_bro_garden",
+   "url": "https://www.instagram.com/bota_bro_garden/",
+   "eventCount": 1,
+   "lastEventName": "アガベ販売会 Agave collection 2026（Bota Bro Garden）",
+   "lastEventDate": "2026-11-01",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
