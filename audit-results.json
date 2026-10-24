@@ -1,5 +1,5 @@
 {
-  "total": 819,
+  "total": 816,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -363,11 +363,9 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
-      "items": [
-        "bota-bro-garden-agave-collection-izumo-2026-10: 本文 10月25日 が 2026-11-01〜2026-11-01 の外"
-      ],
-      "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す",
+      "count": 0,
+      "items": [],
+      "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す。日程を変えた回が当初の日付を書いているなら、eventStatus を rescheduled、previousStartDate に当初の開始日を書く(その日付は外れる)",
       "severity": "urgent"
     },
     "desc_stale_year": {
@@ -581,19 +579,24 @@
       "severity": "urgent"
     },
     "slug_date_mismatch": {
-      "title": "slugの年月が開催日と不一致(日付だけ直してURLが旧月のまま)",
-      "count": 1,
-      "items": [
-        "bota-bro-garden-agave-collection-izumo-2026-10: slug=2026-10 date=2026-11-01..2026-11-01"
-      ],
-      "note": "延期でずれたなら slug を作り直し、旧URLから301で送る。slugを変えないなら archive の所属が実態とずれることを承知で残す",
+      "title": "slugの年月が開催日と不一致(日付の打ち間違いか、日程変更の記録漏れ)",
+      "count": 0,
+      "items": [],
+      "note": "日程を変えた回なら slug はそのままにし、eventStatus を rescheduled、previousStartDate に当初の開始日を書く。そうでなければ date か slug の誤り",
       "severity": "urgent"
     },
     "unknown_event_status": {
       "title": "eventStatusが未知の値(黙ってEventScheduledになる)",
       "count": 0,
       "items": [],
-      "note": "build-detail-pages.py の status_map にある値に直す。新しい状態を足すなら status_map と この検査の両方に足す",
+      "note": "sitelib.SCHEMA_EVENT_STATUS にある値に直す。新しい状態を足すなら SCHEMA_EVENT_STATUS に足す(詳細頁・一覧の ItemList・この検査が同じ表を引く)",
+      "severity": "urgent"
+    },
+    "previous_start_date_invalid": {
+      "title": "previousStartDate が使われていない(rescheduled でない・日付の形でない・date と同じ)",
+      "count": 0,
+      "items": [],
+      "note": "日程を変えた回は eventStatus を rescheduled、previousStartDate に当初の開始日(YYYY-MM-DD)。日程を戻したなら両方外す",
       "severity": "urgent"
     },
     "unknown_event_fields": {
@@ -632,7 +635,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20261020a)と違うページ",
+      "title": "CSS版数が正規値(20261025a)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -821,10 +824,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 1,
-      "items": [
-        "ガーデンプラザ華福島店(3件) → /venue/v-115659ad/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
