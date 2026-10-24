@@ -1,5 +1,5 @@
 {
-  "total": 816,
+  "total": 810,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -80,15 +80,8 @@
     },
     "organizer_ig_unknown_soon": {
       "title": "7日以内に開かれるのに主催のIGが分からない回(中止の告知を拾えない)",
-      "count": 6,
-      "items": [
-        "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10 (2026-10-31) 主催=オザキフラワーパーク",
-        "greensnap-marche-toyosu-2026-autumn (2026-10-31) 主催=?",
-        "isij-tokyo-reikai-2026-10-25 (2026-10-25) 主催=国際多肉植物協会（I.S.I.J.）",
-        "jurian-aki-taniku-cactus-2026-10 (2026-10-24) 主催=埼玉多肉・サボテン友の会",
-        "mizunomori-aki-saboten-ten-2026-10 (2026-10-23) 主催=滋賀サボテンサークル",
-        "toyama-saboten-taniku-9th-2026-10 (2026-10-30) 主催=?"
-      ],
+      "count": 0,
+      "items": [],
       "note": "主催の Instagram を調べて organizerIg を入れる(主催の名前・出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は organizerIgNone: true を書く",
       "severity": "urgent"
     },

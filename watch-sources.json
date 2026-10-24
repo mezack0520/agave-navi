@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-25 07:55 JST",
+ "generated": "2026-10-25 07:58 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 380,
+  "igAccounts": 384,
   "awaitingNextEdition": 390,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 89,
+  "igNeedsBrowser": 93,
   "igDead": 7
  },
  "igAccounts": [
@@ -19,6 +19,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "isij_taniku",
+   "url": "https://www.instagram.com/isij_taniku/",
+   "eventCount": 9,
+   "lastEventName": "サボテン・多肉植物ビッグバザール（2027年11月）",
+   "lastEventDate": "2027-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomitaniku",
@@ -561,6 +571,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "greensnap.jp",
+   "url": "https://www.instagram.com/greensnap.jp/",
+   "eventCount": 2,
+   "lastEventName": "GreenSnap Marche お台場 2026",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "global_botanical_jam",
    "url": "https://www.instagram.com/global_botanical_jam/",
    "eventCount": 2,
@@ -1021,6 +1041,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "botanicgardenstoyama_official",
+   "url": "https://www.instagram.com/botanicgardenstoyama_official/",
+   "eventCount": 1,
+   "lastEventName": "第9回 サボテン・多肉植物展（富山県中央植物園）",
+   "lastEventDate": "2026-10-30",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "driftwood.smokeywood",
    "url": "https://www.instagram.com/driftwood.smokeywood/",
    "eventCount": 1,
@@ -1079,6 +1109,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "ozakiflowerpark",
+   "url": "https://www.instagram.com/ozakiflowerpark/",
+   "eventCount": 1,
+   "lastEventName": "DOLCE’S 多肉植物販売会（オザキフラワーパーク）",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bota_bro_garden",
@@ -4282,8 +4322,8 @@
    "eventDate": "2026-10-10"
   },
   {
-   "domain": "seibu-la.co.jp",
-   "url": "https://www.seibu-la.co.jp/mizunomori/files/9c1f55a3aaf5e3052e500c8a3f4c49c4.pdf",
+   "domain": "city.kusatsu.shiga.jp",
+   "url": "https://www.city.kusatsu.shiga.jp/kurashi/koen_midori/koen_shokai/mizunomori/akinosabotentenmizu.html",
    "eventName": "秋のサボテン展（草津市立水生植物公園みずの森）",
    "eventDate": "2026-10-23"
   },
