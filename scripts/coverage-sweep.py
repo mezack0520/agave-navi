@@ -22,8 +22,9 @@ events.json と rejected-events.json に突き合わせて、
 
 見る先は `listing-policy.json` の `coverageSources` が単一情報源。
 
-  leafla   … 日付別ページ（1日1ページ・全国）を先の日付ぶん
-  nextmeet … 月別ページ（1ページに全国の会期）を先の月ぶん
+  leafla      … 日付別ページ（1日1ページ・全国）を先の日付ぶん
+  nextmeet    … 月別ページ（1ページに全国の会期）を先の月ぶん
+  matome-blog … もすレコ。の「開催予定の園芸イベントまとめ」記事（埼玉・北関東が厚い）
 
 **1社では取りこぼす。**2026-09-06 と 09-10、LEAFLA 由来の巡回が
 errors 0 / gaps 0 でいちばん健全に見えている裏で、NextMeet の月別を
@@ -83,6 +84,11 @@ BASE = 'https://leaf-laboratory.com/blogs/media/event-list-'
 
 # 月別ページ。1ページに全国のその月の会期が並ぶ。
 NEXTMEET = 'https://nextmeet.app/plants/monthly/'
+# もすレコ。の期間まとめ記事(2026-10-25 に手巡回から機械化)。記事は半期ごとに作り直され、
+# URL が変わるので、カテゴリ一覧から「開催予定」「まとめ」を題に持つ記事を探して読む。
+# 手巡回は agave-event-update の担当だったが、10-23〜25 の3日続けて「未実施」で
+# 期限(14日)を切らした。見出しが「2026/10/24,25：<名前>（<所在地>）」の決まった形なので機械で読める
+MATOME_INDEX = 'https://mostgreenrecords.com/category/go_place/'
 UA = sitelib.BROWSER_UA
 
 # 当サイトの対象。これを含まない候補は範囲外として捨てる。
@@ -405,6 +411,78 @@ def sweep_nextmeet(days, sleep=0.7):
     return pages, fetched, notes
 
 
+_MATOME_LINK = re.compile(r'<a\b[^>]*href="(https://mostgreenrecords\.com/go_place/\d+/)"[^>]*>(.*?)</a>',
+                          re.S | re.I)
+_MATOME_H2 = re.compile(r'<h2\b[^>]*class="wp-block-heading"[^>]*>(.*?)</h2>', re.S | re.I)
+# NFKC 後の形: 「2026/10/24,25:秋の多肉植物・サボテン展示会(埼玉県川口市)」「2026/9/19~21:…」
+_MATOME_HEAD = re.compile(r'^(20\d\d)/(\d{1,2})/(\d{1,2})[^:]{0,12}:\s*(.+?)\s*(?:\([^()]*\))?\s*$')
+
+
+def _plain(fragment):
+    t = htmllib.unescape(re.sub(r'<[^>]+>', ' ', fragment))
+    return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', t)).strip()
+
+
+def extract_matome_articles(html):
+    """カテゴリ一覧から「開催予定の…まとめ」記事の URL(並び順・重複なし)"""
+    out = []
+    for m in _MATOME_LINK.finditer(html):
+        t = _plain(m.group(2))
+        if 'まとめ' in t and '開催予定' in t and m.group(1) not in out:
+            out.append(m.group(1))
+    return out
+
+
+def extract_matome(html):
+    """まとめ記事から (開始日, イベント名) を取る。見出しの末尾の(所在地)は名前から外す"""
+    out = []
+    for m in _MATOME_H2.finditer(html):
+        h = _MATOME_HEAD.match(_plain(m.group(1)))
+        if not h:
+            continue                                  # 「引き続き追記予定」など
+        y, mo, d, name = int(h.group(1)), int(h.group(2)), int(h.group(3)), h.group(4)
+        try:
+            day = date(y, mo, d).isoformat()
+        except ValueError:
+            continue
+        out.append((day, name))
+    return out
+
+
+def sweep_matome(sleep=0.7):
+    """もすレコ。のまとめ記事から (日付, [イベント名]) の並びを取る。窓では切らない
+    (記事は先の半期ぶんしか載せない)。到達できなかった理由は notes に返す。errors には積まない"""
+    today = today_jst()
+    try:
+        idx = fetch(MATOME_INDEX)
+    except Exception as e:                          # noqa: BLE001
+        return [], 0, [f'一覧: {type(e).__name__} {e}']
+    urls = extract_matome_articles(idx)[:3]
+    if not urls:
+        return [], 0, ['一覧に「開催予定…まとめ」の記事が見つからない'
+                       f'(ページ構造が変わった可能性 / {len(idx)}バイト)']
+    by_day, fetched, notes = {}, 0, []
+    for u in urls:
+        try:
+            html = fetch(u)
+        except Exception as e:                      # noqa: BLE001
+            notes.append(f'{u}: {type(e).__name__} {e}')
+            continue
+        rows = extract_matome(html)
+        if not rows:
+            notes.append(f'{u}: 見出しを1件も抽出できなかった(ページ構造が変わった可能性 / {len(html)}バイト)')
+            continue
+        fetched += 1
+        for day, name in rows:
+            if day < today:
+                continue
+            by_day.setdefault(day, [])
+            if name not in by_day[day]:
+                by_day[day].append(name)
+        time.sleep(sleep)
+    return [(k, by_day[k]) for k in sorted(by_day)], fetched, notes
+
+
 def load_json(path, default):
     try:
         with open(os.path.join(REPO, path), encoding='utf-8') as f:
@@ -713,6 +791,15 @@ def sweep(days, sleep=0.7):
     if nm_notes:
         sources['nextmeet']['notes'] = nm_notes[:10]
 
+    # 3つ目。もすレコ。のまとめ記事。NextMeet と同じく名前そのものが来る
+    mt_pages, mt_fetched, mt_notes = sweep_matome(sleep)
+    stats['fetched_matome'] = mt_fetched
+    stats['candidates'] += sum(len(t) for _, t in mt_pages)
+    pages.extend((k, t, 'matome-blog') for k, t in mt_pages)
+    sources['matome-blog'] = {'ok': mt_fetched > 0, 'fetched': mt_fetched, 'unit': 'article'}
+    if mt_notes:
+        sources['matome-blog']['notes'] = mt_notes[:10]
+
     # 切り詰め見出しは、全ページを取り終えてから完全版と突き合わせる。
     # 完全版は自分の開催日のページに出ているので、1パス目を終えないと揃わない。
     full_titles = list(dict.fromkeys(
@@ -740,7 +827,9 @@ def sweep(days, sleep=0.7):
                     unresolved.append(t[:180])
                     stats['truncated_unresolved'] += 1
                 continue
-            if not in_scope(t, prescoped=(source == 'nextmeet')):
+            # 名前そのものが来る情報源(NextMeet・まとめ記事)は、見出しにジャンル語を要求しない
+            named = source in ('nextmeet', 'matome-blog')
+            if not in_scope(t, prescoped=named):
                 continue
             stats['in_scope'] += 1
             stats['in_scope_' + source] = stats.get('in_scope_' + source, 0) + 1
@@ -752,7 +841,7 @@ def sweep(days, sleep=0.7):
             # この形の見出しに限り全期間から探す
             if ADDED_PREFIX.match(unicodedata.normalize('NFKC', t)):
                 cand = [e for v in by_day.values() for e in v]
-            bare = (source == 'nextmeet')
+            bare = named
             # aliases は他所での呼び名。主催の表記(PLNTS RIDE)とアグリゲータの
             # 表記(Plants Ride)が違う回がある(2026-09-24)
             if any(matches(t, e.get('name', ''), bare=bare) or
@@ -765,7 +854,7 @@ def sweep(days, sleep=0.7):
             if any(matches(t, r, bare=bare) for r in rejected):
                 stats['known_rejected'] += 1
                 continue
-            gaps.append({'date': key, 'title': t[:180]})
+            gaps.append({'date': key, 'title': t[:180], 'source': source})
 
     # 同じイベントを日数ぶん重ねない。会期の長い回（店舗のセールや常設展示）が
     # 45日ぶん並ぶと件数が膨らんで、一覧として読めなくなる
@@ -779,7 +868,7 @@ def sweep(days, sleep=0.7):
             folded[k]['days'] += 1
         else:
             folded[k] = {'date': g['date'], 'lastSeen': g['date'],
-                         'days': 1, 'title': g['title']}
+                         'days': 1, 'title': g['title'], 'source': g['source']}
     out = sorted(folded.values(), key=lambda x: (x['date'], x['title']))
     for o in out:
         if o['days'] == 1:
@@ -1088,6 +1177,26 @@ def self_test(verbose=True):
         ok = False
     _p(f'  {mark} {got}')
 
+    _p('\n--- まとめ記事(もすレコ。) ---')
+    idx = ('<a href="https://mostgreenrecords.com/go_place/22492/"><span>行ってみた！</span>'
+           '2026秋冬に開催予定の園芸イベントまとめ。主に埼玉</a>'
+           '<a href="https://mostgreenrecords.com/go_place/24258/">花郷園秋の芸術植物祭りに初訪問！！</a>')
+    got = extract_matome_articles(idx)
+    want = ['https://mostgreenrecords.com/go_place/22492/']
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 記事 {got}")
+    art = ('<h2 class="wp-block-heading">2026/10/24,25：秋の多肉植物・サボテン展示会（埼玉県川口市）</h2>'
+           '<h2 class="wp-block-heading">2026/9/19～21：オキボタMAX with 緑の風（東京都豊島区）</h2>'
+           '<h2 class="wp-block-heading">2026/9/6：ボタニカルフェスタ「ハオルチア界隈」（埼玉県熊谷市）</h2>'
+           '<h2 class="wp-block-heading">引き続き追記予定</h2>')
+    got = extract_matome(art)
+    want = [('2026-10-24', '秋の多肉植物・サボテン展示会'), ('2026-09-19', 'オキボタMAX with 緑の風'),
+            ('2026-09-06', 'ボタニカルフェスタ「ハオルチア界隈」')]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 見出し {got}")
+
     _p('\n結果:', 'すべて通過' if ok else '★失敗あり')
     return 0 if ok else 1
 
@@ -1137,6 +1246,7 @@ def main():
 
     print(f"取得できた日: {stats['fetched']} "
           f"/ NextMeetの月: {stats.get('fetched_nextmeet', 0)} "
+          f"/ まとめ記事: {stats.get('fetched_matome', 0)} "
           f"/ 候補 {stats['candidates']}件")
     print(f"  うち対象: {stats['in_scope']}件 "
           f"(掲載済み {stats['covered']} / 見送り済み {stats['known_rejected']})")

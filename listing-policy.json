@@ -327,6 +327,11 @@
     "label": "NextMeet の月別ページ",
     "manualSweepId": null,
     "note": "2026-09-10 に coverage-sweep.py へ機械化。Actions からも 3/3 か月取得できた。届かなくなったら manual-sweeps.json に台帳を作り直して manualSweepId を戻す。"
+   },
+   "matome-blog": {
+    "label": "もすレコ。の「開催予定の園芸イベントまとめ」記事(埼玉・北関東が厚い)",
+    "manualSweepId": "matome-blog",
+    "note": "2026-10-25 に coverage-sweep.py へ機械化。手巡回(agave-event-update)が 10-23〜25 の3日続けて未実施で期限を切らしたため。自動で読めた日は manual-sweeps.json の台帳を見ない(audit.manual_sweep_stale)。読めなかった日だけ台帳が代わりになる"
    }
   }
  },

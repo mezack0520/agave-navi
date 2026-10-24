@@ -1373,9 +1373,11 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `audit.py` の `manual_sweep_stale`(urgent) が経過日数で鳴らす。
   毎回 `lastSweptOn` / `lastScope` / `history` を更新する。
   **回れなかった回は日付を進めない。**進めると回った回と区別が付かなくなる。
-  手で巡回するのは now まとめブログと PUKUBOOK。NextMeet は自動に移した。
-  - まとめブログの期間まとめ記事（もすレコ。の半期まとめ等・staleDays 14）
+  手で巡回するのは PUKUBOOK。NextMeet(09-10)とまとめブログ(10-25)は自動に移した。
   - PUKUBOOK の全国イベント一覧（staleDays 7）
+  - まとめブログの台帳は、coverage-sweep.py が読めなかった日の代わりとして残す
+    (`listing-policy.json` coverageSources の manualSweepId)。自動で読めた日は `manual_sweep_stale` が見ない。
+    手巡回は 10-23〜25 の3日続けて後回しになり、期限の14日を切らした。見出しが決まった形なので機械で読める
 
   **何を巡回すべきかは `listing-policy.json` の `coverageSources` が単一情報源。**
   自動(`coverage-gaps.json` の `sweptSources`)でも手動台帳でも埋まっていない

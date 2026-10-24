@@ -4335,8 +4335,9 @@ def main():
         severity='info')
 
     # --- 手でやる巡回が止まっていないか -------------------------------------
-    # CI から読めない情報源(NextMeet・Instagram)は coverage-sweep.py で
-    # 自動化できないので、回ったかどうかが repo のどこにも残らない。
+    # coverage-sweep.py で自動に読めていない情報源(PUKUBOOK・Instagram)は、
+    # 回ったかどうかが repo のどこにも残らない。
+    # (NextMeet は 2026-09-10、まとめブログは 2026-10-25 に自動へ移した)
     # 2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、
     # NextMeet の月別ページを手で開いたら未掲載が15件出た。
     # 「アグリゲータ3社は互いに取りこぼす」はプレイブック §3 に前から
@@ -4350,7 +4351,14 @@ def main():
         _mday = _dtm.date.fromisoformat(today_jst())
     except ValueError:
         _mday = None
+    # 自動巡回が読めた情報源の台帳は見ない(2026-10-25)。台帳はその情報源を自動で読めない日の
+    # 代わりで、coverageSources の manualSweepId がその対応。まとめブログを coverage-sweep.py に
+    # 入れたあとも台帳が残り、手で回さなくなった日から鳴り続けるのを防ぐ(NextMeet の時は台帳ごと外した)
+    _auto_ok = {(_spec or {}).get('manualSweepId') for _src, _spec in _cs.items()
+                if (_swept_src.get(_src) or {}).get('ok')}
     for _sid in sorted(_ms):
+        if _sid in _auto_ok:
+            continue
         _sc = _ms[_sid] or {}
         _last = str(_sc.get('lastSweptOn') or '').strip()
         _stale = _sc.get('staleDays')
@@ -4371,10 +4379,9 @@ def main():
                 f'（{_age}日前 / 上限{_stale}日）')
     add('manual_sweep_stale', '手でやる巡回が止まっている', sweep_stale,
         note='manual-sweeps.json は agave-event-update が毎回書く台帳。'
-             'NextMeet と まとめブログは CI から読めないので coverage-sweep.py に'
-             '入れられず、回ったかどうかを残せるのはこのファイルだけ。'
-             'coverage-gaps.json が0件でも「取りこぼし無し」の証拠にならない'
-             '(あれは LEAFLA しか見ていない)。'
+             'coverage-sweep.py で自動に読めない情報源(PUKUBOOK など)と、自動巡回が読めなかった日の'
+             '代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。'
+             'coverage-gaps.json が0件でも、ここに残る情報源は見ていない。'
              '回った日に lastSweptOn / lastScope / history を更新する。'
              '回れなかった回は進めない。進めると回った回と区別が付かなくなる')
 
