@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-24 18:36 JST",
+ "generated": "2026-10-25 06:40 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 380,
-  "awaitingNextEdition": 387,
+  "awaitingNextEdition": 392,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 90,
+  "igNeedsBrowser": 89,
   "igDead": 7
  },
  "igAccounts": [
@@ -881,36 +881,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "garden_link_festa",
-   "url": "https://www.instagram.com/garden_link_festa/",
-   "eventCount": 1,
-   "lastEventName": "Garden Link Festa",
-   "lastEventDate": "2026-10-24",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kumakiri55",
-   "url": "https://www.instagram.com/kumakiri55/",
-   "eventCount": 1,
-   "lastEventName": "プランツボックス 甲府",
-   "lastEventDate": "2026-10-24",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "minefarm_okinawa",
-   "url": "https://www.instagram.com/minefarm_okinawa/",
-   "eventCount": 1,
-   "lastEventName": "MINE FARM POP UP in 沖縄",
-   "lastEventDate": "2026-10-24",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "wakayama_cactus_club",
    "url": "https://www.instagram.com/wakayama_cactus_club/",
    "eventCount": 1,
@@ -919,16 +889,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "mochi.ie29",
-   "url": "https://www.instagram.com/mochi.ie29/",
-   "eventCount": 1,
-   "lastEventName": "植物販売会（やまぐちフラワーランド・もちのいえ）",
-   "lastEventDate": "2026-10-24",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "gardens_umekita",
@@ -998,7 +958,7 @@
    "lastEventDate": "2026-10-25",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "fumoto_plants_market",
@@ -3821,6 +3781,46 @@
    "eventCount": 1,
    "lastEventName": "CROSS アガベ販売会（松阪ワークセンター）",
    "lastEventDate": "2026-10-18",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "garden_link_festa",
+   "url": "https://www.instagram.com/garden_link_festa/",
+   "eventCount": 1,
+   "lastEventName": "Garden Link Festa",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kumakiri55",
+   "url": "https://www.instagram.com/kumakiri55/",
+   "eventCount": 1,
+   "lastEventName": "プランツボックス 甲府",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "minefarm_okinawa",
+   "url": "https://www.instagram.com/minefarm_okinawa/",
+   "eventCount": 1,
+   "lastEventName": "MINE FARM POP UP in 沖縄",
+   "lastEventDate": "2026-10-24",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "mochi.ie29",
+   "url": "https://www.instagram.com/mochi.ie29/",
+   "eventCount": 1,
+   "lastEventName": "植物販売会（やまぐちフラワーランド・もちのいえ）",
+   "lastEventDate": "2026-10-24",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
