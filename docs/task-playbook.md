@@ -4630,6 +4630,23 @@ coverage-gaps の候補が「掲載済み・監査の照合漏れ」と分かっ
 **パッチ(base64)を `device_bash` のコマンド文字列に写してはいけない。**手で写すと内容が変わる(今回、末尾が別物になった)。ファイル渡しは sha256 を両側で突き合わせる。
 `/sessions` は満杯でも `/tmp`(別ディスク)は空いていた。clone 先は /tmp にする。
 
+### 無人実行で Chrome が2台つながっていると選べない (2026-10-25)
+
+`mcp__claude-in-chrome__tabs_context_mcp` が「複数のブラウザが接続されている。AskUserQuestion で選べ」と返す回がある(Browser 1 = macOS、Browser 2 = Windows)。
+定期実行は答える人がいないので止まる。**勝手に選ばず、組み込みブラウザ(`mcp__remote-devices__Claude_Browser__*`)で同じことをする。**
+Step0 の Google fetch・Instagram プロフィールの `img.alt` 読みは組み込みブラウザでそのまま動いた(10-25 に12クエリ・IG取得で確認)。
+
+### 監査の「中止のお知らせ」は過去の回の文言でも鳴る (2026-10-25)
+
+`isij-tokyo-reikai-2026-12-20` の「中止の語: 中止のお知らせ」は、isij.net/event の2024年8月の回(終了済み)の文言だった。
+出典頁は cp932 なので `curl | iconv -f cp932 -t utf-8` で読む。語の前後250字で、**どの回の中止か**を必ず確かめてから動く。
+
+### 主催の日程変更投稿は organizer_unlisted_dates に出る (2026-10-25)
+
+台風などの「日程を変更しました」は新イベントではなく既存回の date 変更。`@bota_bro_garden` の 10/25→11/1 がこれで、
+events.json の date・dateDisplay・description・出典(変更を告げた投稿)を直した。
+
+
 ## 4. 自己改善のやり方
 
 **気づいたことは必ずリポジトリに残す。** 手段は次の4つ。
