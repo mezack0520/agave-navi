@@ -5457,6 +5457,10 @@ def main():
         # 自サイトが wixsite なら wixstatic は同じ持ち主とみなす
         if _ih in _own or ('wixstatic.com' in _ih and any('wix' in o for o in _own)):
             continue
+        # note.com の記事は og:image(rectangle_large_type_2_*)を自社 CDN の assets.st-note.com に置く(2026-10-25)。
+        # 自サイトが note.com なら st-note.com は同じ持ち主。曼荼羅多肉まつりで毎回 info に出ていた
+        if _ih == 'assets.st-note.com' and any(o == 'note.com' or o.endswith('.note.com') for o in _own):
+            continue
         # wraptas は画像を共有バケット(s3 の wraptas-prod/<サイト名>/)に置く。自サイトが wraptas で、パスのサイト名が同じなら持ち主は同じ
         if 'amazonaws.com' in _ih and '/wraptas-prod/' in e['imageUrl'] and any(o.endswith('.wraptas.site') and o.split('.')[0] in e['imageUrl'] for o in _own):
             continue

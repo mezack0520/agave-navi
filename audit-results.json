@@ -1,5 +1,5 @@
 {
-  "total": 810,
+  "total": 809,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -1558,10 +1558,8 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 1,
-      "items": [
-        "2026-12-26 mandara-taniku-matsuri-hibikinada-2026-12: assets.st-note.com（url=note.com / sourceUrl=note.com）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },
