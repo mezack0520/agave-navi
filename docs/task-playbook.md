@@ -3280,6 +3280,12 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
   `scripts/cancel-reviewed.json` に記録する(記録より古い投稿では再び動かない)。
   きっかけ: 第二回アガベースは前日昼の中止告知を翌朝の巡回で拾いながら、
   人が言うまで当日も開催予定のまま載っていた。
+- **主催の IG が分からない回は、中止の告知を拾えない(2026-10-24)。**見張りが読むのは
+  `sitelib.organizer_ig_handles`(organizerIg と、url / sourceUrl が指すプロフィール)だけ。
+  ROOTS MARKET(10/25 稲毛)は出典が公園の告知頁で、主催 @vivi_succulent の前日の中止告知(強風)を
+  目崎が出店者の投稿を見せるまで拾えなかった。出典が Web の回も主催の IG を調べて organizerIg を入れる
+  (出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は `organizerIgNone: true`。
+  7日以内に開かれる回で分からないものは監査 `organizer_ig_unknown_soon`(urgent)に出る。
 - **読めない相手**: 個人アカウント・非公開・名前違い。開始時点で102中22。
   `watch-sources.json` の各アカウントに `apiStatus`(`api` / `personal` /
   `unchecked`)が付く。**ブラウザで回るのは `api` 以外だけでよい。**

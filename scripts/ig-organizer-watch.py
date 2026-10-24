@@ -242,22 +242,19 @@ def name_key(e):
 
 
 def upcoming_by_org(events, today):
-    """開催予定の回を主催ごとに束ねる"""
+    """開催予定の回を主催ごとに束ねる(中止の見張り)。主催の引き方は sitelib.organizer_ig_handles"""
     lim = (today + timedelta(days=WATCH_HORIZON_DAYS)).strftime('%Y-%m-%d')
     t = today.strftime('%Y-%m-%d')
     by = {}
     for e in events:
-        u = (e.get('organizerIg') or '').strip().lstrip('@')
-        if not u or sitelib.is_cancelled(e):
+        if sitelib.is_cancelled(e):
             continue
         end = e.get('dateEnd') or e.get('date') or ''
         if not end or end < t or (e.get('date') or '') > lim:
             continue
-        by.setdefault(u, []).append(e)
+        for u in sitelib.organizer_ig_handles(e):
+            by.setdefault(u, []).append(e)
     return by
-
-
-_IG_HANDLE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?(?:$|[?#])')
 
 
 def all_by_org(events):
@@ -270,15 +267,7 @@ def all_by_org(events):
     """
     by = {}
     for e in events:
-        hs = set()
-        u = (e.get('organizerIg') or '').strip().lstrip('@').lower()
-        if u:
-            hs.add(u)
-        for k in ('url', 'sourceUrl'):
-            m = _IG_HANDLE.search(e.get(k) or '')
-            if m and m.group(1).lower() not in ('p', 'reel', 'tv', 'explore', 'stories'):
-                hs.add(m.group(1).lower())
-        for h in hs:
+        for h in sitelib.organizer_ig_handles(e):
             by.setdefault(h, []).append(e)
     return by
 
@@ -732,6 +721,11 @@ def self_test():
     chk('自動中止: 延期を含む', auto_cancel_ok(sig, ev_a, '10/18は開催中止し11/1に延期します'), False)
     chk('自動中止: 掲載前の投稿', auto_cancel_ok(dict(sig, postedOn='2026-08-20'), ev_a, '開催中止'), False)
     chk('自動中止: 中止済み', auto_cancel_ok(sig, dict(ev_a, eventStatus='cancelled'), '開催中止'), False)
+    # 中止の見張りは url だけがプロフィールの回も主催の回に数える(2026-10-24)
+    ev_u = dict(ev, url='https://www.instagram.com/test_org/')
+    chk('見張り: url がプロフィールの回', [e['slug'] for e in upcoming_by_org([ev_u], today).get('test_org', [])],
+        ['x-2026-10'])
+    chk('見張り: 投稿URLは主催に数えない', upcoming_by_org([dict(ev, url='https://www.instagram.com/p/AbC/')], today), {})
     chk('自動中止: 人が確認済み', auto_cancel_ok(sig, ev_a, '開催中止', {'x-2026-10': '2026-09-22'}), False)
     _evs = [dict(ev_a)]
     chk('自動中止: 反映', apply_auto_cancels([dict(sig)], _evs, {'u1': '10/18 開催中止'}, '2026-09-21'),

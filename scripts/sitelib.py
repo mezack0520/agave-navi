@@ -956,6 +956,30 @@ def is_long_run(e, threshold=LONG_RUN_DAYS):
 CANCELLED_STATUSES = ('cancelled', 'postponed')
 
 
+_IG_PROFILE_RE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?(?:$|[?#])')
+_IG_NON_HANDLES = frozenset({'p', 'reel', 'reels', 'tv', 'explore', 'stories', 'accounts'})
+
+
+def organizer_ig_handles(e):
+    """その回の主催の Instagram ハンドル(小文字の集合)。organizerIg と、url / sourceUrl が
+    プロフィールを指すときのハンドル。
+
+    中止の見張り(ig-organizer-watch.upcoming_by_org)・未掲載の日付(all_by_org)・
+    監査 organizer_ig_unknown_soon が同じ規則で引く(2026-10-24)。それまで中止の見張りは
+    organizerIg しか見ておらず、url だけがプロフィールの回(garden link festa・
+    なばなの里の多肉マルシェ)は、未掲載の日付は見ているのに中止の告知は見ていなかった。
+    """
+    hs = set()
+    u = (e.get('organizerIg') or '').strip().lstrip('@').lower()
+    if u:
+        hs.add(u)
+    for k in ('url', 'sourceUrl'):
+        m = _IG_PROFILE_RE.search(e.get(k) or '')
+        if m and m.group(1).lower() not in _IG_NON_HANDLES:
+            hs.add(m.group(1).lower())
+    return hs
+
+
 def is_cancelled(e):
     """開催されないことが確定した回。
 
