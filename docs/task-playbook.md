@@ -17,7 +17,8 @@
 1. フォルダ `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` は**スケジュール済みタスク自体に付ける**
    (デスクトップアプリのタスク編集でフォルダを追加する。device_bash では `$HOME/mnt/mzplants`)。
    付いていれば実行の最初から見えるので、接続を求める操作(`request_cowork_directory`・`device_request_folder_access`)はしない。
-   **2026-10-25 までタスクにフォルダが付いていなかった。**タスクは「このPCが必要」で動いているが、フォルダは毎回
+   **2026-10-25 に目崎が agave 系5本のタスクに付けた**(`list_triggers` の `folders_state` が `FOLDERS_STATE_PRESENT`)。
+   それまでは付いていなかった。タスクは「このPCが必要」で動いているが、フォルダは毎回
    `device_request_folder_access` で求めていて、PC の確認画面に答える人がいない回は
    「フォルダが接続されていないのでできません」で止まった(10-24 の eyecatch など。目崎に同じ報告が何度も届いた)。
    **フォルダはタスクの編集でしか付けられない。**会話から `update_trigger` では付けられず、プロンプトの変更も
@@ -4658,6 +4659,10 @@ coverage-gaps の候補が「掲載済み・監査の照合漏れ」と分かっ
 記録済みなのに候補に残る回を出す。
 
 ### デバイスVMの git push が今は通る。bundle は要らない (2026-10-23)
+
+**`device_commit_files` は同じ `stagedPath` を渡すと最初に送った中身を書く(2026-10-25)。**`/mnt/user-data/outputs/_transfer.patch` を
+書き換えて同じ名前で2回送ったら、PC 側には1回目の中身が残った(sha256 で発覚)。送るたびに別の名前(時刻を付ける)にし、
+PC 側の受け取り先は固定名でよい。両側の sha256 を必ず突き合わせる。
 
 `device_bash` から `git ls-remote` / `git push`(PAT)が通った。クラウドで clone → 編集 → **変更後のファイルを `SendUserFile` → `device_commit_files` で `work\` に置く** → デバイスVMの /tmp に `--depth 1` で clone して `cp` → push、で足りる。
 **パッチ(base64)を `device_bash` のコマンド文字列に写してはいけない。**手で写すと内容が変わる(今回、末尾が別物になった)。ファイル渡しは sha256 を両側で突き合わせる。
