@@ -108,14 +108,15 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
   2026-08-10まで『contents権限のみでワークフローは触れない』と誤って記録されており、
   この思い込みで notify-inquiry.yml の修正が10日間放置された
 - Claudeタスクは**Coworkアプリ起動中のみ**実行される。プロンプト変更後は「Run now」でツール事前承認
-- Instagram/nextmeetはサーバーから読めない → **Chromeで google.com/search?hl=ja&tbs=qdr:w2** が主経路
-  (WebSearchのUS版ではIG告知がほぼ拾えない)
+- Instagram/nextmeetはサーバーから読めない → **組み込みブラウザで google.com/search?hl=ja&tbs=qdr:w2** が主経路
+  (WebSearchのUS版ではIG告知がほぼ拾えない。2026-10-25 まで Chrome だったが、定期タスクは Chrome を使わない。NextMeet は 09-10 から CI が読む)
 - **repository_dispatchは使わない。** events.json / new-events.json / new-inquiries.json のpushでワークフローが
   起動する(daily.yml / sync-events.yml の on.push)。Chrome経由のdispatchは、認証ヘッダ付きfetchが
   Chromeツール側で遮断されPromiseが解決しなくなったため2026-07-31に廃止した
   (以前はService Worker干渉と見ていたが、SWは未登録で原因が別だった)。
   サンドボックスからの api.github.com 直叩きは不通。ただし**Chromeからの無認証GETは通る**
   (2026-08-10・08-18の2回で確認。公開repoなので Actions の run 一覧はこれで読める)。
+  定期タスクは device_bash の curl(PAT 付き)で読む(2026-10-25。定期タスクは Chrome を使わない)。
   書き込み系は依然403なので、**ローカルで build-all.sh を回して生成物ごとpushする**のが標準手順
 - **GITHUB_TOKENによるpushはワークフローを再起動しない**(GitHubの仕様)。だからCI側の自動コミットで
   ループしない。PATでpushしたときだけ on.push が発火する
@@ -390,3 +391,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-10-25: まとめブログ(もすレコ。の「開催予定の園芸イベントまとめ」)を coverage-sweep.py の3つ目の情報源にした(matome-blog)。手巡回の担当 agave-event-update が 10-23〜25 の3日続けて未実施にし、manual_sweep_stale が日次メールに出た。記事の見出しは「2026/10/24,25：名前（所在地）」の決まった形で、カテゴリ一覧から題に「開催予定」「まとめ」を持つ記事を探して読む。台帳は自動で読めなかった日の代わりとして残し、自動で読めた日は manual_sweep_stale が見ない。取りこぼし候補(gaps)に情報源(source)を持たせた。当日の手巡回は24件すべて掲載済みか見送り済み
 - 2026-10-25: 日程を変えた回の書き方を決めた。slug(URL)は変えず、eventStatus を rescheduled、previousStartDate に当初の開始日を書く。詳細頁に「日程が変わりました」の告知、JSON-LD に EventRescheduled と previousStartDate が出る。slug_date_mismatch・desc_date_mismatch は当初の日付を外し、previous_start_date_invalid が rescheduled でない回の値を拾う(Bota Bro Garden 10/25→11/1 が2件の urgent になっていた)。eventStatus → schema.org の対応表を sitelib.SCHEMA_EVENT_STATUS に移し、トップ・地図・カレンダーの ItemList も引く(それまで EventScheduled の決め打ち)。ガーデンプラザ華 福島店を3件でローマ字URLにした
 - 2026-10-25: organizer_ig_unknown_soon の6件を埋めた(I.S.I.J. は @isij_taniku を開催予定の9回に、GreenSnap Marche・オザキフラワーパーク・富山県中央植物園は公式頁のリンクから。埼玉多肉・サボテン友の会と滋賀サボテンサークルは IG が無いので organizerIgNone)。organizerIgNone の読み手が監査だけで、監査は自分を読み手と数えないため、初めて値を書いた日に event_field_unread が鳴った。判定を sitelib.organizer_ig_resolved に移した。sitelib に organizer_ig_handles と同じことをする event_ig_accounts と2つ目の _IG_PROFILE_RE が残っていたので消した(全713件で結果が同じことを確かめた)。みずの森の秋のサボテン展の出典を 503 の PDF から草津市の頁に替えた
+- 2026-10-25: スケジュール済みタスクの「フォルダが接続されていないのでできません」「ブラウザが2つつながっていてできません」を止めた。クラウドのタスクにフォルダが付いておらず、実行のたびに接続を求めて無人の回で止まっていた。agave 系5本と朝ルーティンを「このPCが必要」+フォルダ付きで作り直し、旧タスクを消した(update_trigger ではフォルダを付けられない)。定期タスクは Claude in Chrome を使わず組み込みブラウザだけを使う(Chrome は Mac と Windows の2台がつながっていて無人では選べない)。rhs 系3本は Chrome が要る(受注・WP の管理画面のログイン)ので、ログインしている方を選び、目崎に聞かない規則をプロンプトに足した。event-listing-review は定期実行で Apps Script のトリガー画面を開かない(毎回「未確認」と書くだけだった)

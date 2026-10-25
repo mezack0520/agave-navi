@@ -14,9 +14,17 @@
 
 ## 1. 起動時の手順
 
-1. `request_cowork_directory` で `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` を接続
-   （2026-08-18に OneDrive から iCloud Drive へ移行。古いパスは存在しない）
-   （既に接続済みなら何もしない）
+1. フォルダ `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` は**スケジュール済みタスクに付けてある**
+   (2026-10-25 に「このPCが必要」+フォルダ付きで作り直した。device_bash では `$HOME/mnt/mzplants`)。
+   **接続を求める操作(`request_cowork_directory`・`device_request_folder_access`)はしない。**
+   それまではタスクにフォルダが付いておらず、実行のたびに接続を求め、答える人のいない回は
+   「フォルダが接続されていないのでできません」で止まっていた(目崎に何度も同じ報告が届いた)。
+   見えない回は PC につながっていない障害なので、その1行だけをレポートに書いて終わる。
+   会話のセッションで作業するときだけ、見えなければ `device_request_folder_access` で求める。
+   **ブラウザは組み込みブラウザ(`mcp__remote-devices__Claude_Browser__*`)だけを使う。Claude in Chrome は使わない。**
+   Chrome は Mac と Windows の2台がつながっていて、無人の実行では選べない(「ブラウザが2つつながっていてできません」を
+   繰り返していた)。**この手順書のほかの節に「Chrome で」とある手順も、組み込みブラウザで行う。**
+   git の clone・commit・push は device_bash(PC側)で行う(クラウドのコンテナからの git push は 403)。
 2. リポジトリを clone し、**最初のコミットより前に** 名義を設定する:
    `git config user.name mezack0520 && git config user.email 88774621+mezack0520@users.noreply.github.com`
    名義の規定は §2 にしか無く、手順5の起動記録コミットは §2 を読む前に作られる。
@@ -130,6 +138,9 @@
    **定期タスクは 2026-10-18 からクラウドのスケジュール済みタスク(claude-code-remote の trigger)で動いている。**
    10-16 夜に Cowork の「Delete Cowork VM Sessions and Restart」を押したらローカルの定期タスクが消え(10-17・10-18 の朝は
    1本も起動しなかった)、10-18 に8本(agave 系5本・rhs 系3本)を登録し直した。時刻は docs/architecture-2026-07.md §2。
+   - **2026-10-25 に agave 系5本と朝ルーティンを `requires_local_device` + フォルダ付きで作り直した**(`update_trigger` では
+     フォルダを付けられないため。旧タスクは削除)。agave 系は `mzplants`、朝ルーティンは `claude-workspace` と Obsidian Vault。
+     rhs 系3本は Chrome の選び方(受注・WP の管理画面にログインしている方を使い、目崎に聞かない)をプロンプトに足した
    - 一覧・本文・最後の実行は `list_triggers` で見られる。クラウドの会話からも見える。プロンプトの変更は `update_trigger`。
      ローカルの `list_scheduled_tasks` / `update_scheduled_task` と `Claude\Scheduled\<id>\SKILL.md` はもう使っていない
    - プロンプトに置くのは起動(clone の場所・record-run.py・このファイルを読む)だけにする。手順・規則はこのファイルに書く。
@@ -138,7 +149,7 @@
      `approvedOn` が付き、日次メールに出る。**当てるのは会話のセッション**(どの会話でもよい): `list_triggers` で現行の
      本文を取り、差分だけを当てた本文で `update_trigger` → もう一度 `list_triggers` で指定の箇所だけ変わったかを見る →
      `resolved` に移して push。**定期実行はプロンプトを書き換えない**(自分のものも他のものも。頼まれていない書き込みになる)
-   - 実行は PC が起きていることが前提(device_bash・Claude in Chrome・組み込みブラウザを使う)。PC が止まっていた日は
+   - 実行は PC が起きていることが前提(device_bash・組み込みブラウザを使う)。PC が止まっていた日は
      翌日のメールに `pc_tasks_all_stopped` が出る。`last_run` の SUCCEEDED は会話が終わったことで、仕事が済んだことではない。
      済んだかは成果物(コミット・レポート)で見る
 
@@ -625,6 +636,9 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   拒否は常時ではなく断続なので、「開けない前提」で試すのを省かない。毎回1回だけ試し、開けた回は行の有無と前回の実行を読む。
   その回はシート検算（行数 = `processed`）だけで新着を判定し、レポートに「トリガー未確認」と書く。
   検算はGASが送信を取りこぼせば翌日に差として出るので、新着の判定はこれで足りる。
+  **2026-10-25 から定期実行ではトリガー画面を開かない。レポートにも「トリガー未確認」を書かない。**
+  毎回「未確認」と書くだけになっていた(10-20〜25 の6回すべて)。開くのは行数 > `processed`(GAS の取りこぼし)が
+  出た回だけで、そのときは会話のセッションで目崎のブラウザから開く。
 - **取りこぼしの回収は `backfillFromSheet`。**
   トリガーが止まっていた期間があっても、Apps Scriptエディタでこの関数を1回実行すれば
   シート全行から未処理のタイムスタンプだけを拾って `new-inquiries.json` に送る。
@@ -635,8 +649,8 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `inquiries-processed.json` の `processed` を照合することだけ。
   - コネクタの `get_values` で spreadsheetId `1iTWAAbd5FV4NkNyt186H8wR6KqTPOLcFWSvHghZMDvI`、
     range `フォームの回答 1!A1:A500` を読む。1行目は見出し、A列がタイムスタンプ。
-    シートは目崎が仕事用アカウントに共有済み(10-13)。コネクタが無い・権限エラーの回は
-    Claude in Chrome で同じシートを開いて数える(この回は「コネクタ不可」とレポートに書く)
+    シートは目崎が仕事用アカウントに共有済み(10-13)。コネクタが無い・権限エラーの回は数えず、
+    `sheetCheckedOn` を進めない(「コネクタ不可」とレポートに書く)。Chrome では開かない
   - データ行は A列が `^\d{4}/\d{1,2}/\d{1,2} \d{1,2}:\d{2}:\d{2}$` に一致する行だけを数える
   - 行数 > processed は GAS の取りこぼしなので `backfillFromSheet` を回す判断に入る。
     行数 < processed は読み取り失敗で、「新着ゼロ」と結論しない。等しければ新着ゼロ
@@ -813,7 +827,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   about.html は「各イベントページに参照元と最終更新日を明記」と掲げているので、
   直した日が出ないのは掲載方針との食い違いになる
 - **Instagram告知は WebSearch(US版)ではほぼ拾えない。**
-  Chromeで `google.com/search?hl=ja&tbs=qdr:w2` を叩くのが主経路
+  組み込みブラウザで `google.com/search?hl=ja&tbs=qdr:w2` を叩くのが主経路(2026-10-25 まで Chrome と書いていた)
 - **Step0の検索だけでは開催予定を取りこぼす。`pukubook.jp/events/` の一覧を必ず1回読む。**
   2026-08-12 に検索経由で6件を拾った後、この一覧から未掲載の開催予定が8件出た(うち6件が掲載相当)。
   `blockedUrlDomains` は url/sourceUrl への使用禁止であって参照の禁止ではない。
@@ -4628,7 +4642,7 @@ events.json の直し(status 付与・時刻の補完)だけでは次の手書�
 タブ内 fetch で14クエリ×2頁(28本)を引いた直後、続けた5本が3KB前後の空ページ(h3 が0件)になった。レート制限の応答と読み、
 CAPTCHA は突破せずそこで打ち切った。**見出しの取得は1回の呼び出しにまとめ、`window` に積んで小分けに読む**
 (`javascript_tool` の戻り値は約1,000字で切れる)。個別の裏取りは Google ではなく、一覧ページ(LEAFLA / NextMeet の月別 HTML を device_bash の curl で)
-と、Chrome の Instagram タブ(`get_page_text` で全キャプションが読める)で行う。
+と、組み込みブラウザの Instagram タブ(`get_page_text` で全キャプションが読める)で行う。
 coverage-gaps の候補は、NextMeet 月別 HTML を curl して名称で grep すると主催・会場が取れ、既存の slug と突き合わせるだけで片づく回が多い
 (10-22 は3件とも掲載済みだった)。
 
@@ -4650,6 +4664,8 @@ coverage-gaps の候補が「掲載済み・監査の照合漏れ」と分かっ
 
 `mcp__claude-in-chrome__tabs_context_mcp` が「複数のブラウザが接続されている。AskUserQuestion で選べ」と返す回がある(Browser 1 = macOS、Browser 2 = Windows)。
 定期実行は答える人がいないので止まる。**勝手に選ばず、組み込みブラウザ(`mcp__remote-devices__Claude_Browser__*`)で同じことをする。**
+**同じ日にプロンプトと §1 で「定期タスクは Chrome を使わない」に揃えた。**Chrome を先に試して代替に回る形だと、
+毎回「Chrome が2台で選べない」と報告することになる(10-19・21・25)。
 Step0 の Google fetch・Instagram プロフィールの `img.alt` 読みは組み込みブラウザでそのまま動いた(10-25 に12クエリ・IG取得で確認)。
 
 ### 監査の「中止のお知らせ」は過去の回の文言でも鳴る (2026-10-25)
