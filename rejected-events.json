@@ -1103,11 +1103,11 @@
     "植物と生きもの即売会"
    ],
    "reasonType": "undisclosed",
-   "revisit": true,
+   "revisit": false,
    "eventDate": "2026-10-25",
    "decided": "2026-09-29",
-   "revisitedOn": "2026-10-15",
-   "reason": "主催 @mishimatakaoka の告知は開催の予告だけで出店者・品目が無い。名称が植物と生きものの併記で outOfScopeGenres.coTitledEvents に当たり、主題が読めない。内訳が出たら数える / 2026-10-12 再評価: @mishimatakaoka の最新8投稿は観葉植物・メダカ・グッピーの入荷案内だけで、vol.8 の出店者・品目はまだ出ていない。継続 / 2026-10-13 再評価: @mishimatakaoka の最新8投稿は熱帯魚・観葉植物の入荷案内だけで、vol.8 の出店者・品目はまだ出ていない。継続 / 2026-10-15 再評価: @mishimatakaoka の最新5投稿は熱帯魚の繁殖・入荷の話だけで、vol.8 の出店者・品目は出ていない。継続"
+   "revisitedOn": "2026-10-25",
+   "reason": "主催 @mishimatakaoka の告知は開催の予告だけで出店者・品目が無い。名称が植物と生きものの併記で outOfScopeGenres.coTitledEvents に当たり、主題が読めない。内訳が出たら数える / 2026-10-12 再評価: @mishimatakaoka の最新8投稿は観葉植物・メダカ・グッピーの入荷案内だけで、vol.8 の出店者・品目はまだ出ていない。継続 / 2026-10-13 再評価: @mishimatakaoka の最新8投稿は熱帯魚・観葉植物の入荷案内だけで、vol.8 の出店者・品目はまだ出ていない。継続 / 2026-10-15 再評価: @mishimatakaoka の最新5投稿は熱帯魚の繁殖・入荷の話だけで、vol.8 の出店者・品目は出ていない。継続 / 2026-10-25 開催日を過ぎ、出店者・品目の開示が無いまま終了。再評価を終える(見送り確定)"
   },
   {
    "key": "yokoni-plants-5th-anniversary-2026-10",
@@ -2734,6 +2734,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-10-16",
+ "updated": "2026-10-25",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
