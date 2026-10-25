@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-26 06:41 JST",
+ "generated": "2026-10-26 07:12 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 384,
-  "awaitingNextEdition": 422,
+  "awaitingNextEdition": 421,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 89,
@@ -91,16 +91,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "j_n_ishikawa",
-   "url": "https://www.instagram.com/j_n_ishikawa/",
-   "eventCount": 5,
-   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "_myoko_plants_market_",
    "url": "https://www.instagram.com/_myoko_plants_market_/",
    "eventCount": 5,
@@ -109,6 +99,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "j_n_ishikawa",
+   "url": "https://www.instagram.com/j_n_ishikawa/",
+   "eventCount": 5,
+   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "botayoko",
@@ -179,6 +179,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "eventCount": 4,
+   "lastEventName": "木更津園芸市（2026年11月）",
+   "lastEventDate": "2026-11-08",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "botanical.botanical",
@@ -461,20 +471,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "temo2929",
-   "url": "https://www.instagram.com/temo2929/",
+   "handle": "botapara_botanical_paradise",
+   "url": "https://www.instagram.com/botapara_botanical_paradise/",
    "eventCount": 2,
-   "lastEventName": "多肉もぶれ vol.13",
+   "lastEventName": "Bota Para Vol.4",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "botapara_botanical_paradise",
-   "url": "https://www.instagram.com/botapara_botanical_paradise/",
+   "handle": "temo2929",
+   "url": "https://www.instagram.com/temo2929/",
    "eventCount": 2,
-   "lastEventName": "Bota Para Vol.4",
+   "lastEventName": "多肉もぶれ vol.13",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
@@ -659,16 +669,6 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
-   "eventCount": 3,
-   "lastEventName": "木更津園芸市（2026年10月）",
-   "lastEventDate": "2026-10-12",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "aobouzu_caudex",
@@ -3912,17 +3912,6 @@
    "apiStatus": "api"
   },
   {
-   "series": "木更津園芸市（2026年10月）",
-   "lastSlug": "kisarazu-engei-ichi-2026-10",
-   "lastDate": "2026-10-12",
-   "lastEnd": "2026-10-12",
-   "monthsSinceLast": 0,
-   "igHandle": "chiba_c_and_s_association",
-   "officialUrl": "https://www.instagram.com/p/DddxjcVvQ3u/",
-   "recurring": true,
-   "apiStatus": "personal"
-  },
-  {
    "series": "森の多肉園販売会 in 京都舞鶴",
    "lastSlug": "morino-tanikuen-hanbaikai-maizuru-2026-10",
    "lastDate": "2026-10-12",
@@ -3967,17 +3956,6 @@
    "apiStatus": "api"
   },
   {
-   "series": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
-   "lastSlug": "taniku-midori-marche-nabana-2026-10",
-   "lastDate": "2026-10-23",
-   "lastEnd": "2026-10-25",
-   "monthsSinceLast": 0,
-   "igHandle": "nagashima_marche",
-   "officialUrl": "https://www.instagram.com/nagashima_marche/",
-   "recurring": true,
-   "apiStatus": "personal"
-  },
-  {
    "series": "PLANT & POT Vol.16",
    "lastSlug": "plant-and-pot-vol16-2026-10",
    "lastDate": "2026-10-24",
@@ -3987,6 +3965,17 @@
    "officialUrl": "https://www.instagram.com/p/DdUkzhfzENs/",
    "recurring": true,
    "apiStatus": "api"
+  },
+  {
+   "series": "多肉とみどりのマルシェ in なばなの里 (第13回・秋)",
+   "lastSlug": "taniku-midori-marche-nabana-2026-10",
+   "lastDate": "2026-10-23",
+   "lastEnd": "2026-10-25",
+   "monthsSinceLast": 0,
+   "igHandle": "nagashima_marche",
+   "officialUrl": "https://www.instagram.com/nagashima_marche/",
+   "recurring": true,
+   "apiStatus": "personal"
   },
   {
    "series": "多肉植物即売会 10月25日（ポケットファームどきどき茨城町店）",
@@ -4306,38 +4295,25 @@
    "officialUrl": "https://weekend.osaka/16061/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "植物と(パン) vol.1",
+   "lastSlug": "shokubutsu-to-pan-vol1-mitakadai-2026-10",
+   "lastDate": "2026-10-10",
+   "lastEnd": "2026-10-10",
+   "monthsSinceLast": 0,
+   "igHandle": "hatazao_engei",
+   "officialUrl": "https://www.instagram.com/hatazao_engei/",
+   "recurring": false,
+   "apiStatus": "personal"
   }
  ],
  "officialSiteCandidates": [
-  {
-   "domain": "qusamura.com",
-   "url": "https://qusamura.com/information/exhibition/",
-   "eventName": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
-   "eventDate": "2026-10-03"
-  },
   {
    "domain": "shaboten.co.jp",
    "url": "https://shaboten.co.jp/press/7561/",
    "eventName": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
    "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "city.kusatsu.shiga.jp",
-   "url": "https://www.city.kusatsu.shiga.jp/kurashi/koen_midori/koen_shokai/mizunomori/akinosabotentenmizu.html",
-   "eventName": "秋のサボテン展（草津市立水生植物公園みずの森）",
-   "eventDate": "2026-10-23"
-  },
-  {
-   "domain": "jurian.or.jp",
-   "url": "https://www.jurian.or.jp/event/article/?id=1475",
-   "eventName": "秋の多肉植物・サボテン展示会（樹里安）",
-   "eventDate": "2026-10-24"
-  },
-  {
-   "domain": "sunsetbeachpark.jp",
-   "url": "https://sunsetbeachpark.jp/rtmt0922/2026/09/22/",
-   "eventName": "ROOTS MARKET",
-   "eventDate": "2026-10-25"
   },
   {
    "domain": "bgtym.org",
@@ -4488,6 +4464,30 @@
    "url": "https://fmfm.jp/event/marche/saitama",
    "eventName": "HAZE -various genres marche",
    "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "botafes.jp",
+   "url": "https://botafes.jp/",
+   "eventName": "HOSOKAWA BOTAFES '26 spring",
+   "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "no1plantae.com",
+   "url": "https://no1plantae.com/",
+   "eventName": "第6回 天下一植物界",
+   "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "ilinobeclub.jp",
+   "url": "https://ilinobeclub.jp/archives/475",
+   "eventName": "Plants garage market 2026 -SPRING & SUMMER-",
+   "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "festival-life.com",
+   "url": "https://festival-life.com/festival/area/tokai/aichi",
+   "eventName": "Rhythms of Life",
+   "eventDate": "2026-05-30"
   }
  ],
  "unresolvedIgHandles": []
