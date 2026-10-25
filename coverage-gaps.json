@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-25",
+  "sweptOn": "2026-10-26",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -21,19 +21,19 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 1006,
-    "in_scope": 243,
-    "covered": 174,
-    "known_rejected": 69,
+    "candidates": 925,
+    "in_scope": 209,
+    "covered": 153,
+    "known_rejected": 55,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
-    "in_scope_leafla": 140,
+    "in_scope_leafla": 114,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 95,
+    "in_scope_nextmeet": 87,
     "in_scope_matome-blog": 8,
-    "gaps_raw": 0
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -41,5 +41,11 @@
     "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
     "10/15 追加 日本ライン花木センターで「フィンガーライム試食..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-08",
+      "title": "木更津園芸市",
+      "source": "nextmeet"
+    }
+  ]
 }
