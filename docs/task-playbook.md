@@ -2116,6 +2116,16 @@ no1plantae.com は「BORDER BREAK!! はお陰様で13年を迎え」「次回イ
   誤った画像を出すより無いほうがマシ。
 - 取得元は必ず `imageSource` に残す。他人の告知画像を自分のドメインから
   配るので、出所を黙っておくのは筋が通らない。詳細ページの脚注に出る。
+- **クラウド側から届かない回の経路(2026-10-25)。** リポジトリは `mezack0520/agave-navi`(`agave` ではない)。
+  クラウドの gh / git は届かない(gh は YujiMezaki、リポジトリは mezack0520 の private)。
+  mzplants を接続し、device_bash で `agave-navi\github.pat` の PAT を http.extraheader
+  (Authorization: Basic base64("x-access-token:<PAT>"))に載せて clone / push する。
+  フォルダ未接続の回は 10-24 に何もできず終わった。接続できない回は通知だけ出して終わる。
+- 候補画像を Read で見るには、mzplants 配下に一時フォルダを作って device_stage_files で取り込む
+  (/tmp や $HOME/mnt/outputs は stage できない)。一時フォルダは device_bash から削除できない。
+- ブラウザ経路の画像は `/p/<code>/embed/captioned/` の EmbeddedMediaImage の src を取り、
+  クラウド側 Bash の curl で落として目で見る。採用は SendUserFile → device_commit_files で
+  mzplants 配下へ渡し、`eyecatchlib.save_image` で images/events/ に保存する。
 - 残数は `python3 scripts/list-missing-eyecatch.py --counts`。
   `web` は backfill-images が既に失敗した回なので、出典そのものを
   見直さないと埋まらない。このタスクの対象外。
