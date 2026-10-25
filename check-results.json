@@ -2,44 +2,7 @@
   "check_date": "2026-10-25",
   "total_events": 713,
   "dead_links": [],
-  "unreachable": [
-    {
-      "slug": "jurian-aki-taniku-cactus-2026-10",
-      "name": "秋の多肉植物・サボテン展示会（樹里安）",
-      "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
-      "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-25"
-    },
-    {
-      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
-      "name": "多肉植物とサボテンの展示会（井頭公園）",
-      "sourceUrl": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-22"
-    },
-    {
-      "slug": "jusai-10th-anniversary-nagoya-2027-03",
-      "name": "樹祭 10 YEAR ANNIVERSARY",
-      "sourceUrl": "https://jusai.link/news",
-      "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-25"
-    },
-    {
-      "slug": "jusai-utsunomiya-spring-2027-05",
-      "name": "樹祭 宇都宮 春 2027",
-      "sourceUrl": "https://jusai.link/news",
-      "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-25"
-    }
-  ],
+  "unreachable": [],
   "tbd_events": [
     {
       "slug": "masappe-taniku-2nd-anniversary-2026-11",
@@ -5320,9 +5283,8 @@
       "name": "秋の多肉植物・サボテン展示会（樹里安）",
       "sourceUrl": "https://www.jurian.or.jp/event/article/?id=1475",
       "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-25"
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "roots-market-inage-2026-10",
@@ -5417,9 +5379,8 @@
       "name": "多肉植物とサボテンの展示会（井頭公園）",
       "sourceUrl": "https://www.park-tochigi.com/igashira/greensalon/tenji",
       "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-22"
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "greensnap-marche-abc-hachioji-2026-11",
@@ -5506,9 +5467,8 @@
       "name": "樹祭 10 YEAR ANNIVERSARY",
       "sourceUrl": "https://jusai.link/news",
       "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-25"
+      "statusCode": 200,
+      "alive": true
     },
     {
       "slug": "hanatomofesta-10th-makuhari-2027-04",
@@ -5523,9 +5483,8 @@
       "name": "樹祭 宇都宮 春 2027",
       "sourceUrl": "https://jusai.link/news",
       "field": "sourceUrl",
-      "statusCode": -1,
-      "alive": false,
-      "failingSince": "2026-10-25"
+      "statusCode": 200,
+      "alive": true
     }
   ],
   "implausible": [],
