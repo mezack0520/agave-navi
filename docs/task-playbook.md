@@ -14,13 +14,16 @@
 
 ## 1. 起動時の手順
 
-1. フォルダ `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` は**スケジュール済みタスクに付けてある**
-   (2026-10-25 に「このPCが必要」+フォルダ付きで作り直した。device_bash では `$HOME/mnt/mzplants`)。
-   **接続を求める操作(`request_cowork_directory`・`device_request_folder_access`)はしない。**
-   それまではタスクにフォルダが付いておらず、実行のたびに接続を求め、答える人のいない回は
-   「フォルダが接続されていないのでできません」で止まっていた(目崎に何度も同じ報告が届いた)。
-   見えない回は PC につながっていない障害なので、その1行だけをレポートに書いて終わる。
-   会話のセッションで作業するときだけ、見えなければ `device_request_folder_access` で求める。
+1. フォルダ `C:\Users\yujim\iCloudDrive\Claude\Projects\mzplants` は**スケジュール済みタスク自体に付ける**
+   (デスクトップアプリのタスク編集でフォルダを追加する。device_bash では `$HOME/mnt/mzplants`)。
+   付いていれば実行の最初から見えるので、接続を求める操作(`request_cowork_directory`・`device_request_folder_access`)はしない。
+   **2026-10-25 までタスクにフォルダが付いていなかった。**タスクは「このPCが必要」で動いているが、フォルダは毎回
+   `device_request_folder_access` で求めていて、PC の確認画面に答える人がいない回は
+   「フォルダが接続されていないのでできません」で止まった(10-24 の eyecatch など。目崎に同じ報告が何度も届いた)。
+   **フォルダはタスクの編集でしか付けられない。**会話から `update_trigger` では付けられず、プロンプトの変更も
+   PC 上の承認が要る(`needs_device_approval`)。作り直し(`create_trigger`)は PC の承認が無いとクラウド専用になり、
+   PC にもフォルダにも届かない(10-25 に1本作ってしまった。タスクの削除・無効化は会話からは通らず、目崎の操作)。
+   見えない回は1回だけ求め、通らなければその1行をレポートに書いて終わる。
    **ブラウザは組み込みブラウザ(`mcp__remote-devices__Claude_Browser__*`)だけを使う。Claude in Chrome は使わない。**
    Chrome は Mac と Windows の2台がつながっていて、無人の実行では選べない(「ブラウザが2つつながっていてできません」を
    繰り返していた)。**この手順書のほかの節に「Chrome で」とある手順も、組み込みブラウザで行う。**
@@ -138,9 +141,9 @@
    **定期タスクは 2026-10-18 からクラウドのスケジュール済みタスク(claude-code-remote の trigger)で動いている。**
    10-16 夜に Cowork の「Delete Cowork VM Sessions and Restart」を押したらローカルの定期タスクが消え(10-17・10-18 の朝は
    1本も起動しなかった)、10-18 に8本(agave 系5本・rhs 系3本)を登録し直した。時刻は docs/architecture-2026-07.md §2。
-   - **2026-10-25 に agave 系5本と朝ルーティンを `requires_local_device` + フォルダ付きで作り直した**(`update_trigger` では
-     フォルダを付けられないため。旧タスクは削除)。agave 系は `mzplants`、朝ルーティンは `claude-workspace` と Obsidian Vault。
-     rhs 系3本は Chrome の選び方(受注・WP の管理画面にログインしている方を使い、目崎に聞かない)をプロンプトに足した
+   - **フォルダはタスクの編集で付ける(2026-10-25)。**agave 系5本は `mzplants`、朝ルーティンは `claude-workspace` と
+     Obsidian Vault。どのタスクも「このPCが必要」で動いている(会話からの `update_trigger` のプロンプト変更は
+     `needs_device_approval` になる)。rhs 系3本は Chrome が要るので、Chrome が2台つながっている日は止まる
    - 一覧・本文・最後の実行は `list_triggers` で見られる。クラウドの会話からも見える。プロンプトの変更は `update_trigger`。
      ローカルの `list_scheduled_tasks` / `update_scheduled_task` と `Claude\Scheduled\<id>\SKILL.md` はもう使っていない
    - プロンプトに置くのは起動(clone の場所・record-run.py・このファイルを読む)だけにする。手順・規則はこのファイルに書く。
