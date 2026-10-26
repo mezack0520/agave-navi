@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-26 12:54 JST",
+ "generated": "2026-10-27 06:40 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 384,
-  "awaitingNextEdition": 421,
+  "awaitingNextEdition": 422,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 89,
@@ -366,16 +366,6 @@
    "eventCount": 3,
    "lastEventName": "樹祭 宇都宮 春 2027",
    "lastEventDate": "2027-05-29",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "_sunnydrop_",
-   "url": "https://www.instagram.com/_sunnydrop_/",
-   "eventCount": 2,
-   "lastEventName": "sunny drop 5th Anniversary 感謝祭",
-   "lastEventDate": "2026-10-24",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -816,6 +806,16 @@
    "eventCount": 2,
    "lastEventName": "トロピカルガーデン 出張販売（コーナン横浜港北インター店）",
    "lastEventDate": "2026-10-17",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "_sunnydrop_",
+   "url": "https://www.instagram.com/_sunnydrop_/",
+   "eventCount": 2,
+   "lastEventName": "sunny drop 5th Anniversary 感謝祭",
+   "lastEventDate": "2026-10-24",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
