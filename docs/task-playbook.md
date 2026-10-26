@@ -4843,6 +4843,13 @@ pending-judgments は2件(どちらもプロンプトの件で3件未満)。task
 監査の urgent は週を通して0。`image_host_unrelated` は 10-14 から別の回で出続け、今回は wraptas の画像ホストで、検査側に例外を足して0にした。`cross_script_duplicate` 3 は不動で放置のまま。
 pending-judgments は0件。`work/` の `*-unpushed-*.json` は無く、task-runs-unpushed.json の runs は空。
 
+**2026-10-26 の週次点検の記録。**
+2回以上出た失敗は2つ。(1) agave-event-update が「watch-sources のIGローテ個別巡回」を 10-19〜26 の毎回「未実施」で持ち越し(8回)。organizer-posts の照合で代替していて異常は出ていないが、巡回台帳に残らない。
+(2) `manual_sweep_stale`(nextmeet-monthly-check、最終 10-15)が 10-24 と 10-26 に urgent で出た。巡回の持ち主は agave-event-update で、本タスクは直さず `audit` の鳴りだけ見る。次の週次で最終日が 10-26 以前のままなら、巡回の持ち越し理由を task-reports で確かめる。
+`time_vs_organizer_post` 1(toyama-saboten-taniku-9th)は主催が 9:00〜16:00 と 9:00〜17:00 の2通りを書いており機械で確定できない。`pending-judgments.json` に積み済みで、新たには積まない。
+監査の urgent は 10-24 に2種・10-26 に2種が出て、それ以外の日は0。GitHub Actions は 10-19 以降 failure 0(cancelled は pages build のみ)。アフィリエイト・構造は全て正常。
+このタスクは `-p /tmp` の clone で /sessions を使わず、10-26 も通った。
+
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、
 **08-25 の回は成果物ゼロで終わっていた。** スケジュールは enabled のままで
