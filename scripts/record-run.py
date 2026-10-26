@@ -207,6 +207,10 @@ def main():
     print(f'record-run: {task_id} {day} → {where} '
           f'({"追記" if changed else "既に記録済み"})')
     print('  この変更を含めて push すること。push しないと台帳は残らない。')
+    # レポートの名前もここで渡す(2026-10-26)。日付は JST。実行環境の date は UTC で、
+    # 朝9時前は前日になる。10-26 08:15 の event-monitor が UTC の日付で名前を付け、
+    # 前日のレポートを上書きした
+    print(f'  実行レポート: task-reports/{task_id}_{day}.md(この名前のまま使う。日付は JST)')
     return 0
 
 

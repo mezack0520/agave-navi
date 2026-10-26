@@ -518,11 +518,45 @@ def build_index():
     rej = load_json('rejected-events.json', {})
     # 見送りの記録は名前に加えて aliases も照合に使う。英語名で記録した回が
     # 日本語の見出しで出ると一致しない(sumori open garden 対 スモリオープンガーデン)
+    # 見送りは (名前, 開催日, 終了日) で持つ。日付で絞らないと、共通語の多い名前が
+    # 別の日の見送りに当たって取りこぼしが消える(rejected_date_ok)
     rejected = []
     for i in (rej.get('items') or []):
-        rejected.append(i.get('name') or '')
-        rejected.extend(a for a in (i.get('aliases') or []) if a)
+        d0 = str(i.get('eventDate') or '')[:10] or None
+        d1 = str(i.get('eventDateEnd') or '')[:10] or None
+        for n in [i.get('name') or ''] + [a for a in (i.get('aliases') or []) if a]:
+            rejected.append((n, d0, d1))
     return by_day, rejected
+
+
+# 見送りの記録と候補を同じ回とみなす日付の幅。見送りは開始日(eventDate)しか
+# 持たないことが多いので、会期の途中の日のページ(LEAFLA は1日1ページ)でも当たるよう、
+# 開始の前日から REJECTED_SPAN_DAYS 日後までを同じ回とみなす。eventDateEnd が
+# あればそちらを使う。2026-10-26 の目視照合で、日付を見ずに当たっていた見送りが
+# 3件の取りこぼしを隠していた(11/8 道の駅 仁保の郷の「多肉植物販売会」が 9/27 の
+# にしかたの見送りに、12/6 の「Green marché 花の湯」が 9/24 の博多阪急の見送りに、
+# 11/28 の「晩秋の古典園芸植物展」が 9/26 の秋の展に当たっていた)
+REJECTED_SPAN_DAYS = 31
+
+
+def rejected_date_ok(start, end, days):
+    """見送りの記録(開始日 start・終了日 end)が、候補の日付 days のどれかと同じ回になりうるか。
+    日付の無い記録は従来どおり名前だけで当てる"""
+    if not start:
+        return True
+    try:
+        s0 = date.fromisoformat(start)
+        s1 = date.fromisoformat(end) if end else s0 + timedelta(days=REJECTED_SPAN_DAYS)
+    except ValueError:
+        return True
+    for k in days:
+        try:
+            d = date.fromisoformat(k)
+        except ValueError:
+            continue
+        if s0 - timedelta(days=1) <= d <= s1 + timedelta(days=1):
+            return True
+    return False
 
 
 DATE_IN_TITLE = re.compile(r'(\d{1,2})\s*[月/]\s*(\d{1,2})\s*日?')
@@ -741,7 +775,10 @@ def resolve_truncated(title, full_titles, min_stem=8):
     return hits[0] if hits else None
 
 
-def sweep(days, sleep=0.7):
+def sweep(days, sleep=0.7, explain=None):
+    """explain に list を渡すと、名前そのものが来る情報源(NextMeet・まとめ記事)の見出しごとに
+    (情報源, 日付, 見出し, 判定, 当たった相手) を積む。手で回す照合(manual-sweeps.json の
+    nextmeet-monthly-check)は、この一覧を目で見るだけで済む(2026-10-26。ブラウザは要らない)"""
     by_day, rejected = build_index()
     gaps, errors, stats = [], [], {'fetched': 0, 'candidates': 0,
                                    'in_scope': 0, 'covered': 0,
@@ -844,16 +881,25 @@ def sweep(days, sleep=0.7):
             bare = named
             # aliases は他所での呼び名。主催の表記(PLNTS RIDE)とアグリゲータの
             # 表記(Plants Ride)が違う回がある(2026-09-24)
-            if any(matches(t, e.get('name', ''), bare=bare) or
-                   matches(t, e.get('venue') or e.get('location') or '',
-                           bare=bare) or
-                   any(matches(t, a, bare=bare) for a in (e.get('aliases') or []))
-                   for e in cand):
+            hit = next((e for e in cand
+                        if matches(t, e.get('name', ''), bare=bare) or
+                        matches(t, e.get('venue') or e.get('location') or '', bare=bare) or
+                        any(matches(t, a, bare=bare) for a in (e.get('aliases') or []))),
+                       None)
+            if hit is not None:
                 stats['covered'] += 1
+                if explain is not None and named:
+                    explain.append((source, key, t, '掲載済み', hit.get('slug', '')))
                 continue
-            if any(matches(t, r, bare=bare) for r in rejected):
+            rhit = next((n for n, d0, d1 in rejected
+                         if rejected_date_ok(d0, d1, look) and matches(t, n, bare=bare)), None)
+            if rhit is not None:
                 stats['known_rejected'] += 1
+                if explain is not None and named:
+                    explain.append((source, key, t, '見送り', rhit))
                 continue
+            if explain is not None and named:
+                explain.append((source, key, t, '取りこぼし', ''))
             gaps.append({'date': key, 'title': t[:180], 'source': source})
 
     # 同じイベントを日数ぶん重ねない。会期の長い回（店舗のセールや常設展示）が
@@ -1177,6 +1223,20 @@ def self_test(verbose=True):
         ok = False
     _p(f'  {mark} {got}')
 
+    _p('\n--- 見送りの日付の幅(rejected_date_ok) ---')
+    for name, args, want in [
+        ('42日前に始まった見送りは別の回', ('2026-09-27', None, ['2026-11-08']), False),
+        ('前日始まりの見送りは同じ回', ('2026-11-07', None, ['2026-11-08']), True),
+        ('会期の終了日まで当たる', ('2026-10-01', '2026-11-30', ['2026-11-20']), True),
+        ('終了日の2日後は別の回', ('2026-10-01', '2026-10-05', ['2026-10-07']), False),
+        ('日付の無い見送りは名前だけで当てる', (None, None, ['2026-11-08']), True),
+        ('本文の日付のどれかが入れば当たる', ('2026-12-06', None, ['2026-10-26', '2026-12-06']), True),
+    ]:
+        got = rejected_date_ok(*args)
+        if got != want:
+            ok = False
+        _p(f"  {'OK ' if got == want else '★NG'} {name}: {got}")
+
     _p('\n--- まとめ記事(もすレコ。) ---')
     idx = ('<a href="https://mostgreenrecords.com/go_place/22492/"><span>行ってみた！</span>'
            '2026秋冬に開催予定の園芸イベントまとめ。主に埼玉</a>'
@@ -1206,10 +1266,22 @@ def main():
     ap.add_argument('--days', type=int, default=45)
     ap.add_argument('--self-test', action='store_true')
     ap.add_argument('--sleep', type=float, default=0.7)
+    ap.add_argument('--explain', action='store_true',
+                    help='NextMeet・まとめ記事の見出しごとに、当たった掲載済みの回・見送りを出す。'
+                         'coverage-gaps.json は書かない(手の照合用)')
     args = ap.parse_args()
 
     if args.self_test:
         return self_test()
+
+    if args.explain:
+        rows = []
+        sweep(args.days, args.sleep, explain=rows)
+        for src, day, title, verdict, target in sorted(rows):
+            print(f"{src}\t{day}\t{verdict}\t{title[:80]}\t→ {str(target)[:80]}")
+        print(f"計 {len(rows)} 件(掲載済み {sum(r[3] == '掲載済み' for r in rows)} / "
+              f"見送り {sum(r[3] == '見送り' for r in rows)} / 取りこぼし {sum(r[3] == '取りこぼし' for r in rows)})")
+        return 0
 
     # 判定ロジックが壊れたまま巡回すると、もっともらしい0件が書き込まれ、
     # 読む側からは「取りこぼしなし」と区別が付かない。daily の push を

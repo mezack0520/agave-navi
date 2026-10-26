@@ -45,14 +45,16 @@
    "url": "https://nextmeet.app/plants/monthly/",
    "staleDays": 10,
    "why": "NextMeet は 2026-09-10 に coverage-sweep.py へ機械化したが、**機械が拾えるのは『判定を通った候補』だけ**で、一覧をそのまま events.json と並べて見る回が無かった。2026-09-17 に10月の一覧(46件)を目で突き合わせたら、coverage-gaps が出していない未掲載が1件(Green marche 花の湯)あった。coverage_source_missing は『自動で回った』で満たされてしまうので、この台帳で別に数える。",
-   "lastSweptOn": "2026-10-15",
-   "lastScope": "2026年10月(10/15以降)・11月・12月・2027年1月の月別ページ94件を、coverage-sweep の照合(開催日で絞った掲載済み+見送り)に通して、当たった相手を1件ずつ目で見た。見送りに誤って当たっていた5件のうち、NOHARA green marche vol.10(11/21-22)は未掲載だったので掲載。魚町ボタニカルマーケット・ボタニカルモンスターズ2027 は掲載済みの回の書き方違い(aliases を足した)、みどりマーケット・saboten misyonokai は別の見送りに当たっていただけで、自分の見送りもあった。ほかに未掲載は年忘れTony'sFES2026・BORDER BREAK!! 11th(coverage_gaps と同じ。どちらも掲載)。誤って当たる原因(見送りの仮名の共通語ボタニカル・マーケットと、詰めて書いた greenmarche)は coverage-sweep.py の GENERIC と _generic_compound で直した",
+   "lastSweptOn": "2026-10-26",
+   "lastScope": "2026年10月(10/26以降)・11月・12月・2027年1月の月別88件と、もすレコ。のまとめ記事8件を `coverage-sweep.py --explain --days 1` で当たった相手ごとに見た(ブラウザは使っていない)。日付を見ずに見送りに当たって取りこぼしが消えていた3件を見つけた: 11/8 道の駅 仁保の郷「多肉植物販売会」(@mochi.ie29、9/27 のにしかたの見送りに当たっていた。未掲載)、12/6「Green marché 花の湯」(9/24 の博多阪急の見送りに当たっていた。10/4 の回は unverified で見送り)、11/28「晩秋の古典園芸植物展」(9/26 の秋の展の見送りに当たっていた)。見送りの照合を開催日で絞るよう coverage-sweep.py を直した(rejected_date_ok)。直した版の巡回では取りこぼし候補3件(仁保の郷・花の湯・LEAFLA 10/27「花のある暮らし ボタニカルアートとデザイン」)。掲載済みの当たり先の取り違え(多肉＆ガーデンMARCHE→おひさま盛岡、ぶらりぷらんつ vol.3→Green Flea Market、ISIJ 11月バザール→井頭公園の展示会)は、同じ日に正しい回も掲載済みで結論は変わらない",
    "history": [
     "2026-09-17",
     "2026-09-28",
     "2026-10-07",
-    "2026-10-15"
-   ]
+    "2026-10-15",
+    "2026-10-26"
+   ],
+   "how": "`python3 scripts/coverage-sweep.py --explain --days 1` を回し(NextMeet 4か月・まとめ記事を取り、coverage-gaps.json は書かない)、「見送り」「掲載済み」の当たり先が同じ回かを目で見る。ブラウザは要らない(curl で取れる)。bash だけのタスクでも回せる"
   },
   "organizer-official-index": {
    "label": "掲載済みシリーズの主催公式サイトの「イベント一覧」",

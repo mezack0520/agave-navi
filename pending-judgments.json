@@ -1,19 +1,7 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
-  "items": [
-    {
-      "id": "event-monitor:toyama-saboten-time-mismatch",
-      "addedOn": "2026-10-25",
-      "source": "event-monitor",
-      "question": "toyama-saboten-taniku-9th-2026-10 の time「09:00〜16:30」を、主催告知の時刻に合わせて直すか。",
-      "facts": [
-        "audit time_vs_organizer_post: 主催の投稿(Dea-m_1kRgu)は 9:00〜16:00 と 9:00〜17:00 の2通りを書いており、どちらが会期の時刻か機械では確定できない。",
-        "投稿本文を読んで会場の開場・閉場か併催の時刻かを見分ける必要がある。"
-      ],
-      "proposal": "主催告知に時刻が複数ある回は、本体イベントの時刻を優先し併催の時刻は説明文に回す。"
-    }
-  ],
-  "updated": "2026-10-25",
+  "items": [],
+  "updated": "2026-10-26",
   "resolved": [
     {
       "id": "agave-navi-eyecatch:flyer-with-child-photo",
@@ -148,6 +136,11 @@
       "approvedBy": "目崎(「提案通りで」)",
       "resolvedOn": "2026-10-16",
       "decision": "2026-10-16、目崎の依頼で PC の Cowork の会話から update_scheduled_task を5本に当てた(agave-event-update / agave-navi-event-monitor / event-listing-review / agave-navi-site-health-check / agave-navi-eyecatch。目崎がその場で承認)。clone の例を `D=$(mktemp -d -p /tmp)` にし、その文の後ろに「No space left on device で落ちたら df -h で空きのある場所に変える。」を足した。agave-navi-eyecatch は例の文の末尾に句点が無かったので「。」を補ってから足した。ほかの行と frontmatter(name・description)は変えていない。当てる前と後に5本の SKILL.md を Read して差分が clone の段だけであることを確かめ、list_scheduled_tasks で5本とも enabled・スケジュール不変を確かめた"
+    },
+    {
+      "id": "event-monitor:toyama-saboten-time-mismatch",
+      "resolvedOn": "2026-10-26",
+      "decision": "time を「9:00〜17:00（最終日は16:00まで）」に直した。2通りの時刻は日ごとの違いだった。主催(富山県中央植物園)の投稿 Dea-m_1kRgu は「10/30・31は9:00〜17:00(最終入園16:30)、11/1は9:00〜16:00(最終入園16:00)」。公式頁 bgtym.org/event/13014 は「9:00〜17:00(入園は16:30まで)、11月からは9:00〜16:30(入園は16:00まで)」で、11/1 の閉場だけ食い違う。最終入園(16:00)は両方で一致するので、催しの頁が出す短いほう(16:00)を採った。説明文の「入園は16時まで」も日ごとに書き直した"
     }
   ]
 }

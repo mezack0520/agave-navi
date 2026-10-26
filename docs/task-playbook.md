@@ -65,6 +65,10 @@
    スケジューラ側の `lastRunAt` は全タスク当日実行済みを示しており、
    環境も enabled も正常だった。抜けていたのは実行ではなく記録。
 
+   **実行レポートの名前は `record-run.py` が出す行(`実行レポート: task-reports/<taskId>_<日付>.md`)をそのまま使う。**
+   日付は JST。実行環境の `date` は UTC で、朝9時前は前日になる。10-26 08:15 の event-monitor が UTC の日付で
+   `event-monitor_2026-10-25.md` と付け、前日のレポートを上書きした(会話のセッションが中身を戻した)。
+
    記録するのは**起動した日**であって完走した日ではない。
    監査が知りたいのは「そもそも動いたのか」なので、それで足りる。
    完走したかは成果物とレポートで分かる。
@@ -1391,8 +1395,14 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `audit.py` の `manual_sweep_stale`(urgent) が経過日数で鳴らす。
   毎回 `lastSweptOn` / `lastScope` / `history` を更新する。
   **回れなかった回は日付を進めない。**進めると回った回と区別が付かなくなる。
-  手で巡回するのは PUKUBOOK。NextMeet(09-10)とまとめブログ(10-25)は自動に移した。
+  手で巡回するのは PUKUBOOK・NextMeet の目視照合・主催公式の一覧。NextMeet(09-10)とまとめブログ(10-25)の読み取りは自動に移した。
+  台帳は `manual-sweeps.json` に4つある(2026-10-26 時点)。**どれもブラウザは要らない。**
   - PUKUBOOK の全国イベント一覧（staleDays 7）
+  - NextMeet の目視照合 `nextmeet-monthly-check`(staleDays 10): `python3 scripts/coverage-sweep.py --explain --days 1` が
+    NextMeet 4か月とまとめ記事の見出しごとに「掲載済み/見送り/取りこぼし」と当たった相手を出す。当たり先が同じ回かを目で見るだけ。
+    10-26 に event-monitor が「目視巡回でブラウザ必須」と書いて回さず、期限を切らした。**bash だけで回せる。**
+    期限が近いのに agave-event-update が回していなければ event-monitor が回す
+  - 主催公式サイトの一覧 `organizer-official-index`(staleDays 14): device_bash の curl で読める頁は curl で読む
   - まとめブログの台帳は、coverage-sweep.py が読めなかった日の代わりとして残す
     (`listing-policy.json` coverageSources の manualSweepId)。自動で読めた日は `manual_sweep_stale` が見ない。
     手巡回は 10-23〜25 の3日続けて後回しになり、期限の14日を切らした。見出しが決まった形なので機械で読める
@@ -1404,6 +1414,11 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   NextMeet の月別は1ページに全国の会期が並ぶので、
   `events.json` と機械照合すれば数分で差分が出る。名称の表記ゆれで外れるので
   （`ぶらりぷらんつ` と掲載済み `ぷらりぷらんつ`）、**日付+会場でも引く**
+  **見送りの照合は開催日で絞る(2026-10-26)。**それまで見送りは名前だけで当てていて、共通語の多い見出しが
+  別の日の見送りに当たり、取りこぼしが黙って消えていた(11/8 仁保の郷「多肉植物販売会」が 9/27 にしかたの見送りに、
+  12/6「Green marché 花の湯」が 9/24 博多阪急の見送りに当たっていた)。見送りの eventDate の前日から31日後まで
+  (eventDateEnd があればその翌日まで)を同じ回とみなす(`coverage-sweep.py` の `rejected_date_ok`)。
+  会期の長い回を見送ったときは eventDateEnd を書く。書かないと開始から32日目以降のページで取りこぼし候補に出る
 
 - **アグリゲータの一行要約は、参加条件を落とす。掲載可否が逆になる（2026-09-06）。**
   埼玉サボテンクラブの大銘品展を NextMeet は
