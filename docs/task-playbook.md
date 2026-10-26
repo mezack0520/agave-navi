@@ -5007,3 +5007,9 @@ RARE PLANTS COLLECTION の協賛投稿(Sen by Hachiman)は「■来店予定 / 2
 time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出しが時刻の行の2〜3行上にあり、既存の企画語の判定(直前1行)に届かなかった。
 `sitelib.ANNOUNCED_GUEST_WORDS` / `_guest_visit_context` が時刻の行から上へ4行(空行除く)の「来店予定」等を見て除く。自己テスト `_self_test_guest_visit_hours` を audit が毎回呼ぶ。
 同日の plants-and-coffee は主催が 10/15 に 10/23 開始、10/23 夜に「いよいよ明日から 10/24」と書き直しており、**最新の投稿に合わせる**(`organizer_post_span_differs` が拾った)。
+
+## 2026-10-27 event-monitor 追記
+
+- `desc_date_mismatch` の除外語に `年間日程|年間予定|年間スケジュール|今後の日程|開催日程` を足した。
+  シリーズ告知(「2026年は10月4日と12月6日、2027年は…」)が他回の日付を並べるだけで鳴っていた(green-marche-hananoyu-fujinomiya-2026-12)。
+- 起動時に `$HOME`(/sessions)が 100% 満杯で clone のチェックアウトが `config.lock` の書き込み失敗で途中で落ちた。`df -h` で空きのある `/tmp` に clone し直せば通る。

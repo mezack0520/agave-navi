@@ -1,5 +1,5 @@
 {
-  "total": 724,
+  "total": 723,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -356,10 +356,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
-      "items": [
-        "green-marche-hananoyu-fujinomiya-2026-12: 本文 10月4日 が 2026-12-06〜2026-12-06 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す。日程を変えた回が当初の日付を書いているなら、eventStatus を rescheduled、previousStartDate に当初の開始日を書く(その日付は外れる)",
       "severity": "urgent"
     },
@@ -717,7 +715,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
