@@ -803,27 +803,14 @@ def make_hero_meta_note(ev):
 #     events.json の実データのみから生成(憶測・創作はしない)
 
 
-GUIDE_LINKS = [
-    ('agave-winter-hardiness.html', 'アガベの耐寒性ガイド: 屋外越冬できる品種と室内必須種の見分け方', 'アガベ'),
-    ('agave-titanota-care.html',    'アガベ チタノタ系の管理: 美観を保ちながら長く育てるコツ',       'アガベ'),
-    ('titanota-oteroi-labels.html', 'チタノタとオテロイ: イベントで迷わない品種ラベルの読み方',      'アガベ'),
-    ('agave-bareroot-rooting.html', 'ベアルート株の発根管理: イベントで買った抜き苗を枯らさない手順', 'アガベ'),
-    ('pachypodium-gracilius.html',  'パキポディウム グラキリスを枯らさない: 実生株と現地球の管理差', 'コーデックス'),
-    ('caudex-intro.html',           '塊根植物(コーデックス)入門: 夏型・冬型の見分け方と選び方',     'コーデックス'),
-    ('adenium-wintering.html',      'アデニウム(砂漠の薔薇)の冬越し完全ガイド: 種類別の温度管理',   'コーデックス'),
-    ('wintering-tokyo.html',        '東京近郊での冬越し: 練馬から学ぶ屋外・軒下・不織布・室内の使い分け', '管理'),
-    ('rainy-season-care.html',      '梅雨〜真夏のアガベ・塊根植物管理: 遮光・水やり・風通しの実務',  '管理'),
-    ('failure-analysis.html',       '失敗から学ぶ塊根管理: 過去に枯らした植物と原因分析',           '管理'),
-    ('sokubaikai-tips.html',        '植物即売会で失敗しないチェックリスト: 当日の流れと買付けのコツ', '購入'),
-    ('plant-health-check.html',     'イベントで失敗しない株の選び方: 葉・根・害虫のチェックポイント', '購入'),
-    ('event-types-guide.html',      '植物イベントの種類と選び方: 即売会・マルシェ・展示会の違い',    'イベント'),
-    ('event-data-2026.html',        'データで見る2026年の植物イベント: 開催数・地域・入場料の傾向',  'イベント'),
-    ('soil-pot-repot.html',         'アガベ・塊根植物の用土と鉢: 配合例と植え替えの基本手順',        '管理'),
-    ('agave-seedling.html',         'アガベ実生入門: 種まきから1年目までの管理カレンダー',           'アガベ'),
-    ('pest-treatment.html',         'アガベ・多肉の病害虫対策: カイガラムシ・ハダニ・根腐れの治療',  '管理'),
-    ('offsets-guide.html',          '子株(カキコ)の外し方と育成: 失敗しない株分けの手順',            'アガベ'),
-    ('grow-light-basics.html',      '植物育成LEDライト入門: アガベ室内管理の徒長を防ぐ',             '管理'),
-]
+# 詳細頁から貼るガイド。題名と分類は guides_content の META から取る(2026-10-26)。
+# 手で写した表だったころ、題名がずれ(pest-treatment)、後から足したガイドが
+# 載らず(用語集・年間カレンダー)、塊根の分類名が events.json のタグ(塊根植物)と違う
+# 「コーデックス」だったため、タグの一致による加点が一度も効いていなかった。
+# detail_cat は詳細頁の関連付けにだけ使う分類で、無ければ category。
+GUIDE_LINKS = [(m.META['slug'] + '.html', m.META['title'],
+                m.META.get('detail_cat') or m.META['category'])
+               for m in sitelib.guide_modules()]
 
 # カテゴリ解説: 1カテゴリ複数バリアント。slugハッシュで安定的に1つ選ぶ。
 CATEGORY_INTROS = {
@@ -1300,13 +1287,13 @@ def make_related_guides(ev):
             score += 8
         if 'アデニウム' in name and 'アデニウム' in title:
             score += 8
-        if ('コーデックス' in name or '塊根' in name) and gcat == 'コーデックス':
+        if ('コーデックス' in name or '塊根' in name) and gcat == '塊根植物':
             score += 5
         if '即売' in name and gcat == '購入':
             score += 6
         scored.append((score, path, title))
     scored.sort(reverse=True)
-    # 関連度の高い2本 + slugハッシュで分散させる2本(全19記事がサイト全体に行き渡る)
+    # 関連度の高い2本 + slugハッシュで分散させる2本(全記事がサイト全体に行き渡る)
     top = [x for x in scored[:2] if x[0] > 0]
     slug = ev.get('slug', '')
     offset = _slug_hash(slug) % len(GUIDE_LINKS)

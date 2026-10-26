@@ -4,14 +4,13 @@
 各記事は guides_content/*.py からタイトル・メタ・本文(Markdown風)を読み込み
 HTML化する。スタイルはサイト共通の style.css に揃える。
 """
-import os, re, glob, importlib.util
+import os, re
 from datetime import datetime
 
 import sitelib
 from sitelib import JST, DOMAIN
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONTENT_DIR = os.path.join(REPO_ROOT, 'guides_content')
 OUT_DIR = os.path.join(REPO_ROOT, 'guides')
 
 
@@ -45,6 +44,10 @@ HEAD = sitelib.head_open('article') + '''  <script type="application/ld+json">
     .guide-body .callout.warning{{background:#fdf3f0;border-left-color:#d6766a}}
     .guide-body .callout.tip{{background:#f0f6f4;border-left-color:#7ab39a}}
     .guide-body .callout p{{margin:.25rem 0;font-size:.92rem;color:#444}}
+    .guide-table{{overflow-x:auto;margin:1rem 0}}
+    .guide-body table{{border-collapse:collapse;width:100%;font-size:.9rem;line-height:1.6}}
+    .guide-body th,.guide-body td{{border:1px solid #e0e0e0;padding:.4rem .55rem;vertical-align:top;text-align:left;word-break:keep-all;overflow-wrap:break-word}}
+    .guide-body th{{background:#f6f6f1;font-weight:700;white-space:nowrap}}
     .guide-related{{margin:2.5rem 0 1.5rem;padding:1.2rem;background:#fafaf7;border-radius:6px}}
     .guide-related h2{{font-size:.95rem;color:#666;margin:0 0 .8rem;border:none;padding:0}}
     .guide-related ul{{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem}}
@@ -70,8 +73,44 @@ HEADER = sitelib.site_header()
 FOOTER = sitelib.site_footer()
 
 
+_TABLE_SEP = re.compile(r'^\|(\s*:?-{3,}:?\s*\|)+$')
+
+
+def _table_cells(line):
+    return [c.strip() for c in line.strip()[1:-1].split('|')]
+
+
+def render_table(rows):
+    """| 見出し | … | の表。2行目は区切り行(|---|---:|)で、:の位置で右寄せ・中央寄せ。
+
+    原稿の誤りは黙って崩さずに止める(列の数が合わない行は、どの列がずれたか読者に分からない)。"""
+    if len(rows) < 3 or not _TABLE_SEP.match(rows[1]):
+        raise ValueError(f'表は見出し行・区切り行・本体の順に書く: {rows[0][:40]}')
+    head = _table_cells(rows[0])
+    aligns = []
+    for c in _table_cells(rows[1]):
+        aligns.append('center' if c.startswith(':') and c.endswith(':')
+                      else 'right' if c.endswith(':') else '')
+    if len(aligns) != len(head):
+        raise ValueError(f'区切り行の列の数が見出しと違う: {rows[0][:40]}')
+
+    def cells(tag, line):
+        vals = _table_cells(line)
+        if len(vals) != len(head):
+            raise ValueError(f'列の数が見出しと違う行: {line[:40]}')
+        out = []
+        for v, a in zip(vals, aligns):
+            style = ' style="text-align:%s"' % a if a else ''
+            out.append(f'<{tag}{style}>{inline_md(v)}</{tag}>')
+        return ''.join(out)
+
+    body = '\n'.join(f'<tr>{cells("td", r)}</tr>' for r in rows[2:])
+    return (f'<div class="guide-table"><table>\n<thead><tr>{cells("th", rows[0])}</tr></thead>\n'
+            f'<tbody>\n{body}\n</tbody>\n</table></div>')
+
+
 def render_markdown(md):
-    """簡易Markdown→HTMLレンダラ。h2, h3, p, ul, ol, strong, callout 対応。"""
+    """簡易Markdown→HTMLレンダラ。h2, h3, p, ul, ol, table, strong, callout 対応。"""
     lines = md.strip().split('\n')
     out = []
     i = 0
@@ -108,6 +147,13 @@ def render_markdown(md):
                 ol.append('<li>' + inline_md(re.sub(r'^\d+\. ', '', lines[i])) + '</li>')
                 i += 1
             out.append('<ol>\n' + '\n'.join(ol) + '\n</ol>')
+            continue
+        elif line.startswith('|'):
+            rows = []
+            while i < len(lines) and lines[i].startswith('|'):
+                rows.append(lines[i].rstrip())
+                i += 1
+            out.append(render_table(rows))
             continue
         else:
             out.append('<p>' + inline_md(line) + '</p>')
@@ -155,9 +201,17 @@ def has_aff(md):
     return '{{aff:' in md
 
 
+def _md_link(m):
+    text, url = m.group(1), m.group(2)
+    if url.startswith(('http://', 'https://')):
+        # 外部リンクの印(↗)と target・rel は sitelib.ext_link だけが付ける
+        return sitelib.ext_link(url, text)
+    return f'<a href="{url}">{text}</a>'
+
+
 def inline_md(s):
     s = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s)
-    s = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', s)
+    s = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', _md_link, s)
     s = expand_aff(s)
     return s
 
@@ -217,15 +271,12 @@ def render_guide(meta, md, related):
 
 
 def main():
-    files = sorted(glob.glob(os.path.join(CONTENT_DIR, '*.py')))
-    if not files:
+    mods = sitelib.guide_modules()
+    if not mods:
         print('No guide content files found.'); return
     os.makedirs(OUT_DIR, exist_ok=True)
     guides_meta = []
-    for fp in files:
-        spec = importlib.util.spec_from_file_location('g', fp)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
+    for mod in mods:
         meta = mod.META
         md = mod.CONTENT
         related = getattr(mod, 'RELATED', [])

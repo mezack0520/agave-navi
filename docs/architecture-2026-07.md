@@ -74,7 +74,7 @@ push毎  [GitHub] pages build and deployment → 本番反映(CDNキャッシュ
 ```
 build-detail-pages.py   詳細205頁: ヒーロー/スペック表/地図(会場名フォールバック)/開催履歴/
                         近隣イベント/FAQ(JSON-LD)/折りたたみガイド/関連記事(スコア2+分散2)
-build-guides.py         ガイド21本(統計記事はevents.jsonから自動集計)
+build-guides.py         ガイド(原稿は guides_content/NN_*.py。統計記事はevents.jsonから自動集計)
 build-static-html.py    map/calendar SSR埋め込み(冪等・除去→再挿入)
 sync-index-cards.py     indexサムネ同期+削除イベントのカード自動除去+開催予定バッジ更新
 generate-rss.py / generate-itemlist-jsonld.py
@@ -393,3 +393,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-10-25: organizer_ig_unknown_soon の6件を埋めた(I.S.I.J. は @isij_taniku を開催予定の9回に、GreenSnap Marche・オザキフラワーパーク・富山県中央植物園は公式頁のリンクから。埼玉多肉・サボテン友の会と滋賀サボテンサークルは IG が無いので organizerIgNone)。organizerIgNone の読み手が監査だけで、監査は自分を読み手と数えないため、初めて値を書いた日に event_field_unread が鳴った。判定を sitelib.organizer_ig_resolved に移した。sitelib に organizer_ig_handles と同じことをする event_ig_accounts と2つ目の _IG_PROFILE_RE が残っていたので消した(全713件で結果が同じことを確かめた)。みずの森の秋のサボテン展の出典を 503 の PDF から草津市の頁に替えた
 - 2026-10-25: スケジュール済みタスクの「フォルダが接続されていないのでできません」「ブラウザが2つつながっていてできません」の原因を突き止めた。タスクは「このPCが必要」で動いているが、フォルダが付いておらず、実行のたびに接続を求めて PC の確認画面に答える人がいない回で止まっていた。フォルダはデスクトップアプリのタスク編集でしか付けられない(会話からの update_trigger は不可、プロンプト変更も PC 上の承認が要る)。定期タスクは Claude in Chrome を使わず組み込みブラウザだけを使う(手順書 §1。Chrome は Mac と Windows の2台がつながっていて無人では選べない)。event-listing-review は定期実行で Apps Script のトリガー画面を開かない(毎回「未確認」と書くだけだった)
 - 2026-10-26: coverage-sweep.py の見送りの照合を開催日で絞った(rejected_date_ok。eventDate の前日〜31日後、eventDateEnd があればそこまで)。名前だけで当てていたため、共通語の多い見出しが別の日の見送りに当たり、取りこぼしが消えていた(仁保の郷 11/8・花の湯 12/6)。`--explain` を足し、NextMeet・まとめ記事の見出しごとの当たり先を出せるようにした(手の目視照合はこれを見るだけ。ブラウザ不要)。record-run.py が実行レポートの名前(JST の日付)も出す。10-26 の event-monitor が UTC の日付で名前を付け、前日のレポートを上書きした。富山のサボテン展の時刻を日ごとの値に直した(10/30・31 は17時、11/1 は16時まで)
+- 2026-10-26: ガイド「第四種郵便で植物を送る」(fourth-class-mail-plants)を足した。料金と条件は日本郵便の料金表・比較表・お届け日数の頁と内国郵便約款(第10条・第15条・第33条・第40条)で確かめた。ガイドの原稿に表(| 見出し | の行、2行目は |---|、:で寄せ)を書けるようにした。列の数が合わない表はビルドで止める。詳細頁の関連ガイドを guides_content の META から作るようにした(sitelib.guide_modules。build-guides も同じものを読む)。手で写した表は題名がずれ(pest-treatment)、用語集・年間カレンダーが載っておらず、塊根の分類が「コーデックス」でタグ(塊根植物)と一致せず加点が効いていなかった。即売会の記事は META の detail_cat で「購入」として扱い、それまでの関連付けを保った

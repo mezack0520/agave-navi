@@ -11,6 +11,7 @@ RELATED = [
     ('ベアルート株の発根管理', '/guides/agave-bareroot-rooting.html'),
     ('アガベの用土と鉢・植え替え', '/guides/soil-pot-repot.html'),
     ('チタノタとオテロイ: 品種ラベルの読み方', '/guides/titanota-oteroi-labels.html'),
+    ('第四種郵便で植物を送る', '/guides/fourth-class-mail-plants.html'),
 ]
 CONTENT = """
 ## カキコのメリット: 「親と同じ」が保証される

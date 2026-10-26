@@ -1561,16 +1561,15 @@ def main():
         '会期の重なりで採る(date[:7] <= 今月 <= dateEnd[:7])。'
         '開始日基準にすると先月始まりの会期物が消える')
 
-    # 11. ガイド記事リンクの死活(詳細ページから貼っているガイド)
+    # 11. ガイド記事リンクの死活(詳細ページから貼っているガイド)。
+    # 詳細頁は guides_content の全原稿から選ぶ(2026-10-26 から。それまでは
+    # build-detail-pages.py の手書きの表を正規表現で拾っていた)。頁が無いのは
+    # build-guides.py が途中で落ちて、原稿はあるのに頁を書いていないとき
     guide_files = {os.path.basename(f) for f in glob.glob(rp('guides', '*.html'))}
-    try:
-        with open(rp('build-detail-pages.py'), encoding='utf-8') as f:
-            src = f.read()
-        linked = re.findall(r"\('([a-z0-9\-]+\.html)',\s*'", src)
-    except OSError:
-        linked = []
+    linked = [m.META['slug'] + '.html' for m in sitelib.guide_modules()]
     add('dead_guide_links', '詳細ページから貼っているガイドが存在しない',
-        sorted(set(linked) - guide_files))
+        sorted(set(linked) - guide_files),
+        'build-guides.py を回し、落ちるならその原稿(guides_content)を直す')
 
     # 12. CSS版数の乖離
     # **ここで `import sitelib` と書かない(2026-09-16)。** main() の中で書くと

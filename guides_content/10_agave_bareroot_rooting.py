@@ -12,6 +12,7 @@ RELATED = [
     ('イベントで失敗しない株の選び方', '/guides/plant-health-check.html'),
     ('アガベ チタノタ系の管理', '/guides/agave-titanota-care.html'),
     ('梅雨〜真夏のアガベ・塊根植物管理', '/guides/rainy-season-care.html'),
+    ('第四種郵便で植物を送る', '/guides/fourth-class-mail-plants.html'),
 ]
 CONTENT = """
 ## ベアルート株とは — なぜ根がないのか

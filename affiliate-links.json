@@ -42,7 +42,8 @@
         "offsets-guide": {"keyword": "アガベ 子株", "mode": "onSale"},
         "agave-bareroot-rooting": {"keyword": "アガベ ベアルート", "mode": "onSale"},
         "agave-winter-hardiness": {"keyword": "アガベ", "mode": "onSale"},
-        "sokubaikai-tips": {"keyword": "アガベ", "mode": "soldOut"}
+        "sokubaikai-tips": {"keyword": "アガベ", "mode": "soldOut"},
+        "fourth-class-mail-plants": {"keyword": "アガベ ベアルート", "mode": "onSale"}
       },
       "links": {
         "アガベ": {
@@ -882,6 +883,33 @@
         "rank": 3,
         "maxPrice": 6000,
         "ngKeyword": "引越し 家具"
+      }
+    ],
+    "fourth-class-mail-plants": [
+      {
+        "keyword": "OPP袋 透明 テープ付き",
+        "label": "中身が見える形で株を包む透明な袋",
+        "icon": "tool",
+        "group": "pack-bag",
+        "rank": 1,
+        "maxPrice": 2000
+      },
+      {
+        "keyword": "ダンボール 箱 小 60サイズ",
+        "label": "トゲのある株を守って送る小さな段ボール箱",
+        "icon": "shelf",
+        "group": "pack-box",
+        "rank": 1,
+        "maxPrice": 4000,
+        "ngKeyword": "猫 爪とぎ ハウス 収納"
+      },
+      {
+        "keyword": "緩衝材 クラフト紙 ロール",
+        "label": "すき間を埋めて株を固定する紙の緩衝材",
+        "icon": "tool",
+        "group": "pack-fill",
+        "rank": 1,
+        "maxPrice": 3000
       }
     ]
   }

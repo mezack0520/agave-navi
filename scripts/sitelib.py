@@ -1872,6 +1872,31 @@ def affiliate_config():
     return _AFFILIATE_CONFIG
 
 
+_GUIDE_MODULES = None
+
+
+def guide_modules():
+    """guides_content/NN_*.py(ガイド記事の単一情報源)をファイル名順に読んだモジュールの列。
+
+    build-guides.py が頁を作り、build-detail-pages.py が詳細頁の関連ガイドを選ぶ。
+    2026-10-26 まで詳細頁側は題名と分類を手で写した表を持っていて、題名がずれ
+    (pest-treatment)、後から足したガイド(用語集・年間カレンダー)が載っていなかった。"""
+    global _GUIDE_MODULES
+    if _GUIDE_MODULES is None:
+        import glob
+        import importlib.util
+        repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        mods = []
+        for fp in sorted(glob.glob(os.path.join(repo, 'guides_content', '*.py'))):
+            name = 'guide_' + os.path.splitext(os.path.basename(fp))[0]
+            spec = importlib.util.spec_from_file_location(name, fp)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            mods.append(mod)
+        _GUIDE_MODULES = mods
+    return _GUIDE_MODULES
+
+
 def amazon_disclosure_html():
     """Amazon アソシエイトの表記。運営規約第5条で、サイトに目立つように出すことが求められる。
     2026-10-20 まで全頁のどこにも無かった(枠の注記の「Amazon.co.jpアソシエイト」は規約の文言ではない)。
