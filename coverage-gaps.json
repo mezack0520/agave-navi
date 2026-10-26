@@ -21,19 +21,19 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 925,
-    "in_scope": 209,
-    "covered": 153,
-    "known_rejected": 55,
+    "candidates": 926,
+    "in_scope": 210,
+    "covered": 155,
+    "known_rejected": 23,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "in_scope_leafla": 114,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 87,
+    "in_scope_nextmeet": 88,
     "in_scope_matome-blog": 8,
-    "gaps_raw": 1
+    "gaps_raw": 32
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -43,8 +43,20 @@
   ],
   "gaps": [
     {
+      "date": "2026-10-27",
+      "lastSeen": "2026-11-29",
+      "days": 30,
+      "title": "花のある暮らし ボタニカルアートとデザイン",
+      "source": "leafla"
+    },
+    {
       "date": "2026-11-08",
-      "title": "木更津園芸市",
+      "title": "多肉植物販売会",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-12-06",
+      "title": "Green marché 花の湯",
       "source": "nextmeet"
     }
   ]

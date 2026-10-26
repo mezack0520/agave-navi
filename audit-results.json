@@ -715,7 +715,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -889,17 +889,19 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 1,
-      "items": [
-        "2026-11-08 木更津園芸市"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-10-27 花のある暮らし ボタニカルアートとデザイン",
+        "2026-11-08 多肉植物販売会",
+        "2026-12-06 Green marché 花の湯"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1123,10 +1125,8 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 1,
-      "items": [
-        "toyama-saboten-taniku-9th-2026-10: time「09:00〜16:30」/ 告知 9:00〜16:00・9:00〜17:00 (Dea-m_1kRgu)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1295,10 +1295,8 @@
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 1,
-      "items": [
-        "nextmeet-monthly-check(NextMeet の月別ページ(自動巡回の目視照合)): 最後に回ったのは 2026-10-15（11日前 / 上限10日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。coverage-sweep.py で自動に読めない情報源(PUKUBOOK など)と、自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
