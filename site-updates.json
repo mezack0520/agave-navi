@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-26",
+  "updated": "2026-10-27",
   "items": [
+    {
+      "on": "2026-10-27",
+      "kind": "listed",
+      "slug": "green-marche-hananoyu-fujinomiya-2026-12",
+      "name": "Green marché 花の湯（2026年12月）",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "prefecture": "静岡",
+      "detail": ""
+    },
     {
       "on": "2026-10-26",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2026-11-21",
       "dateEnd": "2026-11-21",
       "prefecture": "山口",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "hartn-fes-4th-hirata-kasuga-2026-11",
-      "name": "第4回 ハートンフェス（平田ナーセリー春日店）",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-21",
-      "prefecture": "福岡",
       "detail": ""
     }
   ]
