@@ -1,8 +1,18 @@
 {
-  "check_date": "2026-10-26",
-  "total_events": 714,
+  "check_date": "2026-10-27",
+  "total_events": 715,
   "dead_links": [],
-  "unreachable": [],
+  "unreachable": [
+    {
+      "slug": "taniku-xmas-flarie-2026-12",
+      "name": "多肉X'mas",
+      "sourceUrl": "https://www.flarie.jp/news/succulents-xmas.html",
+      "field": "url",
+      "statusCode": 503,
+      "alive": false,
+      "failingSince": "2026-10-27"
+    }
+  ],
   "tbd_events": [
     {
       "slug": "masappe-taniku-2nd-anniversary-2026-11",
@@ -2883,6 +2893,12 @@
       "dateEnd": "2026-10-25"
     },
     {
+      "slug": "sunny-drop-5th-anniversary-kato-2026-10",
+      "name": "sunny drop 5th Anniversary 感謝祭",
+      "date": "2026-10-24",
+      "dateEnd": "2026-10-26"
+    },
+    {
       "slug": "garden-link-festa-2026-10",
       "name": "Garden Link Festa",
       "date": "2026-10-24",
@@ -3103,18 +3119,15 @@
       "name": "Grace succulents 多肉植物販売会（郡山ユラックス熱海）",
       "date": "2026-10-25",
       "dateEnd": "2026-10-25"
-    }
-  ],
-  "upcoming_events": [
+    },
     {
       "slug": "lier-taniku-festival-hiroshima-2026-10",
       "name": "Lier.多肉フェスティバル in 広島",
       "date": "2026-10-26",
-      "dateEnd": "2026-10-26",
-      "location": "広島市中小企業会館 総合展示館4（広島県広島市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdszFGQBiY-/"
-    },
+      "dateEnd": "2026-10-26"
+    }
+  ],
+  "upcoming_events": [
     {
       "slug": "shinshu-nakano-ikiikikan-taniku-hanbaikai-2026-10",
       "name": "多肉植物苗販売会＆寄せ植えワークショップ（信州中野いきいき館）",
@@ -4457,6 +4470,15 @@
       "sourceUrl": "https://www.instagram.com/p/DeLgx-sBLHh/"
     },
     {
+      "slug": "green-marche-hananoyu-fujinomiya-2026-12",
+      "name": "Green marché 花の湯（2026年12月）",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "location": "富嶽温泉 花の湯 1Fエントランス（静岡県富士宮市ひばりヶ丘805）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/DbZdP0jOBbH/"
+    },
+    {
       "slug": "lier-taniku-festival-kariya-2026-12",
       "name": "Lier.多肉フェスティバル in 刈谷",
       "date": "2026-12-10",
@@ -4963,22 +4985,13 @@
       "sourceUrl": "https://www.instagram.com/p/DdwCbdqNuax/"
     },
     {
-      "slug": "sunny-drop-5th-anniversary-kato-2026-10",
-      "name": "sunny drop 5th Anniversary 感謝祭",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-26",
-      "location": "sunny drop（兵庫県加東市社）",
+      "slug": "shinshu-nakano-ikiikikan-taniku-hanbaikai-2026-10",
+      "name": "多肉植物苗販売会＆寄せ植えワークショップ（信州中野いきいき館）",
+      "date": "2026-10-27",
+      "dateEnd": "2026-10-27",
+      "location": "信州中野いきいき館（長野県中野市大字吉田519）",
       "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/Dd7UMbIzFxQ/"
-    },
-    {
-      "slug": "lier-taniku-festival-hiroshima-2026-10",
-      "name": "Lier.多肉フェスティバル in 広島",
-      "date": "2026-10-26",
-      "dateEnd": "2026-10-26",
-      "location": "広島市中小企業会館 総合展示館4（広島県広島市）",
-      "eventStatus": "confirmed",
-      "sourceUrl": "https://www.instagram.com/p/DdszFGQBiY-/"
+      "sourceUrl": "https://www.instagram.com/p/DdkDcaVk6FW/"
     }
   ],
   "url_results": [
@@ -5107,8 +5120,9 @@
       "name": "多肉X'mas",
       "sourceUrl": "https://www.flarie.jp/news/succulents-xmas.html",
       "field": "url",
-      "statusCode": 200,
-      "alive": true
+      "statusCode": 503,
+      "alive": false,
+      "failingSince": "2026-10-27"
     },
     {
       "slug": "border-break-11th-2026-12",
