@@ -2,11 +2,11 @@
  "generated": "2026-10-28 07:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 385,
+  "igAccounts": 386,
   "awaitingNextEdition": 424,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 89,
+  "igNeedsBrowser": 90,
   "igDead": 7
  },
  "igAccounts": [
@@ -1079,6 +1079,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "bon31_ta29",
+   "url": "https://www.instagram.com/bon31_ta29/",
+   "eventCount": 1,
+   "lastEventName": "秋の盆栽＆多肉 即売会（Bon31＆Ta29Cafe）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botajam2026",
