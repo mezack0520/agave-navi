@@ -2552,6 +2552,22 @@
    "target": "manual_sweep_stale: matome-blog",
    "action": "reviewed",
    "detail": "10-25 から coverage-sweep.py が毎日自動で読む(sweptSources.matome-blog ok)。手巡回は不要"
+  },
+  {
+   "on": "2026-10-28",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "isij-tokyo-reikai-2026-12-20",
+   "action": "reviewed",
+   "detail": "中止のお知らせは2024-08-25の回の文言。2026-12-20は開催告知のまま"
+  },
+  {
+   "on": "2026-10-28",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "coverage_gaps 6件(花のある暮らし10/28・笹の雪POP UP 10/31・ときわミュージアム11/1・URBAN JUNGLE WEEKS 11/4・sweet jungle 11/14・PLANTS DIVE vol.006 11/22)",
+   "action": "skipped",
+   "detail": "ブラウザ要: 主催の一次情報(IG/公式)で掲載可否を確かめる。PLANTS DIVE は vol5 奈良のみ掲載済みで vol.006 赤松種苗は未掲載"
   }
  ]
 }
