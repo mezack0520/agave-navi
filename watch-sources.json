@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-27 13:00 JST",
+ "generated": "2026-10-28 06:42 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 385,
-  "awaitingNextEdition": 422,
+  "awaitingNextEdition": 424,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 90,
+  "igNeedsBrowser": 89,
   "igDead": 7
  },
  "igAccounts": [
@@ -861,16 +861,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "industrial_works_hyogo",
-   "url": "https://www.instagram.com/industrial_works_hyogo/",
-   "eventCount": 1,
-   "lastEventName": "珍奇天烈植物 vol.5",
-   "lastEventDate": "2026-10-23",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "hugcoffee_minamicho",
    "url": "https://www.instagram.com/hugcoffee_minamicho/",
    "eventCount": 1,
@@ -1588,7 +1578,7 @@
    "lastEventDate": "2026-12-06",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "tanikurevolution",
@@ -3674,6 +3664,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "industrial_works_hyogo",
+   "url": "https://www.instagram.com/industrial_works_hyogo/",
+   "eventCount": 1,
+   "lastEventName": "珍奇天烈植物 vol.5",
+   "lastEventDate": "2026-10-23",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   },
   {
    "handle": "nagashima_marche",

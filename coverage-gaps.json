@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-27",
+  "sweptOn": "2026-10-28",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -21,19 +21,19 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 906,
-    "in_scope": 207,
-    "covered": 152,
-    "known_rejected": 23,
+    "candidates": 888,
+    "in_scope": 209,
+    "covered": 151,
+    "known_rejected": 24,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
-    "in_scope_leafla": 110,
+    "in_scope_leafla": 105,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 89,
+    "in_scope_nextmeet": 96,
     "in_scope_matome-blog": 8,
-    "gaps_raw": 32
+    "gaps_raw": 34
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -43,20 +43,35 @@
   ],
   "gaps": [
     {
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "lastSeen": "2026-11-29",
-      "days": 30,
+      "days": 29,
       "title": "花のある暮らし ボタニカルアートとデザイン",
       "source": "leafla"
     },
     {
-      "date": "2026-11-08",
-      "title": "多肉植物販売会",
+      "date": "2026-10-31",
+      "title": "POPUP 笹の雪POP UP",
       "source": "nextmeet"
     },
     {
-      "date": "2026-12-06",
-      "title": "Green marché 花の湯",
+      "date": "2026-11-01",
+      "title": "ときわミュージアム「植物販売」",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-11-04",
+      "title": "URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-11-14",
+      "title": "sweet jungle",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-11-22",
+      "title": "PLANTS DIVE vol.006 in 赤松種苗",
       "source": "nextmeet"
     }
   ]
