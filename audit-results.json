@@ -1,5 +1,5 @@
 {
-  "total": 723,
+  "total": 722,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -1011,11 +1011,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 3,
+      "count": 2,
       "items": [
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10: 公式ページが変わった(本文: 684→694字 +1%)",
-        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
-        "2026-12-20 isij-tokyo-reikai-2026-12-20: 中止・延期の語: 中止のお知らせ"
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
