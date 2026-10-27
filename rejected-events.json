@@ -2736,6 +2736,19 @@
    "eventDate": "2026-11-08",
    "revisit": true,
    "revisitedOn": "2026-10-27"
+  },
+  {
+   "key": "bikamori-house-sokubai-2026-11-08",
+   "name": "ビカ森ハウス 即売会＆ワークショップ (2026-11-08)",
+   "aliases": [
+    "ビカ森ハウス"
+   ],
+   "decided": "2026-10-28",
+   "reason": "主催 @bikamori_wife の告知で 11/8 の即売会とWS(10:00〜、各回3名・参加費3,000円〜)は確認できたが、10/11-12 回と同じく会場は公式LINEでのみ案内し、県・市も公開していない。所在地を載せられないので見送り",
+   "reasonType": "undisclosed",
+   "eventDate": "2026-11-08",
+   "revisit": false,
+   "revisitedOn": "2026-10-28"
   }
  ],
  "_reasonTypes": {
@@ -2744,6 +2757,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-10-27",
+ "updated": "2026-10-28",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }

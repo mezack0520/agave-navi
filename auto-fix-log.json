@@ -2520,6 +2520,38 @@
    "action": "fixed",
    "detail": "開催日超過のため revisit=false にして見送り確定",
    "mailedOn": "2026-10-26"
+  },
+  {
+   "on": "2026-10-28",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "morino-tanikuen-hanbaikai-big-nabari-2026-11",
+   "action": "fixed",
+   "detail": "主催告知 De_0Hp6H2zq で 10:30〜14:00 を確認し time を補完"
+  },
+  {
+   "on": "2026-10-28",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "秋の盆栽＆多肉 即売会 Bon31＆Ta29Cafe (2026-11-03)",
+   "action": "listed",
+   "detail": "主催 @bon31_ta29 De8WHa5htTi で裏取り(Step0)"
+  },
+  {
+   "on": "2026-10-28",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ビカ森ハウス 即売会 (2026-11-08)",
+   "action": "rejected",
+   "detail": "会場の所在地が非公開(10/11-12回と同じ)。undisclosed"
+  },
+  {
+   "on": "2026-10-28",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "manual_sweep_stale: matome-blog",
+   "action": "reviewed",
+   "detail": "10-25 から coverage-sweep.py が毎日自動で読む(sweptSources.matome-blog ok)。手巡回は不要"
   }
  ]
 }
