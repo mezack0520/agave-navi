@@ -2574,6 +2574,22 @@
    "action": "skipped",
    "detail": "ブラウザ要: 主催の一次情報(IG/公式)で掲載可否を確かめる。PLANTS DIVE は vol5 奈良のみ掲載済みで vol.006 赤松種苗は未掲載",
    "mailedOn": "2026-10-28"
+  },
+  {
+   "on": "2026-10-29",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "enjoy-place-outside-2nd-2026-11",
+   "action": "fixed",
+   "detail": "主催 @taniten_kengo202 の告知 DfCWDMJuNUf に 11/7 10:00〜16:00。timeを補完"
+  },
+  {
+   "on": "2026-10-29",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "organizer-official-index",
+   "action": "skipped",
+   "detail": "ブラウザ要: 手でやる巡回が最終10-14から15日。主催公式サイトのイベント一覧を回し manual-sweeps.json を更新"
   }
  ]
 }
