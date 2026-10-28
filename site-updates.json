@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "items": [
+    {
+      "on": "2026-10-29",
+      "kind": "listed",
+      "slug": "enichi-vol18-bizenya-2026-11",
+      "name": "園日 Vol.18",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "岡山",
+      "detail": ""
+    },
     {
       "on": "2026-10-28",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2026-11-03",
       "dateEnd": "2026-11-03",
       "prefecture": "茨城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "plants-popup-rasen-coffee-osaka-2026-11",
-      "name": "PLANTS POP UP at 螺旋珈琲（Heaven Green Factory × TT POTS）",
-      "date": "2026-11-15",
-      "dateEnd": "2026-11-16",
-      "prefecture": "大阪",
       "detail": ""
     }
   ]

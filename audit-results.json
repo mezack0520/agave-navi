@@ -1,5 +1,5 @@
 {
-  "total": 731,
+  "total": 733,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -294,7 +294,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 69,
+      "count": 70,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -309,6 +309,7 @@
         "chinki-plants-flea-market-2027-01",
         "chinki-plants-flea-market-2027-04",
         "collect-plants-2027-04",
+        "enichi-vol18-bizenya-2026-11",
         "enjoy-place-bangaihen-2026-12",
         "fukuoka-green-party-8th-2027-05",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
@@ -334,8 +335,7 @@
         "lier-taniku-festival-kariya-2026-12",
         "lier-taniku-festival-kitakyushu-2027-01",
         "lier-taniku-festival-kumamoto-2026-11",
-        "lier-taniku-festival-munakata-2026-11",
-        "lier-taniku-festival-nagasaki-2027-01"
+        "lier-taniku-festival-munakata-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -886,22 +886,23 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-22 園日 Vol.18"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 7,
+      "count": 6,
       "items": [
         "2026-10-29 花のある暮らし ボタニカルアートとデザイン",
         "2026-10-31 POPUP 笹の雪POP UP",
         "2026-11-01 ときわミュージアム「植物販売」",
         "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
         "2026-11-14 sweet jungle",
-        "2026-11-22 PLANTS DIVE vol.006 in 赤松種苗",
-        "2026-11-22 園日 Vol.18"
+        "2026-11-22 PLANTS DIVE vol.006 in 赤松種苗"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -929,7 +930,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 69,
+      "count": 70,
       "items": [
         "2026-10-31 lier-taniku-festival-nobeoka-2026-10",
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
@@ -946,6 +947,7 @@
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
         "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
+        "2026-11-22 enichi-vol18-bizenya-2026-11",
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
         "2026-11-22 lier-taniku-festival-hamada-2026-11",
         "2026-11-22 midorigakuen-himeji-2026-11",
@@ -969,8 +971,7 @@
         "2026-12-20 nbgarden-festa-shizuoka-2026-12",
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
-        "2027-01-08 lier-taniku-festival-hyuga-2027-01",
-        "2027-01-09 lier-taniku-festival-tamana-2027-01"
+        "2027-01-08 lier-taniku-festival-hyuga-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
