@@ -1,5 +1,5 @@
 {
-  "total": 722,
+  "total": 731,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -893,14 +893,15 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 6,
+      "count": 7,
       "items": [
-        "2026-10-28 花のある暮らし ボタニカルアートとデザイン",
+        "2026-10-29 花のある暮らし ボタニカルアートとデザイン",
         "2026-10-31 POPUP 笹の雪POP UP",
         "2026-11-01 ときわミュージアム「植物販売」",
         "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
         "2026-11-14 sweet jungle",
-        "2026-11-22 PLANTS DIVE vol.006 in 赤松種苗"
+        "2026-11-22 PLANTS DIVE vol.006 in 赤松種苗",
+        "2026-11-22 園日 Vol.18"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -1011,10 +1012,12 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
+      "count": 4,
       "items": [
-        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: 公式ページが変わった(本文: 684→694字 +1%)",
-        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)"
+        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文・画像)",
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
+        "2026-11-21 greensnap-marche-abc-hachioji-2026-11: 公式ページが変わった(本文・画像)",
+        "2026-12-20 isij-tokyo-reikai-2026-12-20: 中止・延期の語: 中止のお知らせ"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -1112,7 +1115,7 @@
         "@greenfarmkanazawa 2026-10-31: 🌸 **松田フラワーガーデン パンジー・ビオラ即売会 開催!** 🌸 今年も、松田フラワーガーデンさんの花たちがやってき https://www.instagram.com/p/De9xBMSy1kA/",
         "@kinoco__inc 2026-11-25: ⁣ ⁣ ⁣ CLIP⁣ ⁣ 2022年以来、2回目となる植木鉢の展示販売⁣ イベントCLIPを開催いたします⁣ ⁣ ye https://www.instagram.com/p/De1aPIsB8EX/",
         "@minori_kaboku_interpark 2026-11-07,2026-11-08: 🎪みのり祭りイベント情報🎪 園芸雑誌でもおなじみの若松康史氏による秋球根の講習会を開催します🌷 11月7日(土)は9:0 https://www.instagram.com/p/De0tHRFAcej/",
-        "@nagasako_farm 2026-10-30: 日曜日ということで、今日も楽しいオープンハウスでした🙌🏻 ご来園いただきありがとうございました☺️ 一緒に植物を選ぶ楽し https://www.instagram.com/p/De6tFklCZ59/",
+        "@nagasako_farm 2026-10-29,2026-10-30: オープンハウスも残すところ後1.5日! 沢山のご来園ありがとうございました😁 また明日以降のお客様お待ちしております🙌🏻 https://www.instagram.com/p/DfCCoESiV3K/",
         "@sakura_shokubutsuen 2026-11-22: 🎄多肉で彩る、大人のクリスマス✨ 11月 多肉植物の寄植え講習のお知らせ 色とりどりの多肉植物を コンクリート鉢にぎゅっ https://www.instagram.com/p/De1EKVxvKGY/",
         "@the_botanical_show 2026-12-24: . \\ 同日開催!湘南キッズデイ🌈 / THE BOTANICAL SHOW 6thと同じ 11月14日(土)・15日( https://www.instagram.com/p/DewFzO4mUyt/"
       ],
@@ -1128,8 +1131,10 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "enjoy-place-outside-2nd-2026-11: time「(空)」/ 告知に 11/7 10:00〜16:00 がある (DfCWDMJuNUf)"
+      ],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1156,8 +1161,13 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12: https://www.instagram.com/p/DfDaE6_EzTJ/（caption）",
+        "2027-01-16 yurutto-taniku-marche-3rd-2027-01: https://www.instagram.com/p/DfDaE6_EzTJ/（caption）",
+        "2027-02-20 santafe-shunensai-2027-02: https://www.instagram.com/reel/DeJerReShvk/（caption）",
+        "2027-04-24 collect-plants-2027-04: https://www.instagram.com/p/DeRq2TYhsce/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1291,15 +1301,17 @@
       "title": "スケジュールタスクの実行が抜けた日",
       "count": 1,
       "items": [
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-21 2026-10-24（直近7日で2日）"
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-24（直近7日で1日）"
       ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "organizer-official-index(掲載済みシリーズの主催公式サイトの「イベント一覧」): 最後に回ったのは 2026-10-14（15日前 / 上限14日）"
+      ],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。coverage-sweep.py で自動に読めない情報源(PUKUBOOK など)と、自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
@@ -1486,8 +1498,8 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 2,
       "items": [
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（32日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（32日前）"
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（33日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（33日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"

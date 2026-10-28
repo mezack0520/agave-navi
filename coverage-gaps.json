@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-28",
+  "sweptOn": "2026-10-29",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -21,17 +21,17 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 888,
-    "in_scope": 209,
-    "covered": 151,
-    "known_rejected": 24,
+    "candidates": 872,
+    "in_scope": 206,
+    "covered": 149,
+    "known_rejected": 23,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
-    "in_scope_leafla": 105,
+    "in_scope_leafla": 101,
     "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 96,
+    "in_scope_nextmeet": 97,
     "in_scope_matome-blog": 8,
     "gaps_raw": 34
   },
@@ -43,9 +43,9 @@
   ],
   "gaps": [
     {
-      "date": "2026-10-28",
+      "date": "2026-10-29",
       "lastSeen": "2026-11-29",
-      "days": 29,
+      "days": 28,
       "title": "花のある暮らし ボタニカルアートとデザイン",
       "source": "leafla"
     },
@@ -72,6 +72,11 @@
     {
       "date": "2026-11-22",
       "title": "PLANTS DIVE vol.006 in 赤松種苗",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-11-22",
+      "title": "園日 Vol.18",
       "source": "nextmeet"
     }
   ]

@@ -1,6 +1,6 @@
 {
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
-  "sweptOn": "2026-10-28",
+  "sweptOn": "2026-10-29",
   "stats": {
     "targets": 22,
     "fetched": 21
@@ -11,13 +11,14 @@
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "taniku-garden-marche-arakogawa-2026-10",
-      "name": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
+      "slug": "greensnap-marche-toyosu-2026-autumn",
+      "name": "GreenSnap Marche 豊洲 2026 Autumn",
       "date": "2026-10-31",
-      "url": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
-      "why": "公式ページが変わった(本文: 684→694字 +1%)",
+      "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
+      "why": "公式ページが変わった(本文・画像)",
       "changed": [
-        "本文"
+        "本文",
+        "画像"
       ]
     },
     {
@@ -25,6 +26,17 @@
       "name": "草木日和（BloomGARDEN）",
       "date": "2026-11-07",
       "url": "https://bloomgarden.jp/event/post-595/",
+      "why": "弱い語(延期)＋ページが変わった",
+      "changed": [
+        "本文",
+        "画像"
+      ]
+    },
+    {
+      "slug": "greensnap-marche-abc-hachioji-2026-11",
+      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
+      "date": "2026-11-21",
+      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
       "why": "公式ページが変わった(本文・画像)",
       "changed": [
         "本文",
@@ -43,7 +55,7 @@
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "514ebb68e6da76f4",
         "images": "fe4c6d76032c77c3",
@@ -65,7 +77,7 @@
     },
     "toyama-saboten-taniku-9th-2026-10": {
       "url": "https://www.bgtym.org/event/13014/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "045195f11ec6f8f5",
         "images": "dfa03fc549e5c2e3",
@@ -87,11 +99,11 @@
     },
     "greensnap-marche-toyosu-2026-autumn": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
-        "text": "46af83926b66dcdc",
-        "images": "890d8fa7f4a06cbe",
-        "textLen": 4675,
+        "text": "faaa038b85797a07",
+        "images": "0aac5951b39978b5",
+        "textLen": 4661,
         "imageCount": 79
       },
       "prevTextLen": 4675,
@@ -109,11 +121,11 @@
     },
     "jolie-nursery-musashi-kanazawa-2026-10": {
       "url": "https://jolienursery.co.jp/pages/events",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
-        "text": "ca883c288745d48e",
+        "text": "61f29e820df52d73",
         "images": "e284e645fe6da741",
-        "textLen": 2968,
+        "textLen": 2975,
         "imageCount": 15
       },
       "prevTextLen": 2968,
@@ -126,19 +138,19 @@
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-09-29",
       "badChars": 0,
-      "textOnlyChanges": 6,
+      "textOnlyChanges": 7,
       "imageOnlyChanges": 0
     },
     "taniku-garden-marche-arakogawa-2026-10": {
       "url": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "310e15a04682c6d4",
         "images": "45c0f9f82e8fbf5d",
         "textLen": 694,
         "imageCount": 11
       },
-      "prevTextLen": 684,
+      "prevTextLen": 694,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -153,7 +165,7 @@
     },
     "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10": {
       "url": "https://ozaki-flowerpark.co.jp/news/dolceshanbaikai",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "95bd379dcf8e3cf7",
         "images": "2c16a1751faaf55d",
@@ -175,7 +187,7 @@
     },
     "chuushokushobutsusai-2026": {
       "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "0cf66798ce974867",
         "images": "33664e58e2bf48d2",
@@ -197,7 +209,7 @@
     },
     "botanical-life-kasama-2026-11": {
       "url": "https://bookkasama.com/bot2611.html",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "a6d929c8027dc31f",
         "images": "cb491c537229572f",
@@ -219,19 +231,21 @@
     },
     "kusaki-biyori-bloomgarden-matsumae-2026-11": {
       "url": "https://bloomgarden.jp/event/post-595/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
-        "text": "c5c1f8287ad0e044",
-        "images": "aefe25843b90d5b4",
-        "textLen": 1378,
-        "imageCount": 28
+        "text": "8d1c6184a0e18427",
+        "images": "c94d16587388cd79",
+        "textLen": 1425,
+        "imageCount": 27
       },
-      "prevTextLen": 1412,
+      "prevTextLen": 1378,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
-      "weak": [],
-      "datesNamed": 4,
+      "weak": [
+        "延期"
+      ],
+      "datesNamed": 8,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-20",
@@ -241,7 +255,7 @@
     },
     "rare-plants-collection-hankyu-umeda-2026-11": {
       "url": "https://rareplantsjapan.jp/2210",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "100cf574f90d44be",
         "images": "9fd5d8abafa5e59d",
@@ -263,7 +277,7 @@
     },
     "igashira-park-taniku-saboten-tenjikai-2026-11": {
       "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "a520e978d107107c",
         "images": "6b3f12a992029d46",
@@ -285,12 +299,12 @@
     },
     "greensnap-marche-abc-hachioji-2026-11": {
       "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
-        "text": "1a90d1292615bc49",
-        "images": "0a82c534436640b7",
-        "textLen": 633,
-        "imageCount": 7
+        "text": "80062e4dbab41342",
+        "images": "d5a8a0b6d80a62f5",
+        "textLen": 1041,
+        "imageCount": 18
       },
       "prevTextLen": 633,
       "sigScope": "article",
@@ -307,7 +321,7 @@
     },
     "isij-big-bazaar-2026-11-22": {
       "url": "http://isij.net/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "1236052c5f817112",
         "images": "8870d2f0089ac6a5",
@@ -329,7 +343,7 @@
     },
     "midorigakuen-himeji-2026-11": {
       "url": "https://www.threads.com/@honoka.kakogawa",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "3e42e385075b9b56",
         "images": "e3b0c44298fc1c14",
@@ -351,7 +365,7 @@
     },
     "greensnap-marche-odaiba-2026": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "fad9ab23144e36e3",
         "images": "00831727e550abe3",
@@ -373,7 +387,7 @@
     },
     "okibota-december-2026-sunshine": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "a02fd17bb94b4d2d",
         "images": "5aaa6f1f74b31d2f",
@@ -395,7 +409,7 @@
     },
     "border-break-11th-2026-12": {
       "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "2dc8f0b75264992d",
         "images": "e3b0c44298fc1c14",
@@ -417,10 +431,10 @@
     },
     "hanatomofesta-2026": {
       "url": "https://hanatomofesta.com/",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "dd1a143059002f6d",
-        "images": "93a41f445602ba24",
+        "images": "627792bce4944b24",
         "textLen": 1187,
         "imageCount": 41
       },
@@ -435,11 +449,11 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 12
+      "imageOnlyChanges": 13
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "fe4b7498d127fc87",
         "images": "49ed9e187652c51c",
@@ -461,7 +475,7 @@
     },
     "isij-tokyo-reikai-2026-12-20": {
       "url": "http://isij.net/event",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "37f65c08b4117b55",
         "images": "68f1147f1ae141ea",
@@ -487,7 +501,7 @@
     },
     "mandara-taniku-matsuri-hibikinada-2026-12": {
       "url": "https://note.com/mandara_medaka/n/n52786d54e55c",
-      "checkedOn": "2026-10-28",
+      "checkedOn": "2026-10-29",
       "signature": {
         "text": "c5a3f6c667d6af59",
         "images": "56fbb5cf02852d8e",
