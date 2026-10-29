@@ -1407,7 +1407,7 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
     読めなかった頁(`coverage-gaps.json` の `sweptSources.organizer-index.notes`)だけ device_bash の curl で見る。
     10-14 から15日回らず期限を切らした。event-monitor は「ブラウザ要」と書いて丸ごと回さなかったが、
     描画の要る頁は6枚のうちフラリエの1枚だけだった。**読めない頁が1枚あっても、残りは回して台帳に読めなかった頁を書く。**
-    フラリエは主催の Instagram(`hisayaodori_garden_flarie`)を organizerIg で ig-organizer-watch が見る
+    フラリエの主催の Instagram(`hisayaodori_garden_flarie`)は個人アカウントで API では読めず、ブラウザのローテ(apiStatus=personal)で開く
   - まとめブログの台帳は、coverage-sweep.py が読めなかった日の代わりとして残す
     (`listing-policy.json` coverageSources の manualSweepId)。自動で読めた日は `manual_sweep_stale` が見ない。
     手巡回は 10-23〜25 の3日続けて後回しになり、期限の14日を切らした。見出しが決まった形なので機械で読める

@@ -62,7 +62,7 @@
    "url": "https://greensnap.jp/event/",
    "staleDays": 14,
    "why": "watch-sources.json の officialSiteCandidates は、**最後に掲載した回の個別ページのURL**しか持たない。個別ページを開いても同じ主催の別の回は出ないので、主催が自分のサイトに並べている次の回が丸ごと見えない。2026-09-18、GreenSnap Marche 豊洲 2026 Autumn(10/31-11/1)と お台場 2026(11/28-29)がこれに当たった。アグリゲータ3社(LEAFLA / NextMeet / PUKUBOOK)にも無く coverage-gaps も0件で、主催公式の /event/ を開いて初めて2件とも見えた。**一覧を持っている主催は、一覧のほうを見る。**",
-   "how": "2026-10-29 から coverage-sweep.py の organizer-index が毎日自動で読む(頁は listing-policy.json の coverageSources.required.organizer-index.pages)。全部の頁を読めた日はこの台帳を見ない。読めなかった日だけ、coverage-gaps.json の sweptSources.organizer-index.notes に出た頁を device_bash の curl で開いて events.json と並べる。ブラウザは要らない。描画の要る頁(フラリエ)は 主催の Instagram を ig-organizer-watch が見ているので、ここでは開かない。一覧を持つ主催が新しく見つかったら pages に足す",
+   "how": "2026-10-29 から coverage-sweep.py の organizer-index が毎日自動で読む(頁は listing-policy.json の coverageSources.required.organizer-index.pages)。全部の頁を読めた日はこの台帳を見ない。読めなかった日だけ、coverage-gaps.json の sweptSources.organizer-index.notes に出た頁を device_bash の curl で開いて events.json と並べる。ブラウザは要らない。描画の要る頁(フラリエ)は開かない。主催の Instagram(個人アカウント)を朝のタスクがブラウザのローテで開く。一覧を持つ主催が新しく見つかったら pages に足す",
    "lastSweptOn": "2026-10-29",
    "lastScope": "greensnap.jp/event/ の4件(豊洲 Autumn・ABCハウジング八王子・お台場・カダンフェス秋)はすべて掲載済み。jolienursery.co.jp/pages/events の開催予定5件(新潟・三郷・金沢・ハートンフェス・花友フェスタ大阪)はすべて掲載済み。kagoen.co はイベント欄が「近日更新」で、農場オープンデイ(11/7-8、クリスマスローズ・ベゴニアの直売日)のみ。soransai.com は 10/4 のまま、figure-online.net/blogs/news は服の新着だけ。flarie.jp は 10-27 からサイト全体が一時休止(503)なので、主催の Instagram @hisayaodori_garden_flarie の最新12投稿を見た(植物の催しは無し)。取りこぼし0。この日から coverage-sweep.py が organizer-index として毎日読む(curl だけ。ブラウザ不要)",
    "history": [
