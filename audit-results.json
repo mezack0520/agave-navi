@@ -1,5 +1,5 @@
 {
-  "total": 746,
+  "total": 750,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -356,12 +356,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 3,
-      "items": [
-        "art-bikakushida-hankyu-umeda-2026-11: 本文 11月4日/11月24日 が 2026-11-11〜2026-11-17 の外",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-01: 本文 11月8日 が 2026-11-01〜2026-11-01 の外",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-08: 本文 11月1日 が 2026-11-08〜2026-11-08 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す。日程を変えた回が当初の日付を書いているなら、eventStatus を rescheduled、previousStartDate に当初の開始日を書く(その日付は外れる)",
       "severity": "urgent"
     },
@@ -654,6 +650,13 @@
       "note": "内容も同じなら片方のcanonicalをもう片方に向ける。内容が違うなら title を書き分ける",
       "severity": "urgent"
     },
+    "same_name_upcoming": {
+      "title": "同じ name の開催予定が複数ある(詳細頁の title が重複する)",
+      "count": 0,
+      "items": [],
+      "note": "name の末尾に「(11/1)」のように日か会場を足して書き分ける",
+      "severity": "urgent"
+    },
     "unreferenced_scripts": {
       "title": "build-all.shもworkflowもプレイブックも参照していないスクリプト",
       "count": 0,
@@ -721,7 +724,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -859,8 +862,14 @@
     },
     "index_card_body_drift": {
       "title": "トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)",
-      "count": 0,
-      "items": [],
+      "count": 5,
+      "items": [
+        "art-bikakushida-hankyu-umeda-2026-11: 説明文が古い",
+        "bizarre-plants-fair-brew-by-mstr-2026-11-01: 名称 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/1'",
+        "bizarre-plants-fair-brew-by-mstr-2026-11-01: 説明文が古い",
+        "bizarre-plants-fair-brew-by-mstr-2026-11-08: 名称 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/8'",
+        "bizarre-plants-fair-brew-by-mstr-2026-11-08: 説明文が古い"
+      ],
       "note": "来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
@@ -1182,8 +1191,11 @@
     },
     "jsonld_data_drift": {
       "title": "詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "bizarre-plants-fair-brew-by-mstr-2026-11-01: name 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/1)'",
+        "bizarre-plants-fair-brew-by-mstr-2026-11-08: name 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/8)'"
+      ],
       "note": "build-detail-pages.py を回す。差分が残るならテンプレート側を疑う",
       "severity": "urgent"
     },

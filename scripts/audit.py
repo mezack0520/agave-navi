@@ -1658,6 +1658,18 @@ def main():
         '内容も同じなら片方のcanonicalをもう片方に向ける。'
         '内容が違うなら title を書き分ける')
 
+    # 同じ name の開催予定が複数ある(2日開催を日ごとに分けた回など)。
+    # 詳細頁の title は name そのままなので、頁を作り直すまで duplicate_indexable_title は鳴らない。
+    # 2026-10-30 Bizarre Plants Fair(11/1・11/8)が同名で入り、生成後に重複 title になった。
+    # events.json の段階で「name に日を入れて書き分ける」ことを促す
+    _nm = {}
+    for e in events:
+        if (e.get('dateEnd') or e.get('date') or '') >= today and not is_cancelled(e):
+            _nm.setdefault((e.get('name') or '').strip(), []).append(e['slug'])
+    add('same_name_upcoming', '同じ name の開催予定が複数ある(詳細頁の title が重複する)',
+        sorted(f"{n} → {', '.join(v)}" for n, v in _nm.items() if n and len(v) > 1),
+        'name の末尾に「(11/1)」のように日か会場を足して書き分ける')
+
     # 13. build-all.sh から呼ばれていないスクリプト(死んだ資産)
     try:
         with open(rp('scripts', 'build-all.sh'), encoding='utf-8') as f:

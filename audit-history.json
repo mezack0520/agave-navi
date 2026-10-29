@@ -1669,8 +1669,9 @@
   {
    "date": "2026-10-30",
    "urgent": {
-    "desc_date_mismatch": 3,
-    "duplicate_indexable_title": 1
+    "duplicate_indexable_title": 1,
+    "index_card_body_drift": 5,
+    "jsonld_data_drift": 2
    },
    "info": {
     "coverage_gap_stale": 2,
