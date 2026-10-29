@@ -1,7 +1,67 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "items": [
+    {
+      "on": "2026-10-30",
+      "kind": "listed",
+      "slug": "bizarre-plants-fair-brew-by-mstr-2026-11-01",
+      "name": "Bizarre Plants Fair",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-30",
+      "kind": "listed",
+      "slug": "bizarre-plants-fair-brew-by-mstr-2026-11-08",
+      "name": "Bizarre Plants Fair",
+      "date": "2026-11-08",
+      "dateEnd": "2026-11-08",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-30",
+      "kind": "listed",
+      "slug": "art-bikakushida-hankyu-umeda-2026-11",
+      "name": "アートな植物ビカクシダ(阪急うめだ本店)",
+      "date": "2026-11-11",
+      "dateEnd": "2026-11-17",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-30",
+      "kind": "listed",
+      "slug": "botanical-junction-asahikawa-2026-11",
+      "name": "BOTANICAL JUNCTION",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-14",
+      "prefecture": "北海道",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-30",
+      "kind": "listed",
+      "slug": "plants-dive-vol6-tennoji-2026-11",
+      "name": "PLANTS DIVE vol.006 in 赤松種苗",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-30",
+      "kind": "listed",
+      "slug": "honwaka-pappa-4th-2026-12",
+      "name": "ホンワカパッパ 第4回",
+      "date": "2026-12-27",
+      "dateEnd": "2026-12-27",
+      "prefecture": "大阪",
+      "detail": ""
+    },
     {
       "on": "2026-10-29",
       "kind": "listed",
@@ -1140,66 +1200,6 @@
       "date": "2026-10-25",
       "dateEnd": "2026-10-25",
       "prefecture": "岡山",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-hiroshima-2026-10",
-      "name": "Lier.多肉フェスティバル in 広島",
-      "date": "2026-10-26",
-      "dateEnd": "2026-10-26",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-nobeoka-2026-10",
-      "name": "Lier.多肉フェスティバル in 延岡",
-      "date": "2026-10-31",
-      "dateEnd": "2026-10-31",
-      "prefecture": "宮崎",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-aira-2026-11",
-      "name": "Lier.多肉フェスティバル in 姶良",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "鹿児島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-kumamoto-2026-11",
-      "name": "Lier.多肉フェスティバル in 熊本",
-      "date": "2026-11-02",
-      "dateEnd": "2026-11-02",
-      "prefecture": "熊本",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-munakata-2026-11",
-      "name": "Lier.多肉フェスティバル in 宗像",
-      "date": "2026-11-03",
-      "dateEnd": "2026-11-03",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "masappe-taniku-2nd-anniversary-2026-11",
-      "name": "masappe多肉 周年祭（2周年）",
-      "date": "2026-11-03",
-      "dateEnd": "2026-11-03",
-      "prefecture": "茨城",
       "detail": ""
     }
   ]

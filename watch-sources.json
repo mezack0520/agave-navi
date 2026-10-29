@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-30 06:41 JST",
+ "generated": "2026-10-30 07:16 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 387,
-  "awaitingNextEdition": 424,
-  "officialSiteCandidates": 88,
+  "igAccounts": 391,
+  "awaitingNextEdition": 422,
+  "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 91,
+  "igNeedsBrowser": 95,
   "igDead": 7
  },
  "igAccounts": [
@@ -441,6 +441,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "brew_by_mstr",
+   "url": "https://www.instagram.com/brew_by_mstr/",
+   "eventCount": 2,
+   "lastEventName": "Bizarre Plants Fair",
+   "lastEventDate": "2026-11-08",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "lahainagarden",
    "url": "https://www.instagram.com/lahainagarden/",
    "eventCount": 2,
@@ -606,6 +616,16 @@
    "eventCount": 2,
    "lastEventName": "多肉ワンダーランド 第2回",
    "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "homwaka_pappa",
+   "url": "https://www.instagram.com/homwaka_pappa/",
+   "eventCount": 2,
+   "lastEventName": "ホンワカパッパ 第4回",
+   "lastEventDate": "2026-12-27",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
@@ -1211,6 +1231,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "hankyu_greenage",
+   "url": "https://www.instagram.com/hankyu_greenage/",
+   "eventCount": 1,
+   "lastEventName": "アートな植物ビカクシダ(阪急うめだ本店)",
+   "lastEventDate": "2026-11-11",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "the_botanical_show",
    "url": "https://www.instagram.com/the_botanical_show/",
    "eventCount": 1,
@@ -1249,6 +1279,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "horn_and_spina",
+   "url": "https://www.instagram.com/horn_and_spina/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL JUNCTION",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -1439,6 +1479,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "plants_dive",
+   "url": "https://www.instagram.com/plants_dive/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS DIVE vol.006 in 赤松種苗",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "pachypo_no_en",
@@ -2694,16 +2744,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
-  },
-  {
-   "handle": "homwaka_pappa",
-   "url": "https://www.instagram.com/homwaka_pappa/",
-   "eventCount": 1,
-   "lastEventName": "ホンワカパッパ 第3回",
-   "lastEventDate": "2026-09-13",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
   },
   {
    "handle": "north_east_caudex_club",
@@ -4388,6 +4428,12 @@
    "eventDate": "2026-11-07"
   },
   {
+   "domain": "hankyu-dept.co.jp",
+   "url": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
+   "eventName": "アートな植物ビカクシダ(阪急うめだ本店)",
+   "eventDate": "2026-11-11"
+  },
+  {
    "domain": "rareplantsjapan.jp",
    "url": "https://rareplantsjapan.jp/2210",
    "eventName": "RARE PLANTS COLLECTION",
@@ -4511,12 +4557,6 @@
    "domain": "festival-life.com",
    "url": "https://festival-life.com/festival/area/tokai/aichi",
    "eventName": "Rhythms of Life",
-   "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "makeman.co.jp",
-   "url": "https://makeman.co.jp/event/event-10904/",
-   "eventName": "ボタニカルマーケットVol.6",
    "eventDate": "2026-05-30"
   }
  ],
