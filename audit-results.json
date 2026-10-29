@@ -1,5 +1,5 @@
 {
-  "total": 750,
+  "total": 742,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -643,10 +643,8 @@
     },
     "duplicate_indexable_title": {
       "title": "index対象の別URLが同じtitle(重複コンテンツ)",
-      "count": 1,
-      "items": [
-        "Bizarre Plants Fair | アガベイベントナビ → events/bizarre-plants-fair-brew-by-mstr-2026-11-01.html, events/bizarre-plants-fair-brew-by-mstr-2026-11-08.html"
-      ],
+      "count": 0,
+      "items": [],
       "note": "内容も同じなら片方のcanonicalをもう片方に向ける。内容が違うなら title を書き分ける",
       "severity": "urgent"
     },
@@ -862,14 +860,8 @@
     },
     "index_card_body_drift": {
       "title": "トップのカード本文がevents.jsonと不一致(古い日付・名称が出る)",
-      "count": 5,
-      "items": [
-        "art-bikakushida-hankyu-umeda-2026-11: 説明文が古い",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-01: 名称 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/1'",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-01: 説明文が古い",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-08: 名称 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/8'",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-08: 説明文が古い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "来場者が読む文字そのものが古い。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
@@ -1191,11 +1183,8 @@
     },
     "jsonld_data_drift": {
       "title": "詳細ページのJSON-LDがevents.jsonと不一致(再生成漏れ)",
-      "count": 2,
-      "items": [
-        "bizarre-plants-fair-brew-by-mstr-2026-11-01: name 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/1)'",
-        "bizarre-plants-fair-brew-by-mstr-2026-11-08: name 頁='Bizarre Plants Fair' data='Bizarre Plants Fair(11/8)'"
-      ],
+      "count": 0,
+      "items": [],
       "note": "build-detail-pages.py を回す。差分が残るならテンプレート側を疑う",
       "severity": "urgent"
     },
