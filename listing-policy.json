@@ -332,6 +332,37 @@
     "label": "もすレコ。の「開催予定の園芸イベントまとめ」記事(埼玉・北関東が厚い)",
     "manualSweepId": "matome-blog",
     "note": "2026-10-25 に coverage-sweep.py へ機械化。手巡回(agave-event-update)が 10-23〜25 の3日続けて未実施で期限を切らしたため。自動で読めた日は manual-sweeps.json の台帳を見ない(audit.manual_sweep_stale)。読めなかった日だけ台帳が代わりになる"
+   },
+   "organizer-index": {
+    "label": "掲載済みシリーズの主催公式サイトの「イベント一覧」",
+    "manualSweepId": "organizer-official-index",
+    "note": "2026-10-29 に coverage-sweep.py へ機械化。手巡回の台帳 organizer-official-index が 10-14 を最後に15日回らず期限を切らし、event-monitor は「ブラウザ要」と書いて回さなかった。描画の要る頁はフラリエ(flarie.jp/news)だけで、残りは curl で読める。全部の頁を読めた日だけ自動で巡回したことになり、1枚でも読めない日は台帳が代わる(読めなかった頁は coverage-gaps.json の sweptSources.organizer-index.notes)。一覧を持つ主催が新しく見つかったら pages に足す",
+    "pages": [
+     {
+      "url": "https://greensnap.jp/event/",
+      "follow": "/event/events/[^/]+/?$",
+      "note": "GreenSnap Marche・カダンフェス。一覧は回の名前だけなので、個別頁を開いて日時を読む"
+     },
+     {
+      "url": "https://www.jolienursery.co.jp/pages/events",
+      "note": "Jolie Nursery の即売会。日付→場所→名前の順に並ぶ"
+     },
+     {
+      "url": "https://www.kagoen.co/",
+      "genreWord": true,
+      "note": "花郷園。クリスマスローズ・ベゴニアの直売日も載るので、ジャンル語のある項目だけ"
+     },
+     {
+      "url": "https://soransai.com/",
+      "note": "草乱祭"
+     },
+     {
+      "url": "https://figure-online.net/blogs/news",
+      "genreWord": true,
+      "note": "FIGURE(服の店)。植物の催しはまれで、残りは服の新着"
+     }
+    ],
+    "notCovered": "久屋大通庭園フラリエ(flarie.jp/news)は描画が要る頁で、2026-10-27 からはサイト全体が一時休止(503)。主催の Instagram(hisayaodori_garden_flarie)を ig-organizer-watch が organizerIg で見る"
    }
   }
  },

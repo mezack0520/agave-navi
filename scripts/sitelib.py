@@ -517,11 +517,52 @@ def decode_html(raw, content_type=None):
         return raw.decode('utf-8', 'replace')
 
 
+def request_url(url):
+    """日本語のパスやホストを含む URL を、urllib が送れる形(パーセント符号化・IDNA)にする。
+
+    urllib は非ASCIIの URL を送れず UnicodeEncodeError になる。probe_status はそれを
+    「接続できない(-1)」と返し、画像の死活も公式リンクの死活も判定できないまま残っていた
+    (2026-10-29。草木日和の画像 .../20261107.08草木日和.jpg はブラウザでも curl でも 200)。
+    requests は自分で符号化するので、urllib を使う fetch_text と probe_status だけが落ちていた。
+    符号化済みの %XX は二重にしない。"""
+    from urllib.parse import urlsplit, urlunsplit, quote
+    url = (url or '').strip()
+    if not re.search(r'[^\x21-\x7e]', url):
+        return url
+    p = urlsplit(url)
+    netloc = p.netloc
+    if re.search(r'[^\x00-\x7f]', netloc):
+        userinfo, at, hostport = netloc.rpartition('@')
+        host, colon, port = hostport.partition(':')
+        try:
+            host = host.encode('idna').decode('ascii')
+        except UnicodeError:
+            pass
+        netloc = userinfo + at + host + colon + port
+    safe = "/%:@!$&'()*+,;=-._~"
+    return urlunsplit((p.scheme, netloc, quote(p.path, safe=safe),
+                       quote(p.query, safe=safe + '?'), quote(p.fragment, safe=safe + '?')))
+
+
+def _self_test_request_url():
+    """request_url の自己テスト。check_events.py が毎回呼び、失敗は selfTestErrors に残る"""
+    cases = [
+        ('https://bloomgarden.jp/wp-content/uploads/2026/10/20261107.08草木日和.jpg',
+         'https://bloomgarden.jp/wp-content/uploads/2026/10/20261107.08%E8%8D%89%E6%9C%A8%E6%97%A5%E5%92%8C.jpg'),
+        ('https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/',
+         'https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/'),
+        ('https://例え.jp/a b?q=多肉&x=1', 'https://xn--r8jz45g.jp/a%20b?q=%E5%A4%9A%E8%82%89&x=1'),
+        ('https://example.com/p?a=1#frag', 'https://example.com/p?a=1#frag'),
+    ]
+    return [f'request_url({u!r}): 期待 {w!r} / 実際 {request_url(u)!r}'
+            for u, w in cases if request_url(u) != w]
+
+
 def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
     """外部ページを取って文字列で返す。接続系の失敗と RETRY_HTTP_STATUS を引き直す。
 
     引き直しても駄目なら最後の例外をそのまま上げる。呼び出し側が
-    errors に積むかどうかを決める。
+    errors に積むかどうかを決める。URL は request_url を通す(日本語のパスで落ちない)。
     """
     import time as _time
     import urllib.request as _ureq
@@ -531,7 +572,7 @@ def fetch_text(url, timeout=20, retries=2, wait=3.0, ua=None, headers=None):
         h['User-Agent'] = ua
     if headers:
         h.update(headers)
-    req = _ureq.Request(url, headers=h)
+    req = _ureq.Request(request_url(url), headers=h)
     for attempt in range(retries + 1):
         try:
             with _ureq.urlopen(req, timeout=timeout) as r:
@@ -558,13 +599,14 @@ def probe_status(url, timeout=15, retries=2, wait=3.0):
       - HEAD を拒むサーバ(403/405/501・接続断)があるので、HEAD が駄目なら GET で引き直す
       - RETRY_HTTP_STATUS(429/5xx)は「今は無理、あとで来い」なので待って引き直す
       - 接続できない(-1)は引き直さない。待っても変わらないことが多く、1回で最大30秒かかる
+      - URL は request_url を通す。日本語のパスのまま渡すと送る前に落ち、-1 になっていた(2026-10-29)
     """
     import time as _time
     import urllib.request as _ureq
     import urllib.error as _uerr
 
     def once(method):
-        req = _ureq.Request(url, method=method, headers={'User-Agent': BROWSER_UA})
+        req = _ureq.Request(request_url(url), method=method, headers={'User-Agent': BROWSER_UA})
         try:
             with _ureq.urlopen(req, timeout=timeout) as r:
                 return r.getcode()

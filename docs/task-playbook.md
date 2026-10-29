@@ -1402,7 +1402,12 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
     NextMeet 4か月とまとめ記事の見出しごとに「掲載済み/見送り/取りこぼし」と当たった相手を出す。当たり先が同じ回かを目で見るだけ。
     10-26 に event-monitor が「目視巡回でブラウザ必須」と書いて回さず、期限を切らした。**bash だけで回せる。**
     期限が近いのに agave-event-update が回していなければ event-monitor が回す
-  - 主催公式サイトの一覧 `organizer-official-index`(staleDays 14): device_bash の curl で読める頁は curl で読む
+  - 主催公式サイトの一覧 `organizer-official-index`(staleDays 14): 2026-10-29 から `coverage-sweep.py` の
+    `organizer-index` が毎日自動で読む(頁は `listing-policy.json` の coverageSources)。全部の頁を読めた日は台帳を見ない。
+    読めなかった頁(`coverage-gaps.json` の `sweptSources.organizer-index.notes`)だけ device_bash の curl で見る。
+    10-14 から15日回らず期限を切らした。event-monitor は「ブラウザ要」と書いて丸ごと回さなかったが、
+    描画の要る頁は6枚のうちフラリエの1枚だけだった。**読めない頁が1枚あっても、残りは回して台帳に読めなかった頁を書く。**
+    フラリエは主催の Instagram(`hisayaodori_garden_flarie`)を organizerIg で ig-organizer-watch が見る
   - まとめブログの台帳は、coverage-sweep.py が読めなかった日の代わりとして残す
     (`listing-policy.json` coverageSources の manualSweepId)。自動で読めた日は `manual_sweep_stale` が見ない。
     手巡回は 10-23〜25 の3日続けて後回しになり、期限の14日を切らした。見出しが決まった形なので機械で読める
@@ -4628,7 +4633,7 @@ embed/captioned の本文の先頭のハンドルは書き手だけを出し、�
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で会場の所在地を確かめ、説明文の所在地を location の住所どおりに直す。location / prefecture のほうが違っていればそちらを直す | fixed |
 | 埋め込み・アイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して image-rejected.json に記録し、この回の告知を主催の投稿で探し直す | fixed |
 | 同じシリーズの回で名称の表記が割れている(`series_name_variant`) | 主催の告知の表記に揃え、使わなくなった表記は aliases に残す。本当に別のイベントなら名前で区別が付くようにする | fixed |
-| リンク切れ(開催前の回) | まず手元から HEAD と GET で引き直す(CI にだけ 204 / 429 を返す相手がある。生きていれば reviewed)。本当に切れていれば主催の新しい告知URLに差し替える。見つからなければ skipped に理由 | fixed / reviewed / skipped |
+| リンク切れ(開催前の回) | まず手元から HEAD と GET で引き直す(CI にだけ 204 / 429 を返す相手がある。生きていれば reviewed)。本当に切れていれば主催の新しい告知URLに差し替える。サイトのトップも同じ返事(休止・メンテナンスの頁)なら、主催の Instagram を url と organizerIg に入れる。画像がその告知頁のものなら、告知頁を imageSource に残す(2026-10-29 フラリエ。サイト全体が一時休止で 503)。見つからなければ skipped に理由 | fixed / reviewed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新 | fixed |
 | その他の urgent | 監査の note のとおり直す | fixed / skipped |

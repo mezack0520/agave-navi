@@ -25,6 +25,8 @@ events.json と rejected-events.json に突き合わせて、
   leafla      … 日付別ページ（1日1ページ・全国）を先の日付ぶん
   nextmeet    … 月別ページ（1ページに全国の会期）を先の月ぶん
   matome-blog … もすレコ。の「開催予定の園芸イベントまとめ」記事（埼玉・北関東が厚い）
+  organizer-index … 掲載済みシリーズの主催公式サイトの「イベント一覧」(頁の一覧は
+                listing-policy.json の coverageSources に持つ。次の回は主催の一覧にだけ先に出る)
 
 **1社では取りこぼす。**2026-09-06 と 09-10、LEAFLA 由来の巡回が
 errors 0 / gaps 0 でいちばん健全に見えている裏で、NextMeet の月別を
@@ -483,6 +485,167 @@ def sweep_matome(sleep=0.7):
     return [(k, by_day[k]) for k in sorted(by_day)], fetched, notes
 
 
+# 4つ目。掲載済みシリーズの主催が自分のサイトに並べている「イベント一覧」(2026-10-29 に手巡回から機械化)。
+# 台帳 organizer-official-index(staleDays 14)は 10-14 を最後に15日回らず期限を切らした。
+# event-monitor は「ブラウザ要」と書いて回さなかったが、描画の要る頁はフラリエの1枚だけで、
+# 残りは curl で読める。見る頁は listing-policy.json の coverageSources.required['organizer-index'].pages
+ORG_INDEX_HORIZON = 180   # 主催は3か月以上前から一覧に出す(GreenSnap の11月回は9月に出ていた)
+_ORG_FULL_DATE = re.compile(r'(20\d\d)\s*[年./-]\s*(\d{1,2})\s*[月./-]\s*(\d{1,2})')
+_ORG_MD_DATE = re.compile(r'(?<![\d./])(\d{1,2})\s*[月/]\s*(\d{1,2})(?!\d)')
+# 日付の前後に催しの語が無ければ候補にしない(ナビの行や放送日の行を拾わない)
+_ORG_EVENT_WORDS = ('開催', '即売', '販売会', 'マルシェ', 'フェス', '祭', '展示', 'フェア',
+                    'イベント', 'ポップアップ', 'marche', 'market', 'fes', 'fair', 'expo',
+                    'pop up', 'popup', 'event')
+# 日付の行そのものがこれを言っていれば、催しの日ではない(セールの期限・締切・発売日・休業日)
+_ORG_NOT_EVENT = ('セール', 'sale', '%off', '割引', 'クーポン', '締切', '締め切り', '〆切',
+                  '放送', '掲載', '発売', 'release', '入荷', '発送', '休業', '定休', '休園', '営業')
+
+
+def org_page_lines(html):
+    """HTML を見たままの行に分ける(script/style を落とし、ブロック要素の終わりで改行)"""
+    s = re.sub(r'<(script|style|noscript)\b[^>]*>.*?</\1\s*>', ' ', html, flags=re.S | re.I)
+    s = re.sub(r'<br\s*/?>|</(?:p|div|li|h[1-6]|tr|td|th|dt|dd|section|article|a)\s*>', '\n',
+               s, flags=re.I)
+    out = []
+    for line in htmllib.unescape(re.sub(r'<[^>]+>', ' ', s)).splitlines():
+        line = re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', line)).strip()
+        if line:
+            out.append(line)
+    return out
+
+
+def org_line_dates(line, today, horizon=ORG_INDEX_HORIZON, anchor=None):
+    """行に書かれた日付(年まで書いた日付があればそれだけ。同じ行の「11月1日」は会期の続き)。
+    年の無い日付は、anchor(直前に年まで書いた日付)があればその日以降でいちばん近い年、
+    無ければ今年か来年のうち今日から horizon 日以内に入るほうと読む。
+    終わった回の「3月14日」を来年の3月と読まないため(2026-10-29 の Jolie Nursery の終了欄)。
+    返すのは今日から horizon 日以内の日付だけ。年まで書いた日付は2つ目に返す(過去でも)"""
+    out, full_dates = [], []
+    full = _ORG_FULL_DATE.findall(line)
+    if full:
+        for y, m, d in full:
+            try:
+                full_dates.append(date(int(y), int(m), int(d)))
+            except ValueError:
+                pass
+        out = list(full_dates)
+    else:
+        for m, d in _ORG_MD_DATE.findall(line):
+            base = anchor - timedelta(days=1) if anchor else today
+            for y in (base.year, base.year + 1):
+                try:
+                    x = date(y, int(m), int(d))
+                except ValueError:
+                    continue
+                if x >= base and (anchor or (x - today).days <= horizon):
+                    out.append(x)
+                    break
+    return [x for x in out if 0 <= (x - today).days <= horizon], full_dates
+
+
+def org_dated_items(lines, today, horizon=ORG_INDEX_HORIZON, event_words=True):
+    """一覧の行から (開始日, 見出し) を取る。先の日付を書いた行ごとに、前1行と後ろ4行を見出しにする
+    (一覧は「日付→場所→名前」とも「名前→日付」とも並ぶ)。同じ回の2日目や時刻の行
+    (直前の候補から8行以内で3日以内)は畳む。event_words=False は回の個別頁を読むとき
+    (頁そのものが1つの回なので、日付の前後に催しの語を求めない)"""
+    items, last_i, last_d = [], -99, None
+    anchor, anchor_i = None, -99
+    for i, line in enumerate(lines):
+        ds, full = org_line_dates(line, today, horizon,
+                                  anchor=anchor if i - anchor_i <= 8 else None)
+        if full:
+            anchor, anchor_i = min(full), i
+        if not ds or any(w in line.lower() for w in _ORG_NOT_EVENT):
+            continue
+        d0 = min(ds)
+        if last_d is not None and i - last_i <= 8 and abs((d0 - last_d).days) <= 3:
+            continue
+        ctx = ' '.join(lines[max(0, i - 1): i + 5])[:240]
+        if event_words and not any(w in ctx.lower() for w in _ORG_EVENT_WORDS):
+            continue
+        items.append((d0.isoformat(), ctx))
+        last_i, last_d = i, d0
+    return items
+
+
+def org_link_targets(html, base, pattern):
+    """一覧から個別頁へのリンク(pattern に当たる URL)を、出てきた順に重複なしで取る"""
+    from urllib.parse import urljoin
+    out = []
+    for m in re.finditer(r'<a\b[^>]*\bhref="([^"#]+)"', html, re.I):
+        u = urljoin(base, htmllib.unescape(m.group(1)))
+        if re.search(pattern, u) and u not in out:
+            out.append(u)
+    return out
+
+
+def org_page_title(html):
+    """頁の題から回の名前を取る(「回の名前 – サイト名」のサイト名を落とす)"""
+    m = re.search(r'<title[^>]*>(.*?)</title>', html, re.S | re.I)
+    t = _plain(m.group(1)) if m else ''
+    return re.split(r'\s+[–|-]\s+', t)[0].strip()
+
+
+def sweep_organizer_index(sleep=0.7):
+    """主催公式の一覧から (日付, [見出し]) を取る。
+    follow のある頁は一覧が名前だけなので、当たる個別頁を開いて日時を読み、見出しは頁の題にする。
+    genreWord の頁(服の店のお知らせ欄など)は、見出しにジャンル語がある項目だけ残す。
+    1枚でも読めなければ notes に残す。呼び出し側は全部読めた日だけ ok にし、
+    読めなかった日は台帳 organizer-official-index が代わる"""
+    spec = ((load_json('listing-policy.json', {}).get('coverageSources') or {})
+            .get('required') or {}).get('organizer-index') or {}
+    pages_cfg = spec.get('pages') or []
+    today = date.fromisoformat(today_jst())
+    by_day, fetched, notes = {}, 0, []
+    if not pages_cfg:
+        notes.append('listing-policy.json の coverageSources.required.organizer-index.pages が空')
+
+    def keep(day, title, need_genre):
+        if need_genre and not in_scope(title):
+            return
+        by_day.setdefault(day, [])
+        if title not in by_day[day]:
+            by_day[day].append(title)
+
+    for pc in pages_cfg:
+        url = pc.get('url') or ''
+        try:
+            html = fetch(url)
+        except Exception as e:                      # noqa: BLE001
+            notes.append(f'{url}: {type(e).__name__} {e}')
+            continue
+        need_genre = bool(pc.get('genreWord'))
+        if pc.get('follow'):
+            targets = org_link_targets(html, url, pc['follow'])
+            if not targets:
+                notes.append(f'{url}: 個別頁へのリンクが1件も無い(頁の作りが変わった可能性 / {len(html)}バイト)')
+                continue
+            failed = False
+            for t in targets[:12]:
+                time.sleep(sleep)
+                try:
+                    sub = fetch(t)
+                except Exception as e:              # noqa: BLE001
+                    notes.append(f'{t}: {type(e).__name__} {e}')
+                    failed = True
+                    continue
+                items = org_dated_items(org_page_lines(sub), today, event_words=False)
+                if items:
+                    keep(items[0][0], org_page_title(sub) or items[0][1], need_genre)
+            if failed:
+                continue
+        else:
+            lines = org_page_lines(html)
+            if len(lines) < 5:
+                notes.append(f'{url}: 本文が読めない(描画の要る頁の可能性 / {len(html)}バイト)')
+                continue
+            for day, title in org_dated_items(lines, today):
+                keep(day, title, need_genre)
+        fetched += 1
+        time.sleep(sleep)
+    return [(k, by_day[k]) for k in sorted(by_day)], fetched, len(pages_cfg), notes
+
+
 def load_json(path, default):
     try:
         with open(os.path.join(REPO, path), encoding='utf-8') as f:
@@ -776,7 +939,7 @@ def resolve_truncated(title, full_titles, min_stem=8):
 
 
 def sweep(days, sleep=0.7, explain=None):
-    """explain に list を渡すと、名前そのものが来る情報源(NextMeet・まとめ記事)の見出しごとに
+    """explain に list を渡すと、名前そのものが来る情報源(NextMeet・まとめ記事・主催公式の一覧)の見出しごとに
     (情報源, 日付, 見出し, 判定, 当たった相手) を積む。手で回す照合(manual-sweeps.json の
     nextmeet-monthly-check)は、この一覧を目で見るだけで済む(2026-10-26。ブラウザは要らない)"""
     by_day, rejected = build_index()
@@ -837,6 +1000,17 @@ def sweep(days, sleep=0.7, explain=None):
     if mt_notes:
         sources['matome-blog']['notes'] = mt_notes[:10]
 
+    # 4つ目。主催公式の一覧。回の名前(個別頁の題)か、一覧の日付の前後の行が来る。
+    # 全部の頁を読めた日だけ ok にする。1枚でも読めない日は台帳 organizer-official-index が代わる
+    oi_pages, oi_fetched, oi_total, oi_notes = sweep_organizer_index(sleep)
+    stats['fetched_organizer_index'] = oi_fetched
+    stats['candidates'] += sum(len(t) for _, t in oi_pages)
+    pages.extend((k, t, 'organizer-index') for k, t in oi_pages)
+    sources['organizer-index'] = {'ok': oi_total > 0 and oi_fetched == oi_total,
+                                  'fetched': oi_fetched, 'unit': 'page'}
+    if oi_notes:
+        sources['organizer-index']['notes'] = oi_notes[:10]
+
     # 切り詰め見出しは、全ページを取り終えてから完全版と突き合わせる。
     # 完全版は自分の開催日のページに出ているので、1パス目を終えないと揃わない。
     full_titles = list(dict.fromkeys(
@@ -864,8 +1038,9 @@ def sweep(days, sleep=0.7, explain=None):
                     unresolved.append(t[:180])
                     stats['truncated_unresolved'] += 1
                 continue
-            # 名前そのものが来る情報源(NextMeet・まとめ記事)は、見出しにジャンル語を要求しない
-            named = source in ('nextmeet', 'matome-blog')
+            # 名前そのものが来る情報源(NextMeet・まとめ記事・主催公式の一覧)は、見出しにジャンル語を
+            # 要求しない。主催公式の一覧のうち植物以外も並ぶ頁は sweep_organizer_index が先に絞っている
+            named = source in ('nextmeet', 'matome-blog', 'organizer-index')
             if not in_scope(t, prescoped=named):
                 continue
             stats['in_scope'] += 1
@@ -1257,6 +1432,63 @@ def self_test(verbose=True):
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 見出し {got}")
 
+    _p('\n--- 主催公式の一覧(organizer-index) ---')
+    t0 = date(2026, 10, 29)
+    # Jolie Nursery の /pages/events の作り(2026-10-29)。日付の行の後ろに場所と名前が来る。
+    # 先頭のセールの期限(〜11/3まで)、終わった回、同じ回の「開催日時」の行は候補にしない
+    jolie = ('<div>コンテンツに進む</div><div>秋の感謝セール 全品10%OFF｜〜11/3まで・自動適用</div>'
+             '<div>イベント情報</div><div>開催予定</div><div>2026年10月24日（土）・25日（日）</div>'
+             '<div>埼玉県三郷市｜武蔵乃葉品店 三郷店</div><div>Jolie Nursery Selected Aroids 即売会</div>'
+             '<div>開催予定</div><div>2026年11月21日（土）・22日（日）</div>'
+             '<div>福岡県春日市・福岡市西区｜平田ナーセリー 春日店・小戸店</div>'
+             '<div>第4回 ハートンフェス FES2026</div><div>開催日時</div>'
+             '<div>11月21日（土）10:00〜16:00｜春日店</div><div>11月22日（日）10:00〜16:00｜小戸店</div>'
+             '<div>開催予定</div><div>2026年12月19日（土）</div><div>大阪府大阪市｜インテックス大阪</div>'
+             '<div>第9回 花友フェスタ in 大阪</div>'
+             # 終了欄。年の無い「3月14日」を来年3月と読まない(直前の 2026年3月14日 に揃える)
+             '<div>終了</div><div>2026年3月14日（土）</div><div>東京都西多摩郡瑞穂町</div>'
+             '<div>植フェス GLOBAL PLANTS MARKET</div><div>開催日時</div><div>3月14日（土）9:30〜15:00</div>')
+    got = [(d, ('ハートンフェス' in t, '花友フェスタ' in t))
+           for d, t in org_dated_items(org_page_lines(jolie), t0)]
+    want = [('2026-11-21', (True, False)), ('2026-12-19', (False, True))]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 日付の行と前後の行 {got}")
+    # 年の無い日付(花郷園の 11/7)と、放送日・発売日の行
+    kagoen = ('<p>毎年春と秋に、珍奇植物を扱う生産者が一堂に会するイベントを開催。</p>'
+              '<p>農場オープンデイ</p><p>11/7(土)・11/8(日) 10:00-16:00</p><p>駐車場:5台まで</p>'
+              '<p>2026年6月6日(土)夜9時00分放送</p><p>2026.11.20(FRI) RELEASE</p>')
+    got = org_dated_items(org_page_lines(kagoen), t0)
+    # 11/7 の農場オープンデイ(直売日)は、日付の前1行と後ろ4行に催しの語が無いので候補にしない
+    want = []
+    if [d for d, _ in got] != want:
+        ok = False
+    _p(f"  {'OK ' if [d for d, _ in got] == want else '★NG'} 年の無い日付・放送日・発売日 {[d for d, _ in got]}")
+    gs = ('<a href="https://greensnap.jp/event/events/">一覧</a>'
+          '<a href="https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/">お台場</a>'
+          '<a href="/event/events/kadanfes2026autumn/">カダンフェス</a>'
+          '<a href="https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/">重複</a>')
+    got = org_link_targets(gs, 'https://greensnap.jp/event/', r'/event/events/[^/]+/?$')
+    want = ['https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/',
+            'https://greensnap.jp/event/events/kadanfes2026autumn/']
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 個別頁へのリンク {got}")
+    # 回の個別頁(GreenSnap)は「日時」の下に日付だけが並び、前後に催しの語が無い
+    detail = ('<div>日時</div><div>2026年11月21日（土）10:00〜16:00</div>'
+              '<div>2026年11月22日（日）10:00〜16:00</div><div>アクセス</div><div>〒192-0034 東京都八王子市</div>')
+    got = ([d for d, _ in org_dated_items(org_page_lines(detail), t0, event_words=False)],
+           [d for d, _ in org_dated_items(org_page_lines(detail), t0)])
+    want = (['2026-11-21'], [])
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 個別頁の日時 {got}")
+    got = org_page_title('<title>GreenSnapMarche ABCハウジング八王子住宅公園 &#8211; GreenSnapMarche</title>')
+    want = 'GreenSnapMarche ABCハウジング八王子住宅公園'
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 頁の題 {got}")
+
     _p('\n結果:', 'すべて通過' if ok else '★失敗あり')
     return 0 if ok else 1
 
@@ -1267,7 +1499,7 @@ def main():
     ap.add_argument('--self-test', action='store_true')
     ap.add_argument('--sleep', type=float, default=0.7)
     ap.add_argument('--explain', action='store_true',
-                    help='NextMeet・まとめ記事の見出しごとに、当たった掲載済みの回・見送りを出す。'
+                    help='NextMeet・まとめ記事・主催公式の一覧の見出しごとに、当たった掲載済みの回・見送りを出す。'
                          'coverage-gaps.json は書かない(手の照合用)')
     args = ap.parse_args()
 
@@ -1319,6 +1551,7 @@ def main():
     print(f"取得できた日: {stats['fetched']} "
           f"/ NextMeetの月: {stats.get('fetched_nextmeet', 0)} "
           f"/ まとめ記事: {stats.get('fetched_matome', 0)} "
+          f"/ 主催公式の一覧: {stats.get('fetched_organizer_index', 0)} "
           f"/ 候補 {stats['candidates']}件")
     print(f"  うち対象: {stats['in_scope']}件 "
           f"(掲載済み {stats['covered']} / 見送り済み {stats['known_rejected']})")

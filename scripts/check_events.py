@@ -14,7 +14,7 @@ EVENTS_JSON = os.path.join(os.path.dirname(__file__), '..', 'events.json')
 RESULTS_JSON = os.path.join(os.path.dirname(__file__), '..', 'check-results.json')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sitelib import (today_jst, DESC_MIN_CHARS, content_implausible_issues,  # noqa: E402
-                     probe_status, should_retry_status)
+                     probe_status, should_retry_status, _self_test_request_url)
 
 def check_url(url):
     """URLの死活チェック。ステータスコードを返す。取り方(HEAD→GET・429/5xx の引き直し)は
@@ -111,9 +111,10 @@ def _self_test_status_is_alive():
 
 
 def main():
-    _bad = _self_test_status_is_alive() + _self_test_link_state()
+    # request_url が崩れると、日本語を含む URL がまた「接続できない(-1)」に落ちる(2026-10-29)
+    _bad = _self_test_status_is_alive() + _self_test_link_state() + _self_test_request_url()
     if _bad:
-        print('::warning::check_events: status_is_alive の自己テスト失敗: ' + ' / '.join(_bad), file=sys.stderr)
+        print('::warning::check_events: 死活判定の自己テスト失敗: ' + ' / '.join(_bad), file=sys.stderr)
     with open(EVENTS_JSON, 'r', encoding='utf-8') as f:
         events = json.load(f)
 
