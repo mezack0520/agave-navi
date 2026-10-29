@@ -1643,15 +1643,12 @@
   },
   {
    "date": "2026-10-29",
-   "urgent": {
-    "manual_sweep_stale": 1
-   },
+   "urgent": {},
    "info": {
-    "coverage_gap_stale": 1,
     "coverage_gaps": 6,
-    "cancel_suspects": 4,
-    "cancel_watch_unreachable": 1,
-    "organizer_unlisted_dates": 6,
+    "cancel_suspects": 2,
+    "organizer_unlisted_dates": 8,
+    "eyecatch_candidates_pending": 2,
     "task_run_gap": 1,
     "cross_script_duplicate": 3,
     "rejected_revisit_stale": 2

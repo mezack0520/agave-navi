@@ -2,42 +2,18 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-10-29",
   "stats": {
-    "targets": 22,
+    "targets": 21,
     "fetched": 21
   },
-  "errors": [
-    "taniku-xmas-flarie-2026-12: HTTP 503 https://www.flarie.jp/news/succulents-xmas.html"
-  ],
+  "errors": [],
   "logicErrors": [],
   "suspects": [
-    {
-      "slug": "greensnap-marche-toyosu-2026-autumn",
-      "name": "GreenSnap Marche 豊洲 2026 Autumn",
-      "date": "2026-10-31",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
     {
       "slug": "kusaki-biyori-bloomgarden-matsumae-2026-11",
       "name": "草木日和（BloomGARDEN）",
       "date": "2026-11-07",
       "url": "https://bloomgarden.jp/event/post-595/",
       "why": "弱い語(延期)＋ページが変わった",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-abc-hachioji-2026-11",
-      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
-      "date": "2026-11-21",
-      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "why": "公式ページが変わった(本文・画像)",
       "changed": [
         "本文",
         "画像"
@@ -106,7 +82,7 @@
         "textLen": 4661,
         "imageCount": 79
       },
-      "prevTextLen": 4675,
+      "prevTextLen": 4661,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -128,7 +104,7 @@
         "textLen": 2975,
         "imageCount": 15
       },
-      "prevTextLen": 2968,
+      "prevTextLen": 2975,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -233,12 +209,12 @@
       "url": "https://bloomgarden.jp/event/post-595/",
       "checkedOn": "2026-10-29",
       "signature": {
-        "text": "8d1c6184a0e18427",
-        "images": "c94d16587388cd79",
-        "textLen": 1425,
-        "imageCount": 27
+        "text": "fe21bd0bfcaecf1e",
+        "images": "3e5cc0ac06546ea5",
+        "textLen": 1417,
+        "imageCount": 26
       },
-      "prevTextLen": 1378,
+      "prevTextLen": 1425,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -306,7 +282,7 @@
         "textLen": 1041,
         "imageCount": 18
       },
-      "prevTextLen": 633,
+      "prevTextLen": 1041,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -434,7 +410,7 @@
       "checkedOn": "2026-10-29",
       "signature": {
         "text": "dd1a143059002f6d",
-        "images": "627792bce4944b24",
+        "images": "7aca72b2231e5af7",
         "textLen": 1187,
         "imageCount": 41
       },
@@ -449,7 +425,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 13
+      "imageOnlyChanges": 14
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",

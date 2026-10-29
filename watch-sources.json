@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-29 09:37 JST",
+ "generated": "2026-10-29 10:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 386,
+  "igAccounts": 387,
   "awaitingNextEdition": 424,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 90,
+  "igNeedsBrowser": 91,
   "igDead": 7
  },
  "igAccounts": [
@@ -1549,6 +1549,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "hisayaodori_garden_flarie",
+   "url": "https://www.instagram.com/hisayaodori_garden_flarie/",
+   "eventCount": 1,
+   "lastEventName": "多肉X'mas",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "botanical.tamba",
@@ -4402,12 +4412,6 @@
    "eventDate": "2026-12-04"
   },
   {
-   "domain": "flarie.jp",
-   "url": "https://www.flarie.jp/news/succulents-xmas.html",
-   "eventName": "多肉X'mas",
-   "eventDate": "2026-12-05"
-  },
-  {
    "domain": "borderbreak121415.blogspot.com",
    "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
    "eventName": "BORDER BREAK!! 11th",
@@ -4507,6 +4511,12 @@
    "domain": "festival-life.com",
    "url": "https://festival-life.com/festival/area/tokai/aichi",
    "eventName": "Rhythms of Life",
+   "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "makeman.co.jp",
+   "url": "https://makeman.co.jp/event/event-10904/",
+   "eventName": "ボタニカルマーケットVol.6",
    "eventDate": "2026-05-30"
   }
  ],

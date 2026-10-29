@@ -16,24 +16,31 @@
       "ok": true,
       "fetched": 1,
       "unit": "article"
+    },
+    "organizer-index": {
+      "ok": true,
+      "fetched": 5,
+      "unit": "page"
     }
   },
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 872,
-    "in_scope": 206,
-    "covered": 149,
+    "candidates": 878,
+    "in_scope": 212,
+    "covered": 156,
     "known_rejected": 23,
     "truncated_resolved": 0,
     "truncated_unresolved": 3,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
+    "fetched_organizer_index": 5,
     "in_scope_leafla": 101,
     "truncated_unresolved_hits": 135,
     "in_scope_nextmeet": 97,
     "in_scope_matome-blog": 8,
-    "gaps_raw": 34
+    "in_scope_organizer-index": 6,
+    "gaps_raw": 33
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -72,11 +79,6 @@
     {
       "date": "2026-11-22",
       "title": "PLANTS DIVE vol.006 in 赤松種苗",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-11-22",
-      "title": "園日 Vol.18",
       "source": "nextmeet"
     }
   ]
