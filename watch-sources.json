@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-31 07:49 JST",
+ "generated": "2026-10-31 08:18 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 391,
+  "igAccounts": 393,
   "awaitingNextEdition": 422,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 92,
+  "igNeedsBrowser": 94,
   "igDead": 7
  },
  "igAccounts": [
@@ -1071,6 +1071,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "tokiwapark.official",
+   "url": "https://www.instagram.com/tokiwapark.official/",
+   "eventCount": 1,
+   "lastEventName": "ときわミュージアム 植物販売",
+   "lastEventDate": "2026-11-01",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "yamanishihiryouten",
    "url": "https://www.instagram.com/yamanishihiryouten/",
    "eventCount": 1,
@@ -1119,6 +1129,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "helisgarden",
+   "url": "https://www.instagram.com/helisgarden/",
+   "eventCount": 1,
+   "lastEventName": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "botajam2026",
