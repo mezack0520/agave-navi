@@ -1,5 +1,5 @@
 {
-  "total": 768,
+  "total": 769,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -80,13 +80,20 @@
     },
     "organizer_ig_unknown_soon": {
       "title": "7日以内に開かれるのに主催のIGが分からない回(中止の告知を拾えない)",
-      "count": 3,
+      "count": 1,
       "items": [
-        "botanical-life-kasama-2026-11 (2026-11-07) 主催=笠間工芸の丘",
-        "chuushokushobutsusai-2026 (2026-11-07) 主催=Heli's Garden",
-        "tokiwa-museum-plant-sale-ube-2026-11 (2026-11-01) 主催=ときわミュージアム"
+        "botanical-life-kasama-2026-11 (2026-11-07) 主催=笠間工芸の丘"
       ],
       "note": "主催の Instagram を調べて organizerIg を入れる(主催の名前・出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は organizerIgNone: true を書く",
+      "severity": "urgent"
+    },
+    "organizer_ig_format": {
+      "title": "organizerIg が handle の形でない(@・URL・空白入り。見張りが外れる)",
+      "count": 1,
+      "items": [
+        "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10: @bad.handle"
+      ],
+      "note": "@ や https://instagram.com/ を外し、handle だけにする",
       "severity": "urgent"
     },
     "thin_fixable": {
@@ -726,7 +733,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -817,18 +824,20 @@
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 2,
-      "items": [
-        "大阪 インテックス大阪(1件) / インテックス大阪6号館D(1件)",
-        "山口 ときわミュージアム(1件) / ときわミュージアムときわ公園内(1件)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
     "venue_history_drift": {
       "title": "詳細頁の「同会場の他イベント」が会場ページの束ね方と食い違う",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "botanic-collection2-ube-2026-10: 節に0件 / 会場ページの束では1件",
+        "hanatomofesta-2026: 節に0件 / 会場ページの束では1件",
+        "reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02: 節に0件 / 会場ページの束では1件",
+        "tokiwa-museum-plant-sale-ube-2026-11: 節に0件 / 会場ページの束では1件"
+      ],
       "note": "build-detail-pages.py の同会場の束ねは sitelib.venue_key、見出しは sitelib.venue_display を使う。生の location で束ねると住所の括弧書きの有無だけで同じ会場の回が落ちる",
       "severity": "urgent"
     },

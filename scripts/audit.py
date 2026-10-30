@@ -453,6 +453,14 @@ def main():
         '無いと確かめた回は organizerIgNone: true を書く',
         severity='urgent')
 
+    # organizerIg の書式(2026-10-31)。ウォッチは handle だけを引く。@付き・URL・空白入りを書くと
+    # 見張りが黙って外れる(ハンドルが取れず「主催のIGが分からない」とも出ない)。
+    _org_ig_bad = [f"{e.get('slug')}: {e.get('organizerIg')}" for e in events
+                   if e.get('organizerIg')
+                   and not re.fullmatch(r'[A-Za-z0-9_.]{1,30}', str(e.get('organizerIg')))]
+    add('organizer_ig_format', 'organizerIg が handle の形でない(@・URL・空白入り。見張りが外れる)',
+        sorted(_org_ig_bad), '@ や https://instagram.com/ を外し、handle だけにする', severity='urgent')
+
     # 7. 薄い判定(noindex かつ収益枠なし)
     def is_thin(e):
         d = e.get('description') or ''
