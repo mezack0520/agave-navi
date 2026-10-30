@@ -1,12 +1,12 @@
 {
- "generated": "2026-10-30 13:42 JST",
+ "generated": "2026-10-31 06:42 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 391,
   "awaitingNextEdition": 422,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 95,
+  "igNeedsBrowser": 92,
   "igDead": 7
  },
  "igAccounts": [
@@ -448,7 +448,7 @@
    "lastEventDate": "2026-11-08",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "lahainagarden",
@@ -1238,7 +1238,7 @@
    "lastEventDate": "2026-11-11",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "the_botanical_show",
@@ -1288,7 +1288,7 @@
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -1488,7 +1488,7 @@
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "pachypo_no_en",

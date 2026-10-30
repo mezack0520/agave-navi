@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-10-30",
+  "sweptOn": "2026-10-31",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -26,40 +26,39 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 860,
-    "in_scope": 212,
-    "covered": 156,
+    "candidates": 792,
+    "in_scope": 211,
+    "covered": 159,
     "known_rejected": 23,
     "truncated_resolved": 0,
-    "truncated_unresolved": 3,
+    "truncated_unresolved": 2,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
-    "in_scope_leafla": 97,
-    "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 101,
-    "in_scope_matome-blog": 8,
+    "in_scope_leafla": 93,
+    "truncated_unresolved_hits": 90,
+    "in_scope_nextmeet": 102,
+    "in_scope_matome-blog": 10,
     "in_scope_organizer-index": 6,
-    "gaps_raw": 33
+    "gaps_raw": 29
   },
   "errors": [],
   "truncatedUnresolved": [
     "10/15 追加 森の展示室 秋 Marketがわち山野草の森で...",
-    "10/15 追加 PLANTS MARKET（植物即売会）がH&...",
-    "10/15 追加 日本ライン花木センターで「フィンガーライム試食..."
+    "10/15 追加 PLANTS MARKET（植物即売会）がH&..."
   ],
   "gaps": [
-    {
-      "date": "2026-10-30",
-      "lastSeen": "2026-11-29",
-      "days": 27,
-      "title": "花のある暮らし ボタニカルアートとデザイン",
-      "source": "leafla"
-    },
     {
       "date": "2026-10-31",
       "title": "POPUP 笹の雪POP UP",
       "source": "nextmeet"
+    },
+    {
+      "date": "2026-10-31",
+      "lastSeen": "2026-11-29",
+      "days": 26,
+      "title": "花のある暮らし ボタニカルアートとデザイン",
+      "source": "leafla"
     },
     {
       "date": "2026-11-01",
@@ -69,21 +68,6 @@
     {
       "date": "2026-11-04",
       "title": "URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-11-14",
-      "title": "sweet jungle",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-11-22",
-      "title": "PLANTS DIVE vol.006 in 赤松種苗",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-12-27",
-      "title": "ホンワカパッパ 第4回目",
       "source": "nextmeet"
     }
   ]
