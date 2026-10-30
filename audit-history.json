@@ -1694,11 +1694,12 @@
   {
    "date": "2026-10-31",
    "urgent": {
-    "organizer_ig_unknown_soon": 2,
-    "new_events_unmerged": 3
+    "organizer_ig_unknown_soon": 3,
+    "venue_key_split": 2
    },
    "info": {
-    "coverage_gaps": 4,
+    "coverage_gap_stale": 2,
+    "coverage_gaps": 2,
     "cancel_suspects": 6,
     "organizer_unlisted_dates": 7,
     "eyecatch_candidates_pending": 6,
@@ -1709,15 +1710,15 @@
    "metric": {
     "thin_past_with_source": 34,
     "thin_archived": 48,
-    "upcoming_with_image": 146,
-    "events_with_image": 351,
-    "upcoming_no_image": 66,
-    "ongoing_events": 21,
+    "upcoming_with_image": 147,
+    "events_with_image": 352,
+    "upcoming_no_image": 68,
+    "ongoing_events": 22,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 66
+    "eyecatch_backlog": 68
    },
-   "events": 723,
-   "upcoming": 212
+   "events": 726,
+   "upcoming": 215
   }
  ]
 }

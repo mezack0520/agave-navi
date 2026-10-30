@@ -1,5 +1,5 @@
 {
-  "total": 767,
+  "total": 774,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -80,10 +80,11 @@
     },
     "organizer_ig_unknown_soon": {
       "title": "7日以内に開かれるのに主催のIGが分からない回(中止の告知を拾えない)",
-      "count": 2,
+      "count": 3,
       "items": [
         "botanical-life-kasama-2026-11 (2026-11-07) 主催=笠間工芸の丘",
-        "chuushokushobutsusai-2026 (2026-11-07) 主催=Heli's Garden"
+        "chuushokushobutsusai-2026 (2026-11-07) 主催=Heli's Garden",
+        "tokiwa-museum-plant-sale-ube-2026-11 (2026-11-01) 主催=ときわミュージアム"
       ],
       "note": "主催の Instagram を調べて organizerIg を入れる(主催の名前・出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は organizerIgNone: true を書く",
       "severity": "urgent"
@@ -201,7 +202,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 146,
+      "count": 147,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -249,7 +250,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 351,
+      "count": 352,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -297,7 +298,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 66,
+      "count": 68,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -751,7 +752,7 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 21,
+      "count": 22,
       "items": [
         "botanical-botanical-osaka-2026-10(2026-10-31〜2026-11-01/2日)",
         "botanicbomb-vol11-fukuchiyama-2026-10(2026-10-31〜2026-11-01/2日)",
@@ -768,6 +769,7 @@
         "nightwalker-horie-2026-10(2026-10-31〜2026-11-01/2日)",
         "od-plants-1st-anniversary-sukagawa-2026-10(2026-10-31〜2026-10-31/1日)",
         "plants-and-coffee-hugcoffee-minamicho-2026-10(2026-10-24〜2026-11-01/9日/長期)",
+        "sasanoyuki-popup-kato-engei-tokyo-2026-10(2026-10-31〜2026-10-31/1日)",
         "shabomaniac-popup-saboru-inu-2026-10(2026-10-31〜2026-11-01/2日)",
         "shimamura-engei-qsplant-vol9-2026-10(2026-10-31〜2026-11-01/2日)",
         "taniku-garden-marche-arakogawa-2026-10(2026-10-31〜2026-11-01/2日)",
@@ -815,8 +817,11 @@
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "大阪 インテックス大阪(1件) / インテックス大阪6号館D(1件)",
+        "山口 ときわミュージアム(1件) / ときわミュージアムときわ公園内(1件)"
+      ],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
@@ -913,18 +918,19 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-10-31 POPUP 笹の雪POP UP",
+        "2026-11-01 ときわミュージアム「植物販売」"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 4,
+      "count": 2,
       "items": [
-        "2026-10-31 POPUP 笹の雪POP UP",
         "2026-10-31 花のある暮らし ボタニカルアートとデザイン",
-        "2026-11-01 ときわミュージアム「植物販売」",
         "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -953,9 +959,10 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 66,
+      "count": 68,
       "items": [
         "2026-10-31 lier-taniku-festival-nobeoka-2026-10",
+        "2026-10-31 sasanoyuki-popup-kato-engei-tokyo-2026-10",
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
         "2026-11-01 kasamajuku-tanikusai-2026-11",
         "2026-11-01 lier-taniku-festival-aira-2026-11",
@@ -993,8 +1000,7 @@
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
         "2027-01-08 lier-taniku-festival-hyuga-2027-01",
-        "2027-01-09 lier-taniku-festival-tamana-2027-01",
-        "2027-01-10 lier-taniku-festival-nagasaki-2027-01"
+        "2027-01-09 lier-taniku-festival-tamana-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1064,12 +1070,8 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 3,
-      "items": [
-        "2026-10-31 sasanoyuki-popup-kato-engei-tokyo-2026-10: new-events.json に残ったまま events.json に無い",
-        "2026-11-01 tokiwa-museum-plant-sale-ube-2026-11: new-events.json に残ったまま events.json に無い",
-        "2027-02-20 reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02: new-events.json に残ったまま events.json に無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },

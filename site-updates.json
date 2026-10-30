@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "items": [
+    {
+      "on": "2026-10-31",
+      "kind": "listed",
+      "slug": "sasanoyuki-popup-kato-engei-tokyo-2026-10",
+      "name": "笹の雪POP UP 高見澤園芸",
+      "date": "2026-10-31",
+      "dateEnd": "2026-10-31",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-31",
+      "kind": "listed",
+      "slug": "tokiwa-museum-plant-sale-ube-2026-11",
+      "name": "ときわミュージアム 植物販売",
+      "date": "2026-11-01",
+      "dateEnd": "2026-11-01",
+      "prefecture": "山口",
+      "detail": ""
+    },
+    {
+      "on": "2026-10-31",
+      "kind": "listed",
+      "slug": "reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02",
+      "name": "レプタイルズフィーバー2027 Winter×変態植物倶楽部FES Vol.1",
+      "date": "2027-02-20",
+      "dateEnd": "2027-02-21",
+      "prefecture": "大阪",
+      "detail": ""
+    },
     {
       "on": "2026-10-30",
       "kind": "listed",
@@ -1170,36 +1200,6 @@
       "date": "2026-10-24",
       "dateEnd": "2026-10-24",
       "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "minori-kaboku-cactus-agave-2026-10",
-      "name": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター 2026年10月）",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-25",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "jolie-nursery-musashinoyouhinten-misato-2026-10",
-      "name": "Jolie Nursery 即売会（武蔵乃葉品店・三郷）",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-25",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "lier-taniku-festival-okayama-2026-10",
-      "name": "Lier.多肉フェスティバル in 岡山",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "岡山",
       "detail": ""
     }
   ]
