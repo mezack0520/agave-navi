@@ -1,19 +1,19 @@
 {
- "generated": "2026-10-31 09:26 JST",
+ "generated": "2026-10-31 09:54 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 393,
+  "igAccounts": 400,
   "awaitingNextEdition": 422,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 94,
+  "igNeedsBrowser": 101,
   "igDead": 7
  },
  "igAccounts": [
   {
    "handle": "lier_succulent",
    "url": "https://www.instagram.com/lier_succulent/",
-   "eventCount": 26,
+   "eventCount": 27,
    "lastEventName": "第10回 花友フェスタ in 幕張メッセ",
    "lastEventDate": "2027-04-29",
    "hasUpcoming": true,
@@ -271,6 +271,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "greensnap.jp",
+   "url": "https://www.instagram.com/greensnap.jp/",
+   "eventCount": 3,
+   "lastEventName": "GreenSnap Marche お台場 2026",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "botanoichi",
    "url": "https://www.instagram.com/botanoichi/",
    "eventCount": 3,
@@ -339,6 +349,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "okibota_2021",
+   "url": "https://www.instagram.com/okibota_2021/",
+   "eventCount": 3,
+   "lastEventName": "オキボタ March 2027 in サンシャインシティ",
+   "lastEventDate": "2027-03-19",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bizarre_farm",
@@ -516,16 +536,6 @@
    "eventCount": 2,
    "lastEventName": "園日 Vol.18",
    "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "greensnap.jp",
-   "url": "https://www.instagram.com/greensnap.jp/",
-   "eventCount": 2,
-   "lastEventName": "GreenSnap Marche お台場 2026",
-   "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -1151,6 +1161,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "bookkasama",
+   "url": "https://www.instagram.com/bookkasama/",
+   "eventCount": 1,
+   "lastEventName": "第10回 ボタニカルライフ",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "uchidanouen",
    "url": "https://www.instagram.com/uchidanouen/",
    "eventCount": 1,
@@ -1371,6 +1391,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "igashirakouen",
+   "url": "https://www.instagram.com/igashirakouen/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物とサボテンの展示会（井頭公園）",
+   "lastEventDate": "2026-11-19",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "sand_hiroshima",
    "url": "https://www.instagram.com/sand_hiroshima/",
    "eventCount": 1,
@@ -1469,6 +1499,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "honoka.kakogawa",
+   "url": "https://www.instagram.com/honoka.kakogawa/",
+   "eventCount": 1,
+   "lastEventName": "緑楽宴",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "ta29_handmade.marche",
@@ -1651,6 +1691,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "borderbreakbeyond",
+   "url": "https://www.instagram.com/borderbreakbeyond/",
+   "eventCount": 1,
+   "lastEventName": "BORDER BREAK!! 11th",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "itoshima.bariyoka_tanikuichi",
    "url": "https://www.instagram.com/itoshima.bariyoka_tanikuichi/",
    "eventCount": 1,
@@ -1721,6 +1771,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "chibigo.fes",
+   "url": "https://www.instagram.com/chibigo.fes/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL MONSTERS 2027",
+   "lastEventDate": "2027-01-17",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "aichinn_syokusai",
    "url": "https://www.instagram.com/aichinn_syokusai/",
    "eventCount": 1,
@@ -1729,6 +1789,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "shokubutsu_club",
+   "url": "https://www.instagram.com/shokubutsu_club/",
+   "eventCount": 1,
+   "lastEventName": "レプタイルズフィーバー2027 Winter×変態植物倶楽部FES Vol.1",
+   "lastEventDate": "2027-02-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "shokubutsuchuudoku",
