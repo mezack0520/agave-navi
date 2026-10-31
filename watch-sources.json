@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-01 06:42 JST",
+ "generated": "2026-11-01 07:13 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 400,
+  "igAccounts": 402,
   "awaitingNextEdition": 424,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 93,
+  "igNeedsBrowser": 95,
   "igDead": 7
  },
  "igAccounts": [
@@ -1241,6 +1241,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "_vabudo_",
+   "url": "https://www.instagram.com/_vabudo_/",
+   "eventCount": 1,
+   "lastEventName": "VABUDO 3社ポップアップ（left botanical・KANIK・VABUDO）",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "_wonder_market_",
    "url": "https://www.instagram.com/_wonder_market_/",
    "eventCount": 1,
@@ -1319,6 +1329,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "kanik_jp",
+   "url": "https://www.instagram.com/kanik_jp/",
+   "eventCount": 1,
+   "lastEventName": "KANIK ポップアップ販売会",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -4500,6 +4520,12 @@
    "eventDate": "2026-10-31"
   },
   {
+   "domain": "tokiwapark.jp",
+   "url": "https://www.tokiwapark.jp/info/post_1144.html",
+   "eventName": "ときわミュージアム 植物販売",
+   "eventDate": "2026-11-01"
+  },
+  {
    "domain": "helisgarden.wraptas.site",
    "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
    "eventName": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
@@ -4572,6 +4598,12 @@
    "eventDate": "2027-01-17"
   },
   {
+   "domain": "tv-osaka.co.jp",
+   "url": "https://www.tv-osaka.co.jp/event/reptiles2027winter/",
+   "eventName": "レプタイルズフィーバー2027 Winter×変態植物倶楽部FES Vol.1",
+   "eventDate": "2027-02-20"
+  },
+  {
    "domain": "jusai.link",
    "url": "https://jusai.link/news",
    "eventName": "樹祭 10 YEAR ANNIVERSARY",
@@ -4636,18 +4668,6 @@
    "url": "https://no1plantae.com/",
    "eventName": "第6回 天下一植物界",
    "eventDate": "2026-05-23"
-  },
-  {
-   "domain": "ilinobeclub.jp",
-   "url": "https://ilinobeclub.jp/archives/475",
-   "eventName": "Plants garage market 2026 -SPRING & SUMMER-",
-   "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "festival-life.com",
-   "url": "https://festival-life.com/festival/area/tokai/aichi",
-   "eventName": "Rhythms of Life",
-   "eventDate": "2026-05-30"
   }
  ],
  "unresolvedIgHandles": []

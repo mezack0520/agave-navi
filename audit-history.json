@@ -1719,7 +1719,7 @@
   {
    "date": "2026-11-01",
    "urgent": {
-    "rejected_revisit_expired": 3
+    "region_mismatch": 1
    },
    "info": {
     "coverage_gaps": 4,
@@ -1734,13 +1734,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 150,
     "events_with_image": 357,
-    "upcoming_no_image": 62,
+    "upcoming_no_image": 64,
     "ongoing_events": 36,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 62
+    "eyecatch_backlog": 64
    },
-   "events": 726,
-   "upcoming": 212
+   "events": 728,
+   "upcoming": 214
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
-  "total": 783,
+  "total": 785,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 62,
+      "count": 64,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -328,6 +328,7 @@
         "jusai-10th-anniversary-nagoya-2027-03",
         "jusai-utsunomiya-spring-2027-05",
         "ka78-kikakusai-6th-shimada-2026-11",
+        "kanik-popup-pac-plants-yokohama-2026-11",
         "kasamajuku-tanikusai-2026-11",
         "king-plants-sunday-oroshimachi-2026-12",
         "lier-taniku-festival-fukuyama-2026-12",
@@ -341,8 +342,7 @@
         "lier-taniku-festival-oda-2027-01",
         "lier-taniku-festival-shimizu-2026-12",
         "lier-taniku-festival-shimonoseki-kikugawa-2026-11",
-        "lier-taniku-festival-tamana-2027-01",
-        "lier-taniku-festival-tokushima-2026-12"
+        "lier-taniku-festival-tamana-2027-01"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -890,8 +890,10 @@
     },
     "region_mismatch": {
       "title": "regionが地域定義と不一致 / スラッグ未定義",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "vabudo-3sha-popup-shizuoka-2026-11: 静岡=中部 (定義では東海)"
+      ],
       "note": "定義の単一情報源は scripts/sitelib.py の PREF_TO_REGION",
       "severity": "urgent"
     },
@@ -972,12 +974,14 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 62,
+      "count": 64,
       "items": [
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
         "2026-11-01 kasamajuku-tanikusai-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
+        "2026-11-07 vabudo-3sha-popup-shizuoka-2026-11",
+        "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
@@ -1011,9 +1015,7 @@
         "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
-        "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-17 chinki-plants-flea-market-2027-01",
-        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01"
+        "2027-01-17 botanical-monsters-2027-okazaki"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1531,12 +1533,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 3,
-      "items": [
-        "greendays-ebina-crafters-market-2026-10: 開催日 2026-10-31 を過ぎた（保留 2026-10-16）",
-        "plants-market-machida-pario-2026-10: 開催日 2026-10-31 を過ぎた（保留 2026-09-30）",
-        "sumori-sai-2026-aki: 開催日 2026-10-31 を過ぎた（保留 2026-08-18）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
