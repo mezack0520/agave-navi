@@ -1,5 +1,5 @@
 {
-  "total": 785,
+  "total": 781,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 150,
+      "count": 151,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -253,7 +253,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 357,
+      "count": 358,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 64,
+      "count": 63,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -974,13 +974,12 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 64,
+      "count": 63,
       "items": [
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
         "2026-11-01 kasamajuku-tanikusai-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
-        "2026-11-07 vabudo-3sha-popup-shizuoka-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
@@ -1015,7 +1014,8 @@
         "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
-        "2027-01-17 botanical-monsters-2027-okazaki"
+        "2027-01-17 botanical-monsters-2027-okazaki",
+        "2027-01-17 chinki-plants-flea-market-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1209,13 +1209,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 4,
-      "items": [
-        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/DfJHyVKiQIL/（caption）",
-        "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/reel/DfGXL-_hwLO/（caption）",
-        "2027-02-20 santafe-shunensai-2027-02: https://www.instagram.com/p/DfI9m6fkkA1/（caption）",
-        "2027-03-19 okibota-march-2027-sunshine: https://www.instagram.com/reel/DfKTanXAA_9/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
