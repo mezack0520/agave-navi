@@ -1,5 +1,5 @@
 {
-  "total": 783,
+  "total": 780,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -904,10 +904,8 @@
     },
     "index_card_attr_drift": {
       "title": "トップのカード属性がevents.jsonと不一致(一覧から消える)",
-      "count": 1,
-      "items": [
-        "vabudo-3sha-popup-shizuoka-2026-11: data-region 頁='中部' data='東海'"
-      ],
+      "count": 0,
+      "items": [],
       "note": "status-auto.js がこの属性で開催中/終了を振り分けるため、古いと正しいデータでも一覧に出ない。scripts/sync-index-cards.py で直す",
       "severity": "urgent"
     },
@@ -1402,10 +1400,8 @@
     },
     "feed_slug_drift": {
       "title": "配布フィードが現行のタグ・地域と一対一でない",
-      "count": 1,
-      "items": [
-        "孤児: feeds/region-region-939f0a09.xml(対応するタグ・地域が無い)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "generate-rss.py が生成しなかった region-*/tag-*.xml を消す。スラッグは sitelib の tag_slug / region_slug が単一情報源",
       "severity": "urgent"
     },
@@ -1446,10 +1442,8 @@
     },
     "landing_event_set_drift": {
       "title": "ランディング頁のイベント集合がevents.jsonと不一致",
-      "count": 1,
-      "items": [
-        "region/tokai/index.html: 載っていない 1件 (例 vabudo-3sha-popup-shizuoka-2026-11)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "generate-landing-pages.py を再実行する。events.json を直して再生成しないと、県頁・タグ頁からその回が消えたまま残る",
       "severity": "urgent"
     },
