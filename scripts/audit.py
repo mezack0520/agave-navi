@@ -64,7 +64,7 @@ KNOWN_EVENT_FIELDS = {
     # 主催の表記(PLNTS RIDE)とアグリゲータの表記(Plants Ride)が違う回を掲載済みと判定する
     'aliases',
     # 主催の Instagram が無いと確かめた回(2026-10-24)。true のときだけ書く。
-    # 読むのは sitelib.organizer_ig_resolved で、監査 organizer_ig_unknown_soon がその回を外す
+    # 読むのは sitelib.organizer_ig_resolved で、監査 organizer_ig_unknown がその回を外す
     'organizerIgNone',
     # 日程を変えた回の当初の開始日(2026-10-25)。eventStatus=rescheduled と組で書く。
     # 読むのは sitelib.previous_start_date(詳細頁の JSON-LD previousStartDate と
@@ -423,13 +423,15 @@ def main():
         [u.get('slug') for u in (watch.get('unresolvedIgHandles') or [])],
         'organizerIg を入れれば解消する')
 
-    # 6b. 近く開かれるのに主催の IG が分からない回(2026-10-24 追加)。
+    # 6b. 開催前なのに主催の IG が分からない回(2026-10-24 追加、10-31 に全期間へ)。
     # 当日・前日の中止は主催の IG にしか出ないことが多いが、ig-organizer-watch が読むのは
     # organizerIg と watch-sources のアカウントだけ。出典が Web の回は organizerIg が空のまま載りやすい。
     # ROOTS MARKET(10/25 稲毛)は出典が公園の告知頁で、主催 @vivi_succulent の前日の中止告知
-    # (強風)を、目崎が出店者の投稿を見せるまで拾えなかった
-    import datetime as _dt6
-    _lim6 = (_dt6.date.fromisoformat(today_jst()) + _dt6.timedelta(days=7)).isoformat()
+    # (強風)を、目崎が出店者の投稿を見せるまで拾えなかった。
+    # はじめは「7日以内に始まる回」だけを見ていた。それだと掲載から開催の1週間前まで誰も主催を
+    # 調べず、1件ずつ直前に鳴る(10-31 のボタニカルライフは 9-12 に載せた回で、出典頁に主催の
+    # IG が無く、ブラウザの要る調べものが開催の7日前に回ってきた)。開催前の回すべてを見て、
+    # 載せた翌日に鳴らす。その日に11件あったのを埋めて 0 にした
     _org_unknown = []
     for e in events:
         # 会期の長い展示(叢の個展・伊豆シャボテンの品評会など)は途中の中止がまず無いので外す
@@ -437,8 +439,7 @@ def main():
                 or is_long_run(e) or event_phase(e) not in ('upcoming', 'ongoing')):
             continue
         _s6 = event_span(e)[0] or ''
-        if _s6 and _s6 <= _lim6:
-            _org_unknown.append(f"{e.get('slug')} ({_s6}) 主催={e.get('organizer') or '?'}")
+        _org_unknown.append(f"{e.get('slug')} ({_s6 or '日付なし'}) 主催={e.get('organizer') or '?'}")
     # Markdown の強調がそのまま頁に出ていないか(2026-10-24 追加)。頁・JSON-LD・フィードは
     # 説明文を文字のまま出すので、** は記号のまま読者に見える。one-love-sano-2026 の
     # 中止の説明文に 09-22 から出ていて、10-24 の ROOTS MARKET はそれを手本に写した
@@ -447,8 +448,8 @@ def main():
     add('markdown_in_event_text', 'events.json の文に Markdown の ** が入っている(頁に記号のまま出る)',
         sorted(_md), '強調は使えない。** を消す', severity='urgent')
 
-    add('organizer_ig_unknown_soon', '7日以内に開かれるのに主催のIGが分からない回(中止の告知を拾えない)',
-        sorted(_org_unknown),
+    add('organizer_ig_unknown', '開催前なのに主催のIGが分からない回(中止の告知を拾えない)',
+        sorted(_org_unknown, key=lambda s: (s.split('(')[1] if '(' in s else '', s)),
         '主催の Instagram を調べて organizerIg を入れる(主催の名前・出店者の投稿の「主催 @…」が手がかり)。'
         '無いと確かめた回は organizerIgNone: true を書く',
         severity='urgent')

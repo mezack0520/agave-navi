@@ -1010,7 +1010,7 @@ def organizer_ig_handles(e):
     プロフィールを指すときのハンドル。
 
     中止の見張り(ig-organizer-watch.upcoming_by_org)・未掲載の日付(all_by_org)・
-    監査 organizer_ig_unknown_soon と、主催の投稿の時間・会期の照合が同じ規則で引く(2026-10-24)。
+    監査 organizer_ig_unknown と、主催の投稿の時間・会期の照合が同じ規則で引く(2026-10-24)。
     2026-10-25 に同じことをしていた event_ig_accounts と2つ目の _IG_PROFILE_RE を消した
     (後に定義した正規表現がこちらの名前を上書きしていた)。それまで中止の見張りは
     organizerIg しか見ておらず、url だけがプロフィールの回(garden link festa・
@@ -1028,7 +1028,7 @@ def organizer_ig_handles(e):
 
 
 def organizer_ig_resolved(e):
-    """主催の Instagram が分かっているか、無いと確かめた回か(監査 organizer_ig_unknown_soon)。
+    """主催の Instagram が分かっているか、無いと確かめた回か(監査 organizer_ig_unknown)。
 
     organizerIgNone: true は「主催の IG は無い」と確かめた印(2026-10-24)。読み手は監査だけだったが、
     監査は自分を読み手と数えない(event_field_unread)ので、初めて値を書いた 10-25 に

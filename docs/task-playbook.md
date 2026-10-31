@@ -3335,7 +3335,12 @@ Graph API の Business Discovery を叩くと、相手のユーザー名だけ�
   ROOTS MARKET(10/25 稲毛)は出典が公園の告知頁で、主催 @vivi_succulent の前日の中止告知(強風)を
   目崎が出店者の投稿を見せるまで拾えなかった。出典が Web の回も主催の IG を調べて organizerIg を入れる
   (出店者の投稿の「主催 @…」が手がかり)。無いと確かめた回は `organizerIgNone: true`。
-  7日以内に開かれる回で分からないものは監査 `organizer_ig_unknown_soon`(urgent)に出る。
+  分からない回は監査 `organizer_ig_unknown`(urgent)に出る。2026-10-31 までは「7日以内に始まる回」だけを見ていて、
+  掲載から1週間前まで誰も調べず、ブラウザの要る調べものが直前に1件ずつ回ってきた。今は開催前の回すべてを見るので、
+  **載せるときに organizerIg まで埋める。**公式頁に IG が無い主催も、Google の `"<名前>" site:instagram.com` で
+  出店者の投稿から引ける(Book KASAMA・オキボタ・ちびGO・BORDER BREAK!! はそれで当たった)。
+  組み込みブラウザが Instagram に未ログインの日でも、instagram.com を開いたタブから `fetch("/<handle>/")` の
+  `<title>` で、その handle が誰のアカウントかを確かめられる
   公式頁のヘッダ・フッタの IG リンク(オザキフラワーパーク・GreenSnap・富山県中央植物園)と、
   Google の `"<主催の名前>" instagram`(I.S.I.J. の @isij_taniku)で引けた(2026-10-25)。
   主催欄に施設も並ぶ共催(富山サボテン会・富山県中央植物園)は施設の IG を入れる。
