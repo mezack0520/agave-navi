@@ -1715,6 +1715,32 @@
    },
    "events": 726,
    "upcoming": 215
+  },
+  {
+   "date": "2026-11-01",
+   "urgent": {
+    "rejected_revisit_expired": 3
+   },
+   "info": {
+    "coverage_gaps": 4,
+    "cancel_suspects": 6,
+    "organizer_unlisted_dates": 11,
+    "eyecatch_candidates_pending": 4,
+    "cross_script_duplicate": 3,
+    "rejected_revisit_stale": 3
+   },
+   "metric": {
+    "thin_past_with_source": 34,
+    "thin_archived": 48,
+    "upcoming_with_image": 150,
+    "events_with_image": 357,
+    "upcoming_no_image": 62,
+    "ongoing_events": 36,
+    "workflow_secrets": 6,
+    "eyecatch_backlog": 62
+   },
+   "events": 726,
+   "upcoming": 212
   }
  ]
 }

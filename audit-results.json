@@ -1,5 +1,5 @@
 {
-  "total": 763,
+  "total": 783,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 152,
+      "count": 150,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agave-summit-osaka-2026-11",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 63,
+      "count": 62,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -755,11 +755,18 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 22,
+      "count": 36,
       "items": [
+        "agave-summit-osaka-2026-11(2026-11-01〜2026-11-01/1日)",
+        "bizarre-plants-fair-brew-by-mstr-2026-11-01(2026-11-01〜2026-11-01/1日)",
+        "bizarre-plants-nagoya-no-jin-2026-11(2026-11-01〜2026-11-01/1日)",
+        "bota-bro-garden-agave-collection-izumo-2026-10(2026-11-01〜2026-11-01/1日)",
         "botanical-botanical-osaka-2026-10(2026-10-31〜2026-11-01/2日)",
         "botanicbomb-vol11-fukuchiyama-2026-10(2026-10-31〜2026-11-01/2日)",
+        "botariba-toyohashi-2026-11(2026-11-01〜2026-11-01/1日)",
         "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10(2026-10-31〜2026-11-01/2日)",
+        "dyckia-needles-tsuboikenjuen-2026-11(2026-11-01〜2026-11-01/1日)",
+        "fukuyama-de-marche-8th-2026-11(2026-11-01〜2026-11-01/1日)",
         "green-flea-market-vol2-soraniwa-rakurakuen-2026-10(2026-10-31〜2026-11-01/2日)",
         "greensnap-marche-toyosu-2026-autumn(2026-10-31〜2026-11-01/2日)",
         "hana-no-eki-chikumagawa-taniku-hanbaikai-2026-10(2026-10-31〜2026-11-01/2日)",
@@ -767,18 +774,25 @@
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
         "jolie-nursery-musashi-kanazawa-2026-10(2026-10-31〜2026-11-01/2日)",
         "kakegawa-kachouen-saboten-taniku-ten-8th-2026-10(2026-10-10〜2026-11-01/23日/長期)",
-        "lier-taniku-festival-nobeoka-2026-10(2026-10-31〜2026-10-31/1日)",
+        "kasamajuku-tanikusai-2026-11(2026-11-01〜2026-11-01/1日)",
+        "lier-taniku-festival-aira-2026-11(2026-11-01〜2026-11-01/1日)",
         "myoko-taniku-oichi-2026-11(2026-10-31〜2026-11-01/2日)",
         "nightwalker-horie-2026-10(2026-10-31〜2026-11-01/2日)",
-        "od-plants-1st-anniversary-sukagawa-2026-10(2026-10-31〜2026-10-31/1日)",
         "plants-and-coffee-hugcoffee-minamicho-2026-10(2026-10-24〜2026-11-01/9日/長期)",
-        "sasanoyuki-popup-kato-engei-tokyo-2026-10(2026-10-31〜2026-10-31/1日)",
+        "plants-fes-vol4-ehime-2026-11(2026-11-01〜2026-11-01/1日)",
+        "purari-plants-vol3-2026-11(2026-11-01〜2026-11-01/1日)",
+        "santaana-shokubutsuen-vol11-kurume-2026-11(2026-11-01〜2026-11-01/1日)",
         "shabomaniac-popup-saboru-inu-2026-10(2026-10-31〜2026-11-01/2日)",
         "shimamura-engei-qsplant-vol9-2026-10(2026-10-31〜2026-11-01/2日)",
+        "shumatsu-botanical-gotemba-2026-11(2026-11-01〜2026-11-01/1日)",
+        "souper-market-2026-11(2026-11-01〜2026-11-01/1日)",
+        "succutochi-2-tenpyo-2026-11(2026-11-01〜2026-11-01/1日)",
         "taniku-garden-marche-arakogawa-2026-10(2026-10-31〜2026-11-01/2日)",
         "tanikuen-ohisama-aeon-hiezu-2026-10(2026-10-31〜2026-11-01/2日)",
         "tanikuen-ohisama-aeon-morioka-2026-10(2026-10-30〜2026-11-01/3日)",
-        "toyama-saboten-taniku-9th-2026-10(2026-10-30〜2026-11-01/3日)"
+        "tokiwa-museum-plant-sale-ube-2026-11(2026-11-01〜2026-11-01/1日)",
+        "toyama-saboten-taniku-9th-2026-10(2026-10-30〜2026-11-01/3日)",
+        "walk-coffee-platycerium-exhibition-nagaoka-2026-11(2026-11-01〜2026-11-01/1日)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -918,20 +932,19 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 2,
-      "items": [
-        "2026-10-31 POPUP 笹の雪POP UP",
-        "2026-11-01 ときわミュージアム「植物販売」"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 2,
+      "count": 4,
       "items": [
-        "2026-10-31 花のある暮らし ボタニカルアートとデザイン",
-        "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～"
+        "2026-11-01 花のある暮らし ボタニカルアートとデザイン",
+        "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
+        "2027-02-07 Green marché 花の湯",
+        "2027-02-13 雨林ノ市 第参陣"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -959,9 +972,8 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 63,
+      "count": 62,
       "items": [
-        "2026-10-31 sasanoyuki-popup-kato-engei-tokyo-2026-10",
         "2026-10-31 taniku-garden-marche-arakogawa-2026-10",
         "2026-11-01 kasamajuku-tanikusai-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
@@ -1000,7 +1012,8 @@
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
         "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-17 chinki-plants-flea-market-2027-01"
+        "2027-01-17 chinki-plants-flea-market-2027-01",
+        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1044,10 +1057,10 @@
       "title": "載せた回に中止・延期の兆候がある",
       "count": 6,
       "items": [
-        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文: 4782→4771字 -1%)",
-        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
-        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 公式ページが変わった(本文: 1193→1182字 -1%)",
-        "2026-11-22 isij-big-bazaar-2026-11-22: 公式ページが変わった(本文: 4685→4715字 +0%)",
+        "2026-10-31 greensnap-marche-toyosu-2026-autumn: 公式ページが変わった(本文: 4771→4772字 +0%)",
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
+        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 公式ページが変わった(本文: 1182→1193字 +0%)",
+        "2026-11-22 isij-big-bazaar-2026-11-22: 公式ページが変わった(画像)",
         "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)",
         "2026-12-20 isij-tokyo-reikai-2026-12-20: 中止・延期の語: 中止のお知らせ"
       ],
@@ -1140,14 +1153,18 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 7,
+      "count": 11,
       "items": [
-        "@greenfarmkanazawa 2026-10-31,2026-11-01,2026-11-13: 【ハンギングバスケット教室】スタート🌿 お花の色合いやリーフの組み合わせを楽しみながら、 冬のお庭を彩るハンギングバスケ https://www.instagram.com/p/DfHCVLdBbEf/",
+        "@_plants_dealer_ 2026-11-01: ★ 11/1はイベント出店のためclosed 今回は雑貨がメイン! 植物は全く持って行かないです🙇‍♂️ SUNNY S https://www.instagram.com/p/DfJ1IOAk9k0/",
+        "@greenfarmkanazawa 2026-11-01,2026-11-13: 【ハンギングバスケット教室】スタート🌿 お花の色合いやリーフの組み合わせを楽しみながら、 冬のお庭を彩るハンギングバスケ https://www.instagram.com/p/DfHCVLdBbEf/",
         "@kinoco__inc 2026-11-25: ⁣ ⁣ ⁣ CLIP⁣ ⁣ 2022年以来、2回目となる植木鉢の展示販売⁣ イベントCLIPを開催いたします⁣ ⁣ ye https://www.instagram.com/p/De1aPIsB8EX/",
+        "@lucky_gardening 2026-11-01: 得 スモリ祭り 得 スモリ祭りではお客様にお得でにっこりな午後企画が12時から15時まで各店舗毎に開催されます🌈🫰 吉祥 https://www.instagram.com/p/DfG_jC5FP8X/",
         "@minori_kaboku_interpark 2026-11-07,2026-11-08: 🎪みのり祭りイベント情報🎪 園芸雑誌でもおなじみの若松康史氏による秋球根の講習会を開催します🌷 11月7日(土)は9:0 https://www.instagram.com/p/De0tHRFAcej/",
+        "@plants2306.fe 2026-11-06,2026-11-23: 【11月のお知らせ】 いつも当店をご利用頂きありがとうございます。 日差しの中に冬の気配を感じる季節になってきましたね。 https://www.instagram.com/p/DfGf3NLhMIO/",
         "@protoleaf.shop_futakotamagawa 2026-12-09,2026-12-16,2026-12-18: 🌿【オリジナル寄せ植えワークショップのご案内です】🌿 ◆ワークショップの内容 お好きな苗を選び、講師のアドバイスを受けな https://www.instagram.com/p/De8fqDYkbHK/",
         "@sakura_shokubutsuen 2026-11-08,2026-11-22: 🍁 秋のお花で寄せ植えを楽しもう!🌿 さくら植物園で、寄せ植え講習会を開催します!🪴 好きなお花を選んで、自分だけの寄せ https://www.instagram.com/p/De_tfz7v6LL/",
-        "@the_botanical_show 2026-12-24: . \\ 同日開催!湘南キッズデイ🌈 / THE BOTANICAL SHOW 6thと同じ 11月14日(土)・15日( https://www.instagram.com/p/DewFzO4mUyt/",
+        "@the_botanical_show 2026-11-04,2026-12-24: . . \\ STAGE TIME SCHEDULE 公開!🌿 / THE BOTANICAL SHOW 6th 11月1 https://www.instagram.com/p/DfKL3DPRez9/",
+        "@tokiwapark.official 2026-11-22,2026-12-19,2026-12-24,2027-01-11: 毎年TOKIWAファンタジアにあわせて開催する植物館ライトアップ「TOKIWAナイトミュージアム2026」。 今年のテー https://www.instagram.com/p/De1LvWiRw00/",
         "@yukuhashisyokubutsuen 2026-11-01: ⭐️🧶ビオラでかわいい毛糸玉作り🧶⭐️ ⭐️第2弾⭐️ 夏に行った毛糸玉作り教室を 寒くなってきた、かわいい毛糸本命の時 https://www.instagram.com/p/De_Ny3AH-Rx/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
@@ -1190,8 +1207,13 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "2026-10-31 taniku-garden-marche-arakogawa-2026-10: https://www.instagram.com/p/DfJHyVKiQIL/（caption）",
+        "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/reel/DfGXL-_hwLO/（caption）",
+        "2027-02-20 santafe-shunensai-2027-02: https://www.instagram.com/p/DfI9m6fkkA1/（caption）",
+        "2027-03-19 okibota-march-2027-sunshine: https://www.instagram.com/reel/DfKTanXAA_9/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1323,10 +1345,8 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 1,
-      "items": [
-        "agave-navi-eyecatch(daily) が動かなかった日: 2026-10-24（直近7日で1日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
@@ -1511,8 +1531,12 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "greendays-ebina-crafters-market-2026-10: 開催日 2026-10-31 を過ぎた（保留 2026-10-16）",
+        "plants-market-machida-pario-2026-10: 開催日 2026-10-31 を過ぎた（保留 2026-09-30）",
+        "sumori-sai-2026-aki: 開催日 2026-10-31 を過ぎた（保留 2026-08-18）"
+      ],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
@@ -1520,9 +1544,9 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 3,
       "items": [
-        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（30日前）",
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（35日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（35日前）"
+        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（31日前）",
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（36日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（36日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
