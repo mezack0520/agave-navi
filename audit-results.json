@@ -1,5 +1,5 @@
 {
-  "total": 706,
+  "total": 705,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -800,10 +800,8 @@
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 1,
-      "items": [
-        "大阪 阪急うめだ本店8階GREENAGE(1件) / 阪急うめだ本店8階GREENAGEコトコトステージ81(2件)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
