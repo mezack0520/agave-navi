@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-01",
+  "sweptOn": "2026-11-02",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -26,21 +26,21 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 694,
-    "in_scope": 202,
-    "covered": 151,
-    "known_rejected": 23,
+    "candidates": 567,
+    "in_scope": 168,
+    "covered": 126,
+    "known_rejected": 15,
     "truncated_resolved": 0,
     "truncated_unresolved": 2,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
-    "in_scope_leafla": 85,
+    "in_scope_leafla": 67,
     "truncated_unresolved_hits": 90,
-    "in_scope_nextmeet": 99,
-    "in_scope_matome-blog": 10,
-    "in_scope_organizer-index": 8,
-    "gaps_raw": 28
+    "in_scope_nextmeet": 86,
+    "in_scope_matome-blog": 9,
+    "in_scope_organizer-index": 6,
+    "gaps_raw": 27
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -49,9 +49,9 @@
   ],
   "gaps": [
     {
-      "date": "2026-11-01",
+      "date": "2026-11-03",
       "lastSeen": "2026-11-29",
-      "days": 25,
+      "days": 24,
       "title": "花のある暮らし ボタニカルアートとデザイン",
       "source": "leafla"
     },
