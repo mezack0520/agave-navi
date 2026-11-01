@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-02 06:42 JST",
+ "generated": "2026-11-02 07:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 402,
@@ -371,6 +371,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "lahainagarden",
+   "url": "https://www.instagram.com/lahainagarden/",
+   "eventCount": 2,
+   "lastEventName": "LahainaGarden 7周年記念祭",
+   "lastEventDate": "2026-11-08",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "brew_by_mstr",
    "url": "https://www.instagram.com/brew_by_mstr/",
    "eventCount": 2,
@@ -381,11 +391,11 @@
    "apiStatus": "api"
   },
   {
-   "handle": "lahainagarden",
-   "url": "https://www.instagram.com/lahainagarden/",
+   "handle": "hankyu_greenage",
+   "url": "https://www.instagram.com/hankyu_greenage/",
    "eventCount": 2,
-   "lastEventName": "LahainaGarden 7周年記念祭",
-   "lastEventDate": "2026-11-08",
+   "lastEventName": "アートな植物ビカクシダ(阪急うめだ本店)",
+   "lastEventDate": "2026-11-11",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -581,16 +591,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "tanikuen_ohisama",
-   "url": "https://www.instagram.com/tanikuen_ohisama/",
-   "eventCount": 5,
-   "lastEventName": "多肉園おひさま 多肉イベント in イオンモール日吉津",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "_myoko_plants_market_",
    "url": "https://www.instagram.com/_myoko_plants_market_/",
    "eventCount": 5,
@@ -609,6 +609,16 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "tanikuen_ohisama",
+   "url": "https://www.instagram.com/tanikuen_ohisama/",
+   "eventCount": 5,
+   "lastEventName": "多肉園おひさま 多肉イベント in イオンモール日吉津",
+   "lastEventDate": "2026-10-31",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
   },
   {
    "handle": "sapporo.cactus.club",
@@ -1079,16 +1089,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "hankyu_greenage",
-   "url": "https://www.instagram.com/hankyu_greenage/",
-   "eventCount": 1,
-   "lastEventName": "アートな植物ビカクシダ(阪急うめだ本店)",
-   "lastEventDate": "2026-11-11",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
   },
   {
    "handle": "the_botanical_show",
@@ -4048,17 +4048,6 @@
  ],
  "awaitingNextEdition": [
   {
-   "series": "多肉園おひさま 多肉イベント in イオンモール日吉津",
-   "lastSlug": "tanikuen-ohisama-aeon-hiezu-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "tanikuen_ohisama",
-   "officialUrl": "https://www.instagram.com/p/DeGzgrYMA8d/",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
    "series": "BOTANICAL BOTANICAL OSAKA",
    "lastSlug": "botanical-botanical-osaka-2026-10",
    "lastDate": "2026-10-31",
@@ -4066,6 +4055,17 @@
    "monthsSinceLast": 0,
    "igHandle": "botanical.botanical",
    "officialUrl": "https://www.instagram.com/p/DejXu0xJU4F/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "PLANTS FES vol.4",
+   "lastSlug": "plants-fes-vol4-ehime-2026-11",
+   "lastDate": "2026-11-01",
+   "lastEnd": "2026-11-01",
+   "monthsSinceLast": 0,
+   "igHandle": "plants_fes_ehime",
+   "officialUrl": "https://www.instagram.com/plants_fes_ehime/",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4081,13 +4081,13 @@
    "apiStatus": "api"
   },
   {
-   "series": "PLANTS FES vol.4",
-   "lastSlug": "plants-fes-vol4-ehime-2026-11",
-   "lastDate": "2026-11-01",
+   "series": "多肉園おひさま 多肉イベント in イオンモール日吉津",
+   "lastSlug": "tanikuen-ohisama-aeon-hiezu-2026-10",
+   "lastDate": "2026-10-31",
    "lastEnd": "2026-11-01",
    "monthsSinceLast": 0,
-   "igHandle": "plants_fes_ehime",
-   "officialUrl": "https://www.instagram.com/plants_fes_ehime/",
+   "igHandle": "tanikuen_ohisama",
+   "officialUrl": "https://www.instagram.com/p/DeGzgrYMA8d/",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4496,36 +4496,6 @@
    "eventDate": "2026-10-10"
   },
   {
-   "domain": "bgtym.org",
-   "url": "https://www.bgtym.org/event/13014/",
-   "eventName": "第9回 サボテン・多肉植物展（富山県中央植物園）",
-   "eventDate": "2026-10-30"
-  },
-  {
-   "domain": "greensnap.jp",
-   "url": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-   "eventName": "GreenSnap Marche 豊洲 2026 Autumn",
-   "eventDate": "2026-10-31"
-  },
-  {
-   "domain": "jolienursery.co.jp",
-   "url": "https://jolienursery.co.jp/pages/events",
-   "eventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-   "eventDate": "2026-10-31"
-  },
-  {
-   "domain": "nga.or.jp",
-   "url": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
-   "eventName": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
-   "eventDate": "2026-10-31"
-  },
-  {
-   "domain": "tokiwapark.jp",
-   "url": "https://www.tokiwapark.jp/info/post_1144.html",
-   "eventName": "ときわミュージアム 植物販売",
-   "eventDate": "2026-11-01"
-  },
-  {
    "domain": "helisgarden.wraptas.site",
    "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
    "eventName": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
@@ -4560,6 +4530,12 @@
    "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
    "eventName": "多肉植物とサボテンの展示会（井頭公園）",
    "eventDate": "2026-11-19"
+  },
+  {
+   "domain": "greensnap.jp",
+   "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
+   "eventName": "GreenSnapMarche ABCハウジング八王子住宅公園",
+   "eventDate": "2026-11-21"
   },
   {
    "domain": "threads.com",
@@ -4668,6 +4644,30 @@
    "url": "https://no1plantae.com/",
    "eventName": "第6回 天下一植物界",
    "eventDate": "2026-05-23"
+  },
+  {
+   "domain": "ilinobeclub.jp",
+   "url": "https://ilinobeclub.jp/archives/475",
+   "eventName": "Plants garage market 2026 -SPRING & SUMMER-",
+   "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "festival-life.com",
+   "url": "https://festival-life.com/festival/area/tokai/aichi",
+   "eventName": "Rhythms of Life",
+   "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "makeman.co.jp",
+   "url": "https://makeman.co.jp/event/event-10904/",
+   "eventName": "ボタニカルマーケットVol.6",
+   "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "fukui-bot.jp",
+   "url": "https://www.fukui-bot.jp/event/",
+   "eventName": "福井ボタニカルマルシェ2026",
+   "eventDate": "2026-05-30"
   }
  ],
  "unresolvedIgHandles": []

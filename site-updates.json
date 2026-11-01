@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-01",
+  "updated": "2026-11-02",
   "items": [
+    {
+      "on": "2026-11-02",
+      "kind": "listed",
+      "slug": "urban-jungle-weeks-hankyu-umeda-2026-11",
+      "name": "URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～(阪急うめだ本店)",
+      "date": "2026-11-04",
+      "dateEnd": "2026-11-24",
+      "prefecture": "大阪",
+      "detail": ""
+    },
     {
       "on": "2026-11-01",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2026-10-17",
       "dateEnd": "2026-10-17",
       "prefecture": "香川",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-17",
-      "name": "さんぱち 多肉植物販売会（道の駅あさじ・10月17〜18日）",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "大分",
       "detail": ""
     }
   ]

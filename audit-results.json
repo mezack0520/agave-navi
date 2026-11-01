@@ -1,5 +1,5 @@
 {
-  "total": 705,
+  "total": 707,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 61,
+      "count": 62,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -800,8 +800,10 @@
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "大阪 阪急うめだ本店8階GREENAGE(1件) / 阪急うめだ本店8階GREENAGEコトコトステージ81(2件)"
+      ],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
@@ -898,17 +900,18 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 4,
+      "count": 3,
       "items": [
         "2026-11-03 花のある暮らし ボタニカルアートとデザイン",
-        "2026-11-04 URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
         "2027-02-07 Green marché 花の湯",
         "2027-02-13 雨林ノ市 第参陣"
       ],
@@ -938,8 +941,9 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 61,
+      "count": 62,
       "items": [
+        "2026-11-04 urban-jungle-weeks-hankyu-umeda-2026-11",
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
@@ -978,8 +982,7 @@
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
         "2027-01-17 botanical-monsters-2027-okazaki",
         "2027-01-17 chinki-plants-flea-market-2027-01",
-        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
-        "2027-01-23 lier-taniku-festival-ube-2027-01"
+        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1488,10 +1491,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 1,
-      "items": [
-        "saboten-misyonokai-plants-connection-fest-6th-2026-11: 開催日 2026-11-01 を過ぎた（保留 2026-10-03）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
