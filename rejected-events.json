@@ -1390,14 +1390,14 @@
   {
    "key": "saboten-misyonokai-plants-connection-fest-6th-2026-11",
    "reasonType": "unverified",
-   "revisit": true,
+   "revisit": false,
    "name": "第6回 saboten misyonokai Plants connection fest (2026-11-01 むさしの村 さくらホール・埼玉県加須市)",
    "aliases": [
     "Plants connection fest",
     "saboten misyonokai"
    ],
    "decided": "2026-10-03",
-   "reason": "即売会×交換会(入場500円)。告知は出店者 @super__bloom___ の投稿 Dd6TyO5pdyL のみで、主催 @saboten.misyonokai(サボテン実生の会)のプロフィールからは投稿を読めなかった。vendorAnnouncementsOnly。主催の告知が読めたら掲載相当 / 2026-10-09 再評価: 主催 @saboten.misyonokai はプロフィールに『会員制 cactus Club・フォロー申請されても削除します』とある非公開アカウントで、投稿は読めない。もすレコ。の秋冬まとめ(2026-10-07 更新)にも 11/1 の回が載るが第三者の二次情報。unverified を継続",
+   "reason": "即売会×交換会(入場500円)。告知は出店者 @super__bloom___ の投稿 Dd6TyO5pdyL のみで、主催 @saboten.misyonokai(サボテン実生の会)のプロフィールからは投稿を読めなかった。vendorAnnouncementsOnly。主催の告知が読めたら掲載相当 / 2026-10-09 再評価: 主催 @saboten.misyonokai はプロフィールに『会員制 cactus Club・フォロー申請されても削除します』とある非公開アカウントで、投稿は読めない。もすレコ。の秋冬まとめ(2026-10-07 更新)にも 11/1 の回が載るが第三者の二次情報。unverified を継続 開催日(11/1)を過ぎたため再評価を打ち切り(2026-11-02)",
    "eventDate": "2026-11-01",
    "revisitedOn": "2026-10-09"
   },
@@ -2762,6 +2762,31 @@
    "reasonType": "policy",
    "eventDate": "2026-11-14",
    "revisit": false
+  },
+  {
+   "key": "nihon-meitei-keikaku-final-oga-2026-11-07",
+   "name": "日本酩酊計画2026 Final(稲とアガベ創業5周年祭 2026-11-07〜08 秋田県男鹿市)",
+   "aliases": [
+    "日本酩酊計画",
+    "稲とアガベ創業祭"
+   ],
+   "decided": "2026-11-02",
+   "reason": "クラフトサケ醸造所「稲とアガベ」の創業祭。アガベは酒蔵の屋号で、酒と飲食の催し。植物は主役でない(outOfScopeGenres)",
+   "reasonType": "policy",
+   "eventDate": "2026-11-07",
+   "revisit": false
+  },
+  {
+   "key": "clip-pots-exhibition-minamiaoyama-2026-11-19",
+   "name": "CLIP 植木鉢の展示販売(2026-11-19〜29 南青山・YELL GREEN × KINOCO)",
+   "aliases": [
+    "CLIP"
+   ],
+   "decided": "2026-11-02",
+   "reason": "主催 @kinoco__inc の告知(投稿 De1aPIsB8EX)で確認。植木鉢・オブジェ・TRUNKWAREの展示販売で主題は器(potteryAndVesselShows)。植物の即売は無い",
+   "reasonType": "policy",
+   "eventDate": "2026-11-19",
+   "revisit": false
   }
  ],
  "_reasonTypes": {
@@ -2770,6 +2795,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-10-30",
+ "updated": "2026-11-02",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
