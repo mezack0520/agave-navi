@@ -294,7 +294,8 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
 # 'サンシャインシティ' は削除(2026-08-21)。実データの location は
 # 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
 # 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
-_VENUE_ROMAJI_RAW = {'ガーデンプラザ華 福島店':'garden-plaza-hana-fukushima',   # 2026-10-25 ピクニックガーデン vol.27 で3件(読みは店の IG @gardenplazahana)
+_VENUE_ROMAJI_RAW = {'阪急うめだ本店':'hankyu-umeda-honten',   # 2026-11-02 location を区画なしに揃えて4件(GREEN AGE・コトコトステージ81・9階祝祭広場は venue)
+                'ガーデンプラザ華 福島店':'garden-plaza-hana-fukushima',   # 2026-10-25 ピクニックガーデン vol.27 で3件(読みは店の IG @gardenplazahana)
                 'グランメッセ熊本':'grandmesse-kumamoto',   # 2026-10-23 Collect Plants 2027-04 の回で3件
                 'せんだい農業園芸センター みどりの杜':'sendai-nogyo-engei-center',   # 2026-10-15 ピクニックガーデン11月の回で3件
                 '道の駅いちごの里よしみ':'michinoeki-ichigonosato-yoshimi',   # 2026-10-15 bizarrefarm SPRING FES 10th で3件
