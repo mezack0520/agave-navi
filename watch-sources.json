@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-03 06:43 JST",
+ "generated": "2026-11-03 07:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 402,
+  "igAccounts": 404,
   "awaitingNextEdition": 456,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 93,
+  "igNeedsBrowser": 95,
   "igDead": 7
  },
  "igAccounts": [
@@ -551,6 +551,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "nagasako_farm",
+   "url": "https://www.instagram.com/nagasako_farm/",
+   "eventCount": 2,
+   "lastEventName": "GREEN LINK(グリリン)",
+   "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "homwaka_pappa",
    "url": "https://www.instagram.com/homwaka_pappa/",
    "eventCount": 2,
@@ -559,6 +569,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "urinchi2026",
+   "url": "https://www.instagram.com/urinchi2026/",
+   "eventCount": 2,
+   "lastEventName": "雨林ノ市 第参陣",
+   "lastEventDate": "2027-02-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "bota_magic",
@@ -951,6 +971,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "veitchiis",
+   "url": "https://www.instagram.com/veitchiis/",
+   "eventCount": 1,
+   "lastEventName": "ベイチーズ ポップアップ(FRIDGE SETAGAYA)",
+   "lastEventDate": "2026-11-06",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "helisgarden",
    "url": "https://www.instagram.com/helisgarden/",
    "eventCount": 1,
@@ -1095,16 +1125,6 @@
    "url": "https://www.instagram.com/the_botanical_show/",
    "eventCount": 1,
    "lastEventName": "THE BOTANICAL SHOW 6TH",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "nagasako_farm",
-   "url": "https://www.instagram.com/nagasako_farm/",
-   "eventCount": 1,
-   "lastEventName": "HOBBY PLANTS FREAKS vol.6",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 1,
@@ -1569,6 +1589,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "sw__plants",
+   "url": "https://www.instagram.com/sw__plants/",
+   "eventCount": 1,
+   "lastEventName": "LIFE WITH PLANTS『植物のある暮らし』vol.2(SW PLANTS)",
+   "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nb_garden2015",
@@ -2450,16 +2480,6 @@
    "url": "https://www.instagram.com/f.r.w.plants123/",
    "eventCount": 1,
    "lastEventName": "アクア＆グリーンフェス 縁日",
-   "lastEventDate": "2026-08-15",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "urinchi2026",
-   "url": "https://www.instagram.com/urinchi2026/",
-   "eventCount": 1,
-   "lastEventName": "雨林ノ市 第貳陣",
    "lastEventDate": "2026-08-15",
    "hasUpcoming": false,
    "priority": 2,
