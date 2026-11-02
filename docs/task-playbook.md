@@ -4875,6 +4875,13 @@ pending-judgments は0件。`work/` の `*-unpushed-*.json` は無く、task-run
 監査の urgent は 10-24 に2種・10-26 に2種が出て、それ以外の日は0。GitHub Actions は 10-19 以降 failure 0(cancelled は pages build のみ)。アフィリエイト・構造は全て正常。
 このタスクは `-p /tmp` の clone で /sessions を使わず、10-26 も通った。
 
+**2026-11-02 の週次点検の記録。**
+2回以上出た失敗は1つ。agave-event-update が「watch-sources のIGローテ個別巡回」を 10-19 から 11-02 まで毎回「未実施」で持ち越し(15回。10-26 の指摘から進展なし)。organizer-posts の照合で代替していて audit の異常は出ていないが、巡回台帳に残らない。巡回の持ち主は agave-event-update で本タスクは直さない。次の週次でも未実施なら、巡回を毎回やる前提をやめて「週1回・曜日固定」に改める案を `pending-judgments.json` に積む。
+`manual_sweep_stale`(nextmeet-monthly-check)は 10-27 以降 audit に出ていない。解消扱い。
+監査の urgent は週を通して0、pending-judgments は0件。`rejected_revisit_stale` は 2→3(最終評価が30日超の見送り3件。info)。`eyecatch_backlog` は 73→62 で減少。GitHub Actions は 10-26 以降 failure 0(cancelled は pages build のみ)。
+アフィリエイト(.rk-card 3・.aff-shop-btn 6・.aff-bar 1)・コンソールエラー・構造(詳細・トップ・ガイド・カテゴリ・pref/region・sitemap・ics)は全て正常。task_run_gap 0、task-reports は7日×4タスク揃っている。
+`/tmp/` 直下の固定名ファイル(例 `/tmp/audit_out.txt`)は前のセッションの所有で書けない。audit の出力は clone と同じ `mktemp -d` の中に書く。
+
 **このタスク自身の抜けについて(2026-08-31 追記)。**
 site-health-check は週次だが、`task-reports/` に 08-03 / 08-10 / 08-18 の次が無く、
 **08-25 の回は成果物ゼロで終わっていた。** スケジュールは enabled のままで
