@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-02",
+  "sweptOn": "2026-11-03",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -26,26 +26,28 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 567,
-    "in_scope": 168,
-    "covered": 126,
-    "known_rejected": 15,
-    "truncated_resolved": 0,
-    "truncated_unresolved": 2,
+    "candidates": 851,
+    "in_scope": 206,
+    "covered": 137,
+    "known_rejected": 28,
+    "truncated_resolved": 90,
+    "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
-    "in_scope_leafla": 67,
-    "truncated_unresolved_hits": 90,
-    "in_scope_nextmeet": 86,
+    "in_scope_leafla": 104,
+    "truncated_unresolved_hits": 180,
+    "in_scope_nextmeet": 87,
     "in_scope_matome-blog": 9,
     "in_scope_organizer-index": 6,
-    "gaps_raw": 27
+    "gaps_raw": 41
   },
   "errors": [],
   "truncatedUnresolved": [
-    "10/15 追加 森の展示室 秋 Marketがわち山野草の森で...",
-    "10/15 追加 PLANTS MARKET（植物即売会）がH&..."
+    "11/02 追加 ベジタブルブExhibitionが金沢で開催 ...",
+    "11/02 追加 金岡みどりのマルシェが金岡公園で開催、サボテン...",
+    "11/02 追加 コーナン鎌倉大船店 秋の園芸フェアが2026年...",
+    "11/02 追加 THINNING 14th in 丸田池公園が..."
   ],
   "gaps": [
     {
@@ -56,9 +58,11 @@
       "source": "leafla"
     },
     {
-      "date": "2026-11-04",
-      "title": "URBAN JUNGLE WEEKS ～植物と暮らす都会のライフスタイル～",
-      "source": "nextmeet"
+      "date": "2026-11-20",
+      "lastSeen": "2026-12-06",
+      "days": 15,
+      "title": "植物園のもみじ散策～世界の森で紅葉めぐり～",
+      "source": "leafla"
     },
     {
       "date": "2027-02-07",
