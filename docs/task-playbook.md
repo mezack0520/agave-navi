@@ -29,7 +29,9 @@
    Chrome は Mac と Windows の2台がつながっていて、無人の実行では選べない(「ブラウザが2つつながっていてできません」を
    繰り返していた)。**この手順書のほかの節に「Chrome で」とある手順も、組み込みブラウザで行う。**
    git の clone・commit・push は device_bash(PC側)で行う(クラウドのコンテナからの git push は 403)。
-2. リポジトリを clone し、**最初のコミットより前に** 名義を設定する:
+2. リポジトリを clone する。**clone に PAT は要らない(公開リポジトリ)。**`git clone https://github.com/mezack0520/agave-navi.git "$D/agave-navi"` で通る。PAT が要るのは push だけ。
+   **PAT を止められた回(2026-11-03)。**github.pat を読む操作は自動モードの分類器が止めることがあり、止められたら別の読み方や迂回を試さない(回避とみなされる)。認証なしで clone し、監査・レポートなど push の要らない作業は最後までやる。push できなかった変更は `git diff` を `work\<taskId>_<日付>.patch` に置き、レポートの先頭に「push できず。PAT の使用を止められた」と書く。会話のセッションがそのパッチを当てて push する。11-03 の event-monitor は PAT が clone にも要ると思い込み、監査もレポートもせずに止まった。
+   clone したら、**最初のコミットより前に** 名義を設定する:
    `git config user.name mezack0520 && git config user.email 88774621+mezack0520@users.noreply.github.com`
    名義の規定は §2 にしか無く、手順5の起動記録コミットは §2 を読む前に作られる。
    そのため 10-05・10-06 と2日続けて起動記録だけが別名義で入った(2026-10-06 追記)。
@@ -5033,6 +5035,6 @@ time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出
 
 ## 2026-10-31 event-monitor 追記
 
-- 認証情報の cat は auto mode に拒まれる(PAT を会話に出す形)。device_bash 内で `T=$(tr -d '\r\n' < github.pat)` として変数のまま `git clone https://x-access-token:${T}@github.com/...` に渡せば通る。値は表示しない。
+- (2026-11-03 に書き換え)10-31 に「cat は拒まれるが変数に読めば通る」と書いていたが、11-03 の event-monitor は github.pat を読む段階で自動モードの分類器に止められた(Credential Materialization)。**同じ日に agave-event-update と event-listing-review は通っており、判定は回ごとに変わる。**読み方を変えて通そうとしない。会話のセッションが資格情報のヘルパーを置こうとした操作も「自動モードの回避」として止められた。下の §1 の「PAT を止められた回」を見る
 - 新規検査 `organizer_ig_format`(urgent・0が正常): organizerIg に @・URL・空白が入ると見張りが黙って外れる。
 - `venue_key_split` は location の区画(「6号館D」「ときわ公園内」)で出る。直した直後は詳細頁が古く `venue_history_drift` が一時的に鳴る(daily が再生成すれば消える)。
