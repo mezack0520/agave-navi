@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-03 14:39 JST",
+ "generated": "2026-11-04 06:43 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 404,
-  "awaitingNextEdition": 456,
+  "awaitingNextEdition": 462,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 93,
+  "igNeedsBrowser": 92,
   "igDead": 7
  },
  "igAccounts": [
@@ -121,16 +121,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "fuji_taniku",
-   "url": "https://www.instagram.com/fuji_taniku/",
-   "eventCount": 4,
-   "lastEventName": "フジサンフェスタ 2026秋",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "joyfulak_gardencenter",
    "url": "https://www.instagram.com/joyfulak_gardencenter/",
    "eventCount": 4,
@@ -158,7 +148,7 @@
    "lastEventDate": "2026-11-08",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "personal"
+   "apiStatus": "api"
   },
   {
    "handle": "botanical.botanical",
@@ -671,6 +661,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "fuji_taniku",
+   "url": "https://www.instagram.com/fuji_taniku/",
+   "eventCount": 4,
+   "lastEventName": "フジサンフェスタ 2026秋",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -919,56 +919,6 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "yamanishihiryouten",
-   "url": "https://www.instagram.com/yamanishihiryouten/",
-   "eventCount": 1,
-   "lastEventName": "masappe多肉 周年祭（2周年）",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ethan_plants",
-   "url": "https://www.instagram.com/ethan_plants/",
-   "eventCount": 1,
-   "lastEventName": "イーサンプランツ 多肉植物販売会（イーサン祭）",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "nakano_plants_lab",
-   "url": "https://www.instagram.com/nakano_plants_lab/",
-   "eventCount": 1,
-   "lastEventName": "ちいさな植物園 vol.3（なかの植物研究所）",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "brooklynprojects_hh",
-   "url": "https://www.instagram.com/brooklynprojects_hh/",
-   "eventCount": 1,
-   "lastEventName": "レア株ギャングスタ POPUP EVENT（BROOKLYN PROJECTS 東広島店）",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "bon31_ta29",
-   "url": "https://www.instagram.com/bon31_ta29/",
-   "eventCount": 1,
-   "lastEventName": "秋の盆栽＆多肉 即売会（Bon31＆Ta29Cafe）",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "veitchiis",
@@ -4064,6 +4014,56 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "yamanishihiryouten",
+   "url": "https://www.instagram.com/yamanishihiryouten/",
+   "eventCount": 1,
+   "lastEventName": "masappe多肉 周年祭（2周年）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "ethan_plants",
+   "url": "https://www.instagram.com/ethan_plants/",
+   "eventCount": 1,
+   "lastEventName": "イーサンプランツ 多肉植物販売会（イーサン祭）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "nakano_plants_lab",
+   "url": "https://www.instagram.com/nakano_plants_lab/",
+   "eventCount": 1,
+   "lastEventName": "ちいさな植物園 vol.3（なかの植物研究所）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "brooklynprojects_hh",
+   "url": "https://www.instagram.com/brooklynprojects_hh/",
+   "eventCount": 1,
+   "lastEventName": "レア株ギャングスタ POPUP EVENT（BROOKLYN PROJECTS 東広島店）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bon31_ta29",
+   "url": "https://www.instagram.com/bon31_ta29/",
+   "eventCount": 1,
+   "lastEventName": "秋の盆栽＆多肉 即売会（Bon31＆Ta29Cafe）",
+   "lastEventDate": "2026-11-03",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
   }
  ],
  "awaitingNextEdition": [

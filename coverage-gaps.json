@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-03",
+  "sweptOn": "2026-11-04",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -26,21 +26,21 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 851,
-    "in_scope": 206,
+    "candidates": 839,
+    "in_scope": 215,
     "covered": 138,
-    "known_rejected": 28,
+    "known_rejected": 26,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
-    "in_scope_leafla": 104,
+    "in_scope_leafla": 100,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 87,
+    "in_scope_nextmeet": 100,
     "in_scope_matome-blog": 9,
     "in_scope_organizer-index": 6,
-    "gaps_raw": 40
+    "gaps_raw": 51
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -51,22 +51,72 @@
   ],
   "gaps": [
     {
-      "date": "2026-11-03",
+      "date": "2026-11-04",
       "lastSeen": "2026-11-29",
-      "days": 24,
+      "days": 23,
       "title": "花のある暮らし ボタニカルアートとデザイン",
       "source": "leafla"
     },
     {
+      "date": "2026-11-07",
+      "title": "nobinobi 2026 GreenSnap Marche出展",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-11-14",
+      "title": "ひめじ花と緑のガーデンフェア",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2026-11-14",
+      "title": "第29回 花宇宙ドリームガーデン・3社合同販売会",
+      "source": "nextmeet"
+    },
+    {
       "date": "2026-11-20",
       "lastSeen": "2026-12-06",
-      "days": 15,
+      "days": 17,
       "title": "植物園のもみじ散策～世界の森で紅葉めぐり～",
       "source": "leafla"
     },
     {
+      "date": "2026-12-06",
+      "title": "12月例会",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2027-01-09",
+      "title": "第2回 PLANTS FAMILY 豊橋ラウンド",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2027-01-10",
+      "title": "ピクニックガーデン せんだい農業園芸センター・初売り",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2027-01-11",
+      "title": "第2回 PLANTS FAMILY 名古屋ラウンド",
+      "source": "nextmeet"
+    },
+    {
       "date": "2027-02-07",
       "title": "Green marché 花の湯",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2027-02-14",
+      "title": "さよならグリーンパーク さよならタニッペ",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2027-02-20",
+      "title": "enjoy place 6th",
+      "source": "nextmeet"
+    },
+    {
+      "date": "2027-02-27",
+      "title": "ピクニックガーデン ガーデンプラザ華",
       "source": "nextmeet"
     }
   ]

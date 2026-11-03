@@ -1,5 +1,5 @@
 {
-  "total": 715,
+  "total": 717,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 119,
+      "count": 112,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agavejam-3rd-as-green-garden-2026-11",
@@ -217,7 +217,6 @@
         "bbb-snowpeak-miyakonojo-2026-11",
         "bizarre-plants-fair-brew-by-mstr-2026-11-08",
         "bizarre-plants-night-day-2026-12",
-        "bon31-ta29-aki-bonsai-taniku-sokubai-2026-11",
         "bota-magic-2nd-wakayama-2027-04",
         "bota-para-vol4-sapporo-2026-11",
         "botajam-2026",
@@ -229,15 +228,12 @@
         "botanical-yokocho-senju-2026-11",
         "camp-park-garden-3-flarie-2026-11",
         "ceramall-hanbaikai-2026-11",
-        "chiisana-shokubutsuen-vol3-fukuyama-2026-11",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chuushokushobutsusai-2026",
         "collect-plants-2027-04",
         "enichi-vol18-bizenya-2026-11",
         "enjoy-place-outside-2nd-2026-11",
-        "ethan-plants-hanbaikai-ichikawa-2026-11",
         "fehn-5th-kakusen-en-ikebukuro-2026-11",
-        "fujisan-festa-2026-autumn",
         "fukuoka-green-party-8th-2027-05",
         "gamagori-taniku-festa-6th-2026-11",
         "granterrace-chikusei-tanikusai-2026-11",
@@ -246,7 +242,11 @@
         "greensnap-marche-odaiba-2026",
         "hanamichiru-taniku-hanbaikai-5th-joyfulak-kushiro-2026-11",
         "hanatomofesta-10th-makuhari-2027-04",
-        "hanatomofesta-2026"
+        "hanatomofesta-2026",
+        "hartn-fes-4th-hirata-kasuga-2026-11",
+        "hartn-fes-4th-hirata-odo-2026-11",
+        "haze-various-genres-marche-2026-11",
+        "hobby-plants-freaks-vol6-2026-11"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -755,16 +755,10 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 8,
+      "count": 2,
       "items": [
-        "bon31-ta29-aki-bonsai-taniku-sokubai-2026-11(2026-11-03〜2026-11-03/1日)",
-        "chiisana-shokubutsuen-vol3-fukuyama-2026-11(2026-11-03〜2026-11-03/1日)",
-        "ethan-plants-hanbaikai-ichikawa-2026-11(2026-11-03〜2026-11-03/1日)",
-        "fujisan-festa-2026-autumn(2026-11-03〜2026-11-03/1日)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
-        "lier-taniku-festival-munakata-2026-11(2026-11-03〜2026-11-03/1日)",
-        "masappe-taniku-2nd-anniversary-2026-11(2026-11-03〜2026-11-03/1日)",
-        "reakabu-gangsta-popup-brooklyn-projects-2026-11(2026-11-03〜2026-11-03/1日)"
+        "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -911,11 +905,21 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 3,
+      "count": 13,
       "items": [
-        "2026-11-03 花のある暮らし ボタニカルアートとデザイン",
+        "2026-11-04 花のある暮らし ボタニカルアートとデザイン",
+        "2026-11-07 nobinobi 2026 GreenSnap Marche出展",
+        "2026-11-14 ひめじ花と緑のガーデンフェア",
+        "2026-11-14 第29回 花宇宙ドリームガーデン・3社合同販売会",
         "2026-11-20 植物園のもみじ散策～世界の森で紅葉めぐり～",
-        "2027-02-07 Green marché 花の湯"
+        "2026-12-06 12月例会",
+        "2027-01-09 第2回 PLANTS FAMILY 豊橋ラウンド",
+        "2027-01-10 ピクニックガーデン せんだい農業園芸センター・初売り",
+        "2027-01-11 第2回 PLANTS FAMILY 名古屋ラウンド",
+        "2027-02-07 Green marché 花の湯",
+        "2027-02-14 さよならグリーンパーク さよならタニッペ",
+        "2027-02-20 enjoy place 6th",
+        "2027-02-27 ピクニックガーデン ガーデンプラザ華"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -1026,8 +1030,11 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
+        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(本文・画像)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1168,9 +1175,11 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 1,
+      "count": 3,
       "items": [
-        "2026-12-13 life-with-plants-vol2-sw-plants-2026-12: https://www.instagram.com/p/DfOn4h3Sfl6/（sourcePost）"
+        "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11: https://www.instagram.com/p/DfOVUxKCZqz/（caption）",
+        "2026-12-13 life-with-plants-vol2-sw-plants-2026-12: https://www.instagram.com/p/DfOn4h3Sfl6/（sourcePost）",
+        "2026-12-13 green-link-mishima-2026-12: https://www.instagram.com/p/DewBx1NCaPA/（sourcePost）"
       ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
@@ -1489,8 +1498,10 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "kesennuma-clubhouse-hanbaikai-2026-11: 開催日 2026-11-03 を過ぎた（保留 2026-10-15）"
+      ],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
@@ -1498,9 +1509,9 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 3,
       "items": [
-        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（33日前）",
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（38日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（38日前）"
+        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（34日前）",
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（39日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（39日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
