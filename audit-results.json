@@ -1,5 +1,5 @@
 {
-  "total": 717,
+  "total": 719,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 64,
+      "count": 65,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -898,14 +898,16 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2027-02-14 さよならグリーンパーク さよならタニッペ"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 13,
+      "count": 12,
       "items": [
         "2026-11-04 花のある暮らし ボタニカルアートとデザイン",
         "2026-11-07 nobinobi 2026 GreenSnap Marche出展",
@@ -917,7 +919,6 @@
         "2027-01-10 ピクニックガーデン せんだい農業園芸センター・初売り",
         "2027-01-11 第2回 PLANTS FAMILY 名古屋ラウンド",
         "2027-02-07 Green marché 花の湯",
-        "2027-02-14 さよならグリーンパーク さよならタニッペ",
         "2027-02-20 enjoy place 6th",
         "2027-02-27 ピクニックガーデン ガーデンプラザ華"
       ],
@@ -947,7 +948,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 64,
+      "count": 65,
       "items": [
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",

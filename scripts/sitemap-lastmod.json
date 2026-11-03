@@ -2,7 +2,7 @@
  "_note": "sitemap.xml の lastmod 台帳。generate_sitemap.py が内容のsha1と、その内容になった日を持つ。mtime はCIのcloneで毎回更新されるため使えない(2026-08-30)。",
  "pages": {
   "https://agave-navi.com/": {
-   "sha": "7cfb8563e7104e207fa9d1364fad2e9658c03b73",
+   "sha": "b7ca928680b86bfcf2a62aa8e90b293173c208c2",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/about.html": {
@@ -10,8 +10,8 @@
    "date": "2026-10-25"
   },
   "https://agave-navi.com/archive/": {
-   "sha": "af8f8d35d403f11074e4cae9ec8c23b2ae3c08b1",
-   "date": "2026-11-03"
+   "sha": "1a2afd65cd981b76d441cff4148f6ebcb2239b1b",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/archive/2026-02/": {
    "sha": "9703229c06cb3f7b1ee9b05e74521485693beed4",
@@ -66,8 +66,8 @@
    "date": "2026-10-27"
   },
   "https://agave-navi.com/archive/2027-02/": {
-   "sha": "37c8aa829b84de27bd3bf6eb40b0931826ae5dd9",
-   "date": "2026-11-03"
+   "sha": "d303e6cf37855f5fee0b019e97282e1fccfa9b6b",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/archive/2027-03/": {
    "sha": "d461c5b56c79e064b7e6b6069c74bf564479ba7a",
@@ -86,11 +86,11 @@
    "date": "2026-10-25"
   },
   "https://agave-navi.com/archive/2027/": {
-   "sha": "d923544015d3de192211068e45391acc57a45284",
-   "date": "2026-11-03"
+   "sha": "c42721e78e7351543f0b80ab061c28a4f8c7b883",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/calendar.html": {
-   "sha": "617df9b145f0d9f4c0d05bdfe3a347528d22323d",
+   "sha": "46e20e091dec7db48b19812d760ee9644aae4455",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/category/exhibition.html": {
@@ -106,7 +106,7 @@
    "date": "2026-11-02"
   },
   "https://agave-navi.com/category/sokubai.html": {
-   "sha": "78fc2dd752bfc09699cb17780645663988575e26",
+   "sha": "556ed12a971d20c4f86d347e70914d2303bac918",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/contact.html": {
@@ -1273,6 +1273,10 @@
    "sha": "f8fa3e67e23d1114ef5ae72a3caf5e56e835c01c",
    "date": "2026-11-03"
   },
+  "https://agave-navi.com/events/sayonara-green-park-tanippe-fukaya-2027-02.html": {
+   "sha": "c822bd0963e74f3badc310f25aa465093491b45d",
+   "date": "2026-11-04"
+  },
   "https://agave-navi.com/events/shabomaniac-popup-saboru-inu-2026-10.html": {
    "sha": "76220e27c9fdecae21e55747bf4436c113c51b00",
    "date": "2026-11-03"
@@ -1482,7 +1486,7 @@
    "date": "2026-11-04"
   },
   "https://agave-navi.com/events/tochigi-tanippe-fukaya-final-2026-10.html": {
-   "sha": "657c6f0544b39552725b1deb54027490f715a937",
+   "sha": "81af2866fbea39105c2f3a9a6515e793bd9079e6",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/events/tokai-okibota-2026.html": {
@@ -1706,11 +1710,11 @@
    "date": "2026-10-25"
   },
   "https://agave-navi.com/map.html": {
-   "sha": "c4de2516cbcccaa3f651946897ff69050ac6732b",
+   "sha": "5b3927c54e9a1fa922763bca70197ba1e51918bf",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/new/": {
-   "sha": "9e257ffccc02836479ca200b0c9c257dca2416da",
+   "sha": "a14ed5f995b53d82726399a7643e44ed39f891f8",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/operator.html": {
@@ -1718,8 +1722,8 @@
    "date": "2026-10-25"
   },
   "https://agave-navi.com/pref/": {
-   "sha": "b4c806b7fae76815c5dac4211ffe08f4955d092a",
-   "date": "2026-11-03"
+   "sha": "d71715ad33e3eef32f7e120f89e07b9f40a56e39",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/pref/aichi/": {
    "sha": "dcd22babbea029af27e84637d909a975e5f8680e",
@@ -1826,8 +1830,8 @@
    "date": "2026-11-02"
   },
   "https://agave-navi.com/pref/oita/": {
-   "sha": "cb4efd15311f7b0c50899ebe36ad7639b45cb077",
-   "date": "2026-11-02"
+   "sha": "e4ab8f8a741ca45a7a72500093b1fbe76f4780dc",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/pref/okayama/": {
    "sha": "c3106fc3bf1ac75cb708adc55cca0aaf4599ec4e",
@@ -1842,7 +1846,7 @@
    "date": "2026-11-04"
   },
   "https://agave-navi.com/pref/saitama/": {
-   "sha": "2fb2efc30113704973a92a4cf8e898451ba2141b",
+   "sha": "a9a704af833e47d1bd32079d27b1d8687ef7205a",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/pref/shiga/": {
@@ -1898,8 +1902,8 @@
    "date": "2026-10-25"
   },
   "https://agave-navi.com/region/": {
-   "sha": "509893ee78d7d68f2d5b05095f3f33d4438cdd85",
-   "date": "2026-11-03"
+   "sha": "ecd52e4e3646e84b2e3b8b16227537666945ab13",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/region/chugoku/": {
    "sha": "809fe9115954043d91486a5f1aa349672a9e41ee",
@@ -1914,7 +1918,7 @@
    "date": "2026-11-04"
   },
   "https://agave-navi.com/region/kanto/": {
-   "sha": "2af3052a8f12bc7bdf0b8cce18eb4340c05a8596",
+   "sha": "51425e065560b60c4b5a45a2645a9e365938efdb",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/region/kyushu/": {
@@ -1934,8 +1938,8 @@
    "date": "2026-11-04"
   },
   "https://agave-navi.com/tag/": {
-   "sha": "06ac8c64c7b0ff31f3e5541bf764165fd818530c",
-   "date": "2026-11-03"
+   "sha": "b78f013313d0013669945cb387502f70d6cc526e",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/tag/agave/": {
    "sha": "c6791b3656b301aeb03ebec5376d5cd3f16d73e0",
@@ -1982,11 +1986,11 @@
    "date": "2026-11-04"
   },
   "https://agave-navi.com/tag/sokubaikai/": {
-   "sha": "34b43fae780a1fa7372152a74782f445f82c8e05",
+   "sha": "d8a5a74d6ee43138df5d8ef20bf2524124317fc8",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/tag/succulent/": {
-   "sha": "a0f5c7375319b06a556f9dbb5462edc853bc0b4c",
+   "sha": "8b7156f92c65526123245cd59fcf2a4fcadb4ef5",
    "date": "2026-11-04"
   },
   "https://agave-navi.com/tag/tag-22145fa5/": {
@@ -2018,8 +2022,8 @@
    "date": "2026-11-04"
   },
   "https://agave-navi.com/venue/": {
-   "sha": "4e7a1ffeea99b4413e341d15ea02a495adf4e91d",
-   "date": "2026-11-02"
+   "sha": "34f31e1b0b1272271b0e1c1a84d4b6c5486eaa98",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/venue/anvirenote/": {
    "sha": "f089037b941b752bc430749d286b8b6884ad1582",
@@ -2364,6 +2368,10 @@
   "https://agave-navi.com/venue/v-f88b3842/": {
    "sha": "c96e3b60eea4a9c31a7ae89e16ed969fbe5f8841",
    "date": "2026-10-25"
+  },
+  "https://agave-navi.com/venue/v-ff75db2f/": {
+   "sha": "25b66eb2385a2bd801fda26c23bc04d074547c37",
+   "date": "2026-11-04"
   },
   "https://agave-navi.com/venue/yorktown-bando/": {
    "sha": "928f1fa40bfcab5a92629a8b9aad2edde7f55011",

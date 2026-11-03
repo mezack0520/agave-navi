@@ -1,7 +1,17 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-03",
+  "updated": "2026-11-04",
   "items": [
+    {
+      "on": "2026-11-04",
+      "kind": "listed",
+      "slug": "sayonara-green-park-tanippe-fukaya-2027-02",
+      "name": "さよならグリーンパーク さよならタニッペ",
+      "date": "2027-02-14",
+      "dateEnd": "2027-02-14",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
     {
       "on": "2026-11-03",
       "kind": "listed",
@@ -1190,16 +1200,6 @@
       "date": "2026-10-10",
       "dateEnd": "2026-10-12",
       "prefecture": "岩手",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-09",
-      "kind": "listed",
-      "slug": "sanpachi-taniku-hanbaikai-michinoeki-asaji-2026-10-10",
-      "name": "さんぱち 多肉植物販売会（道の駅あさじ・10月10〜12日）",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-12",
-      "prefecture": "大分",
       "detail": ""
     }
   ]
