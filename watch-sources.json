@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-03 10:13 JST",
+ "generated": "2026-11-03 10:33 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 404,
   "awaitingNextEdition": 456,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 95,
+  "igNeedsBrowser": 93,
   "igDead": 7
  },
  "igAccounts": [
@@ -978,7 +978,7 @@
    "lastEventDate": "2026-11-06",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "helisgarden",
@@ -1598,7 +1598,7 @@
    "lastEventDate": "2026-12-13",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nb_garden2015",

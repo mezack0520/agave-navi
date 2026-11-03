@@ -13,28 +13,6 @@
       "name": "草木日和（BloomGARDEN）",
       "date": "2026-11-07",
       "url": "https://bloomgarden.jp/event/post-595/",
-      "why": "弱い語(延期)＋ページが変わった",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
-      "name": "多肉植物とサボテンの展示会（井頭公園）",
-      "date": "2026-11-19",
-      "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-abc-hachioji-2026-11",
-      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
-      "date": "2026-11-21",
-      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
       "why": "公式ページが変わった(本文・画像)",
       "changed": [
         "本文",
@@ -46,18 +24,11 @@
       "name": "第9回 花友フェスタ",
       "date": "2026-12-19",
       "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(画像)",
+      "why": "公式ページが変わった(本文・画像)",
       "changed": [
+        "本文",
         "画像"
       ]
-    },
-    {
-      "slug": "isij-tokyo-reikai-2026-12-20",
-      "name": "I.S.I.J. 東京例会（2026年12月）",
-      "date": "2026-12-20",
-      "url": "http://isij.net/event",
-      "why": "中止・延期の語: 中止のお知らせ",
-      "changed": []
     }
   ],
   "pages": {
@@ -114,7 +85,7 @@
         "textLen": 15564,
         "imageCount": 600
       },
-      "prevTextLen": 15614,
+      "prevTextLen": 15564,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -131,18 +102,16 @@
       "url": "https://bloomgarden.jp/event/post-595/",
       "checkedOn": "2026-11-03",
       "signature": {
-        "text": "77b306f816a348c6",
-        "images": "0af6679cc2c2fd3e",
-        "textLen": 1435,
+        "text": "918ada5aae8e14c6",
+        "images": "18fb69a1d1de8cb0",
+        "textLen": 1422,
         "imageCount": 27
       },
-      "prevTextLen": 1401,
+      "prevTextLen": 1435,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
-      "weak": [
-        "延期"
-      ],
+      "weak": [],
       "datesNamed": 7,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
@@ -204,7 +173,7 @@
         "textLen": 1043,
         "imageCount": 44
       },
-      "prevTextLen": 1193,
+      "prevTextLen": 1043,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -226,7 +195,7 @@
         "textLen": 2570,
         "imageCount": 40
       },
-      "prevTextLen": 1041,
+      "prevTextLen": 2570,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -353,9 +322,9 @@
       "url": "https://hanatomofesta.com/",
       "checkedOn": "2026-11-03",
       "signature": {
-        "text": "c765d53207271ae2",
-        "images": "552896eb65b4503a",
-        "textLen": 1155,
+        "text": "ccffcbe39d93bc91",
+        "images": "17b1d6b7028d3bf6",
+        "textLen": 1133,
         "imageCount": 43
       },
       "prevTextLen": 1155,
@@ -369,7 +338,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 1
+      "imageOnlyChanges": 0
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -405,9 +374,7 @@
       "prevTextLen": 7199,
       "sigScope": "page",
       "sigRule": 2,
-      "strong": [
-        "中止のお知らせ"
-      ],
+      "strong": [],
       "weak": [
         "中止"
       ],
