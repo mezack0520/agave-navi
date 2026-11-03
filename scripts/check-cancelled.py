@@ -201,6 +201,33 @@ FACILITY_CANCEL = (
 )
 
 
+# 過去の回の中止告知が頁に残る型(2026-11-03)。
+# isij.net/event は「東京例会 中止のお知らせ ［日時］2024年8月25日」を過去の回の欄に
+# 残したままで、2026-12-20 の回が毎巡回「中止のお知らせ」で鳴っていた(10-28 に目視で
+# 「2024年の回の文言」と確認済みでも、記録は「その巡回ぶん」しか黙らせず翌日また鳴った)。
+# 告知の見出しの直後に出る日付が今年より前の年なら、過去の回の話なので落とす。
+PAST_NOTICE = re.compile(
+    r'(?:中止|延期|開催見合わせ)(?:の)?お知らせ[\s\S]{0,40}?(20\d\d)\s*年')
+
+
+def drop_past_notice(text, year=None):
+    y = year or int(str(today_jst())[:4])
+    return PAST_NOTICE.sub(
+        lambda m: ' ' if int(m.group(1)) < y else m.group(0), text)
+
+
+def _self_test_past_notice():
+    """過去年の告知を落とし、今年の告知は落とさない。失敗は文のリストで返す"""
+    bad = []
+    old = '東京例会 中止のお知らせ ［ 日 時 ］ 2024 年8月25日（日）急な中止となり'
+    if '中止のお知らせ' in drop_past_notice(old, 2026):
+        bad.append('2024年の中止のお知らせを落とせていない')
+    now = '東京例会 中止のお知らせ ［日時］2026年12月20日（日）'
+    if '中止のお知らせ' not in drop_past_notice(now, 2026):
+        bad.append('2026年の中止のお知らせまで落としている')
+    return bad
+
+
 def drop_conditional(text):
     """イベントの中止を指していない言い回しを落とす。判定に使う前に通す。
 
@@ -209,7 +236,7 @@ def drop_conditional(text):
     (5) 施設・設備の利用の中止。
     どちらも「イベントが中止になったか」とは別のことを言っている。
     """
-    out = text
+    out = drop_past_notice(text)
     for pat in (CONDITIONAL_CANCEL + VENDOR_CANCEL + SUBPROGRAM_CANCEL
                 + ORDER_CANCEL + FACILITY_CANCEL):
         out = re.sub(pat, ' ', out)

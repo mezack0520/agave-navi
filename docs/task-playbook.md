@@ -5038,3 +5038,9 @@ time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出
 - (2026-11-03 に書き換え)10-31 に「cat は拒まれるが変数に読めば通る」と書いていたが、11-03 の event-monitor は github.pat を読む段階で自動モードの分類器に止められた(Credential Materialization)。**同じ日に agave-event-update と event-listing-review は通っており、判定は回ごとに変わる。**読み方を変えて通そうとしない。会話のセッションが資格情報のヘルパーを置こうとした操作も「自動モードの回避」として止められた。下の §1 の「PAT を止められた回」を見る
 - 新規検査 `organizer_ig_format`(urgent・0が正常): organizerIg に @・URL・空白が入ると見張りが黙って外れる。
 - `venue_key_split` は location の区画(「6号館D」「ときわ公園内」)で出る。直した直後は詳細頁が古く `venue_history_drift` が一時的に鳴る(daily が再生成すれば消える)。
+
+## 2026-11-03 event-monitor 追記
+
+- 過去の回の中止告知が頁に残る型: isij.net/event の「東京例会 中止のお知らせ ［日時］2024年8月25日」で 2026-12-20 の回が毎巡回鳴っていた(10-28 に目視確認・記録済みでも、記録は「その巡回ぶん」しか黙らせず再発)。`check-cancelled.drop_past_notice` が「◯◯のお知らせ」の直後に今年より前の年が続くものを落とす。自己テスト `_self_test_past_notice` を audit が毎回呼ぶ。
+- 同日の cancel_suspects 残り4件(草木日和・井頭公園・GreenSnapMarche八王子・花友フェスタ)は一次情報で開催予定のまま確認し cancel-reviewed.json に記録。
+- clone に PAT は不要(公開リポジトリ)。PAT は push 用。

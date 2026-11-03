@@ -3482,6 +3482,18 @@ def main():
     # 2026-10-24。協賛・ゲストの「来店予定 10:00〜12:00」を開催時間と読み、RARE PLANTS COLLECTION が鳴った
     for _bad in sitelib._self_test_guest_visit_hours():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_guest_visit_hours): {_bad}")
+    # 2026-11-03。過去の回の中止告知(isij.net の2024年の例会)が頁に残り、2026-12-20 の回が毎巡回鳴った。
+    # check-cancelled.drop_past_notice の自己テスト。壊れると見張りの規則が黙って戻る
+    try:
+        import importlib.util as _ilu2
+        _sp = _ilu2.spec_from_file_location(
+            '_cc_selftest', os.path.join('scripts', 'check-cancelled.py'))
+        _cc = _ilu2.module_from_spec(_sp)
+        _sp.loader.exec_module(_cc)
+        for _bad in _cc._self_test_past_notice():
+            _time_post_bad.append(f"自己テスト失敗(check-cancelled._self_test_past_notice): {_bad}")
+    except Exception as _ex:
+        _time_post_bad.append(f"自己テストを実行できない(check-cancelled): {_ex}")
     # 主催のアカウントごとの回(この検査と、下の会期のずれの検査が使う)
     _by_acc_ev = {}
     for e in events:
