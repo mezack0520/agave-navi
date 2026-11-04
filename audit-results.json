@@ -1,5 +1,5 @@
 {
-  "total": 721,
+  "total": 767,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 64,
+      "count": 81,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -315,9 +315,14 @@
         "botanoichi-senju-2026-11",
         "chinki-plants-flea-market-2027-01",
         "chinki-plants-flea-market-2027-04",
+        "enjoy-place-6th-2027-02",
         "enjoy-place-bangaihen-2026-12",
+        "enjoy-place-outside-3rd-2027-05",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
         "green-garage-nogata-2026-11",
+        "green-marche-hananoyu-fujinomiya-2027-02",
+        "green-marche-hananoyu-fujinomiya-2027-04",
+        "green-marche-hananoyu-fujinomiya-2027-06",
         "igashira-park-taniku-saboten-tenjikai-2026-11",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
@@ -329,20 +334,15 @@
         "jusai-utsunomiya-spring-2027-05",
         "ka78-kikakusai-6th-shimada-2026-11",
         "kanik-popup-pac-plants-yokohama-2026-11",
+        "kasamajuku-tanikusai-2026-12",
+        "kasamajuku-tanikusai-2027-01",
+        "kasamajuku-tanikusai-2027-02",
+        "kasamajuku-tanikusai-2027-03",
+        "kasamajuku-tanikusai-2027-04",
         "king-plants-sunday-oroshimachi-2026-12",
         "lier-taniku-festival-fukuyama-2026-12",
         "lier-taniku-festival-fukuyama-2027-01",
-        "lier-taniku-festival-hamada-2026-11",
-        "lier-taniku-festival-hyuga-2027-01",
-        "lier-taniku-festival-kariya-2026-12",
-        "lier-taniku-festival-kitakyushu-2027-01",
-        "lier-taniku-festival-nagasaki-2027-01",
-        "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01",
-        "lier-taniku-festival-shimizu-2026-12",
-        "lier-taniku-festival-shimonoseki-kikugawa-2026-11",
-        "lier-taniku-festival-tamana-2027-01",
-        "lier-taniku-festival-tokushima-2026-12"
+        "lier-taniku-festival-hamada-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -356,8 +356,10 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "picnic-garden-michinoeki-yamagata-zao-2027-04: 2027.04.03-4 → 2027.04.03-04"
+      ],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -729,7 +731,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -793,15 +795,21 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "まちの駅笠間宿(6件) → /venue/v-ce02f6af/",
+        "南国ちゃたんたにくった(3件) → /venue/v-bf5a617f/",
+        "富嶽温泉花の湯1Fエントランス(4件) → /venue/v-86f4ffea/"
+      ],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "宮城 せんだい農業園芸センター(1件) / せんだい農業園芸センターみどりの杜(3件)"
+      ],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
@@ -898,21 +906,8 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
-      "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
-      "severity": "info"
-    },
-    "coverage_gaps": {
-      "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 14,
+      "count": 8,
       "items": [
-        "2026-11-05 花のある暮らし ボタニカルアートとデザイン",
-        "2026-11-07 nobinobi 2026 GreenSnap Marche出展",
-        "2026-11-14 ひめじ花と緑のガーデンフェア",
-        "2026-11-14 第29回 花宇宙ドリームガーデン・3社合同販売会",
-        "2026-11-20 植物園のもみじ散策～世界の森で紅葉めぐり～",
-        "2026-12-06 12月例会",
         "2027-01-03 まちの駅笠間宿 多肉祭（2027年1月）",
         "2027-01-09 第2回 PLANTS FAMILY 豊橋ラウンド",
         "2027-01-10 ピクニックガーデン せんだい農業園芸センター・初売り",
@@ -921,6 +916,20 @@
         "2027-02-07 まちの駅笠間宿 多肉祭（2027年2月）",
         "2027-02-20 enjoy place 6th",
         "2027-02-27 ピクニックガーデン ガーデンプラザ華"
+      ],
+      "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
+      "severity": "info"
+    },
+    "coverage_gaps": {
+      "title": "他所に出ていて当サイトに無いイベント候補",
+      "count": 6,
+      "items": [
+        "2026-11-05 花のある暮らし ボタニカルアートとデザイン",
+        "2026-11-07 nobinobi 2026 GreenSnap Marche出展",
+        "2026-11-14 ひめじ花と緑のガーデンフェア",
+        "2026-11-14 第29回 花宇宙ドリームガーデン・3社合同販売会",
+        "2026-11-20 植物園のもみじ散策～世界の森で紅葉めぐり～",
+        "2026-12-06 12月例会"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -948,7 +957,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 64,
+      "count": 81,
       "items": [
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
@@ -973,6 +982,7 @@
         "2026-12-05 orais-party-2026-garden-messe-hachioji",
         "2026-12-05 taniku-xmas-flarie-2026-12",
         "2026-12-06 botanical-market-mie-vol11-matsusaka-2026-12",
+        "2026-12-06 kasamajuku-tanikusai-2026-12",
         "2026-12-06 lier-taniku-festival-fukuyama-2026-12",
         "2026-12-10 lier-taniku-festival-kariya-2026-12",
         "2026-12-11 lier-taniku-festival-shimizu-2026-12",
@@ -982,14 +992,13 @@
         "2026-12-20 nbgarden-festa-shizuoka-2026-12",
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
+        "2027-01-03 kasamajuku-tanikusai-2027-01",
         "2027-01-08 lier-taniku-festival-hyuga-2027-01",
         "2027-01-09 lier-taniku-festival-tamana-2027-01",
+        "2027-01-09 plants-family-2nd-toyohashi-2027-01",
         "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
-        "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
-        "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
-        "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-17 chinki-plants-flea-market-2027-01",
-        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01"
+        "2027-01-10 picnic-garden-hatsuuri-sendai-2027-01",
+        "2027-01-11 lier-taniku-festival-kitakyushu-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1481,8 +1490,14 @@
     },
     "instagram_post_predates_edition": {
       "title": "Instagramの埋め込み・アイキャッチが開催の1年以上前の投稿(前の回の告知)",
-      "count": 0,
-      "items": [],
+      "count": 5,
+      "items": [
+        "picnic-garden-hatsuuri-sendai-2027-01: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の489日前)",
+        "picnic-garden-plaza-hana-fukushima-2027-02: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の537日前)",
+        "picnic-garden-plaza-hana-fukushima-2027-03: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の565日前)",
+        "picnic-garden-michinoeki-yamagata-zao-2027-04: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の572日前)",
+        "picnic-garden-plaza-hana-fukushima-2027-04: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の586日前)"
+      ],
       "note": "前の回の投稿。instagramPostId / instagramUrl なら外す(頁の埋め込みが消える)。imageSource なら imageUrl と images/events/ の画像も外し image-rejected.json に記録。この回の告知を主催の投稿で探し直す。年間の日程を1本で告知した投稿は、同じ投稿を近い回にも当てれば出なくなる",
       "severity": "urgent"
     },
@@ -1641,8 +1656,11 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "eyecatch_backlog: 直近中央値 64 → 79（掲載751件で換算 60）（+19）",
+        "upcoming_no_image: 直近中央値 64 → 79（掲載751件で換算 60）（+19）"
+      ],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },

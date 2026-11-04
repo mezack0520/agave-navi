@@ -1815,11 +1815,17 @@
   {
    "date": "2026-11-05",
    "urgent": {
+    "datedisplay_format": 1,
+    "venue_slug_romaji_candidates": 3,
+    "venue_key_split": 1,
     "manual_sweep_stale": 1,
-    "rejected_revisit_expired": 1
+    "instagram_post_predates_edition": 5,
+    "rejected_revisit_expired": 1,
+    "metric_moved": 2
    },
    "info": {
-    "coverage_gaps": 14,
+    "coverage_gap_stale": 8,
+    "coverage_gaps": 6,
     "cancel_suspects": 2,
     "organizer_unlisted_dates": 8,
     "eyecatch_candidates_pending": 2,
@@ -1832,13 +1838,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 113,
     "events_with_image": 361,
-    "upcoming_no_image": 64,
+    "upcoming_no_image": 81,
     "ongoing_events": 2,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 64
+    "eyecatch_backlog": 81
    },
-   "events": 734,
-   "upcoming": 177
+   "events": 751,
+   "upcoming": 194
   }
  ]
 }
