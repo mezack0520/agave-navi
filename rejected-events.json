@@ -2774,6 +2774,66 @@
    "reasonType": "policy",
    "eventDate": "2026-11-19",
    "revisit": false
+  },
+  {
+   "key": "himeji-hana-to-midori-garden-fair-2026-11-14",
+   "name": "ひめじ花と緑のガーデンフェア (2026-11-14〜15 大手前公園・兵庫県姫路市)",
+   "aliases": [
+    "ひめじ花と緑のガーデンフェア"
+   ],
+   "reasonType": "policy",
+   "decided": "2026-11-05",
+   "eventDate": "2026-11-14",
+   "revisit": false,
+   "reason": "花苗・園芸資材を含むガーデニング総合の催し。主催告知は加古川の店 穂ノ花の出店予定にしか出ておらず、植物軸(アガベ・多肉等)の明示も無い(plantCentric / outOfScopeGenres)"
+  },
+  {
+   "key": "hanauchu-dream-garden-29th-nextmeet-2026-11-14",
+   "name": "第29回 花宇宙ドリームガーデン・3社合同販売会 (NextMeet記載 2026-11-14)",
+   "aliases": [
+    "花宇宙ドリームガーデン・3社合同販売会"
+   ],
+   "reasonType": "unverified",
+   "decided": "2026-11-05",
+   "eventDate": "2026-11-14",
+   "revisit": true,
+   "reason": "主催 @hanauchustaff は 2026-10-11 に「次回、第29回ドリームガーデンは2027年4月開催予定」と告知。11/14 の日付は主催告知に無く、NextMeet の記載は食い違う。4月の回は日付の告知が出たら掲載"
+  },
+  {
+   "key": "botanical-art-design-exhibition-2026-11-05",
+   "name": "花のある暮らし ボタニカルアートとデザイン (2026-11-05〜29)",
+   "aliases": [
+    "花のある暮らし ボタニカルアートとデザイン"
+   ],
+   "reasonType": "policy",
+   "decided": "2026-11-05",
+   "eventDate": "2026-11-05",
+   "revisit": false,
+   "reason": "ボタニカルアートの展覧会で植物の即売が無い(outOfScopeGenres)"
+  },
+  {
+   "key": "shokubutsuen-momiji-sanpo-2026-11-20",
+   "name": "植物園のもみじ散策〜世界の森で紅葉めぐり〜 (2026-11-20〜12-06)",
+   "aliases": [
+    "植物園のもみじ散策"
+   ],
+   "reasonType": "policy",
+   "decided": "2026-11-05",
+   "eventDate": "2026-11-20",
+   "revisit": false,
+   "reason": "植物園の紅葉の観賞企画で植物の即売会ではない(plantCentric.autoInclude に当たらない)"
+  },
+  {
+   "key": "nobinobi-greensnap-marche-vendor-2026-11-07",
+   "name": "nobinobi 2026 GreenSnap Marche出展 (2026-11-07)",
+   "aliases": [
+    "nobinobi 2026"
+   ],
+   "reasonType": "policy",
+   "decided": "2026-11-05",
+   "eventDate": "2026-11-07",
+   "revisit": false,
+   "reason": "出店者側の告知で、上位の催事の1区画に出るだけ(vendorBoothInHostEvent)。催事本体の名前で立てる"
   }
  ],
  "_reasonTypes": {
@@ -2782,6 +2842,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-11-02",
+ "updated": "2026-11-05",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
