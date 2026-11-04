@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-04",
+  "sweptOn": "2026-11-05",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -26,18 +26,18 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 839,
-    "in_scope": 215,
+    "candidates": 828,
+    "in_scope": 214,
     "covered": 138,
-    "known_rejected": 26,
+    "known_rejected": 25,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
-    "in_scope_leafla": 100,
+    "in_scope_leafla": 98,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 100,
+    "in_scope_nextmeet": 101,
     "in_scope_matome-blog": 9,
     "in_scope_organizer-index": 6,
     "gaps_raw": 51
@@ -51,9 +51,9 @@
   ],
   "gaps": [
     {
-      "date": "2026-11-04",
+      "date": "2026-11-05",
       "lastSeen": "2026-11-29",
-      "days": 23,
+      "days": 22,
       "title": "花のある暮らし ボタニカルアートとデザイン",
       "source": "leafla"
     },
@@ -85,6 +85,11 @@
       "source": "nextmeet"
     },
     {
+      "date": "2027-01-03",
+      "title": "まちの駅笠間宿 多肉祭（2027年1月）",
+      "source": "nextmeet"
+    },
+    {
       "date": "2027-01-09",
       "title": "第2回 PLANTS FAMILY 豊橋ラウンド",
       "source": "nextmeet"
@@ -105,8 +110,8 @@
       "source": "nextmeet"
     },
     {
-      "date": "2027-02-14",
-      "title": "さよならグリーンパーク さよならタニッペ",
+      "date": "2027-02-07",
+      "title": "まちの駅笠間宿 多肉祭（2027年2月）",
       "source": "nextmeet"
     },
     {

@@ -1,5 +1,5 @@
 {
-  "total": 716,
+  "total": 721,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -898,27 +898,27 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 1,
-      "items": [
-        "2027-02-14 さよならグリーンパーク さよならタニッペ"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 12,
+      "count": 14,
       "items": [
-        "2026-11-04 花のある暮らし ボタニカルアートとデザイン",
+        "2026-11-05 花のある暮らし ボタニカルアートとデザイン",
         "2026-11-07 nobinobi 2026 GreenSnap Marche出展",
         "2026-11-14 ひめじ花と緑のガーデンフェア",
         "2026-11-14 第29回 花宇宙ドリームガーデン・3社合同販売会",
         "2026-11-20 植物園のもみじ散策～世界の森で紅葉めぐり～",
         "2026-12-06 12月例会",
+        "2027-01-03 まちの駅笠間宿 多肉祭（2027年1月）",
         "2027-01-09 第2回 PLANTS FAMILY 豊橋ラウンド",
         "2027-01-10 ピクニックガーデン せんだい農業園芸センター・初売り",
         "2027-01-11 第2回 PLANTS FAMILY 名古屋ラウンド",
         "2027-02-07 Green marché 花の湯",
+        "2027-02-07 まちの駅笠間宿 多肉祭（2027年2月）",
         "2027-02-20 enjoy place 6th",
         "2027-02-27 ピクニックガーデン ガーデンプラザ華"
       ],
@@ -1034,7 +1034,7 @@
       "count": 2,
       "items": [
         "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
-        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(本文・画像)"
+        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -1133,8 +1133,8 @@
         "@plants2306.fe 2026-11-06,2026-11-23: 【11月のお知らせ】 いつも当店をご利用頂きありがとうございます。 日差しの中に冬の気配を感じる季節になってきましたね。 https://www.instagram.com/p/DfGf3NLhMIO/",
         "@protoleaf.shop_futakotamagawa 2026-12-09,2026-12-16,2026-12-18: 🌿【オリジナル寄せ植えワークショップのご案内です】🌿 ◆ワークショップの内容 お好きな苗を選び、講師のアドバイスを受けな https://www.instagram.com/p/De8fqDYkbHK/",
         "@sakura_shokubutsuen 2026-11-08,2026-11-22: 🍁 秋のお花で寄せ植えを楽しもう!🌿 さくら植物園で、寄せ植え講習会を開催します!🪴 好きなお花を選んで、自分だけの寄せ https://www.instagram.com/p/De_tfz7v6LL/",
-        "@the_botanical_show 2026-11-04,2026-12-24: . . \\ STAGE TIME SCHEDULE 公開!🌿 / THE BOTANICAL SHOW 6th 11月1 https://www.instagram.com/p/DfKL3DPRez9/",
-        "@tokiwapark.official 2026-11-22,2026-12-19,2026-12-24,2027-01-11: 毎年TOKIWAファンタジアにあわせて開催する植物館ライトアップ「TOKIWAナイトミュージアム2026」。 今年のテー https://www.instagram.com/p/De1LvWiRw00/"
+        "@tokiwapark.official 2026-11-22,2026-12-19,2026-12-24,2027-01-11: 毎年TOKIWAファンタジアにあわせて開催する植物館ライトアップ「TOKIWAナイトミュージアム2026」。 今年のテー https://www.instagram.com/p/De1LvWiRw00/",
+        "@wakayama_cactus_club 2026-12-06,2027-01-17: 🍁12月例会のお知らせです🍁 ⚠️いつもの開催場所ではなく変更してますので お間違えのないようにお願いします。 《場所》 https://www.instagram.com/p/DfOzDMFBQbI/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -1176,8 +1176,11 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11: https://www.instagram.com/p/DfOV752ibXw/（caption）",
+        "2027-02-20 santafe-shunensai-2027-02: https://www.instagram.com/p/DfVDI5Dkni5/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1309,15 +1312,19 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "event-monitor(daily) が動かなかった日: 2026-11-04（直近7日で1日）"
+      ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "pukubook-events(PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）): 最後に回ったのは 2026-10-28（8日前 / 上限7日）"
+      ],
       "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。coverage-sweep.py で自動に読めない情報源(PUKUBOOK など)と、自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
@@ -1506,9 +1513,9 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 3,
       "items": [
-        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（34日前）",
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（39日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（39日前）"
+        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（35日前）",
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（40日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（40日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
