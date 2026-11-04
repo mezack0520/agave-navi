@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 114,
+      "count": 113,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agavejam-3rd-as-green-garden-2026-11",
@@ -253,7 +253,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 362,
+      "count": 361,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 63,
+      "count": 64,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -948,7 +948,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 63,
+      "count": 64,
       "items": [
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
@@ -971,6 +971,7 @@
         "2026-12-05 king-plants-sunday-oroshimachi-2026-12",
         "2026-12-05 lier-taniku-festival-tokushima-2026-12",
         "2026-12-05 orais-party-2026-garden-messe-hachioji",
+        "2026-12-05 taniku-xmas-flarie-2026-12",
         "2026-12-06 botanical-market-mie-vol11-matsusaka-2026-12",
         "2026-12-06 lier-taniku-festival-fukuyama-2026-12",
         "2026-12-10 lier-taniku-festival-kariya-2026-12",
@@ -988,8 +989,7 @@
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
         "2027-01-17 botanical-monsters-2027-okazaki",
         "2027-01-17 chinki-plants-flea-market-2027-01",
-        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
-        "2027-01-23 lier-taniku-festival-ube-2027-01"
+        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
