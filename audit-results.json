@@ -1,5 +1,5 @@
 {
-  "total": 761,
+  "total": 753,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -807,13 +807,8 @@
     },
     "venue_history_drift": {
       "title": "詳細頁の「同会場の他イベント」が会場ページの束ね方と食い違う",
-      "count": 4,
-      "items": [
-        "green-summit-more-vol21-2026-08: 節に2件 / 会場ページの束では3件",
-        "picnic-garden-hatsuuri-sendai-2027-01: 節に0件 / 会場ページの束では3件",
-        "picnic-garden-sendai-2026-11: 節に2件 / 会場ページの束では3件",
-        "picnic-garden-vol24-sendai-2026-09: 節に2件 / 会場ページの束では3件"
-      ],
+      "count": 0,
+      "items": [],
       "note": "build-detail-pages.py の同会場の束ねは sitelib.venue_key、見出しは sitelib.venue_display を使う。生の location で束ねると住所の括弧書きの有無だけで同じ会場の回が落ちる",
       "severity": "urgent"
     },
@@ -826,12 +821,8 @@
     },
     "venue_redirect_broken": {
       "title": "会場ページの旧URL中継が壊れている",
-      "count": 3,
-      "items": [
-        "v-86f4ffea → /venue/fugaku-onsen-hana-no-yu/ が存在しない",
-        "v-bf5a617f → /venue/nangoku-chatan-tanikutta/ が存在しない",
-        "v-ce02f6af → /venue/machinoeki-kasamajuku/ が存在しない"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_REDIRECTS_RAW の宛先会場名を実データに合わせる",
       "severity": "urgent"
     },
@@ -1319,10 +1310,8 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 1,
-      "items": [
-        "event-monitor(daily) が動かなかった日: 2026-11-04（直近7日で1日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },

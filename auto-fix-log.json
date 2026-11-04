@@ -1879,7 +1879,8 @@
    "kind": "rejected_revisit_expired",
    "target": "kesennuma-clubhouse-hanbaikai-2026-11",
    "action": "fixed",
-   "detail": "開催日 11-03 を過ぎたため revisit=false"
+   "detail": "開催日 11-03 を過ぎたため revisit=false",
+   "mailedOn": "2026-11-05"
   },
   {
    "on": "2026-11-05",
@@ -1887,7 +1888,8 @@
    "kind": "datedisplay_format",
    "target": "picnic-garden-michinoeki-yamagata-zao-2027-04",
    "action": "fixed",
-   "detail": "dateDisplay 2027.04.03-4 → 2027.04.03-04"
+   "detail": "dateDisplay 2027.04.03-4 → 2027.04.03-04",
+   "mailedOn": "2026-11-05"
   },
   {
    "on": "2026-11-05",
@@ -1895,7 +1897,8 @@
    "kind": "instagram_post_predates_edition",
    "target": "picnic-garden 2027年の5回",
    "action": "fixed",
-   "detail": "2025-09-08 投稿 DOVkkAvk_hK の埋め込み(instagramPostId)を外した。url/sourceUrl の投稿が2027年の年間日程の出典かは未確認"
+   "detail": "2025-09-08 投稿 DOVkkAvk_hK の埋め込み(instagramPostId)を外した。url/sourceUrl の投稿が2027年の年間日程の出典かは未確認",
+   "mailedOn": "2026-11-05"
   },
   {
    "on": "2026-11-05",
@@ -1903,7 +1906,8 @@
    "kind": "venue_key_split",
    "target": "せんだい農業園芸センター",
    "action": "fixed",
-   "detail": "初売りの回の location を みどりの杜 に揃えた"
+   "detail": "初売りの回の location を みどりの杜 に揃えた",
+   "mailedOn": "2026-11-05"
   },
   {
    "on": "2026-11-05",
@@ -1911,7 +1915,8 @@
    "kind": "venue_slug_romaji_candidates",
    "target": "笠間宿・南国ちゃたん たにくった・花の湯",
    "action": "fixed",
-   "detail": "ローマ字と旧hash→新の中継を足した。花の湯は location から1Fエントランスを外した"
+   "detail": "ローマ字と旧hash→新の中継を足した。花の湯は location から1Fエントランスを外した",
+   "mailedOn": "2026-11-05"
   },
   {
    "on": "2026-11-05",
@@ -1919,7 +1924,8 @@
    "kind": "needs_browser",
    "target": "picnic-garden 2027年5回の出典(DOVkkAvk_hK)",
    "action": "skipped",
-   "detail": "ブラウザ要: 組み込みブラウザで投稿を開き、2027年の日程が載っているか確認。無ければ url/sourceUrl を主催プロフィールにする"
+   "detail": "ブラウザ要: 組み込みブラウザで投稿を開き、2027年の日程が載っているか確認。無ければ url/sourceUrl を主催プロフィールにする",
+   "mailedOn": "2026-11-05"
   },
   {
    "on": "2026-11-05",
@@ -1927,7 +1933,8 @@
    "kind": "needs_browser",
    "target": "manual_sweep pukubook-events",
    "action": "skipped",
-   "detail": "ブラウザ要: pukubook /events/ の巡回(10-28 以降未実施)"
+   "detail": "ブラウザ要: pukubook /events/ の巡回(10-28 以降未実施)",
+   "mailedOn": "2026-11-05"
   }
  ]
 }
