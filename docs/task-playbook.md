@@ -5044,3 +5044,9 @@ time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出
 - 過去の回の中止告知が頁に残る型: isij.net/event の「東京例会 中止のお知らせ ［日時］2024年8月25日」で 2026-12-20 の回が毎巡回鳴っていた(10-28 に目視確認・記録済みでも、記録は「その巡回ぶん」しか黙らせず再発)。`check-cancelled.drop_past_notice` が「◯◯のお知らせ」の直後に今年より前の年が続くものを落とす。自己テスト `_self_test_past_notice` を audit が毎回呼ぶ。
 - 同日の cancel_suspects 残り4件(草木日和・井頭公園・GreenSnapMarche八王子・花友フェスタ)は一次情報で開催予定のまま確認し cancel-reviewed.json に記録。
 - clone に PAT は不要(公開リポジトリ)。PAT は push 用。
+
+## 2026-11-05 event-monitor 追記
+
+- 前日のパッチ(`work\event-monitor_<日付>.patch`)は、台帳・audit-results・auto-fix-log が**古い土台**の写しで、そのまま `git apply` すると task-runs・audit-results が当たらず、auto-fix-log は他の項目を消す差分になっていた。当てるときは `git apply --include=<ソースの手編集ファイルだけ>` にし、生成物・運ぶデータ(auto-fix-log・mail-request・task-runs)は取り込まずに作り直す。
+- push できなかった回は、翌日の台帳に起動日が入らない(11-04 は `task_run_gap` が出た)。パッチを当てた回が `task-runs.json` の history にその日を足す。
+- 手書き new-events が、前年の「年間日程」投稿の ID を `instagramPostId` に入れて5件同時に `instagram_post_predates_edition` が鳴った(ピクニックガーデン2027)。検査は既存で足りた。出典 URL 自体がその投稿のままなので、ブラウザの回で投稿に2027年の日程が載っているかを確かめる(`needs_browser` で渡した)。

@@ -2,276 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "@uell_creators 2026-10-08",
-   "action": "reviewed",
-   "detail": "掲載済みミドリアン(10/9-10)の投稿。10/8はDESIGN WEEKEND OSAKA(10/8-11)の会期。ig-organizer-watch に上位会期の除外を追加",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "@fukuoka_effect 2026-10-12 AMAZON GACHA",
-   "action": "rejected",
-   "detail": "植物ガチャ+ホヤ・ピペル即売会。storeSale/plantCentric で見送り",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "@greenfarmkanazawa 2026-10-21 多肉寄せ植え教室",
-   "action": "rejected",
-   "detail": "予約制の教室単独。workshopOnly で見送り",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "@protoleaf.shop_futakotamagawa 寄せ植えWS 10/14〜11/20",
-   "action": "rejected",
-   "detail": "定員4名・要予約の講座単独。workshopOnly で見送り",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "coverage_gaps",
-   "target": "福LAND 2026 (2026-10-11)",
-   "action": "skipped",
-   "detail": "主催の一次情報を特定できず。検索でも当たらない",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "coverage_gaps",
-   "target": "森のクラフト フィールドワーク (2026-10-30)",
-   "action": "skipped",
-   "detail": "主催の一次情報を特定できず。題名からは観察とピック作りの体験会",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "metric_moved",
-   "target": "ongoing_events 20→11",
-   "action": "reviewed",
-   "detail": "events.json で開催中11件を実数確認。祝日を平日扱いしていた基準の誤りを是正",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-03",
-   "task": "event-monitor",
-   "kind": "venue_slug_romaji_candidates",
-   "target": "プロトリーフ二子玉川本店",
-   "action": "fixed",
-   "detail": "protoleaf-futakotamagawa を追加、旧 v-e5cca93b を中継に残す",
-   "mailedOn": "2026-10-03"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "cocoha 10th ANNIVERSARY (2026-10-03)",
-   "action": "fixed",
-   "detail": "企画内容が出ないまま会期に入ったため revisit=false で閉じた",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "福LAND 2026 (2026-10-11)",
-   "action": "rejected",
-   "detail": "主催 @heavengreen_factory Dd0G533yc5b。街の祭りに珍奇植物の企画を加える形で内訳非公開 → undisclosed / revisit",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "10月の森のクラフトフィールドワーク (2026-10-30)",
-   "action": "rejected",
-   "detail": "植物観察・きのこのピック作りの参加費制フィールドワーク。workshopOnly",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "第10回 栃木★多肉フェス in ゆうがおパーク (2026-10-03〜04)",
-   "action": "listed",
-   "detail": "会場公式 yugao-park.com/event/5446 で裏取り。09-22 に『実在しない回』として見送った記録は名称違いの別件で、回そのものは実在した",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "implausible",
-   "target": "isij-tokyo-reikai-2026-12-20 admission",
-   "action": "fixed",
-   "detail": "sync-events の enrich が isij.net/event の別催事(三角広場の即売会)の『入場：無料』を入れた。例会は参加費制なので消した",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "generic_image",
-   "target": "tochigi-taniku-fes-10th-yugao-park-2026-10 imageUrl",
-   "action": "fixed",
-   "detail": "会場の一覧記事の見出し画像。image-rejected.json に記録して外した",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "duplicate_indexable_title",
-   "target": "どきどき多肉植物即売会 10/18・10/25",
-   "action": "fixed",
-   "detail": "同名2件の名称に開催日を入れた",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "agave-event-update",
-   "kind": "venue_slug_romaji_candidates",
-   "target": "カトーエンゲー東京",
-   "action": "fixed",
-   "detail": "kato-engei-tokyo を追加、旧 v-aafb626c を中継に残す",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "event-monitor",
-   "kind": "coverage_gaps",
-   "target": "麋角植物作業室 at pigment 名古屋 (2026-10-17)",
-   "action": "listed",
-   "detail": "主催 @tompots_501 の告知 Dd8bLUhS04q で裏取り。9月の熊本編と同じ企画",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "サボテンの自生地風ワークショップ (2026-11-02)",
-   "action": "rejected",
-   "detail": "workshopOnly。@plants2306.fe DeB5uT9k9Js",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "ブルーグレイのBotanical ball (2026-10-18〜19)",
-   "action": "rejected",
-   "detail": "workshopOnly。10/13 は予約締切で、ig-organizer-watch が前置きの締切を日付に数えていたのも直した",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-04",
-   "task": "event-monitor",
-   "kind": "cancel_watch_undecodable",
-   "target": "mizunomori-aki-saboten-ten-2026-10",
-   "action": "fixed",
-   "detail": "出典がPDFでUTF-8として読んでいた。sitelib.pdf_to_text を足し、CIに pypdf を入れた。次の daily で解消",
-   "mailedOn": "2026-10-04"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "agave-event-update",
-   "kind": "cancel_watch_undecodable",
-   "target": "mizunomori-aki-saboten-ten-2026-10",
-   "action": "skipped",
-   "detail": "pypdf 導入後の daily(10-04 02:10 UTC)は check-cancelled で読めていたが、push 衝突の作り直しで cancel-watch.json(持ち越さない観測結果)が捨てられた。手元で fetch_text が1644字・化け0字を返すことを確認。次の schedule daily で解消する",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "aki-no-shokubutsu-no-ichi-2026-10",
-   "action": "fixed",
-   "detail": "開催日を過ぎたので revisit=false。理由に一文追記",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "green-marche-hananoyu-2026-10",
-   "action": "fixed",
-   "detail": "開催日を過ぎたので revisit=false。理由に一文追記",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "savers-flea-market-vol1-susono-2026-10",
-   "action": "fixed",
-   "detail": "開催日を過ぎたので revisit=false。理由に一文追記",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "sippo-de-marche-shikinosato-2026-10",
-   "action": "fixed",
-   "detail": "開催日を過ぎたので revisit=false。理由に一文追記",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "event-monitor",
-   "kind": "coverage_gaps",
-   "target": "Tailors Market on MEDAKA & Water Plant (2026-11-01)",
-   "action": "rejected",
-   "detail": "めだか小屋紅 @medakakoya.kou の告知 Dd1A7a0pY8U(LEAFLA topics6293)。熱帯魚店のメダカ・水草市で出店はメダカ店のみ。outOfScopeGenres。coverage-sweep の OUT_OF_SCOPE に英字綴り(medaka/aquarium/水草/waterplant)を足した",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "event-monitor",
-   "kind": "cancel_suspects",
-   "target": "サボテン・多肉植物展示会 須磨離宮公園 (2026-10-16)",
-   "action": "reviewed",
-   "detail": "告知頁は会期・内容とも不変。弱い語は施設状況欄の『子供の森 利用中止』。FACILITY_CANCEL で恒久対応",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "event-monitor",
-   "kind": "cancel_suspects",
-   "target": "ROOTS MARKET (2026-10-25)",
-   "action": "reviewed",
-   "detail": "記事本文は不変。新着お知らせ欄が本文と画像を同時に変えていた(5回目)。署名を単独記事に絞る main_entry で恒久対応",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "event-monitor",
-   "kind": "cancel_watch_body_shrunk",
-   "target": "みずの森 秋のサボテン展 (PDF)",
-   "action": "reviewed",
-   "detail": "-100% は PDF を文字にした読み方の変更による一過性。読み方・範囲が変わった回は prevTextLen を残さないよう修正",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-05",
-   "task": "event-monitor",
-   "kind": "organizer_unlisted_dates",
-   "target": "キノコリウムワークショップ @greenfarmkanazawa (2026-10-18)",
-   "action": "rejected",
-   "detail": "告知 DeEQ3hvkj-- は苔・キノコのテラリウム作りWS単独(要予約・8,800円)。workshopOnly",
-   "mailedOn": "2026-10-06"
-  },
-  {
    "on": "2026-10-06",
    "task": "event-monitor",
    "kind": "cancel_suspects",
@@ -2142,6 +1872,62 @@
    "action": "fixed",
    "detail": "location を施設名に揃え区画は venue へ。sitelib に hankyu-umeda-honten を登録",
    "mailedOn": "2026-11-02"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "rejected_revisit_expired",
+   "target": "kesennuma-clubhouse-hanbaikai-2026-11",
+   "action": "fixed",
+   "detail": "開催日 11-03 を過ぎたため revisit=false"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "datedisplay_format",
+   "target": "picnic-garden-michinoeki-yamagata-zao-2027-04",
+   "action": "fixed",
+   "detail": "dateDisplay 2027.04.03-4 → 2027.04.03-04"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "instagram_post_predates_edition",
+   "target": "picnic-garden 2027年の5回",
+   "action": "fixed",
+   "detail": "2025-09-08 投稿 DOVkkAvk_hK の埋め込み(instagramPostId)を外した。url/sourceUrl の投稿が2027年の年間日程の出典かは未確認"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "venue_key_split",
+   "target": "せんだい農業園芸センター",
+   "action": "fixed",
+   "detail": "初売りの回の location を みどりの杜 に揃えた"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "venue_slug_romaji_candidates",
+   "target": "笠間宿・南国ちゃたん たにくった・花の湯",
+   "action": "fixed",
+   "detail": "ローマ字と旧hash→新の中継を足した。花の湯は location から1Fエントランスを外した"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "picnic-garden 2027年5回の出典(DOVkkAvk_hK)",
+   "action": "skipped",
+   "detail": "ブラウザ要: 組み込みブラウザで投稿を開き、2027年の日程が載っているか確認。無ければ url/sourceUrl を主催プロフィールにする"
+  },
+  {
+   "on": "2026-11-05",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "manual_sweep pukubook-events",
+   "action": "skipped",
+   "detail": "ブラウザ要: pukubook /events/ の巡回(10-28 以降未実施)"
   }
  ]
 }

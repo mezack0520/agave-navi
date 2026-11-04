@@ -1,5 +1,5 @@
 {
-  "total": 765,
+  "total": 761,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -356,10 +356,8 @@
     },
     "datedisplay_format": {
       "title": "dateDisplayの書式がsitelib.compact_dateと不一致",
-      "count": 1,
-      "items": [
-        "picnic-garden-michinoeki-yamagata-zao-2027-04: 2027.04.03-4 → 2027.04.03-04"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一覧表記は sitelib.compact_date が単一情報源。曖昧表記(中旬等)は除外",
       "severity": "urgent"
     },
@@ -731,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -795,28 +793,27 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 3,
-      "items": [
-        "まちの駅笠間宿(6件) → /venue/v-ce02f6af/",
-        "南国ちゃたんたにくった(3件) → /venue/v-bf5a617f/",
-        "富嶽温泉花の湯1Fエントランス(4件) → /venue/v-86f4ffea/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 1,
-      "items": [
-        "宮城 せんだい農業園芸センター(1件) / せんだい農業園芸センターみどりの杜(3件)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
     "venue_history_drift": {
       "title": "詳細頁の「同会場の他イベント」が会場ページの束ね方と食い違う",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "green-summit-more-vol21-2026-08: 節に2件 / 会場ページの束では3件",
+        "picnic-garden-hatsuuri-sendai-2027-01: 節に0件 / 会場ページの束では3件",
+        "picnic-garden-sendai-2026-11: 節に2件 / 会場ページの束では3件",
+        "picnic-garden-vol24-sendai-2026-09: 節に2件 / 会場ページの束では3件"
+      ],
       "note": "build-detail-pages.py の同会場の束ねは sitelib.venue_key、見出しは sitelib.venue_display を使う。生の location で束ねると住所の括弧書きの有無だけで同じ会場の回が落ちる",
       "severity": "urgent"
     },
@@ -829,8 +826,12 @@
     },
     "venue_redirect_broken": {
       "title": "会場ページの旧URL中継が壊れている",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "v-86f4ffea → /venue/fugaku-onsen-hana-no-yu/ が存在しない",
+        "v-bf5a617f → /venue/nangoku-chatan-tanikutta/ が存在しない",
+        "v-ce02f6af → /venue/machinoeki-kasamajuku/ が存在しない"
+      ],
       "note": "sitelib._VENUE_REDIRECTS_RAW の宛先会場名を実データに合わせる",
       "severity": "urgent"
     },
@@ -1487,14 +1488,8 @@
     },
     "instagram_post_predates_edition": {
       "title": "Instagramの埋め込み・アイキャッチが開催の1年以上前の投稿(前の回の告知)",
-      "count": 5,
-      "items": [
-        "picnic-garden-hatsuuri-sendai-2027-01: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の489日前)",
-        "picnic-garden-plaza-hana-fukushima-2027-02: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の537日前)",
-        "picnic-garden-plaza-hana-fukushima-2027-03: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の565日前)",
-        "picnic-garden-michinoeki-yamagata-zao-2027-04: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の572日前)",
-        "picnic-garden-plaza-hana-fukushima-2027-04: instagramPostId DOVkkAvk_hK(2025-09-08 投稿・開催の586日前)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "前の回の投稿。instagramPostId / instagramUrl なら外す(頁の埋め込みが消える)。imageSource なら imageUrl と images/events/ の画像も外し image-rejected.json に記録。この回の告知を主催の投稿で探し直す。年間の日程を1本で告知した投稿は、同じ投稿を近い回にも当てれば出なくなる",
       "severity": "urgent"
     },
@@ -1514,10 +1509,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 1,
-      "items": [
-        "kesennuma-clubhouse-hanbaikai-2026-11: 開催日 2026-11-03 を過ぎた（保留 2026-10-15）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
