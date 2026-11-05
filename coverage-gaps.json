@@ -21,26 +21,33 @@
       "ok": true,
       "fetched": 5,
       "unit": "page"
+    },
+    "pukubook": {
+      "ok": true,
+      "fetched": 13,
+      "unit": "page"
     }
   },
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 828,
-    "in_scope": 214,
-    "covered": 138,
-    "known_rejected": 25,
+    "candidates": 861,
+    "in_scope": 247,
+    "covered": 167,
+    "known_rejected": 63,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
+    "fetched_pukubook": 13,
     "in_scope_leafla": 98,
     "truncated_unresolved_hits": 180,
     "in_scope_nextmeet": 101,
     "in_scope_matome-blog": 9,
     "in_scope_organizer-index": 6,
-    "gaps_raw": 51
+    "in_scope_pukubook": 33,
+    "gaps_raw": 17
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -52,77 +59,28 @@
   "gaps": [
     {
       "date": "2026-11-05",
-      "lastSeen": "2026-11-29",
-      "days": 22,
-      "title": "花のある暮らし ボタニカルアートとデザイン",
-      "source": "leafla"
-    },
-    {
-      "date": "2026-11-07",
-      "title": "nobinobi 2026 GreenSnap Marche出展",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-11-14",
-      "title": "ひめじ花と緑のガーデンフェア",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-11-14",
-      "title": "第29回 花宇宙ドリームガーデン・3社合同販売会",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2026-11-20",
-      "lastSeen": "2026-12-06",
-      "days": 17,
+      "lastSeen": "2026-11-18",
+      "days": 14,
       "title": "植物園のもみじ散策～世界の森で紅葉めぐり～",
       "source": "leafla"
     },
     {
+      "date": "2026-11-07",
+      "title": "開催予定 2026年11月7日(土)・8日(日) 東京都江東区|スーパービバホーム豊洲店 JUNGLE TO YOU ― そこはまるで、レアアロイドの森 開催日時 11月7日(土)9:30〜17:00",
+      "source": "organizer-index",
+      "pref": "東京"
+    },
+    {
+      "date": "2026-11-14",
+      "title": "開催予定 2026年11月14日(土)・15日(日) 茨城県水戸市|山新グランステージ水戸ホームセンター Jolie Selected Aroids 即売会 開催日 11月14日(土)・15日(日)",
+      "source": "organizer-index",
+      "pref": "茨城"
+    },
+    {
       "date": "2026-12-06",
       "title": "12月例会",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-01-03",
-      "title": "まちの駅笠間宿 多肉祭（2027年1月）",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-01-09",
-      "title": "第2回 PLANTS FAMILY 豊橋ラウンド",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-01-10",
-      "title": "ピクニックガーデン せんだい農業園芸センター・初売り",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-01-11",
-      "title": "第2回 PLANTS FAMILY 名古屋ラウンド",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-02-07",
-      "title": "Green marché 花の湯",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-02-07",
-      "title": "まちの駅笠間宿 多肉祭（2027年2月）",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-02-20",
-      "title": "enjoy place 6th",
-      "source": "nextmeet"
-    },
-    {
-      "date": "2027-02-27",
-      "title": "ピクニックガーデン ガーデンプラザ華",
-      "source": "nextmeet"
+      "source": "nextmeet",
+      "pref": "和歌山"
     }
   ]
 }

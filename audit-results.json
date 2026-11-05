@@ -1,5 +1,5 @@
 {
-  "total": 755,
+  "total": 746,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -898,29 +898,19 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 8,
+      "count": 2,
       "items": [
-        "2027-01-03 まちの駅笠間宿 多肉祭（2027年1月）",
-        "2027-01-09 第2回 PLANTS FAMILY 豊橋ラウンド",
-        "2027-01-10 ピクニックガーデン せんだい農業園芸センター・初売り",
-        "2027-01-11 第2回 PLANTS FAMILY 名古屋ラウンド",
-        "2027-02-07 Green marché 花の湯",
-        "2027-02-07 まちの駅笠間宿 多肉祭（2027年2月）",
-        "2027-02-20 enjoy place 6th",
-        "2027-02-27 ピクニックガーデン ガーデンプラザ華"
+        "2026-11-07 開催予定 2026年11月7日(土)・8日(日) 東京都江東区|スーパービバホーム豊洲店 JUNGLE TO YOU ― そこはまるで、レアアロイドの森 開催日時 11月7日(土)",
+        "2026-11-14 開催予定 2026年11月14日(土)・15日(日) 茨城県水戸市|山新グランステージ水戸ホームセンター Jolie Selected Aroids 即売会 開催日 11月14日("
       ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 6,
+      "count": 2,
       "items": [
-        "2026-11-05 花のある暮らし ボタニカルアートとデザイン",
-        "2026-11-07 nobinobi 2026 GreenSnap Marche出展",
-        "2026-11-14 ひめじ花と緑のガーデンフェア",
-        "2026-11-14 第29回 花宇宙ドリームガーデン・3社合同販売会",
-        "2026-11-20 植物園のもみじ散策～世界の森で紅葉めぐり～",
+        "2026-11-05 植物園のもみじ散策～世界の森で紅葉めぐり～",
         "2026-12-06 12月例会"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -1034,7 +1024,7 @@
       "title": "載せた回に中止・延期の兆候がある",
       "count": 2,
       "items": [
-        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
         "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
@@ -1126,9 +1116,8 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 8,
+      "count": 7,
       "items": [
-        "@en_joy_unite_69 2027-01-09,2027-01-11: こんばんは🌃 en’joyです🤘😎🎸 大発表wっ!!️ 来年1月開催の第2回PLANTS FAMILY2️⃣DAYS 出 https://www.instagram.com/p/DfMne4ezUXP/",
         "@greenfarmkanazawa 2026-11-13: 【ハンギングバスケット教室】スタート🌿 お花の色合いやリーフの組み合わせを楽しみながら、 冬のお庭を彩るハンギングバスケ https://www.instagram.com/p/DfHCVLdBbEf/",
         "@minori_kaboku_interpark 2026-11-07,2026-11-08: 🎪みのり祭りイベント情報🎪 園芸雑誌でもおなじみの若松康史氏による秋球根の講習会を開催します🌷 11月7日(土)は9:0 https://www.instagram.com/p/De0tHRFAcej/",
         "@plants2306.fe 2026-11-06,2026-11-23: 【11月のお知らせ】 いつも当店をご利用頂きありがとうございます。 日差しの中に冬の気配を感じる季節になってきましたね。 https://www.instagram.com/p/DfGf3NLhMIO/",
@@ -1177,8 +1166,11 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2027-01-09 plants-family-2nd-toyohashi-2027-01: https://www.instagram.com/p/DfMne4ezUXP/（sourcePost）",
+        "2027-01-11 plants-family-2nd-nagoya-2027-01: https://www.instagram.com/p/DfMne4ezUXP/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
