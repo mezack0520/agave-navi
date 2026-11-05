@@ -1,5 +1,5 @@
 {
-  "total": 766,
+  "total": 761,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 113,
+      "count": 115,
       "items": [
         "agave-shokudo-2026-autumn-uchidanouen",
         "agavejam-3rd-as-green-garden-2026-11",
@@ -253,7 +253,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 361,
+      "count": 363,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 87,
+      "count": 85,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -945,7 +945,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 87,
+      "count": 85,
       "items": [
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
@@ -1173,14 +1173,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 5,
-      "items": [
-        "2026-11-15 taniku-mobure-vol13-marugame-2026-11: https://www.instagram.com/p/DfW0Tj3gfWg/（caption）",
-        "2027-01-09 plants-family-2nd-toyohashi-2027-01: https://www.instagram.com/p/DfMne4ezUXP/（sourcePost）",
-        "2027-01-11 plants-family-2nd-nagoya-2027-01: https://www.instagram.com/p/DfMne4ezUXP/（sourcePost）",
-        "2027-02-20 santafe-shunensai-2027-02: https://www.instagram.com/reel/DfU_iIdSnpz/（caption）",
-        "2027-05-22 enjoy-place-outside-3rd-2027-05: https://www.instagram.com/p/DfOBGshk3M1/（sourcePost）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
