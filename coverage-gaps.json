@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-05",
+  "sweptOn": "2026-11-06",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,23 +31,23 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 861,
-    "in_scope": 247,
-    "covered": 167,
-    "known_rejected": 63,
+    "candidates": 856,
+    "in_scope": 253,
+    "covered": 170,
+    "known_rejected": 75,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 98,
+    "in_scope_leafla": 97,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 101,
+    "in_scope_nextmeet": 108,
     "in_scope_matome-blog": 9,
     "in_scope_organizer-index": 6,
     "in_scope_pukubook": 33,
-    "gaps_raw": 17
+    "gaps_raw": 8
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -58,29 +58,52 @@
   ],
   "gaps": [
     {
-      "date": "2026-11-05",
-      "lastSeen": "2026-11-18",
-      "days": 14,
-      "title": "植物園のもみじ散策～世界の森で紅葉めぐり～",
-      "source": "leafla"
+      "date": "2026-11-07",
+      "title": "Green Daysと爽GO",
+      "source": "nextmeet",
+      "pref": "愛知"
     },
     {
       "date": "2026-11-07",
-      "title": "開催予定 2026年11月7日(土)・8日(日) 東京都江東区|スーパービバホーム豊洲店 JUNGLE TO YOU ― そこはまるで、レアアロイドの森 開催日時 11月7日(土)9:30〜17:00",
-      "source": "organizer-index",
-      "pref": "東京"
+      "title": "環 - わっか -",
+      "source": "nextmeet",
+      "pref": "愛知"
     },
     {
       "date": "2026-11-14",
-      "title": "開催予定 2026年11月14日(土)・15日(日) 茨城県水戸市|山新グランステージ水戸ホームセンター Jolie Selected Aroids 即売会 開催日 11月14日(土)・15日(日)",
-      "source": "organizer-index",
+      "title": "PUNAHELEマルシェ vol.3",
+      "source": "nextmeet",
       "pref": "茨城"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "富士多肉プランツマルシェ（2026年11月）",
+      "source": "nextmeet",
+      "pref": "静岡"
+    },
+    {
+      "date": "2026-11-29",
+      "title": "ばんだか植物動物園",
+      "source": "nextmeet",
+      "pref": "京都"
+    },
+    {
+      "date": "2026-12-05",
+      "title": "POPUP Plant & Pot SOLO Vol.3（2026年12月）",
+      "source": "nextmeet",
+      "pref": "東京"
     },
     {
       "date": "2026-12-06",
       "title": "12月例会",
       "source": "nextmeet",
       "pref": "和歌山"
+    },
+    {
+      "date": "2026-12-26",
+      "title": "富士多肉プランツマルシェ（2026年12月）",
+      "source": "nextmeet",
+      "pref": "静岡"
     }
   ]
 }
