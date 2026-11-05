@@ -5098,3 +5098,9 @@ time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出
 - 前日のパッチ(`work\event-monitor_<日付>.patch`)は、台帳・audit-results・auto-fix-log が**古い土台**の写しで、そのまま `git apply` すると task-runs・audit-results が当たらず、auto-fix-log は他の項目を消す差分になっていた。当てるときは `git apply --include=<ソースの手編集ファイルだけ>` にし、生成物・運ぶデータ(auto-fix-log・mail-request・task-runs)は取り込まずに作り直す。
 - push できなかった回は、翌日の台帳に起動日が入らない(11-04 は `task_run_gap` が出た)。パッチを当てた回が `task-runs.json` の history にその日を足す。
 - 手書き new-events が、前年の「年間日程」投稿の ID を `instagramPostId` に入れて5件同時に `instagram_post_predates_edition` が鳴った(ピクニックガーデン2027)。検査は既存で足りた。出典 URL 自体がその投稿のままなので、ブラウザの回で投稿に2027年の日程が載っているかを確かめる(`needs_browser` で渡した)。
+
+## 2026-11-06 event-monitor 追記
+
+- `shared_source_page_multi_date`(jolienursery.co.jp/pages/events): 1頁に複数の回が並ぶ型。頁を取得して2件の日付が頁と一致するのを確かめ、`autoDateUpdate: false` を入れて解消(events.json は `json.dumps(indent=2, ensure_ascii=False)+'\n'` と往復一致)。
+- `cancel_suspects` の「延期」は同じ頁の別企画(bloomgarden の10/3雨天延期)から拾う型。出典を取得して確認し cancel-reviewed.json に記録。再発したら check-cancelled 側で規則を直す。
+- 手動巡回 `nextmeet-monthly-check` が11日前で期限切れ(悪化 0→1)。内蔵ブラウザの回でないと照合できないため未実施。
