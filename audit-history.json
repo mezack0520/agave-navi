@@ -1841,10 +1841,12 @@
   {
    "date": "2026-11-06",
    "urgent": {
+    "new_events_unmerged": 4,
     "manual_sweep_stale": 1
    },
    "info": {
-    "coverage_gaps": 8,
+    "coverage_gap_stale": 1,
+    "coverage_gaps": 7,
     "cancel_suspects": 3,
     "organizer_unlisted_dates": 7,
     "eyecatch_candidates_pending": 5,

@@ -1,5 +1,5 @@
 {
-  "total": 758,
+  "total": 762,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -900,16 +900,17 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-07 Green Daysと爽GO"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 8,
+      "count": 7,
       "items": [
-        "2026-11-07 Green Daysと爽GO",
         "2026-11-07 環 - わっか -",
         "2026-11-14 PUNAHELEマルシェ vol.3",
         "2026-11-21 富士多肉プランツマルシェ（2026年11月）",
@@ -1052,8 +1053,13 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 0,
-      "items": [],
+      "count": 4,
+      "items": [
+        "2026-11-07 wakka-cactus-gamagori-2026-11: new-events.json に残ったまま events.json に無い",
+        "2026-11-21 fuji-taniku-plants-marche-2026-11: new-events.json に残ったまま events.json に無い",
+        "2026-11-29 vandaka-shokubutsu-dobutsuen-2026-11: new-events.json に残ったまま events.json に無い",
+        "2026-12-05 plant-and-pot-solo-vol3-2026-12: new-events.json に残ったまま events.json に無い"
+      ],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
