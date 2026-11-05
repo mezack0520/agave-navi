@@ -1814,16 +1814,14 @@
   },
   {
    "date": "2026-11-05",
-   "urgent": {
-    "manual_sweep_stale": 1,
-    "metric_moved": 2
-   },
+   "urgent": {},
    "info": {
     "coverage_gap_stale": 8,
     "coverage_gaps": 6,
     "cancel_suspects": 2,
     "organizer_unlisted_dates": 8,
     "cross_script_duplicate": 3,
+    "shared_source_page_multi_date": 1,
     "rejected_revisit_stale": 3
    },
    "metric": {
@@ -1831,13 +1829,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 113,
     "events_with_image": 361,
-    "upcoming_no_image": 81,
+    "upcoming_no_image": 83,
     "ongoing_events": 2,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 81
+    "eyecatch_backlog": 83
    },
-   "events": 751,
-   "upcoming": 194
+   "events": 753,
+   "upcoming": 196
   }
  ]
 }

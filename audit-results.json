@@ -1,5 +1,5 @@
 {
-  "total": 753,
+  "total": 755,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 81,
+      "count": 83,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -330,6 +330,8 @@
         "isij-big-bazaar-2027-09-26",
         "isij-big-bazaar-2027-11-28",
         "isij-tokyo-reikai-2026-12-20",
+        "jolie-nursery-vivahome-toyosu-2026-11",
+        "jolie-nursery-yamashin-mito-2026-11",
         "jusai-10th-anniversary-nagoya-2027-03",
         "jusai-utsunomiya-spring-2027-05",
         "ka78-kikakusai-6th-shimada-2026-11",
@@ -340,9 +342,7 @@
         "kasamajuku-tanikusai-2027-03",
         "kasamajuku-tanikusai-2027-04",
         "king-plants-sunday-oroshimachi-2026-12",
-        "lier-taniku-festival-fukuyama-2026-12",
-        "lier-taniku-festival-fukuyama-2027-01",
-        "lier-taniku-festival-hamada-2026-11"
+        "lier-taniku-festival-fukuyama-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -949,10 +949,12 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 81,
+      "count": 83,
       "items": [
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
+        "2026-11-07 jolie-nursery-vivahome-toyosu-2026-11",
+        "2026-11-14 jolie-nursery-yamashin-mito-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
@@ -988,9 +990,7 @@
         "2027-01-08 lier-taniku-festival-hyuga-2027-01",
         "2027-01-09 lier-taniku-festival-tamana-2027-01",
         "2027-01-09 plants-family-2nd-toyohashi-2027-01",
-        "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
-        "2027-01-10 picnic-garden-hatsuuri-sendai-2027-01",
-        "2027-01-11 lier-taniku-festival-kitakyushu-2027-01"
+        "2027-01-10 lier-taniku-festival-nagasaki-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1317,11 +1317,9 @@
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 1,
-      "items": [
-        "pukubook-events(PUKUBOOK の全国イベント一覧 /events/（注目 + 今後のイベント）): 最後に回ったのは 2026-10-28（8日前 / 上限7日）"
-      ],
-      "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。coverage-sweep.py で自動に読めない情報源(PUKUBOOK など)と、自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
+      "count": 0,
+      "items": [],
+      "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。手でやる照合(nextmeet-monthly-check)と、自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
     "watch_seed_dropped": {
@@ -1400,8 +1398,10 @@
     },
     "shared_source_page_multi_date": {
       "title": "同じ出典頁を読む回が別の日付を持っている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "https://jolienursery.co.jp/pages/events → 未保護 jolie-nursery-vivahome-toyosu-2026-11, jolie-nursery-yamashin-mito-2026-11 (同じ頁を読む回 3件)"
+      ],
       "note": "告知頁が回ごとに分かれているなら sourceUrl をそちらへ。分かれていないなら autoDateUpdate: false を入れて自動更新から外す",
       "severity": "info"
     },
@@ -1635,11 +1635,8 @@
     },
     "metric_moved": {
       "title": "参考値が急に動いた(異常の可能性)",
-      "count": 2,
-      "items": [
-        "eyecatch_backlog: 直近中央値 64 → 79（掲載751件で換算 60）（+19）",
-        "upcoming_no_image: 直近中央値 64 → 79（掲載751件で換算 60）（+19）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "値そのものは対応不要だが、この動き方は異常の手がかりになる。該当項目の items を見て、想定できる増減かを確かめる",
       "severity": "urgent"
     },

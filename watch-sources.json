@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05 10:18 JST",
+ "generated": "2026-11-05 10:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 404,
@@ -59,6 +59,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
+  },
+  {
+   "handle": "j_n_ishikawa",
+   "url": "https://www.instagram.com/j_n_ishikawa/",
+   "eventCount": 7,
+   "lastEventName": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
   },
   {
    "handle": "midorino_marche",
@@ -639,16 +649,6 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "j_n_ishikawa",
-   "url": "https://www.instagram.com/j_n_ishikawa/",
-   "eventCount": 5,
-   "lastEventName": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "tanikuen_ohisama",
@@ -4534,6 +4534,12 @@
    "eventDate": "2026-11-07"
   },
   {
+   "domain": "jolienursery.co.jp",
+   "url": "https://jolienursery.co.jp/pages/events",
+   "eventName": "JUNGLE TO YOU（Jolie Nursery・スーパービバホーム豊洲店）",
+   "eventDate": "2026-11-07"
+  },
+  {
    "domain": "hankyu-dept.co.jp",
    "url": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
    "eventName": "アートな植物ビカクシダ(阪急うめだ本店)",
@@ -4681,12 +4687,6 @@
    "domain": "makeman.co.jp",
    "url": "https://makeman.co.jp/event/event-10904/",
    "eventName": "ボタニカルマーケットVol.6",
-   "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "fukui-bot.jp",
-   "url": "https://www.fukui-bot.jp/event/",
-   "eventName": "福井ボタニカルマルシェ2026",
    "eventDate": "2026-05-30"
   }
  ],
