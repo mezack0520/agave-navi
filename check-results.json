@@ -1,6 +1,6 @@
 {
   "check_date": "2026-11-05",
-  "total_events": 751,
+  "total_events": 753,
   "dead_links": [],
   "unreachable": [],
   "tbd_events": [
@@ -3562,6 +3562,15 @@
       "sourceUrl": "https://www.instagram.com/p/De4Dcj3kzes/"
     },
     {
+      "slug": "jolie-nursery-vivahome-toyosu-2026-11",
+      "name": "JUNGLE TO YOU（Jolie Nursery・スーパービバホーム豊洲店）",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-08",
+      "location": "スーパービバホーム 豊洲店（東京都江東区豊洲3丁目4-8）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://jolienursery.co.jp/pages/events"
+    },
+    {
       "slug": "wonder-market-2026-11",
       "name": "Wonder Market（2026年11月）",
       "date": "2026-11-08",
@@ -3713,6 +3722,15 @@
       "location": "塊根植物専門店KANIK（神奈川県横浜市磯子区丸山1-2-6 コーケンビル2F）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/DfBropVibzb/"
+    },
+    {
+      "slug": "jolie-nursery-yamashin-mito-2026-11",
+      "name": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-15",
+      "location": "山新グランステージ水戸 ホームセンター（茨城県水戸市酒門町上千束3234-1）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://jolienursery.co.jp/pages/events"
     },
     {
       "slug": "nagomi-marche-kazo-2026-11",
@@ -5182,9 +5200,25 @@
       "alive": true
     },
     {
+      "slug": "jolie-nursery-vivahome-toyosu-2026-11",
+      "name": "JUNGLE TO YOU（Jolie Nursery・スーパービバホーム豊洲店）",
+      "sourceUrl": "https://jolienursery.co.jp/pages/events",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
       "slug": "art-bikakushida-hankyu-umeda-2026-11",
       "name": "アートな植物ビカクシダ(阪急うめだ本店)",
       "sourceUrl": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "jolie-nursery-yamashin-mito-2026-11",
+      "name": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
+      "sourceUrl": "https://jolienursery.co.jp/pages/events",
       "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
