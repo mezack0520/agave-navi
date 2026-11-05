@@ -1,5 +1,5 @@
 {
-  "total": 762,
+  "total": 766,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 83,
+      "count": 87,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -318,6 +318,7 @@
         "enjoy-place-6th-2027-02",
         "enjoy-place-bangaihen-2026-12",
         "enjoy-place-outside-3rd-2027-05",
+        "fuji-taniku-plants-marche-2026-11",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
         "green-garage-nogata-2026-11",
         "green-marche-hananoyu-fujinomiya-2027-02",
@@ -341,8 +342,7 @@
         "kasamajuku-tanikusai-2027-02",
         "kasamajuku-tanikusai-2027-03",
         "kasamajuku-tanikusai-2027-04",
-        "king-plants-sunday-oroshimachi-2026-12",
-        "lier-taniku-festival-fukuyama-2026-12"
+        "king-plants-sunday-oroshimachi-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -900,22 +900,22 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 1,
+      "count": 5,
       "items": [
-        "2026-11-07 Green Daysと爽GO"
+        "2026-11-07 Green Daysと爽GO",
+        "2026-11-07 環 - わっか -",
+        "2026-11-21 富士多肉プランツマルシェ（2026年11月）",
+        "2026-11-29 ばんだか植物動物園",
+        "2026-12-05 POPUP Plant & Pot SOLO Vol.3（2026年12月）"
       ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 7,
+      "count": 3,
       "items": [
-        "2026-11-07 環 - わっか -",
         "2026-11-14 PUNAHELEマルシェ vol.3",
-        "2026-11-21 富士多肉プランツマルシェ（2026年11月）",
-        "2026-11-29 ばんだか植物動物園",
-        "2026-12-05 POPUP Plant & Pot SOLO Vol.3（2026年12月）",
         "2026-12-06 12月例会",
         "2026-12-26 富士多肉プランツマルシェ（2026年12月）"
       ],
@@ -945,15 +945,17 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 83,
+      "count": 87,
       "items": [
         "2026-11-07 botanical-life-kasama-2026-11",
         "2026-11-07 green-garage-nogata-2026-11",
         "2026-11-07 jolie-nursery-vivahome-toyosu-2026-11",
+        "2026-11-07 wakka-cactus-gamagori-2026-11",
         "2026-11-14 jolie-nursery-yamashin-mito-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
+        "2026-11-21 fuji-taniku-plants-marche-2026-11",
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
         "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
@@ -965,11 +967,13 @@
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
         "2026-11-29 botanoichi-senju-2026-11",
+        "2026-11-29 vandaka-shokubutsu-dobutsuen-2026-11",
         "2026-12-04 lier-taniku-festival-niihama-2026-12",
         "2026-12-05 border-break-11th-2026-12",
         "2026-12-05 king-plants-sunday-oroshimachi-2026-12",
         "2026-12-05 lier-taniku-festival-tokushima-2026-12",
         "2026-12-05 orais-party-2026-garden-messe-hachioji",
+        "2026-12-05 plant-and-pot-solo-vol3-2026-12",
         "2026-12-05 taniku-xmas-flarie-2026-12",
         "2026-12-06 botanical-market-mie-vol11-matsusaka-2026-12",
         "2026-12-06 kasamajuku-tanikusai-2026-12",
@@ -982,11 +986,7 @@
         "2026-12-20 nbgarden-festa-shizuoka-2026-12",
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
-        "2027-01-03 kasamajuku-tanikusai-2027-01",
-        "2027-01-08 lier-taniku-festival-hyuga-2027-01",
-        "2027-01-09 lier-taniku-festival-tamana-2027-01",
-        "2027-01-09 plants-family-2nd-toyohashi-2027-01",
-        "2027-01-10 lier-taniku-festival-nagasaki-2027-01"
+        "2027-01-03 kasamajuku-tanikusai-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1053,13 +1053,8 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 4,
-      "items": [
-        "2026-11-07 wakka-cactus-gamagori-2026-11: new-events.json に残ったまま events.json に無い",
-        "2026-11-21 fuji-taniku-plants-marche-2026-11: new-events.json に残ったまま events.json に無い",
-        "2026-11-29 vandaka-shokubutsu-dobutsuen-2026-11: new-events.json に残ったまま events.json に無い",
-        "2026-12-05 plant-and-pot-solo-vol3-2026-12: new-events.json に残ったまま events.json に無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },

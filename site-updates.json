@@ -1,7 +1,47 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-05",
+  "updated": "2026-11-06",
   "items": [
+    {
+      "on": "2026-11-06",
+      "kind": "listed",
+      "slug": "wakka-cactus-gamagori-2026-11",
+      "name": "環 - わっか -",
+      "date": "2026-11-07",
+      "dateEnd": "2026-11-07",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-06",
+      "kind": "listed",
+      "slug": "fuji-taniku-plants-marche-2026-11",
+      "name": "FUJI TANIKU プランツマルシェ（2026年11月）",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-21",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-06",
+      "kind": "listed",
+      "slug": "vandaka-shokubutsu-dobutsuen-2026-11",
+      "name": "ばんだか植物動物園",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "京都",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-06",
+      "kind": "listed",
+      "slug": "plant-and-pot-solo-vol3-2026-12",
+      "name": "Plant & Pot SOLO Vol.3",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-06",
+      "prefecture": "東京",
+      "detail": ""
+    },
     {
       "on": "2026-11-05",
       "kind": "listed",
@@ -1160,46 +1200,6 @@
       "date": "2026-10-10",
       "dateEnd": "2026-10-10",
       "prefecture": "熊本",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-10",
-      "kind": "listed",
-      "slug": "banryoku-popup-vol6-setagaya-2026-10",
-      "name": "万緑 POP-UP STORE VOL.6",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-10",
-      "kind": "listed",
-      "slug": "toyohashi-cactus-club-tenjikai-2026-10",
-      "name": "豊橋カクタスクラブ サボテン・多肉植物展示会・品評会",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-10",
-      "kind": "listed",
-      "slug": "plants-party-the-park-kinashi-2026-10",
-      "name": "秋のPlants Party!（THE PARK × DOLCE'S）",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "香川",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-10",
-      "kind": "listed",
-      "slug": "agave-popup-mellow-plants-toon-2026-10",
-      "name": "AGAVE POP UP（MELLOW PLANTS）",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "愛媛",
       "detail": ""
     }
   ]

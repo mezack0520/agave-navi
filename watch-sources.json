@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-06 07:16 JST",
+ "generated": "2026-11-06 07:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 404,
-  "awaitingNextEdition": 461,
+  "igAccounts": 406,
+  "awaitingNextEdition": 460,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 92,
+  "igNeedsBrowser": 94,
   "igDead": 7
  },
  "igAccounts": [
@@ -99,6 +99,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "fuji_taniku",
+   "url": "https://www.instagram.com/fuji_taniku/",
+   "eventCount": 5,
+   "lastEventName": "FUJI TANIKU プランツマルシェ（2026年11月）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "botayoko",
@@ -256,6 +266,16 @@
    "eventCount": 3,
    "lastEventName": "ボタの市 年内ファイナル",
    "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "_and_plants",
+   "url": "https://www.instagram.com/_and_plants/",
+   "eventCount": 3,
+   "lastEventName": "Plant & Pot SOLO Vol.3",
+   "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -691,16 +711,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "fuji_taniku",
-   "url": "https://www.instagram.com/fuji_taniku/",
-   "eventCount": 4,
-   "lastEventName": "フジサンフェスタ 2026秋",
-   "lastEventDate": "2026-11-03",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -875,16 +885,6 @@
    "url": "https://www.instagram.com/_sunnydrop_/",
    "eventCount": 2,
    "lastEventName": "sunny drop 5th Anniversary 感謝祭",
-   "lastEventDate": "2026-10-24",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "_and_plants",
-   "url": "https://www.instagram.com/_and_plants/",
-   "eventCount": 2,
-   "lastEventName": "PLANT & POT Vol.16",
    "lastEventDate": "2026-10-24",
    "hasUpcoming": false,
    "priority": 1,
@@ -1079,6 +1079,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "santama127",
+   "url": "https://www.instagram.com/santama127/",
+   "eventCount": 1,
+   "lastEventName": "環 - わっか -",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "_wonder_market_",
@@ -1469,6 +1479,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "vandaka_plants",
+   "url": "https://www.instagram.com/vandaka_plants/",
+   "eventCount": 1,
+   "lastEventName": "ばんだか植物動物園",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "goodthings.jp",
