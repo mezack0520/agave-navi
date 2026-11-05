@@ -21,8 +21,8 @@
    "url": "https://pukubook.jp/events/",
    "staleDays": 7,
    "why": "3社目のアグリゲータ。LEAFLA(coverage-sweep が自動巡回)と NextMeet(月別)のどちらにも出ない回を拾う。2026-09-07 の巡回で THE BOTANICAL SHOW 6th・トハメルカド境赤レンガ倉庫・アジア有用植物祭がここにだけ出ていた。プレイブック §3 に『pukubook の一覧を必ず1回読む』と 2026-08-12 から書いてあるが、回ったかを残す場所が無く、やらなくても誰も気づかない状態だった",
-   "lastSweptOn": "2026-10-28",
-   "lastScope": "一覧(注目3・今後19)を全件、events/rejected と照合。取りこぼし0(古花市=生花、LOHAS FESTA=総合は対象外)",
+   "lastSweptOn": "2026-11-05",
+   "lastScope": "トップ(注目3・今後19)と地域別12頁の札のうち、年月日があり今日から180日以内の33件を events/rejected と照合し取りこぼし0(窓の右端は 2027-03-19 の GREEN✕EXPO。2027-08 の PLANTS UP SATSUMA は窓の外)。モロプラ moro2 plants は掲載済みの モロモロプランツ 19th に aliases を足し、GREEN✕EXPO は見送りに aliases と会期の終わりを足した。この日から coverage-sweep.py が毎日自動で読む。この台帳は自動で読めなかった日の代わり",
    "history": [
     "2026-09-07",
     "2026-09-12",
@@ -38,8 +38,10 @@
     "2026-10-09",
     "2026-10-14",
     "2026-10-22",
-    "2026-10-28"
-   ]
+    "2026-10-28",
+    "2026-11-05"
+   ],
+   "how": "2026-11-05 から coverage-sweep.py の pukubook が毎日自動で読む(トップと、トップから辿れる地域別の頁12枚。年月日のある札で今日から180日以内のものを、英名・会期・県も使って events/rejected と照合する)。全部の頁を読めた日はこの台帳を見ない。読めなかった日だけ、coverage-gaps.json の sweptSources.pukubook.notes に出た頁を device_bash の curl で開いて `python3 scripts/coverage-sweep.py --explain --days 1` の pukubook の行と同じ照合をする。ブラウザは要らない"
   },
   "nextmeet-monthly-check": {
    "label": "NextMeet の月別ページ(自動巡回の目視照合)",
@@ -73,6 +75,6 @@
    ]
   }
  },
- "updated": "2026-10-29",
+ "updated": "2026-11-05",
  "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
 }

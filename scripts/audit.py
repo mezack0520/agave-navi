@@ -546,9 +546,11 @@ def main():
         sorted(e['slug'] for e in events if (e.get('imageUrl') or '').strip()),
         '暦では減らない。減ったぶんは imageUrl の削除かイベントの削除',
         severity='metric')
+    # eyecatch_backlog と metric_moved も同じ集合を読む。定義はここ1か所
+    _up_noimg = [e for e in events
+                 if is_upcoming(e, today_s) and not (e.get('imageUrl') or '').strip()]
     add('upcoming_no_image', '開催予定でimageUrlが無い',
-        sorted(e['slug'] for e in events
-               if is_upcoming(e, today_s) and not (e.get('imageUrl') or '').strip()),
+        sorted(e['slug'] for e in _up_noimg),
         '新規イベントは必ず画像なしで入るので、この件数はゼロにならない。'
         'カード側は県名と開催日を出す枠になっており(2026-08-24)、'
         '画像が無いこと自体は表示の不具合ではない。'
@@ -2544,21 +2546,19 @@ def main():
                                        'coverage-sweep.py'))
         _csm = _ilu.module_from_spec(_sp)
         _sp.loader.exec_module(_csm)
+        # 照合は巡回と同じ judge(2026-11-05)。以前は全部の候補を名前どうし(bare)で
+        # 会期の掛かる全国の回に当てていたので、5文字以上の語1つで別の県の回に当たり、
+        # 本物の取りこぼしを「掲載済みになった」と外していた(巡回の照合と同じ型)。
+        # 県と別名は coverage-gaps.json の候補が持っている。見送りは見ない(掲載済みになった回だけを分ける)
+        _cov_by_day, _ = _csm.build_index()
+        _cov_days = int(_cov.get('daysAhead') or 45)
         _keep = []
         for g in _cov_gaps:
             _gd = str(g.get('date') or '')
-            _hit = False
-            for _e in events:
-                _d0 = str(_e.get('date') or '')
-                _d1 = str(_e.get('dateEnd') or _d0)
-                if not _d0 or not (_d0 <= _gd <= _d1):
-                    continue
-                _names = [_e.get('name', '')] + list(_e.get('aliases') or [])
-                if any(_csm.matches(str(g.get('title') or ''), n, bare=True)
-                       for n in _names if n):
-                    _hit = True
-                    break
-            if _hit:
+            _verdict, _ = _csm.judge(str(g.get('title') or ''), _gd, str(g.get('source') or ''),
+                                     _cov_by_day, [], _cov_days,
+                                     {k: g[k] for k in ('pref', 'alts') if g.get(k)})
+            if _verdict == '掲載済み':
                 _cov_stale_items.append(f"{_gd} {str(g.get('title'))[:90]}")
             else:
                 _keep.append(g)
@@ -2723,11 +2723,9 @@ def main():
     # アイキャッチの積み残し。Instagram出典の回は CI から取れず、
     # 組み込みブラウザを持つ定期タスクだけが埋められる(2026-09-08)。
     # ゼロにはならないので metric。推移が見えれば十分。
-    _eye = [e for e in events
-            if not e.get('imageUrl') and not is_cancelled(e)
-            and is_upcoming(e, today_s)]
+    # 集合は upcoming_no_image と同じ(_up_noimg)。並びだけ開催日順にする
     add('eyecatch_backlog', '開催予定でアイキャッチが無い回',
-        sorted(f"{e.get('date')} {e.get('slug')}" for e in _eye),
+        sorted(f"{e.get('date')} {e.get('slug')}" for e in _up_noimg),
         'scripts/list-missing-eyecatch.py で経路ごとに分かれる。'
         'igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。'
         'web は backfill-images.py が既に失敗した回なので、'
@@ -4408,9 +4406,9 @@ def main():
         severity='info')
 
     # --- 手でやる巡回が止まっていないか -------------------------------------
-    # coverage-sweep.py で自動に読めていない情報源(PUKUBOOK・Instagram)は、
+    # 手でやる巡回(自動の照合を目で確かめる nextmeet-monthly-check と、自動巡回が読めなかった日の代わり)は、
     # 回ったかどうかが repo のどこにも残らない。
-    # (NextMeet は 2026-09-10、まとめブログは 2026-10-25 に自動へ移した)
+    # (NextMeet は 2026-09-10、まとめブログは 2026-10-25、主催公式の一覧は 10-29、PUKUBOOK は 11-05 に自動へ移した)
     # 2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、
     # NextMeet の月別ページを手で開いたら未掲載が15件出た。
     # 「アグリゲータ3社は互いに取りこぼす」はプレイブック §3 に前から
@@ -4452,7 +4450,7 @@ def main():
                 f'（{_age}日前 / 上限{_stale}日）')
     add('manual_sweep_stale', '手でやる巡回が止まっている', sweep_stale,
         note='manual-sweeps.json は agave-event-update が毎回書く台帳。'
-             'coverage-sweep.py で自動に読めない情報源(PUKUBOOK など)と、自動巡回が読めなかった日の'
+             '手でやる照合(nextmeet-monthly-check)と、自動巡回が読めなかった日の'
              '代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。'
              'coverage-gaps.json が0件でも、ここに残る情報源は見ていない。'
              '回った日に lastSweptOn / lastScope / history を更新する。'
@@ -5947,35 +5945,20 @@ def main():
     _METRIC_SCALES_WITH_EVENTS = {
         'thin_past_with_source', 'thin_archived',
     }
-    # 開催予定だけを数える指標の母数は「開催予定の件数」であって全件ではない。
-    # 全件は past を貯め込むので単調に増えるが、開催予定は暦で毎日減る。
-    # 全件で割り引くと、掲載が増えた回の換算が実際より小さく出て、
-    # 2026-08-27 に潰したはずの誤検知が残る(50件をまとめて載せると
-    # 全件は+13%なのに開催予定は+38%で、換算が追いつかず鳴る)。
-    # 母数は 2026-09-01 から履歴に upcoming として残す。
-    # 持っていない古い回が混ざる間は全件で換算する(移行前の挙動)。
-    # 欠けた回だけを全件で埋めると2つの母数が中央値の中で混ざるので、
-    # 全部が upcoming を持つときだけ upcoming を使う。
-    _METRIC_SCALES_WITH_UPCOMING = {
-        'upcoming_with_image', 'upcoming_no_image',
-        # eyecatch_backlog は upcoming_no_image と同じ集合を数える(2026-10-08 に 96 / 96)。
-        # ここに無かったので、まとめて掲載した日に「直近中央値 68 → 89」で鳴った。
-        # 掲載を15件足せば画像の無い回は15件増える。それは異常ではない
-        'eyecatch_backlog',
-    }
-    # 新しく足した回が**全部**その集合に入る指標は、比例ではなく足し算で換算する(2026-10-10)。
-    # 掲載した回は必ず画像なしで入る(アイキャッチは後から別のタスクが付ける)ので、
-    # 開催予定が N 件増えれば画像の無い回も N 件増える。比例の換算(上の集合)は
-    # 「足した回も既存と同じ割合で画像を持つ」と置くので、まとめて掲載が続くと追いつかない。
-    # 10-09 に44件、10-10 に21件を足した日に「直近中央値 73 → 140(換算 106)」で鳴った
-    # (比例 73×279/193=106、足し算なら 73+(279-193)=159)。開催予定が減った分は
-    # 終わった回が抜けただけなので、そちらは従来どおり比例で減らす。
-    # 画像の消失そのものは event_image_lost が全件の実数で見ている(ここは補助の信号)。
-    # audit-history の 48回で旧・新の判定を比べ、変わったのは今日の1件だけ。
-    _METRIC_ADDS_WITH_UPCOMING = {'upcoming_no_image', 'eyecatch_backlog'}
+    # 開催予定で画像の無い回は、中央値と母数の換算では読めない(2026-11-05)。
+    # 掲載した回はアイキャッチが付くまで必ず画像なしで入り、終わって抜ける回は
+    # 画像を持つ回に偏る(アイキャッチは開催日の近い回から付く)。開催予定の件数は
+    # この2つを1つの数に混ぜるので、どう換算しても片方に引きずられる。
+    # 換算は 08-28(全件で比例)・09-01(開催予定で比例)・10-10(増えた分は足し算)と
+    # 3回直したが、11-05 に17件を足した日に「直近中央値 64 → 79(換算 60)」で鳴った。
+    # 前の週末に画像付きの回がまとめて終わって開催予定が 214→177 に減っており、
+    # 中央値(206)より少ない開催予定(194)を比例で縮めた換算になった。
+    # 足した回は addedDate で数えられるので、推し量らずに実数で引く(下の節)。
+    # eyecatch_backlog は同じ集合(_up_noimg)なので1行にまとめる。先頭の名前で出す
+    _METRIC_BY_ADDITIONS = ('upcoming_no_image', 'eyecatch_backlog')
     # その指標が「異常を示す向き」。反対向きの動きは、
     # その指標を足した理由からして異常の証拠にならない。
-    _METRIC_ALARM_DIR = {'upcoming_no_image': +1, 'eyecatch_backlog': +1, 'events_with_image': -1}
+    _METRIC_ALARM_DIR = {'events_with_image': -1}
 
     # 暦だけで動く指標は、ここでは判定できない。
     # upcoming_with_image は「増えたら正常・減ったら消失」という前提で
@@ -5998,7 +5981,7 @@ def main():
     # **正常な週末のたびに鳴る**(2026-09-06 に発覚)。
     # 実測(08-24〜09-06): ongoing_events は平日の中央値 1.5 に対し土日は 9.5 で6倍。
     # 一日だけのイベントは土日に集中するので、これは暦がそうさせているだけで異常ではない。
-    # 母数の割り引き(_METRIC_SCALES_WITH_UPCOMING)では吸収できない。
+    # 開催予定の件数での割り引き(2026-11-05 に廃止)でも吸収できなかった。
     # 開催予定は 132→148 とほぼ動いていないのに開催中だけが 1→15 になる量だから。
     # 対処: 同じ曜日区分(平日/土日)の履歴だけで基準を作る。窓は28回に広げる
     # (直近7回では土日が2回しか入らず、基準を作れるだけの標本が集まらない)。
@@ -6061,23 +6044,44 @@ def main():
         severity='urgent')
 
     metric_moves = []
-    # 人が外した画像ぶんは急変に数えない(2026-09-29)。中央値の窓に入っている間、
-    # 外した回は「画像なし」に移ったままなので、差し引かないと数日鳴り続ける。
-    # 窓の最古の日より後に外し、今も開催予定で画像が空の回だけを数える
-    _win_from = min((r.get('date') or '' for r in _hist_wide), default='')
-    _ev_by = {e.get('slug'): e for e in events}
-    _unhooked_up = sum(
-        1 for _sl, _rs in sitelib.rejected_images().items()
-        if _sl in _ev_by and is_upcoming(_ev_by[_sl]) and not _ev_by[_sl].get('imageUrl')
-        and any((r.get('on') or '') > _win_from for r in _rs))
-    _IMG_ADJ = {'upcoming_no_image': -1, 'eyecatch_backlog': -1, 'upcoming_with_image': 1}
+    # 画像の無い開催予定は、前回の監査からの増分を実数で割り引いて読む(2026-11-05)。
+    # 前回 = 前の日の最後の監査。掲載や画像の取り外しの push はその日のうちに
+    # 監査を回す(daily / sync-events)ので、前回の値には前回の日付までのぶんが入っている。
+    # 引くのは、addedDate が前回の日付より後の回(新しく掲載した)と、それ以前からある回で
+    # 前回より後に人が画像を外した回(scripts/image-rejected.json)。
+    # 残った増加は、掲載でも人の判断でもないのに画像の無い開催予定が増えたこと
+    # (画像の消失・終わった回が日付の更新で開催予定に戻った 等)。
+    # audit-history の72回(08-25〜11-05)を当時の events.json で照合して、鳴る回は0
+    # (旧方式は 11-05 に鳴った)。残った増加の最大は +13 で、翌朝の値が前日に
+    # 上書きされていた頃(08-27)の記録の食い違いだった。
+    # 画像の消失そのものは event_image_lost が全件の実数で見ている。
+    _k0 = _METRIC_BY_ADDITIONS[0]
+    _prev_add = next((r for r in reversed(_prev_runs)
+                      if isinstance((r.get('metric') or {}).get(_k0), int)
+                      and r.get('date')), None)
+    if _k0 in _cur_metric and _prev_add:
+        _pd = str(_prev_add['date'])
+        _pv = _prev_add['metric'][_k0]
+        _v = _cur_metric[_k0]
+        _added = sum(1 for e in _up_noimg if str(e.get('addedDate') or '') > _pd)
+        _rej = sitelib.rejected_images()
+        _unhooked = sum(
+            1 for e in _up_noimg
+            if str(e.get('addedDate') or '') <= _pd
+            and any(str(r.get('on') or '') > _pd for r in _rej.get(e.get('slug'), [])))
+        _delta = _v - _pv - _added - _unhooked
+        if _delta >= 10 and _delta / max(_pv, 1) >= 0.30:
+            metric_moves.append(
+                f'{_k0}(eyecatch_backlog も同じ): 前回({_pd}) {_pv} → {_v}'
+                f'（新しく掲載した{_added}件・画像を外した{_unhooked}件を除いて {_delta:+d}）')
     for _k, _v in _cur_metric.items():
-        _v = _v + _IMG_ADJ.get(_k, 0) * _unhooked_up
         # そのキーを実際に持っている履歴だけで基準を作る。
         # 欠けている履歴を0とみなすと、検査を追加した初日に必ず誤検知する
         # (2026-08-24: upcoming_with_image を足した日に「0→13」で鳴った)。
         if _k in _METRIC_NO_ALARM:
             continue        # 暦で動くので急変を異常と読めない
+        if _k in _METRIC_BY_ADDITIONS:
+            continue        # 上の節で実数で読んだ
         if _k in _METRIC_WEEKLY_CYCLE:
             if _today_weekend is None:
                 continue    # 今日の曜日が読めない。当てずっぽうで比べない
@@ -6090,23 +6094,12 @@ def main():
         _series = sorted(r['metric'][_k] for r in _rows)
         _base = _series[len(_series) // 2]
         _scaled = _base
-        _denom = None
         if _k in _METRIC_SCALES_WITH_EVENTS:
-            _denom = ('events', _ev_now)
-        elif _k in _METRIC_SCALES_WITH_UPCOMING:
-            _denom = (('upcoming', _up_now)
-                      if all(isinstance(r.get('upcoming'), int) for r in _rows)
-                      else ('events', _ev_now))
-        if _denom:
             # 中央値を取った回と同じ並びで母数の中央値も取る。
-            _field, _now_denom = _denom
-            _ds = sorted(r.get(_field) or 0 for r in _rows)
+            _ds = sorted(r.get('events') or 0 for r in _rows)
             _d_base = _ds[len(_ds) // 2]
-            if _d_base > 0 and _now_denom > 0:
-                _scaled = _base * _now_denom / _d_base
-                if _k in _METRIC_ADDS_WITH_UPCOMING and _field == 'upcoming':
-                    _dd = _now_denom - _d_base
-                    _scaled = _base + _dd if _dd > 0 else _base + _dd * _base / _d_base
+            if _d_base > 0 and _ev_now > 0:
+                _scaled = _base * _ev_now / _d_base
         _delta = _v - _scaled
         _dir = _METRIC_ALARM_DIR.get(_k, 0)
         if _dir and (_delta > 0) != (_dir > 0):
@@ -6210,6 +6203,8 @@ def main():
                                          for k in (r.get('metric') or {})}):
         if _k in _METRIC_WEEKLY_CYCLE or _k in _METRIC_NO_ALARM:
             continue
+        if _k in _METRIC_BY_ADDITIONS:
+            continue        # 中央値と比べないので、曜日の偏りが基準に入らない
         _series = [(r.get('date'), r['metric'][_k]) for r in _hist_wide
                    if _k in (r.get('metric') or {})]
         _wd = [v for (_ds, v) in _series if _is_weekend(_ds) is False]
