@@ -2511,6 +2511,7 @@ def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
         if _guest_visit_context(lines, i):
             continue
         prev_end = 0
+        line_ds = set()
         for k, m in enumerate(ms):
             rr = time_ranges(m.group(0))
             seg = ln[prev_end:m.start()]
@@ -2523,6 +2524,13 @@ def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
                 ds = _day_only_days(seg, month_days)
                 if not ds and k == 0 and head and not _DAY_ONLY.search(seg):
                     ds = _dated_days(head, month_days)
+                # 同じ行の2つ目からの範囲で自分の日付を持たないものは、前の範囲と同じ日(2026-11-05)。
+                # 「9:00〜12:00/13:00〜17:00(両日共通)」の 13:00〜17:00 がどの日付にも紐づかない時刻になり、
+                # 主催の一覧の頁(Jolie Nursery)にある終わった三郷の回の時刻を、時刻未定の水戸の回の time に書いた
+                if not ds and k > 0:
+                    ds = set(line_ds)
+            if ds:
+                line_ds = set(ds)
             for d in sorted(ds):
                 out.setdefault(d, set()).add(rr[0])
                 labeled.setdefault(d, []).append((_dated_place_label(seg), rr[0]))
@@ -2610,6 +2618,9 @@ def _self_test_dated_hours_multi():
         ('企画の見出しが下', '10/24(SAT) - 11/1(SAT)\n\n10/24 19:00 - 22:00\nOPENING EVENT', {(10, 24)}, {}),
         ('見出しに会期の外の日がある', '10/17(土)・10/18(日)\n10:00〜16:00', {(10, 17)}, {}),
         ('1日だけの見出しは従来どおり', '10月18日(日)\n開催時間 10:00〜16:00', {(10, 18)}, {(10, 18): {(600, 960)}}),
+        # 2026-11-05。同じ行の2つ目の範囲も見出しの日に紐づく(Jolie Nursery の一覧の三郷の回)
+        ('同じ行の2つ目の範囲', '開催日時\n10月24日(土)・25日(日)\n9:00〜12:00/13:00〜17:00(両日共通)',
+         {(10, 24), (10, 25)}, {(10, 24): {(540, 720), (780, 1020)}, (10, 25): {(540, 720), (780, 1020)}}),
     ]
     for label, cap, md, want in hours_cases:
         got = announced_dated_hours(cap, md)
