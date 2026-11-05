@@ -2,24 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-06",
-   "task": "event-monitor",
-   "kind": "cancel_suspects",
-   "target": "サボテン・多肉植物展示会（神戸市立須磨離宮公園） (2026-10-16)",
-   "action": "reviewed",
-   "detail": "公式告知頁は会期・会場とも変わらず。変化は全頁共通の施設状況欄。check-cancelled.py の署名から状況欄の語を落とした",
-   "mailedOn": "2026-10-06"
-  },
-  {
-   "on": "2026-10-06",
-   "task": "event-monitor",
-   "kind": "cancel_watch_unreachable",
-   "target": "BOTANICAL TAMBA 2026 (2026-12-05)",
-   "action": "fixed",
-   "detail": "url の観光協会頁(splash_tamba_2026)が404。主催 @botanical.tamba の告知投稿に差し替え。check_events.py が url も死活を見るようにした",
-   "mailedOn": "2026-10-06"
-  },
-  {
    "on": "2026-10-07",
    "task": "agave-event-update",
    "kind": "rejected_revisit_stale",
@@ -1935,6 +1917,30 @@
    "action": "skipped",
    "detail": "ブラウザ要: pukubook /events/ の巡回(10-28 以降未実施)",
    "mailedOn": "2026-11-05"
+  },
+  {
+   "on": "2026-11-06",
+   "task": "agave-event-update",
+   "kind": "coverage_gap",
+   "target": "ばんだか植物動物園 / 環-わっか- / 富士多肉プランツマルシェ11月 / Plant & Pot SOLO Vol.3",
+   "action": "listed",
+   "detail": "主催IGで裏取り。new-events.json に追加"
+  },
+  {
+   "on": "2026-11-06",
+   "task": "agave-event-update",
+   "kind": "coverage_gap",
+   "target": "Green Daysと爽GO (2026-11-07)",
+   "action": "fixed",
+   "detail": "ceramall-hanbaikai-2026-11 と同一。aliases・出店者・時間・会場を追記"
+  },
+  {
+   "on": "2026-11-06",
+   "task": "agave-event-update",
+   "kind": "coverage_gap",
+   "target": "PUNAHELEマルシェ vol.3 / 和歌山サボテンクラブ12月例会 / 富士多肉12月",
+   "action": "rejected",
+   "detail": "ヤシ主題・例会で即売なし・12/26は主催告知なし。rejected-events.json に記録"
   }
  ]
 }
