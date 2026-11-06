@@ -1840,14 +1840,11 @@
   },
   {
    "date": "2026-11-06",
-   "urgent": {
-    "manual_sweep_stale": 1
-   },
+   "urgent": {},
    "info": {
-    "coverage_gap_stale": 5,
-    "coverage_gaps": 3,
-    "cancel_suspects": 3,
-    "organizer_unlisted_dates": 7,
+    "cancel_suspects": 2,
+    "organizer_unlisted_dates": 8,
+    "eyecatch_candidates_pending": 3,
     "cross_script_duplicate": 3,
     "rejected_revisit_stale": 4
    },

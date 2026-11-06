@@ -1,5 +1,5 @@
 {
-  "total": 760,
+  "total": 754,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -729,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -900,25 +900,15 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 5,
-      "items": [
-        "2026-11-07 Green Daysと爽GO",
-        "2026-11-07 環 - わっか -",
-        "2026-11-21 富士多肉プランツマルシェ（2026年11月）",
-        "2026-11-29 ばんだか植物動物園",
-        "2026-12-05 POPUP Plant & Pot SOLO Vol.3（2026年12月）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 3,
-      "items": [
-        "2026-11-14 PUNAHELEマルシェ vol.3",
-        "2026-12-06 12月例会",
-        "2026-12-26 富士多肉プランツマルシェ（2026年12月）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1028,11 +1018,10 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 3,
+      "count": 2,
       "items": [
-        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 弱い語(延期)＋ページが変わった",
-        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 公式ページが変わった(本文: 1043→1033字 -1%)",
-        "2026-11-21 greensnap-marche-abc-hachioji-2026-11: 公式ページが変わった(本文・画像)"
+        "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
+        "2026-12-26 mandara-taniku-matsuri-hibikinada-2026-12: 公式ページが変わった(本文・画像)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -1123,7 +1112,7 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 7,
+      "count": 8,
       "items": [
         "@greenfarmkanazawa 2026-11-13: 【ハンギングバスケット教室】スタート🌿 お花の色合いやリーフの組み合わせを楽しみながら、 冬のお庭を彩るハンギングバスケ https://www.instagram.com/p/DfHCVLdBbEf/",
         "@minori_kaboku_interpark 2026-11-07,2026-11-08: 🎪みのり祭りイベント情報🎪 園芸雑誌でもおなじみの若松康史氏による秋球根の講習会を開催します🌷 11月7日(土)は9:0 https://www.instagram.com/p/De0tHRFAcej/",
@@ -1131,7 +1120,8 @@
         "@robingarden02 2026-11-18: 🎄クリスマスワークショップ🎅 今年のクリスマスは、作る楽しみから スタートしませんか? 【開催日時】 2026年11月1 https://www.instagram.com/p/DfUA5RPkwqw/",
         "@sakura_shokubutsuen 2026-11-08,2026-11-22: 🍁 秋のお花で寄せ植えを楽しもう!🌿 さくら植物園で、寄せ植え講習会を開催します!🪴 好きなお花を選んで、自分だけの寄せ https://www.instagram.com/p/De_tfz7v6LL/",
         "@tokiwapark.official 2026-11-22,2026-12-19,2026-12-24,2027-01-11: 毎年TOKIWAファンタジアにあわせて開催する植物館ライトアップ「TOKIWAナイトミュージアム2026」。 今年のテー https://www.instagram.com/p/De1LvWiRw00/",
-        "@wakayama_cactus_club 2026-12-06,2027-01-17: 🍁12月例会のお知らせです🍁 ⚠️いつもの開催場所ではなく変更してますので お間違えのないようにお願いします。 《場所》 https://www.instagram.com/p/DfOzDMFBQbI/"
+        "@vandaka_plants 2026-11-21,2026-11-23: 【京都店11月営業日のお知らせ】 vandaka plants KYOTO 京都店11月のオープンデイは 8,21,22 https://www.instagram.com/reel/DfGabt_hiSA/",
+        "@wakayama_cactus_club 2027-01-17: 🍁12月例会のお知らせです🍁 ⚠️いつもの開催場所ではなく変更してますので お間違えのないようにお願いします。 《場所》 https://www.instagram.com/p/DfOzDMFBQbI/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -1173,8 +1163,12 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-11-07 wakka-cactus-gamagori-2026-11: https://www.instagram.com/p/DfUaFN9Ekpk/（sourcePost）",
+        "2026-11-29 vandaka-shokubutsu-dobutsuen-2026-11: https://www.instagram.com/p/DfTFIn_AaCs/（caption）",
+        "2026-12-05 plant-and-pot-solo-vol3-2026-12: https://www.instagram.com/p/DfV28nEpGdY/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1313,11 +1307,9 @@
     },
     "manual_sweep_stale": {
       "title": "手でやる巡回が止まっている",
-      "count": 1,
-      "items": [
-        "nextmeet-monthly-check(NextMeet の月別ページ(自動巡回の目視照合)): 最後に回ったのは 2026-10-26（11日前 / 上限10日）"
-      ],
-      "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。手でやる照合(nextmeet-monthly-check)と、自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
+      "count": 0,
+      "items": [],
+      "note": "manual-sweeps.json は agave-event-update が毎回書く台帳。自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。coverage-gaps.json が0件でも、ここに残る情報源は見ていない。回った日に lastSweptOn / lastScope / history を更新する。回れなかった回は進めない。進めると回った回と区別が付かなくなる",
       "severity": "urgent"
     },
     "watch_seed_dropped": {
