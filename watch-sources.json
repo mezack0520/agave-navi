@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-07 06:43 JST",
+ "generated": "2026-11-07 07:13 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 406,
+  "igAccounts": 407,
   "awaitingNextEdition": 460,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 92,
+  "igNeedsBrowser": 93,
   "igDead": 7
  },
  "igAccounts": [
@@ -465,6 +465,16 @@
    "url": "https://www.instagram.com/temo2929/",
    "eventCount": 2,
    "lastEventName": "多肉もぶれ vol.13",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "mellow_plants_coffee",
+   "url": "https://www.instagram.com/mellow_plants_coffee/",
+   "eventCount": 2,
+   "lastEventName": "AGAVE POP-UP（MELLOW PLANTS・2026年11月）",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
@@ -1599,6 +1609,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "garden_isle_tsukuba",
+   "url": "https://www.instagram.com/garden_isle_tsukuba/",
+   "eventCount": 1,
+   "lastEventName": "第2回 THE GARDEN ISLE 多肉フェス",
+   "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bakyuu.kitchen",
@@ -3570,16 +3590,6 @@
    "url": "https://www.instagram.com/saidaijigarden/",
    "eventCount": 1,
    "lastEventName": "西大寺ガーデン 多肉イベント（2026秋）",
-   "lastEventDate": "2026-10-18",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "mellow_plants_coffee",
-   "url": "https://www.instagram.com/mellow_plants_coffee/",
-   "eventCount": 1,
-   "lastEventName": "AGAVE POP UP（MELLOW PLANTS）",
    "lastEventDate": "2026-10-18",
    "hasUpcoming": false,
    "priority": 2,

@@ -1,7 +1,27 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-06",
+  "updated": "2026-11-07",
   "items": [
+    {
+      "on": "2026-11-07",
+      "kind": "listed",
+      "slug": "agave-popup-mellow-plants-toon-2026-11",
+      "name": "AGAVE POP-UP（MELLOW PLANTS・2026年11月）",
+      "date": "2026-11-15",
+      "dateEnd": "2026-11-15",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-07",
+      "kind": "listed",
+      "slug": "garden-isle-taniku-fes-2nd-2026-12",
+      "name": "第2回 THE GARDEN ISLE 多肉フェス",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "prefecture": "茨城",
+      "detail": ""
+    },
     {
       "on": "2026-11-06",
       "kind": "listed",
@@ -1180,26 +1200,6 @@
       "date": "2026-11-21",
       "dateEnd": "2026-11-21",
       "prefecture": "岡山",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-11",
-      "kind": "listed",
-      "slug": "tanikudayo-zeninshugo-18th-fukuyama-2026-11",
-      "name": "第18回 多肉だョ！全員集合 in 福山",
-      "date": "2026-11-22",
-      "dateEnd": "2026-11-22",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-10",
-      "kind": "listed",
-      "slug": "miyagawa-yoran-open-farm-2026-10",
-      "name": "宮川洋蘭 OPEN FARM",
-      "date": "2026-10-10",
-      "dateEnd": "2026-10-10",
-      "prefecture": "熊本",
       "detail": ""
     }
   ]
