@@ -1,5 +1,5 @@
 {
-  "total": 754,
+  "total": 776,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -755,12 +755,30 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 4,
+      "count": 22,
       "items": [
+        "agave-shokudo-2026-autumn-uchidanouen(2026-11-07〜2026-11-08/2日)",
+        "botajam-2026(2026-11-07〜2026-11-08/2日)",
+        "botanical-life-kasama-2026-11(2026-11-07〜2026-11-08/2日)",
+        "ceramall-hanbaikai-2026-11(2026-11-07〜2026-11-07/1日)",
+        "chuushokushobutsusai-2026(2026-11-07〜2026-11-08/2日)",
+        "enjoy-place-outside-2nd-2026-11(2026-11-07〜2026-11-07/1日)",
+        "green-garage-nogata-2026-11(2026-11-07〜2026-11-08/2日)",
+        "hanamichiru-taniku-hanbaikai-5th-joyfulak-kushiro-2026-11(2026-11-07〜2026-11-08/2日)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
+        "jolie-nursery-vivahome-toyosu-2026-11(2026-11-07〜2026-11-08/2日)",
+        "kitakyushu-botanical-market-vol3-2026-11(2026-11-07〜2026-11-08/2日)",
+        "kusa-paradise-hirata-nursery-odo-2026-11(2026-11-07〜2026-11-08/2日)",
+        "kusaki-biyori-bloomgarden-matsumae-2026-11(2026-11-07〜2026-11-08/2日)",
+        "lier-taniku-festival-taishodo-2026-11(2026-11-07〜2026-11-08/2日)",
+        "plants-market-hm-garden-utsunomiya-2026-11(2026-11-07〜2026-11-07/1日)",
+        "plants-panic-11th-hirata-nursery-kurume-2026-11(2026-11-07〜2026-11-08/2日)",
+        "taniku-market-fungarden-tobe-2026-11(2026-11-07〜2026-11-08/2日)",
         "uji-botanical-park-saboten-taniku-ten-aki-2026-11(2026-11-06〜2026-11-08/3日)",
         "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)",
-        "veitchiis-popup-fridge-setagaya-2026-11(2026-11-06〜2026-11-07/2日)"
+        "vabudo-3sha-popup-shizuoka-2026-11(2026-11-07〜2026-11-08/2日)",
+        "veitchiis-popup-fridge-setagaya-2026-11(2026-11-06〜2026-11-07/2日)",
+        "wakka-cactus-gamagori-2026-11(2026-11-07〜2026-11-07/1日)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -1018,10 +1036,12 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
+      "count": 4,
       "items": [
+        "2026-11-07 jolie-nursery-vivahome-toyosu-2026-11: 公式ページが変わった(本文: 3286→3276字 -1%)",
         "2026-11-07 kusaki-biyori-bloomgarden-matsumae-2026-11: 公式ページが変わった(本文・画像)",
-        "2026-12-26 mandara-taniku-matsuri-hibikinada-2026-12: 公式ページが変わった(本文・画像)"
+        "2026-11-14 jolie-nursery-yamashin-mito-2026-11: 公式ページが変わった(本文: 3286→3276字 -1%)",
+        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 公式ページが変わった(本文: 1033→1043字 +0%)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
@@ -1112,14 +1132,12 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 8,
+      "count": 6,
       "items": [
         "@greenfarmkanazawa 2026-11-13: 【ハンギングバスケット教室】スタート🌿 お花の色合いやリーフの組み合わせを楽しみながら、 冬のお庭を彩るハンギングバスケ https://www.instagram.com/p/DfHCVLdBbEf/",
-        "@minori_kaboku_interpark 2026-11-07,2026-11-08: 🎪みのり祭りイベント情報🎪 園芸雑誌でもおなじみの若松康史氏による秋球根の講習会を開催します🌷 11月7日(土)は9:0 https://www.instagram.com/p/De0tHRFAcej/",
-        "@plants2306.fe 2026-11-06,2026-11-23: 【11月のお知らせ】 いつも当店をご利用頂きありがとうございます。 日差しの中に冬の気配を感じる季節になってきましたね。 https://www.instagram.com/p/DfGf3NLhMIO/",
+        "@plants2306.fe 2026-11-23: 【11月のお知らせ】 いつも当店をご利用頂きありがとうございます。 日差しの中に冬の気配を感じる季節になってきましたね。 https://www.instagram.com/p/DfGf3NLhMIO/",
         "@robingarden02 2026-11-18: 🎄クリスマスワークショップ🎅 今年のクリスマスは、作る楽しみから スタートしませんか? 【開催日時】 2026年11月1 https://www.instagram.com/p/DfUA5RPkwqw/",
-        "@sakura_shokubutsuen 2026-11-08,2026-11-22: 🍁 秋のお花で寄せ植えを楽しもう!🌿 さくら植物園で、寄せ植え講習会を開催します!🪴 好きなお花を選んで、自分だけの寄せ https://www.instagram.com/p/De_tfz7v6LL/",
-        "@tokiwapark.official 2026-11-22,2026-12-19,2026-12-24,2027-01-11: 毎年TOKIWAファンタジアにあわせて開催する植物館ライトアップ「TOKIWAナイトミュージアム2026」。 今年のテー https://www.instagram.com/p/De1LvWiRw00/",
+        "@sakura_shokubutsuen 2026-11-08: 🍁 秋のお花で寄せ植えを楽しもう!🌿 さくら植物園で、寄せ植え講習会を開催します!🪴 好きなお花を選んで、自分だけの寄せ https://www.instagram.com/p/De_tfz7v6LL/",
         "@vandaka_plants 2026-11-21,2026-11-23: 【京都店11月営業日のお知らせ】 vandaka plants KYOTO 京都店11月のオープンデイは 8,21,22 https://www.instagram.com/reel/DfGabt_hiSA/",
         "@wakayama_cactus_club 2027-01-17: 🍁12月例会のお知らせです🍁 ⚠️いつもの開催場所ではなく変更してますので お間違えのないようにお願いします。 《場所》 https://www.instagram.com/p/DfOzDMFBQbI/"
       ],
@@ -1163,11 +1181,13 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 3,
+      "count": 5,
       "items": [
         "2026-11-07 wakka-cactus-gamagori-2026-11: https://www.instagram.com/p/DfUaFN9Ekpk/（sourcePost）",
+        "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/p/DfZJacZmEPj/（caption）",
         "2026-11-29 vandaka-shokubutsu-dobutsuen-2026-11: https://www.instagram.com/p/DfTFIn_AaCs/（caption）",
-        "2026-12-05 plant-and-pot-solo-vol3-2026-12: https://www.instagram.com/p/DfV28nEpGdY/（sourcePost）"
+        "2026-12-05 plant-and-pot-solo-vol3-2026-12: https://www.instagram.com/p/DfV28nEpGdY/（sourcePost）",
+        "2026-12-05 orais-party-2026-garden-messe-hachioji: https://www.instagram.com/p/DfYo_OjE8E8/（caption）"
       ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
@@ -1486,19 +1506,22 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "seedpot-autumn-fair-2026-11: 開催日 2026-11-06 を過ぎた（保留 2026-10-13）"
+      ],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
     "rejected_revisit_stale": {
       "title": "再評価待ちの見送りが30日以上動いていない",
-      "count": 4,
+      "count": 5,
       "items": [
-        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（36日前）",
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（41日前）",
-        "lala-botaniq-vol2-2026-11: 最終評価 2026-10-07（30日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（41日前）"
+        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（37日前）",
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（42日前）",
+        "lala-botaniq-vol2-2026-11: 最終評価 2026-10-07（31日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（42日前）",
+        "taniku-jam-kyoto-2027-01: 最終評価 2026-10-08（30日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
