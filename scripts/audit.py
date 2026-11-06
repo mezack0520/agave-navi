@@ -2549,7 +2549,7 @@ def main():
         # 照合は巡回と同じ judge(2026-11-05)。以前は全部の候補を名前どうし(bare)で
         # 会期の掛かる全国の回に当てていたので、5文字以上の語1つで別の県の回に当たり、
         # 本物の取りこぼしを「掲載済みになった」と外していた(巡回の照合と同じ型)。
-        # 県と別名は coverage-gaps.json の候補が持っている。見送りは見ない(掲載済みになった回だけを分ける)
+        # 県・別名・場所は coverage-gaps.json の候補が持っている(GAP_HINTS)。見送りは見ない(掲載済みになった回だけを分ける)
         _cov_by_day, _ = _csm.build_index()
         _cov_days = int(_cov.get('daysAhead') or 45)
         _keep = []
@@ -2557,7 +2557,7 @@ def main():
             _gd = str(g.get('date') or '')
             _verdict, _ = _csm.judge(str(g.get('title') or ''), _gd, str(g.get('source') or ''),
                                      _cov_by_day, [], _cov_days,
-                                     {k: g[k] for k in ('pref', 'alts') if g.get(k)})
+                                     {k: g[k] for k in _csm.GAP_HINTS if g.get(k)})
             if _verdict == '掲載済み':
                 _cov_stale_items.append(f"{_gd} {str(g.get('title'))[:90]}")
             else:
@@ -4406,8 +4406,8 @@ def main():
         severity='info')
 
     # --- 手でやる巡回が止まっていないか -------------------------------------
-    # 手でやる巡回(自動の照合を目で確かめる nextmeet-monthly-check と、自動巡回が読めなかった日の代わり)は、
-    # 回ったかどうかが repo のどこにも残らない。
+    # 手でやる巡回(いまは自動巡回が読めなかった日の代わりだけ)は、回ったかどうかが repo のどこにも残らない。
+    # NextMeet の目視照合(nextmeet-monthly-check)は 2026-11-06 に coverage-sweep の場所の裏付けへ置き換えた。
     # (NextMeet は 2026-09-10、まとめブログは 2026-10-25、主催公式の一覧は 10-29、PUKUBOOK は 11-05 に自動へ移した)
     # 2026-09-06、coverage-gaps.json は 0件(LEAFLA 由来の自動巡回)だったのに、
     # NextMeet の月別ページを手で開いたら未掲載が15件出た。
@@ -4450,8 +4450,8 @@ def main():
                 f'（{_age}日前 / 上限{_stale}日）')
     add('manual_sweep_stale', '手でやる巡回が止まっている', sweep_stale,
         note='manual-sweeps.json は agave-event-update が毎回書く台帳。'
-             '手でやる照合(nextmeet-monthly-check)と、自動巡回が読めなかった日の'
-             '代わり(listing-policy.json coverageSources の manualSweepId)を残せるのはこのファイルだけ。'
+             '自動巡回が読めなかった日の代わり(listing-policy.json coverageSources の manualSweepId)を'
+             '残せるのはこのファイルだけ。'
              'coverage-gaps.json が0件でも、ここに残る情報源は見ていない。'
              '回った日に lastSweptOn / lastScope / history を更新する。'
              '回れなかった回は進めない。進めると回った回と区別が付かなくなる')

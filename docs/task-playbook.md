@@ -1398,15 +1398,15 @@ bash scripts/build-all.sh && git add -A && git commit -m "chore: rebase後の再
   `audit.py` の `manual_sweep_stale`(urgent) が経過日数で鳴らす。
   毎回 `lastSweptOn` / `lastScope` / `history` を更新する。
   **回れなかった回は日付を進めない。**進めると回った回と区別が付かなくなる。
-  手で巡回するのは NextMeet の目視照合だけ。NextMeet(09-10)・まとめブログ(10-25)・主催公式の一覧(10-29)・PUKUBOOK(11-05)の読み取りは自動に移した。
-  台帳は `manual-sweeps.json` に4つある(2026-11-05 時点)。**どれもブラウザは要らない。**
+  手で回す巡回はもう無い。NextMeet(09-10)・まとめブログ(10-25)・主催公式の一覧(10-29)・PUKUBOOK(11-05)の読み取りは自動に移し、
+  NextMeet の目視照合は 11-06 に照合の場所の裏付けへ置き換えた(下)。
+  台帳は `manual-sweeps.json` に3つあり(2026-11-06 時点)、どれも自動巡回が読めなかった日の代わり。**どれもブラウザは要らない。**
   - PUKUBOOK の全国イベント一覧 `pukubook-events`(staleDays 7): 2026-11-05 から `coverage-sweep.py` の `pukubook` が毎日自動で読む
     (トップと地域別の頁12枚)。全部の頁を読めた日は台帳を見ない。読めなかった頁(`sweptSources.pukubook.notes`)だけ curl で見る。
     「自動で読めない情報源」として台帳に置いていたが、確かめると静的な HTML だった。10-28 から8日回らず期限を切らした
-  - NextMeet の目視照合 `nextmeet-monthly-check`(staleDays 10): `python3 scripts/coverage-sweep.py --explain --days 1` が
-    NextMeet 4か月とまとめ記事の見出しごとに「掲載済み/見送り/取りこぼし」と当たった相手を出す。当たり先が同じ回かを目で見るだけ。
-    10-26 に event-monitor が「目視巡回でブラウザ必須」と書いて回さず、期限を切らした。**bash だけで回せる。**
-    期限が近いのに agave-event-update が回していなければ event-monitor が回す
+  - NextMeet の目視照合 `nextmeet-monthly-check` は 2026-11-06 に外した。目視が毎回見つけていたのは「同じ日の別の回に当たって
+    取りこぼしが消える」で、照合が相手の「会場 / 住所」とこちらの location の市区町村の一致を求めるようにして機械で止めた
+    (下の 11-06 の節)。当たり先を見たいときは `python3 scripts/coverage-sweep.py --explain --days 1` が今も使える
   - 主催公式サイトの一覧 `organizer-official-index`(staleDays 14): 2026-10-29 から `coverage-sweep.py` の
     `organizer-index` が毎日自動で読む(頁は `listing-policy.json` の coverageSources)。全部の頁を読めた日は台帳を見ない。
     読めなかった頁(`coverage-gaps.json` の `sweptSources.organizer-index.notes`)だけ device_bash の curl で見る。
@@ -4105,6 +4105,18 @@ eyecatch_backlog は同じ集合なので定義を `_up_noimg` の1つにし、�
 検証: 切り出しの前後で `--explain` の PUKUBOOK 以外116行が一致(県を足す前)。県と注記の扱いで判定が変わったのは、上の回と
 LEAFLA の「植物園のもみじ散策」(11-05 の頁に出ていたのが、さくら植物園の見送りに当たっていた。見送りの記録は 11-20〜)だけ。
 **情報源が名前以外に読める項目(県・会期・別名)を持っているなら、照合に渡す。**
+
+### NextMeet の目視照合を、照合の場所の裏付けに置き換えた (2026-11-06)
+
+台帳 `nextmeet-monthly-check` が 10-26 から11日回らず `manual_sweep_stale` が鳴った。event-monitor は「内蔵ブラウザの回でないと
+照合できない」と書いて回さなかったが、`--explain` は bash だけで回る。10-26 にも同じ理由で回さなかった。
+目視が回るたびに見つけていたのは同じ型で、**同じ日の別の回(見送り)に当たって取りこぼしが消える**(09-17 花の湯、10-15 NOHARA、
+10-26 仁保の郷ほか、11-05 JUNGLE TO YOU ほか)。その都度、共通語・開催日・県で照合を直してきたが、直すのは見つけた型だけだった。
+NextMeet の札は「会場 / 住所」を持つ。照合(`judge`)は、相手の場所とこちらの location(無ければ mapQuery・venue。見送りは名前の注記)
+の市区町村(`muni_of`)が両方読めるとき、一致を求める。どちらかが読めない当たりは従来どおり名前だけで決める。
+まとめ記事の所在地・主催公式の一覧の見出しも同じ場所として渡す。11-06 の NextMeet 108件で、場所で裏付けられた当たりは
+掲載済み 72/91・見送り 8/17、食い違い0で判定は変わらなかった(残りは当サイトの location に住所が無い回)。
+**目で見て見つけた誤りを型ごとに直すより、相手が持つ別の手がかり(場所)で当たりを裏付ける。**台帳は外した。
 
 ### 同じ会場・同じ日に別の主催が並べて開く回は coexistsWith を書く (2026-10-10)
 

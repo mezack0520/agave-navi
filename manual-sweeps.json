@@ -43,22 +43,6 @@
    ],
    "how": "2026-11-05 から coverage-sweep.py の pukubook が毎日自動で読む(トップと、トップから辿れる地域別の頁12枚。年月日のある札で今日から180日以内のものを、英名・会期・県も使って events/rejected と照合する)。全部の頁を読めた日はこの台帳を見ない。読めなかった日だけ、coverage-gaps.json の sweptSources.pukubook.notes に出た頁を device_bash の curl で開いて `python3 scripts/coverage-sweep.py --explain --days 1` の pukubook の行と同じ照合をする。ブラウザは要らない"
   },
-  "nextmeet-monthly-check": {
-   "label": "NextMeet の月別ページ(自動巡回の目視照合)",
-   "url": "https://nextmeet.app/plants/monthly/",
-   "staleDays": 10,
-   "why": "NextMeet は 2026-09-10 に coverage-sweep.py へ機械化したが、**機械が拾えるのは『判定を通った候補』だけ**で、一覧をそのまま events.json と並べて見る回が無かった。2026-09-17 に10月の一覧(46件)を目で突き合わせたら、coverage-gaps が出していない未掲載が1件(Green marche 花の湯)あった。coverage_source_missing は『自動で回った』で満たされてしまうので、この台帳で別に数える。",
-   "lastSweptOn": "2026-10-26",
-   "lastScope": "2026年10月(10/26以降)・11月・12月・2027年1月の月別88件と、もすレコ。のまとめ記事8件を `coverage-sweep.py --explain --days 1` で当たった相手ごとに見た(ブラウザは使っていない)。日付を見ずに見送りに当たって取りこぼしが消えていた3件を見つけた: 11/8 道の駅 仁保の郷「多肉植物販売会」(@mochi.ie29、9/27 のにしかたの見送りに当たっていた。未掲載)、12/6「Green marché 花の湯」(9/24 の博多阪急の見送りに当たっていた。10/4 の回は unverified で見送り)、11/28「晩秋の古典園芸植物展」(9/26 の秋の展の見送りに当たっていた)。見送りの照合を開催日で絞るよう coverage-sweep.py を直した(rejected_date_ok)。直した版の巡回では取りこぼし候補3件(仁保の郷・花の湯・LEAFLA 10/27「花のある暮らし ボタニカルアートとデザイン」)。掲載済みの当たり先の取り違え(多肉＆ガーデンMARCHE→おひさま盛岡、ぶらりぷらんつ vol.3→Green Flea Market、ISIJ 11月バザール→井頭公園の展示会)は、同じ日に正しい回も掲載済みで結論は変わらない",
-   "history": [
-    "2026-09-17",
-    "2026-09-28",
-    "2026-10-07",
-    "2026-10-15",
-    "2026-10-26"
-   ],
-   "how": "`python3 scripts/coverage-sweep.py --explain --days 1` を回し(NextMeet 4か月・まとめ記事を取り、coverage-gaps.json は書かない)、「見送り」「掲載済み」の当たり先が同じ回かを目で見る。ブラウザは要らない(curl で取れる)。bash だけのタスクでも回せる"
-  },
   "organizer-official-index": {
    "label": "掲載済みシリーズの主催公式サイトの「イベント一覧」",
    "url": "https://greensnap.jp/event/",
@@ -75,6 +59,9 @@
    ]
   }
  },
- "updated": "2026-11-05",
- "_removed": "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。"
+ "updated": "2026-11-06",
+ "_removed": [
+  "nextmeet-monthly は 2026-09-10 に coverage-sweep.py へ機械化したので外した。「CI から NextMeet は読めない」と書いていたが、実測すると Actions から 3/3 か月とも取得できた。残したままだと、タスクが手で回さなくなった7日後に manual_sweep_stale が誤って鳴る。",
+  "nextmeet-monthly-check は 2026-11-06 に外した。coverage-sweep.py の照合が、相手の「会場 / 住所」とこちらの location の市区町村が両方読めるとき一致を求めるようにし、目視で毎回見つけていた「同じ日の別の回に当たって取りこぼしが消える」を機械で止める。台帳は 10-24・10-26 に続き 11-06 も期限切れで、event-monitor は「ブラウザが要る」と書いて回さなかった(要らない)。最後の目視は 11-06(NextMeet 108件の当たり先を全部見て、取り違えは無かった。11-05 の目視で、県の食い違いで別の回に当たっていたものを直している)。11-06 の NextMeet 108件のうち、場所で裏付けられた当たりは掲載済み 72/91・見送り 8/17、食い違いは0"
+ ]
 }

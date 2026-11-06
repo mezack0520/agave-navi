@@ -316,18 +316,39 @@ def pref_short(p):
     return ''
 
 
+# 都道府県の接尾辞つきの形(「東京都」「京都府」「北海道」「茨城県」)
+PREF_FULL = {p: (p if p == '北海道' else p + ('都' if p == '東京' else '府' if p in ('大阪', '京都') else '県'))
+             for p in sitelib.PREF_TO_REGION}
+_PREF_FULL_RE = re.compile('|'.join(sorted(map(re.escape, PREF_FULL.values()), key=len, reverse=True)))
+# 都道府県の直後の市区町村。句読点・空白・数字・括弧の手前まで、9字以内
+_MUNI_RE = re.compile(r'[^\s\d()（）/／|｜・,、。:：〒]{1,9}?[市区町村]')
+_GUN_RE = re.compile(r'^[^\s\d()（）/／|｜・,、。:：〒市区町村郡]{1,5}郡')
+
+
 def pref_in_text(text):
     """文に「東京都」「茨城県」の形(接尾辞つき)で出る都道府県が1つだけならその短い形。0か2つ以上なら空。
     接尾辞の無い「京都」は数えない(「京都みどりのマルシェ ベンケイソウ」は大阪で開かれる)。
     「東京都府中市」は東京と京都の2つに読めるので空になり、照合を絞らない側に倒れる"""
     t = unicodedata.normalize('NFKC', text or '')
-    found = {p for p in sitelib.PREF_TO_REGION
-             if (p if p == '北海道' else p + ('都' if p == '東京' else '府' if p in ('大阪', '京都') else '県')) in t}
+    found = {p for p, full in PREF_FULL.items() if full in t}
     return found.pop() if len(found) == 1 else ''
 
 
+def muni_of(text):
+    """住所の市区町村(「東京都江東区豊洲3丁目」→「江東区」)。都道府県を接尾辞つきで書いた直後だけを読み、読めなければ空。
+    政令市は市まで(「大阪府大阪市住之江区」→「大阪市」)、郡は落とす(「愛知県西春日井郡豊山町」→「豊山町」)。
+    「兵庫県立フラワーセンター / 兵庫県加西市…」のように施設名が県名で始まるときは、市区町村が続く方を採る"""
+    t = unicodedata.normalize('NFKC', text or '')
+    for m in _PREF_FULL_RE.finditer(t):
+        rest = _GUN_RE.sub('', t[m.end():].lstrip())
+        mm = _MUNI_RE.match(rest)
+        if mm and len(mm.group(0)) >= 2:
+            return mm.group(0)
+    return ''
+
+
 def keep_title(by_day, extra, day, title, **hints):
-    """(日付, 見出し) を積む。同じ日の同じ見出しは1回だけ。hints(alts・span・pref)は照合(judge)に渡す"""
+    """(日付, 見出し) を積む。同じ日の同じ見出しは1回だけ。hints(alts・span・pref・place)は照合(judge)に渡す"""
     if title in by_day.setdefault(day, []):
         return False
     by_day[day].append(title)
@@ -360,12 +381,13 @@ def extract_titles(html):
 
 
 def extract_nextmeet(html):
-    """月別ページから (開催日, イベント名, 県) を取る。
+    """月別ページから (開催日, イベント名, 県, 場所) を取る。
 
     日付行 `2026/9/13(日)` が h3 の**直前**に出る。位置順に並べて、
     直近の日付行を持ち越す。最初の h3（「この月に見つかりやすい植物・雑貨」）は
     日付行より前にあるので、日付が無いものを捨てれば自然に落ちる。
-    県は日付と h3 の間にある「<県>の植物イベントを見る」のリンク(2026-11-05)。次の h3 だけが使う
+    県は日付と h3 の間にある「<県>の植物イベントを見る」のリンク(2026-11-05)。次の h3 だけが使う。
+    場所は h3 の後ろの「会場 / 住所」の行(2026-11-06)。直前の h3 の札のもの。照合(judge)が市区町村を読む
     """
     marks = []
     for m in re.finditer(r'(20\d\d)/(\d{1,2})/(\d{1,2})\([日月火水木金土]\)', html):
@@ -380,6 +402,8 @@ def extract_nextmeet(html):
         txt = re.sub(r'\s+', ' ', txt).strip()
         if txt:
             marks.append((m.start(), 'h', txt))
+    for m in re.finditer(r'<p class="min-w-0 text-xs text-slate-500[^"]*">(.*?)</p>', html, re.S | re.I):
+        marks.append((m.start(), 'v', _plain(m.group(1))))
     marks.sort()
     out, day, pref = [], None, ''
     for _pos, kind, val in marks:
@@ -387,11 +411,14 @@ def extract_nextmeet(html):
             day = val
         elif kind == 'p':
             pref = val
+        elif kind == 'v':
+            if out and not out[-1][3]:
+                out[-1][3] = val
         else:
             if day:
-                out.append((day, val, pref))
+                out.append([day, val, pref, ''])
             pref = ''
-    return out
+    return [tuple(x) for x in out]
 
 
 def sweep_nextmeet(days, sleep=0.7):
@@ -439,11 +466,11 @@ def sweep_nextmeet(days, sleep=0.7):
                          f'(ページ構造が変わった可能性 / {len(html)}バイト)')
             continue
         fetched += 1
-        for day, title, pref in rows:
+        for day, title, pref, place in rows:
             # 上は切らない。取った月のぶんは全部見る(上のコメント)
             if day < today.isoformat():
                 continue
-            keep_title(by_day, extra, day, title, pref=pref)
+            keep_title(by_day, extra, day, title, pref=pref, place=place)
         time.sleep(sleep)
 
     pages = [(k, by_day[k]) for k in sorted(by_day)]
@@ -473,7 +500,7 @@ def extract_matome_articles(html):
 
 
 def extract_matome(html):
-    """まとめ記事から (開始日, イベント名, 県) を取る。見出しの末尾の(所在地)は名前から外し、県だけ読む"""
+    """まとめ記事から (開始日, イベント名, 県, 所在地) を取る。見出しの末尾の(所在地)は名前から外す"""
     out = []
     for m in _MATOME_H2.finditer(html):
         h = _MATOME_HEAD.match(_plain(m.group(1)))
@@ -484,7 +511,7 @@ def extract_matome(html):
             day = date(y, mo, d).isoformat()
         except ValueError:
             continue
-        out.append((day, name, pref_in_text(h.group(5) or '')))
+        out.append((day, name, pref_in_text(h.group(5) or ''), h.group(5) or ''))
     return out
 
 
@@ -512,10 +539,10 @@ def sweep_matome(sleep=0.7):
             notes.append(f'{u}: 見出しを1件も抽出できなかった(ページ構造が変わった可能性 / {len(html)}バイト)')
             continue
         fetched += 1
-        for day, name, pref in rows:
+        for day, name, pref, place in rows:
             if day < today:
                 continue
-            keep_title(by_day, extra, day, name, pref=pref)
+            keep_title(by_day, extra, day, name, pref=pref, place=place)
         time.sleep(sleep)
     return [(k, by_day[k]) for k in sorted(by_day)], extra, fetched, notes
 
@@ -635,10 +662,10 @@ def sweep_organizer_index(sleep=0.7):
     if not pages_cfg:
         notes.append('listing-policy.json の coverageSources.required.organizer-index.pages が空')
 
-    def keep(day, title, need_genre, pref=''):
+    def keep(day, title, need_genre, pref='', place=''):
         if need_genre and not in_scope(title):
             return
-        keep_title(by_day, extra, day, title, pref=pref)
+        keep_title(by_day, extra, day, title, pref=pref, place=place)
 
     for pc in pages_cfg:
         url = pc.get('url') or ''
@@ -674,7 +701,7 @@ def sweep_organizer_index(sleep=0.7):
                 continue
             # 見出しは日付の前後の行なので、場所の行(「茨城県水戸市|…」)が入っていれば県が読める
             for day, title in org_dated_items(lines, today):
-                keep(day, title, need_genre, pref_in_text(title))
+                keep(day, title, need_genre, pref_in_text(title), title)
         fetched += 1
         time.sleep(sleep)
     return [(k, by_day[k]) for k in sorted(by_day)], extra, fetched, len(pages_cfg), notes
@@ -698,7 +725,7 @@ _PK_END = re.compile(r'^[^~]*~\s*(?:(20\d\d)年)?(?:(\d{1,2})月)?(\d{1,2})日')
 
 
 def extract_pukubook(html):
-    """一覧の札から (開始日, 終了日, 名前, 英名, 県) を取る。年月日の無い札は捨てる"""
+    """一覧の札から (開始日, 終了日, 名前, 英名, 県, 県と会場) を取る。年月日の無い札は捨てる"""
     out = []
     for m in _PK_CARD.finditer(html):
         d = _plain(m.group(1))
@@ -723,7 +750,7 @@ def extract_pukubook(html):
                     break
         spot = _plain(m.group(4) or '')
         pref = spot.split('/')[0].strip() if '/' in spot else ''
-        out.append((start, end, _plain(m.group(2)), _plain(m.group(3) or ''), pref))
+        out.append((start, end, _plain(m.group(2)), _plain(m.group(3) or ''), pref, spot))
     return out
 
 
@@ -755,7 +782,7 @@ def sweep_pukubook(sleep=0.7):
             notes.append(f'{u}: 札を1件も抽出できなかった(頁の作りが変わった可能性 / {len(html)}バイト)')
             continue
         fetched += 1
-        for start, end, name, en, pref in cards:
+        for start, end, name, en, pref, spot in cards:
             if end < today or start > last:
                 continue
             day = max(start, today)
@@ -764,7 +791,7 @@ def sweep_pukubook(sleep=0.7):
                        alts=[en] if en and en != name else [],
                        span=[(day + timedelta(days=k)).isoformat()
                              for k in range(min((end - day).days, 30) + 1)],
-                       pref=pref)
+                       pref=pref, place=spot)
     return [(k, by_day[k]) for k in sorted(by_day)], extra, fetched, len(urls), notes
 
 
@@ -1062,6 +1089,8 @@ def resolve_truncated(title, full_titles, min_stem=8):
 
 # 名前そのものが来る情報源。見出しにジャンル語を要求せず(in_scope の prescoped)、名前どうしで照合する
 NAMED_SOURCES = ('nextmeet', 'matome-blog', 'organizer-index', 'pukubook')
+# 取りこぼし候補に残す照合の手がかり。監査が judge で引き直すときに同じものを渡す
+GAP_HINTS = ('pref', 'alts', 'place')
 
 
 def judge(t, key, source, by_day, rejected, days, ex=None):
@@ -1072,7 +1101,9 @@ def judge(t, key, source, by_day, rejected, days, ex=None):
       pref … 県(PUKUBOOK・NextMeet・まとめ記事・主催公式の一覧)。県が食い違う回には当てない。
              名前の照合は5文字以上の語1つで当たるので、同じ週末の別の県の回に当たって取りこぼしが消える。
              11-05 に主催公式の一覧の「JUNGLE TO YOU」(東京・豊洲)が大阪の URBAN JUNGLE WEEKS に、
-             「Jolie Selected Aroids 即売会」(茨城・水戸)が群馬の JSS秋の多肉市に当たって消えていた"""
+             「Jolie Selected Aroids 即売会」(茨城・水戸)が群馬の JSS秋の多肉市に当たって消えていた
+      place … 場所の文(NextMeet の「会場 / 住所」、まとめ記事の所在地、主催公式の一覧の見出し、PUKUBOOK の「県 / 会場」)。
+             こちらの location(見送りは名前の注記)と市区町村が両方読めるなら、一致を求める(2026-11-06)"""
     ex = ex or {}
     bare = source in NAMED_SOURCES
     names = [t] + [a for a in (ex.get('alts') or []) if a and a != t]
@@ -1087,22 +1118,33 @@ def judge(t, key, source, by_day, rejected, days, ex=None):
     tp = pref_short(ex.get('pref'))
     if tp:
         cand = [e for e in cand if pref_short(e.get('prefecture')) in ('', tp)]
+    # 場所の裏付け(2026-11-06)。向こうの場所とこちらの location の市区町村が両方読めるなら、一致を求める。
+    # NextMeet の月別の目視照合(nextmeet-monthly-check)が回るたびに見つけていた「同じ日の別の回に当たって
+    # 取りこぼしが消える」を、目で見る代わりに機械で止める。どちらかが読めない当たりは従来どおり名前だけで決める。
+    # 名前が同じでも場所が違えば当てない(「多肉植物販売会」のような一般名の回は、同じ週末に別の町でも開かれる)
+    cm = muni_of(ex.get('place') or '')
+
+    def place_ok(*where):
+        om = next((m for m in map(muni_of, where) if m), '')
+        return not cm or not om or om == cm
+
     # aliases は他所での呼び名。主催の表記(PLNTS RIDE)とアグリゲータの
     # 表記(Plants Ride)が違う回がある(2026-09-24)
     hit = next((e for e in cand if any(
         matches(x, e.get('name', ''), bare=bare) or
         matches(x, e.get('venue') or e.get('location') or '', bare=bare) or
         any(matches(x, a, bare=bare) for a in (e.get('aliases') or []))
-        for x in names)), None)
+        for x in names) and place_ok(e.get('location'), e.get('mapQuery'), e.get('venue'))), None)
     if hit is not None:
         return '掲載済み', hit.get('slug', '')
     # 見送りの名前の末尾の(日付 会場・所在地)はこちらの注記なので照合に使わない(2026-11-05)。
     # 所在地の語「東京都江東区」が、主催公式の一覧の見出しの所在地に当たり、
-    # 豊洲の「JUNGLE TO YOU」が夢の島公園の植物交換会の見送りに落ちていた
+    # 豊洲の「JUNGLE TO YOU」が夢の島公園の植物交換会の見送りに落ちていた。
+    # 注記は場所の裏付けにだけ使う
     rhit = next((n for n, d0, d1 in rejected
                  if rejected_date_ok(d0, d1, look)
-                 and any(matches(x, PAREN_SUFFIX_RE.sub('', n).strip() or n, bare=bare) for x in names)),
-                None)
+                 and any(matches(x, PAREN_SUFFIX_RE.sub('', n).strip() or n, bare=bare) for x in names)
+                 and place_ok(n)), None)
     if rhit is not None:
         return '見送り', rhit
     return '取りこぼし', ''
@@ -1110,8 +1152,8 @@ def judge(t, key, source, by_day, rejected, days, ex=None):
 
 def sweep(days, sleep=0.7, explain=None):
     """explain に list を渡すと、名前そのものが来る情報源(NAMED_SOURCES)の見出しごとに
-    (情報源, 日付, 見出し, 判定, 当たった相手) を積む。手で回す照合(manual-sweeps.json の
-    nextmeet-monthly-check)は、この一覧を目で見るだけで済む(2026-10-26。ブラウザは要らない)"""
+    (情報源, 日付, 見出し, 判定, 当たった相手) を積む。当たり先を目で確かめたいときに使う(ブラウザは要らない)。
+    定期の目視(nextmeet-monthly-check)は 2026-11-06 に judge の場所の裏付けへ置き換えた"""
     by_day, rejected = build_index()
     gaps, errors, stats = [], [], {'fetched': 0, 'candidates': 0,
                                    'in_scope': 0, 'covered': 0,
@@ -1244,10 +1286,10 @@ def sweep(days, sleep=0.7, explain=None):
             elif verdict == '見送り':
                 stats['known_rejected'] += 1
             else:
-                # 県と別名は候補に残す。監査(coverage_gap_stale)が巡回の後の掲載と引き直すときに
-                # 同じ judge に渡す(渡さないと、別の県の回に当てて候補を消す)
+                # 県・別名・場所は候補に残す(GAP_HINTS)。監査(coverage_gap_stale)が巡回の後の掲載と
+                # 引き直すときに同じ judge に渡す(渡さないと、別の県の回に当てて候補を消す)
                 gaps.append({'date': key, 'title': t[:180], 'source': source,
-                             **{k: ex[k] for k in ('pref', 'alts') if ex.get(k)}})
+                             **{k: ex[k] for k in GAP_HINTS if ex.get(k)}})
 
     # 同じイベントを日数ぶん重ねない。会期の長い回（店舗のセールや常設展示）が
     # 45日ぶん並ぶと件数が膨らんで、一覧として読めなくなる
@@ -1262,7 +1304,7 @@ def sweep(days, sleep=0.7, explain=None):
         else:
             folded[k] = {'date': g['date'], 'lastSeen': g['date'],
                          'days': 1, 'title': g['title'], 'source': g['source'],
-                         **{h: g[h] for h in ('pref', 'alts') if g.get(h)}}
+                         **{h: g[h] for h in GAP_HINTS if g.get(h)}}
     out = sorted(folded.values(), key=lambda x: (x['date'], x['title']))
     for o in out:
         if o['days'] == 1:
@@ -1599,8 +1641,9 @@ def self_test(verbose=True):
            '<h2 class="wp-block-heading">2026/9/6：ボタニカルフェスタ「ハオルチア界隈」（埼玉県熊谷市）</h2>'
            '<h2 class="wp-block-heading">引き続き追記予定</h2>')
     got = extract_matome(art)
-    want = [('2026-10-24', '秋の多肉植物・サボテン展示会', '埼玉'), ('2026-09-19', 'オキボタMAX with 緑の風', '東京'),
-            ('2026-09-06', 'ボタニカルフェスタ「ハオルチア界隈」', '埼玉')]
+    want = [('2026-10-24', '秋の多肉植物・サボテン展示会', '埼玉', '埼玉県川口市'),
+            ('2026-09-19', 'オキボタMAX with 緑の風', '東京', '東京都豊島区'),
+            ('2026-09-06', 'ボタニカルフェスタ「ハオルチア界隈」', '埼玉', '埼玉県熊谷市')]
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 見出し {got}")
@@ -1675,7 +1718,7 @@ def self_test(verbose=True):
           '<h3><a href="#">年越し市</a><span>New Year Market</span></h3></li>'
           '<li><p class="date">12月</p><h3><a href="#">多肉植物マーケット</a><span>Succulent Market</span></h3>'
           '<p class="spotName">静岡 / 未定</p></li>')
-    got = [(s.isoformat(), e.isoformat(), n, a, p) for s, e, n, a, p in extract_pukubook(pk)]
+    got = [(s.isoformat(), e.isoformat(), n, a, p) for s, e, n, a, p, _spot in extract_pukubook(pk)]
     want = [('2026-11-07', '2026-11-08', 'プランツパニック vol.11', 'Plants Panic Vol.11', '福岡'),
             ('2027-03-19', '2027-09-26', 'GREEN✕EXPO2027 横浜花博', 'EXPO2027 Yokohama', '神奈川'),
             ('2026-12-30', '2027-01-03', '年越し市', 'New Year Market', '')]
@@ -1707,10 +1750,12 @@ def self_test(verbose=True):
     # NextMeet の月別の札(2026-11-05)。日付 → 県のリンク → h3 の順。県のリンクが無い札は空
     nm = ('<h3>この月に見つかりやすい植物</h3>'
           '<span>2026/11/21(土)</span><a aria-label="京都府の植物イベントを見る" href="/plants/kyoto">京都府</a>'
-          '<h3>京都シャボテンクラブ11月例会・交換会</h3>'
+          '<h3>京都シャボテンクラブ11月例会・交換会</h3><p class="line-clamp-3 text-xs">説明</p>'
+          '<p class="min-w-0 text-xs text-slate-500 md:text-sm">六孫王会館 1F / 〒601-8471 京都府京都市南区八条町509</p>'
           '<span>2026/11/22(日)</span><h3>県の無い札</h3>')
     got = extract_nextmeet(nm)
-    want = [('2026-11-21', '京都シャボテンクラブ11月例会・交換会', '京都'), ('2026-11-22', '県の無い札', '')]
+    want = [('2026-11-21', '京都シャボテンクラブ11月例会・交換会', '京都', '六孫王会館 1F / 〒601-8471 京都府京都市南区八条町509'),
+            ('2026-11-22', '県の無い札', '', '')]
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} NextMeet の札 {got}")
@@ -1730,6 +1775,41 @@ def self_test(verbose=True):
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 県での照合(主催公式の一覧) {got}")
+
+    _p('\n--- 場所の裏付け(2026-11-06) ---')
+    got = [muni_of(x) for x in ('AKOMEYA TOKYO in la kagū / 東京都新宿区矢来町67番地',
+                                '兵庫県立フラワーセンター / 兵庫県加西市豊倉町飯森1282-1',
+                                'インテックス大阪6号館A / 〒559-0034 大阪府大阪市住之江区南港北1丁',
+                                '愛知県西春日井郡豊山町大字豊場', '東京都町田市', '千葉県市川市', '東京都府中市',
+                                '平田ナーセリー本城店温室 / 北九州市八幡西区本城3451-2')]
+    want = ['新宿区', '加西市', '大阪市', '豊山町', '町田市', '市川市', '府中市', '']
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 市区町村 {got}")
+    # 同じ県・同じ日の回でも、市区町村が両方読めて違えば当てない。読めなければ名前だけで決める
+    jss = {'slug': 'jss', 'name': 'JSS秋の多肉市', 'prefecture': '群馬',
+           'location': 'ヤマダデンキLABI1 LIFE SELECT高崎(群馬県高崎市栄町1-1)'}
+    oth = {'slug': 'same-name', 'name': 'Selected Aroids', 'prefecture': '群馬',
+           'location': '別の会場(群馬県前橋市)'}
+    idx = {'2026-11-14': [jss]}
+    t = 'Selected Aroids 即売会'
+    got = [judge(t, '2026-11-14', 'nextmeet', idx, [], 45, {'place': '山新 / 群馬県伊勢崎市'}),
+           judge(t, '2026-11-14', 'nextmeet', idx, [], 45, {'place': '山新 / 群馬県高崎市'}),
+           judge(t, '2026-11-14', 'nextmeet', idx, [], 45, {'place': '会場未定'}),
+           judge(t, '2026-11-14', 'nextmeet', {'2026-11-14': [oth]}, [], 45, {'place': '山新 / 群馬県伊勢崎市'}),
+           judge(t, '2026-11-14', 'nextmeet', {'2026-11-14': [oth]}, [], 45, {'place': '別の会場 / 群馬県前橋市'})]
+    want = [('取りこぼし', ''), ('掲載済み', 'jss'), ('掲載済み', 'jss'), ('取りこぼし', ''), ('掲載済み', 'same-name')]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 場所での照合 {got}")
+    # 見送りの注記の所在地も裏付けに使う
+    rej = [('多肉植物販売会 (2026-11-08 道の駅 仁保の郷・山口県山口市)', '2026-11-08', None)]
+    got = [judge('道の駅の多肉植物販売会 第2回', '2026-11-08', 'nextmeet', {}, rej, 45, {'place': '道の駅 / 山口県下関市'}),
+           judge('道の駅の多肉植物販売会 第2回', '2026-11-08', 'nextmeet', {}, rej, 45, {'place': '仁保の郷 / 山口県山口市仁保'})]
+    want = [('取りこぼし', ''), ('見送り', rej[0][0])]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 見送りの場所 {got}")
 
     _p('\n結果:', 'すべて通過' if ok else '★失敗あり')
     return 0 if ok else 1
