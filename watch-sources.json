@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-07 14:45 JST",
+ "generated": "2026-11-08 06:43 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 408,
-  "awaitingNextEdition": 460,
+  "awaitingNextEdition": 464,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 94,
+  "igNeedsBrowser": 92,
   "igDead": 7
  },
  "igAccounts": [
@@ -389,16 +389,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "greendays_emi_8783",
-   "url": "https://www.instagram.com/greendays_emi_8783/",
-   "eventCount": 2,
-   "lastEventName": "セラモール販売会（2026年11月）Green Daysと爽GO",
-   "lastEventDate": "2026-11-07",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
   },
   {
    "handle": "kusa_paradise",
@@ -961,12 +951,12 @@
    "apiStatus": "api"
   },
   {
-   "handle": "veitchiis",
-   "url": "https://www.instagram.com/veitchiis/",
-   "eventCount": 1,
-   "lastEventName": "ベイチーズ ポップアップ(FRIDGE SETAGAYA)",
-   "lastEventDate": "2026-11-06",
-   "hasUpcoming": true,
+   "handle": "greendays_emi_8783",
+   "url": "https://www.instagram.com/greendays_emi_8783/",
+   "eventCount": 2,
+   "lastEventName": "セラモール販売会（2026年11月）Green Daysと爽GO",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
@@ -1061,16 +1051,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "bears_palm",
-   "url": "https://www.instagram.com/bears_palm/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS MARKET（H&M GARDEN・宇都宮）",
-   "lastEventDate": "2026-11-07",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "bloom_gardendesign",
    "url": "https://www.instagram.com/bloom_gardendesign/",
    "eventCount": 1,
@@ -1085,16 +1065,6 @@
    "url": "https://www.instagram.com/_vabudo_/",
    "eventCount": 1,
    "lastEventName": "VABUDO 3社ポップアップ（left botanical・KANIK・VABUDO）",
-   "lastEventDate": "2026-11-07",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "santama127",
-   "url": "https://www.instagram.com/santama127/",
-   "eventCount": 1,
-   "lastEventName": "環 - わっか -",
    "lastEventDate": "2026-11-07",
    "hasUpcoming": true,
    "priority": 1,
@@ -1128,7 +1098,7 @@
    "lastEventDate": "2026-11-08",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "the_botanical_show",
@@ -1628,7 +1598,7 @@
    "lastEventDate": "2026-12-20",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "bakyuu.kitchen",
@@ -4104,6 +4074,36 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "veitchiis",
+   "url": "https://www.instagram.com/veitchiis/",
+   "eventCount": 1,
+   "lastEventName": "ベイチーズ ポップアップ(FRIDGE SETAGAYA)",
+   "lastEventDate": "2026-11-06",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bears_palm",
+   "url": "https://www.instagram.com/bears_palm/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS MARKET（H&M GARDEN・宇都宮）",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "santama127",
+   "url": "https://www.instagram.com/santama127/",
+   "eventCount": 1,
+   "lastEventName": "環 - わっか -",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   }
  ],
  "awaitingNextEdition": [

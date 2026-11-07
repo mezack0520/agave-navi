@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-07",
+  "sweptOn": "2026-11-08",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,23 +31,23 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 840,
-    "in_scope": 250,
-    "covered": 175,
-    "known_rejected": 75,
+    "candidates": 793,
+    "in_scope": 227,
+    "covered": 154,
+    "known_rejected": 69,
     "truncated_resolved": 90,
     "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 95,
+    "in_scope_leafla": 84,
     "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 107,
-    "in_scope_matome-blog": 9,
+    "in_scope_nextmeet": 98,
+    "in_scope_matome-blog": 8,
     "in_scope_organizer-index": 6,
-    "in_scope_pukubook": 33,
-    "gaps_raw": 0
+    "in_scope_pukubook": 31,
+    "gaps_raw": 4
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -56,5 +56,34 @@
     "11/02 追加 コーナン鎌倉大船店 秋の園芸フェアが2026年...",
     "11/02 追加 THINNING 14th in 丸田池公園が..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-08",
+      "title": "11月7日(土)9:30〜17:00 11月8日(日)9:30〜16:00 住所 〒135-0061 東京都江東区豊洲3丁目4-8 イベント詳細を見る ルートを調べる",
+      "source": "organizer-index",
+      "pref": "東京",
+      "place": "11月7日(土)9:30〜17:00 11月8日(日)9:30〜16:00 住所 〒135-0061 東京都江東区豊洲3丁目4-8 イベント詳細を見る ルートを調べる"
+    },
+    {
+      "date": "2026-11-15",
+      "title": "日本サボテン狂人会 サボテン・多肉植物交換会（2026年11月）",
+      "source": "nextmeet",
+      "pref": "埼玉",
+      "place": "ワークヒルズ羽生 / 埼玉県羽生市大字下羽生1014番地1"
+    },
+    {
+      "date": "2026-11-28",
+      "title": "POPUP PLANT GUILD POPUP vol.5",
+      "source": "nextmeet",
+      "pref": "京都",
+      "place": "PLANT GUILD / 京都府福知山市岩井51"
+    },
+    {
+      "date": "2026-12-06",
+      "title": "第4回 ツンツンぷくぷくワンダーランド！！",
+      "source": "nextmeet",
+      "pref": "和歌山",
+      "place": "産直市場よってって南紀の台店 イベントホール / 和歌山県西牟婁郡上富田町南紀の台63-3"
+    }
+  ]
 }
