@@ -1,5 +1,5 @@
 {
-  "total": 776,
+  "total": 775,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -363,10 +363,8 @@
     },
     "desc_date_mismatch": {
       "title": "説明文の日付が開催日の範囲外(予備日・前回言及は除外)",
-      "count": 1,
-      "items": [
-        "agave-popup-mellow-plants-toon-2026-11: 本文 10月18日 が 2026-11-15〜2026-11-15 の外"
-      ],
+      "count": 0,
+      "items": [],
       "note": "本文か日付欄のどちらかが古い。一次情報で確認して直す。日程を変えた回が当初の日付を書いているなら、eventStatus を rescheduled、previousStartDate に当初の開始日を書く(その日付は外れる)",
       "severity": "urgent"
     },
@@ -731,7 +729,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1064,8 +1062,10 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-08 pizarre-plants-market-autumn-uozu-2026-11: new-events.json に残ったまま events.json に無い"
+      ],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
@@ -1502,11 +1502,16 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 1,
-      "items": [
-        "seedpot-autumn-fair-2026-11: 開催日 2026-11-06 を過ぎた（保留 2026-10-13）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
+      "severity": "urgent"
+    },
+    "rejected_revisit_due": {
+      "title": "再評価待ちの見送りが開催10日前を切ったのに見ていない",
+      "count": 0,
+      "items": [],
+      "note": "出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない",
       "severity": "urgent"
     },
     "rejected_revisit_stale": {
