@@ -4118,6 +4118,15 @@ NextMeet の札は「会場 / 住所」を持つ。照合(`judge`)は、相手�
 掲載済み 72/91・見送り 8/17、食い違い0で判定は変わらなかった(残りは当サイトの location に住所が無い回)。
 **目で見て見つけた誤りを型ごとに直すより、相手が持つ別の手がかり(場所)で当たりを裏付ける。**台帳は外した。
 
+### 保留の見送りは、開催前の10日間に一度見る (2026-11-07)
+
+Seedpot Autumn Fair(11/6)が `rejected_revisit_expired` で鳴った。保留を促す側は「最終評価から30日」(info)と
+「開催日を過ぎた」(手遅れ)しか無く、出店者の一覧が出やすい開催前の数日に誰も見ていなかった。同じ週の ALLEY JAM・
+TUIN マルシェ・ピザールプランツマーケットも 10-15〜16 を最後に止まっていた。ピザールプランツマーケットは 11-07 に見ると
+主催が出店者11組を出しており(Deq8yBcyFB7)、エケベリア・メセン・塊根植物などを扱う出店者が5組以上(3割以上)いたので掲載した。
+**監査 `rejected_revisit_due`(urgent)が、開催の10日前から開催日までに一度も再評価していない保留を出す。**
+見て決められなければ `revisitedOn` に実行日を書けば、その回は開催日まで出ない。
+
 ### 同じ会場・同じ日に別の主催が並べて開く回は coexistsWith を書く (2026-10-10)
 
 坪井健樹園の 11/1 は FELICITA の「ビザールプランツ 名古屋ノ陣」と、隣の屋外駐車場でディッキアの「DYCKIA EVENT NEEDLES」が
@@ -4690,6 +4699,7 @@ embed/captioned の本文の先頭のハンドルは書き手だけを出し、�
 | 主催の投稿に当サイトに無い日付(`organizer_unlisted_dates`) | 同上。ワークショップ単独などは workshopOnly で見送り | listed / rejected |
 | 中止・延期の兆候(`organizer_cancel_signal` / `cancel_suspects`) | 投稿・公式頁を開く。中止なら cancelled にする。違えば `scripts/cancel-reviewed.json` | fixed / reviewed |
 | 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
+| 再評価待ちの見送りが開催10日前を切ったのに見ていない(`rejected_revisit_due`) | 保留の理由に書いた一次情報(出店者の一覧・施設の告知)が出ていないかを見て、掲載するか見送りを確定する。出店者の一覧が出ていれば数える(breakdownPublished)。決められなければ `revisitedOn` に実行日、理由の末尾に見たことを一文 | listed / rejected / reviewed |
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否 | fixed |
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`。入場料・時間・説明文混入など) | 主催の告知で確かめて直す。出典に無い値は消す(9/28 の 5,000円2件は出店料だった。10/7 の5,000円2件は出店料と貸しスペース料) | fixed |
 | 主催の最新の告知と会期が1〜3日ずれる(`organizer_post_span_differs`・info) | 投稿を開き、主催が会期を動かしたのか、上位の催し・別の回の会期なのかを見る。動かしたなら date / dateEnd / dateDisplay・説明文の会期・出典を直す | fixed / reviewed |

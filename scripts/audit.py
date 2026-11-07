@@ -608,8 +608,10 @@ def main():
     # チケット受付開始日(ボタニカル横丁)や準備休業(ボタらいふ)のように
     # 会期外にあって当然の日付は語彙に無く、3件が urgent で鳴っていた。
     # 会期の日付そのものは告知に必ず出るので、周辺語で見るほうが precision も上がる。
+    # 「10月18日に続いて再び開く」「4月5日の第1回に続き」のように、前の回の日付を続きの言い方で
+    # 名指しする書き方も前回の言及(2026-11-07。MELLOW PLANTS の11月回が 10/18 の回を指していた)
     _EXCUSE_NEAR = re.compile(
-        r'(予備日|延期|順延|前回|初回|第\s*1\s*回|昨年|去年|翌年|来年|同時開催|次回'
+        r'(予備日|延期|順延|前回|初回|第\s*1\s*回|昨年|去年|翌年|来年|同時開催|次回|に続いて|に続き|以来'
         r'|チケット|受付|発売|販売開始|予約|申込|申し込み|エントリー|募集|締切|抽選'
         r'|休業|休み|定休|臨時休|準備期間|搬入|搬出|時点|現在'
         r'|年間日程|年間予定|年間スケジュール|今後の日程|開催日程)')
@@ -5345,7 +5347,14 @@ def main():
     # 実際 gujo-de-cactus-night-market-2026-08(2026-08-16開催)は
     # 08-12 に保留したまま開催日を11日過ぎており、誰も見に行かなかった。
     # 「後で見る」と書いた時点で、それを期限付きで表に出す側を作らないと二度と見ない。
-    rej_expired, rej_stale = [], []
+    # 開催が近いのに保留のまま見ていない回(2026-11-07)。上の2つだけでは、再評価を促すのが
+    # 「最終評価から30日」(info)と「開催日を過ぎた」(手遅れ)しか無く、出店者の一覧が出やすい
+    # 開催前の数日に誰も見ない。Seedpot Autumn Fair(11/6)は 10-16 を最後に見ないまま開催日を過ぎ、
+    # 同じ週の ALLEY JAM・TUIN マルシェ・ピザールプランツマーケットも 10-15〜16 から止まっていた。
+    # 開催の REVISIT_DUE_DAYS 日前から開催日までに一度も再評価していない回を出す。
+    # 見て決められなければ revisitedOn に実行日を書けば、その回は開催日まで黙る
+    REVISIT_DUE_DAYS = 10
+    rej_expired, rej_stale, rej_due = [], [], []
     for _it in (rej.get('items') or []):
         if not _it.get('revisit'):
             continue
@@ -5358,6 +5367,15 @@ def main():
         _last = max(str(_it.get('revisitedOn') or ''), str(_it.get('decided') or ''))
         if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', _last):
             continue        # 書式は rejected_reason_vocab 側で鳴る
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _ed):
+            try:
+                _open = (_dtm.date.fromisoformat(_ed)
+                         - _dtm.timedelta(days=REVISIT_DUE_DAYS)).isoformat()
+            except ValueError:
+                _open = ''
+            if _open and _open <= today_s and _last < _open:
+                rej_due.append(f"{_it.get('key')}: 開催 {_ed}・最終評価 {_last}")
+                continue    # 急ぐほうに出す。30日の放置(info)と二重に並べない
         try:
             _age = (_dtm.date.fromisoformat(today_s)
                     - _dtm.date.fromisoformat(_last)).days
@@ -5370,6 +5388,11 @@ def main():
         '開催日を過ぎた回はもう掲載できない。revisit を外して'
         'reasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。'
         '同じシリーズの次回が告知されていれば新規エントリとして扱う')
+    add('rejected_revisit_due', f'再評価待ちの見送りが開催{REVISIT_DUE_DAYS}日前を切ったのに見ていない',
+        sorted(rej_due),
+        '出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。'
+        '決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。'
+        '開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない')
     add('rejected_revisit_stale', '再評価待ちの見送りが30日以上動いていない',
         sorted(rej_stale),
         '一次情報を探し直して、掲載するか revisit を外すかを決める。'
