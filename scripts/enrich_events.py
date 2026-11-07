@@ -1256,7 +1256,7 @@ def main():
             f.write(report)
     except PermissionError:
         # 手元では /tmp の固定名に別セッションの残骸が居て書けないことがある
-        # (プレイブック §3「clone 先は毎回一意なディレクトリにする」と同じ型)。CI は新しい runner なので当たらない
+        # (プレイブック §1 の 2「clone 先は毎回一意なディレクトリにする」と同じ型)。CI は新しい runner なので当たらない
         import tempfile
         fd, report_path = tempfile.mkstemp(prefix='enrich-report-', suffix='.md')
         with os.fdopen(fd, 'w', encoding='utf-8') as f:

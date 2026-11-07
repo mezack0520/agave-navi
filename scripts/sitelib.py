@@ -2116,7 +2116,7 @@ def access_has_malformed_station(v):
     """access の値に、駅名として成立しない「〜口駅」が入っているか。
 
     出典が一次情報でも、こちらの項目に入れる形としては誤り。
-    裏取りできない出口名は落として駅名だけ残す(プレイブック §3)。
+    裏取りできない出口名は落として駅名だけ残す(プレイブック §3.5)。
     """
     return bool(_MALFORMED_STATION.search(v or ''))
 

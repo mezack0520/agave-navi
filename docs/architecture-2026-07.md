@@ -102,34 +102,7 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 新規主催者の発見はStep0カバレッジスイープが担う(ウォッチは既知主催者の再来専用)。
 
 ## 7. 制約・注意(ハマりどころ)
-- PAT(`mzplants\agave-navi\github.pat`)は**ワークフローファイルのpushができる**(2026-08-10に実測)。
-  `.github/workflows/` 配下も git push で更新できる。workflow_dispatch/Actions APIは403のままで、
-  サンドボックスから api.github.com も不通。定期失効するので401が出たら長期限で再発行。
-  2026-08-10まで『contents権限のみでワークフローは触れない』と誤って記録されており、
-  この思い込みで notify-inquiry.yml の修正が10日間放置された
-- Claudeタスクは**Coworkアプリ起動中のみ**実行される。プロンプト変更後は「Run now」でツール事前承認
-- Instagram/nextmeetはサーバーから読めない → **組み込みブラウザで google.com/search?hl=ja&tbs=qdr:w2** が主経路
-  (WebSearchのUS版ではIG告知がほぼ拾えない。2026-10-25 まで Chrome だったが、定期タスクは Chrome を使わない。NextMeet は 09-10 から CI が読む)
-- **repository_dispatchは使わない。** events.json / new-events.json / new-inquiries.json のpushでワークフローが
-  起動する(daily.yml / sync-events.yml の on.push)。Chrome経由のdispatchは、認証ヘッダ付きfetchが
-  Chromeツール側で遮断されPromiseが解決しなくなったため2026-07-31に廃止した
-  (以前はService Worker干渉と見ていたが、SWは未登録で原因が別だった)。
-  サンドボックスからの api.github.com 直叩きは不通。ただし**Chromeからの無認証GETは通る**
-  (2026-08-10・08-18の2回で確認。公開repoなので Actions の run 一覧はこれで読める)。
-  定期タスクは device_bash の curl(PAT 付き)で読む(2026-10-25。定期タスクは Chrome を使わない)。
-  書き込み系は依然403なので、**ローカルで build-all.sh を回して生成物ごとpushする**のが標準手順
-- **GITHUB_TOKENによるpushはワークフローを再起動しない**(GitHubの仕様)。だからCI側の自動コミットで
-  ループしない。PATでpushしたときだけ on.push が発火する
-- sanity-check-new-events.py は既存slugを落とす。**既存イベントの修正は events.json を直接編集**する
-- サンドボックスの nohup バックグラウンド実行は呼び出し終了時に殺される。build-all.sh は45秒制限に
-  収まらないので scripts を4〜6本ずつ前景で順に叩く
-- pushが non-fast-forward で拒否されたら、生成物のrebaseは衝突する。**origin/main に reset --hard
-  → データ変更を再適用 → 再ビルド → push** の順でやり直す
-- CSS/JSを変えたら scripts/sitelib.py の CSS_VERSION / JS_VERSION を上げる。上げないと閲覧者の
-  キャッシュが更新されず変更が届かない
-- 都道府県→地域の定義は **scripts/sitelib.py の PREF_TO_REGION が単一情報源**。沖縄は九州、
-  山梨・長野は北陸。各スクリプトが独自定義を持っていて割れた事故がある
-- 挿入系スクリプトは必ず冪等設計(除去→再挿入)。過去にcalendar/mapが4.2MBまで肥大した事故あり
+運用上の規則と注意は `docs/task-playbook.md` に1か所でまとめている(2026-11-08 にここから移した)。ここには設計の前提だけを置く。
 - デザインはモノクロ基調・スマホ軸・装飾控えめ(詳細はメモリ/過去コミット参照)
 
 ## 8. 履歴
@@ -399,3 +372,4 @@ generate_sitemap.py     noindex頁/内部ツール/終了30日超イベントを
 - 2026-11-05: 監査 metric_moved の upcoming_no_image / eyecatch_backlog を、中央値と開催予定の件数での換算から、前回の監査との差を addedDate(新規掲載)と image-rejected.json(人が外した画像)の実数で引く読み方に替えた。換算は 08-28・09-01・10-10 と直したが、17件を足した日に「64 → 79(換算 60)」で鳴った(画像付きの回がまとめて終わって開催予定が減っていた)。2つの指標は同じ集合なので定義を1つにし、鳴るときも1行にした。PUKUBOOK を coverage-sweep.py の5つ目の情報源にした(トップと地域別の頁12枚。台帳 pukubook-events が8日回らず期限切れ)。照合を judge() に切り出し、情報源が持つ県・英名・会期を渡す。県の食い違う回に当てないことで、主催公式の一覧で消えていた Jolie Nursery の2回(豊洲・水戸)が出た。見送りの名前の末尾の注記は照合に使わない。監査 coverage_gap_stale の引き直しも同じ judge にした。取り込んだ水戸の回に enrich が一覧の頁の別の回(三郷)の時刻を書いたので、sitelib.announced_dated_hours が同じ行の2つ目からの範囲も前の範囲と同じ日に紐づけるようにした
 - 2026-11-06: NextMeet の定期の目視照合(manual-sweeps.json の nextmeet-monthly-check)を外し、coverage-sweep.py の照合(judge)に場所の裏付けを入れた。相手の場所(NextMeet の「会場 / 住所」、まとめ記事の所在地、主催公式の一覧の見出し)とこちらの location・mapQuery(見送りは名前の注記)の市区町村(muni_of)が両方読めるとき、一致を求める。目視は回るたびに「同じ日の別の回に当たって取りこぼしが消える」を見つけ、その都度その型だけを直していた。台帳は 10-24・10-26・11-06 と期限を切らし、event-monitor は2度「ブラウザが要る」と書いて回さなかった。11-06 の NextMeet 108件で判定の変化は0
 - 2026-11-07: 監査 rejected_revisit_due を足した。再評価待ちの見送りで、開催の10日前から開催日までに一度も見ていない回を urgent で出す(それまでは最終評価から30日の info と、開催日を過ぎた後の expired しか無かった)。desc_date_mismatch の言い訳の語に「に続いて・に続き・以来」を足した(前の回の日付を続きの言い方で名指しする説明文が鳴っていた)
+- 2026-11-08: プレイブック(docs/task-playbook.md)を話題別に書き直した(474KB・5,128行 → 57KB)。日付つきの節を足し続けて、訂正が元の記述の後ろに重なり、古い規則と新しい規則が並んでいた(listing-policy で決着した子どもの写真の扱いが「採らない」のまま残っていた)。§1〜§6 の番号と、コードが参照する節の名前は残した。整理前の全文は `git show 79e146e491f1:docs/task-playbook.md`。書き方の規則を §4 に置き、監査 playbook_oversize(72KB)で上限を見張る。この文書の §7 にあった運用の注意はプレイブックと重複し、古くなった記述もあったので、プレイブックに寄せた。
