@@ -1867,11 +1867,12 @@
   },
   {
    "date": "2026-11-08",
-   "urgent": {},
+   "urgent": {
+    "cancel_review_repeated": 2
+   },
    "info": {
     "coverage_gap_stale": 2,
     "coverage_gaps": 2,
-    "cancel_suspects": 5,
     "cancel_watch_unreachable": 1,
     "organizer_unlisted_dates": 6,
     "cross_script_duplicate": 3,

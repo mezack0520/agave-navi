@@ -5126,3 +5126,8 @@ time が空の7日会期の回が `time_vs_organizer_post` で鳴った。見出
 - `shared_source_page_multi_date`(jolienursery.co.jp/pages/events): 1頁に複数の回が並ぶ型。頁を取得して2件の日付が頁と一致するのを確かめ、`autoDateUpdate: false` を入れて解消(events.json は `json.dumps(indent=2, ensure_ascii=False)+'\n'` と往復一致)。
 - `cancel_suspects` の「延期」は同じ頁の別企画(bloomgarden の10/3雨天延期)から拾う型。出典を取得して確認し cancel-reviewed.json に記録。再発したら check-cancelled 側で規則を直す。
 - 手動巡回 `nextmeet-monthly-check` が11日前で期限切れ(悪化 0→1)。内蔵ブラウザの回でないと照合できないため未実施。
+
+## 2026-11-08 event-monitor 追記
+
+- clone・record-run・push はすべて device_bash(PC側)で通った。PAT は変数に読んで clone URL に渡した。
+- cancel_suspects 5件(bloomgarden松前・jolie豊洲/水戸・阪急うめだ・井頭公園)は出典で開催予定のままを確認し cancel-reviewed.json に記録。新しい類型は無く、検査の追加なし。
