@@ -2,11 +2,11 @@
  "generated": "2026-11-07 14:45 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 407,
+  "igAccounts": 408,
   "awaitingNextEdition": 460,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 93,
+  "igNeedsBrowser": 94,
   "igDead": 7
  },
  "igAccounts": [
@@ -1119,6 +1119,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "trattoria_pizzeria_delphino",
+   "url": "https://www.instagram.com/trattoria_pizzeria_delphino/",
+   "eventCount": 1,
+   "lastEventName": "ピザールプランツマーケット in オータム",
+   "lastEventDate": "2026-11-08",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "the_botanical_show",
