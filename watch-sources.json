@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-08 06:43 JST",
+ "generated": "2026-11-08 07:14 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 408,
+  "igAccounts": 410,
   "awaitingNextEdition": 464,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 92,
+  "igNeedsBrowser": 94,
   "igDead": 7
  },
  "igAccounts": [
@@ -591,6 +591,26 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "tunpuku",
+   "url": "https://www.instagram.com/tunpuku/",
+   "eventCount": 2,
+   "lastEventName": "第4回 ツンツンぷくぷくワンダーランド！！",
+   "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "plant.guild",
+   "url": "https://www.instagram.com/plant.guild/",
+   "eventCount": 2,
+   "lastEventName": "PLANT GUILD POPUP vol.6",
+   "lastEventDate": "2026-12-12",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "nagasako_farm",
    "url": "https://www.instagram.com/nagasako_farm/",
    "eventCount": 2,
@@ -1099,6 +1119,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "n.plants",
+   "url": "https://www.instagram.com/n.plants/",
+   "eventCount": 1,
+   "lastEventName": "N PLANTS 栽培温室イベント",
+   "lastEventDate": "2026-11-08",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "the_botanical_show",
@@ -3284,16 +3314,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
-  },
-  {
-   "handle": "tunpuku",
-   "url": "https://www.instagram.com/tunpuku/",
-   "eventCount": 1,
-   "lastEventName": "ツンツンぷくぷくワンダーランド mini！",
-   "lastEventDate": "2026-10-11",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
   },
   {
    "handle": "figure_shizuoka",

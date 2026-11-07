@@ -1,7 +1,47 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-07",
+  "updated": "2026-11-08",
   "items": [
+    {
+      "on": "2026-11-08",
+      "kind": "listed",
+      "slug": "n-plants-greenhouse-event-niigata-2026-11",
+      "name": "N PLANTS 栽培温室イベント",
+      "date": "2026-11-08",
+      "dateEnd": "2026-11-08",
+      "prefecture": "新潟",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-08",
+      "kind": "listed",
+      "slug": "plant-guild-popup-vol5-fukuchiyama-2026-11",
+      "name": "PLANT GUILD POPUP vol.5",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-28",
+      "prefecture": "京都",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-08",
+      "kind": "listed",
+      "slug": "tsuntsun-pukupuku-wonderland-4th-2026-12",
+      "name": "第4回 ツンツンぷくぷくワンダーランド！！",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "prefecture": "和歌山",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-08",
+      "kind": "listed",
+      "slug": "plant-guild-popup-vol6-fukuchiyama-2026-12",
+      "name": "PLANT GUILD POPUP vol.6",
+      "date": "2026-12-12",
+      "dateEnd": "2026-12-12",
+      "prefecture": "京都",
+      "detail": ""
+    },
     {
       "on": "2026-11-07",
       "kind": "listed",
@@ -1160,46 +1200,6 @@
       "date": "2027-01-16",
       "dateEnd": "2027-01-16",
       "prefecture": "三重",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-12",
-      "kind": "listed",
-      "slug": "jusai-10th-anniversary-nagoya-2027-03",
-      "name": "樹祭 10 YEAR ANNIVERSARY",
-      "date": "2027-03-20",
-      "dateEnd": "2027-03-21",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-12",
-      "kind": "listed",
-      "slug": "jusai-utsunomiya-spring-2027-05",
-      "name": "樹祭 宇都宮 春 2027",
-      "date": "2027-05-29",
-      "dateEnd": "2027-05-30",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-11",
-      "kind": "listed",
-      "slug": "kairos-popup-hinoki-matsuyama-2026-10",
-      "name": "kairos POP UP（HINOKI and the green）",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "愛媛",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-11",
-      "kind": "listed",
-      "slug": "hanamichiru-taniku-hanbaikai-5th-joyfulak-kushiro-2026-11",
-      "name": "はなみちるさんプレゼンツ 第5回 多肉販売会（ジョイフルエーケー釧路店）",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "北海道",
       "detail": ""
     }
   ]

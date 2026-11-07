@@ -1869,7 +1869,8 @@
    "date": "2026-11-08",
    "urgent": {},
    "info": {
-    "coverage_gaps": 4,
+    "coverage_gap_stale": 2,
+    "coverage_gaps": 2,
     "cancel_suspects": 5,
     "cancel_watch_unreachable": 1,
     "organizer_unlisted_dates": 6,
@@ -1882,13 +1883,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 119,
     "events_with_image": 371,
-    "upcoming_no_image": 79,
-    "ongoing_events": 25,
+    "upcoming_no_image": 83,
+    "ongoing_events": 26,
     "workflow_secrets": 6,
-    "eyecatch_backlog": 79
+    "eyecatch_backlog": 83
    },
-   "events": 760,
-   "upcoming": 198
+   "events": 764,
+   "upcoming": 202
   }
  ]
 }
