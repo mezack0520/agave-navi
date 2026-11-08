@@ -1,5 +1,5 @@
 {
-  "total": 732,
+  "total": 730,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 102,
+      "count": 107,
       "items": [
         "agave-popup-mellow-plants-toon-2026-11",
         "agavejam-3rd-as-green-garden-2026-11",
@@ -236,6 +236,9 @@
         "granterrace-chikusei-tanikusai-2026-11",
         "green-link-mishima-2026-12",
         "green-marche-hananoyu-fujinomiya-2026-12",
+        "green-marche-hananoyu-fujinomiya-2027-02",
+        "green-marche-hananoyu-fujinomiya-2027-04",
+        "green-marche-hananoyu-fujinomiya-2027-06",
         "greensnap-marche-abc-hachioji-2026-11",
         "greensnap-marche-odaiba-2026",
         "hanatomofesta-10th-makuhari-2027-04",
@@ -243,17 +246,14 @@
         "hartn-fes-4th-hirata-kasuga-2026-11",
         "hartn-fes-4th-hirata-odo-2026-11",
         "haze-various-genres-marche-2026-11",
-        "hobby-plants-freaks-vol6-2026-11",
-        "honwaka-pappa-4th-2026-12",
-        "iizuka-noen-popup-engeiya-tanaka-2026-11",
-        "isij-big-bazaar-2026-11-22"
+        "hobby-plants-freaks-vol6-2026-11"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 375,
+      "count": 380,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 76,
+      "count": 71,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -318,9 +318,6 @@
         "enjoy-place-bangaihen-2026-12",
         "enjoy-place-outside-3rd-2027-05",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
-        "green-marche-hananoyu-fujinomiya-2027-02",
-        "green-marche-hananoyu-fujinomiya-2027-04",
-        "green-marche-hananoyu-fujinomiya-2027-06",
         "igashira-park-taniku-saboten-tenjikai-2026-11",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
@@ -342,7 +339,10 @@
         "lier-taniku-festival-kariya-2026-12",
         "lier-taniku-festival-kitakyushu-2027-01",
         "lier-taniku-festival-nagasaki-2027-01",
-        "lier-taniku-festival-niihama-2026-12"
+        "lier-taniku-festival-niihama-2026-12",
+        "lier-taniku-festival-oda-2027-01",
+        "lier-taniku-festival-shimizu-2026-12",
+        "lier-taniku-festival-shimonoseki-kikugawa-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -736,7 +736,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -943,7 +943,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 76,
+      "count": 71,
       "items": [
         "2026-11-14 jolie-nursery-yamashin-mito-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
@@ -1167,11 +1167,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 2,
-      "items": [
-        "2026-11-28 plant-guild-popup-vol5-fukuchiyama-2026-11: https://www.instagram.com/p/DfZ9NYNGj1H/（sourcePost）",
-        "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12: https://www.instagram.com/p/DfZ9NYNGj1H/（sourcePost）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
