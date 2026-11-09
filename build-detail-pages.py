@@ -607,6 +607,9 @@ def official_link_items(ev):
     return items
 
 
+ORGANIZER_PAGES = {}   # main() が sitelib.organizer_pages で埋める
+
+
 def make_official_links_rows(ev):
     """公式情報の行。ラベルに種別、値に行き先を出す。
 
@@ -616,6 +619,23 @@ def make_official_links_rows(ev):
     (2026-09-08 指摘)。種別と文字は sitelib.link_kind が唯一の持ち主。
     """
     rows = []
+    # 主催の行(2026-11-09)。掲載が2件以上の主催は、主催の頁へ内部リンクで渡す
+    _oh = sitelib.organizer_key(ev)
+    _on = str(ev.get('organizer') or '').strip()
+    if _oh in ORGANIZER_PAGES:
+        _label = html_escape(ORGANIZER_PAGES[_oh]['name'])
+        rows.append(
+            f'          <div class="info-row">\n'
+            f'            <span class="info-label">主催</span>\n'
+            f'            <span class="info-value"><a href="{sitelib.organizer_page_url(_oh)}">'
+            f'{_label}の開催一覧({len(ORGANIZER_PAGES[_oh]["events"])}件)</a></span>\n'
+            f'          </div>')
+    elif _on:
+        rows.append(
+            f'          <div class="info-row">\n'
+            f'            <span class="info-label">主催</span>\n'
+            f'            <span class="info-value">{html_escape(_on)}</span>\n'
+            f'          </div>')
     for u, kind, text in official_link_items(ev):
         rows.append(
             f'          <div class="info-row">\n'
@@ -1430,6 +1450,9 @@ def main():
 
     # 全イベント横断コンテキスト(シリーズ/会場/統計)は必ず全件で構築する
     ctx = build_context(events)
+    # 主催の頁がある主催(2件以上)。回の頁の「主催」の行から渡す
+    ORGANIZER_PAGES.clear()
+    ORGANIZER_PAGES.update(sitelib.organizer_pages(events))
 
     # Filter if slug specified
     if args.slug:

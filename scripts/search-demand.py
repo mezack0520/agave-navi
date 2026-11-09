@@ -88,7 +88,7 @@ def _generic(listed):
     return {s for s, n in c.items() if n >= 5}
 
 
-def analyze(rows, events, rejected):
+def analyze_demand(rows, events, rejected):
     """rows: [{'query','page','clicks','impressions','position'}]。返り値は search-demand.json の本体"""
     listed, rej = name_index(events, rejected)
     generic = _generic(listed)
@@ -186,7 +186,7 @@ def _self_test():
         {'query': '090-1234-5678', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 99, 'position': 5},
         {'query': 'まれな語', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 3, 'position': 5},
     ]
-    out = analyze(rows, ev, rej)
+    out = analyze_demand(rows, ev, rej)
     bad = []
     if [q['query'] for q in out['opportunities']] != ['花友フェスタ 2026']:
         bad.append(('伸びしろは表示20回以上・4〜20位', out['opportunities']))
@@ -224,7 +224,7 @@ def main():
         events = json.load(f)
     with open(os.path.join(ROOT, 'rejected-events.json'), encoding='utf-8') as f:
         rejected = json.load(f).get('items') or []
-    body = analyze(rows, events, rejected)
+    body = analyze_demand(rows, events, rejected)
     doc = {'_note': 'Search Console の直近28日から作る(scripts/search-demand.py)。表示10回未満の語句と、'
                     'メール・電話番号の形の語句は書かない。site-health-check が週次で読んで手を打つ',
            'generatedOn': today_jst(), 'site': site, 'range': [start.isoformat(), end.isoformat()], **body}

@@ -114,7 +114,7 @@ EXCLUDE_BASENAMES = {'dashboard.html'}
 # `/guides/index.html` として sitemap に載っていた。頁の canonical は
 # `/guides/` なので、sitemap が自分で「正規ではないURL」を申告していた。
 # 同じ列挙を2か所に書いたことが原因なので、単一の定数にする。
-LANDING_DIRS = ('tag', 'pref', 'region', 'archive', 'venue',
+LANDING_DIRS = ('tag', 'pref', 'region', 'archive', 'venue', 'organizer',
                 'this-weekend', 'this-month', 'guides', 'new')
 
 def generate():
@@ -163,7 +163,7 @@ def generate():
             pri, freq = '0.8', 'daily'
         elif first == 'archive':
             pri, freq = '0.5', 'monthly'
-        elif first == 'venue':
+        elif first in ('venue', 'organizer'):
             pri, freq = '0.6', 'weekly'
         elif first == 'guides':
             pri, freq = '0.7', 'monthly'

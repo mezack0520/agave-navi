@@ -234,7 +234,7 @@ def write_page(path, html):
     GENERATED_PAGES.add(os.path.abspath(path))
 
 # このスクリプトが所有するディレクトリ。ここ配下の index.html は毎回生成される前提。
-OWNED_DIRS = ['tag', 'pref', 'region', 'archive', 'venue', 'category',
+OWNED_DIRS = ['tag', 'pref', 'region', 'archive', 'venue', 'organizer', 'category',
               'this-weekend', 'this-month', 'new']
 
 
@@ -535,6 +535,25 @@ def main():
                    intro_html=intro_html, rel_path=f'venue/{sl}/index.html'))
         counters['venue']+=1
 
+    # 主催(2件以上。2026-11-09)。主催の名前で探す人に、予定と実績をまとめて見せる。
+    # 相手は sitelib.organizer_pages が決める(回の頁からの導線と同じ集合)
+    orgs = sitelib.organizer_pages(events)
+    for h, o in orgs.items():
+        evs, nm = o['events'], o['name']
+        facts = dyn_facts(evs, today_str)
+        intro_html = (f'<p>最新の告知は主催の Instagram '
+                      f'{sitelib.ext_link("https://www.instagram.com/" + h + "/", "@" + h)} で確かめられます。</p>')
+        if facts:
+            intro_html += f'<p>{facts}</p>'
+        write_page(os.path.join(REPO_ROOT, 'organizer', h, 'index.html'),
+            render(f'{nm}のイベント', f'{nm}が主催する植物イベントの予定と実績。{len(evs)}件。',
+                   f'{nm},アガベ,イベント', f'{DOMAIN}/organizer/{h}/',
+                   [sitelib.CRUMB_ROOT, ('主催別', '/organizer/'), (nm, None)],
+                   nm, f'{nm}が主催するイベントの予定と実績。', upcoming_then_past(evs), '../../',
+                   noindex=len(evs) < sitelib.ORGANIZER_INDEX_MIN,
+                   intro_html=intro_html, rel_path=f'organizer/{h}/index.html'))
+        counters['organizer'] += 1
+
     # 旧URLからの中継頁。GitHub Pages はサーバ側リダイレクトを持てないので
     # meta refresh + canonical + noindex の頁を置く。宛先は sitelib の
     # VENUE_SLUG_REDIRECTS が単一情報源で、宛先スラッグが将来変わっても追随する。
@@ -638,6 +657,15 @@ def main():
         f'{DOMAIN}/archive/','イベントアーカイブ','年別・月別に過去イベントを参照できます。',
         items, '../')
     counters['index']+=1
+
+    # 主催の一覧
+    oi = sorted([(o['name'], f'/organizer/{h}/', len(o['events'])) for h, o in orgs.items()],
+                key=lambda x: (-x[2], x[0]))
+    index_page(os.path.join(REPO_ROOT, 'organizer', 'index.html'),
+        '主催別イベント一覧', '複数回の開催実績がある主催のみ。', '主催,アガベ,イベント',
+        f'{DOMAIN}/organizer/', '主催別イベント一覧', '複数回の開催実績がある主催のみ掲載。',
+        oi, '../')
+    counters['index'] += 1
 
     # Venue index
     vi = sorted([(venue_label[k],f'/venue/{venue_slug(k)}/',len(by_venue[k])) for k in by_venue if len(by_venue[k])>=2], key=lambda x:-x[2])

@@ -1011,6 +1011,53 @@ _IG_PROFILE_RE = re.compile(r'instagram\.com/([A-Za-z0-9_.]+)/?(?:$|[?#])')
 _IG_NON_HANDLES = frozenset({'p', 'reel', 'reels', 'tv', 'explore', 'stories', 'accounts'})
 
 
+ORGANIZER_PAGE_MIN = 2   # 主催の頁を作る掲載件数の下限。会場の頁と同じ
+ORGANIZER_INDEX_MIN = 3  # これ未満の主催の頁は noindex(薄い頁にしない)
+
+
+def organizer_key(e):
+    """主催の頁の鍵。organizerIg の handle(小文字)。形が崩れていれば空(audit.organizer_ig_format が出す)"""
+    h = str(e.get('organizerIg') or '').strip().lstrip('@').lower()
+    return h if re.fullmatch(r'[a-z0-9._]{1,30}', h) else ''
+
+
+def organizer_pages(events):
+    """主催の頁を作る相手。{handle: {'name': 表示名, 'events': [回...]}}(2026-11-09)。
+
+    主催の名前で探す人に、その主催の予定と実績をまとめて見せる。掲載が2件以上の主催だけ。
+    表示名は回の organizer で最も多い書き方(同数なら短いほう)。無ければ @handle。
+    generate-landing-pages.py(頁)と build-detail-pages.py(回の頁からの導線)が同じ結果を使う。
+    """
+    from collections import Counter
+    by = {}
+    for e in events:
+        k = organizer_key(e)
+        if k:
+            by.setdefault(k, []).append(e)
+    out = {}
+    for k, evs in by.items():
+        if len(evs) < ORGANIZER_PAGE_MIN:
+            continue
+        names = Counter(str(e.get('organizer') or '').strip() for e in evs)
+        names.pop('', None)
+        if names:
+            top = max(names.values())
+            name = min((n for n, c in names.items() if c == top), key=len)
+        else:
+            name = '@' + k
+        out[k] = {'name': name, 'events': evs}
+    # 別の handle が同じ名前を名乗る主催は、題名が重複しないよう handle を添える
+    seen = Counter(o['name'] for o in out.values())
+    for k, o in out.items():
+        if seen[o['name']] > 1:
+            o['name'] = f"{o['name']}(@{k})"
+    return out
+
+
+def organizer_page_url(handle):
+    return f'/organizer/{handle}/'
+
+
 def organizer_ig_handles(e):
     """その回の主催の Instagram ハンドル(小文字の集合)。organizerIg と、url / sourceUrl が
     プロフィールを指すときのハンドル。
