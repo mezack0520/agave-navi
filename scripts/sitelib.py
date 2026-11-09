@@ -3411,8 +3411,25 @@ def rejected_days(item, cap_days=62):
     return [ed] if ed else []
 
 
+def str_list(value):
+    """配列のはずの値を文字列の配列にして返す(2026-11-09)。
+
+    手で書く JSON の配列の項目に文字列が入ると、for が1文字ずつ回る。例外は出ない。
+    pending-judgments.json の facts が文字列で積まれ、日次メールの判断の根拠が
+    「・t ・a ・s ・k …」と1文字1行で届いた。文字列は1つの要素として扱い、None は空にする。
+    型の崩れそのものは audit.json_field_shape が出す。
+    """
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, (list, tuple)):
+        return [str(v) for v in value if v is not None]
+    return [str(value)]
+
+
 def judgment_fields(item):
-    """pending-judgments.json の1項目から、日次メールに出す (見出し, 日付, 本文の行) を返す。
+    """pending-judgments.json の1項目から、日次メールに出す (見出し, 日付, 本文の行, 判断が要る理由) を返す。
 
     キューを書く側(各タスク)は question / facts / addedOn を書き、
     メール(build-health-mail.py)は title / date / detail だけを読んでいた。
@@ -3420,6 +3437,7 @@ def judgment_fields(item):
     (2026-10-01 発見。09-30 の作り直しより前の版も同じキーを読んでいた)。
     読む側と書く側で別々にキー名を持つと食い違うので、ここに寄せる。
     audit.pending_judgment_policy も同じ関数で見出しの有無を見る。
+    whyHuman(なぜ人の判断が要るか)は判断の材料なのに、メールが読んでいなかった(2026-11-09)。
     """
     item = item or {}
     head = str(item.get('title') or item.get('question') or '').strip()
@@ -3429,10 +3447,23 @@ def judgment_fields(item):
     body = []
     if str(item.get('detail') or '').strip():
         body.append(str(item['detail']).strip())
-    for f in item.get('facts') or []:
-        if str(f or '').strip():
-            body.append(f'・{str(f).strip()}')
-    return head, date, body
+    for f in str_list(item.get('facts')):
+        if f.strip():
+            body.append(f'・{f.strip()}')
+    why = str(item.get('whyHuman') or '').strip()
+    return head, date, body, why
+
+
+def _self_test_judgment_fields():
+    """judgment_fields の自己テスト(2026-11-09)。audit.pending_judgment_policy が毎回呼ぶ。返り値は失敗の一覧"""
+    bad = []
+    got = judgment_fields({'question': 'q', 'facts': '未実施が22回。理由は時間配分'})[2]
+    if got != ['・未実施が22回。理由は時間配分']:
+        bad.append(('facts が文字列でも1文字ずつにせず1行で返す', got))
+    got = judgment_fields({'question': 'q', 'facts': ['a', '', 'b'], 'whyHuman': 'w'})
+    if got[2] != ['・a', '・b'] or got[3] != 'w':
+        bad.append(('facts の配列は1要素1行、whyHuman は理由として返す', got))
+    return bad
 
 
 def listing_policy():

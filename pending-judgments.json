@@ -1,12 +1,16 @@
 {
-  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。",
+  "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。 1件の項目: id(source:キー)、source、addedOn(YYYY-MM-DD)、question(問い)、facts(根拠。文字列の配列)、whyHuman(人の判断が要る理由)、proposal(listing-policy への追記案などの提案)。日次メールは sitelib.judgment_fields で読む。",
   "items": [
     {
       "id": "site-health-check:watch-sources-sweep-never-done",
       "source": "site-health-check",
       "addedOn": "2026-11-09",
       "question": "agave-event-update の watch-sources 巡回と IG 主催者ローテを、毎日の義務から「週1回(固定曜日)・personal と unchecked のみ」に変えてよいか。",
-      "facts": "task-reports で「未実施」と書かれた回が 2026-10-06 以降 22 回(10-19〜11-08 は毎日)。理由は毎回「時間配分の都合」。Step0 の Google 検索と coverage-gaps 照合だけで1回が終わっている。",
+      "facts": [
+        "task-reports で「未実施」と書かれた回が 2026-10-06 以降 22 回(10-19〜11-08 は毎日)。",
+        "理由は毎回「時間配分の都合」。",
+        "Step0 の Google 検索と coverage-gaps 照合だけで1回が終わっている。"
+      ],
       "whyHuman": "毎日やる前提のプロンプトを週1に落とすと、告知が出た personal 主催への到達が最大1週遅れる。取りこぼしと実行時間のどちらを取るかは目崎の判断。",
       "proposal": "承認されたら agave-event-update のプロンプトと playbook §3.1 を「watch-sources 巡回は日曜のみ。平日は Step0 と coverage-gaps のみ」に改め、平日のレポートに『未実施』を書かせない。却下なら、巡回を省く回は理由を1行で書かせる。"
     }

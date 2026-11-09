@@ -289,6 +289,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
     決められなければ `revisitedOn` と、理由の末尾に見たことを一文書く。開催日を過ぎたら `revisit=false`(`rejected_revisit_expired`)。
   - 会期の長い常設の掲載(PUKUBOOK の「注目イベント」など)は、1回の見送りでは毎回候補に出る。`listing-policy.json` の `precedents` に置く。
 - 規則が無い類型に出会ったら `pending-judgments.json` に積み、`listing-policy.json` への追記案を添える。同じ問いを翌日も投げないため。
+  項目の形はファイルの description にある。facts は文字列の配列で、文字列1つで書くとメールに1文字ずつ出る(`json_field_shape`)。
 
 ### 3.4 一次情報の読み方
 
@@ -312,6 +313,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 ### 3.5 項目の書き方
 
 - 項目の定義は `docs/event-data-prompt.md`。`events.json` にキーを足したら `audit.py` の `KNOWN_EVENT_FIELDS` にも足す(`unknown_event_fields`)。
+  配列の項目(`aliases`、`tags` など)は文字列1つでも `["…"]` で書く。手で書く JSON の配列の項目は `audit.py` の `_SHAPES` が見る(`json_field_shape`)。
 - 値が無いならキーごと消す。null や空文字を入れない。開催前の回に「未定」を値として入れない。
 - `location` は施設名と住所で書き、区画(「6号館D」「◯◯公園内」)まで書かない。区画まで書くと会場の頁が割れる(`venue_key_split`)。
   会場名が無く住所しか出さない主催には `venue` を作らない。`venue` の先頭に「会場：」のようなラベルを残さない。

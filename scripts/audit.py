@@ -5834,9 +5834,11 @@ def main():
     _seen_ids = set()
     pj_bad = []
     for _it in _pj_items:
-        _id = (_it.get('id') or '').strip()
+        # 手で書くファイルなので型を仮定しない。文字列のはずの値に配列が入ると .strip() で
+        # 監査ごと落ち、配列の型を見る json_field_shape まで届かない(2026-11-09)
+        _id = str(_it.get('id') or '').strip()
         if not _id:
-            pj_bad.append(f'id が無い項目: {(_it.get("title") or "")[:40]}')
+            pj_bad.append(f'id が無い項目: {str(_it.get("title") or "")[:40]}')
             continue
         if not re.fullmatch(r'[a-z0-9-]+:[a-z0-9-]+', _id):
             pj_bad.append(f'{_id}: id が source:キー 形式でない')
@@ -5846,17 +5848,17 @@ def main():
         # 見出しはメールの「■」行になる。読む規則は sitelib.judgment_fields が
         # 単一情報源(2026-10-01。メールが title だけを読み、question で積んだ
         # 項目が「■ （）」で届いていた)
-        _jh, _jd, _jb = sitelib.judgment_fields(_it)
+        _jh, _jd, _jb, _jw = sitelib.judgment_fields(_it)
         if not _jh:
             pj_bad.append(f'{_id}: 見出し(question / title)が無い。'
                           'メールの判断の行が空になる')
         if not _jb:
             pj_bad.append(f'{_id}: 根拠(facts / detail)が無い。'
                           'メールに判断材料が出ない')
-        if not (_it.get('proposal') or '').strip():
+        if not ' '.join(sitelib.str_list(_it.get('proposal'))).strip():
             pj_bad.append(f'{_id}: proposal が無い'
                           '（listing-policy.escalate.requirement）')
-        _pol = (_it.get('policy') or '').strip()
+        _pol = str(_it.get('policy') or '').strip()
         if _pol:
             if _pol not in (_policy or {}):
                 pj_bad.append(f'{_id}: policy="{_pol}" は listing-policy.json に無い節')
@@ -5931,11 +5933,78 @@ def main():
         '処理したら items を空にして push する。'
         '値そのものはここに書かない（監査結果も公開ファイル）')
 
+    for _bad in sitelib._self_test_judgment_fields():
+        pj_bad.append(f'自己テスト失敗(sitelib._self_test_judgment_fields): {_bad}')
     add('pending_judgment_policy', '要人間判断キューが掲載基準の規則に反している',
         sorted(set(pj_bad)),
         'id は source:キー 形式。proposal(policyへの追記案)を必ず書く。'
         'doNotEscalate=true の類型は積まない。'
         '該当する節があるなら item に policy: <節名> を書くと、この検査が効く')
+
+    # --- 手で書く JSON の入れ物の型が崩れていないか(2026-11-09) ------------------
+    # 配列のはずの項目に文字列が入ると、読む側の for が1文字ずつ回り、例外も出ずに壊れる。
+    # site-health-check が pending-judgments.json の facts を文字列で積み、日次メールの
+    # 判断の根拠が「・t ・a ・s ・k …」と1文字1行で届いた。events.json の aliases が文字列なら
+    # 照合が1文字ずつになり、別名が効かないまま取りこぼし候補に残る。
+    # タスクが手で書くファイルについて、読む側が配列として回す項目の型だけを見る。
+    # 道筋の [] は配列の各要素、{} は辞書の各値。項目が無いのは問わない(任意の項目)
+    _SHAPES = (
+        ('events.json', '[].aliases', str),
+        ('events.json', '[].tags', str),
+        ('rejected-events.json', 'items', dict),
+        ('rejected-events.json', 'items[].aliases', str),
+        ('pending-judgments.json', 'items', dict),
+        ('pending-judgments.json', 'items[].facts', str),
+        ('inquiries-processed.json', 'processed', str),
+        ('inquiries-processed.json', 'outcomes', dict),
+        ('new-inquiries.json', 'items', None),
+        ('new-inquiries.json', 'reviewedHistory', str),
+        ('manual-sweeps.json', 'sweeps{}.history', str),
+        ('task-runs.json', 'tasks{}.history', str),
+        ('scripts/cancel-reviewed.json', 'items', dict),
+        ('scripts/image-rejected.json', 'items{}', dict),
+        ('scripts/eyecatch-rejected.json', 'items{}', dict),
+        ('watch-seeds.json', 'igAccounts', dict),
+        ('watch-seeds.json', 'deadHandles', dict),
+    )
+
+    def _shape_nodes(node, path, label):
+        """道筋をたどって (値, 場所) を返す。途中で型が合わない枝は、その枝を見る別の行に任せる"""
+        if not path:
+            yield node, label
+            return
+        m = re.match(r'(\[\]|\{\}|[A-Za-z_]\w*)\.?', path)
+        tok, rest = m.group(1), path[m.end():]
+        if tok == '[]':
+            if isinstance(node, list):
+                for i, v in enumerate(node):
+                    _n = (v.get('slug') or v.get('id') or v.get('key') or v.get('handle') or i) \
+                        if isinstance(v, dict) else i
+                    yield from _shape_nodes(v, rest, f'{label}[{_n}]')
+        elif tok == '{}':
+            if isinstance(node, dict):
+                for k, v in node.items():
+                    if not k.startswith('_'):
+                        yield from _shape_nodes(v, rest, f'{label}.{k}')
+        elif isinstance(node, dict) and tok in node:
+            yield from _shape_nodes(node[tok], rest, f'{label}.{tok}' if label else tok)
+
+    shape_bad = []
+    _shape_docs = {}
+    for _f, _path, _elem in _SHAPES:
+        if _f not in _shape_docs:
+            _shape_docs[_f] = load_json(_f, None)
+        if _shape_docs[_f] is None:
+            continue
+        for _v, _where in _shape_nodes(_shape_docs[_f], _path, ''):
+            if not isinstance(_v, list):
+                shape_bad.append(f'{_f} {_where}: 配列のはずが {type(_v).__name__}'
+                                 f'({str(_v)[:40]!r})')
+            elif _elem is not None and any(not isinstance(x, _elem) for x in _v):
+                shape_bad.append(f'{_f} {_where}: 要素が {_elem.__name__} でないものを含む')
+    add('json_field_shape', '手で書く JSON の配列の項目に別の型が入っている(読む側が1文字ずつ回る)',
+        shape_bad,
+        '値を配列に直す。文字列1つなら ["…"] にする。どの項目が配列かは audit.py の _SHAPES')
 
     add('policy_machine_value_unread',
         'listing-policy.json の機械可読な値を読むコードが無い',

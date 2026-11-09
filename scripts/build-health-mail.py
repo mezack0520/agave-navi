@@ -131,12 +131,15 @@ lines = [f'【アガベイベントナビ】{today}', '']
 if judgments:
     lines.append(f'━━━ 🙋 あなたの判断が必要です（{len(judgments)}件）━━━')
     for j in judgments:
-        _h, _d, _body = sitelib.judgment_fields(j)
+        _h, _d, _body, _why = sitelib.judgment_fields(j)
         lines.append(f"■ {_h}" + (f"（{_d}）" if _d else ''))
         for _b in _body:
             lines.append(f"  {_b}")
-        if j.get('proposal'):
-            lines.append(f"  → 提案: {j['proposal']}")
+        if _why:
+            lines.append(f"  判断が要る理由: {_why}")
+        _prop = ' '.join(sitelib.str_list(j.get('proposal'))).strip()
+        if _prop:
+            lines.append(f"  → 提案: {_prop}")
     lines.append('Cowork で Claude に指示してください（例:「キューの◯◯を承認」）。')
     lines.append('')
 
@@ -148,7 +151,7 @@ if _approved:
     lines.append('Claude(どの会話でもよい)に「アガナビの承認済みプロンプト変更を当てて」と送ってください。'
                  'update_trigger で当てて片づけます(手順は docs/task-playbook.md §1 の 7)。')
     for j in _approved:
-        lines.append(f"・[{j.get('id')}] {j.get('proposal', '')}")
+        lines.append(f"・[{j.get('id')}] {' '.join(sitelib.str_list(j.get('proposal')))}")
     lines.append('')
 
 if added or site_fixes:
