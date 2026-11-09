@@ -1970,6 +1970,8 @@ def main():
         'auto-fix-log.json',
         # 日次メールを送った日(2026-10-06)。同じ日の2通目を止める
         'mail-state.json',
+        # 検索の需要(2026-11-09)。Search Console から週1回作る。build-all.sh では作れない
+        'search-demand.json',
     }
     # 分け方の判定は1つ。**remote の版に乗せて build-all.sh を回し直したとき、
     # この回の情報が失われるか。**失われるなら運ぶデータ、失われないなら生成物。
@@ -5968,6 +5970,22 @@ def main():
     add('css_source_drift', 'style.css が style.src.css から作ったものと違う', _css_drift,
         '直すのは style.src.css。style.css に入れた変更は style.src.css に移し、'
         'python3 scripts/build-css.py を回す')
+
+    # --- 検索の需要の取り込みが止まっていないか(2026-11-09) ---------------------------
+    # search-demand.json は Search Console から週1回作る(.github/workflows/search-console.yml)。
+    # Secret を置く前はファイルが無いので鳴らさない。一度できてから古くなったら、取り込みが壊れている
+    _sd = load_json('search-demand.json', None)   # 無ければ {} が返る
+    _sd_stale = []
+    if isinstance(_sd, dict) and _sd:
+        try:
+            _sd_age = (_dtm.date.fromisoformat(today_jst()) - _dtm.date.fromisoformat(_sd.get('generatedOn') or '')).days
+        except ValueError:
+            _sd_age = None
+        if _sd_age is None or _sd_age > 10:
+            _sd_stale.append(f"search-demand.json の generatedOn={_sd.get('generatedOn')!r}(10日を超えた)")
+    add('search_demand_stale', '検索の需要(Search Console)の取り込みが止まっている', _sd_stale,
+        'Actions の Search Console の実行ログを見る。401/403 ならサービスアカウントの鍵か、'
+        'Search Console のユーザー権限を確かめる(docs/search-console.md)')
 
     # --- 頁の重さ(2026-11-09) ----------------------------------------------------
     # 一覧の頁はイベントの数に比例して重くなる。即売会タグと年のアーカイブは素の HTML で約1MB、

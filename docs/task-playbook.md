@@ -551,7 +551,9 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 
 1. 直近7日の `task-reports/` を読む。2回以上出た失敗は、§4 の順で恒久化する。
 2. `audit-history.json` の推移を見る。urgent が増えていれば原因を直す。何週も動かない項目は、対処されていないか検査が不適切かのどちらかを直す。
-3. `pending-judgments.json` が3件以上なら、人の判断が本当に要るかを見直す。要らないものは `listing-policy.json` に基準を書く。
-4. `task_run_gap` を見る(§3.12)。台帳に無いタスクがあれば足す。
+3. `search-demand.json`(Search Console の直近28日)を読んで手を打つ。`hubLanded` は回の頁の題名と説明文、`seriesLanded` はシリーズの頁、
+   `opportunities` は順位を上げる手直し、`unknownEvents` は取りこぼしの裏取り(§3.1)に回す。ファイルが無いのは Secret 未設定(docs/search-console.md)。
+4. `pending-judgments.json` が3件以上なら、人の判断が本当に要るかを見直す。要らないものは `listing-policy.json` に基準を書く。
+5. `task_run_gap` を見る(§3.12)。台帳に無いタスクがあれば足す。
    `work\` に残った `*-unpushed-*.json` と `*.patch` は、反映済みか期限切れかを見て回収する。
-5. このファイルを点検する。日付の付いた追記や同じ規則の重複が増えていれば、§4 の書き方に戻す。
+6. このファイルを点検する。日付の付いた追記や同じ規則の重複が増えていれば、§4 の書き方に戻す。

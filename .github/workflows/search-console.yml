@@ -1,0 +1,54 @@
+name: Search Console
+
+# 検索の需要を週1回取り込む(2026-11-09)。scripts/search-demand.py が
+# Search Console の直近28日から search-demand.json を作り、月曜の週次点検
+# (site-health-check)が読んで手を打つ。
+# 必要な Secret: GSC_SA_KEY(サービスアカウントの JSON。手順は docs/search-console.md)。
+# Secret が無い間は何もしないで成功で終わる。
+
+on:
+  schedule:
+    - cron: '7 19 * * 0'    # 毎週日曜 19:07 UTC = 月曜 04:07 JST。週次点検(月曜 09:04)より前
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/search-demand.py'
+      # 取り直しの合図。内容は何でもよい(PAT では workflow_dispatch が通らない)
+      - 'search-request.json'
+  workflow_dispatch:
+
+concurrency:
+  group: search-console
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  demand:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install deps
+        run: pip install -q google-auth requests
+
+      - name: Fetch and analyze
+        env:
+          GSC_SA_KEY: ${{ secrets.GSC_SA_KEY }}
+        run: python3 scripts/search-demand.py
+
+      - name: Commit
+        run: |
+          if [ -f search-demand.json ] && [ -n "$(git status --porcelain search-demand.json)" ]; then
+            git add search-demand.json
+            bash scripts/ci-push.sh "chore(search): 検索の需要を更新 [skip ci]"
+          else
+            echo "変更なし"
+          fi
