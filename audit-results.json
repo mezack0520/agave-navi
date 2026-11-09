@@ -1602,6 +1602,13 @@
       "note": "id は source:キー 形式。proposal(policyへの追記案)を必ず書く。doNotEscalate=true の類型は積まない。該当する節があるなら item に policy: <節名> を書くと、この検査が効く",
       "severity": "urgent"
     },
+    "json_field_shape": {
+      "title": "手で書く JSON の配列の項目に別の型が入っている(読む側が1文字ずつ回る)",
+      "count": 0,
+      "items": [],
+      "note": "値を配列に直す。文字列1つなら [\"…\"] にする。どの項目が配列かは audit.py の _SHAPES",
+      "severity": "urgent"
+    },
     "policy_machine_value_unread": {
       "title": "listing-policy.json の機械可読な値を読むコードが無い",
       "count": 0,
