@@ -635,7 +635,7 @@
       "severity": "urgent"
     },
     "css_version_drift": {
-      "title": "CSS版数が正規値(20261025a)と違うページ",
+      "title": "CSS版数が正規値(20261109a)と違うページ",
       "count": 0,
       "items": [],
       "note": "sync-footers.py が正規化する",
@@ -669,11 +669,11 @@
       "note": "使われていないか、呼び出しが失われている。手動実行が正しいものは audit.py の MANUAL_ONLY に理由つきで足す",
       "severity": "urgent"
     },
-    "playbook_oversize": {
-      "title": "プレイブック(docs/task-playbook.md)が上限を超えている",
+    "startup_doc_oversize": {
+      "title": "タスクが起動時に読む文書が上限を超えている",
       "count": 0,
       "items": [],
-      "note": "プレイブック §4 の書き方に戻して縮める。コードや listing-policy に移した規則と古くなった行を消し、同じ話題の行は1つにまとめる。経緯や日付つきの追記はコミットメッセージへ移す",
+      "note": "プレイブック §4 の書き方に戻して縮める。コードや listing-policy に移した規則と古くなった行を消し、同じ話題の行は1つにまとめる。経緯は docs/history.md とコミットメッセージへ移す。listing-policy は判断の規則だけを残し、経緯の注記を縮める",
       "severity": "urgent"
     },
     "orphan_outputs": {
@@ -1600,6 +1600,20 @@
       "count": 0,
       "items": [],
       "note": "id は source:キー 形式。proposal(policyへの追記案)を必ず書く。doNotEscalate=true の類型は積まない。該当する節があるなら item に policy: <節名> を書くと、この検査が効く",
+      "severity": "urgent"
+    },
+    "css_source_drift": {
+      "title": "style.css が style.src.css から作ったものと違う",
+      "count": 0,
+      "items": [],
+      "note": "直すのは style.src.css。style.css に入れた変更は style.src.css に移し、python3 scripts/build-css.py を回す",
+      "severity": "urgent"
+    },
+    "page_weight_over": {
+      "title": "頁が重すぎる(転送の gzip か要素の数が上限を超えた)",
+      "count": 0,
+      "items": [],
+      "note": "一覧の頁なら、年や月で頁を分けるか、終わった回の載せ方を変える。どちらも見た目と導線が変わるので、案を pending-judgments.json に積んで目崎が決める",
       "severity": "urgent"
     },
     "json_field_shape": {
