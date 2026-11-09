@@ -12,7 +12,10 @@
         "Step0 の Google 検索と coverage-gaps 照合だけで1回が終わっている。"
       ],
       "whyHuman": "毎日やる前提のプロンプトを週1に落とすと、告知が出た personal 主催への到達が最大1週遅れる。取りこぼしと実行時間のどちらを取るかは目崎の判断。",
-      "proposal": "承認されたら agave-event-update のプロンプトと playbook §3.1 を「watch-sources 巡回は日曜のみ。平日は Step0 と coverage-gaps のみ」に改め、平日のレポートに『未実施』を書かせない。却下なら、巡回を省く回は理由を1行で書かせる。"
+      "proposal": "agave-event-update の手順の「2. watch-sources.json を巡回(次回待ちシリーズ + IG主催者ローテ)」を「2. 日曜だけ watch-sources.json を巡回する(次回待ちシリーズ + IG主催者ローテ。回すのは personal と unchecked のアカウント)。平日は巡回せず、レポートに「未実施」と書かない(プレイブック §3.1)」に置き換える。プレイブック §3.1 は 2026-11-09 に反映済み",
+      "approvedOn": "2026-11-09",
+      "approvedBy": "目崎(「承認」)",
+      "resolveWhen": "list_triggers で agave-event-update の本文の「やること」の2が置き換わっていたら resolved へ移す"
     }
   ],
   "updated": "2026-10-26",

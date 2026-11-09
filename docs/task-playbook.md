@@ -60,14 +60,14 @@
 7. **スケジュール済みタスクとプロンプト。**
    - 定期タスクは claude-code-remote の trigger で、`list_triggers` で一覧と最後の実行が見える。時刻は architecture §2。
    - どれも「このPCが必要」で動いている。フォルダはタスクの編集画面でしか付けられない。
-     プロンプトの変更は、その PC につながった Cowork の会話で目崎が `update_trigger` を承認したときだけ効く。
-     それ以外は `needs_device_approval` が返り、何も変わらない。
+     プロンプトを変えられるのは目崎だけで、デスクトップアプリのタスク画面で手順を書き換える。
+     会話のセッションから `update_trigger` で変えると、PC につながったクラウドの会話からでも `needs_device_approval` が返り、何も変わらない。
      作り直し(`create_trigger`)はしない。PC の承認が無いとクラウド専用になり、PC にもフォルダにも届かない。
    - プロンプトに置くのは起動の手順(clone の場所、record-run.py、このファイルを読む)だけにする。手順と規則はこのファイルに書く。
    - 変えたいプロンプトは `pending-judgments.json` に提案として積む(対象のタスクと、置換前 → 置換後)。
-     目崎が承認すると `approvedOn` が付き、日次メールに出る。当てるのは会話のセッション。
-     現行の本文に差分だけを当てて `update_trigger` し、承認されたら `list_triggers` で指定の箇所だけ変わったのを確かめ、
-     `resolved` に移して push する。**定期実行はプロンプトを書き換えない。**
+     目崎が承認すると `approvedOn` が付き、日次メールの「承認済みのプロンプト変更」に出る。会話のセッションは、置き換えた全文を目崎に渡す。
+     書き換わったかは `list_triggers` の本文で確かめ、指定の箇所だけ変わっていれば `resolved` に移して push する。確かめるのはどのセッションでもよい。
+     **定期実行はプロンプトを書き換えない。**
    - 台帳に taskId を足したら、同じ回にそのタスクのプロンプトへ record-run.py の行を入れる提案を積む。
    - 動いたかどうかは成果物で見る。`last_run` の SUCCEEDED は会話が終わったことしか示さない。
      台帳に抜けがあれば、`task-reports/<taskId>_<日付>.md`、`git log` の成果物のコミット、`list_triggers` の順に見る。
@@ -235,8 +235,10 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   空の頁や CAPTCHA が出たら打ち切る。CAPTCHA は解かない。
   Instagram のタブからは google.com を fetch できない(CORS)。WebSearch では Instagram の告知はほぼ拾えない。
 - 検索のスニペットは、別の投稿のキャプションや別の出店者の予定表を混ぜて出す。知識パネルの入場料と営業情報は出典にしない。
-- 主催が personal の回はブラウザで回る(§3.6)。順番は前回のレポートから決めず、`revisit=true` の見送りの reason と name に出る handle のうち、
-  personal のものと watch-sources に居ないものを先に回す。告知が出た主催に何日も届かなくなるため。
+- watch-sources の巡回(次回待ちのシリーズと、主催の IG のローテ)は日曜だけ行う。目崎の決定。
+  平日は Step0 の検索と coverage-gaps の照合だけにし、レポートに巡回の「未実施」を書かない。
+  ローテはブラウザで回り(§3.6)、回すのは `apiStatus` が personal と unchecked のアカウントだけ。
+  順番は前回のレポートから決めず、`revisit=true` の見送りの reason と name に出る handle のうち、personal のものと watch-sources に居ないものを先に回す。
 - 主催公式サイトの「イベント一覧」と、生産者が投稿の末尾に貼る「出店・販売会予定」は、1回で巡業ぶんが取れる。
   取りこぼしを裏取りするときは、会場のイベント一覧まで開く。
 - 月別の巡回は当月から3か月先まで見る。主催はそのくらい前から告知する。
