@@ -13,6 +13,7 @@ workflow の `run: |` に直書きされていて、ローカルで実行も検�
 - slug が既にあれば、**値のあるキーだけ**上書きする。空で潰さない
 - imageUrl は `sitelib.is_quality_image_url` を通らなければ落とす
 - 新規で status / eventStatus / addedDate / updatedAt が無ければ取り込みの入口で埋める
+- region は prefecture から決め直す(定義と違う手書きの値は直す)
 - 並びは 開催予定を先、その中は日付昇順
 
 Usage:
@@ -28,7 +29,18 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
-from sitelib import is_quality_image_url        # noqa: E402
+from sitelib import is_quality_image_url, pref_to_region   # noqa: E402
+
+
+def fix_region(e):
+    """region は prefecture から決まる値。手書きの値が定義と違えば直す。
+    直したら True。prefecture が定義に無ければ触らない。"""
+    want = pref_to_region(e.get('prefecture'))
+    if want and e.get('region') != want:
+        e['region'] = want
+        return True
+    return False
+
 
 
 def drop_blanks(d):
@@ -92,6 +104,7 @@ def merge(events, new_events):
                 ne['addedDate'] = today
             if not ne.get('updatedAt'):
                 ne['updatedAt'] = ne['addedDate']
+            fix_region(ne)
             events.append(ne)
             existing.add(slug)
             added.append(slug)
@@ -107,6 +120,8 @@ def merge(events, new_events):
                     e[k] = v
                     if slug not in updated:
                         updated.append(slug)
+            if fix_region(e) and slug not in updated:
+                updated.append(slug)
             break
     events.sort(key=lambda e: (0 if e.get('status') == 'upcoming' else 1,
                                e.get('date', '')))
@@ -185,6 +200,10 @@ def self_test():
     out, _a, _u = merge([{'slug': 'p', 'date': '2026-01-01', 'status': 'past'},
                          {'slug': 'u', 'date': '2026-12-01', 'status': 'upcoming'}],
                         [])
+    rout, _a, _u = merge([], [{'slug': 'r', 'name': 'R', 'date': '2026-12-01',
+                                'prefecture': '沖縄', 'region': '沖縄'}])
+    chk('新規の region は prefecture から決め直す', rout[0]['region'], '九州')
+
     chk('終了は後ろ', [e['slug'] for e in out], ['u', 'p'])
     print('\n結果:', 'すべて通過' if not bad else f'{bad}件 失敗')
     return 1 if bad else 0
