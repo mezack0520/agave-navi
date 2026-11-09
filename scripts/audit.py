@@ -1618,7 +1618,7 @@ def main():
         pass
     js_drift = []
     if want_js:
-        jsre = re.compile(r'((?:affiliate|ads|status-auto|list-ui)\.js)(\?v=([0-9a-zA-Z]*))?')
+        jsre = re.compile(r'((?:affiliate|ads|status-auto|list-ui|nav|top-filter|outbound)\.js)(\?v=([0-9a-zA-Z]*))?')
         for f in glob.glob(rp('**', '*.html'), recursive=True):
             if '/.git/' in f or '/templates/' in f:
                 continue

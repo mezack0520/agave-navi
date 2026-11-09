@@ -392,7 +392,8 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   画像は `embed/captioned` の `EmbeddedMediaImage` の src をコンテナで curl し、`eyecatchlib.save_image` で保存する。
   og:image とグリッドのサムネイルは切り出し版なので使わない。`/reel/<code>` は `/p/<code>/` に読み替える。
   screenshot を挟んで20秒待っても img が無く video だけなら動画。
-- 候補の画像を Read で見るには、mzplants の下に一時フォルダを作って `device_stage_files` で取り込む。`/tmp` は stage できない。
+- 候補の画像を Read で見るには、`mzplants\agave-navi\work\_eyecatch_tmp` に置いて `device_stage_files` で取り込む。`/tmp` は stage できない。
+  フォルダは固定名で毎回上書きする。日付付きで作ると、無人の実行は削除できず残骸が増える(2026-11-09 時点で10個)。
 - 採った画像に時刻、入場料、会場が書いてあって回の値に無ければ、その場で埋める。
   会場が分かった tbd の回は venue と location を埋めて eventStatus を confirmed にする(`tbd_with_named_venue`)。
 - 取得元は `imageSource` に必ず残す。詳細ページの脚注に出る。
