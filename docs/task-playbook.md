@@ -502,6 +502,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 - 古くなった行は書き換えるか消す。「※訂正」を重ねない。
 - 1つの規則は1か所にだけ書く。同じ話題の行があれば、足さずにその行を直す。
 - コードや listing-policy に入った規則は、ここではその場所を指すだけにする。
+- コードのコメントも同じ。今の理由を短く書き、何が起きたかはコミットメッセージに書く。`audit.py` には5行以上のコメントが150か所ほど残っていて、多くは経緯。直すついでに縮める。
 - 起動時に読む文書には上限がある。このファイルは 72KB、architecture は 16KB、listing-policy は 80KB(監査 `startup_doc_oversize`)。
   超えたら、コードや listing-policy に移した規則と古くなった行を消して縮める。
 
