@@ -21,9 +21,11 @@
 
 2. **clone 先は毎回一意なディレクトリにする。**
    ```
-   D=$(mktemp -d -p /tmp) && git clone https://github.com/mezack0520/agave-navi.git "$D/agave-navi"
+   D=$(mktemp -d -p /tmp) && git clone --filter=blob:none https://github.com/mezack0520/agave-navi.git "$D/agave-navi"
    ```
    - 公開リポジトリなので clone に PAT は要らない。PAT を使うのは push だけ。
+   - `--filter=blob:none` は過去の版のファイルの中身を、要るときに取りに行く clone。全部取ると 289MB・33秒、これで 150MB・11秒。
+     `git log` や `git show <sha>:<path>` はそのまま使える。
    - 名義は `mezack0520 <88774621+mezack0520@users.noreply.github.com>`。
      手順5の `record-run.py` が repo に設定するので、それより前にコミットしない。
    - `/tmp` 直下の固定名(`/tmp/agave-navi`、`/tmp/audit_out.txt` など)は前のセッションの残骸で書けないことがある。
@@ -37,7 +39,7 @@
      シェルの変数は次の呼び出しに残らないので、`rm -rf "$D"` は何も消さずに終わる。
      レポートに「clone 削除済み」と書く。push できなかった回は消さず、パスと理由をレポートに書く。
 
-3. このファイル、`listing-policy.json`、`docs/architecture-2026-07.md` の §1〜§7 を読む。architecture の §8 は経緯なので、要るときだけ読む。
+3. このファイル、`listing-policy.json`、`docs/architecture-2026-07.md` を読む。経緯は `docs/history.md` にあり、要るときだけ読む。
 
 4. プロンプトとこのファイルが食い違えば、このファイルが正。
 
@@ -63,7 +65,8 @@
      プロンプトを変えられるのは目崎だけで、デスクトップアプリのタスク画面で手順を書き換える。
      会話のセッションから `update_trigger` で変えると、PC につながったクラウドの会話からでも `needs_device_approval` が返り、何も変わらない。
      作り直し(`create_trigger`)はしない。PC の承認が無いとクラウド専用になり、PC にもフォルダにも届かない。
-   - プロンプトに置くのは起動の手順(clone の場所、record-run.py、このファイルを読む)だけにする。手順と規則はこのファイルに書く。
+   - プロンプトに置くのは起動の手順(clone の場所、record-run.py、このファイルを読む)と、そのタスクのやることだけにする。手順と規則はこのファイルに書く。
+     5本のプロンプトの正本は `docs/task-prompts.md`。変えるときはまずそこを直して push し、目崎がタスク画面で全文を置き換える。
    - 変えたいプロンプトは `pending-judgments.json` に提案として積む(対象のタスクと、置換前 → 置換後)。
      目崎が承認すると `approvedOn` が付き、日次メールの「承認済みのプロンプト変更」に出る。会話のセッションは、置き換えた全文を目崎に渡す。
      書き換わったかは `list_triggers` の本文で確かめ、指定の箇所だけ変わっていれば `resolved` に移して push する。確かめるのはどのセッションでもよい。
@@ -454,6 +457,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 
 ### 3.11 サイトの作りを変えるとき
 
+- CSS は `style.src.css` を直す。配信用の `style.css` は `scripts/build-css.py` がコメントを落として作る生成物で、直接直すと次のビルドで消える(`css_source_drift`)。
 - JS と CSS の中身を変えたら `scripts/sitelib.py` の `JS_VERSION` と `CSS_VERSION` を上げ、`bash scripts/build-all.sh` を通す。
   上げ忘れると CDN と閲覧者のブラウザが旧版を配り続け、検査では見つからない(`css_version_drift`、`js_version_drift` が見るのは頁の参照だけ)。
   確かめるときは本番のファイルを `?cb=` 付きで取得して中身を見る。
@@ -491,14 +495,15 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 | 機械で止められる誤り | コード。監査の検査、取り込みの入口、生成器 |
 | 掲載の判断の基準 | `listing-policy.json` |
 | 作業の手順と注意 | このファイルの該当する節。1〜3行 |
-| 何が起きたか、いつ何を変えたか | コミットメッセージと `docs/architecture-2026-07.md` の §8 |
+| 何が起きたか、いつ何を変えたか | コミットメッセージと `docs/history.md` |
 
 このファイルの書き方:
 - 規則は今の形だけを書く。日付の付いた経緯、「追記」の節、点検の記録を足さない。経緯はコミットメッセージに書く。
 - 古くなった行は書き換えるか消す。「※訂正」を重ねない。
 - 1つの規則は1か所にだけ書く。同じ話題の行があれば、足さずにその行を直す。
 - コードや listing-policy に入った規則は、ここではその場所を指すだけにする。
-- このファイルは 72KB までにする(監査 `playbook_oversize`)。超えたら、コードや listing-policy に移した規則と古くなった行を消して縮める。
+- 起動時に読む文書には上限がある。このファイルは 72KB、architecture は 16KB、listing-policy は 80KB(監査 `startup_doc_oversize`)。
+  超えたら、コードや listing-policy に移した規則と古くなった行を消して縮める。
 
 ### audit.py に検査を足すとき
 

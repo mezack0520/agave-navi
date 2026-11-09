@@ -17,7 +17,7 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20261025a'
+CSS_VERSION = '20261109a'
 JS_VERSION = '20261020b'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -1987,6 +1987,7 @@ def site_footer():
       </nav>
 {amazon_disclosure_html()}      <p class="footer-copy">&copy; 2025-{year} アガベイベントナビ</p>
     </div>
+    {HEART_SPRITE}
   </footer>"""
 
 
@@ -3562,9 +3563,23 @@ def is_quality_image_url(img_url):
 # 別だったため片方を直しても他方に効かない状態だった(2026-08-20に統合)。
 # 会場は is_vague_venue を通す。通さないと「東京 / 東京」「東京 / 調整中」が出る。
 
-HEART_SVG = ('<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 '
-             '5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 '
-             '1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>')
+HEART_PATH = ('M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 '
+              '7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z')
+# カードの「行きたい」のハートは、フッターに1回だけ置いた symbol を参照する(2026-11-09)。
+# 1枚に2〜3個の同じ path を埋めていて、トップの 484KB のうち 115KB、タグやアーカイブの頁では
+# 240KB 前後がこの繰り返しだった。fill / stroke は外側の svg に当たる CSS がそのまま継承されるので、
+# 見た目は変わらない。symbol は site_footer() にある(フッターの無い頁では描かれない)
+HEART_SVG = '<svg viewBox="0 0 24 24"><use href="#i-heart"/></svg>'
+HEART_SPRITE = (f'<svg class="svg-sprite" width="0" height="0" aria-hidden="true" '
+                f'style="position:absolute;overflow:hidden"><symbol id="i-heart" viewBox="0 0 24 24">'
+                f'<path d="{HEART_PATH}"/></symbol></svg>')
+_INLINE_HEART_RE = re.compile(
+    r'<svg viewBox="0 0 24 24">\s*<path d="' + re.escape(HEART_PATH) + r'"\s*(?:/>|>\s*</path>)\s*</svg>')
+
+
+def use_heart_sprite(html):
+    """埋め込みのハートを symbol の参照に置き換える(手書きのカードが残る index.html 用)。冪等"""
+    return _INLINE_HEART_RE.sub(HEART_SVG, html)
 
 
 _OG_IMAGE_KEYS = ('og:image:secure_url', 'og:image:url', 'og:image',

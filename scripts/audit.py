@@ -8,6 +8,7 @@
 読み取り専用。何も変更しない。検出結果を JSON とテキストで出す。
 終了コードは常に0(検出は失敗ではない)。件数は日次メールに載せる。
 """
+import gzip
 import hashlib
 import html as _html
 import html as _htmllib
@@ -1748,15 +1749,26 @@ def main():
     # 474KB・5,128行になった。毎朝のタスクが全文を読むうえ、訂正が元の記述の後ろに
     # 重なって古い規則と新しい規則が並んでいた(子どもの写真の扱いは listing-policy で
     # 決着した後も「採らない」のまま残っていた)。話題別に書き直して 57KB にした。
-    # 書き方の規則(§4)を文章で書いただけでは戻るので、上限を検査にする
-    PLAYBOOK_MAX_BYTES = 72_000
-    _pb_bytes = len(pb.encode('utf-8'))
-    add('playbook_oversize', 'プレイブック(docs/task-playbook.md)が上限を超えている',
-        [f'{_pb_bytes:,} バイト / 上限 {PLAYBOOK_MAX_BYTES:,} バイト']
-        if _pb_bytes > PLAYBOOK_MAX_BYTES else [],
+    # 書き方の規則(§4)を文章で書いただけでは戻るので、上限を検査にする。
+    # architecture-2026-07.md も同じ形で、59KB のうち 50KB が §8 の履歴だった(2026-11-09 に
+    # docs/history.md へ移した)。タスクが起動時に読む文書をまとめて見る
+    STARTUP_DOC_MAX = {
+        'docs/task-playbook.md': 72_000,
+        'docs/architecture-2026-07.md': 16_000,
+        'listing-policy.json': 80_000,
+    }
+    _doc_over = []
+    for _doc, _max in STARTUP_DOC_MAX.items():
+        try:
+            _n = os.path.getsize(rp(_doc))
+        except OSError:
+            continue
+        if _n > _max:
+            _doc_over.append(f'{_doc}: {_n:,} バイト / 上限 {_max:,} バイト')
+    add('startup_doc_oversize', 'タスクが起動時に読む文書が上限を超えている', _doc_over,
         'プレイブック §4 の書き方に戻して縮める。コードや listing-policy に移した規則と'
-        '古くなった行を消し、同じ話題の行は1つにまとめる。経緯や日付つきの追記は'
-        'コミットメッセージへ移す')
+        '古くなった行を消し、同じ話題の行は1つにまとめる。経緯は docs/history.md と'
+        'コミットメッセージへ移す。listing-policy は判断の規則だけを残し、経緯の注記を縮める')
 
     # 13b. 書いているのに誰も読まない出力(昔の設計の名残)。
     # 2026-09-25 に棚卸しして、次が全部「参照はされているが出力が誰にも届かない」
@@ -2880,7 +2892,8 @@ def main():
     # **セレクタ列がまったく同じ規則が2つある場合だけ**を鳴らす。
     _css_dups = []
     try:
-        _css = open(rp('style.css'), encoding='utf-8').read()
+        # 直す人が見る行番号に合わせて、コメント付きの原本を読む(2026-11-09 に分けた)
+        _css = open(rp('style.src.css'), encoding='utf-8').read()
     except OSError:
         _css = ''
     if _css:
@@ -4658,7 +4671,7 @@ def main():
     try:
         sys.path.insert(0, rp('scripts'))
         import csslib as _csslib
-        with open(rp('style.css'), encoding='utf-8') as f:
+        with open(rp('style.src.css'), encoding='utf-8') as f:
             _css_src = f.read()
         _css_seen = defaultdict(list)
         _prop_re = re.compile(r'([-\w]+)\s*:')
@@ -5940,6 +5953,49 @@ def main():
         'id は source:キー 形式。proposal(policyへの追記案)を必ず書く。'
         'doNotEscalate=true の類型は積まない。'
         '該当する節があるなら item に policy: <節名> を書くと、この検査が効く')
+
+    # --- 配信用の style.css が原本から作ったものか(2026-11-09) -----------------------
+    # style.css は style.src.css からコメントを落として作る。style.css を直接直すと、
+    # 次のビルドで黙って消える。直した直後に鳴らす
+    _css_drift = []
+    try:
+        _bc = subprocess.run([sys.executable, rp('scripts', 'build-css.py'), '--check'],
+                             capture_output=True, text=True, timeout=60)
+        if _bc.returncode != 0:
+            _css_drift.append((_bc.stderr or _bc.stdout).strip()[:200] or 'build-css.py --check が失敗')
+    except Exception as e:                          # noqa: BLE001
+        _css_drift.append(f'build-css.py --check を実行できない: {e}')
+    add('css_source_drift', 'style.css が style.src.css から作ったものと違う', _css_drift,
+        '直すのは style.src.css。style.css に入れた変更は style.src.css に移し、'
+        'python3 scripts/build-css.py を回す')
+
+    # --- 頁の重さ(2026-11-09) ----------------------------------------------------
+    # 一覧の頁はイベントの数に比例して重くなる。即売会タグと年のアーカイブは素の HTML で約1MB、
+    # 要素1.4万個まで育っていた(同じハートの SVG を1枚に2〜3個埋めていた分は symbol に寄せて
+    # 16%減った)。転送の重さは gzip で、描画とメモリに効く重さは要素の数で見る。
+    # 上限を超えたら、頁を分けるか、終わった回の載せ方を変えるかを決める
+    PAGE_GZIP_MAX = 150_000
+    PAGE_ELEMENTS_MAX = 20_000
+    heavy_pages = []
+    for _root, _dirs, _files in os.walk(REPO):
+        _dirs[:] = [d for d in _dirs if not d.startswith('.')
+                    and d not in ('templates', 'staging', 'guides_content', 'scripts', 'node_modules')]
+        for _fn in _files:
+            if not _fn.endswith('.html'):
+                continue
+            _fp = os.path.join(_root, _fn)
+            try:
+                _raw = open(_fp, 'rb').read()
+            except OSError:
+                continue
+            _gz = len(gzip.compress(_raw, 6))
+            _el = len(re.findall(rb'<[a-zA-Z]', _raw))
+            if _gz > PAGE_GZIP_MAX or _el > PAGE_ELEMENTS_MAX:
+                heavy_pages.append(f'{os.path.relpath(_fp, REPO)}: gzip {_gz // 1024}KB / 要素 {_el:,}'
+                                   f'(上限 {PAGE_GZIP_MAX // 1024}KB / {PAGE_ELEMENTS_MAX:,})')
+    add('page_weight_over', '頁が重すぎる(転送の gzip か要素の数が上限を超えた)', sorted(heavy_pages),
+        '一覧の頁なら、年や月で頁を分けるか、終わった回の載せ方を変える。どちらも見た目と導線が変わるので、'
+        '案を pending-judgments.json に積んで目崎が決める')
 
     # --- 手で書く JSON の入れ物の型が崩れていないか(2026-11-09) ------------------
     # 配列のはずの項目に文字列が入ると、読む側の for が1文字ずつ回り、例外も出ずに壊れる。

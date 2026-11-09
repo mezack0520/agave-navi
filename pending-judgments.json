@@ -2,20 +2,20 @@
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。 1件の項目: id(source:キー)、source、addedOn(YYYY-MM-DD)、question(問い)、facts(根拠。文字列の配列)、whyHuman(人の判断が要る理由)、proposal(listing-policy への追記案などの提案)。日次メールは sitelib.judgment_fields で読む。",
   "items": [
     {
-      "id": "site-health-check:watch-sources-sweep-never-done",
-      "source": "site-health-check",
+      "id": "conversation:task-prompts-2026-11",
+      "source": "conversation",
       "addedOn": "2026-11-09",
-      "question": "agave-event-update の watch-sources 巡回と IG 主催者ローテを、毎日の義務から「週1回(固定曜日)・personal と unchecked のみ」に変えてよいか。",
+      "question": "agave 系5本のプロンプトを docs/task-prompts.md の全文に置き換える",
       "facts": [
-        "task-reports で「未実施」と書かれた回が 2026-10-06 以降 22 回(10-19〜11-08 は毎日)。",
-        "理由は毎回「時間配分の都合」。",
-        "Step0 の Google 検索と coverage-gaps 照合だけで1回が終わっている。"
+        "全タスクの clone を --filter=blob:none にする。全部取る clone は 289MB・33秒、これで 150MB・11秒",
+        "agave-event-update の watch-sources 巡回を日曜だけにする(2026-11-09 承認)",
+        "プロンプトに残っていた古い指示(Chrome で開く、フォルダを毎回接続する、経緯の長文)を外し、プレイブックと揃えた"
       ],
-      "whyHuman": "毎日やる前提のプロンプトを週1に落とすと、告知が出た personal 主催への到達が最大1週遅れる。取りこぼしと実行時間のどちらを取るかは目崎の判断。",
-      "proposal": "agave-event-update の手順の「2. watch-sources.json を巡回(次回待ちシリーズ + IG主催者ローテ)」を「2. 日曜だけ watch-sources.json を巡回する(次回待ちシリーズ + IG主催者ローテ。回すのは personal と unchecked のアカウント)。平日は巡回せず、レポートに「未実施」と書かない(プレイブック §3.1)」に置き換える。プレイブック §3.1 は 2026-11-09 に反映済み",
+      "whyHuman": "PC が要るタスクのプロンプトは、目崎がデスクトップアプリのタスク画面でしか書き換えられない",
+      "proposal": "docs/task-prompts.md の各タスクの全文で、5本の手順を置き換える",
       "approvedOn": "2026-11-09",
-      "approvedBy": "目崎(「承認」)",
-      "resolveWhen": "list_triggers で agave-event-update の本文の「やること」の2が置き換わっていたら resolved へ移す"
+      "approvedBy": "目崎(「全部やって」)",
+      "resolveWhen": "list_triggers の5本の本文が docs/task-prompts.md と一致したら resolved へ移す"
     }
   ],
   "updated": "2026-10-26",
@@ -157,6 +157,24 @@
       "id": "event-monitor:toyama-saboten-time-mismatch",
       "resolvedOn": "2026-10-26",
       "decision": "time を「9:00〜17:00（最終日は16:00まで）」に直した。2通りの時刻は日ごとの違いだった。主催(富山県中央植物園)の投稿 Dea-m_1kRgu は「10/30・31は9:00〜17:00(最終入園16:30)、11/1は9:00〜16:00(最終入園16:00)」。公式頁 bgtym.org/event/13014 は「9:00〜17:00(入園は16:30まで)、11月からは9:00〜16:30(入園は16:00まで)」で、11/1 の閉場だけ食い違う。最終入園(16:00)は両方で一致するので、催しの頁が出す短いほう(16:00)を採った。説明文の「入園は16時まで」も日ごとに書き直した"
+    },
+    {
+      "id": "site-health-check:watch-sources-sweep-never-done",
+      "source": "site-health-check",
+      "addedOn": "2026-11-09",
+      "question": "agave-event-update の watch-sources 巡回と IG 主催者ローテを、毎日の義務から「週1回(固定曜日)・personal と unchecked のみ」に変えてよいか。",
+      "facts": [
+        "task-reports で「未実施」と書かれた回が 2026-10-06 以降 22 回(10-19〜11-08 は毎日)。",
+        "理由は毎回「時間配分の都合」。",
+        "Step0 の Google 検索と coverage-gaps 照合だけで1回が終わっている。"
+      ],
+      "whyHuman": "毎日やる前提のプロンプトを週1に落とすと、告知が出た personal 主催への到達が最大1週遅れる。取りこぼしと実行時間のどちらを取るかは目崎の判断。",
+      "proposal": "agave-event-update の手順の「2. watch-sources.json を巡回(次回待ちシリーズ + IG主催者ローテ)」を「2. 日曜だけ watch-sources.json を巡回する(次回待ちシリーズ + IG主催者ローテ。回すのは personal と unchecked のアカウント)。平日は巡回せず、レポートに「未実施」と書かない(プレイブック §3.1)」に置き換える。プレイブック §3.1 は 2026-11-09 に反映済み",
+      "approvedOn": "2026-11-09",
+      "approvedBy": "目崎(「承認」)",
+      "resolveWhen": "list_triggers で agave-event-update の本文の「やること」の2が置き換わっていたら resolved へ移す",
+      "decision": "承認。プレイブック §3.1 に反映した。agave-event-update のプロンプトは conversation:task-prompts-2026-11 の置き換えに含めた",
+      "resolvedOn": "2026-11-09"
     }
   ]
 }

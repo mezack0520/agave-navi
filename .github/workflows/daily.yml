@@ -33,6 +33,8 @@ on:
       - 'guides_content/**'
       - 'build-detail-pages.py'
       - 'affiliate-links.json'
+      # 配信用の style.css は style.src.css から build-css.py が作る(2026-11-09)
+      - 'style.src.css'
   repository_dispatch:
     types: [daily]
   workflow_dispatch:

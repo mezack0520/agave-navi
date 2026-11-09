@@ -15,6 +15,10 @@ python3 scripts/track-updates.py || echo "::warning::track-updates.py が失敗�
 
 python3 scripts/auto-status-jst.py
 
+# 配信用の style.css を style.src.css から作る(コメントを落とすだけ。2026-11-09)。
+# 直すのは style.src.css。style.css を直接直すと次のビルドで消える
+python3 scripts/build-css.py
+
 # 開催バッジの日付境界テスト。0時直後・早朝・深夜を4タイムゾーンで検証する。
 # 2026-08-29 に todayJST() の時差計算が誤っていて、JSTの閲覧者に
 # 0:00〜9:00 のあいだ「本日開催」が「明日開催」と出ていた。

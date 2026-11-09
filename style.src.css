@@ -1,0 +1,3978 @@
+/* ========================================
+   AGAVE EVENT NAVI - Cool Minimal Design
+   Airbnb-inspired, No Green, Sharp & Modern
+   ======================================== */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic UI', Meiryo, 'Noto Sans JP', sans-serif;
+    background-color: var(--white);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.event-card.filter-hide {
+    animation: none;
+    opacity: 0;
+    transform: scale(0.92);
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+}
+
+.event-card.filter-show {
+    animation: scaleIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Stagger card entrance */
+.events-grid .event-card:nth-child(1) { animation-delay: 0s; }
+.events-grid .event-card:nth-child(2) { animation-delay: 0.04s; }
+.events-grid .event-card:nth-child(3) { animation-delay: 0.08s; }
+.events-grid .event-card:nth-child(4) { animation-delay: 0.12s; }
+.events-grid .event-card:nth-child(5) { animation-delay: 0.16s; }
+.events-grid .event-card:nth-child(6) { animation-delay: 0.2s; }
+.events-grid .event-card:nth-child(7) { animation-delay: 0.24s; }
+.events-grid .event-card:nth-child(8) { animation-delay: 0.28s; }
+
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--black);
+    backdrop-filter: blur(12px);
+}
+
+.header-inner {
+    max-width: 100%;
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logo-img {
+    /* ヘッダーのロゴ。294x64 の実寸を 26px 高で出す。
+       高さだけ指定して width:auto にすると、画像が届く前に幅が0になって
+       右の要素がずれる。HTML側に width/height を書いて比率を固定する。 */
+    display: block;
+    height: 26px;
+    width: auto;
+}
+@media (max-width: 480px) {
+  .logo-img { height: 22px; }
+}
+.logo-en {
+    display: block;
+    color: var(--white);
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.logo-jp {
+    display: block;
+    color: var(--gray-400);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+/* ========================================
+   HEADER IKITAI (LIQUID) BUTTON
+   ======================================== */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.ikitai-blob-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem 0.35rem 0.65rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+/* Pill background */
+.ikitai-blob-btn .blob-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 20px;
+    background: #e63946;
+    transition: background 0.25s, transform 0.25s;
+}
+
+.ikitai-blob-btn:hover .blob-bg {
+    background: #d62839;
+    transform: scale(1.04);
+}
+
+.ikitai-blob-btn .ikitai-heart {
+    width: 14px;
+    height: 14px;
+    fill: var(--white);
+    transition: transform 0.25s;
+}
+
+.ikitai-blob-btn:hover .ikitai-heart {
+    transform: scale(1.1);
+}
+
+.ikitai-blob-btn .ikitai-label {
+    color: var(--white);
+}
+
+.ikitai-blob-btn .ikitai-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #fff;
+    color: #e63946;
+    font-size: 0.65rem;
+    font-weight: 800;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ikitai-blob-btn .ikitai-badge.has-count {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Nav ikitai link: hidden on desktop, shown in mobile menu */
+.nav-ikitai-link {
+    display: none !important;
+}
+
+/* Hamburger Menu Toggle */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    /* 24pxの箱に線2px×3 + 隙間5px×2 = 16px しか入っていないので、
+       上詰め(既定)だと下に8px余り、線の中心が箱の中心より4px上に来る。
+       ヘッダーの他の要素は中心が揃っているため、これだけ浮いて見えた
+       (2026-09-08 指摘)。 */
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 24px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+/* 中央寄せにしたので線は y=5 / 12 / 19。Xの交点を箱の中心(12)に
+   合わせるため、上下の線を7pxずつ寄せてから回す */
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Navigation Overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.97);
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-overlay.active {
+    transform: translateX(0);
+}
+
+.nav-overlay-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 6rem 2rem 2rem;
+    height: 100%;
+}
+
+.nav-overlay a {
+    color: var(--white);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    opacity: 0.7;
+}
+
+.nav-overlay a:hover {
+    opacity: 1;
+    color: var(--white);
+}
+
+/* ========================================
+   BREADCRUMB
+   ======================================== */
+
+/* 詳細ページの操作ボタン。**5つ全部を同じ形にする。**
+   以前は 行きたい/カレンダー/シェア3種が別々の宣言で、高さも角丸も
+   文字の大きさも違い、さらにシェアだけ transform:scale(.92) で
+   見た目だけ縮めていた。transform は場所を取ったままなので
+   間隔もずれ、行がガタガタになっていた(2026-09-08 指摘)。
+   ブランドのボタンは文字を持たせない。Xのロゴの隣に「X」と書くと
+   「X x」と読める(同日 指摘)。 */
+.eh-actions {
+    --pill-h: 2.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 0;
+}
+
+/* シェアの入れ物は箱として振る舞わせない。
+   入れ物があると間隔が「3つの塊」と「他」で変わる */
+.eh-actions .detail-share {
+    display: contents;
+}
+
+
+
+.eh-actions .detail-fav-btn,
+.eh-actions .gcal-btn,
+.eh-actions .share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: var(--pill-h);
+    align-self: center;
+    margin: 0;
+    padding: 0 1rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    opacity: 1;
+    transform: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+                color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.eh-actions .detail-fav-btn svg,
+.eh-actions .gcal-btn svg,
+.eh-actions .share-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* 行きたいが主行動。ここだけ塗る */
+.eh-actions .detail-fav-btn {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+}
+
+.eh-actions .detail-fav-btn.is-fav {
+    background: var(--accent-pop);
+    border-color: var(--accent-pop);
+}
+
+.eh-actions .detail-fav-btn.is-fav svg {
+    fill: var(--white);
+}
+
+/* ロゴだけのボタンは正方形=丸にする */
+
+
+
+
+
+
+.eh-actions .gcal-btn:hover,
+.eh-actions .share-copy:hover {
+    border-color: var(--black);
+    background: var(--gray-100);
+}
+
+.eh-actions .detail-fav-btn:active,
+.eh-actions .gcal-btn:active,
+.eh-actions .share-btn:active {
+    filter: brightness(0.92);
+}
+
+/* パンくずと絞り込みの部品。**ここが唯一の宣言。**
+   詳細・地域・県・タグ・ガイド・トップで別々に書いていたため、
+   文字が 0.66〜0.75rem に散って「詳細だけ大きさが違う」状態だった
+   (2026-09-08 指摘)。役割は3つだけ。
+     現在地 … 黒で塗る
+     上位・選択肢 … 白のチップ。押せる
+     区切り … 「>」
+   大きさと余白は下の変数で1箇所から変える。 */
+:root {
+    /* Webフォント廃止(2026-07-15): @import連鎖でFCP+約8秒。システムフォントで描画する */
+    --black: #111;
+    --white: #fff;
+    --accent: #222;
+    --accent-hover: #444;
+    --accent-pop: #e63946;
+    --gray-100: #fafafa;
+    --gray-200: #f0f0f0;
+    --gray-300: #ddd;
+    --gray-400: #767676;
+    --gray-500: #717171;
+    --gray-600: #484848;
+    --text-color: #222;
+    --shadow-light: 0 1px 6px rgba(0,0,0,0.06);
+    --shadow-medium: 0 6px 20px rgba(0,0,0,0.1);
+    --shadow-heavy: 0 12px 40px rgba(0,0,0,0.15);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --crumb-size: 0.74rem;
+    --crumb-pad: 0.34rem 0.78rem;
+    --crumb-sep-size: 0.68rem;
+    /* 上に居座る帯の高さ。sticky の top と scroll-margin-top は
+       すべてここから計算する。**数値を直に書かない。**
+       .filter-bar は top:40px、.detail-sidebar は top:70px と
+       手打ちで、実測のヘッダーは 50.8px。トップの帯は約11px
+       ヘッダーの下に潜っていた(2026-09-10 実測)。
+       この値は nav.js が走る前の初期値で、実際の高さは
+       nav.js が測って上書きする。 */
+    --header-h: 51px;
+    --crumb-h: 47px;
+    --stuck-h: calc(var(--header-h) + var(--crumb-h));
+}
+
+/* 見出しへのリンクで飛んだ先が固定の帯に隠れる。
+   帯の高さが変われば自動で追う。 */
+[id] {
+    scroll-margin-top: calc(var(--stuck-h) + 0.5rem);
+}
+
+.crumb-bar {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.breadcrumb::-webkit-scrollbar,
+.crumb-bar::-webkit-scrollbar {
+    display: none;
+}
+
+/* 上位・選択肢 */
+.breadcrumb a,
+.breadcrumb .crumb-current,
+.pref-crumb,
+.region-tab,
+.pref-chip {
+    flex-shrink: 0;
+    padding: var(--crumb-pad);
+    border: 1.5px solid var(--gray-300);
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--gray-600);
+    font-size: var(--crumb-size);
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    /* 押した手応えが無いと反応していないように見える(2026-09-08 指摘)。
+       スマホには hover が無いので :active を必ず付ける */
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+                color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.breadcrumb a:hover,
+.pref-crumb:hover,
+.region-tab:hover,
+.pref-chip:hover {
+    border-color: var(--gray-400);
+    background: var(--gray-100);
+    color: var(--black);
+    text-decoration: none;
+}
+
+.breadcrumb a:active,
+.pref-crumb:active,
+.region-tab:active,
+.pref-chip:active {
+    background: var(--gray-200);
+    border-color: var(--gray-500);
+    color: var(--black);
+}
+
+/* 現在地。トップの「関東」と詳細のイベント名は同じ扱い。
+   `.breadcrumb > span` で書いていたら区切りの span まで黒く塗られ、
+   「>」が黒い丸として並んだ(2026-09-08 本番で発生)。
+   要素の種類で意味を決めると、同じ種類の別物を巻き込む。 */
+.breadcrumb .crumb-current,
+.pref-crumb.active,
+.region-tab.active,
+.pref-chip.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+    font-weight: 600;
+    cursor: default;
+}
+
+/* イベント名は長いので詰める。全文は直下のh1にある */
+.breadcrumb .crumb-current {
+    max-width: 15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pref-sep {
+    flex-shrink: 0;
+    color: var(--gray-400);
+    font-size: var(--crumb-sep-size);
+    user-select: none;
+}
+
+@media (min-width: 721px) {
+    .crumb-bar {
+        padding: 0.45rem 2rem;
+    }
+    .breadcrumb .crumb-current {
+        max-width: 26em;
+    }
+}
+
+/* ========================================
+   FILTER BAR (Airbnb-style category tabs)
+   ======================================== */
+
+
+
+
+
+
+
+
+
+/* 検索。スマホでは虫眼鏡だけに畳んで、触ったら開く。
+   常に開いた入力欄を置くと、狭い画面で1段を丸ごと使ってしまう
+   (2026-09-08 指摘)。文字が入っている間は開いたまま。
+   畳んだ状態は**正方形=丸**にする。横長のカプセルのままだと
+   中身が虫眼鏡1つなのに入力欄の形をしていて浮く(同日 指摘)。
+   スマホを既定にして、広い画面で開く。 */
+.search-field {
+    flex: none;
+    width: 2rem;
+    max-width: 100%;
+    margin: 0;
+    transition: width 0.22s ease;
+}
+
+.search-field input {
+    width: 100%;
+    height: 2rem;
+    padding: 0 0.6rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 50%;
+    font-size: 0.78rem;
+    font-family: inherit;
+    outline: none;
+    color: var(--text-color);
+    background: var(--gray-100) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center;
+    background-size: 15px 15px;
+    box-sizing: border-box;
+    transition: border-radius 0.22s ease, background-color 0.2s,
+                border-color 0.2s;
+    -webkit-appearance: none;
+}
+
+.search-field:focus-within,
+.search-field:has(input:not(:placeholder-shown)) {
+    width: 62%;
+}
+
+/* 開いた形。**畳んだ状態から変わるのは幅だけではない。**
+   虫眼鏡の位置と余白と角丸も戻す。ここを幅だけで済ませていたため、
+   PCの初期状態(幅260px・未フォーカス)でアイコンが中央に居座り、
+   プレースホルダが重なって枠から溢れていた(2026-09-08 指摘)。 */
+.search-field:focus-within input,
+.search-field:has(input:not(:placeholder-shown)) input {
+    border-radius: 20px;
+    padding: 0 0.8rem 0 1.9rem;
+    background-position: 0.6rem center;
+    background-color: var(--white);
+    border-color: var(--black);
+}
+
+.search-field input::placeholder {
+    color: var(--gray-400);
+}
+
+.search-field input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+@media (min-width: 721px) {
+    /* 広い画面は最初から開けておく。畳む理由が無い。
+       幅と一緒に中身も開いた形にする */
+    .search-field {
+        width: 260px;
+    }
+    .search-field input {
+        border-radius: 20px;
+        padding: 0 0.8rem 0 1.9rem;
+        background-position: 0.6rem center;
+        background-color: var(--white);
+        border-color: var(--gray-300);
+    }
+    .search-field input:focus {
+        border-color: var(--black);
+    }
+}
+
+.filter-tab {
+    flex-shrink: 0;
+    padding: 0.45rem 0.9rem;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    border-radius: 20px;
+    color: var(--gray-500);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+    white-space: nowrap;
+    position: relative;
+}
+
+.filter-tab:hover {
+    color: var(--black);
+    border-color: var(--gray-400);
+    background: var(--gray-200);
+}
+
+.filter-tab.active {
+    color: var(--white);
+    background: var(--black);
+    border-color: var(--black);
+}
+
+
+
+/* === Area Filter Bar (Drill-down: Region → Prefecture in 1 row) === */
+
+
+
+
+
+/* エリアのパンくずと検索を同じ段に置く。
+   並び順の選択を外したら検索だけが1段を占め、
+   狭い画面で固定ヘッダーが2段になっていた(2026-09-08 指摘) */
+
+
+
+
+
+/* 全国 > 地域 > 県 の1行。地域選択と県選択で同じ組み方にする */
+
+
+
+.pref-chips {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
+
+/* Empty state for 行きたい list */
+.empty-state {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--gray-400);
+    grid-column: 1 / -1;
+}
+
+.empty-state.visible {
+    display: block;
+}
+
+.empty-state-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    stroke: var(--gray-300);
+    fill: none;
+    stroke-width: 1.5;
+}
+
+.empty-state-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    margin-bottom: 0.4rem;
+}
+
+.empty-state-desc {
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+/* Google Calendar button */
+.gcal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    color: var(--text-color);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition);
+    margin-top: 0.75rem;
+}
+
+.gcal-btn:hover {
+    border-color: var(--black);
+    background: var(--gray-100);
+}
+
+.gcal-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Instagram card in detail sidebar */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ========================================
+   MAIN CONTENT AREA
+   ======================================== */
+
+main {
+    flex: 1;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.page-content {
+    max-width: 100%;
+}
+
+.content-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem 2rem;
+}
+
+
+
+/* ========================================
+   EVENTS GRID & CARDS
+   ======================================== */
+
+.events-section {
+    width: 100%;
+}
+
+.section-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 1rem;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.02em;
+}
+
+.section-heading--sub {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    color: var(--gray-500);
+    font-size: 0.95rem;
+}
+
+.event-count {
+    /* 見出しが display:flex なので、縮められて「50」「件」に
+       折れていた(2026-09-08 SPで発生)。縮めない・折らない */
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gray-400);
+    background: var(--gray-200);
+    padding: 0.15rem 0.6rem;
+    border-radius: 10px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    align-items: stretch;
+}
+
+.event-card {
+    /* Card filter animation classes */
+    animation: fadeInUp 0.4s ease both;
+    background-color: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all var(--transition);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--gray-200);
+}
+
+.event-card:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: transparent;
+    transform: translateY(-2px);
+}
+
+
+.event-card.event-ended .event-title,
+.event-card.event-ended .event-description {
+    color: var(--gray-500);
+}
+
+/* Card thumbnail image */
+.event-thumb {
+    width: 100%;
+    /* 1:1。アイキャッチの出所はほぼInstagramで、告知フライヤーは正方形。
+       16:9で cover すると縦が56%しか残らず(実測、最小31%)、
+       上のタイトルと下の日付・会場が両方消えていた(2026-09-08)。
+       枠は1:1のまま、中身は contain で切らない(下の .event-thumb img)。 */
+    aspect-ratio: 1 / 1;
+    display: block;
+    background-color: var(--gray-200);
+    overflow: hidden;
+}
+.event-thumb img {
+    width: 100%;
+    height: 100%;
+    /* 切らずに全体を出し、余りはグレーで埋める(2026-09-08)。
+       枠は1:1。自サイトに置いた告知フライヤーは正方形に揃えてあるので
+       余白は出ない。外部サイトの横長画像だけ上下に帯が出る。
+       余白が出るほうが、タイトルや日付が切れるよりよい。
+       枠を4:5にすると正方形の側にも帯が出て、両方が悪くなる
+       (実測: 4:5では正方形74件に上下20%、外部29件に55%の帯)。 */
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background-color: var(--gray-200);
+}
+
+
+.event-no-image::before {
+  display: none;
+}
+/* 画像が無い枠。以前は英字のプレースホルダ文字を出していたが、訪問者には壊れて見えるだけで
+   情報が無い。imageUrl 無しの開催予定は常時60〜80件あり新規は必ず画像なしで入るので
+   件数はゼロにならない。枠のほうを情報として成立させる(2026-08-24)。
+   onerror で後から class が付く経路では中身が空になるため、
+   そのときはグラデーションだけを見せる(:empty)。 */
+.event-no-image {
+    /* 文字が小さすぎて情報として読めていなかった(2026-09-22)。
+       枠の幅はカードの幅で変わる(実測 165〜300px)ので、rem で決めると
+       どこかの幅で必ず小さすぎるか溢れる。container query 単位にして
+       枠の幅に比例させる。container-type はここに置く。 */
+    container-type: inline-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* ブランドの BLACK #0B0B0B に合わせる */
+    background: radial-gradient(120% 100% at 50% 0%, #1f1f1f 0%, #0b0b0b 72%);
+    overflow: hidden;
+    flex-direction: column;
+    gap: 3.5cqw;
+    color: #F3EEE4;
+}
+.event-no-image .eni-pref {
+  /* 2文字が既定。3文字以上は Python 側が l3 / l4 を付ける。
+     枠に収まる上限を実測して決めた値で、変えるなら両方を直す。 */
+  font-size: 26cqw;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #F3EEE4;
+}
+.event-no-image .eni-pref.l3 { font-size: 20cqw; }
+.event-no-image .eni-pref.l4 { font-size: 15cqw; }
+.event-no-image .eni-date {
+  font-size: 11cqw;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #0b0b0b;
+  background: #F3EEE4;
+  border-radius: 999px;
+  padding: 2.6cqw 5.2cqw;
+}
+
+.event-card.event-ended .event-thumb {
+    /* opacity は 1030 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    filter: grayscale(0.7);
+    opacity: 0.7;
+}
+
+/* Favorite button */
+.fav-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.fav-btn:hover {
+    transform: scale(1.1);
+    background: var(--white);
+}
+
+.fav-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--gray-500);
+    fill: none;
+    stroke-width: 2;
+    transition: all var(--transition);
+}
+
+.fav-btn.favorited svg {
+    fill: var(--accent-pop);
+    stroke: var(--accent-pop);
+}
+
+.fav-btn.favorited {
+    background: rgba(255,255,255,0.95);
+}
+
+/* Fav filter active state */
+
+
+.event-card-body {
+    padding: 0.75rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-date {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--black);
+    background: none;
+    padding: 0;
+    letter-spacing: 0.03em;
+}
+
+.event-status {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--white);
+    background-color: var(--gray-400);
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.event-status:empty {
+    display: none;
+}
+
+/* Proximity color gradient: closer events = more vivid */
+.event-status.status-today {
+    background-color: #e84393;
+    animation: pulse-today 1.5s ease-in-out infinite;
+}
+@keyframes pulse-today {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+}
+/* 見出しの補足。その節に何が載っているかを見出し自身に書く
+   (「終了したイベント」だけでは全件あるように見える)。 */
+.section-heading-note {
+    display: inline-block;
+    margin-left: .6rem;
+    font-size: .72rem;
+    font-weight: 500;
+    color: var(--gray-500, #888);
+    letter-spacing: .02em;
+    vertical-align: middle;
+}
+
+/* 開催中(会期2日目以降)。会期の長い展示が最緊急色で出続けるのを避け、
+   落ち着いた色にする。緊急度の序列は 本日 > 明日/3日以内 > 開催中。 */
+.event-status.status-ongoing {
+    background-color: #4a8a7b;
+}
+.event-status.status-thisweek {
+    background-color: #d63031;
+}
+.event-status.status-soon {
+    background-color: #e17055;
+}
+.event-status.status-month {
+    background-color: #f39c12;
+}
+.event-status.status-upcoming {
+    background-color: #636e72;
+}
+.event-status.status-ended {
+    background-color: #e6e6e6;
+    color: #444;
+}
+
+.event-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.event-description {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    margin-bottom: 0.6rem;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+
+.tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background-color: #f0faf0;
+    color: #3a7d44;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    border: 1px solid #c8e6c9;
+}
+
+.event-link {
+    margin-top: auto;
+    padding-top: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--black);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition);
+    font-size: 0.78rem;
+}
+
+.event-link::after {
+    content: '→';
+    transition: transform var(--transition);
+    font-size: 0.85em;
+}
+
+.event-link:hover {
+    color: var(--gray-600);
+}
+
+.event-link:hover::after {
+    transform: translateX(3px);
+}
+
+/* Past Events Grid */
+.past-events {
+    opacity: 0.65;
+}
+
+/* ========================================
+   SCHEDULE TABLE (HIDDEN)
+   ======================================== */
+
+
+
+/* ========================================
+   SIDEBAR (HIDDEN)
+   ======================================== */
+
+.sidebar {
+    display: none;
+}
+
+/* ========================================
+   CONTENT PAGES
+   ======================================== */
+
+
+
+
+
+.legal-date {
+    color: var(--gray-500);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.legal-footer-info {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--gray-200);
+    color: var(--gray-500);
+    font-size: 0.9rem;
+}
+
+.disclaimer-notice {
+    background-color: var(--gray-100);
+    padding: 1.5rem;
+    border-left: 3px solid var(--black);
+    margin: 1.5rem 0;
+    border-radius: var(--radius-sm);
+}
+
+.disclaimer-notice p {
+    margin: 0;
+}
+
+
+
+
+
+
+
+
+
+/* ========================================
+   OPERATOR PAGE
+   ======================================== */
+
+
+
+
+
+
+
+.operator-table {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.operator-table tr {
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.operator-table th {
+    text-align: left;
+    font-weight: 700;
+    color: var(--black);
+    padding: 0.75rem 0;
+    width: 30%;
+}
+
+.operator-table td {
+    padding: 0.75rem 0 0.75rem 1rem;
+    color: var(--text-color);
+}
+
+
+/* detail hero no-image is removed entirely via HTML — this class kept as fallback */
+
+
+
+
+
+
+
+
+
+
+.detail-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    font-weight: 500;
+}
+
+.detail-meta-item strong {
+    color: var(--black);
+    font-weight: 700;
+}
+
+
+
+.detail-status-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--white);
+    background-color: var(--black);
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+}
+.detail-status-badge:empty {
+    display: none;
+}
+
+/* Info Grid — 2-column layout */
+
+
+
+.detail-sidebar {
+    position: sticky;
+    top: calc(var(--stuck-h) + 1rem);
+    align-self: start;
+}
+
+
+
+
+
+
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--gray-100);
+    gap: 0.75rem;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    flex-shrink: 0;
+    min-width: 70px;
+}
+
+.info-value {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--black);
+    text-align: right;
+}
+
+.info-value a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.info-value a:hover {
+    color: var(--gray-500);
+}
+
+
+.detail-section p {
+    color: var(--gray-600);
+    line-height: 1.85;
+    margin-bottom: 0.85rem;
+    font-size: 0.92rem;
+}
+
+/* Map in detail */
+
+
+
+
+/* Back button */
+.detail-back {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.detail-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--black);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.2rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+}
+
+.detail-back-link:hover {
+    background-color: var(--gray-100);
+    border-color: var(--black);
+}
+
+.detail-back-link::before {
+    content: '←';
+}
+
+/* Legacy detail page support */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.event-description h2 {
+    color: var(--black);
+}
+
+.event-description p {
+    color: var(--text-color);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+
+
+
+
+
+
+/* ========================================
+   ERROR PAGE (404)
+   ======================================== */
+
+
+
+.error-code {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 1rem;
+}
+
+
+
+
+
+/* ========================================
+   CONTACT FORM
+   ======================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contact-form-section iframe {
+    width: 100%;
+    min-height: 600px;
+    border-radius: var(--radius-sm);
+    border: none;
+    margin-top: 1.5rem;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 3rem 2rem 1.5rem;
+    margin-top: 3rem;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.footer-logo .logo-en {
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.footer-nav a {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.footer-nav a:hover {
+    color: var(--white);
+}
+
+.footer-copy {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.66);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Amazon アソシエイトの表記(運営規約第5条)。全頁のフッターに出す (2026-10-20) */
+.footer-aff {
+    text-align: center;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 1rem;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .events-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    
+
+    .detail-sidebar {
+        order: -1;
+        position: static;
+        align-self: auto;
+    }
+
+    
+}
+
+@media (max-width: 768px) {
+    .header-inner {
+        padding: 0.45rem 1rem;
+    }
+
+    .logo-en {
+        font-size: 0.8rem;
+    }
+
+    .logo-jp {
+        font-size: 0.55rem;
+    }
+
+    /* Mobile: show compact heart icon only, hide label */
+    .ikitai-blob-btn .ikitai-label {
+        display: none;
+    }
+    .ikitai-blob-btn {
+        padding: 0.35rem;
+    }
+    .ikitai-blob-btn .blob-bg {
+        inset: -2px;
+    }
+    .ikitai-blob-btn .ikitai-heart {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Nav overlay ikitai link */
+    .nav-ikitai-link {
+        display: flex !important;
+        align-items: center;
+        gap: 0.5rem;
+        color: #e63946 !important;
+    }
+    .nav-ikitai-link svg {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        fill: #e63946;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-overlay-inner {
+        padding: 5rem 1.5rem 2rem;
+        gap: 1.5rem;
+    }
+
+    .nav-overlay a {
+        font-size: 1.2rem;
+    }
+
+    
+
+    
+
+    
+
+    
+
+    
+    /* パンくずの大きさと帯の高さはここで一括。個別に書くと必ず食い違う */
+    :root {
+        --crumb-size: 0.72rem;
+        --crumb-pad: 0.3rem 0.68rem;
+        --crumb-sep-size: 0.66rem;
+        --header-h: 38px;
+        --crumb-h: 44px;
+    }
+
+    
+
+    .filter-tab {
+        padding: 0.3rem 0.65rem;
+        font-size: 0.75rem;
+    }
+
+    .content-inner {
+        padding: 1rem;
+    }
+
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .event-title {
+        font-size: 0.9rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    
+
+    .detail-page {
+        padding: 0 1rem 2rem;
+    }
+
+    
+
+    
+
+    .detail-sidebar {
+        order: -1;
+        position: static;
+        align-self: auto;
+    }
+
+    
+
+    
+
+    
+
+    .contact-form-section iframe {
+        min-height: 500px;
+    }
+
+    .footer-nav {
+        gap: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .error-code {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-inner {
+        padding: 0.4rem 0.75rem;
+    }
+
+    .logo-en {
+        font-size: 0.72rem;
+    }
+
+    .logo-jp {
+        font-size: 0.5rem;
+    }
+
+
+    .filter-tab {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    
+
+    
+
+    .content-inner {
+        padding: 0.75rem;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .event-card-body {
+        padding: 0.5rem 0.75rem 0.75rem;
+    }
+
+    .event-title {
+        font-size: 0.85rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .event-description {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .event-date {
+        font-size: 0.65rem;
+    }
+
+    .event-status {
+        font-size: 0.55rem;
+        padding: 0.15rem 0.4rem;
+    }
+
+    .tag {
+        font-size: 0.6rem;
+        padding: 0.1rem 0.35rem;
+    }
+
+    .event-link {
+        font-size: 0.75rem;
+    }
+
+    .card-fav-bar {
+        padding: 0.45rem 0.5rem;
+        gap: 0.3rem;
+    }
+    .card-fav-bar svg {
+        width: 14px;
+        height: 14px;
+    }
+    .card-fav-bar span {
+        font-size: 0.7rem;
+    }
+
+    
+
+    .detail-page {
+        padding: 0 0.75rem 2rem;
+    }
+
+    
+
+    
+
+    .detail-meta-item {
+        font-size: 0.78rem;
+    }
+
+    
+
+    
+
+    
+
+    
+
+    .contact-form-section iframe {
+        min-height: 400px;
+    }
+
+    
+
+    
+
+    .footer {
+        padding: 2rem 1rem 1rem;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+
+    .error-code {
+        font-size: 2.5rem;
+    }
+
+    
+}
+
+/* Share Buttons */
+
+
+
+
+
+
+
+/* Detail page: 行きたいボタン — header内右上配置 */
+
+.detail-fav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.2rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--gray-500);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+}
+.detail-fav-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+.detail-fav-btn:hover {
+    border-color: var(--accent-pop);
+    color: var(--accent-pop);
+}
+.detail-fav-btn.is-fav {
+    border-color: var(--accent-pop);
+    background: var(--accent-pop);
+    color: var(--white);
+}
+.detail-fav-btn.is-fav svg {
+    fill: var(--white);
+}
+
+/* Detail page: 注意文言 */
+/* 訂正の受け口。以前は灰色の箱に中央揃えで、
+   「万が一誤りがある場合は申し訳ございません」という言い回しだった。
+   謝る場所ではなく直す先を示す場所なので、一行の脇書きにした
+   (2026-09-08 指摘) */
+.correction-notice {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    padding: 0.9rem 0 0;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: var(--gray-500);
+}
+.correction-notice a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.correction-notice a:hover {
+    text-decoration: underline;
+}
+
+/* Algolia search */
+
+
+
+
+
+
+
+
+
+
+/* Detail page: ikitai link */
+
+
+
+/* Category navigation */
+
+
+
+
+
+/* Empty state button */
+.empty-state-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.5rem;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+.empty-state-btn:hover { opacity: 0.8; }
+
+/* Category links under filter tabs */
+
+
+
+
+/* Fav tab as link */
+
+
+@media (max-width: 768px) {
+    
+    
+    .correction-notice { margin: 0 1rem 2rem; }
+    .detail-hero { margin: 0 -1rem; }
+}
+@media (max-width: 480px) {
+    .detail-hero { margin: 0 -0.75rem; }
+}
+
+
+
+
+
+
+
+
+.affiliate-desc {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0 0 1rem 0;
+}
+.affiliate-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.affiliate-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.75rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #eee;
+    border-radius: 0;
+    color: #222;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.affiliate-item:last-of-type {
+    border-bottom: none;
+}
+/* 主動線: 理由を書いた一文をそのままリンクにする */
+
+
+
+
+
+
+
+
+.affiliate-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+.affiliate-icon svg {
+    color: #666;
+}
+
+.affiliate-item-label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+
+
+/* 文中アフィリエイトリンク: 意図がピークする段落に埋める主動線 */
+.aff-inline {
+    color: #111;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+}
+.aff-inline:hover { background: #f5f5dc; }
+.aff-inline-pr {
+    display: inline-block;
+    margin-left: .3em;
+    font-size: .62em;
+    font-weight: 700;
+    color: #fff;
+    background: #999;
+    border-radius: 3px;
+    padding: .08em .32em;
+    vertical-align: 1px;
+    text-decoration: none;
+}
+.aff-disclosure {
+    font-size: .78rem;
+    color: #777;
+    background: #fafafa;
+    border-left: 3px solid #ddd;
+    padding: .5rem .7rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+}
+.affiliate-notice {
+    font-size: 0.7rem;
+    color: #aaa;
+    margin: 0.75rem 0 0 0;
+    text-align: right;
+}
+
+/* ========================================
+   MOBILE CARD FAV ACTION BAR + SWIPE
+   ======================================== */
+
+/* Action bar hidden on desktop, shown on mobile */
+.card-fav-bar {
+    display: none;
+}
+.swipe-hint {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Hide the small overlay heart on mobile */
+    .event-card .fav-btn {
+        display: none;
+    }
+
+    /* Show card fav action bar at bottom */
+    .card-fav-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.55rem 0.75rem;
+        border-top: 1px solid var(--gray-200);
+        background: var(--gray-100);
+        cursor: pointer;
+        transition: all 0.25s;
+        -webkit-tap-highlight-color: transparent;
+        margin-top: auto;
+        flex-shrink: 0;
+        user-select: none;
+    }
+    .card-fav-bar svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--gray-500);
+        fill: none;
+        stroke-width: 2;
+        flex-shrink: 0;
+        transition: all 0.25s;
+    }
+    .card-fav-bar span {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--gray-500);
+        transition: color 0.25s;
+    }
+    .card-fav-bar.is-fav {
+        background: var(--accent-pop);
+        border-color: var(--accent-pop);
+    }
+    .card-fav-bar.is-fav svg {
+        stroke: var(--white);
+        fill: var(--white);
+    }
+    .card-fav-bar.is-fav span {
+        color: var(--white);
+    }
+    .card-fav-bar:active {
+        transform: scale(0.97);
+    }
+
+    /* Swipe visual feedback */
+    .event-card {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        overflow: hidden;
+    }
+    .event-card.swiping-right,
+    .event-card.swipe-confirm {
+        overflow: visible;
+    }
+    .event-card.swiping-right {
+        box-shadow: -4px 0 12px rgba(230, 57, 70, 0.2);
+    }
+    .event-card.swipe-confirm {
+        animation: swipeConfirm 0.4s ease;
+    }
+    @keyframes swipeConfirm {
+        0%   { transform: translateX(0); }
+        30%  { transform: translateX(20px); }
+        100% { transform: translateX(0); }
+    }
+
+    /* Swipe hint overlay */
+    .swipe-hint {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(230, 57, 70, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s;
+        border-radius: var(--radius);
+        z-index: 5;
+    }
+    .swipe-hint-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--accent-pop);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.5);
+        opacity: 0;
+        transition: all 0.2s ease;
+    }
+    .swipe-hint-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: white;
+        fill: white;
+        stroke-width: 2;
+    }
+    .event-card.swiping-right .swipe-hint {
+        opacity: 1;
+    }
+    .event-card.swiping-right .swipe-hint-icon {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ============================
+   広告・アフィリエイト
+   ============================ */
+
+/* AdSense共通 */
+
+
+.aff-pr {
+    display: inline-block;
+    font-size: 0.6rem;
+    background: var(--gray-200);
+    color: var(--gray-500);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+}
+
+/* アフィリエイトスロット */
+.aff-slot {
+    margin: 0.75rem 0;
+    padding: 0;
+}
+
+/* マップで開くリンク非表示（地図埋め込みで代替） */
+
+
+/* Instagram投稿の埋め込み（投稿/リールURLが instagramUrl にある場合） */
+.detail-instagram-embed {
+  margin-top: 1.5rem;
+}
+.detail-instagram-embed .instagram-embed-wrap {
+  position: relative;
+  max-width: 540px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  background: #fff;
+}
+.detail-instagram-embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 720px;
+  border: 0;
+}
+.detail-instagram-embed .instagram-embed-link {
+  margin: .6rem 0 0;
+  text-align: center;
+  font-size: .85rem;
+}
+.detail-instagram-embed .instagram-embed-link a {
+  color: var(--gray-600, #666);
+  text-decoration: none;
+}
+.detail-instagram-embed .instagram-embed-link a:hover {
+  text-decoration: underline;
+}
+
+/* カード全体クリック化（event-link 廃止に伴うカーソル表示） */
+.events-grid .event-card[data-slug]:not(.event-ended) {
+  cursor: pointer;
+}
+
+/* === Share buttons (added 2026-05-04) === */
+.detail-share {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.5rem 0 0.5rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: var(--gray-100, #f7f7f7);
+    border-radius: var(--radius, 12px);
+}
+
+.share-btn {
+    /* align-items, border-radius, display, font-size, font-weight, gap, padding, text-decoration は 2349 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+}
+.share-btn:hover {
+    /* opacity は 2362 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    opacity: 0.85;
+}
+.share-btn:active { transform: scale(0.97); }
+
+
+.share-btn.share-copy { background: #fff; color: #333; border-color: #ddd; }
+
+
+/* === Footer extended nav (SEO internal linking, added 2026-05-04) === */
+
+
+.footer-nav-tertiary {
+    margin-top: 1rem !important;
+    opacity: 0.7;
+    font-size: 0.7rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.7rem;
+    flex-wrap: wrap;
+}
+
+/* Enriched content sections (AdSense / E-E-A-T 強化用 / モノクロ統一) */
+.detail-enriched {
+  margin-top: 1.5rem;
+}
+.detail-enriched p {
+  line-height: 1.85;
+  color: #222;
+}
+.detail-enriched .visit-tips-list,
+.detail-enriched .related-guides-list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.4rem;
+  line-height: 1.85;
+}
+.detail-enriched .visit-tips-list li,
+.detail-enriched .related-guides-list li {
+  margin: 0.4rem 0;
+}
+.detail-enriched .related-guides-list a {
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.detail-enriched .related-guides-list a:hover {
+  color: #444;
+}
+.detail-enriched .related-guides-more {
+  margin-top: 0.6rem;
+  text-align: right;
+}
+.detail-enriched .related-guides-more a {
+  color: #222;
+  font-weight: 600;
+}
+
+.detail-mission p {
+  margin: 0;
+  font-size: 0.95em;
+  color: #222;
+}
+.detail-mission a {
+  color: #111;
+  text-decoration: underline;
+}
+
+/* === detail enriched sections (2026-06) — モノクロ基調 === */
+.data-summary{color:#555;font-size:.92em;line-height:1.8;margin-top:.7em;padding-top:.7em;border-top:1px dashed #e3e3e3}
+
+
+
+
+
+
+
+
+.detail-faq .faq-item{margin:.9em 0;padding-bottom:.9em;border-bottom:1px solid #efefef}
+.detail-faq .faq-item:last-of-type{border-bottom:none;padding-bottom:0}
+
+.detail-faq .faq-q::before{content:"Q. ";color:#6e6e6e}
+
+.detail-faq .faq-a::before{content:"A. ";color:#6e6e6e;font-weight:700}
+.detail-mission {
+    /* background, border-radius, padding は 3072 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    border-left: 3px solid #222;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-radius:8px;
+    padding:.8em 1em;
+}
+.mission-note{margin:0;font-size:.85em;color:#666;line-height:1.7}
+.mission-note a{color:#444}
+.series-watch-note{font-size:.85em;color:#777;background:#fafafa;border:1px dashed #ddd;border-radius:6px;padding:.6em .8em;margin-top:.6em}
+.series-watch-note a{color:#444}
+
+/* === detail UX 2026-07: date-hero / visitor-guide / faq accordion === */
+.date-hero{background:#111;color:#fff;border-radius:var(--radius,12px);margin:0 0 1.4rem;overflow:hidden}
+.dh-inner{padding:1.6rem 1.5rem 1.4rem;display:flex;flex-direction:column;gap:.3rem;background:
+  radial-gradient(ellipse at 85% -20%, rgba(255,255,255,.14), transparent 55%),
+  repeating-linear-gradient(135deg, transparent 0 22px, rgba(255,255,255,.045) 22px 23px)}
+.dh-date{font-size:3.2rem;font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.dh-date .dh-tilde{opacity:.45;margin:0 .12em;font-weight:400}
+.dh-date.dh-tbd{font-size:2.2rem;opacity:.85}
+.dh-sub{font-size:.85rem;color:rgba(255,255,255,.75);letter-spacing:.06em}
+.dh-chips{display:flex;gap:.4rem;margin-top:.55rem;flex-wrap:wrap}
+.dh-chip{font-size:.72rem;font-weight:700;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:.18em .75em;color:#fff}
+
+.info-label .i{vertical-align:-2px;margin-right:.45em;color:#999}
+
+.visitor-guide{border:1px solid #e8e8e8;border-radius:10px;margin:1.6rem 0;background:#fcfcfc}
+.visitor-guide summary{cursor:pointer;padding:.9rem 1.1rem;font-weight:700;font-size:.95rem;color:#333;list-style:none;display:flex;align-items:center;gap:.6rem}
+.visitor-guide summary::-webkit-details-marker{display:none}
+.visitor-guide summary::after{content:"+";margin-left:auto;font-size:1.25rem;color:#999;font-weight:400;transition:transform .2s}
+.visitor-guide[open] summary::after{transform:rotate(45deg)}
+.vg-icon{flex:none;width:1.35rem;height:1.35rem;border:1.5px solid #bbb;border-radius:50%;color:#888;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.vg-body{padding:0 1.1rem 1rem;color:#444;line-height:1.85;font-size:.93rem;border-top:1px dashed #e5e5e5}
+.vg-body p{margin:.9rem 0 .6rem}
+.vg-body .visit-tips-list{margin:.2rem 0 0;padding-left:1.3em}
+.vg-body .visit-tips-list li{margin:.45em 0}
+
+.detail-faq details.faq-item{margin:0;padding:0;border-bottom:1px solid #efefef}
+.detail-faq details.faq-item:last-of-type{border-bottom:none}
+.detail-faq .faq-q {
+    font-size:.98em;
+    font-weight:700;
+    color:#111;
+    margin:0 0 .35em;
+    cursor:pointer;
+    padding:.8em 0;
+    list-style:none;
+    display:flex;
+    align-items:baseline;
+}
+.detail-faq .faq-q::-webkit-details-marker{display:none}
+.detail-faq .faq-q::after{content:"+";margin-left:auto;color:#aaa;font-size:1.1rem;padding-left:1em}
+.detail-faq details[open] .faq-q::after{content:"−"}
+.detail-faq .faq-a {
+    /* margin は 3102 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    color:#444;
+    line-height:1.75;
+    margin:0 0 1em;
+    padding-right:1.5em;
+}
+
+@media (max-width:480px){
+  .dh-date{font-size:2.5rem}
+  .dh-inner{padding:1.2rem 1.1rem 1.1rem}
+  .detail-section-title{font-size:1.05rem}
+}
+
+/* === detail 見出し/カードUI刷新 2026-07 === */
+.detail-section-title {
+    /* border-bottom, color, font-size, font-weight, padding-bottom は 1685 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    margin-bottom: 1rem;
+    position:relative;
+    font-size:1.15rem;
+    font-weight:900;
+    letter-spacing:-.01em;
+    color:#111;
+    margin:0 0 .8em;
+    padding-bottom:.55em;
+    border-bottom:2px solid #111;
+}
+.detail-section-title::before{content:attr(data-kicker);display:block;font-size:.62rem;font-weight:700;letter-spacing:.22em;color:#767676;margin-bottom:.35em}
+.detail-section-title:not([data-kicker])::before{content:none}
+.detail-section {
+    /* Detail section headings */
+    margin-bottom: 2rem;
+    margin:1.6rem 0 2rem;
+}
+.section-note{font-size:.85rem;color:#6e6e6e;line-height:1.75;margin:.2em 0 1em}
+
+.mini-grid{display:grid;grid-template-columns:1fr;gap:.5rem;margin-top:.9em}
+.mini-card{display:flex;align-items:center;gap:.85rem;border:1px solid #e7e7e7;border-radius:9px;padding:.62rem .85rem;text-decoration:none;color:inherit;background:#fff;transition:border-color .15s,transform .15s,box-shadow .15s}
+.mini-card:hover{border-color:#111;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.mc-date{flex:none;width:4.2em;color:#111;border-right:1px solid #e8e8e8;padding-right:.7em;font-weight:800;font-size:.78rem;letter-spacing:.01em;font-variant-numeric:tabular-nums;line-height:1.3;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.mc-date .mc-l{display:block;white-space:nowrap}
+.mc-date .mc-to{color:#777;font-weight:700;font-size:.92em}
+.mini-card.is-ended .mc-date{color:#b0b0b0}
+.mc-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:.15em}
+.mc-name{font-weight:700;font-size:.95rem;color:#111;line-height:1.4}
+.mc-meta{font-size:.78rem;color:#6e6e6e}
+.mc-state{flex:none;margin-left:auto;font-size:.7rem;color:#6e6e6e;border:1px solid #ddd;border-radius:4px;padding:.15em .5em}
+@media (min-width:769px){.mini-grid{grid-template-columns:1fr 1fr}}
+
+/* === event-hero 編集誌型レイアウト 2026-07 === */
+.detail-page {
+    /* max-width は 1506 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    /* ========================================
+       EVENT DETAIL PAGE — Airbnb-style
+       ======================================== */
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    max-width:820px;
+}
+.event-hero{padding-top:1rem}
+.eh-kicker{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.eh-chip{font-size:.72rem;font-weight:700;letter-spacing:.08em;background:#111;color:#fff;border-radius:4px;padding:.28em .7em}
+
+.eh-title{font-size:clamp(1.75rem,5.2vw,2.7rem);font-weight:900;letter-spacing:-.022em;line-height:1.16;margin:.45em 0 .55em;color:#111}
+.eh-spec{border-top:2px solid #111;margin-top:.2rem}
+.detail-hero+.eh-spec{margin-top:0}
+.eh-spec .info-row{display:grid;grid-template-columns:7.2em 1fr;gap:0 1rem;align-items:baseline;padding:.72em .1em;border-bottom:1px solid #eaeaea;margin:0}
+.eh-spec .info-label{font-size:.78rem;font-weight:700;color:#707070;letter-spacing:.05em}
+.eh-spec .info-label .i{vertical-align:-2px;margin-right:.4em;color:#c2c2c2}
+.eh-spec .info-value{font-size:.95rem;color:#111;line-height:1.65;text-align:left}
+.eh-spec .info-value a{color:#111;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#bbb}
+.detail-main {
+    min-width: 0;
+    padding-top:0;
+}
+.detail-hero {
+    /* margin は 1512 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    overflow: hidden;
+    border-radius: var(--radius);
+    margin:.2rem 0 1rem;
+}
+/* 見た目の枠だけ。比率と object-fit は上の .detail-hero-img と
+   下の .eh-lead .detail-hero-img が持つ。ここに比率を書かないこと
+   (同じ規則が3か所に散ると必ず食い違う。2026-09-08 に実際に起きた) */
+.detail-hero-img {
+    /* width は 1518 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    aspect-ratio: 1 / 1;
+    display: block;
+    max-height: 560px;
+    object-fit: contain;
+    object-position: center;
+    background-color: var(--gray-200);
+    width:100%;
+    border-radius:12px;
+    border:1px solid #eee;
+}
+@media (max-width:480px){
+  .eh-spec .info-row{grid-template-columns:5.6em 1fr}
+}
+
+/* ========================================
+   EVENT HERO 情報の並び (2026-07-29 調整)
+   画像は補助。日時・会場が最初に目に入るよう横並びにする。
+   ======================================== */
+/* 詳細の先頭。**画像の有無にかかわらず1カラムの縦積み。**
+   以前はPCで「画像300px + 情報」の2カラムに組み、画像が無い回だけ
+   1カラムに落としていた。同じ種類のページで組みが変わるので、
+   見比べたときに別のサイトのように見えた(2026-09-08 指摘)。
+   縦に積めば画像の有無で変わるのは高さだけになる。 */
+.eh-lead {
+    display: block;
+    margin-top: 0.9rem;
+}
+.eh-lead .detail-hero {
+    /* コンテンツ幅いっぱい(2026-09-08 指摘)。
+       1枚しか出さないので、カードのように高さを揃える必要がない。
+       枠の比率をやめて画像そのままの形で置く。帯も見切れも出ない */
+    max-width: 100%;
+    margin: 0 0 1.1rem;
+    border-radius: 10px;
+    border: 1px solid #ececec;
+    overflow: hidden;
+}
+/* フライヤーは正方形が多い。切ると会期や会場名が落ちるので全体を収める。
+   **ここが詳細ページの実効ルール。**基底の .detail-hero-img (上方) は
+   詳細相当度が低く、この .eh-lead 配下の指定に負ける。
+   2026-09-08 に基底だけを 1:1 に直して「効いていない」と誤認した。
+   枠は 1:1。自サイトに置いたフライヤーは正方形に揃えてあるので余白が出ない。
+   4:3 だと正方形に左右25%の帯が出る(実測。開催予定で画像がある103件のうち
+   74件が正方形)。 */
+.eh-lead .detail-hero-img {
+    /* 1:1の枠に contain で入れていたので、縦長のフライヤーは左右に、
+       横長の写真は上下に灰色の帯が出ていた。詳細は1枚だけなので
+       枠を決めず、画像の形のまま出す(2026-09-08 指摘) */
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    max-height: none;
+    object-fit: fill;
+    background: none;
+}
+.eh-lead .eh-spec { margin-top: 0; }
+
+
+@media (max-width: 720px) {
+    .eh-lead {
+        margin-top: 0.7rem;
+    }
+    .eh-lead .detail-hero {
+        margin-bottom: 0.9rem;
+    }
+    /* モバイルも切らない。16:10 にすると正方形のフライヤーが
+       左右44%も帯になって、肝心の文字が小さくなる。
+       1:1 のまま max-height で高さを抑え、日時が画面内に残るようにする。 */
+    .eh-lead .detail-hero-img {
+        aspect-ratio: auto;
+        max-height: none;
+    }
+}
+
+/* 共有系は主動線ではないので視覚的な重みを落とす */
+.eh-actions .share-btn,
+.eh-meta-note {
+    font-size: .72rem;
+    color: #9a9a9a;
+    margin: .55rem 0 0;
+    line-height: 1.6;
+}
+.eh-meta-note a { color: #7a7a7a; text-decoration: underline; }
+.eh-meta-note a:hover { color: #111; }
+.eh-body { min-width: 0; }
+.eh-meta-note .ehm-sep { margin: 0 .45em; color: #d0d0d0; }
+
+/* ========================================
+   AFFILIATE BLOCK — 目立たせるための上書き (2026-07-30)
+   既存定義は変更せず、後勝ちで上書きする(範囲置換で他を壊した事故の再発防止)。
+   モノクロ基調を崩さず、サイズ・太さ・黒ベタだけで階層をつける。
+   ======================================== */
+.affiliate-section {
+    /* background, border, border-radius, border-top, padding は 2618 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    /* ========================================
+       AMAZON AFFILIATE SECTION
+       ======================================== */
+    margin-top: 1.5rem;
+    margin: 2rem 0 1.5rem;
+    background: #fff;
+    border: 1px solid #111;
+    border-top: 1px solid #111;
+    border-radius: 12px;
+    padding: 1.2rem 1.1rem 1rem;
+}
+.aff-head {
+    display: flex;
+    align-items: baseline;
+    gap: .55rem;
+    margin-bottom: .2rem;
+}
+.affiliate-section h3 {
+    /* color, font-size, font-weight, margin は 2626 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    font-size: 1.08rem;
+    font-weight: 900;
+    letter-spacing: -.015em;
+    color: #111;
+    margin: 0;
+    line-height: 1.35;
+}
+.affiliate-section .affiliate-desc {
+    font-size: .8rem;
+    color: #777;
+    margin: 0 0 1rem;
+    line-height: 1.55;
+}
+.affiliate-section .affiliate-links {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+.affiliate-section .affiliate-item {
+    display: block;
+    border: 1px solid #e6e6e6;
+    border-radius: 9px;
+    padding: .1rem;
+    background: #fff;
+    font-size: inherit;
+    transition: border-color .15s, box-shadow .15s;
+}
+.affiliate-section .affiliate-item:hover {
+    border-color: #111;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+.affiliate-section .aff-row {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .7rem .75rem;
+    text-decoration: none;
+    color: #111;
+}
+.affiliate-section .affiliate-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    border-radius: 8px;
+}
+.affiliate-section .aff-row-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .7rem;
+    flex: 1;
+    min-width: 0;
+}
+.affiliate-section .affiliate-item-label {
+    display: block;
+    font-size: .9rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #111;
+    margin: 0;
+}
+
+
+
+/* 1件目を主役として扱う */
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 560px) {
+    .affiliate-section { padding: 1.05rem .9rem .85rem; margin: 1.6rem 0 1.2rem; }
+    .affiliate-section h3 { font-size: 1rem; }
+    /* 通常行もモバイルでは縦積みにしてタップ範囲を確保する */
+    .affiliate-section .aff-row-body { flex-direction: column; align-items: stretch; gap: .55rem; }
+    
+    
+}
+
+/* ========================================
+   RAKUTEN PRODUCT CARD (.rk-*) — 2026-07-30
+   旧実装(ads.jsの横スクロールカード)の .aff-card 系CSSがstyle.cssに残っており、
+   flex:0 0 130px と overflow:hidden が縦並びコンテナで高さを固定して
+   価格行を切り捨てていた。上書きで戦わずクラス名を分離する。
+   ======================================== */
+.affiliate-section .rk-card {
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    padding: .85rem .8rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 9px;
+    background: #fff;
+    text-decoration: none;
+    color: #111;
+    transition: border-color .15s, box-shadow .15s;
+}
+.affiliate-section .rk-card:hover {
+    border-color: #111;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+.affiliate-section .rk-card + .rk-card { margin-top: .55rem; }
+.affiliate-section .rk-card-img {
+    flex: 0 0 auto;
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+.affiliate-section .rk-card-body { flex: 1 1 auto; min-width: 0; }
+.affiliate-section .rk-card-why {
+    display: block;
+    font-size: .93rem;
+    font-weight: 800;
+    line-height: 1.45;
+    color: #111;
+    margin-bottom: .28rem;
+}
+.affiliate-section .rk-card-name {
+    display: block;
+    max-height: 2.3em;
+    overflow: hidden;
+    font-size: .74rem;
+    line-height: 1.5;
+    color: #6b6b6b;
+    margin-bottom: .45rem;
+}
+.affiliate-section .rk-card-meta {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+.affiliate-section .rk-card-price {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #111;
+    letter-spacing: -.01em;
+}
+.affiliate-section .rk-card-rev { font-size: .7rem; color: #999; }
+.affiliate-section .rk-card-shop {
+    font-size: .64rem;
+    font-weight: 700;
+    color: #fff;
+    background: #bf0000;
+    border-radius: 3px;
+    padding: .16em .45em;
+    white-space: nowrap;
+}
+@media (max-width: 480px) {
+    .affiliate-section .rk-card { gap: .7rem; padding: .75rem .65rem; }
+    .affiliate-section .rk-card-img { width: 72px; height: 72px; }
+    .affiliate-section .rk-card-why { font-size: .88rem; }
+}
+
+
+.affiliate-section .aff-shop-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: .55em .7em;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 7px;
+    background: #fff;
+    color: #333;
+    font-size: .8rem;
+    font-weight: 800;
+    text-decoration: none;
+    line-height: 1.25;
+    text-align: center;
+    transition: border-color .15s, color .15s, background .15s;
+}
+.affiliate-section .aff-shop-btn:hover { background: #fafafa; }
+.affiliate-section .aff-shop-btn[data-shop="amazon"] { border-color: #ff9900; color: #b36b00; }
+.affiliate-section .aff-shop-btn[data-shop="amazon"]:hover { background: #ff9900; color: #fff; }
+.affiliate-section .aff-shop-btn[data-shop="yahoo"] { border-color: #ff0033; color: #c40028; }
+.affiliate-section .aff-shop-btn[data-shop="yahoo"]:hover { background: #ff0033; color: #fff; }
+.affiliate-section .aff-shop-btn[data-shop="rakuten"] { border-color: #bf0000; color: #a10000; }
+.affiliate-section .aff-shop-btn[data-shop="rakuten"]:hover { background: #bf0000; color: #fff; }
+@media (max-width: 480px) {
+    .affiliate-section .aff-shop-btns { padding: .1rem .65rem .7rem; }
+    .affiliate-section .aff-shop-btn { min-height: 44px; font-size: .82rem; }
+}
+
+/* メルカリで株そのものを見る1行 (2026-10-20)。枠の先頭に置き、資材と破線で分ける */
+.affiliate-section .aff-mercari {
+    margin: 0 0 1rem;
+    padding: 0 0 1rem;
+    border-bottom: 1px dashed #d8d8d8;
+}
+.affiliate-section .aff-mercari .aff-head { margin-bottom: .6rem; }
+.affiliate-section .aff-mercari-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: .55em .8em;
+    border: 1.5px solid #e8343a;
+    border-radius: 7px;
+    background: #fff;
+    color: #c4161c;
+    font-size: .84rem;
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
+    text-wrap: balance;
+    text-decoration: none;
+    transition: color .15s, background .15s;
+}
+.affiliate-section .aff-mercari-btn:hover { background: #e8343a; color: #fff; }
+.affiliate-section .aff-mercari-note {
+    font-size: .72rem;
+    color: #888;
+    line-height: 1.5;
+    margin: .4rem 0 0;
+}
+
+/* 商品が取れなかった行。カード行と余白を揃える (2026-07-30) */
+.affiliate-section .aff-row-plain { padding: .8rem .8rem .55rem; }
+.affiliate-section .aff-row-plain .affiliate-item-label { font-size: .93rem; font-weight: 800; }
+
+/* ボタン間隔を広げる (2026-07-30) — .45rem では指で押し分けにくかった */
+.affiliate-section .aff-shop-btns {
+    /* gap は 3490 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    /* ========================================
+       SHOP BUTTONS (.aff-shop-btn) — 2026-07-30
+       Amazon / Yahoo! への導線が 0.72rem の灰色下線テキストで押されない形だった。
+       タップ範囲を確保したボタンにする。店の識別色は枠線と文字色だけに使い、
+       モノクロ基調を崩さない。
+       ======================================== */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    padding: .1rem .8rem .75rem;
+    gap: .7rem;
+    padding-top: .55rem;
+}
+
+/* ========================================
+   MOBILE STICKY AFFILIATE BAR (.aff-bar) — 2026-07-30
+   スマホ主体のため画面下に1件だけ固定表示する。
+   画面の1/4ほど読み進めたら出し(2026-10-20 まで頁の45%)、本文中の枠が見えている間は隠す。
+   ×で当セッション中は再表示しない。iPhoneのセーフエリアを考慮。
+   ======================================== */
+.aff-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 800;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    border-top: 1px solid #e2e2e2;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, .1);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform: translateY(110%);
+    transition: transform .22s ease;
+}
+.aff-bar.is-shown { transform: translateY(0); }
+
+.aff-bar-link {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .5rem .3rem .5rem .6rem;
+    text-decoration: none;
+    color: #111;
+}
+.aff-bar-img {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background: #fff;
+}
+/* Amazon は商品画像を出せないので、品目のアイコンを同じ大きさで置く (2026-10-20) */
+.aff-bar-icon {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f1dcb8;
+    border-radius: 5px;
+    background: #fff8ec;
+    color: #b36b00;
+}
+.aff-bar-icon svg { width: 26px; height: 26px; }
+.aff-bar-body { min-width: 0; flex: 1 1 auto; }
+.aff-bar-why {
+    display: block;
+    font-size: .8rem;
+    font-weight: 800;
+    line-height: 1.3;
+    max-height: 2.1em;
+    overflow: hidden;
+    color: #111;
+}
+.aff-bar-pr {
+    display: inline-block;
+    margin-left: .35em;
+    font-size: .58rem;
+    font-weight: 700;
+    color: #fff;
+    background: #aaa;
+    border-radius: 3px;
+    padding: .1em .3em;
+    vertical-align: 1px;
+}
+.aff-bar-meta {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin-top: .15rem;
+}
+.aff-bar-price { font-size: .88rem; font-weight: 900; color: #111; }
+.aff-bar-shop {
+    font-size: .58rem;
+    font-weight: 700;
+    color: #fff;
+    background: #bf0000;
+    border-radius: 3px;
+    padding: .12em .35em;
+}
+.aff-bar-shop.is-amazon { background: #ff9900; color: #111; }
+.aff-bar-go {
+    flex: 0 0 auto;
+    align-self: center;
+    background: #111;
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 800;
+    border-radius: 6px;
+    padding: .6em 1em;
+    white-space: nowrap;
+}
+.aff-bar-close {
+    flex: 0 0 auto;
+    width: 38px;
+    border: none;
+    border-left: 1px solid #eee;
+    background: #fff;
+    color: #888;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.aff-bar-close:hover { color: #111; background: #fafafa; }
+
+@media (min-width: 721px) {
+    .aff-bar { display: none; }
+}
+
+/* ============================================================
+   一覧UI(もっと見る)。index.html のインライン <style> にあったため
+   ランディング106枚に効かず、別のカード実装を持つ理由になっていた。
+   .event-card を使う全ページで同じ挙動にするため style.css に移した
+   (2026-08-20)。
+   ============================================================ */
+    /* Load More: 初回は12件表示（終了は4件）、残りはhidden（SEO: HTML上は全件存在） */
+    .events-grid .event-card.load-more-hidden {
+        display: none !important;
+    }
+    .past-events .event-card.past-load-more-hidden {
+        display: none !important;
+    }
+    .load-more-wrap {
+        text-align: center;
+        margin: 2rem 0 1rem;
+        padding: 0 1rem;
+        clear: both;
+    }
+    .load-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 2.5rem;
+        border: 1.5px solid #ddd;
+        border-radius: 30px;
+        background: #fff;
+        color: #484848;
+        font-family: inherit;
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        letter-spacing: 0.02em;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    .load-more-btn:hover,
+    .load-more-btn:active {
+        border-color: #222;
+        color: #222;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .load-more-btn svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.25s;
+    }
+    .load-more-btn:hover svg {
+        transform: translateY(2px);
+    }
+
+/* カードの会場名。曖昧値(「東京」「調整中」等)は sitelib.is_vague_venue が
+   落とすので、ここに出るのは実在の会場名だけ。 */
+.event-added {
+    display: block;
+    width: 100%;
+    font-size: 0.72rem;
+    color: var(--gray-500, #888);
+    margin-top: .3rem;
+}
+
+/* カード見出しのリンク。.event-link は ::after で「→」を足すので使わない
+   (詳細ページへの誘導リンク用のクラス)。カードは全体がクリックできる。 */
+.event-title > .event-title-link {
+    color: inherit;
+    text-decoration: none;
+}
+.event-title > .event-title-link:hover {
+    text-decoration: underline;
+}
+
+/* メタ行は県チップ + 会場名。会場名が長いと県チップが縦に潰れるので、
+   チップは縮めず、行を折り返す。 */
+.event-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0.4rem;
+    flex-wrap: wrap;
+    row-gap: .25rem;
+}
+.event-region {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    background-color: #eef2f7;
+    color: #3d5c88;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid #d0dae8;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.event-venue {
+    /* margin-left は 3706 行目の
+       同じセレクタでも指定されていて、こちらが勝っていた。
+       死んだ指定を消して1箇所にまとめた(2026-09-08 リファクタ) */
+    font-size: 0.72rem;
+    color: var(--gray-500, #888);
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: 0;
+}
+
+/* ============================================================
+   ランディング(/pref/ /region/ /tag/ /venue/ /archive/ ...)
+   generate-landing-pages.py の HEAD 内インライン <style> にあった分。
+   CSS版数の同期対象に実体が乗るよう style.css へ移した(2026-08-20)。
+   .landing-card は索引ページのリンクタイル専用。イベントは .event-card。
+   ============================================================ */
+.landing-hero { max-width: 1200px; margin: 1.2rem auto .6rem; padding: 0 1rem; }
+.landing-hero h1 { font-size: 1.8rem; margin: .2rem 0; color: #111; }
+.landing-hero p.lead { color: #555; margin: .4rem 0 0; line-height: 1.7; }
+.landing-intro { max-width: 1200px; margin: .4rem auto 0; padding: 0 1rem; color: #444; font-size: .95rem; line-height: 1.85; }
+.landing-intro p { margin: .5rem 0; }
+.landing-intro a { color: #111; }
+.landing-empty { max-width: 1200px; margin: 2rem auto; padding: 2rem 1rem; text-align: center; color: #666; background: #fff; border-radius: 12px; }
+.landing-grid { max-width: 1200px; margin: 1rem auto; padding: 0 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.landing-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.landing-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.12); }
+.landing-card a { display: block; color: inherit; text-decoration: none; padding: 1rem; }
+.landing-card .lc-name { font-size: 1.05rem; margin: .4rem 0 .3rem; line-height: 1.35; }
+.landing-card .lc-meta { font-size: .85rem; color: #666; }
+
+/* ランディングでも一覧はトップと同じ横幅・段組にそろえる */
+.landing-hero ~ .events-grid,
+.landing-hero ~ .section-heading,
+.landing-hero ~ .load-more-wrap,
+.landing-intro ~ .events-grid,
+.landing-intro ~ .section-heading,
+.landing-intro ~ .load-more-wrap {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.landing-hero ~ .section-heading,
+.landing-intro ~ .section-heading {
+    padding: 0 1rem;
+    margin-top: 2rem;
+}
+
+/* Amazonを主動線にする（2026-08-24）。実測でAmazonだけが売れている:
+   過去30日 Amazon クリック14/発送5点/¥214、楽天 クリック16/売上0/¥0。
+   楽天カードのほうが露出は大きいのに成果はゼロなので、序列を実績に合わせる。
+   楽天カードはAPIの規約上そのまま楽天へリンクさせる（データの出所と行き先を一致させる）。 */
+/* 全幅の塗りバーにすると、3行並んだときに広告の壁になり、
+   しかも楽天の価格表示の真下に最大のボタンが来るので
+   「この商品をAmazonで」と誤読させる。同じ行に並べて色で主従をつける。 */
+.affiliate-section .aff-shop-btn.is-primary {
+    border-width: 2px;
+}
+.affiliate-section .aff-shop-btn.is-primary[data-shop="amazon"] {
+    background: #ff9900;
+    border-color: #ff9900;
+    color: #fff;
+}
+.affiliate-section .aff-shop-btn.is-primary[data-shop="amazon"]:hover {
+    background: #e88a00;
+    border-color: #e88a00;
+}
+
+/* ========================================
+   中止・延期の回（2026-09-08）
+   削除ではなく中止として残す。消すとURLが404になり、
+   共有リンクを踏んだ人に何も伝わらないまま当日を迎える。
+   ======================================== */
+
+.event-cancel-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 3px;
+    background: var(--accent-pop);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+}
+
+.event-card.event-cancelled .event-title,
+.event-card.event-cancelled .event-description {
+    opacity: 0.6;
+}
+
+.event-card.event-cancelled .event-thumb img {
+    filter: grayscale(1);
+    opacity: 0.55;
+}
+
+.event-notice-cancelled,
+.event-notice-rescheduled {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.1rem;
+    border: 2px solid var(--accent-pop);
+    border-radius: 6px;
+    background: #fff5f5;
+}
+
+.event-notice-cancelled .notice-head,
+.event-notice-rescheduled .notice-head {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--accent-pop);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.event-notice-cancelled p,
+.event-notice-rescheduled p {
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.event-notice-cancelled a,
+.event-notice-rescheduled a {
+    color: var(--accent-pop);
+}
+
+.event-status.status-cancelled,
+.detail-status-badge.status-cancelled {
+    background: var(--accent-pop);
+    color: var(--white);
+}
+
+/* ========================================
+   更新のお知らせ（2026-09-08 作り直し）
+   「アガベイベントナビとは」の直上に置くので、幅と余白をあちらに揃える。
+   最初は <main> の外に置いたまま幅の制約が無く、画面いっぱいに
+   間延びしていた。
+   ======================================== */
+
+.updates-section {
+    max-width: 960px;
+    margin: 2.5rem auto 0;
+    padding: 1.15rem 1.3rem 0.5rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    background: var(--white);
+}
+
+.updates-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.updates-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: 0.02em;
+}
+
+.updates-note {
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--gray-500);
+    letter-spacing: 0;
+}
+
+.updates-feed {
+    flex: none;
+    font-size: 0.75rem;
+    color: var(--gray-600);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.updates-feed::before {
+    content: '';
+    display: inline-block;
+    width: 0.44rem;
+    height: 0.44rem;
+    margin-right: 0.42em;
+    border-radius: 50%;
+    background: #e8871a;
+    vertical-align: 0.06em;
+}
+
+.updates-feed:hover {
+    color: var(--accent-pop);
+}
+
+/* display を持つ要素に hidden 属性を付けても消えない。
+   UAスタイルの [hidden]{display:none} は作者スタイルに負けるので、
+   .upd-item{display:grid} が勝ってしまう。
+   2026-09-08、関東で絞ったとき「該当なし」と10件が同時に出た。
+   個別のクラスを足すより全域で1回宣言しておくほうが再発しない。 */
+[hidden] {
+    display: none !important;
+}
+
+.updates-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 日付・種別・イベント名・開催地の4列。grid にすると列が縦に揃う。
+   flex で組んでいたときは行ごとに位置がずれて雑に見えた。 */
+.upd-item {
+    display: grid;
+    grid-template-columns: 3.2rem 4.4rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0 0.7rem;
+    padding: 0.52rem 0.15rem;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.upd-item:last-child {
+    border-bottom: 0;
+}
+
+.upd-date {
+    color: var(--gray-500);
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+}
+
+.upd-kind {
+    padding: 0.1rem 0;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.04em;
+    color: var(--white);
+}
+
+.upd-listed { background: #3f7d6e; }
+.upd-cancelled { background: var(--accent-pop); }
+.upd-removed { background: var(--gray-500); }
+.upd-changed { background: #cf8324; }
+
+.upd-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.upd-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.upd-title a:hover {
+    border-bottom-color: var(--accent-pop);
+}
+
+.upd-meta {
+    color: var(--gray-500);
+    font-size: 0.76rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+    .updates-section {
+        margin: 1.8rem 1rem 0;
+        padding: 1rem 1rem 0.4rem;
+    }
+    /* 狭い画面は2行に折る。イベント名と開催地を下の行に落とす。
+       1行に4列を詰めるとイベント名が数文字しか出ない */
+    .upd-item {
+        grid-template-columns: 3.2rem 4.4rem minmax(0, 1fr);
+        gap: 0.1rem 0.6rem;
+        padding: 0.6rem 0.15rem;
+    }
+    .upd-title {
+        white-space: normal;
+        overflow: visible;
+    }
+    .upd-meta {
+        grid-column: 3;
+        white-space: normal;
+    }
+}
+
+@media (max-width: 720px) {
+    /* SPの余白をここでまとめる。個別に足すと画面ごとにばらつく
+       (2026-09-08 指摘) */
+    .event-hero {
+        padding-top: 0.7rem;
+    }
+    /* 3つを1行に収める。5つ並べたときは折り返して2行になり、
+       行ごとに高さの違うボタンが混ざってガタガタに見えていた
+       (2026-09-08 指摘) */
+    .eh-actions {
+        --pill-h: 2.15rem;
+        gap: 0.35rem;
+        margin: 0.85rem 0 0;
+        flex-wrap: nowrap;
+    }
+    .eh-actions .detail-fav-btn,
+    .eh-actions .gcal-btn,
+    .eh-actions .share-btn {
+        margin: 0;
+        padding: 0 0.8rem;
+        font-size: 0.78rem;
+    }
+    .detail-section {
+        margin: 1.3rem 0 1.6rem;
+    }
+    .crumb-bar {
+        padding: 0.35rem 0.75rem;
+    }
+}
+
+/* サイトの説明。トップの末尾に置く奥付。
+   以前は index.html に直書きの style で、灰色の箱に黒い縦線という
+   作りだった。周りの部品と共通点が無く浮いていた(2026-09-08 指摘)。
+   更新のお知らせと同じ幅に揃え、色と線は落として脇役にする。 */
+.site-about {
+    max-width: 960px;
+    margin: 2.5rem auto 1.5rem;
+    padding: 1.4rem 1.3rem 0;
+    border-top: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    font-size: 0.85rem;
+    line-height: 1.9;
+}
+
+.site-about h2 {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--gray-500);
+}
+
+.site-about p {
+    margin: 0 0 0.7rem;
+}
+
+.site-about a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.site-about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.1rem;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 720px) {
+    .site-about {
+        margin: 1.8rem 1rem 1.2rem;
+        padding: 1.2rem 0 0;
+        font-size: 0.82rem;
+        line-height: 1.85;
+    }
+}
+
+/* 会場欄から下の地図へ飛ばす。会場名だけでは行ったことがない場所は
+   分からないのに、地図への手がかりが無かった(2026-09-08 指摘) */
+
+
+
+
+/* 会場の地図。会場欄のすぐ下。
+   以前はページの下のほうに節として置いていたが、会場名を読んだ人が
+   いちばん知りたいのは「どこ」なので、その場で見せる(2026-09-08 指摘) */
+.venue-map {
+    /* コンテンツ幅いっぱい。ラベル列ぶんの字下げはしない */
+    margin: 0.4rem 0 0.9rem;
+}
+
+
+
+.venue-map iframe {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+}
+
+
+
+
+/* 外部リンク。**印と見た目はここだけ。**
+   以前は「↗」を素で足すだけで、下線も無く本文の色と同じだった。
+   矢印1文字では外に出ることに気づかれない(2026-09-08 指摘)。
+   枠付きの矢印にして、読み上げ用の文字も添えている
+   (組み立ては sitelib.ext_link)。 */
+.ext {
+    color: var(--black);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    font-weight: 600;
+}
+
+.ext:hover {
+    color: var(--accent-pop);
+}
+
+.ext-mark {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.28em;
+    border: 1px solid var(--gray-300);
+    border-radius: 3px;
+    font-size: 0.68em;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--gray-500);
+    text-decoration: none;
+    vertical-align: 0.08em;
+}
+
+.ext:hover .ext-mark {
+    border-color: var(--accent-pop);
+    color: var(--accent-pop);
+}
+
+/* 読み上げ専用。目には出さないが読み飛ばされないようにする */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 会場の住所。会場名の下にぶら下げる。
+   データは「会場名（住所）」の1文字列だが、括弧書きは読みにくい
+   (2026-09-08 指摘)。表示で分ける */
+.venue-addr {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--gray-600);
+}
+
+/* 文章ページの器と文字。**ここが唯一の宣言。**
+   about / 規約 / プライバシー / 免責 / お問い合わせ / 掲載申請 /
+   運営者情報 で、器のクラス名も見出しの大きさも余白も別々だった。
+   h1が2.2remのページと1.8remのページ、本文の行間が違うページが
+   混在していた(2026-09-08 指摘)。 */
+.about-content,
+.legal-content,
+.contact-form-container,
+.listing-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1.6rem 1rem 3rem;
+}
+
+.about-content h1,
+.legal-content h1,
+.contact-form-container h1,
+.listing-content h1 {
+    margin: 0 0 1.2rem;
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--black);
+}
+
+.about-content h2,
+.legal-content h2,
+.contact-form-container h2,
+.listing-content h2 {
+    margin: 2.2rem 0 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.about-content h3,
+.legal-content h3,
+.contact-form-container h3,
+.listing-content h3 {
+    margin: 1.5rem 0 0.6rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.about-content p,
+.legal-content p,
+.contact-form-container p,
+.listing-content p {
+    margin: 0 0 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text-color);
+}
+
+.about-content ul,
+.about-content ol,
+.legal-content ul,
+.legal-content ol,
+.contact-form-container ul,
+.listing-content ul,
+.listing-content ol {
+    margin: 0 0 1rem;
+    padding-left: 1.4rem;
+}
+
+.about-content li,
+.legal-content li,
+.contact-form-container li,
+.listing-content li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text-color);
+}
+
+.about-content a,
+.legal-content a,
+.contact-form-container a,
+.listing-content a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.about-content a:hover,
+.legal-content a:hover,
+.contact-form-container a:hover,
+.listing-content a:hover {
+    color: var(--accent-pop);
+}
+
+@media (min-width: 721px) {
+    .about-content,
+    .legal-content,
+    .contact-form-container,
+    .listing-content {
+        padding: 2rem 2rem 4rem;
+    }
+    .about-content h1,
+    .legal-content h1,
+    .contact-form-container h1,
+    .listing-content h1 {
+        font-size: 2rem;
+    }
+}
+
+/* ========================================
+   イベントカレンダー
+   ページ内の <style> に持っていたので共通の色や字の大きさが効かず、
+   直すたびにここと2箇所を見る必要があった(2026-09-09 に移設)。
+
+   **描き方を2つ持つ。**7列のグリッドは 375px の画面に入らない。
+   1列216px×7=1518pxで、日曜と月曜しか見えていなかった。
+   狭い画面は日付ごとの一覧、広い画面は月のグリッド。
+   ======================================== */
+
+.cal-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem 0.75rem 3rem;
+}
+
+.cal-subscribe {
+    margin: 0 0 1rem;
+    padding: 0.85rem 1rem;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.cal-subscribe p {
+    margin: 0;
+}
+
+.cal-subscribe a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.cal-subscribe-hint {
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--gray-500);
+}
+
+.cal-subscribe code {
+    font-size: 0.92em;
+    word-break: break-all;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+}
+
+.cal-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--black);
+}
+
+.cal-nav button {
+    padding: 0.4rem 0.8rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--gray-600);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cal-nav button:hover {
+    border-color: var(--black);
+    color: var(--black);
+}
+
+.cal-nav button:active {
+    background: var(--gray-100);
+}
+
+/* --- 狭い画面: 日付ごとの一覧 --- */
+
+.cal-grid {
+    display: none;
+}
+
+.cal-day {
+    border-top: 1px solid var(--gray-200);
+    padding: 0.75rem 0;
+}
+
+.cal-day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--black);
+}
+
+.cal-day-dow {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.dow-0 {
+    color: #d64545;
+}
+
+.dow-6 {
+    color: #3a6ea5;
+}
+
+.cal-day-count {
+    margin-left: auto;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--gray-500);
+}
+
+.cal-day-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.cal-empty {
+    padding: 1.5rem 0;
+    color: var(--gray-500);
+    font-size: 0.88rem;
+}
+
+.cal-event {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border-left: 3px solid var(--gray-400);
+    border-radius: 3px;
+    background: var(--gray-100);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.cal-event:hover {
+    background: var(--gray-200);
+}
+
+.cal-event-name {
+    min-width: 0;
+}
+
+.cal-event-span {
+    margin-left: auto;
+    flex: none;
+    font-size: 0.72rem;
+    color: var(--gray-500);
+    white-space: nowrap;
+}
+
+/* 種別は左の線で示す。塗りつぶすと文字が読みにくい */
+.cal-event.tag-即売会 { border-left-color: #d64545; }
+.cal-event.tag-マルシェ { border-left-color: #d98324; }
+.cal-event.tag-大型 { border-left-color: #264653; }
+.cal-event.tag-展示会 { border-left-color: #2a9d8f; }
+
+.cal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    margin-top: 1.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.cal-legend-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 2px;
+}
+
+
+
+/* --- 広い画面: 月のグリッド --- */
+
+@media (min-width: 721px) {
+    .cal-container {
+        padding: 1.5rem 1.5rem 4rem;
+    }
+
+    .cal-days {
+        display: none;
+    }
+
+    .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        border: 1px solid var(--gray-200);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .cal-dow {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--gray-200);
+        background: var(--gray-100);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--gray-600);
+    }
+
+    .cal-cell {
+        min-height: 6.5rem;
+        padding: 0.35rem;
+        border-top: 1px solid var(--gray-200);
+        border-left: 1px solid var(--gray-200);
+    }
+
+    .cal-cell:nth-child(7n + 1) {
+        border-left: 0;
+    }
+
+    .cal-cell.other-month {
+        background: #fbfbfb;
+    }
+
+    .cal-cell.today {
+        background: #fffdf3;
+    }
+
+    .cal-day-num {
+        margin-bottom: 0.25rem;
+        font-size: 0.75rem
+        ;
+        font-weight: 700;
+        color: var(--gray-500);
+    }
+
+    /* グリッドの中は横に詰める。1行で収める */
+    .cal-grid .cal-event {
+        display: block;
+        margin-bottom: 0.2rem;
+        padding: 0.2rem 0.35rem;
+        border-left-width: 3px;
+        font-size: 0.7rem;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .cal-grid .cal-event-span {
+        margin-left: 0.3em;
+        font-size: 0.9em;
+    }
+}

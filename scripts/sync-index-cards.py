@@ -28,7 +28,7 @@ from sitelib import (today_jst, is_recent_past, event_span,
                      list_sort_key, is_cancelled, cancel_label, is_upcoming,
                      updates_section_html, load_updates,
                      updates_scopes, area_filter_html, region_map_js,
-                     time_consts_js)
+                     time_consts_js, HEART_SVG, use_heart_sprite)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
 
@@ -218,9 +218,7 @@ def new_card_html(ev):
     region = ev.get('region', '')
     badge = ('<span class="event-cancel-badge">'
              + e(cancel_label(ev)) + '</span>') if is_cancelled(ev) else ''
-    heart = ('<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 '
-             '5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 '
-             '1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>')
+    heart = HEART_SVG
     e = html_attr_escape
     return (
         f'<div class="event-card{" event-cancelled" if is_cancelled(ev) else ""}"'
@@ -532,6 +530,9 @@ def main():
     print(f'  → unchanged:       {unchanged}')
     print(f'  → 属性を直したカード: {attr_fixed}')
     print(f'  → 本文を直したカード: {body_fixed}')
+
+    # 手書きで入ったカードの埋め込みハートも、フッターの symbol の参照に揃える(2026-11-09)
+    new_html = use_heart_sprite(new_html)
 
     if new_html != original_html:
         if args.dry_run:
