@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-09",
+  "sweptOn": "2026-11-10",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,39 +31,62 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 687,
-    "in_scope": 199,
-    "covered": 136,
-    "known_rejected": 61,
-    "truncated_resolved": 45,
-    "truncated_unresolved": 5,
+    "candidates": 735,
+    "in_scope": 225,
+    "covered": 139,
+    "known_rejected": 62,
+    "truncated_resolved": 90,
+    "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 75,
-    "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 93,
+    "in_scope_leafla": 99,
+    "truncated_unresolved_hits": 180,
+    "in_scope_nextmeet": 95,
     "in_scope_matome-blog": 7,
     "in_scope_organizer-index": 5,
     "in_scope_pukubook": 19,
-    "gaps_raw": 2
+    "gaps_raw": 24
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/02 追加 プロトリーフ二子玉川本店 2周年祭（土尽くしの...",
-    "11/02 追加 ベジタブルブExhibitionが金沢で開催 ...",
-    "11/02 追加 金岡みどりのマルシェが金岡公園で開催、サボテン...",
-    "11/02 追加 コーナン鎌倉大船店 秋の園芸フェアが2026年...",
-    "11/02 追加 THINNING 14th in 丸田池公園が..."
+    "11/09 追加 グリーンファーム金沢本店で「ガーデナーによる球...",
+    "11/09 追加 フローラルガーデンよさみで「クリスマスブッタナ...",
+    "11/09 追加 PICNIC GARDEN vol.27が20...",
+    "11/09 追加 ファンガーデンMASAKI本店で植物日和ワーク..."
   ],
   "gaps": [
+    {
+      "date": "2026-11-10",
+      "lastSeen": "2026-11-28",
+      "days": 18,
+      "title": "SYMBOL GREEN FAIR（シンボルグリーンフェア／観葉植物販売・診断イベント）",
+      "source": "leafla"
+    },
     {
       "date": "2026-11-15",
       "title": "日本サボテン狂人会 サボテン・多肉植物交換会（2026年11月）",
       "source": "nextmeet",
       "pref": "埼玉",
       "place": "ワークヒルズ羽生 / 埼玉県羽生市大字下羽生1014番地1"
+    },
+    {
+      "date": "2026-11-15",
+      "title": "日本サボテン狂人会 通常例会（交換会）",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-15",
+      "title": "緑の市（植物販売・展示イベント）",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-21",
+      "lastSeen": "2026-11-22",
+      "days": 2,
+      "title": "Plant’s Work POP-UP @KAKUSEN-EN",
+      "source": "leafla"
     },
     {
       "date": "2026-12-20",
