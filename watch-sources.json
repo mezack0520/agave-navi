@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-10 06:41 JST",
+ "generated": "2026-11-10 07:13 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 410,
@@ -41,21 +41,21 @@
    "apiStatus": "api"
   },
   {
-   "handle": "isij_taniku",
-   "url": "https://www.instagram.com/isij_taniku/",
+   "handle": "nagomitaniku",
+   "url": "https://www.instagram.com/nagomitaniku/",
    "eventCount": 9,
-   "lastEventName": "サボテン・多肉植物ビッグバザール（2027年11月）",
-   "lastEventDate": "2027-11-28",
+   "lastEventName": "多肉と雑貨 農マルシェ 第8回",
+   "lastEventDate": "2026-12-13",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
   },
   {
-   "handle": "nagomitaniku",
-   "url": "https://www.instagram.com/nagomitaniku/",
-   "eventCount": 8,
-   "lastEventName": "ナゴリバ in 鳴門ウチノ海総合公園",
-   "lastEventDate": "2026-11-21",
+   "handle": "isij_taniku",
+   "url": "https://www.instagram.com/isij_taniku/",
+   "eventCount": 9,
+   "lastEventName": "サボテン・多肉植物ビッグバザール（2027年11月）",
+   "lastEventDate": "2027-11-28",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -79,6 +79,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "king.plants.slugger",
+   "url": "https://www.instagram.com/king.plants.slugger/",
+   "eventCount": 6,
+   "lastEventName": "キングプランツ in ホームセンターサンデー 卸町店",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "gamagori_taniku_festa",
@@ -126,16 +136,6 @@
    "eventCount": 5,
    "lastEventName": "森の多肉園販売会 BIG",
    "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "king.plants.slugger",
-   "url": "https://www.instagram.com/king.plants.slugger/",
-   "eventCount": 5,
-   "lastEventName": "キングプランツ in ホームセンターサンデー 卸町店",
-   "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -371,6 +371,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "morimizuki1187",
+   "url": "https://www.instagram.com/morimizuki1187/",
+   "eventCount": 2,
+   "lastEventName": "宮川洋蘭 OPEN MARKET",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "botapara_botanical_paradise",
    "url": "https://www.instagram.com/botapara_botanical_paradise/",
    "eventCount": 2,
@@ -396,6 +406,16 @@
    "eventCount": 2,
    "lastEventName": "AGAVE POP-UP（MELLOW PLANTS・2026年11月）",
    "lastEventDate": "2026-11-15",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "yamada_ishigaki",
+   "url": "https://www.instagram.com/yamada_ishigaki/",
+   "eventCount": 2,
+   "lastEventName": "珍奇植物マーケット in 八重山 vol.2",
+   "lastEventDate": "2026-11-20",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -671,20 +691,20 @@
    "apiStatus": "api"
   },
   {
-   "handle": "kato_engei_tokyo",
-   "url": "https://www.instagram.com/kato_engei_tokyo/",
+   "handle": "chiba_c_and_s_association",
+   "url": "https://www.instagram.com/chiba_c_and_s_association/",
    "eventCount": 4,
-   "lastEventName": "OJISANS6（カトーエンゲー東京）",
+   "lastEventName": "木更津園芸市（2026年11月）",
    "lastEventDate": "2026-11-08",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
   {
-   "handle": "chiba_c_and_s_association",
-   "url": "https://www.instagram.com/chiba_c_and_s_association/",
+   "handle": "kato_engei_tokyo",
+   "url": "https://www.instagram.com/kato_engei_tokyo/",
    "eventCount": 4,
-   "lastEventName": "木更津園芸市（2026年11月）",
+   "lastEventName": "OJISANS6（カトーエンゲー東京）",
    "lastEventDate": "2026-11-08",
    "hasUpcoming": false,
    "priority": 1,
@@ -941,16 +961,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "kusa_paradise",
-   "url": "https://www.instagram.com/kusa_paradise/",
-   "eventCount": 2,
-   "lastEventName": "Kusa paradise in hirata nursery（平田ナーセリー小戸店）",
-   "lastEventDate": "2026-11-07",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "greendays_emi_8783",
    "url": "https://www.instagram.com/greendays_emi_8783/",
    "eventCount": 2,
@@ -959,6 +969,16 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "kusa_paradise",
+   "url": "https://www.instagram.com/kusa_paradise/",
+   "eventCount": 2,
+   "lastEventName": "Kusa paradise in hirata nursery（平田ナーセリー小戸店）",
+   "lastEventDate": "2026-11-07",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
   },
   {
    "handle": "lahainagarden",
@@ -2056,16 +2076,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "yamada_ishigaki",
-   "url": "https://www.instagram.com/yamada_ishigaki/",
-   "eventCount": 1,
-   "lastEventName": "珍奇植物イベント「本屋はもっと、楽しくなる」",
-   "lastEventDate": "2026-07-18",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "greenfarmkanazawa",
    "url": "https://www.instagram.com/greenfarmkanazawa/",
    "eventCount": 1,
@@ -3100,16 +3110,6 @@
    "url": "https://www.instagram.com/aitomargueritestation/",
    "eventCount": 1,
    "lastEventName": "多肉植物・サボテン販売会（道の駅あいとうマーガレットステーション）",
-   "lastEventDate": "2026-10-10",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "morimizuki1187",
-   "url": "https://www.instagram.com/morimizuki1187/",
-   "eventCount": 1,
-   "lastEventName": "宮川洋蘭 OPEN FARM",
    "lastEventDate": "2026-10-10",
    "hasUpcoming": false,
    "priority": 2,
@@ -4576,34 +4576,16 @@
    "eventDate": "2026-10-10"
   },
   {
-   "domain": "helisgarden.wraptas.site",
-   "url": "https://helisgarden.wraptas.site/2a8bb776d6808058961ccd2509c2704f",
-   "eventName": "食虫植物祭2026 (Carnivorous Plants Carnival #4)",
-   "eventDate": "2026-11-07"
-  },
-  {
-   "domain": "bookkasama.com",
-   "url": "https://bookkasama.com/bot2611.html",
-   "eventName": "第10回 ボタニカルライフ",
-   "eventDate": "2026-11-07"
-  },
-  {
-   "domain": "bloomgarden.jp",
-   "url": "https://bloomgarden.jp/event/post-595/",
-   "eventName": "草木日和（BloomGARDEN）",
-   "eventDate": "2026-11-07"
-  },
-  {
-   "domain": "jolienursery.co.jp",
-   "url": "https://jolienursery.co.jp/pages/events",
-   "eventName": "JUNGLE TO YOU（Jolie Nursery・スーパービバホーム豊洲店）",
-   "eventDate": "2026-11-07"
-  },
-  {
    "domain": "hankyu-dept.co.jp",
    "url": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
    "eventName": "アートな植物ビカクシダ(阪急うめだ本店)",
    "eventDate": "2026-11-11"
+  },
+  {
+   "domain": "jolienursery.co.jp",
+   "url": "https://jolienursery.co.jp/pages/events",
+   "eventName": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
+   "eventDate": "2026-11-14"
   },
   {
    "domain": "rareplantsjapan.jp",
@@ -4748,6 +4730,24 @@
    "url": "https://makeman.co.jp/event/event-10904/",
    "eventName": "ボタニカルマーケットVol.6",
    "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "fukui-bot.jp",
+   "url": "https://www.fukui-bot.jp/event/",
+   "eventName": "福井ボタニカルマルシェ2026",
+   "eventDate": "2026-05-30"
+  },
+  {
+   "domain": "green-flash-fes.com",
+   "url": "https://green-flash-fes.com/",
+   "eventName": "GREEN BREEZE FES vol.3",
+   "eventDate": "2026-05-31"
+  },
+  {
+   "domain": "city.hanamaki.iwate.jp",
+   "url": "https://www.city.hanamaki.iwate.jp/kurashi/kankyo/hanaippai/1013528.html",
+   "eventName": "花と緑のまつり",
+   "eventDate": "2026-06-05"
   }
  ],
  "unresolvedIgHandles": []

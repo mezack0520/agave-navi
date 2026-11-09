@@ -1889,7 +1889,9 @@
   },
   {
    "date": "2026-11-10",
-   "urgent": {},
+   "urgent": {
+    "region_mismatch": 1
+   },
    "info": {
     "coverage_gaps": 6,
     "organizer_unlisted_dates": 5,
@@ -1903,13 +1905,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 107,
     "events_with_image": 380,
-    "upcoming_no_image": 71,
+    "upcoming_no_image": 75,
     "ongoing_events": 2,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 71
+    "eyecatch_backlog": 75
    },
-   "events": 764,
-   "upcoming": 178
+   "events": 768,
+   "upcoming": 182
   }
  ]
 }

@@ -1,7 +1,47 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-08",
+  "updated": "2026-11-10",
   "items": [
+    {
+      "on": "2026-11-10",
+      "kind": "listed",
+      "slug": "miyagawa-yoran-open-market-2026-11",
+      "name": "宮川洋蘭 OPEN MARKET",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-14",
+      "prefecture": "熊本",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-10",
+      "kind": "listed",
+      "slug": "king-plants-sunday-morioka-maegata-2026-11",
+      "name": "キングプランツ in ホームセンターサンデー 盛岡前潟店",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-15",
+      "prefecture": "岩手",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-10",
+      "kind": "listed",
+      "slug": "chinki-shokubutsu-market-yaeyama-vol2-2026-11",
+      "name": "珍奇植物マーケット in 八重山 vol.2",
+      "date": "2026-11-20",
+      "dateEnd": "2026-11-21",
+      "prefecture": "沖縄",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-10",
+      "kind": "listed",
+      "slug": "nou-marche-8th-2026-12",
+      "name": "多肉と雑貨 農マルシェ 第8回",
+      "date": "2026-12-13",
+      "dateEnd": "2026-12-13",
+      "prefecture": "岡山",
+      "detail": ""
+    },
     {
       "on": "2026-11-08",
       "kind": "listed",
@@ -1160,46 +1200,6 @@
       "date": "2026-10-24",
       "dateEnd": "2026-10-24",
       "prefecture": "山口",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-12",
-      "kind": "listed",
-      "slug": "bota-bro-garden-agave-collection-izumo-2026-10",
-      "name": "アガベ販売会 Agave collection 2026（Bota Bro Garden）",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "島根",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-12",
-      "kind": "listed",
-      "slug": "kyoto-midori-marche-benkeisou-2026-11",
-      "name": "京都みどりのマルシェ BENKEISOU",
-      "date": "2026-11-08",
-      "dateEnd": "2026-11-08",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-12",
-      "kind": "listed",
-      "slug": "yurutto-taniku-marche-2nd-inabe-2026-12",
-      "name": "第2回 ゆるっと多肉マルシェ",
-      "date": "2026-12-27",
-      "dateEnd": "2026-12-27",
-      "prefecture": "三重",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-12",
-      "kind": "listed",
-      "slug": "yurutto-taniku-marche-3rd-2027-01",
-      "name": "第3回 ゆるっと多肉マルシェ",
-      "date": "2027-01-16",
-      "dateEnd": "2027-01-16",
-      "prefecture": "三重",
       "detail": ""
     }
   ]
