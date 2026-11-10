@@ -7,19 +7,7 @@
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "greensnap-marche-abc-hachioji-2026-11",
-      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
-      "date": "2026-11-21",
-      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
@@ -140,7 +128,7 @@
         "textLen": 3669,
         "imageCount": 50
       },
-      "prevTextLen": 3406,
+      "prevTextLen": 3669,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -268,7 +256,7 @@
       "checkedOn": "2026-11-11",
       "signature": {
         "text": "97d2b8fff8d42b4c",
-        "images": "05150451bce14d07",
+        "images": "21a966b65b8d3dbd",
         "textLen": 1129,
         "imageCount": 42
       },
@@ -283,7 +271,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 9
+      "imageOnlyChanges": 10
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -362,7 +350,7 @@
         "textLen": 4715,
         "imageCount": 10
       },
-      "prevTextLen": null,
+      "prevTextLen": 4715,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],

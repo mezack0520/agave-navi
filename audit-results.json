@@ -1,5 +1,5 @@
 {
-  "total": 773,
+  "total": 766,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -914,7 +914,7 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 21,
+      "count": 14,
       "items": [
         "2026-11-11 SYMBOL GREEN FAIR（シンボルグリーンフェア／観葉植物販売・診断イベント）",
         "2026-11-11 観葉植物との不思議な出会い ～不思議なサボテンと少し癖のある植物たち～",
@@ -929,13 +929,6 @@
         "2026-11-22 秋の植物と土のtalk&teaの時間",
         "2026-12-02 暮らしの中の自然 体験型植物イベント「Botanical Lounge」",
         "2026-12-20 ハッピーグリーンDays",
-        "2026-12-25 11th BORDER BREAK!!（植物販売イベント）",
-        "2026-12-25 BOTANICAL TAMBA 2026",
-        "2026-12-25 ビザールプランツナイト(&デイ)",
-        "2026-12-25 植物園のもみじ散策～世界の森で紅葉めぐり～",
-        "2026-12-25 第2回 多肉フェス",
-        "2026-12-25 第4回 ぷらっと 多肉フェス！",
-        "2026-12-25 路地裏ボタニカル",
         "2027-02-20 KYOTO MIDORINO MARCHE BENKEISOU"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -1047,10 +1040,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 1,
-      "items": [
-        "2026-11-21 greensnap-marche-abc-hachioji-2026-11: 公式ページが変わった(本文・画像)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1140,8 +1131,9 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 8,
+      "count": 9,
       "items": [
+        "@botalife_pachy 2026-11-14,2026-11-17,2026-11-21,2026-11-28: 【Euphorbia Fair開催のお知らせ】 ホリダ綴化株などイタリアユーフォルビア大量入荷に伴い、今週末からゲリラで https://www.instagram.com/p/DfjgjnJn3GU/",
         "@greenfarmkanazawa 2026-11-13: 🌼ハンギングバスケット教室🌼 今月から始まるハンギングバスケット教室について 詳しくご紹介します🌿 11月は「冬を彩る可 https://www.instagram.com/p/DfegzbzICOQ/",
         "@lahainagarden 2026-11-12,2026-11-21,2026-11-22: ★ 2026秋 寄せ植えphotoコンテスト📸5PLACE ⁡ 鳥取花回廊を スタートに 5会場にて 寄せ植えphoto https://www.instagram.com/p/Dfi9JMaFHHH/",
         "@notreatelier.29 2026-11-15: * 【レーザー名入れ ご予約受付のお知らせ】 11/21(土)〜23(月・祝)に開催される succulentsnoel https://www.instagram.com/p/DfhQTQGC2Af/",
