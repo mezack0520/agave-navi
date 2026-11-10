@@ -306,6 +306,35 @@ def fetch(url, timeout=20):
     return sitelib.fetch_text(url, timeout=timeout, ua=UA)
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *a, **k):
+        return None
+
+
+_NO_REDIRECT = urllib.request.build_opener(_NoRedirect)
+# 日付頁の無い日(LEAFLA の掲載範囲より先)は 301 で月別頁へ飛ばされる。飛び先を読むと
+# 月の全件をその日の回として照合し、掲載済みの回が日付違いで取りこぼし候補に出る(2026-11-11 に15件)。
+DAY_PAGE_MISSING = (301, 302, 303, 307, 308, 404)
+
+
+def fetch_day(url, timeout=20, retries=2, wait=3.0):
+    """LEAFLA の日付頁。リダイレクトを追わず HTTPError で返す。引き直しの規則は fetch_text と同じ"""
+    req = urllib.request.Request(sitelib.request_url(url),
+                                 headers={'Accept-Language': 'ja', 'User-Agent': UA})
+    for attempt in range(retries + 1):
+        try:
+            with _NO_REDIRECT.open(req, timeout=timeout) as r:
+                return sitelib.decode_html(r.read(), r.headers.get('Content-Type'))
+        except urllib.error.HTTPError as ex:
+            if not sitelib.should_retry_status(ex.code) or attempt == retries:
+                raise
+            time.sleep(wait)
+        except Exception:                             # noqa: BLE001
+            if attempt == retries:
+                raise
+            time.sleep(wait)
+
+
 def pref_short(p):
     """都道府県を「東京」「京都」「北海道」の形にする。都道府県でなければ空"""
     p = (p or '').strip()
@@ -1167,11 +1196,13 @@ def sweep(days, sleep=0.7, explain=None):
         key = d.isoformat()
         url = BASE + key
         try:
-            html = fetch(url)
+            html = fetch_day(url)
             stats['fetched'] += 1
         except urllib.error.HTTPError as e:
-            # 先の日付はページが無い。404は異常ではない
-            if e.code != 404:
+            # 先の日付はページが無い(404 か月別頁への転送)。異常ではない
+            if e.code in DAY_PAGE_MISSING:
+                stats['day_page_missing'] = stats.get('day_page_missing', 0) + 1
+            else:
                 errors.append(f'{key}: HTTP {e.code}')
             continue
         except Exception as e:                      # noqa: BLE001
