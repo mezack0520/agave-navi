@@ -1,17 +1,29 @@
 {
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
-  "sweptOn": "2026-11-10",
+  "sweptOn": "2026-11-11",
   "stats": {
-    "targets": 15,
-    "fetched": 15
+    "targets": 16,
+    "fetched": 16
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "greensnap-marche-abc-hachioji-2026-11",
+      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
+      "date": "2026-11-21",
+      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
+      "why": "公式ページが変わった(本文・画像)",
+      "changed": [
+        "本文",
+        "画像"
+      ]
+    }
+  ],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "514ebb68e6da76f4",
         "images": "fe4c6d76032c77c3",
@@ -33,7 +45,7 @@
     },
     "art-bikakushida-hankyu-umeda-2026-11": {
       "url": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "f94e712580ad3474",
         "images": "856bad2713a20fea",
@@ -55,7 +67,7 @@
     },
     "jolie-nursery-yamashin-mito-2026-11": {
       "url": "https://jolienursery.co.jp/pages/events",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "a4e1d952046e0a8d",
         "images": "e284e645fe6da741",
@@ -77,7 +89,7 @@
     },
     "rare-plants-collection-hankyu-umeda-2026-11": {
       "url": "https://rareplantsjapan.jp/2210",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "100cf574f90d44be",
         "images": "9fd5d8abafa5e59d",
@@ -99,7 +111,7 @@
     },
     "igashira-park-taniku-saboten-tenjikai-2026-11": {
       "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "17429dedc1ad207a",
         "images": "8f90f884fdaee71b",
@@ -121,12 +133,12 @@
     },
     "greensnap-marche-abc-hachioji-2026-11": {
       "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
-        "text": "a41ae2f1cbbb7836",
-        "images": "17c19a0e7547aee1",
-        "textLen": 3406,
-        "imageCount": 46
+        "text": "75980791a8e961ef",
+        "images": "81e34cc0bc9d6dc2",
+        "textLen": 3669,
+        "imageCount": 50
       },
       "prevTextLen": 3406,
       "sigScope": "article",
@@ -143,7 +155,7 @@
     },
     "isij-big-bazaar-2026-11-22": {
       "url": "http://isij.net/",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "11a8d66e4ce2e2ad",
         "images": "57da63a85c9c595f",
@@ -165,7 +177,7 @@
     },
     "midorigakuen-himeji-2026-11": {
       "url": "https://www.threads.com/@honoka.kakogawa",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "3e42e385075b9b56",
         "images": "e3b0c44298fc1c14",
@@ -187,7 +199,7 @@
     },
     "greensnap-marche-odaiba-2026": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "fad9ab23144e36e3",
         "images": "00831727e550abe3",
@@ -209,7 +221,7 @@
     },
     "okibota-december-2026-sunshine": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "a02fd17bb94b4d2d",
         "images": "5aaa6f1f74b31d2f",
@@ -231,14 +243,14 @@
     },
     "border-break-11th-2026-12": {
       "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "2dc8f0b75264992d",
         "images": "e3b0c44298fc1c14",
         "textLen": 51,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 51,
       "sigScope": "page",
       "sigRule": 2,
       "strong": [],
@@ -253,10 +265,10 @@
     },
     "hanatomofesta-2026": {
       "url": "https://hanatomofesta.com/",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "97d2b8fff8d42b4c",
-        "images": "f427a6ee25a35a97",
+        "images": "05150451bce14d07",
         "textLen": 1129,
         "imageCount": 42
       },
@@ -271,11 +283,11 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 8
+      "imageOnlyChanges": 9
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "fe4b7498d127fc87",
         "images": "49ed9e187652c51c",
@@ -297,7 +309,7 @@
     },
     "isij-tokyo-reikai-2026-12-20": {
       "url": "http://isij.net/event",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "e92b4e3229222104",
         "images": "68f1147f1ae141ea",
@@ -321,7 +333,7 @@
     },
     "mandara-taniku-matsuri-hibikinada-2026-12": {
       "url": "https://note.com/mandara_medaka/n/n52786d54e55c",
-      "checkedOn": "2026-11-10",
+      "checkedOn": "2026-11-11",
       "signature": {
         "text": "ff87f4b3d1bf8553",
         "images": "de4d1b33f1f0e517",
@@ -337,6 +349,28 @@
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
       "firstSeenOn": "2026-10-27",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
+    "isij-big-bazaar-2027-01-10": {
+      "url": "http://isij.net/",
+      "checkedOn": "2026-11-11",
+      "signature": {
+        "text": "11a8d66e4ce2e2ad",
+        "images": "57da63a85c9c595f",
+        "textLen": 4715,
+        "imageCount": 10
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 58,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-11-11",
       "badChars": 0,
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
