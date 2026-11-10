@@ -1,5 +1,5 @@
 {
-  "total": 762,
+  "total": 755,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 107,
+      "count": 117,
       "items": [
         "agave-popup-mellow-plants-toon-2026-11",
         "agavejam-3rd-as-green-garden-2026-11",
@@ -220,13 +220,17 @@
         "bota-para-vol4-sapporo-2026-11",
         "botanic-front-fes-shikokuzouen-2026-11",
         "botanical-botanical-okinawa-2026-11",
+        "botanical-day-in-titanota-vol3-2026-11",
+        "botanical-day-vivahome-ibaraki-2026-11",
         "botanical-junction-asahikawa-2026-11",
         "botanical-popup-ondo-kurate-2026-11",
         "botanical-tamba-2026",
         "botanical-yokocho-senju-2026-11",
         "camp-park-garden-3-flarie-2026-11",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
+        "chinki-shokubutsu-market-yaeyama-vol2-2026-11",
         "collect-plants-2027-04",
+        "coolcactus-popup-antidote-oimachi-2026-11",
         "enichi-vol18-bizenya-2026-11",
         "fehn-5th-kakusen-en-ikebukuro-2026-11",
         "fuji-taniku-plants-marche-2026-11",
@@ -242,18 +246,14 @@
         "greensnap-marche-abc-hachioji-2026-11",
         "greensnap-marche-odaiba-2026",
         "hanatomofesta-10th-makuhari-2027-04",
-        "hanatomofesta-2026",
-        "hartn-fes-4th-hirata-kasuga-2026-11",
-        "hartn-fes-4th-hirata-odo-2026-11",
-        "haze-various-genres-marche-2026-11",
-        "hobby-plants-freaks-vol6-2026-11"
+        "hanatomofesta-2026"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 380,
+      "count": 390,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -301,12 +301,10 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 81,
+      "count": 71,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
-        "botanical-day-in-titanota-vol3-2026-11",
-        "botanical-day-vivahome-ibaraki-2026-11",
         "botanical-journey-onomichi-2026-11",
         "botanical-market-mie-vol11-matsusaka-2026-12",
         "botanical-monsters-2027-okazaki",
@@ -316,13 +314,10 @@
         "botanoichi-senju-2026-11",
         "chinki-plants-flea-market-2027-01",
         "chinki-plants-flea-market-2027-04",
-        "chinki-shokubutsu-market-yaeyama-vol2-2026-11",
-        "coolcactus-popup-antidote-oimachi-2026-11",
         "enjoy-place-6th-2027-02",
         "enjoy-place-bangaihen-2026-12",
         "enjoy-place-outside-3rd-2027-05",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
-        "happy-green-days-minaterrace-tochigi-2026-12",
         "igashira-park-taniku-saboten-tenjikai-2026-11",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
@@ -336,13 +331,18 @@
         "ka78-kikakusai-6th-shimada-2026-11",
         "kanik-popup-pac-plants-yokohama-2026-11",
         "kasamajuku-tanikusai-2026-12",
-        "king-plants-sunday-morioka-maegata-2026-11",
         "king-plants-sunday-oroshimachi-2026-12",
         "lier-taniku-festival-fukuyama-2026-12",
         "lier-taniku-festival-fukuyama-2027-01",
         "lier-taniku-festival-hamada-2026-11",
         "lier-taniku-festival-hyuga-2027-01",
-        "lier-taniku-festival-kariya-2026-12"
+        "lier-taniku-festival-kariya-2026-12",
+        "lier-taniku-festival-kitakyushu-2027-01",
+        "lier-taniku-festival-nagasaki-2027-01",
+        "lier-taniku-festival-niihama-2026-12",
+        "lier-taniku-festival-oda-2027-01",
+        "lier-taniku-festival-shimizu-2026-12",
+        "lier-taniku-festival-shimonoseki-kikugawa-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -736,7 +736,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -801,8 +801,10 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "農マル園芸吉備路農園(3件) → /venue/v-f2260e2c/"
+      ],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -942,29 +944,21 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 81,
+      "count": 71,
       "items": [
         "2026-11-14 jolie-nursery-yamashin-mito-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
-        "2026-11-14 king-plants-sunday-morioka-maegata-2026-11",
         "2026-11-14 miyagawa-yoran-open-market-2026-11",
-        "2026-11-15 midori-no-ichi-leafplus-hiroshima-2026-11",
         "2026-11-15 taniku-mobure-vol13-marugame-2026-11",
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
-        "2026-11-20 chinki-shokubutsu-market-yaeyama-vol2-2026-11",
-        "2026-11-21 coolcactus-popup-antidote-oimachi-2026-11",
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
         "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
-        "2026-11-22 botanical-day-in-titanota-vol3-2026-11",
-        "2026-11-22 botanical-day-vivahome-ibaraki-2026-11",
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
         "2026-11-22 lier-taniku-festival-hamada-2026-11",
         "2026-11-22 midorigakuen-himeji-2026-11",
         "2026-11-23 lier-taniku-festival-yonago-2026-11",
         "2026-11-28 botanical-journey-onomichi-2026-11",
-        "2026-11-28 plant-guild-popup-vol5-fukuchiyama-2026-11",
-        "2026-11-28 saboten-tenji-sokubaikai-3rd-popeye-niihama-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
         "2026-11-29 botanoichi-senju-2026-11",
@@ -981,9 +975,17 @@
         "2026-12-11 lier-taniku-festival-shimizu-2026-12",
         "2026-12-12 love-green-market-vol3-ichihara-2026-12",
         "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12",
-        "2026-12-13 nou-marche-8th-2026-12",
         "2026-12-19 botanical-style-fukuoka-minato-2026-12",
-        "2026-12-20 happy-green-days-minaterrace-tochigi-2026-12"
+        "2026-12-20 isij-tokyo-reikai-2026-12-20",
+        "2026-12-20 nbgarden-festa-shizuoka-2026-12",
+        "2026-12-26 enjoy-place-bangaihen-2026-12",
+        "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
+        "2027-01-08 lier-taniku-festival-hyuga-2027-01",
+        "2027-01-09 lier-taniku-festival-tamana-2027-01",
+        "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
+        "2027-01-10 picnic-garden-hatsuuri-sendai-2027-01",
+        "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
+        "2027-01-16 yurutto-taniku-marche-3rd-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1168,17 +1170,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 8,
-      "items": [
-        "2026-11-14 king-plants-sunday-morioka-maegata-2026-11: https://www.instagram.com/p/DfgrSMpEmm1/（sourcePost）",
-        "2026-11-14 miyagawa-yoran-open-market-2026-11: https://www.instagram.com/reel/DfW2tVQlaf9/（sourcePost）",
-        "2026-11-20 chinki-shokubutsu-market-yaeyama-vol2-2026-11: https://www.instagram.com/p/DfV6LsGvq6H/（sourcePost）",
-        "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/p/Dfja9gZP6ni/（caption）",
-        "2026-11-28 plant-guild-popup-vol5-fukuchiyama-2026-11: https://www.instagram.com/p/DfkL316moKt/（caption）",
-        "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12: https://www.instagram.com/p/DfkL316moKt/（caption）",
-        "2026-12-13 nou-marche-8th-2026-12: https://www.instagram.com/p/DfXEDNdE80V/（sourcePost）",
-        "2026-12-26 enjoy-place-bangaihen-2026-12: https://www.instagram.com/p/DfkSOnhzGg9/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
