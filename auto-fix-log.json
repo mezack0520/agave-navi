@@ -2,132 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "艸化 第七話 (2026-11-08)",
-   "action": "rejected",
-   "detail": "主催 @cusasuc の出店者紹介 DeG7SNdvmvm で全10店のうち植物は艸と花・ドライの2店。compositeEvents で見送り、listing-policy にシリーズの前例を足した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "truncated_unresolved",
-   "target": "四日市 生活文化・趣味の作品展 / リトリートマルシェ vol.10",
-   "action": "reviewed",
-   "detail": "2件とも 10-10 に見送り記録済み(yokkaichi-seikatsu-bunka-sakuhinten-2026-10 / retreat-marche-vol10-recorso-2026-11)。切れた見出しなので照合できないだけ",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "organizer_unlisted_dates",
-   "target": "@sprout_2010817 2026-10-17 秋の外構診断会",
-   "action": "rejected",
-   "detail": "外構・庭づくりの相談会(DeQiPsESaEc)。同じ日のスプラウトの秋まつり(植物ガチャ・多肉くじ・輪投げだけ)も storeSale.exclude で見送り",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "cancel_suspects",
-   "target": "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10",
-   "action": "reviewed",
-   "detail": "shaboten.co.jp/press/7561/ は会期 10/10〜11/23 のままで中止の語なし。+40字は記事の外の関連記事欄(10/06 の別の告知)。cancel-reviewed.json に記録",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "hananowa-marche-9th-2026-10",
-   "action": "fixed",
-   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "irie-plants-bash-5-2026-10",
-   "action": "fixed",
-   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "kazenomori-market-2026-10",
-   "action": "fixed",
-   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "polka-marche-takahashi-2026-10",
-   "action": "fixed",
-   "detail": "開催日(10/10)を過ぎたので revisit=false にし、理由に一文足した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "tbd",
-   "target": "botanical-botanical-okinawa / masappe 周年祭 / まるっと植物fes / BOTANICAL STYLE 福岡 / 珍奇植物FM 2回 / サンタフェ周年祭",
-   "action": "skipped",
-   "detail": "主催の最新12件に会場・時間が出ていない。まるっと植物fes は 10/08 の投稿が @fuchinobepark をメンションするだけで、正式な告知画像は10月末の予定",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "eyecatch_candidates_pending",
-   "target": "12件",
-   "action": "skipped",
-   "detail": "agave-navi-eyecatch の担当",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "BOTANICAL DISPLAY 2026 (2026-10-04〜11-03)",
-   "action": "rejected",
-   "detail": "coverage-sweep の照合の不具合で隠れていた(見送りの BOTANICA の語が Botanical の中に当たり、Botanical を名乗る見出しが全部見送り済み扱い)。照合を直し、the Farm UNIVERSAL OSAKA のスタッフ作品のフォトスポット企画なので outOfScopeGenres で見送り",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "event-monitor",
-   "kind": "desc_venue_other_prefecture",
-   "target": "第28回 花宇宙ドリームガーデン (2026-10-09〜11)",
-   "action": "fixed",
-   "detail": "説明文の「香川県三豊市の花宇宙」を、主催 @hanauchustaff の告知(場所:兵庫県川西市絹延町3-10)どおり兵庫県川西市に直した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "event-monitor",
-   "kind": "time_vs_description",
-   "target": "開催済みで time が空だった29回 (6/7〜9/27)",
-   "action": "fixed",
-   "detail": "説明文に書いた開催時間を time に入れた(BOTARIBA 豊橋・札幌カクタスクラブ秋の展示会 ほか)。27 GALLERY の企画展(8/14〜30)は曜日ごとの開始時刻しか無いので残した",
-   "mailedOn": "2026-10-11"
-  },
-  {
-   "on": "2026-10-11",
-   "task": "event-monitor",
-   "kind": "instagram_embed_link_mismatch",
-   "target": "American and Plants（アメプラ） (2026-10-25)",
-   "action": "fixed",
-   "detail": "詳細頁の Instagram の埋め込みはチラシの投稿、「Instagramで見る」は出店者募集終了の投稿を指していた。リンクを埋め込みと同じ投稿にした",
-   "mailedOn": "2026-10-12"
-  },
-  {
    "on": "2026-10-12",
    "task": "agave-event-update",
    "kind": "rejected_revisit_expired",
@@ -1395,6 +1269,150 @@
    "action": "reviewed",
    "detail": "11/29 ばんだか植物動物園は掲載済み",
    "mailedOn": "2026-11-10"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "green-flea-market-vol3-soraniwa-matsue-2026-11",
+   "action": "rejected",
+   "detail": "主催 DfhEQkfktVx の出店者一覧で対象植物は14組中4組以下。見送り確定"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "grandterrace-chikusei-market-2026-11",
+   "action": "rejected",
+   "detail": "主催 DfVx7Oan8Wu で茨城野音(音楽ライブ)同時開催の物販と判明。見送り確定"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "緑の市 (2026-11-15 leaf+ 広島)",
+   "action": "listed",
+   "detail": "主催 @leafplus114 De_jqd8IGCs で裏取り。山口県として記録していた見送りを削除"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "COOLCACTUS POPUP (2026-11-21)",
+   "action": "listed",
+   "detail": "会場 @antidote_oimachitracks DfggNgsTpaK"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "botanical day in titanota VOL.3 (2026-11-22)",
+   "action": "listed",
+   "detail": "主催 @spice_cafe_titanota DfeegHlzqYd"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ボタニカルデイ2026 (2026-11-22)",
+   "action": "listed",
+   "detail": "@unknownbotanical De9RI1hySy2"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ハッピーグリーンDays (2026-12-20)",
+   "action": "listed",
+   "detail": "主催ミナテラスとちぎ、サポート @rinarina__3 DfW74pZCbUR"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "SYMBOL GREEN FAIR / 観葉植物との不思議な出会い / てとて舎ナイトマーケット / 名古屋サボテンクラブ11月例会 / talk&tea / Botanical Lounge",
+   "action": "rejected",
+   "detail": "主催の告知で確認。観葉主題・総合・例会のみ・チケット制トーク・苔盆栽中心で見送り"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "KYOTO MIDORINO MARCHE BENKEISOU (2027-02-20)",
+   "action": "rejected",
+   "detail": "NextMeet のみ。主催の次回告知は 2027-03-20(掲載済み)。unverified/revisit"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "Plant’s Work POP-UP @KAKUSEN-EN / 珍奇植物マーケッ(OCR欠落)",
+   "action": "fixed",
+   "detail": "掲載済みの fehn-5th / chinki-shokubutsu-market-yaeyama-vol2 に LEAFLA の呼び名を aliases で追加"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "LEAFLA 2026-12-25 の月別頁転送",
+   "action": "fixed",
+   "detail": "coverage-sweep.py が301で月別頁を日付頁として読んでいた。転送を頁なしとして扱うよう修正(21→14件)"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@greenfarmkanazawa 11/13・@wakayama_cactus_club 2027-01-17・@tonysplantsnakano 12/06",
+   "action": "rejected",
+   "detail": "教室・新年会・オフ会で見送り記録"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "coverage_gaps 6件(花のある暮らし10/28・笹の雪POP UP 10/31・ときわミュージアム11/1・URBAN JUNGLE WEEKS 11/4・sweet jungle 11/14・PLANTS DIVE vol.006 11/22)",
+   "action": "reviewed",
+   "detail": "4件は開催済み、sweet jungle は見送り済み、PLANTS DIVE vol.006 は掲載済み"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "organizer-official-index",
+   "action": "reviewed",
+   "detail": "coverage-sweep.py に機械化済み(本日 5/5 頁取得)"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "picnic-garden 2027年5回の出典(DOVkkAvk_hK)",
+   "action": "reviewed",
+   "detail": "投稿本文(2026/10/23 更新)に2027年の日程が載っている。出典はそのままでよい"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "manual_sweep pukubook-events",
+   "action": "reviewed",
+   "detail": "coverage-sweep.py が PUKUBOOK を自動巡回(本日13頁取得)"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "coverage_gaps 2件(日本サボテン狂人会 交換会 11/15・ハッピーグリーンDays 12/20)",
+   "action": "fixed",
+   "detail": "狂人会は見送り済み、ハッピーグリーンDaysは掲載"
+  },
+  {
+   "on": "2026-11-11",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "organizer_unlisted_dates 5件(@greenfarmkanazawa 11/13・@plants2306.fe 11/23・@vandaka_plants・@wakayama_cactus_club 2027-01-17・@yamada_ishigaki 11/20 珍奇植物マーケット in 八重山 vol.2)",
+   "action": "reviewed",
+   "detail": "教室・新年会は見送り記録、八重山は掲載済み、vandaka はヤフオク告知、plants2306 は店のお知らせ"
   }
  ]
 }
