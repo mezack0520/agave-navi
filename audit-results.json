@@ -205,7 +205,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 117,
+      "count": 120,
       "items": [
         "agave-popup-mellow-plants-toon-2026-11",
         "agavejam-3rd-as-green-garden-2026-11",
@@ -214,6 +214,7 @@
         "art-bikakushida-hankyu-umeda-2026-11",
         "asamiya-tanikusai-xmas-market-2026-12",
         "awajishima-taniku-smile-marche-3rd-2026",
+        "back-to-the-forest-vol2-uju-osaka-2026-12",
         "bbb-snowpeak-miyakonojo-2026-11",
         "bizarre-plants-night-day-2026-12",
         "bota-magic-2nd-wakayama-2027-04",
@@ -245,15 +246,14 @@
         "green-marche-hananoyu-fujinomiya-2027-06",
         "greensnap-marche-abc-hachioji-2026-11",
         "greensnap-marche-odaiba-2026",
-        "hanatomofesta-10th-makuhari-2027-04",
-        "hanatomofesta-2026"
+        "hanatomofesta-10th-makuhari-2027-04"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 390,
+      "count": 393,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -273,6 +273,7 @@
         "asamiya-tanikusai-xmas-market-2026-12",
         "atilab-magari-hanbaikai-fangit-2026-10",
         "awajishima-taniku-smile-marche-3rd-2026",
+        "back-to-the-forest-vol2-uju-osaka-2026-12",
         "banryoku-popup-vol6-setagaya-2026-10",
         "bba-vol5-carpediem-2026-09",
         "bbb-snowpeak-miyakonojo-2026-11",
@@ -293,17 +294,15 @@
         "botalife-4th-anniversary-popup-2026-09",
         "botanic-bomb-10th-kyoto-2026",
         "botanic-front-fes-shikokuzouen-2026-11",
-        "botanical-auction-3rd-hamamatsu-2026-09",
-        "botanical-botanical-fukuoka-2026-10"
+        "botanical-auction-3rd-hamamatsu-2026-09"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 81,
+      "count": 78,
       "items": [
-        "back-to-the-forest-vol2-uju-osaka-2026-12",
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
         "botalife-euphorbia-fair-2026-11",
@@ -342,7 +341,8 @@
         "lier-taniku-festival-ichikawa-2026-11",
         "lier-taniku-festival-kariya-2026-12",
         "lier-taniku-festival-kitakyushu-2027-01",
-        "lier-taniku-festival-nagasaki-2027-01"
+        "lier-taniku-festival-nagasaki-2027-01",
+        "lier-taniku-festival-natori-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -945,9 +945,8 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 81,
+      "count": 78,
       "items": [
-        "2026-11-13 sekaiju-no-shizuku-omiya-marui-2026-11",
         "2026-11-14 botalife-euphorbia-fair-2026-11",
         "2026-11-14 jolie-nursery-yamashin-mito-2026-11",
         "2026-11-14 kanik-popup-pac-plants-yokohama-2026-11",
@@ -957,7 +956,6 @@
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
         "2026-11-21 lier-taniku-festival-ichikawa-2026-11",
         "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
-        "2026-11-21 plant-addict-festa-ishiuchi-pennon-2026-11",
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
         "2026-11-22 heartplants-kasugadou-collab-toyonaka-2026-11",
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
@@ -984,9 +982,11 @@
         "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12",
         "2026-12-13 morino-tanikuen-hanbaikai-kagoshima-2026-12",
         "2026-12-19 botanical-style-fukuoka-minato-2026-12",
-        "2026-12-20 back-to-the-forest-vol2-uju-osaka-2026-12",
         "2026-12-20 isij-tokyo-reikai-2026-12-20",
-        "2026-12-20 nbgarden-festa-shizuoka-2026-12"
+        "2026-12-20 nbgarden-festa-shizuoka-2026-12",
+        "2026-12-26 enjoy-place-bangaihen-2026-12",
+        "2026-12-26 lier-taniku-festival-tokorozawa-2026-12",
+        "2026-12-27 lier-taniku-festival-natori-2026-12"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
