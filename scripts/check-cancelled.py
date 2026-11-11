@@ -350,7 +350,7 @@ def main_entry(html, event=None):
         _named, found = page_dates(frags[0])
         return frags[0] if (span & found) else None
     if not frags:
-        return entry_container(html, span)
+        return entry_container(html, span) or repeated_block(html, event)
     # 記事が複数(本文 + 関連記事)の頁は、この回の開始日を含む記事がちょうど1つのときだけ
     # その記事に絞る。会期の範囲で選ぶと、会期の長い回では関連記事の日付が範囲に入る
     try:
@@ -397,6 +397,39 @@ def entry_container(html, span):
         f = element_fragment(html, m.start(), m.group(1))
         if f and span & page_dates(f)[1]:
             hits.append(f)
+    inner = [f for f in hits if not any(g is not f and g in f for g in hits)]
+    return inner[0] if len(inner) == 1 else None
+
+
+# 催しを同じ class の入れ物で縦に並べる一覧頁(施設の「展示会情報」など)。
+# 前の催しが終わって消え、次の催しが足されるたびに頁全体の本文と画像が動く。
+# 井頭公園グリーンサロンの展示会情報(<div class="kouza">)で14日に3回空振りした。
+REPEATED_OPEN = re.compile(
+    r'(?i)<(div|li|section|tr)\b[^>]*\bclass\s*=\s*["\']([^"\']+)["\'][^>]*>')
+
+
+def repeated_block(html, event):
+    """同じ tag と class の入れ物が2つ以上並び、この回の開始日を含むものがちょうど1つならそれを返す。
+
+    入れ子(kouza > kouza-inner)は内側を採る。開始日を含む入れ物が2つ以上なら絞らない。
+    """
+    try:
+        sd = date.fromisoformat(event_span(event)[0])
+    except (ValueError, TypeError, IndexError):
+        return None
+    groups = {}
+    for m in REPEATED_OPEN.finditer(html or ''):
+        groups.setdefault((m.group(1).lower(), m.group(2).strip()), []).append(m)
+    hits = []
+    for (tag, _cls), ms in groups.items():
+        if len(ms) < 2:
+            continue
+        frs = [element_fragment(html, m.start(), tag) for m in ms]
+        frs = [f for f in frs if f]
+        hit = [f for f in frs if (sd.month, sd.day) in page_dates(f)[1]]
+        if len(hit) > 1:
+            return None
+        hits += hit
     inner = [f for f in hits if not any(g is not f and g in f for g in hits)]
     return inner[0] if len(inner) == 1 else None
 
@@ -996,6 +1029,24 @@ def self_test(verbose=True):
     chk('class 名の一部だけの一致(my-news_boxes)は入れ物に数えない',
         analyze(FIX_NEWS_BOX.replace('{news}', 'X').replace('news_box ClearFix', 'my-news_boxes'), _evx)['sigScope'],
         'page')
+
+    say('\n--- 同じ入れ物が並ぶ催しの一覧は、その回の入れ物に絞る (2026-11-12) ---')
+    _ka = ('<html><body><h2>展示会情報</h2>'
+           '<div class="kouza"><div class="kouza-inner"><div class="flt">【展示】{prev}</div>'
+           '<img src="/a{prev_img}.jpg"><table><tr><td>2026年11月12日(木)～11月16日(月)</td></tr></table></div></div>'
+           '<div class="kouza"><div class="kouza-inner"><div class="flt">【展示】多肉植物とサボテンの展示会</div>'
+           '<img src="/b.jpg"><p>{body}</p><table><tr><td>2026年11月19日（木）~11月22日（日）</td></tr></table></div></div>'
+           '</body></html>')
+    _evk = {'slug': 'k', 'date': '2026-11-19', 'dateEnd': '2026-11-22'}
+    _k1 = analyze(_ka.format(prev='写真展', prev_img='1', body='即売も行います。'), _evk)
+    _k2 = analyze(_ka.format(prev='俳句展ほか', prev_img='2', body='即売も行います。'), _evk)
+    _k3 = analyze(_ka.format(prev='写真展', prev_img='1', body='中止いたします。'), _evk)
+    chk('並んだ入れ物の1つに開始日 → 絞る', _k1['sigScope'], 'article')
+    chk('隣の催しが入れ替わっても署名は同じ', _k1['signature'] == _k2['signature'], True)
+    chk('この回の入れ物の本文が変われば署名は変わる', _k1['signature']['text'] != _k3['signature']['text'], True)
+    chk('開始日を含む入れ物が2つ → 絞らない',
+        analyze(_ka.format(prev='写真展', prev_img='1', body='即売も行います。').replace(
+            '2026年11月12日(木)', '2026年11月19日(木)'), _evk)['sigScope'], 'page')
 
     say('\n--- 通販の注文のキャンセル ---')
     _s3, w3 = find_words(['エントリー受付後、ご注文は自動的にキャンセルされます。'

@@ -2,159 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "ao-dryflower-bikaku-ten-hitoyoshi-2026-10",
-   "action": "fixed",
-   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "fukuland-2026-10",
-   "action": "fixed",
-   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "terrace-no-marche-vol17-2026-10",
-   "action": "fixed",
-   "detail": "一次情報が出ないまま開催日(10/11)を過ぎたので revisit=false にして理由に一文足した",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "ミニ植欲祭 (2026-10-18)",
-   "action": "listed",
-   "detail": "主催 @tokue_green_plants(徳江生花店)の告知 DeOo1eQqR32 で裏取り。趣味家のアガベ・ビカクシダ等の即売会",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "metric_moved",
-   "target": "ongoing_events 20→17 (換算28)",
-   "action": "fixed",
-   "detail": "3連休最終日(スポーツの日)の開催中17件は平常。土日の中央値を遠い先の回で膨らんだ開催予定で換算した基準との比較だった。ongoing_events は暦で決まる値なので audit の _METRIC_NO_ALARM へ移した(暦が原因の誤検知3回目)",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "tbd",
-   "target": "masappe 周年祭 / BOTANICAL BOTANICAL OKINAWA / まるっと植物fes!! / BOTANICAL STYLE Minato / 珍奇植物フリマ 1月・4月 / サンタフェ周年祭",
-   "action": "skipped",
-   "detail": "主催の最新12件に会場・時間なし。まるっと植物fes は 10/08 の投稿に #淵野辺公園 と公園のアカウントのタグだけで会場の明記は無く、正式な告知画像は10月末の予定",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "eyecatch_candidates_pending",
-   "target": "12件",
-   "action": "skipped",
-   "detail": "agave-navi-eyecatch の担当",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "agave-event-update",
-   "kind": "truncated_unresolved",
-   "target": "四日市 生活文化・趣味の作品展 / リトリートマルシェ vol.10",
-   "action": "reviewed",
-   "detail": "どちらも 10-10 に見送り記録済み",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "event-monitor",
-   "kind": "time_vs_flyer",
-   "target": "植物販売会（やまぐちフラワーランド・もちのいえ） (2026-10-24)",
-   "action": "fixed",
-   "detail": "time を 9:00〜15:00 にし、説明文の「開始・終了の時刻は告知に無い」を消した。出典の投稿 Dd1MD2ny3HK の告知画像(アイキャッチと同じ1枚)に「10/24(土) 9:00-15:00」とある",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "event-monitor",
-   "kind": "instagram_post_predates_edition",
-   "target": "第6回 KA78企画祭 (2026-11-22)",
-   "action": "fixed",
-   "detail": "詳細頁が 2025-05-21 の投稿 DJ6gP1RS1ye を「この回のInstagram投稿」として埋め込んでいた。09-29 に enrich が検索で当たった投稿を書いたもの。instagramPostId / instagramUrl を外した",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "event-monitor",
-   "kind": "eyecatch_candidates_pending",
-   "target": "アガベ販売会 Agave collection 2026（Bota Bro Garden） (2026-10-25)",
-   "action": "fixed",
-   "detail": "CI の候補(出典のリール Dd8rprAS7MB の表紙)を採用。回名・10.25 SUN・10:00-16:00 が読める",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "event-monitor",
-   "kind": "time_vs_source",
-   "target": "俺の！プランツ・コレクション！！ (2026-09-19〜21)",
-   "action": "fixed",
-   "detail": "time 9:30〜17:00 → 9:30〜16:30。出典の PR TIMES(島根県の発表)が「開園時間 9:30～16:30」。17:00 は掲載時の出典 しまね花の郷 の頁から入った値で、その頁は今 404。同サイトの見出しには当日の開園時間 9:30〜17:00 が出ている",
-   "mailedOn": "2026-10-12"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "site-health-check",
-   "kind": "enrich_desc_offsource",
-   "target": "LOVE GReeN MARKeT Vol.3 (2026-12-12)",
-   "action": "fixed",
-   "detail": "10-11 の週次エンリッチが出典でないブログ taniwansibatani.com の定型文「…開催予定。時間、会場、出店内容、過去開催を紹介します。」で上書きしていた。主催の出店者発表 DdTupRWK9nr・DdTutSMK4TK で書き直した(出店者70組超)",
-   "mailedOn": "2026-10-13"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "site-health-check",
-   "kind": "enrich_desc_offsource",
-   "target": "Seedpot Summer Fair 2026 (2026-07-17〜19)",
-   "action": "fixed",
-   "detail": "07-19 の週次エンリッチが店のトップ頁 seedpot.co.jp の店舗紹介で上書きしていた。上書き前の説明文に戻した",
-   "mailedOn": "2026-10-13"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "site-health-check",
-   "kind": "tbd",
-   "target": "食虫植物祭2026 (2026-11-07〜08)",
-   "action": "fixed",
-   "detail": "主催 Heli's Garden の公式頁のタイムテーブルどおり time 9:00〜17:00(開場〜閉園)、即売会の会場 花の展示ホールを venue に、organizer を入れた。入場料は頁に無いので空のまま(event-monitor 10-12 の未対応)",
-   "mailedOn": "2026-10-13"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "site-health-check",
-   "kind": "needs_browser",
-   "target": "Lier.多肉フェスティバル in 岡山 (2026-10-25)",
-   "action": "skipped",
-   "detail": "ブラウザ要: 会場「サウスヴィレッジホール」が岡山市南区片岡のサウスヴィレッジ(ファーマーズハウスのホール)と同じ施設かを、会場か主催 @lier_succulent の告知で確かめ、venue/location を直す。event-monitor が 10-09〜12 の4回持ち越した",
-   "mailedOn": "2026-10-13"
-  },
-  {
-   "on": "2026-10-12",
-   "task": "site-health-check",
-   "kind": "needs_browser",
-   "target": "多肉だョ！全員集合 の表記(とっとり花回廊・金沢 / 津山・福山)",
-   "action": "skipped",
-   "detail": "ブラウザ要: とっとり花回廊・金沢の回は「だヨ」、津山・福山の回は「だョ」。主催 @tanikudayo.zeninsyuugou の表記で name を揃える。event-monitor が 10-11・12 に持ち越した",
-   "mailedOn": "2026-10-13"
-  },
-  {
    "on": "2026-10-13",
    "task": "agave-event-update",
    "kind": "coverage_gaps",
@@ -1440,6 +1287,78 @@
    "action": "fixed",
    "detail": "掲載3件目(nou-marche-8th-2026-12)で頁がハッシュのままだった。/venue/noumaru-kibiji-noen/ に移し、旧 v-f2260e2c は中継頁で転送",
    "mailedOn": "2026-11-11"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "植フェス GLOBAL PLANTS MARKET 千葉ニュータウン (2026-11-14)",
+   "action": "listed",
+   "detail": "ジョイフル本田の店舗イベント頁 id=45641 と出店者一覧の画像で裏取り。対象植物の店6/約20"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "BACK TO THE FOREST vol.2 (2026-12-20)",
+   "action": "listed",
+   "detail": "主催 @backplain77 DfjpffSk77d"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "あいち花マルシェ三河 / 香りの植物学 / フェルム・ド・ノエル Vol.31",
+   "action": "rejected",
+   "detail": "花・有用植物・総合クラフト市で policy"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "sumori Open garden (2026-12-19)",
+   "action": "rejected",
+   "detail": "出店者 @king.plants.slugger の告知のみ。unverified / revisit"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "heartplants-osaka-ikuseijo-popup-2026-11",
+   "action": "listed",
+   "detail": "主催 @heart_plants DfmPJaatm31 に所在地・時間・予約不要が出たので掲載し見送りを削除"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "hinata-tanikuen-event-miyazaki-2026-11",
+   "action": "reviewed",
+   "detail": "@succulent_room_m に告知なし。revisitedOn 更新"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "igashira-park-taniku-saboten-tenjikai-2026-11",
+   "action": "fixed",
+   "detail": "check-cancelled.py: 同じ class の入れ物が並ぶ一覧頁はその回の入れ物に署名を絞る(repeated_block)。隣の展示の入れ替わりで鳴らなくなる"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@sekaijunosizuku 11/13 / @botalife_pachy 11/14 / @lier_succulent 市川・所沢・名取 / @morinotanikuen 宮崎・鹿児島",
+   "action": "listed",
+   "detail": "scan-organizer-posts の一覧から主催の告知で掲載"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "GREENS vol.5 / グリーンフェス大分 / かぐらばマルシェ / THE TANIKU EXPO",
+   "action": "rejected",
+   "detail": "総合マルシェ・ガーデニングは policy、TANIKU EXPO は主催未特定で unverified"
   }
  ]
 }

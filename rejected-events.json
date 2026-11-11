@@ -1877,9 +1877,9 @@
     "メデルさんイベント"
    ],
    "decided": "2026-10-07",
-   "reason": "vendorAnnouncementsOnly。福岡の出店者 @the_factory_otto ほか複数の出店予定に『11/22(日)宮崎ヒナタ多肉園(メデルさん)イベントへ出店』とあるだけで、主催とみられる @succulent_room_m(めでる/ヒナタ多肉園・宮崎県日向市の生産者)の最新12投稿に当該回の告知が無い。会場も不明。主催の告知が出たら再評価する / 2026-10-12 再評価: @succulent_room_m の最新9投稿は苗の通販だけで、11/22 の回の告知はまだ無い。継続 / 2026-10-15 再評価: @succulent_room_m の最新5投稿は苗の通販と品種名の紹介だけで、11/22 の回の告知は無い。継続",
+   "reason": "vendorAnnouncementsOnly。福岡の出店者 @the_factory_otto ほか複数の出店予定に『11/22(日)宮崎ヒナタ多肉園(メデルさん)イベントへ出店』とあるだけで、主催とみられる @succulent_room_m(めでる/ヒナタ多肉園・宮崎県日向市の生産者)の最新12投稿に当該回の告知が無い。会場も不明。主催の告知が出たら再評価する / 2026-10-12 再評価: @succulent_room_m の最新9投稿は苗の通販だけで、11/22 の回の告知はまだ無い。継続 / 2026-10-15 再評価: @succulent_room_m の最新5投稿は苗の通販と品種名の紹介だけで、11/22 の回の告知は無い。継続 / 2026-11-12 再評価: @succulent_room_m の最新9投稿は苗の通販と品種の紹介だけで、11/22 の回の告知はまだ無い。継続",
    "eventDate": "2026-11-22",
-   "revisitedOn": "2026-10-15"
+   "revisitedOn": "2026-11-12"
   },
   {
    "key": "sakura-shokubutsuen-halloween-2026-10",
@@ -2352,20 +2352,6 @@
    "decided": "2026-10-11",
    "eventDate": "2026-10-04",
    "reason": "outOfScopeGenres(ガーデニング)。主催 @thefarmuniversal(DeBc5-Rmr3W)の告知は、恒例のスタッフの技能コンテストで作った植物のディスプレイ作品を園内に飾るフォトスポットの企画で、即売会・展示即売会ではなく、主題も対象ジャンルの植物ではない。coverage-sweep の照合の不具合(見送りの BOTANICA の語が Botanical の中に当たる)で24日ぶん候補に出ていなかった"
-  },
-  {
-   "key": "heartplants-osaka-ikuseijo-popup-2026-11",
-   "name": "Heartplants. 大阪育成場ポップアップ with 丹波多肉 春日堂 (2026-11-22 Heartplants. 大阪の育成場・大阪府)",
-   "aliases": [
-    "育成場ポップアップ",
-    "大阪育成場ポップアップ"
-   ],
-   "reasonType": "undisclosed",
-   "revisit": true,
-   "eventDate": "2026-11-22",
-   "decided": "2026-10-12",
-   "reason": "主催 @heart_plants(厳選アガベ専門店)が自分の投稿の予定欄に『11/22 大阪育成場ポップアップ with @tambataniku.kasugadou』と書いている(DeGx-nRtGwC ほか)。日付は主催の一次情報だが、育成場は普段『事前予約で来店可能』で所在地も非公開。当日が予約なしで誰でも入れる回か・時間・所在地が出ていないので、誰でも行ける回かを判断できない。詳細の告知が出たら掲載する / 2026-10-16 再評価: @tambataniku.kasugadou の最新8投稿に当該回の告知は無い。継続",
-   "revisitedOn": "2026-10-16"
   },
   {
    "key": "monster-plants-kagawa-2027-03",
@@ -2992,6 +2978,93 @@
    "aliases": [
     "KYOTO MIDORINO MARCHE BENKEISOU"
    ]
+  },
+  {
+   "key": "aichi-hana-marche-mikawa-2026-11",
+   "name": "あいち花マルシェ2026 三河ステージ (2026-11-21 安城産業文化公園デンパーク・愛知県安城市)",
+   "aliases": [
+    "あいち花マルシェ"
+   ],
+   "reasonType": "policy",
+   "eventDate": "2026-11-21",
+   "decided": "2026-11-12",
+   "reason": "PUKUBOOK から。愛知県と安城市の告知する花のマルシェで、主題は花きの消費拡大。outOfScopeGenres(ガーデニング・花)"
+  },
+  {
+   "key": "kaori-no-shokubutsugaku-otaki-2026-11",
+   "name": "香りの植物学 〜香りから探究する、植物の有用性〜 (2026-11-29 大多喜有用植物苑・千葉県大多喜町)",
+   "reasonType": "policy",
+   "eventDate": "2026-11-29",
+   "decided": "2026-11-12",
+   "reason": "LEAFLA から。薬草研究家のトークを軸にした有用植物の催しで、同じ苑のアジア有用植物祭(2026-09 見送り)と同じ型。outOfScopeGenres(ハーブ・有用植物)"
+  },
+  {
+   "key": "ferme-de-noel-vol31-2026-12",
+   "name": "フェルム・ド・ノエル Vol.31 (2026-12-05/06 こもれび森のイバライド・茨城県稲敷市)",
+   "aliases": [
+    "Ferme de noel"
+   ],
+   "reasonType": "policy",
+   "eventDate": "2026-12-05",
+   "eventDateEnd": "2026-12-06",
+   "decided": "2026-11-12",
+   "reason": "NextMeet から。フェルム・ド・フェス Vol.29 と同じ主催・会場の総合クラフト市(約120店中 植物系9店で見送り済み)。compositeEvents"
+  },
+  {
+   "key": "sumori-open-garden-2026-12",
+   "name": "sumori Open garden 冬 (2026-12-19 スモリの家中庭・宮城県名取市)",
+   "aliases": [
+    "スモリオープンガーデン",
+    "sumori Open garden 〜植物と雑貨で冬の暮らしに彩りを〜"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-12-19",
+   "decided": "2026-11-12",
+   "reason": "vendorAnnouncementsOnly。出店者 @king.plants.slugger (DflI9W8SaMd) が 12/19(土) 10:00〜18:00 スモリの家中庭と出店者13組(植物はSolis・sunny spot・キングプランツ・多肉屋福。ほか鉢・雑貨)を書いているが、主催 @sumori_634 と運営に入る ここばな庵 @kokobanaankoh1 の最新投稿に当該回の告知が無い。主催の告知が出たら出店者一覧で数えて判断する"
+  },
+  {
+   "key": "greens-vol5-garage-toyohashi-2026-12",
+   "name": "GREENS vol.5 (2026-12-06 garage TOYOHASHI・愛知県豊橋市)",
+   "aliases": [
+    "GREENS"
+   ],
+   "reasonType": "policy",
+   "eventDate": "2026-12-06",
+   "decided": "2026-11-12",
+   "reason": "Google 検索から。主催 @garage_toyohashi (DfcBizsEWuC) の出店者一覧は全31組で、plants 8組(プロテア・シクラメン・オンブー・観葉・盆栽・肥料を含む)、creator 10組、food 12組、music 1組。対象の植物を主に扱うのは MONET とメデルの2組ほど。compositeEvents"
+  },
+  {
+   "key": "oita-green-fes-2026-11",
+   "name": "グリーンフェス 大分 (2026-11-14 大分駅上野の森口側・大分県大分市)",
+   "reasonType": "policy",
+   "eventDate": "2026-11-14",
+   "decided": "2026-11-12",
+   "reason": "出店する @lier_succulent (DfndnU4Ev26) の告知から。大分市共催の年1回の催しで、Lier は日比谷公園ガーデニングショーの作品展示と寄せ植え体験で出る。主題はガーデニング。outOfScopeGenres"
+  },
+  {
+   "key": "kaguraba-marche-sennomori-2026-11",
+   "name": "かぐらばマルシェ (2026-11-29 伊勢かぐらばリゾート千の杜 さるめ広場・三重県伊勢市)",
+   "aliases": [
+    "かぐらばマルシェ"
+   ],
+   "reasonType": "policy",
+   "eventDate": "2026-11-29",
+   "decided": "2026-11-12",
+   "reason": "出店者 @morinotanikuen の予定表から。宿泊施設が11月の毎週日曜と12/19-20・1月に開く総合マルシェで、名称は中立、出店者は募集制。compositeEvents。森の多肉園の出店は vendorBoothInHostEvent"
+  },
+  {
+   "key": "the-taniku-expo-osanbashi-2026-12",
+   "name": "THE TANIKU EXPO (2026-12-12 大さん橋ホール・神奈川県横浜市)",
+   "aliases": [
+    "TANIKU EXPO",
+    "タニクエキスポ"
+   ],
+   "reasonType": "unverified",
+   "revisit": true,
+   "eventDate": "2026-12-12",
+   "decided": "2026-11-12",
+   "reason": "出店者の予定表(@lier_succulent DfndnU4Ev26、@casulo_succulent の Threads)にだけ 12/12 大さん橋ホールとある。過去の TANIKU EXPO(金沢港クルーズターミナル)の主催 @kumakiri55 の最新投稿に横浜の回は無く、主催を特定できていない。vendorAnnouncementsOnly。主催の告知が出たら掲載する"
   }
  ],
  "_reasonTypes": {
