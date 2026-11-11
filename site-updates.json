@@ -1,7 +1,107 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-11",
+  "updated": "2026-11-12",
   "items": [
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "sekaiju-no-shizuku-omiya-marui-2026-11",
+      "name": "世界樹の雫 大宮マルイ（2026年11月）",
+      "date": "2026-11-13",
+      "dateEnd": "2026-11-15",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "shokufes-joyful-festival-chiba-newtown-2026-11",
+      "name": "植フェス GLOBAL PLANTS MARKET（JOYFUL FESTIVAL 千葉ニュータウン）",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-15",
+      "prefecture": "千葉",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "botalife-euphorbia-fair-2026-11",
+      "name": "ボタらいふ Euphorbia Fair",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-17",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-ichikawa-2026-11",
+      "name": "Lier.多肉フェスティバル in 市川",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-21",
+      "prefecture": "千葉",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "heartplants-kasugadou-collab-toyonaka-2026-11",
+      "name": "Heartplants. × KASUGADOU コラボイベント（大阪育成場）",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-miyazaki-2026-12",
+      "name": "森の多肉園販売会 in 宮崎",
+      "date": "2026-12-12",
+      "dateEnd": "2026-12-12",
+      "prefecture": "宮崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "morino-tanikuen-hanbaikai-kagoshima-2026-12",
+      "name": "森の多肉園販売会 in 鹿児島",
+      "date": "2026-12-13",
+      "dateEnd": "2026-12-13",
+      "prefecture": "鹿児島",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "back-to-the-forest-vol2-uju-osaka-2026-12",
+      "name": "BACK TO THE FOREST vol.2",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-tokorozawa-2026-12",
+      "name": "Lier.多肉フェスティバル in 所沢",
+      "date": "2026-12-26",
+      "dateEnd": "2026-12-26",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-12",
+      "kind": "listed",
+      "slug": "lier-taniku-festival-natori-2026-12",
+      "name": "Lier.多肉フェスティバル in 名取",
+      "date": "2026-12-27",
+      "dateEnd": "2026-12-27",
+      "prefecture": "宮城",
+      "detail": ""
+    },
     {
       "on": "2026-11-11",
       "kind": "venue",
@@ -1101,106 +1201,6 @@
       "dateEnd": "2026-11-22",
       "prefecture": "神奈川",
       "detail": "調整中 → 淵野辺公園 芝生広場"
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "joyfulak-omagari-agave-tenji-sokubaikai-2026-10",
-      "name": "アガベ展示即売会（ジョイフルエーケー大曲店）",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-17",
-      "prefecture": "北海道",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "joyfulak-ooasa-agave-tenji-sokubaikai-2026-10",
-      "name": "アガベ展示即売会（ジョイフルエーケー大麻店）",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-17",
-      "prefecture": "北海道",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "reggio-popup-saikai-kawatana-2026-10",
-      "name": "REGGIO POP UP SHOP in NAGASAKI KAWATANA（西海園芸 川棚店）",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-17",
-      "prefecture": "長崎",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "aobouzu-akashi-popup-2026-10",
-      "name": "青坊主 明石ポップアップ（octet.）",
-      "date": "2026-10-23",
-      "dateEnd": "2026-10-25",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "cactusnishi-gardens-umekita-2026-10",
-      "name": "店頭即売会 カクタスニシ・Ruchia・優木園（gardens umekita）",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-25",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "shimamura-engei-qsplant-vol9-2026-10",
-      "name": "シマムラ園芸×QSPLANT vol.9",
-      "date": "2026-10-31",
-      "dateEnd": "2026-11-01",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "walk-coffee-platycerium-exhibition-nagaoka-2026-11",
-      "name": "WALK COFFEE PLATYCERIUM EXHIBITION（scene・長岡）",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "新潟",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "taniku-market-fungarden-tobe-2026-11",
-      "name": "多肉植物マーケット＠とべ（ファンガーデン砥部店）",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-08",
-      "prefecture": "愛媛",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
-      "name": "多肉植物とサボテンの展示会（井頭公園）",
-      "date": "2026-11-19",
-      "dateEnd": "2026-11-22",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "listed",
-      "slug": "plump-plants-collab-ina-2026-11",
-      "name": "PLUMP 3社合同コラボイベント（伊那市）",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "長野",
-      "detail": ""
     }
   ]
 }

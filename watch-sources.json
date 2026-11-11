@@ -1,19 +1,19 @@
 {
- "generated": "2026-11-12 06:42 JST",
+ "generated": "2026-11-12 07:23 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 416,
-  "awaitingNextEdition": 487,
+  "igAccounts": 419,
+  "awaitingNextEdition": 486,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 93,
+  "igNeedsBrowser": 96,
   "igDead": 7
  },
  "igAccounts": [
   {
    "handle": "lier_succulent",
    "url": "https://www.instagram.com/lier_succulent/",
-   "eventCount": 27,
+   "eventCount": 30,
    "lastEventName": "第10回 花友フェスタ in 幕張メッセ",
    "lastEventDate": "2027-04-29",
    "hasUpcoming": true,
@@ -71,6 +71,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "morinotanikuen",
+   "url": "https://www.instagram.com/morinotanikuen/",
+   "eventCount": 7,
+   "lastEventName": "森の多肉園販売会 in 鹿児島",
+   "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "midorino_marche",
    "url": "https://www.instagram.com/midorino_marche/",
    "eventCount": 7,
@@ -125,16 +135,6 @@
    "url": "https://www.instagram.com/botayoko/",
    "eventCount": 5,
    "lastEventName": "ボタニカル横丁（2026年11月）",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "morinotanikuen",
-   "url": "https://www.instagram.com/morinotanikuen/",
-   "eventCount": 5,
-   "lastEventName": "森の多肉園販売会 BIG",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
@@ -381,6 +381,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "botalife_pachy",
+   "url": "https://www.instagram.com/botalife_pachy/",
+   "eventCount": 2,
+   "lastEventName": "ボタらいふ Euphorbia Fair",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "botapara_botanical_paradise",
    "url": "https://www.instagram.com/botapara_botanical_paradise/",
    "eventCount": 2,
@@ -445,6 +455,16 @@
    "url": "https://www.instagram.com/banksia.111/",
    "eventCount": 2,
    "lastEventName": "園日 Vol.18",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "heart_plants",
+   "url": "https://www.instagram.com/heart_plants/",
+   "eventCount": 2,
+   "lastEventName": "Heartplants. × KASUGADOU コラボイベント（大阪育成場）",
    "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
@@ -1001,6 +1021,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "sekaijunosizuku",
+   "url": "https://www.instagram.com/sekaijunosizuku/",
+   "eventCount": 1,
+   "lastEventName": "世界樹の雫 大宮マルイ（2026年11月）",
+   "lastEventDate": "2026-11-13",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "the_botanical_show",
    "url": "https://www.instagram.com/the_botanical_show/",
    "eventCount": 1,
@@ -1049,6 +1079,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "gardencenter_joyfulhonda",
+   "url": "https://www.instagram.com/gardencenter_joyfulhonda/",
+   "eventCount": 1,
+   "lastEventName": "植フェス GLOBAL PLANTS MARKET（JOYFUL FESTIVAL 千葉ニュータウン）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagomi_marche_2023",
@@ -1559,6 +1599,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "backplain77",
+   "url": "https://www.instagram.com/backplain77/",
+   "eventCount": 1,
+   "lastEventName": "BACK TO THE FOREST vol.2",
+   "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bakyuu.kitchen",
@@ -2640,16 +2690,6 @@
    "url": "https://www.instagram.com/kinoco__inc/",
    "eventCount": 1,
    "lastEventName": "NOVA CULTURA（TRADMAN'S BONSAI × KINOCO）",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "botalife_pachy",
-   "url": "https://www.instagram.com/botalife_pachy/",
-   "eventCount": 1,
-   "lastEventName": "ボタらいふ 4周年祭POPUP",
    "lastEventDate": "2026-09-19",
    "hasUpcoming": false,
    "priority": 2,
@@ -3906,16 +3946,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "heart_plants",
-   "url": "https://www.instagram.com/heart_plants/",
-   "eventCount": 1,
-   "lastEventName": "Agave summit Osaka",
-   "lastEventDate": "2026-11-01",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "succutochi",
    "url": "https://www.instagram.com/succutochi/",
    "eventCount": 1,
@@ -4298,17 +4328,6 @@
    "apiStatus": "api"
   },
   {
-   "series": "森の多肉園販売会 in 京都舞鶴",
-   "lastSlug": "morino-tanikuen-hanbaikai-maizuru-2026-10",
-   "lastDate": "2026-10-12",
-   "lastEnd": "2026-10-12",
-   "monthsSinceLast": 1,
-   "igHandle": "morinotanikuen",
-   "officialUrl": "https://www.instagram.com/p/DdY2FP9H4nG/",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
    "series": "魚町ボダニカルナイトマーケット",
    "lastSlug": "uomachi-botanical-night-market-2026-10",
    "lastDate": "2026-10-17",
@@ -4626,6 +4645,17 @@
    "officialUrl": "https://www.instagram.com/p/DeRWiZUmUMQ/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "DOLCE’S 多肉植物販売会（オザキフラワーパーク）",
+   "lastSlug": "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10",
+   "lastDate": "2026-10-31",
+   "lastEnd": "2026-11-01",
+   "monthsSinceLast": 0,
+   "igHandle": "ozakiflowerpark",
+   "officialUrl": "https://ozaki-flowerpark.co.jp/news/dolceshanbaikai",
+   "recurring": false,
+   "apiStatus": "api"
   }
  ],
  "officialSiteCandidates": [
@@ -4645,6 +4675,12 @@
    "domain": "jolienursery.co.jp",
    "url": "https://jolienursery.co.jp/pages/events",
    "eventName": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
+   "eventDate": "2026-11-14"
+  },
+  {
+   "domain": "event.joyfulhonda.com",
+   "url": "https://event.joyfulhonda.com/single-exp.php?id=45641&store=chibant",
+   "eventName": "植フェス GLOBAL PLANTS MARKET（JOYFUL FESTIVAL 千葉ニュータウン）",
    "eventDate": "2026-11-14"
   },
   {
@@ -4802,12 +4838,6 @@
    "url": "https://green-flash-fes.com/",
    "eventName": "GREEN BREEZE FES vol.3",
    "eventDate": "2026-05-31"
-  },
-  {
-   "domain": "city.hanamaki.iwate.jp",
-   "url": "https://www.city.hanamaki.iwate.jp/kurashi/kankyo/hanaippai/1013528.html",
-   "eventName": "花と緑のまつり",
-   "eventDate": "2026-06-05"
   }
  ],
  "unresolvedIgHandles": []

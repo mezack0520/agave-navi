@@ -1909,11 +1909,11 @@
   {
    "date": "2026-11-12",
    "urgent": {
-    "cancel_review_repeated": 1,
-    "rejected_revisit_due": 2
+    "cancel_review_repeated": 1
    },
    "info": {
-    "coverage_gaps": 6,
+    "coverage_gap_stale": 2,
+    "coverage_gaps": 4,
     "cancel_suspects": 2,
     "organizer_unlisted_dates": 7,
     "eyecatch_candidates_pending": 12,
@@ -1926,13 +1926,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 117,
     "events_with_image": 390,
-    "upcoming_no_image": 71,
+    "upcoming_no_image": 81,
     "ongoing_events": 3,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 71
+    "eyecatch_backlog": 81
    },
-   "events": 774,
-   "upcoming": 188
+   "events": 784,
+   "upcoming": 198
   }
  ]
 }
