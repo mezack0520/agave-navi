@@ -7,29 +7,7 @@
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
-      "name": "多肉植物とサボテンの展示会（井頭公園）",
-      "date": "2026-11-19",
-      "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "why": "公式ページが変わった(本文: 886→875字 -2%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-abc-hachioji-2026-11",
-      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
-      "date": "2026-11-21",
-      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
@@ -123,13 +101,13 @@
       "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
       "checkedOn": "2026-11-12",
       "signature": {
-        "text": "ef9bf44903fa9cf7",
-        "images": "8f90f884fdaee71b",
-        "textLen": 875,
-        "imageCount": 42
+        "text": "2b38adaa0531ad2d",
+        "images": "af327c6276857b7d",
+        "textLen": 128,
+        "imageCount": 3
       },
-      "prevTextLen": 886,
-      "sigScope": "page",
+      "prevTextLen": null,
+      "sigScope": "article",
       "sigRule": 2,
       "strong": [],
       "weak": [],
@@ -150,7 +128,7 @@
         "textLen": 4630,
         "imageCount": 60
       },
-      "prevTextLen": 3669,
+      "prevTextLen": 4630,
       "sigScope": "article",
       "sigRule": 2,
       "strong": [],
@@ -278,7 +256,7 @@
       "checkedOn": "2026-11-12",
       "signature": {
         "text": "97d2b8fff8d42b4c",
-        "images": "4b0285a242060d26",
+        "images": "6a3bc3be877cebe3",
         "textLen": 1129,
         "imageCount": 42
       },
@@ -293,7 +271,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 11
+      "imageOnlyChanges": 12
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",

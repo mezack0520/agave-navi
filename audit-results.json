@@ -1,5 +1,5 @@
 {
-  "total": 794,
+  "total": 787,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -917,13 +917,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 4,
-      "items": [
-        "2026-11-21 あいち花マルシェ2026 三河ステージ",
-        "2026-11-29 香りの植物学 〜香りから探究する、植物の有用性〜",
-        "2026-12-05 フェルム・ド・ノエル Vol.31",
-        "2026-12-19 sumori Open garden"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1033,20 +1028,15 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
-      "items": [
-        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 公式ページが変わった(本文: 886→875字 -2%)",
-        "2026-11-21 greensnap-marche-abc-hachioji-2026-11: 公式ページが変わった(本文・画像)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
     "cancel_review_repeated": {
       "title": "同じ回の中止の兆候が空振りを繰り返している(見張りの規則が直っていない)",
-      "count": 1,
-      "items": [
-        "igashira-park-taniku-saboten-tenjikai-2026-11: 14日で3回空振りを記録 / 今日も「公式ページが変わった(本文: 886→875字 -2%)」"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を開いて cancel-reviewed.json に書くだけでは翌日また鳴る。何が変わって鳴ったか(新着欄・施設の状況欄・日付表示など)を突き止め、check-cancelled.py の drop_* / main_entry / 自己テストで規則を直す",
       "severity": "urgent"
     },
