@@ -707,6 +707,12 @@ def main():
         '説明文を書き足すときに、名前の似た別の施設や同じ主催の別の会場の所在地を写した疑い。'
         '会場名の直前の「◯◯県◯◯市の」と直後の括弧書きだけを見るので、生産者・出店者の拠点の県はここに出ない')
 
+    # 9c-1d. 曜日付きの日付が暦と合わない。日付か曜日のどちらかが誤り。規則は sitelib.event_weekday_mismatches
+    _wd_bad = [f'{_s}: {_m}' for _s, _m in sitelib.event_weekday_mismatches(events)]
+    add('weekday_mismatch', '説明文・time の曜日付きの日付が暦の曜日と食い違う',
+        sorted(_wd_bad),
+        '主催の告知で日付と曜日を確かめ、誤っている側を直す。日付が誤りなら date / dateEnd / dateDisplay と slug の年月も見る')
+
     # 9c-2. time / access のスクレイプ由来の混入。
     #       time は詳細ページ本文・FAQ・JSON-LD(構造化データ)に直行するので、
     #       誤値は検索結果にそのまま出る。access も同じ経路でFAQに入る。

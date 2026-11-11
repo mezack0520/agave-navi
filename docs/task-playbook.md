@@ -187,6 +187,7 @@ push できなかった日の起動日は、パッチを当てた回が `task-ru
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`) | 主催の告知で確かめて直す。出典に無い値は消す。入場料に出店料や貸しスペース料が入る例が繰り返し出ている | fixed |
 | 主催の最新の告知と会期が1〜3日ずれる(`organizer_post_span_differs`、info) | 主催が会期を動かしたのか、上位の催しや別の回の会期なのかを投稿で見る。動かしたなら date / dateEnd / dateDisplay、説明文の会期、出典を直す | fixed / reviewed |
 | 会期と説明文の食い違い(`desc_span_mismatch` / `desc_date_mismatch`) | 出典で会期を確かめ、日付欄か説明文を直す。daily の日付照合が書いた日付なら `git log -G` で書き換えたコミットを引き、元の値と比べる | fixed |
+| 曜日付きの日付が暦と合わない(`weekday_mismatch`) | 主催の告知で日付と曜日を確かめ、誤っている側を直す。日付が誤りなら date / dateEnd / dateDisplay と slug も見る | fixed |
 | 説明文が「未発表・告知待ち」と書く項目に値がある(`desc_claims_unannounced`) | 値の出所を確かめる。出典の告知にあれば説明文の一文を消し、無ければ値を消す。enrich が一覧の頁から別の回の値を拾っていないかをログの `Found:` で見る | fixed |
 | 終わった回に「未定」などの仮置きの値(`past_placeholder_value`) | 出典に実際の値があれば入れ、無ければキーごと消す。会場は表示側が「記録なし」に落とすので対象外 | fixed |
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で所在地を確かめ、説明文を location の住所どおりに直す。location / prefecture が違っていればそちらを直す | fixed |

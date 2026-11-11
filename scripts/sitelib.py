@@ -3362,6 +3362,50 @@ def _pref_of_city_map(events):
     return {c: next(iter(ps)) for c, ps in seen.items() if len(ps) == 1}
 
 
+
+# --- 曜日付きの日付が暦と合っているか ---
+# 説明文や time の「11/8(土)」「2026年11月8日(土)」「22日(日)」は、日付か曜日の片方が誤り。
+# 年の無い「月/日」は開催日に最も近い年で読み、月の無い「日」は会期の中の日として読む(会期に無ければ数えない)。
+_WEEKDAY_JA = '月火水木金土日'
+_WEEKDAY_DATE_RE = re.compile(
+    r'(?:(?P<y>\d{4})\s*[年/.]\s*)?(?:(?P<m>\d{1,2})\s*[月/.]\s*)?(?<![\d/.])'
+    r'(?P<d>\d{1,2})\s*日?\s*[（(]\s*(?P<w>[月火水木金土日])')
+
+
+def event_weekday_mismatches(events, fields=('description', 'time')):
+    """[(slug, 説明)] 曜日付きの日付のうち、暦の曜日と食い違うもの。"""
+    out = []
+    for e in events:
+        try:
+            d0 = date.fromisoformat(e['date'])
+            d1 = date.fromisoformat(e.get('dateEnd') or e['date'])
+        except (KeyError, ValueError, TypeError):
+            continue
+        span = [d0 + timedelta(days=i) for i in range(max((d1 - d0).days, 0) + 1)]
+        for f in fields:
+            for m in _WEEKDAY_DATE_RE.finditer(e.get(f) or ''):
+                d = int(m.group('d'))
+                if m.group('m'):
+                    years = [int(m.group('y'))] if m.group('y') else [d0.year - 1, d0.year, d0.year + 1]
+                    cands = []
+                    for y in years:
+                        try:
+                            cands.append(date(y, int(m.group('m')), d))
+                        except ValueError:
+                            pass
+                    if not cands:
+                        continue
+                    day = min(cands, key=lambda x: abs((x - d0).days))
+                else:
+                    hit = [x for x in span if x.day == d]
+                    if len(hit) != 1:
+                        continue
+                    day = hit[0]
+                wd = _WEEKDAY_JA[day.weekday()]
+                if wd != m.group('w'):
+                    out.append((e.get('slug'), f'{f} 「{m.group(0)}」は {day.isoformat()}({wd})'))
+    return out
+
 def description_venue_place_mismatches(events):
     """説明文が会場名に付けた所在地が、その回の prefecture と別の県。[(slug, 説明)]
 

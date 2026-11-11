@@ -1359,6 +1359,14 @@
    "target": "GREENS vol.5 / グリーンフェス大分 / かぐらばマルシェ / THE TANIKU EXPO",
    "action": "rejected",
    "detail": "総合マルシェ・ガーデニングは policy、TANIKU EXPO は主催未特定で unverified"
+  },
+  {
+   "on": "2026-11-12",
+   "task": "event-monitor",
+   "kind": "weekday_mismatch",
+   "target": "ojisans6-kato-engei-2026-11",
+   "action": "fixed",
+   "detail": "説明文の「11月8日(土)」を主催の告知 Delr1AjyRIO の「11/8(日)」に合わせて(日)に直した。監査 weekday_mismatch を追加"
   }
  ]
 }
