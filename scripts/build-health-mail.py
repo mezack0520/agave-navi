@@ -145,12 +145,12 @@ if judgments:
 
 # 承認済みのプロンプト変更(プレイブック §1 の 7)。定期実行は update_scheduled_task を
 # 承認者不在で自動拒否され、拒否まで約2時間止まった(2026-10-16)。定期タスクは 10-18 からクラウドの trigger。
-# PC が要るタスクなので、会話からの update_trigger は needs_device_approval で何も変わらない(2026-11-09)。
-# 書き換えるのは目崎(デスクトップアプリのタスク画面)
+# PC が要るタスクなので、update_trigger は PC 4750GE につながった会話からだけ通る。
+# つながる前は needs_device_approval で何も変わらない(2026-11-09)。つながった会話では5本とも通った(2026-11-11)
 if _approved:
     lines.append(f'━━━ 🖥 承認済みのプロンプト変更（{len(_approved)}件）━━━')
-    lines.append('デスクトップアプリのタスク画面で、手順を下のとおり書き換えてください。'
-                 '書き換えたら、どの会話でも「承認済みのプロンプト変更を確かめて」で片づけます'
+    lines.append('4750GE のデスクトップアプリで会話を開き、「承認済みのプロンプト変更を当てて」と頼んでください。'
+                 'Claude が書き換え、確かめて片づけます'
                  '(docs/task-playbook.md §1 の 7)。')
     for j in _approved:
         lines.append(f"・[{j.get('id')}] {' '.join(sitelib.str_list(j.get('proposal')))}")

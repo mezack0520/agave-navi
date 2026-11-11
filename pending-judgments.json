@@ -1,24 +1,7 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。 1件の項目: id(source:キー)、source、addedOn(YYYY-MM-DD)、question(問い)、facts(根拠。文字列の配列)、whyHuman(人の判断が要る理由)、proposal(listing-policy への追記案などの提案)。日次メールは sitelib.judgment_fields で読む。",
-  "items": [
-    {
-      "id": "conversation:task-prompts-2026-11",
-      "source": "conversation",
-      "addedOn": "2026-11-09",
-      "question": "agave 系5本のプロンプトを docs/task-prompts.md の全文に置き換える",
-      "facts": [
-        "全タスクの clone を --filter=blob:none にする。全部取る clone は 289MB・33秒、これで 150MB・11秒",
-        "agave-event-update の watch-sources 巡回を日曜だけにする(2026-11-09 承認)",
-        "プロンプトに残っていた古い指示(Chrome で開く、フォルダを毎回接続する、経緯の長文)を外し、プレイブックと揃えた"
-      ],
-      "whyHuman": "PC が要るタスクのプロンプトは、目崎がデスクトップアプリのタスク画面でしか書き換えられない",
-      "proposal": "docs/task-prompts.md の各タスクの全文で、5本の手順を置き換える",
-      "approvedOn": "2026-11-09",
-      "approvedBy": "目崎(「全部やって」)",
-      "resolveWhen": "list_triggers の5本の本文が docs/task-prompts.md と一致したら resolved へ移す"
-    }
-  ],
-  "updated": "2026-10-26",
+  "items": [],
+  "updated": "2026-11-11",
   "resolved": [
     {
       "id": "agave-navi-eyecatch:flyer-with-child-photo",
@@ -175,6 +158,24 @@
       "resolveWhen": "list_triggers で agave-event-update の本文の「やること」の2が置き換わっていたら resolved へ移す",
       "decision": "承認。プレイブック §3.1 に反映した。agave-event-update のプロンプトは conversation:task-prompts-2026-11 の置き換えに含めた",
       "resolvedOn": "2026-11-09"
+    },
+    {
+      "id": "conversation:task-prompts-2026-11",
+      "source": "conversation",
+      "addedOn": "2026-11-09",
+      "question": "agave 系5本のプロンプトを docs/task-prompts.md の全文に置き換える",
+      "facts": [
+        "全タスクの clone を --filter=blob:none にする。全部取る clone は 289MB・33秒、これで 150MB・11秒",
+        "agave-event-update の watch-sources 巡回を日曜だけにする(2026-11-09 承認)",
+        "プロンプトに残っていた古い指示(Chrome で開く、フォルダを毎回接続する、経緯の長文)を外し、プレイブックと揃えた"
+      ],
+      "whyHuman": "PC が要るタスクのプロンプトは、目崎がデスクトップアプリのタスク画面でしか書き換えられない",
+      "proposal": "docs/task-prompts.md の各タスクの全文で、5本の手順を置き換える",
+      "approvedOn": "2026-11-09",
+      "approvedBy": "目崎(「全部やって」)",
+      "resolveWhen": "list_triggers の5本の本文が docs/task-prompts.md と一致したら resolved へ移す",
+      "decision": "2026-11-11、PC 4750GE につながった会話から update_trigger で5本の本文を docs/task-prompts.md の全文に置き換えた。5本とも「prompt re-signed by 4750GE」で反映し、フォルダ mzplants、承認の設定(auto)、スケジュール、実行の履歴は変わっていない。戻り値の本文が docs/task-prompts.md の各ブロックと1文字違わず一致することを確かめた。同じ会話で、つながる前に呼んだ1回目は needs_device_approval で何も変わらなかった。これを受けてプレイブック §1 の 7、task-prompts.md、日次メールの文面、audit.py の注記を「4750GE につながった会話が当てる」に直した",
+      "resolvedOn": "2026-11-11"
     }
   ]
 }
