@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-11",
+  "sweptOn": "2026-11-12",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,33 +31,77 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 44,
-    "candidates": 910,
-    "in_scope": 277,
-    "covered": 161,
+    "candidates": 920,
+    "in_scope": 300,
+    "covered": 176,
     "known_rejected": 116,
-    "truncated_resolved": 44,
+    "truncated_resolved": 0,
     "truncated_unresolved": 6,
     "day_page_missing": 1,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 150,
+    "in_scope_leafla": 162,
     "truncated_unresolved_hits": 264,
-    "in_scope_nextmeet": 96,
+    "in_scope_nextmeet": 101,
     "in_scope_matome-blog": 7,
     "in_scope_organizer-index": 5,
-    "in_scope_pukubook": 19,
-    "gaps_raw": 0
+    "in_scope_pukubook": 25,
+    "gaps_raw": 8
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/10 追加 petit marché de noëlが20...",
-    "11/10 追加 キングプランツ 盛岡単独出店（多肉植物販売）を...",
-    "11/10 追加 spice cafe titanotaで植物販...",
-    "11/10 追加 秋の植物と土のtalk&teaの時間が2026...",
-    "11/10 追加 趣楓園「ワークショップ in ソレーネ周南」2...",
-    "NEW 11月11日追加 petit marché de noëlが2026年11月14日・15日にビエント高崎で開催 TREE MARKET presents「petit marché de noël」が、2026年11月14日（土..."
+    "11/11 追加 Craft Marche.（クラフトマルシェ）...",
+    "11/11 追加 スーパービバホーム目垣店で石組みレイアウトワー...",
+    "11/11 追加 第131回 水戸の梅まつりが2027年2月11...",
+    "11/11 追加 Green marche in花の湯が富嶽温泉...",
+    "11/11 追加 花まりで「苔テラリウム クリスマス works...",
+    "11/11 追加 ハンズマン松原店で「カーメン君トークショー」開..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-14",
+      "lastSeen": "2026-11-15",
+      "days": 2,
+      "title": "植フェス（GLOBAL PLANTS MARKET）ジョイフル本田千葉ニュータウン店",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "あいち花マルシェ2026 三河ステージ",
+      "source": "pukubook",
+      "pref": "愛知",
+      "alts": [
+        "Aichi Flower Marche 2026 Mikawa Stage"
+      ],
+      "place": "愛知 / 安城産業文化公園デンパーク"
+    },
+    {
+      "date": "2026-11-29",
+      "title": "香りの植物学 〜香りから探究する、植物の有用性〜",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-05",
+      "lastSeen": "2026-12-05",
+      "days": 2,
+      "title": "フェルム・ド・ノエル Vol.31",
+      "source": "nextmeet",
+      "pref": "茨城",
+      "place": "こもれび森のイバライド / 茨城県稲敷市上君山2060-1"
+    },
+    {
+      "date": "2026-12-19",
+      "title": "sumori Open garden",
+      "source": "nextmeet",
+      "pref": "宮城",
+      "place": "スモリの家中庭 / 宮城県名取市愛島郷1-1-1 ホームセンタームサシ名取店敷地内"
+    },
+    {
+      "date": "2026-12-20",
+      "title": "BACK TO THE FOREST vol.2（ビカクシダ展示・イベント限定商品販売イベント）",
+      "source": "leafla"
+    }
+  ]
 }
