@@ -98,7 +98,7 @@
 | github.com | clone、push とも通る。push は PAT | clone は通る。push は 403(プロキシ) |
 | api.github.com | 通る。ジョブのログは PAT 付きで取る | 不通 |
 | agave-navi.com | 通る | 通る |
-| Instagram の画像(CDN の署名付き URL) | 未確認 | curl で取れる |
+| Instagram の画像(CDN の署名付き URL) | curl で取れる | curl で取れる |
 | 画像や PDF を目で見る(Read) | できない | `device_stage_files` で取り込めばできる |
 
 Instagram の本文とプロフィールは組み込みブラウザで読む(§3.6)。
