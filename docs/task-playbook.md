@@ -132,6 +132,7 @@ push できなかった日の起動日は、パッチを当てた回が `task-ru
   `new-events.json` に既存の slug を入れると sanity-check が黙って落とし、ワークフローは成功で終わる。
 - `events.json` と `new-events.json` を同じ push に入れない。daily と sync-events が同時に走り、片方が cancelled になるか衝突する。
   押す前に、データを書くワークフロー(daily、sync-events、health)が走っていないことを確かめる。
+  events.json の push は daily を起こす(約8分。`daily.yml` の paths)。続けて new-events.json を押すなら、その daily が終わるのを待つ。
   daily、health、週次は同じ concurrency group で、待ちは1本しか置けない。
 - 生成物(`scripts/ci-generated-paths.txt` に並ぶもの)の中身は手で直さず、`bash scripts/build-all.sh` で作り直す。
   rebase で衝突したら、衝突したのが生成物だけかを `git diff --name-only --diff-filter=U` で確かめてから、生成物は捨てて作り直す。
