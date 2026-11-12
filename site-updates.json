@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-12",
+  "updated": "2026-11-13",
   "items": [
+    {
+      "on": "2026-11-13",
+      "kind": "listed",
+      "slug": "hanamichiru-taniku-hanbaikai-joyfulak-obihiro-2026-11",
+      "name": "はなみちるさんの多肉販売会（ジョイフルエーケー帯広店）",
+      "date": "2026-11-14",
+      "dateEnd": "2026-11-15",
+      "prefecture": "北海道",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-13",
+      "kind": "listed",
+      "slug": "life-with-botanical-6th-tatebayashi-2026-11",
+      "name": "第6回 Life with botanical",
+      "date": "2026-11-15",
+      "dateEnd": "2026-11-15",
+      "prefecture": "群馬",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-13",
+      "kind": "listed",
+      "slug": "tanushimaru-garden-shokubutsu-hanbaikai-vol5-2026-11",
+      "name": "田主丸ガーデン植物販売会 Vol.5",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "prefecture": "福岡",
+      "detail": ""
+    },
     {
       "on": "2026-11-12",
       "kind": "listed",
@@ -1171,36 +1201,6 @@
       "dateEnd": "2026-11-28",
       "prefecture": "鹿児島",
       "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "camp-park-garden-3-flarie-2026-11",
-      "name": "CAMP PARK Garden #3（CPG#3）",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-29",
-      "prefecture": "愛知",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "shifuku-no-taniku-monogatari-fuji-2026-11",
-      "name": "至福の多肉物語（仮称）",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-28",
-      "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-13",
-      "kind": "venue",
-      "slug": "marutto-shokubutsu-fes-2026-11",
-      "name": "まるっと植物fes!!",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "神奈川",
-      "detail": "調整中 → 淵野辺公園 芝生広場"
     }
   ]
 }

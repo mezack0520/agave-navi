@@ -1919,10 +1919,11 @@
   {
    "date": "2026-11-13",
    "urgent": {
-    "time_vs_organizer_post": 2
+    "venue_key_split": 2
    },
    "info": {
-    "coverage_gaps": 5,
+    "coverage_gap_stale": 3,
+    "coverage_gaps": 2,
     "cancel_suspects": 1,
     "organizer_unlisted_dates": 8,
     "eyecatch_candidates_pending": 12,
@@ -1935,13 +1936,13 @@
     "thin_archived": 48,
     "upcoming_with_image": 120,
     "events_with_image": 393,
-    "upcoming_no_image": 78,
+    "upcoming_no_image": 81,
     "ongoing_events": 4,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 78
+    "eyecatch_backlog": 81
    },
-   "events": 784,
-   "upcoming": 198
+   "events": 787,
+   "upcoming": 201
   }
  ]
 }
