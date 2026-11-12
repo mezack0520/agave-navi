@@ -2,19 +2,6 @@
  "_note": "監査結果の推移。scripts/audit.py が追記する。直近90件のみ保持。改善/悪化の判断に使う。",
  "runs": [
   {
-   "date": "2026-08-15",
-   "urgent": {
-    "unresolved_ig_handles": 1
-   },
-   "info": {
-    "thin_fixable": 38,
-    "thin_archived": 49,
-    "short_descriptions": 18,
-    "workflow_secrets": 8
-   },
-   "events": 300
-  },
-  {
    "date": "2026-08-16",
    "urgent": {
     "unresolved_ig_handles": 1,
@@ -1923,6 +1910,33 @@
     "events_with_image": 393,
     "upcoming_no_image": 78,
     "ongoing_events": 3,
+    "workflow_secrets": 7,
+    "eyecatch_backlog": 78
+   },
+   "events": 784,
+   "upcoming": 198
+  },
+  {
+   "date": "2026-11-13",
+   "urgent": {
+    "time_vs_organizer_post": 2
+   },
+   "info": {
+    "coverage_gaps": 5,
+    "cancel_suspects": 1,
+    "organizer_unlisted_dates": 8,
+    "eyecatch_candidates_pending": 12,
+    "task_run_gap": 1,
+    "cross_script_duplicate": 3,
+    "rejected_revisit_stale": 8
+   },
+   "metric": {
+    "thin_past_with_source": 34,
+    "thin_archived": 48,
+    "upcoming_with_image": 120,
+    "events_with_image": 393,
+    "upcoming_no_image": 78,
+    "ongoing_events": 4,
     "workflow_secrets": 7,
     "eyecatch_backlog": 78
    },

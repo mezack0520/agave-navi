@@ -1,10 +1,10 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-12",
+  "sweptOn": "2026-11-13",
   "sweptSources": {
     "leafla": {
       "ok": true,
-      "fetched": 44,
+      "fetched": 45,
       "unit": "day"
     },
     "nextmeet": {
@@ -30,46 +30,66 @@
   },
   "daysAhead": 45,
   "stats": {
-    "fetched": 44,
-    "candidates": 920,
-    "in_scope": 300,
-    "covered": 176,
-    "known_rejected": 121,
-    "truncated_resolved": 0,
-    "truncated_unresolved": 6,
-    "day_page_missing": 1,
+    "fetched": 45,
+    "candidates": 953,
+    "in_scope": 308,
+    "covered": 184,
+    "known_rejected": 119,
+    "truncated_resolved": 45,
+    "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
     "in_scope_leafla": 162,
-    "truncated_unresolved_hits": 264,
-    "in_scope_nextmeet": 101,
+    "truncated_unresolved_hits": 225,
+    "in_scope_nextmeet": 104,
     "in_scope_matome-blog": 7,
     "in_scope_organizer-index": 5,
-    "in_scope_pukubook": 25,
-    "gaps_raw": 3
+    "in_scope_pukubook": 30,
+    "gaps_raw": 5
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/11 追加 Craft Marche.（クラフトマルシェ）...",
-    "11/11 追加 スーパービバホーム目垣店で石組みレイアウトワー...",
-    "11/11 追加 第131回 水戸の梅まつりが2027年2月11...",
-    "11/11 追加 Green marche in花の湯が富嶽温泉...",
-    "11/11 追加 花まりで「苔テラリウム クリスマス works...",
-    "11/11 追加 ハンズマン松原店で「カーメン君トークショー」開..."
+    "11/12 追加 第6回KA78企画祭が11月22日に島田市ロー...",
+    "11/12 追加 Christmas Workshop 2026...",
+    "11/12 追加 万博記念公園で「盆栽ワークショップ by YA...",
+    "11/12 追加 海辺のカモメ市2026 秋が熊本県農業公園カン...",
+    "11/12 追加 11月のちいさなマルシェ2026がLakesi..."
   ],
   "gaps": [
     {
-      "date": "2026-11-14",
-      "lastSeen": "2026-11-15",
-      "days": 2,
-      "title": "植フェス（GLOBAL PLANTS MARKET）ジョイフル本田千葉ニュータウン店",
+      "date": "2026-11-13",
+      "title": "解像度のあがる、多年草の見方 ― 植物の特徴を知り、庭に生かす",
       "source": "leafla"
     },
     {
-      "date": "2026-12-20",
-      "title": "BACK TO THE FOREST vol.2（ビカクシダ展示・イベント限定商品販売イベント）",
+      "date": "2026-11-15",
+      "title": "第6回 Life with botanical",
+      "source": "nextmeet",
+      "pref": "群馬",
+      "place": "館林つつじが岡公園内 Sugar hill cafe前広場 / 群馬県館林市花山町3278"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "植物販売会 Vol.5",
+      "source": "nextmeet",
+      "pref": "福岡",
+      "place": "田主丸ガーデン駐車場 / 福岡県久留米市田主丸町志塚島907"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "田主丸ガーデン植物販売会 vol.5",
+      "source": "pukubook",
+      "pref": "福岡",
+      "alts": [
+        "Tanushimaru Garden Plant Fair vol.5"
+      ],
+      "place": "福岡 / 田主丸ガーデン駐車場"
+    },
+    {
+      "date": "2026-12-11",
+      "title": "「多肉植物寄植えの会」",
       "source": "leafla"
     }
   ]
