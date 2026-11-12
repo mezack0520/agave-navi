@@ -1334,6 +1334,22 @@
    "target": "はなみちるさんの多肉販売会 帯広 (2026-11-14)",
    "action": "listed",
    "detail": "主催 @joyfulak_gardencenter の告知 Dfl91AdTdi_ で裏取り"
+  },
+  {
+   "on": "2026-11-13",
+   "task": "event-monitor",
+   "kind": "venue_key_split",
+   "target": "田主丸ガーデン / 田主丸ガーデン駐車場",
+   "action": "fixed",
+   "detail": "tanushimaru-garden-shokuyo-osei-vol4-2026 の location を施設名と住所に揃え、駐車場は venue に移した"
+  },
+  {
+   "on": "2026-11-13",
+   "task": "event-monitor",
+   "kind": "venue_key_split",
+   "target": "姶良市文化会館 加音ホール / 同 展示室",
+   "action": "fixed",
+   "detail": "lier-taniku-festival-aira-2026-11 の location から区画(展示室)を外した。venue に区画は残っている"
   }
  ]
 }
