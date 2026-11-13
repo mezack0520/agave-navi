@@ -8,7 +8,7 @@
   - 日本ブロメリア協会「総会」(12/6 西新宿、bromeliads.jp news-13496)。同協会サイトから未掲載の BSJミーティング大阪(11/23)も掲載。
   - 黒★多肉 presents マルシェ001(2027/1/16 真岡、@nyanko.and.taniku DfmZav1n8VB。10組中植物4組)。
 - scan-organizer-posts 通読。新規掲載: Tick-Tick vol.2(11/22 四国造園、@shikokuzouen DfrYziGBGSj)、CPG#4(2027/4/24-25 フラリエ、@campparkworld Dfl5EqQAeLx)。見送り: 2026 Winter Fes in植物園(富山・鉢花と食品のマルシェ)、私へ贈るご褒美マルシェ(PLANTS2306 津店・植物の出店者なし)。
-- truncatedUnresolved: ONEDAY.factory® POP UP(木製フィギュア)と新風会盆栽まつり(盆栽)を見送りに記録。
+- truncatedUnresolved: ONEDAY.factory® POP UP は掲載済みの URBAN JUNGLE WEEKS(阪急うめだ GREEN AGE)の中の企画なので aliases に足した。新風会盆栽まつり(盆栽)は見送りに記録。
 - LEAFLA 連番 7040〜7121 を確認。右端 7111。
 - Google 検索は最初から空の頁で打ち切り(2日続き。プレイブック §3.1 に代替を追記)。中止・延期の検索は WebSearch で1回(該当なし)。
 - watch-sources 巡回は日曜のみ(本日対象外)。
