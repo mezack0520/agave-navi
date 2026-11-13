@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-13",
+  "sweptOn": "2026-11-14",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,56 +31,64 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 953,
-    "in_scope": 304,
-    "covered": 184,
-    "known_rejected": 117,
-    "truncated_resolved": 45,
-    "truncated_unresolved": 5,
+    "candidates": 966,
+    "in_scope": 313,
+    "covered": 195,
+    "known_rejected": 113,
+    "truncated_resolved": 90,
+    "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
     "in_scope_leafla": 158,
-    "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 104,
+    "truncated_unresolved_hits": 180,
+    "in_scope_nextmeet": 113,
     "in_scope_matome-blog": 7,
     "in_scope_organizer-index": 5,
     "in_scope_pukubook": 30,
-    "gaps_raw": 3
+    "gaps_raw": 5
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/12 追加 第6回KA78企画祭が11月22日に島田市ロー...",
-    "11/12 追加 Christmas Workshop 2026...",
-    "11/12 追加 万博記念公園で「盆栽ワークショップ by YA...",
-    "11/12 追加 海辺のカモメ市2026 秋が熊本県農業公園カン...",
-    "11/12 追加 11月のちいさなマルシェ2026がLakesi..."
+    "11/13 追加 BOTAJAMが和歌山県の丸十家具で11月29...",
+    "11/13 追加 新風会盆栽まつりが香川県高松市の北谷養成園で1...",
+    "11/12 追加 ONEDAY.factory® POP UPが...",
+    "11/12 追加 奈良県三宅町のThe PlantsでChris..."
   ],
   "gaps": [
     {
-      "date": "2026-11-15",
-      "title": "第6回 Life with botanical",
-      "source": "nextmeet",
-      "pref": "群馬",
-      "place": "館林つつじが岡公園内 Sugar hill cafe前広場 / 群馬県館林市花山町3278"
+      "date": "2026-11-29",
+      "title": "BOTAJAM（丸十家具でのアガベ・希少植物・オリジナル鉢販売イベント）",
+      "source": "leafla"
     },
     {
-      "date": "2026-11-21",
-      "title": "植物販売会 Vol.5",
+      "date": "2026-12-05",
+      "title": "珍奇植物市場 Vol.10 ~BOTANICAL FACTORY~",
       "source": "nextmeet",
-      "pref": "福岡",
-      "place": "田主丸ガーデン駐車場 / 福岡県久留米市田主丸町志塚島907"
+      "pref": "沖縄",
+      "place": "メイクマン ニューマン店 農業資材館 駐車場スペース"
     },
     {
-      "date": "2026-11-21",
-      "title": "田主丸ガーデン植物販売会 vol.5",
-      "source": "pukubook",
-      "pref": "福岡",
-      "alts": [
-        "Tanushimaru Garden Plant Fair vol.5"
-      ],
-      "place": "福岡 / 田主丸ガーデン駐車場"
+      "date": "2026-12-06",
+      "title": "POPUP PIECE POP UP PLANTS MARKET in EHIME MATSUYAMA",
+      "source": "nextmeet",
+      "pref": "愛媛",
+      "place": "sika / 愛媛県松山市"
+    },
+    {
+      "date": "2026-12-06",
+      "title": "日本ブロメリア協会「総会」",
+      "source": "nextmeet",
+      "pref": "東京",
+      "place": "ビジョンセンター西新宿 新宿サンエービル1F イベントホール / 東京都新宿区西新宿1-22-2 新宿サンエービル1F"
+    },
+    {
+      "date": "2027-01-16",
+      "title": "黒★多肉presentsマルシェ001",
+      "source": "nextmeet",
+      "pref": "栃木",
+      "place": "真岡まちづくり拠点コレカラ / 栃木県真岡市"
     }
   ]
 }
