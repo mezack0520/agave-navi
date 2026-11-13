@@ -26,3 +26,6 @@ embed/captioned の EmbeddedMediaImage を PC で curl、eyecatchlib.save_image 
 
 ## 残数(list-missing-eyecatch.py --counts)
 total 77 (igPost 48 / web 17 / igProfile 12)、ブラウザ対象 3 (personal 2 / ciSkipsSource 1)
+
+## 後始末
+push 確認済み(ahead 0)。clone /tmp/tmp.D3ruxraHcH は本コミットの push 確認後に削除。
