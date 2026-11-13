@@ -642,6 +642,11 @@ def main():
             # 化けた生バイト 660406字 → 本文 1642字で -100% と出た(2026-10-05)。
             'prevTextLen': (None if (reread or rescoped) else bsig.get('textLen')),
             'sigScope': res['sigScope'], 'sigRule': SIG_RULE,
+            # 署名の範囲か作り方が変わった日。audit.cancel_review_repeated はこの日より
+            # 前の「開催予定のまま」を数えない。範囲を直す前の空振りで、直した後の
+            # 本物の変化まで「規則が直っていない」と鳴らさないため。
+            'scopeSince': (today if (bsig and (rescoped or before.get('sigRule') != SIG_RULE))
+                           else before.get('scopeSince')),
             'strong': res['strong'], 'weak': res['weak'],
             # 出典がこの回を裏付けているか。audit.source_page_wrong_edition が読む。
             # CI から頁を取れるのはこのスクリプトだけなので、判定材料を

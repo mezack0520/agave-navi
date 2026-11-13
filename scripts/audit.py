@@ -3068,11 +3068,20 @@ def main():
                     - _dtrv.timedelta(days=14)).isoformat()
     except ValueError:
         _rv_from = ''
+    # 署名の範囲を直した日(check-cancelled の scopeSince)より前の記録は数えない
+    _rv_since = {_k: str(_v.get('scopeSince') or '')
+                 for _k, _v in ((_cw.get('pages') or {}).items()) if isinstance(_v, dict)}
+    _rv_skipped = 0
     for _r in ((load_json(os.path.join('scripts', 'cancel-reviewed.json'), {})
                 or {}).get('items') or []):
         _on = str(_r.get('checkedOn') or '')
+        if _on < _rv_since.get(_r.get('slug'), ''):
+            _rv_skipped += 1
+            continue
         if _rv_from and _on >= _rv_from:
             _rv_cnt[_r.get('slug')] = _rv_cnt.get(_r.get('slug'), 0) + 1
+    if _rv_skipped:
+        print(f'cancel_review_repeated: 範囲を直す前の記録 {_rv_skipped}件を数えなかった')
     _rv_repeat = []
     for _s in (_cw.get('suspects') or []):
         _sl = _s.get('slug', '')

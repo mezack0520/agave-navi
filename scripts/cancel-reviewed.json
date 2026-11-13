@@ -306,6 +306,12 @@
       "checkedOn": "2026-11-08",
       "verdict": "開催予定のまま",
       "note": "出典(park-tochigi.com/igashira)を取得。中止・延期の語なし。2026-11-19〜11-22 のまま。"
+    },
+    {
+      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
+      "checkedOn": "2026-11-14",
+      "verdict": "開催予定のまま",
+      "note": "この回の枠の摘要に「最終日は9:00～15:30」が足されただけ(+16字)。会期 11/19〜22、中止・延期の語なし。11-03〜08 の3回は範囲を絞る前(頁全体)の空振りで、11-12 に repeated_block で絞った。scopeSince を入れて数え方を直した"
     }
   ]
 }
