@@ -2,8 +2,8 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-11-14",
   "stats": {
-    "targets": 17,
-    "fetched": 17
+    "targets": 19,
+    "fetched": 19
   },
   "errors": [],
   "logicErrors": [],
@@ -27,6 +27,11 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "東京",
+        "静岡"
+      ],
       "firstSeenOn": "2026-10-22",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -50,6 +55,13 @@
       "datesNamed": 10,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "大阪",
+        "奈良",
+        "岡山",
+        "栃木"
+      ],
       "firstSeenOn": "2026-10-31",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -59,9 +71,9 @@
       "url": "https://jolienursery.co.jp/pages/events",
       "checkedOn": "2026-11-14",
       "signature": {
-        "text": "c7772751505e58aa",
+        "text": "5f24ff63156c367e",
         "images": "e284e645fe6da741",
-        "textLen": 3238,
+        "textLen": 3193,
         "imageCount": 15
       },
       "prevTextLen": 3238,
@@ -70,12 +82,25 @@
       "scopeSince": null,
       "strong": [],
       "weak": [],
-      "datesNamed": 21,
+      "datesNamed": 20,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "北海道",
+        "埼玉",
+        "大阪",
+        "新潟",
+        "東京",
+        "石川",
+        "福岡",
+        "茨城",
+        "長野"
+      ],
       "firstSeenOn": "2026-11-06",
       "badChars": 0,
-      "textOnlyChanges": 3,
+      "textOnlyChanges": 4,
       "imageOnlyChanges": 0
     },
     "shokufes-joyful-festival-chiba-newtown-2026-11": {
@@ -96,6 +121,10 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "千葉"
+      ],
       "firstSeenOn": "2026-11-13",
       "badChars": 0,
       "textOnlyChanges": 1,
@@ -119,6 +148,10 @@
       "datesNamed": 4,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "大阪"
+      ],
       "firstSeenOn": "2026-10-08",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -142,6 +175,11 @@
       "datesNamed": 6,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "宮城",
+        "栃木"
+      ],
       "firstSeenOn": "2026-10-26",
       "badChars": 0,
       "textOnlyChanges": 2,
@@ -165,6 +203,15 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "埼玉",
+        "山梨",
+        "東京",
+        "沖縄",
+        "神奈川"
+      ],
       "firstSeenOn": "2026-10-14",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -188,6 +235,11 @@
       "datesNamed": 58,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "東京"
+      ],
       "firstSeenOn": "2026-10-23",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -211,7 +263,38 @@
       "datesNamed": 0,
       "eventDateSeen": false,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [],
       "firstSeenOn": "2026-09-23",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
+    "bsj-meeting-osaka-2026-11": {
+      "url": "https://bromeliads.jp/news/news-13474/",
+      "checkedOn": "2026-11-14",
+      "signature": {
+        "text": "dd94fb51ed1cd2c7",
+        "images": "dab212ea413af438",
+        "textLen": 1346,
+        "imageCount": 6
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "scopeSince": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 1,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "大阪",
+        "東京"
+      ],
+      "firstSeenOn": "2026-11-14",
       "badChars": 0,
       "textOnlyChanges": 0,
       "imageOnlyChanges": 0
@@ -234,6 +317,11 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "東京"
+      ],
       "firstSeenOn": "2026-09-29",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -257,6 +345,11 @@
       "datesNamed": 0,
       "eventDateSeen": false,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "東京"
+      ],
       "firstSeenOn": "2026-10-05",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -271,7 +364,7 @@
         "textLen": 51,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 51,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -280,6 +373,36 @@
       "datesNamed": 0,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [],
+      "firstSeenOn": "2026-11-14",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
+    "bsj-soukai-nishishinjuku-2026-12": {
+      "url": "https://bromeliads.jp/news/news-13496/",
+      "checkedOn": "2026-11-14",
+      "signature": {
+        "text": "23e024e83ea8f52c",
+        "images": "4481156e5c3327bd",
+        "textLen": 1626,
+        "imageCount": 6
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "scopeSince": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 3,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "東京"
+      ],
       "firstSeenOn": "2026-11-14",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -290,7 +413,7 @@
       "checkedOn": "2026-11-14",
       "signature": {
         "text": "97d2b8fff8d42b4c",
-        "images": "5d36f57a493d71e4",
+        "images": "91ebe752a9cd38d6",
         "textLen": 1129,
         "imageCount": 42
       },
@@ -303,10 +426,14 @@
       "datesNamed": 0,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "大阪"
+      ],
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 16
+      "imageOnlyChanges": 17
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -326,6 +453,10 @@
       "datesNamed": 0,
       "eventDateSeen": false,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "愛知"
+      ],
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -351,6 +482,13 @@
       "datesNamed": 72,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "愛知",
+        "東京",
+        "神奈川"
+      ],
       "firstSeenOn": "2026-10-23",
       "badChars": 0,
       "textOnlyChanges": 1,
@@ -374,6 +512,8 @@
       "datesNamed": 2,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [],
       "firstSeenOn": "2026-10-27",
       "badChars": 0,
       "textOnlyChanges": 0,
@@ -397,6 +537,11 @@
       "datesNamed": 58,
       "eventDateSeen": true,
       "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [
+        "京都",
+        "東京"
+      ],
       "firstSeenOn": "2026-11-11",
       "badChars": 0,
       "textOnlyChanges": 0,

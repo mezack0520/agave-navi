@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-14 07:50 JST",
+ "generated": "2026-11-14 08:28 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 424,
   "awaitingNextEdition": 486,
-  "officialSiteCandidates": 91,
+  "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 98,
+  "igNeedsBrowser": 96,
   "igDead": 7
  },
  "igAccounts": [
@@ -1518,7 +1518,7 @@
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "goodthings.jp",
@@ -1598,7 +1598,7 @@
    "lastEventDate": "2026-12-06",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "tanikurevolution",
@@ -1688,7 +1688,7 @@
    "lastEventDate": "2027-01-16",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "chibigo.fes",

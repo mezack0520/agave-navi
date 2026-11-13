@@ -1,5 +1,5 @@
 {
-  "total": 823,
+  "total": 818,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -101,9 +101,8 @@
     },
     "thin_past_with_source": {
       "title": "薄い判定で終了済み(出典あり)",
-      "count": 34,
+      "count": 33,
       "items": [
-        "agavista-vol2-matsuyama-2026-06(22字)",
         "bop-with-needles-nagoya-2026-06(44字)",
         "botanical-botanical-osaka(46字)",
         "botanoichi-senju-2026-05(33字)",
@@ -143,11 +142,12 @@
     },
     "thin_archived": {
       "title": "薄い判定のうちアーカイブ許容(終了済み・出典なし)",
-      "count": 48,
+      "count": 49,
       "items": [
         "agave-cross-2026-06",
         "agave-meeting-2026-kobe",
         "agave-popup-market-nagoya-2026-07",
+        "agavista-vol2-matsuyama-2026-06",
         "aichi-plants-fes-vol1",
         "aroid-chakusei-saiten-yashima-2026-06",
         "bingo-botanical-base-vol1-fukuyama-2026-07",
@@ -183,8 +183,7 @@
         "shokuenseisai-5th",
         "shokusai-kakegawa-2026-06",
         "sippo-de-marche-fukushima-2026",
-        "sora-to-taiyo-marche-2026",
-        "sumi-no-engei-2026-05-02"
+        "sora-to-taiyo-marche-2026"
       ],
       "note": "終了済みで出典も無い回。一次情報が後から出ることはほぼ無く、noindex なので検索にも出ない。ゼロにはならない",
       "severity": "metric"
@@ -743,7 +742,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -930,14 +929,8 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 5,
-      "items": [
-        "2026-11-29 BOTAJAM（丸十家具でのアガベ・希少植物・オリジナル鉢販売イベント）",
-        "2026-12-05 珍奇植物市場 Vol.10 ~BOTANICAL FACTORY~",
-        "2026-12-06 POPUP PIECE POP UP PLANTS MARKET in EHIME MATSUYAMA",
-        "2026-12-06 日本ブロメリア協会「総会」",
-        "2027-01-16 黒★多肉presentsマルシェ001"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
@@ -1093,6 +1086,13 @@
       "items": [],
       "note": "URLを開いて、日付・イベント名・会場がその回と一致するかを見る。同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。一致しないなら **url ごと外す**(残すと裏取り済みに見える)。その記事から採った imageUrl も別の回の写真なので一緒に外す。日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない",
       "severity": "urgent"
+    },
+    "source_page_wrong_place": {
+      "title": "出典の頁が別の県だけを名乗っている(別の催しの頁の疑い)",
+      "count": 0,
+      "items": [],
+      "note": "URLを開いて、その回の告知かを見る。別の催しなら url ごと外す。主催の一覧やトップで別の回が載っているだけなら、その回の告知頁に替える",
+      "severity": "info"
     },
     "field_names_other_prefecture": {
       "title": "別の県を名乗る値が入っている",
