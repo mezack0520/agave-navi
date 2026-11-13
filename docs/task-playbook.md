@@ -241,7 +241,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   h1、開催情報の表、参考サイト欄の IG 投稿を抜けば開かずに選別できる。見た右端をレポートに書く。
 - Google 検索は、google.com を開いたタブの javascript から `/search?hl=ja&tbs=qdr:w2&num=20&q=...` を fetch し、DOMParser で `a h3` を拾う。
   1回の起動で30本前後が上限(間隔1.5〜2秒)。リダイレクトの頁になったら google.com へ1回 navigate し直すと戻る。
-  空の頁や CAPTCHA が出たら打ち切る。CAPTCHA は解かない。
+  空の頁や CAPTCHA が出たら打ち切る。CAPTCHA は解かない。最初の fetch から `a h3` が0件の日は、主催公式のニュース頁(curl)と LEAFLA の連番で代える。
   Instagram のタブからは google.com を fetch できない(CORS)。WebSearch では Instagram の告知はほぼ拾えない。
 - 検索のスニペットは、別の投稿のキャプションや別の出店者の予定表を混ぜて出す。知識パネルの入場料と営業情報は出典にしない。
 - watch-sources の巡回(次回待ちのシリーズと、主催の IG のローテ)は日曜だけ行う。目崎の決定。
@@ -255,7 +255,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   主催の投稿に出たものは `organizer_post_span_differs` と `organizer_unlisted_dates` に出る。
 - アグリゲータとまとめブログは出典に使えない(`blockedUrlDomains`)。拾ったら主催の告知で裏取りする。
   アグリゲータは中止や休会を反映せず、一行要約は参加条件(「即売会はありません」など)を落とす。
-  LEAFLA の参考サイト欄の IG 投稿は、別のイベントを指していることがある。
+  LEAFLA の参考サイト欄の IG 投稿は、別のイベントを指していることがある。見出しの催し名が同じ出店者の別の催しの名前のこともあり、名前は主催の告知から付け、アグリゲータの見出しは aliases に残す。
 - 一度も掲載したことのない主催は watch-sources に入らない。主催だと分かった handle は `watch-seeds.json` に足す(出店者の handle は足さない)。
   開いて存在しなかった handle は同じファイルの `deadHandles` に `checkedOn` 付きで足す。
 

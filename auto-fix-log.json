@@ -1272,6 +1272,14 @@
    "target": "igashira-park-taniku-saboten-tenjikai-2026-11",
    "action": "fixed",
    "detail": "3回の空振りは 11-12 に範囲を絞る前のもの。今日の変化は回の枠の摘要に最終日の時刻が足された本物の変化。check-cancelled に scopeSince を足し、audit は範囲変更前の記録を数えないよう直した"
+  },
+  {
+   "on": "2026-11-14",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ONEDAY.factory® POP UP (truncatedUnresolved)",
+   "action": "rejected",
+   "detail": "木製フィギュアの作品販売。plantCentric で見送り。新風会盆栽まつりも盆栽で見送り"
   }
  ]
 }
