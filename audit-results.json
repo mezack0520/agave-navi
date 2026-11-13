@@ -1,5 +1,5 @@
 {
-  "total": 826,
+  "total": 840,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -301,7 +301,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 75,
+      "count": 83,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -311,8 +311,12 @@
         "botanical-x-2027-03",
         "botanical-x-2027-09",
         "botanoichi-senju-2026-11",
+        "bsj-meeting-osaka-2026-11",
+        "bsj-soukai-nishishinjuku-2026-12",
+        "camp-park-garden-4-flarie-2027-04",
         "chinki-plants-flea-market-2027-01",
         "chinki-plants-flea-market-2027-04",
+        "chinki-shokubutsu-ichiba-vol10-2026-12",
         "enjoy-place-6th-2027-02",
         "enjoy-place-bangaihen-2026-12",
         "enjoy-place-outside-3rd-2027-05",
@@ -331,18 +335,14 @@
         "ka78-kikakusai-6th-shimada-2026-11",
         "kanik-popup-pac-plants-yokohama-2026-11",
         "kasamajuku-tanikusai-2026-12",
+        "kijimuna-botany-marujyukagu-arida-2026-11",
         "king-plants-sunday-oroshimachi-2026-12",
+        "kurotaniku-marche-001-moka-2027-01",
         "lier-taniku-festival-fukuyama-2026-12",
         "lier-taniku-festival-fukuyama-2027-01",
         "lier-taniku-festival-hamada-2026-11",
         "lier-taniku-festival-hyuga-2027-01",
-        "lier-taniku-festival-ichikawa-2026-11",
-        "lier-taniku-festival-kariya-2026-12",
-        "lier-taniku-festival-kitakyushu-2027-01",
-        "lier-taniku-festival-nagasaki-2027-01",
-        "lier-taniku-festival-natori-2026-12",
-        "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01"
+        "lier-taniku-festival-ichikawa-2026-11"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -930,13 +930,6 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
-      "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
-      "severity": "info"
-    },
-    "coverage_gaps": {
-      "title": "他所に出ていて当サイトに無いイベント候補",
       "count": 5,
       "items": [
         "2026-11-29 BOTAJAM（丸十家具でのアガベ・希少植物・オリジナル鉢販売イベント）",
@@ -945,6 +938,13 @@
         "2026-12-06 日本ブロメリア協会「総会」",
         "2027-01-16 黒★多肉presentsマルシェ001"
       ],
+      "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
+      "severity": "info"
+    },
+    "coverage_gaps": {
+      "title": "他所に出ていて当サイトに無いイベント候補",
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -971,7 +971,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 75,
+      "count": 83,
       "items": [
         "2026-11-14 hanamichiru-taniku-hanbaikai-joyfulak-obihiro-2026-11",
         "2026-11-14 jolie-nursery-yamashin-mito-2026-11",
@@ -985,19 +985,25 @@
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
         "2026-11-22 lier-taniku-festival-hamada-2026-11",
         "2026-11-22 midorigakuen-himeji-2026-11",
+        "2026-11-22 tick-tick-vol2-shikokuzouen-2026-11",
+        "2026-11-23 bsj-meeting-osaka-2026-11",
         "2026-11-23 lier-taniku-festival-yonago-2026-11",
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
         "2026-11-29 botanoichi-senju-2026-11",
+        "2026-11-29 kijimuna-botany-marujyukagu-arida-2026-11",
         "2026-12-04 lier-taniku-festival-niihama-2026-12",
         "2026-12-05 border-break-11th-2026-12",
+        "2026-12-05 chinki-shokubutsu-ichiba-vol10-2026-12",
         "2026-12-05 king-plants-sunday-oroshimachi-2026-12",
         "2026-12-05 lier-taniku-festival-tokushima-2026-12",
         "2026-12-05 orais-party-2026-garden-messe-hachioji",
         "2026-12-05 taniku-xmas-flarie-2026-12",
+        "2026-12-06 bsj-soukai-nishishinjuku-2026-12",
         "2026-12-06 kasamajuku-tanikusai-2026-12",
         "2026-12-06 lier-taniku-festival-fukuyama-2026-12",
+        "2026-12-06 piece-pop-up-plants-market-matsuyama-2026-12",
         "2026-12-10 lier-taniku-festival-kariya-2026-12",
         "2026-12-11 lier-taniku-festival-shimizu-2026-12",
         "2026-12-12 love-green-market-vol3-ichihara-2026-12",
@@ -1006,13 +1012,7 @@
         "2026-12-13 morino-tanikuen-hanbaikai-kagoshima-2026-12",
         "2026-12-19 botanical-style-fukuoka-minato-2026-12",
         "2026-12-20 isij-tokyo-reikai-2026-12-20",
-        "2026-12-20 nbgarden-festa-shizuoka-2026-12",
-        "2026-12-26 enjoy-place-bangaihen-2026-12",
-        "2026-12-26 lier-taniku-festival-tokorozawa-2026-12",
-        "2026-12-27 lier-taniku-festival-natori-2026-12",
-        "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
-        "2027-01-08 lier-taniku-festival-hyuga-2027-01",
-        "2027-01-09 lier-taniku-festival-tamana-2027-01"
+        "2026-12-20 nbgarden-festa-shizuoka-2026-12"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1054,10 +1054,9 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 3,
+      "count": 2,
       "items": [
         "2026-11-14 shokufes-joyful-festival-chiba-newtown-2026-11: 公式ページが変わった(本文: 1324→1302字 -2%)",
-        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 公式ページが変わった(本文: 128→144字 +12%)",
         "2026-11-28 greensnap-marche-odaiba-2026: 公式ページが変わった(本文・画像)"
       ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
@@ -1065,10 +1064,8 @@
     },
     "cancel_review_repeated": {
       "title": "同じ回の中止の兆候が空振りを繰り返している(見張りの規則が直っていない)",
-      "count": 1,
-      "items": [
-        "igashira-park-taniku-saboten-tenjikai-2026-11: 14日で3回空振りを記録 / 今日も「公式ページが変わった(本文: 128→144字 +12%)」"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を開いて cancel-reviewed.json に書くだけでは翌日また鳴る。何が変わって鳴ったか(新着欄・施設の状況欄・日付表示など)を突き止め、check-cancelled.py の drop_* / main_entry / 自己テストで規則を直す",
       "severity": "urgent"
     },

@@ -1,7 +1,87 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "items": [
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "tick-tick-vol2-shikokuzouen-2026-11",
+      "name": "Tick-Tick vol.2 ディッキアPOPUP",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "bsj-meeting-osaka-2026-11",
+      "name": "2026年 BSJミーティング大阪",
+      "date": "2026-11-23",
+      "dateEnd": "2026-11-23",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "kijimuna-botany-marujyukagu-arida-2026-11",
+      "name": "kijimuna × BOTANY 植物販売会（丸十家具）",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "和歌山",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "chinki-shokubutsu-ichiba-vol10-2026-12",
+      "name": "珍奇植物市場 Vol.10 ~BOTANICAL FACTORY~",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-06",
+      "prefecture": "沖縄",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "piece-pop-up-plants-market-matsuyama-2026-12",
+      "name": "PIECE POP UP PLANTS MARKET in EHIME MATSUYAMA",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "bsj-soukai-nishishinjuku-2026-12",
+      "name": "日本ブロメリア協会「総会」2026",
+      "date": "2026-12-06",
+      "dateEnd": "2026-12-06",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "kurotaniku-marche-001-moka-2027-01",
+      "name": "黒★多肉 presents マルシェ001",
+      "date": "2027-01-16",
+      "dateEnd": "2027-01-16",
+      "prefecture": "栃木",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-14",
+      "kind": "listed",
+      "slug": "camp-park-garden-4-flarie-2027-04",
+      "name": "CAMP PARK GARDEN #4（CPG#4）",
+      "date": "2027-04-24",
+      "dateEnd": "2027-04-25",
+      "prefecture": "愛知",
+      "detail": ""
+    },
     {
       "on": "2026-11-13",
       "kind": "listed",
@@ -1120,86 +1200,6 @@
       "date": "2027-04-18",
       "dateEnd": "2027-04-18",
       "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "on-the-plants-10th-anniversary-2027-10",
-      "name": "On the Plants 10th Anniversary",
-      "date": "2027-10-02",
-      "dateEnd": "2027-10-03",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "venue",
-      "slug": "kyoto-midori-marche-benkeisou-2026-11",
-      "name": "京都みどりのマルシェ BENKEISOU",
-      "date": "2026-11-08",
-      "dateEnd": "2026-11-08",
-      "prefecture": "大阪",
-      "detail": "調整中 → いばらきスカイパレット"
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "wakurie-marche-vol4-niihama-2026-10",
-      "name": "ワクリエマルシェ vol.4",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "愛媛",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "hello-marche-taniku-yakamashimura-2026-10",
-      "name": "HELLO！マルシェ～多肉植物の会～",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-17",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "hakodate-taniku-marche-2nd-2026-10",
-      "name": "第2回 はこだて多肉マルシェ",
-      "date": "2026-10-17",
-      "dateEnd": "2026-10-18",
-      "prefecture": "北海道",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "cross-agave-hanbaikai-matsusaka-2026-10",
-      "name": "CROSS アガベ販売会（松阪ワークセンター）",
-      "date": "2026-10-18",
-      "dateEnd": "2026-10-18",
-      "prefecture": "三重",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "greensnap-marche-abc-hachioji-2026-11",
-      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "東京",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-14",
-      "kind": "listed",
-      "slug": "kagoshima-volcano-market-vol4-2026-11",
-      "name": "KAGOSHIMA VOLCANO MARKET ボルマ vol.4",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-28",
-      "prefecture": "鹿児島",
       "detail": ""
     }
   ]

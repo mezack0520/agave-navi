@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-14 06:41 JST",
+ "generated": "2026-11-14 07:23 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 421,
+  "igAccounts": 424,
   "awaitingNextEdition": 486,
-  "officialSiteCandidates": 90,
+  "officialSiteCandidates": 91,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 95,
+  "igNeedsBrowser": 98,
   "igDead": 7
  },
  "igAccounts": [
@@ -481,6 +481,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "katsumaru9",
+   "url": "https://www.instagram.com/katsumaru9/",
+   "eventCount": 2,
+   "lastEventName": "Tick-Tick vol.2 ディッキアPOPUP",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "global_botanical_jam",
    "url": "https://www.instagram.com/global_botanical_jam/",
    "eventCount": 2,
@@ -555,6 +565,16 @@
    "url": "https://www.instagram.com/garden_messe/",
    "eventCount": 2,
    "lastEventName": "Orai's party 2026",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tanikunchu",
+   "url": "https://www.instagram.com/tanikunchu/",
+   "eventCount": 2,
+   "lastEventName": "珍奇植物市場 Vol.10 ~BOTANICAL FACTORY~",
    "lastEventDate": "2026-12-05",
    "hasUpcoming": true,
    "priority": 0,
@@ -639,6 +659,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "campparkworld",
+   "url": "https://www.instagram.com/campparkworld/",
+   "eventCount": 2,
+   "lastEventName": "CAMP PARK GARDEN #4（CPG#4）",
+   "lastEventDate": "2027-04-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "collect_plants_official",
@@ -1401,16 +1431,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "campparkworld",
-   "url": "https://www.instagram.com/campparkworld/",
-   "eventCount": 1,
-   "lastEventName": "CAMP PARK Garden #3（CPG#3）",
-   "lastEventDate": "2026-11-28",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "taniku.pot",
    "url": "https://www.instagram.com/taniku.pot/",
    "eventCount": 1,
@@ -1491,6 +1511,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "ki_ji_muna",
+   "url": "https://www.instagram.com/ki_ji_muna/",
+   "eventCount": 1,
+   "lastEventName": "kijimuna × BOTANY 植物販売会（丸十家具）",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "goodthings.jp",
    "url": "https://www.instagram.com/goodthings.jp/",
    "eventCount": 1,
@@ -1559,6 +1589,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "pepe__green",
+   "url": "https://www.instagram.com/pepe__green/",
+   "eventCount": 1,
+   "lastEventName": "PIECE POP UP PLANTS MARKET in EHIME MATSUYAMA",
+   "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tanikurevolution",
@@ -1639,6 +1679,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "nyanko.and.taniku",
+   "url": "https://www.instagram.com/nyanko.and.taniku/",
+   "eventCount": 1,
+   "lastEventName": "黒★多肉 presents マルシェ001",
+   "lastEventDate": "2027-01-16",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "chibigo.fes",
@@ -2556,16 +2606,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "tanikunchu",
-   "url": "https://www.instagram.com/tanikunchu/",
-   "eventCount": 1,
-   "lastEventName": "珍奇植物市場 Vol.9 BOTANI CARNIVAL",
-   "lastEventDate": "2026-08-29",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "ajisai.13",
    "url": "https://www.instagram.com/ajisai.13/",
    "eventCount": 1,
@@ -2844,16 +2884,6 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
-  },
-  {
-   "handle": "katsumaru9",
-   "url": "https://www.instagram.com/katsumaru9/",
-   "eventCount": 1,
-   "lastEventName": "Tick-Tick（チクチク）ディッキアPOPUP",
-   "lastEventDate": "2026-09-22",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "personal"
   },
   {
    "handle": "mononoke_botanical_garden",
@@ -4728,6 +4758,12 @@
    "eventDate": "2026-11-22"
   },
   {
+   "domain": "bromeliads.jp",
+   "url": "https://bromeliads.jp/news/news-13474/",
+   "eventName": "2026年 BSJミーティング大阪",
+   "eventDate": "2026-11-23"
+  },
+  {
    "domain": "h27664.wixsite.com",
    "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
    "eventName": "オキボタ December 2026 in サンシャインシティ",
@@ -4852,12 +4888,6 @@
    "url": "https://www.fukui-bot.jp/event/",
    "eventName": "福井ボタニカルマルシェ2026",
    "eventDate": "2026-05-30"
-  },
-  {
-   "domain": "green-flash-fes.com",
-   "url": "https://green-flash-fes.com/",
-   "eventName": "GREEN BREEZE FES vol.3",
-   "eventDate": "2026-05-31"
   }
  ],
  "unresolvedIgHandles": []
