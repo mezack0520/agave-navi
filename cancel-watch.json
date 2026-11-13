@@ -3,45 +3,11 @@
   "sweptOn": "2026-11-14",
   "stats": {
     "targets": 17,
-    "fetched": 16
+    "fetched": 17
   },
-  "errors": [
-    "border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html"
-  ],
+  "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "shokufes-joyful-festival-chiba-newtown-2026-11",
-      "name": "植フェス GLOBAL PLANTS MARKET（JOYFUL FESTIVAL 千葉ニュータウン）",
-      "date": "2026-11-14",
-      "url": "https://event.joyfulhonda.com/single-exp.php?id=45641&store=chibant",
-      "why": "公式ページが変わった(本文: 1324→1302字 -2%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "igashira-park-taniku-saboten-tenjikai-2026-11",
-      "name": "多肉植物とサボテンの展示会（井頭公園）",
-      "date": "2026-11-19",
-      "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "why": "公式ページが変わった(本文: 128→144字 +12%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-odaiba-2026",
-      "name": "GreenSnap Marche お台場 2026",
-      "date": "2026-11-28",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
@@ -55,6 +21,7 @@
       "prevTextLen": 476,
       "sigScope": "article",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -77,6 +44,7 @@
       "prevTextLen": 7665,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 10,
@@ -96,9 +64,10 @@
         "textLen": 3238,
         "imageCount": 15
       },
-      "prevTextLen": 3249,
+      "prevTextLen": 3238,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 21,
@@ -118,9 +87,10 @@
         "textLen": 1302,
         "imageCount": 7
       },
-      "prevTextLen": 1324,
+      "prevTextLen": 1302,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -143,6 +113,7 @@
       "prevTextLen": 952,
       "sigScope": "article",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 4,
@@ -162,9 +133,10 @@
         "textLen": 144,
         "imageCount": 3
       },
-      "prevTextLen": 128,
+      "prevTextLen": 144,
       "sigScope": "article",
       "sigRule": 2,
+      "scopeSince": "2026-11-12",
       "strong": [],
       "weak": [],
       "datesNamed": 6,
@@ -173,8 +145,7 @@
       "firstSeenOn": "2026-10-26",
       "badChars": 0,
       "textOnlyChanges": 2,
-      "imageOnlyChanges": 0,
-      "scopeSince": "2026-11-12"
+      "imageOnlyChanges": 0
     },
     "greensnap-marche-abc-hachioji-2026-11": {
       "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
@@ -188,6 +159,7 @@
       "prevTextLen": 5919,
       "sigScope": "article",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -210,6 +182,7 @@
       "prevTextLen": 4715,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 58,
@@ -232,6 +205,7 @@
       "prevTextLen": 7,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -251,9 +225,10 @@
         "textLen": 1131,
         "imageCount": 21
       },
-      "prevTextLen": 445,
+      "prevTextLen": 1131,
       "sigScope": "article",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -276,6 +251,7 @@
       "prevTextLen": 791,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -286,18 +262,42 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 1
     },
+    "border-break-11th-2026-12": {
+      "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
+      "checkedOn": "2026-11-14",
+      "signature": {
+        "text": "2dc8f0b75264992d",
+        "images": "e3b0c44298fc1c14",
+        "textLen": 51,
+        "imageCount": 0
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "scopeSince": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "firstSeenOn": "2026-11-14",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
     "hanatomofesta-2026": {
       "url": "https://hanatomofesta.com/",
       "checkedOn": "2026-11-14",
       "signature": {
         "text": "97d2b8fff8d42b4c",
-        "images": "e765ae618aab4909",
+        "images": "5d36f57a493d71e4",
         "textLen": 1129,
         "imageCount": 42
       },
       "prevTextLen": 1129,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -306,7 +306,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 15
+      "imageOnlyChanges": 16
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -320,6 +320,7 @@
       "prevTextLen": 777,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 0,
@@ -342,6 +343,7 @@
       "prevTextLen": 7199,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [
         "中止"
@@ -366,6 +368,7 @@
       "prevTextLen": 1515,
       "sigScope": "article",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 2,
@@ -388,6 +391,7 @@
       "prevTextLen": 4715,
       "sigScope": "page",
       "sigRule": 2,
+      "scopeSince": null,
       "strong": [],
       "weak": [],
       "datesNamed": 58,
