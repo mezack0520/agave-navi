@@ -1288,6 +1288,30 @@
    "target": "ONEDAY.factory® POP UP",
    "action": "fixed",
    "detail": "掲載済み URBAN JUNGLE WEEKS の中のポップアップだったので見送り記録を消し、同回の aliases に足した"
+  },
+  {
+   "on": "2026-11-14",
+   "task": "event-monitor",
+   "kind": "wrong_source_url",
+   "target": "agavista-vol2-matsuyama-2026-06",
+   "action": "fixed",
+   "detail": "url が無関係の企業の報道発表一覧(sika.com、化学メーカー)で、頁に催し名も愛媛も無い。url を外した"
+  },
+  {
+   "on": "2026-11-14",
+   "task": "event-monitor",
+   "kind": "wrong_source_url",
+   "target": "green-breeze-fes-vol3",
+   "action": "fixed",
+   "detail": "url が福井の音楽フェス GREEN FLASH FES の公式で別の催し。url を外した(出典は主催の IG が残る)"
+  },
+  {
+   "on": "2026-11-14",
+   "task": "event-monitor",
+   "kind": "organizer_ig_unknown_soon",
+   "target": "botanical-life-kasama-2026-11",
+   "action": "reviewed",
+   "detail": "organizerIg は bookkasama が入っており、回は 11-08 に終了。残りなし"
   }
  ]
 }

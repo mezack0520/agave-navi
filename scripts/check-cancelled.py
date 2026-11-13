@@ -500,6 +500,10 @@ def analyze(html, event=None):
             except ValueError:
                 sm = None
         out['startDateIsPageMeta'] = sm
+        # 頁が別の県だけを名乗っているか。audit.source_page_wrong_place が読む。
+        # 日付を散文で書かない別サイトは eventDateSeen では落ちない。
+        out['wrongPlace'] = sitelib.page_is_wrong_place(html, event)
+        out['pagePrefs'] = sorted(sitelib.page_prefectures(html))
     return out
 
 
@@ -654,6 +658,8 @@ def main():
             'datesNamed': res['datesNamed'],
             'eventDateSeen': res.get('eventDateSeen'),
             'startDateIsPageMeta': res.get('startDateIsPageMeta'),
+            'wrongPlace': res.get('wrongPlace'),
+            'pagePrefs': res.get('pagePrefs'),
             'firstSeenOn': before.get('firstSeenOn') or today,
             'badChars': bad_chars,
         }
@@ -1090,6 +1096,16 @@ def self_test(verbose=True):
                  {'slug': 'u', 'date': '2026-10-17', 'dateEnd': '2026-10-18'})
     chk('数字と月日が別の span でも開催日を拾う', sp['eventDateSeen'], True)
     chk('数字と月日が別の span でも名乗りに数える', sp['datesNamed'], 1)
+    _pl = analyze('<html><head><title>GREEN FLASH FES</title></head><body>'
+                  '<p>福井県坂井市の音楽フェス</p></body></html>',
+                  {'slug': 'p', 'date': '2026-05-31', 'prefecture': '和歌山'})
+    chk('別の県だけを名乗る頁 → wrongPlace', _pl['wrongPlace'], True)
+    _pl2 = analyze('<p>和歌山市 本町公園で開催</p>',
+                   {'slug': 'p', 'date': '2026-05-31', 'prefecture': '和歌山'})
+    chk('その回の県を名乗る頁 → wrongPlace でない', _pl2['wrongPlace'], False)
+    _pl3 = analyze('<p>本町公園で開催</p>',
+                   {'slug': 'p', 'date': '2026-05-31', 'prefecture': '和歌山'})
+    chk('県を名乗らない頁は判定しない', _pl3['wrongPlace'], False)
 
     say('\n--- 開始日が頁の更新日から来ていないか ---')
     # 2026-09-12: 道の駅仁保の郷の告知は開催日を「9月19日（土）」1つしか

@@ -3250,6 +3250,27 @@ def main():
         'その記事から採った imageUrl も別の回の写真なので一緒に外す。'
         '日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない')
 
+    # 16b-3b. 出典の頁が別の県だけを名乗っている。日付を散文で書かない別サイトは
+    #         source_page_wrong_edition を素通りする。和歌山の GREEN BREEZE FES の url が
+    #         福井の音楽フェスの公式だった。判定材料は check-cancelled.py の wrongPlace。
+    _place_bad = []
+    for _slug, _pg in sorted((_cw.get('pages') or {}).items()):
+        if not isinstance(_pg, dict) or _pg.get('wrongPlace') is not True:
+            continue
+        _ev = _cw_ev.get(_slug) or {}
+        _now_src = {(_ev.get('url') or '').strip(),
+                    (_ev.get('sourceUrl') or '').strip()} - {''}
+        if (_pg.get('url') or '').strip() not in _now_src:
+            continue
+        _place_bad.append(
+            f"{_ev.get('date', '')} {_slug}: 出典 {_pg.get('url', '')} は"
+            f"{'・'.join(_pg.get('pagePrefs') or [])}を名乗り、{_ev.get('prefecture', '')}が出てこない")
+    add('source_page_wrong_place', '出典の頁が別の県だけを名乗っている(別の催しの頁の疑い)',
+        sorted(_place_bad),
+        'URLを開いて、その回の告知かを見る。別の催しなら url ごと外す。'
+        '主催の一覧やトップで別の回が載っているだけなら、その回の告知頁に替える',
+        severity='info')
+
     # 16b-4. **別の土地の頁から採った値**。source_page_wrong_edition は
     #        頁が散文で日付を名乗る回しか見ないので、日付を書かない別サイトは
     #        素通りする。2026-09-12、徳島の「Plants marché」に
