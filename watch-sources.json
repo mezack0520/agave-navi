@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-14 14:16 JST",
+ "generated": "2026-11-15 06:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 424,
-  "awaitingNextEdition": 486,
+  "awaitingNextEdition": 491,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 96,
@@ -366,26 +366,6 @@
    "eventCount": 2,
    "lastEventName": "アートな植物ビカクシダ(阪急うめだ本店)",
    "lastEventDate": "2026-11-11",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "jss_event_info",
-   "url": "https://www.instagram.com/jss_event_info/",
-   "eventCount": 2,
-   "lastEventName": "JSS秋の多肉市",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "morimizuki1187",
-   "url": "https://www.instagram.com/morimizuki1187/",
-   "eventCount": 2,
-   "lastEventName": "宮川洋蘭 OPEN MARKET",
-   "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -1051,6 +1031,26 @@
    "apiStatus": "api"
   },
   {
+   "handle": "jss_event_info",
+   "url": "https://www.instagram.com/jss_event_info/",
+   "eventCount": 2,
+   "lastEventName": "JSS秋の多肉市",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "morimizuki1187",
+   "url": "https://www.instagram.com/morimizuki1187/",
+   "eventCount": 2,
+   "lastEventName": "宮川洋蘭 OPEN MARKET",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "sekaijunosizuku",
    "url": "https://www.instagram.com/sekaijunosizuku/",
    "eventCount": 1,
@@ -1065,36 +1065,6 @@
    "url": "https://www.instagram.com/the_botanical_show/",
    "eventCount": 1,
    "lastEventName": "THE BOTANICAL SHOW 6TH",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "hirata_ns.fukuoka",
-   "url": "https://www.instagram.com/hirata_ns.fukuoka/",
-   "eventCount": 1,
-   "lastEventName": "スピーシーズナーサリー 貴重品種販売会（平田ナーセリー福岡東店）",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "as_green_garden_seiko",
-   "url": "https://www.instagram.com/as_green_garden_seiko/",
-   "eventCount": 1,
-   "lastEventName": "agaveJAM 3rd（A’s Green Garden）",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "horn_and_spina",
-   "url": "https://www.instagram.com/horn_and_spina/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL JUNCTION",
    "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 1,
@@ -4261,6 +4231,36 @@
    "eventCount": 1,
    "lastEventName": "N PLANTS 栽培温室イベント",
    "lastEventDate": "2026-11-08",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "hirata_ns.fukuoka",
+   "url": "https://www.instagram.com/hirata_ns.fukuoka/",
+   "eventCount": 1,
+   "lastEventName": "スピーシーズナーサリー 貴重品種販売会（平田ナーセリー福岡東店）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "as_green_garden_seiko",
+   "url": "https://www.instagram.com/as_green_garden_seiko/",
+   "eventCount": 1,
+   "lastEventName": "agaveJAM 3rd（A’s Green Garden）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "horn_and_spina",
+   "url": "https://www.instagram.com/horn_and_spina/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL JUNCTION",
+   "lastEventDate": "2026-11-14",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
