@@ -385,6 +385,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
         {credentials:'include', headers:{'x-ig-app-id':'936619743392459'}}).then(r=>r.json())
     .then(j=>j.users.map(u=>u.user.username+' / '+u.user.full_name))
   ```
+  topsearch と `/api/v1/users/web_profile_info/` が 404 でも、プロフィールへの navigate、グリッドの alt、`embed/captioned` は読めることがある(2026-11-15)。404 だけで巡回を打ち切らない。
   Google の `"<名前>" site:instagram.com` で出店者の投稿から引けることも多い。未ログインでも `fetch('/<handle>/')` の `<title>` で持ち主を確かめられる。
 - 回専用のアカウントや共同投稿者がいる。共同投稿は共同投稿者のグリッドにも出るので、会場が共同投稿者なら会場の告知として扱う。
 
