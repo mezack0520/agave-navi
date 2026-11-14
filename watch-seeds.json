@@ -26,6 +26,12 @@
       "label": "BooTA29♡Succulent（TANIKU JAM 主催）",
       "why": "TANIKU JAM の主催本人。告知は @tanikujam と同時にこちらにも出る",
       "addedOn": "2026-10-05"
+    },
+    {
+      "handle": "aonocraft",
+      "label": "AONOCRAFT（静岡県掛川市・アガベと植物の店）",
+      "why": "2026-12-13 に FLEX 6th ANNIVERSARY AONOCRAFT Store Event を自店で開く(DfqIg-WPQvy)。内田農園の投稿で見つけた主催で、まだ掲載が無い",
+      "addedOn": "2026-11-15"
     }
   ],
   "_deadHandles": "ブラウザで開いて『ページが見つかりません』だった handle。Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、API だけでは見分けられない。generate-watchlist.py がこの handle を apiStatus=dead にして igNeedsBrowser から外す。現行の handle が分かったら events.json の organizerIg を直し、ここから消す",
