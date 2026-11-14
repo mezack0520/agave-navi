@@ -112,7 +112,8 @@ def scan(days_back, ahead):
                     continue
                 if 0 <= (cand - today).days <= ahead:
                     iso = cand.strftime('%Y-%m-%d')
-                    if not w.known_elsewhere(cap, iso, day_index, rejected_by_day):
+                    if not w.known_elsewhere(cap, iso, day_index, rejected_by_day,
+                                             w.post_code(p.get('permalink'))):
                         future.append(iso)
             if future:
                 code = (re.search(r'/(?:p|reel)/([A-Za-z0-9_-]+)', p.get('permalink') or '') or [None, ''])[1]

@@ -1200,22 +1200,33 @@ def main():
         u = (e.get('imageUrl') or '').strip()
         if u:
             _by_img[u].append(e.get('slug'))
-    def _src_host(slug):
+    def _org_keys(slug):
+        """同じ主催かを見る鍵。organizerIg と、url・sourceUrl のホスト(Instagram は主催を区別しないので除く)"""
         e = next((x for x in events if x.get('slug') == slug), {})
-        u = (e.get('sourceUrl') or e.get('url') or '')
-        m = re.match(r'https?://([^/]+)', u)
-        return m.group(1).lower() if m else ''
+        keys = set()
+        org = (e.get('organizerIg') or '').strip().lstrip('@').lower()
+        if org:
+            keys.add('ig:' + org)
+        for u in (e.get('sourceUrl'), e.get('url')):
+            m = re.match(r'https?://([^/]+)', u or '')
+            h = m.group(1).lower() if m else ''
+            if h and 'instagram.com' not in h:
+                keys.add(h)
+        return keys
 
-    # 出典ホストが同じ組は同一主催のシリーズ共用。これは正当なので報告しない。
-    # 実例: おきぼた2回が h27664.wixsite.com のシリーズ用キービジュアルを共有(2026-08-24)。
-    # ホストが違う組だけが「別イベントからの貼り付け」の疑い。
+    # 主催の鍵が共通する組は同一主催のシリーズ共用。これは正当なので報告しない。
+    # 出典を告知の IG 投稿に替えても(プレイブック §3.4)url のホストか organizerIg で同じ主催と分かる。
+    # 鍵が共通しない組だけが「別イベントからの貼り付け」の疑い。
     dup_img = []
     for u, v in _by_img.items():
         slugs = sorted(set(v))
         if len(slugs) < 2:
             continue
-        hosts = {_src_host(sl) for sl in slugs}
-        if len(hosts) == 1 and '' not in hosts:
+        common = None
+        for sl in slugs:
+            k = _org_keys(sl)
+            common = k if common is None else (common & k)
+        if common:
             continue
         dup_img.append(f"{u[:55]} → {', '.join(slugs)}")
     add('duplicate_image_url', '同じimageUrlを複数イベントが使用', sorted(dup_img),
@@ -3459,6 +3470,25 @@ def main():
         _ow_unl,
         '次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。'
         '主催の新しい回なら掲載し、出店告知なら何もしない',
+        severity='info')
+    # 見送りの記録が出典に挙げた投稿が、その日付のまま取りこぼし候補に残っている。
+    # 見張りが見送りと投稿を突き合わせられていない(ig-organizer-watch.known_elsewhere)。
+    _rej_items = (load_json('rejected-events.json', {}) or {}).get('items') or []
+    _ow_rej_left = []
+    for _u in ((_ow.get('signals') or {}).get('unlisted') or []):
+        _m = re.search(r'/(?:p|reel|tv)/([A-Za-z0-9_-]{8,})', _u.get('permalink') or '')
+        if not _m:
+            continue
+        for _r in _rej_items:
+            if _m.group(1) not in json.dumps(_r, ensure_ascii=False):
+                continue
+            _hit = sorted(set(_u.get('dates') or []) & set(sitelib.rejected_days(_r)))
+            if _hit:
+                _ow_rej_left.append(f"@{_u.get('username','')} {','.join(_hit)}: 見送り {_r.get('key','')} が同じ投稿 {_m.group(1)} を挙げている")
+    add('organizer_unlisted_rejected_post', '見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている',
+        sorted(set(_ow_rej_left)),
+        'ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、'
+        '直した翌日の daily までは残る',
         severity='info')
     _ow_broken = []
     if not _ow_on:

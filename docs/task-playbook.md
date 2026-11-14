@@ -235,7 +235,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 - 主催の投稿は `ig-organizer-watch.py`(daily)が読み、`organizer-posts.json` に置く。
   CI の信号(`organizer_unlisted_dates`)は主催が自分の催しを告知した投稿しか数えないので、
   **朝のタスクは `python3 scripts/scan-organizer-posts.py` の一覧(約130行)を目で読む。**
-  主催の告知と読めた行だけ開いて裏取りし、ワークショップ単独、値引きだけ、営業日の案内は見送りに記録する。記録した投稿は翌日から一覧に出ない。
+  主催の告知と読めた行だけ開いて裏取りし、ワークショップ単独、値引きだけ、営業日の案内は見送りに記録する。見送りの reason に投稿のショートコードを書くと、その投稿の日付は翌日から一覧にも信号にも出ない(名前が本文に無くても当たる)。
 - LEAFLA の新着は記事番号の連番で引ける(`/blogs/media/topics<番号>`)。leaf-laboratory.com のタブから前回の右端 +150 まで1件ずつ fetch する。
   並列にすると 429 で塞がる。最後の番号が 200 なら +50 ずつ伸ばし、404 が10件続いたら止める。
   h1、開催情報の表、参考サイト欄の IG 投稿を抜けば開かずに選別できる。見た右端をレポートに書く。

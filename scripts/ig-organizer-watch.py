@@ -49,6 +49,7 @@ from datetime import datetime, timedelta
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sitelib  # noqa: E402
 import iglib  # noqa: E402
+from eyecatchlib import post_code  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, 'organizer-posts.json')
@@ -103,6 +104,19 @@ _TICKET_BEFORE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券
 # 締切・搬入と同じく、日付の直前(同じ行)の見出しと、直後(同じ行)の「は休館」「定休日」で落とす
 _CLOSED_BEFORE = re.compile(r'(?:休館日?|休園日?|定休日|店休日?|休業日?|休業期間|臨時休業)\s*[】\]］」)）]?\s*(?:[：:]|は)?\s*$')
 _CLOSED_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:は|も)?\s*(?:臨時)?(?:休館|休園|定休|店休|休業)')
+# 受付・予約・申込の期間の日付も開催日ではない。本文は norm() で改行が空白になっているので、
+# 見出しの直後(飾りの記号まで)に来た日付だけを落とす
+# (ノトルアトリエ「▪️受付期間:11/15(日)まで」、goodthings.jp「販売期間 11/15(日)21:00 〜 11/23」)。
+# 「販売期間」は即売会の会期のこともあるので、チケット・前売の語がある投稿でだけ落とす
+_PERIOD_BEFORE = re.compile(r'(?:受付|予約|申込|申し込み|応募|募集)期間\s*[】\]］」：:]?\s*$')
+_SALE_PERIOD_BEFORE = re.compile(r'(?:販売|発売)期間\s*[】\]］」：:]?\s*$')
+_TICKET_CTX = re.compile(r'チケット|前売|入場券|整理券')
+# 「11/15(日)21:00より 前売りオンラインチケットを発売」「前売り券:11月15日販売」
+_TICKET_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:\d{1,2}[:：]\d{2})?\s*'
+                           r'(?:(?:より|から)?\s*(?:販売|発売)|(?:より|から)\s*[^\s]{0,20}(?:チケット|前売|入場券|整理券)[^\s]{0,14}(?:販売|発売))')
+_TICKET_LABEL_BEFORE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)(?:販売|発売)?(?:日)?\s*[：:]\s*$')
+# 落とした日付から「〜」でつながる会期の終わりも同じ扱い(受付期間 11/1〜11/15 の 11/15)
+_RANGE_CONT = re.compile(r'\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:\d{1,2}[:：]\d{2})?\s*[〜~\-–—ー]\s*')
 
 
 # ボランティア・スタッフの募集の投稿は、開催日の前日・翌日(会場の設営・撤収)を作業日として並べる(2026-10-16)。
@@ -135,7 +149,19 @@ def staff_work_days(cap, mds, known_md, today):
 def month_days(text):
     """本文に出る (月, 日)。『9月26日』『9/26』。年やURLの数字は拾わない"""
     out = set()
+    ticket_ctx = bool(_TICKET_CTX.search(text))
+    last_drop = -1
     for m in _MD.finditer(text):
+        if last_drop >= 0 and _RANGE_CONT.fullmatch(text[last_drop:m.start()]):
+            last_drop = m.end()
+            continue
+        _pre = re.sub(r'[^\w\s：:】\]］」]+\s*$', '', text[max(0, m.start() - 16):m.start()])  # 「▪️」などの飾りを除く
+        if _PERIOD_BEFORE.search(_pre) or (
+                ticket_ctx and (_SALE_PERIOD_BEFORE.search(_pre)
+                                or _TICKET_AFTER.search(text[m.end():m.end() + 50])
+                                or _TICKET_LABEL_BEFORE.search(text[max(0, m.start() - 12):m.start()]))):
+            last_drop = m.end()
+            continue
         # 「募集は9月30日で締め切ります」のような締切日は開催日ではない
         # 後ろは同じ行の中だけを見る。次の行の「予約締切」で開催日まで落としていた(2026-10-04)
         if _DEADLINE.search(text[m.end():m.end() + 12].split('\n')[0]):
@@ -272,7 +298,7 @@ def all_by_org(events):
     return by
 
 
-def known_elsewhere(cap, iso, day_index, rejected_by_day):
+def known_elsewhere(cap, iso, day_index, rejected_by_day, code=''):
     """その日付の話が、別の主催で掲載済みの回か、見送り済みの回を指しているか。
 
     出店者やコラボ相手の投稿には、主催が別の回の日付が出る(叢宴の出店者が
@@ -295,6 +321,9 @@ def known_elsewhere(cap, iso, day_index, rejected_by_day):
                                                norm(cap).lower()):
             return True
     for r in rejected_by_day.get(iso, []):
+        # 見送りの記録がこの投稿を出典に挙げていれば既知(名前が本文に出ない回。和歌山サボテンクラブの新年会)
+        if code and len(code) >= 8 and code in json.dumps(r, ensure_ascii=False):
+            return True
         for nm in [r.get('name') or ''] + list(r.get('aliases') or []):
             k = norm(re.sub(r'\s*\(.*$', '', nm)).replace(' ', '').lower()[:6]
             if k and len(k) >= 3 and k in c:
@@ -377,7 +406,8 @@ def analyze_posts(username, posts, org_events, all_org_events, today, day_index=
                     continue
                 if 0 <= (cand - today).days <= UNLISTED_AHEAD:
                     iso = cand.strftime('%Y-%m-%d')
-                    if known_elsewhere(cap, iso, day_index or {}, rejected_by_day or {}):
+                    if known_elsewhere(cap, iso, day_index or {}, rejected_by_day or {},
+                                       post_code(p.get('permalink'))):
                         continue
                     fut.append(iso)
             if fut:
@@ -777,6 +807,17 @@ def self_test():
         month_days('ABENO HARUKAS 10/31(SAT)-11/1(SUN)\n🎫オンラインチケット販売開始\n10月17日(土)20:00〜'),
         {(10, 31), (11, 1)})
     chk('苗の販売開始の時刻は落とさない', month_days('販売開始\n10月18日(日)9:30〜'), {(10, 18)})
+    chk('受付期間の日付は数えない',
+        month_days(norm('11/21(土)〜23(月・祝)に開催される\n【ご予約について】\n▪️受付期間：11/15(日)まで\n▪️お渡し：11/21(土)〜23(月・祝)')),
+        {(11, 21)})
+    _cap_t = ('TICKETS！\n＼前売りチケット／\n\n11/15(日)21:00より\n前売りオンラインチケットを発売します！\n'
+              '🎫優先入場券12/5(土)\u3000100枚限定\n販売期間\n11/15(日)21:00 〜 11/23(月•祝)24:00\n'
+              '日時：2026年12月5日・6日\n入場料：¥500\n前売り券：11月15日販売')
+    chk('チケットの販売日と販売期間は数えない', month_days(norm(_cap_t)), {(12, 5)})
+    chk('チケットの無い投稿の販売期間は落とさない', month_days(norm('多肉の販売会\n販売期間：11/21〜11/23')), {(11, 21), (11, 23)})
+    chk('受付期間の後の行の開催日は落とさない', month_days(norm('受付期間：11/1〜11/15\n開催 11/21(土)')), {(11, 21)})
+    chk('開催日の後のチケットの見出しで開催日を落とさない',
+        month_days(norm('ABENO HARUKAS 10/31(SAT)-11/1(SUN)\n🎫オンラインチケット販売開始\n10月17日(土)20:00〜')), {(10, 31), (11, 1)})
     chk('休館日の見出しの後の日付は数えない',
         month_days('【日にち】2026/10/31（土）・11/1（日）\n【休館日】1月1日'), {(10, 31), (11, 1)})
     chk('「は定休日」の前の日付は数えない', month_days('10月14日(水)は定休日です。10月18日(日)開催'), {(10, 18)})
@@ -824,6 +865,9 @@ def self_test():
     chk('主催アカウントで既知', known_elsewhere('来月10/3に開催 主催のぼっちさん @bocchi_syokudou', '2026-10-03', di, {}), True)
     chk('@の落ちたメンションでも既知', known_elsewhere('主催のぼっちさん bocchi_syokudou 10/3', '2026-10-03', di, {}), True)
     chk('無関係なら未知', known_elsewhere('10/3に別の催し', '2026-10-03', di, {}), False)
+    _rj = {'2027-01-17': [{'name': '和歌山サボテンクラブ 新年会・総会', 'reason': '主催 (DfOzDMFBQbI) の新年会'}]}
+    chk('見送りが同じ投稿を挙げていれば既知', known_elsewhere('新年会・総会は1/17(日)', '2027-01-17', {}, _rj, 'DfOzDMFBQbI'), True)
+    chk('別の投稿なら名前で見る', known_elsewhere('新年会・総会は1/17(日)', '2027-01-17', {}, _rj, 'Xxxxxxxxxxx'), False)
     chk('見送り済みは既知', known_elsewhere('花と緑のフラワーオークション 9/27', '2026-09-27', {},
                                      {'2026-09-27': [{'name': '花と緑のフラワーオークション (2026-09-27・福岡)'}]}), True)
     _, ri = day_indexes([], [{'name': 'じゃんけん大会 (2026-10-03〜04 さくら植物園・千葉県)', 'eventDate': '2026-10-03'}])
