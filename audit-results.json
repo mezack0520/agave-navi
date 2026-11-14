@@ -1,5 +1,5 @@
 {
-  "total": 842,
+  "total": 833,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -537,8 +537,10 @@
     },
     "duplicate_image_url": {
       "title": "同じimageUrlを複数イベントが使用",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "https://static.wixstatic.com/media/4c353f_931106b8e6a74 → okibota-december-2026-sunshine, okibota-max-2026-sunshine, tokai-okibota-2026"
+      ],
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
       "severity": "info"
     },
@@ -1182,11 +1184,8 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 2,
-      "items": [
-        "botanic-front-fes-shikokuzouen-2026-11: time「(空)」/ 告知に 11/28 10:00〜15:00・11/29 10:00〜15:00 がある (DfuPNaWhHW6)",
-        "okibota-december-2026-sunshine: time「10:00〜（最終日は15:00まで）」/ 告知に 12/4 10:00〜18:00・12/5 10:00〜17:00 がある (DfuAKgKAOPx)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1547,10 +1546,8 @@
     },
     "rejected_revisit_expired": {
       "title": "再評価待ちの見送りが開催日を過ぎている",
-      "count": 1,
-      "items": [
-        "hanauchu-dream-garden-29th-nextmeet-2026-11-14: 開催日 2026-11-14 を過ぎた（保留 2026-11-05）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "開催日を過ぎた回はもう掲載できない。revisit を外してreasonType を確定させる（一次情報が出ないまま終わったなら unverified のまま revisit=false）。同じシリーズの次回が告知されていれば新規エントリとして扱う",
       "severity": "urgent"
     },
@@ -1563,23 +1560,16 @@
     },
     "rejected_revisit_stale": {
       "title": "再評価待ちの見送りが30日以上動いていない",
-      "count": 17,
+      "count": 10,
       "items": [
-        "bizarre-park-local-market-2026-11: 最終評価 2026-10-15（31日前）",
-        "cadore-de-taniku-marche-2026-11: 最終評価 2026-10-15（31日前）",
         "cosmo-fes-3rd-kobayashi-2027-02: 最終評価 2026-10-12（34日前）",
         "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12: 最終評価 2026-10-16（30日前）",
         "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（45日前）",
         "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（50日前）",
-        "kasai-plants-market-2026-12: 最終評価 2026-10-13（33日前）",
-        "kodo-vol5-motoshima-2026-11: 最終評価 2026-10-15（31日前）",
         "lala-botaniq-vol2-2026-11: 最終評価 2026-10-07（39日前）",
         "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（34日前）",
         "nanayon-grand-open-chikuzen-2026-12: 最終評価 2026-10-15（31日前）",
-        "natural-finkies-2nd-kitakyushu-2026-12: 最終評価 2026-10-16（30日前）",
         "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（50日前）",
-        "niku-palette-festival-marugame-2026-11: 最終評価 2026-10-15（31日前）",
-        "shiba-no-kaori-echeveria-agave-greenmarche-2026-12: 最終評価 2026-10-15（31日前）",
         "taniku-jam-kyoto-2027-01: 最終評価 2026-10-08（38日前）",
         "yell-green-oobachi-matsuri-2026-12: 最終評価 2026-10-15（31日前）"
       ],

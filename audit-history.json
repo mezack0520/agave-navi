@@ -1933,18 +1933,16 @@
   },
   {
    "date": "2026-11-15",
-   "urgent": {
-    "time_vs_organizer_post": 2,
-    "rejected_revisit_expired": 1
-   },
+   "urgent": {},
    "info": {
+    "duplicate_image_url": 1,
     "cancel_suspects": 3,
     "cancel_watch_unreachable": 1,
     "organizer_unlisted_dates": 8,
     "eyecatch_candidates_pending": 12,
     "task_run_gap": 1,
     "cross_script_duplicate": 3,
-    "rejected_revisit_stale": 17
+    "rejected_revisit_stale": 10
    },
    "metric": {
     "thin_past_with_source": 33,

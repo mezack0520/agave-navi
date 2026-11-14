@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-15 06:41 JST",
+ "generated": "2026-11-15 07:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 424,
+  "igAccounts": 425,
   "awaitingNextEdition": 491,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 96,
+  "igNeedsBrowser": 97,
   "igDead": 7
  },
  "igAccounts": [
@@ -1757,6 +1757,18 @@
    "source": "seed",
    "seedWhy": "TANIKU JAM の主催本人。告知は @tanikujam と同時にこちらにも出る",
    "apiStatus": "api"
+  },
+  {
+   "handle": "aonocraft",
+   "url": "https://www.instagram.com/aonocraft/",
+   "eventCount": 0,
+   "lastEventName": "AONOCRAFT（静岡県掛川市・アガベと植物の店）",
+   "lastEventDate": null,
+   "hasUpcoming": false,
+   "priority": 1,
+   "source": "seed",
+   "seedWhy": "2026-12-13 に FLEX 6th ANNIVERSARY AONOCRAFT Store Event を自店で開く(DfqIg-WPQvy)。内田農園の投稿で見つけた主催で、まだ掲載が無い",
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kumagaya_taniku_fes",
