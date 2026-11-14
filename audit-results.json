@@ -1,5 +1,5 @@
 {
-  "total": 824,
+  "total": 822,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -537,10 +537,8 @@
     },
     "duplicate_image_url": {
       "title": "同じimageUrlを複数イベントが使用",
-      "count": 1,
-      "items": [
-        "https://static.wixstatic.com/media/4c353f_931106b8e6a74 → okibota-december-2026-sunshine, okibota-max-2026-sunshine, tokai-okibota-2026"
-      ],
+      "count": 0,
+      "items": [],
       "note": "同一主催のシリーズなら許容。無関係な組なら片方が貼り付けミス",
       "severity": "info"
     },
@@ -744,7 +742,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1057,12 +1055,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 3,
-      "items": [
-        "2026-11-14 shokufes-joyful-festival-chiba-newtown-2026-11: 公式ページが変わった(本文: 1302→1304字 +0%)",
-        "2026-11-22 isij-big-bazaar-2026-11-22: 公式ページが変わった(本文: 4715→4771字 +1%)",
-        "2027-01-10 isij-big-bazaar-2027-01-10: 公式ページが変わった(本文: 4715→4771字 +1%)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1173,6 +1167,16 @@
         "@wakayama_cactus_club 2027-01-17: 🍁12月例会のお知らせです🍁 ⚠️前回より開催場所変更してますので お間違えのないようにお願いします。 《場所》和歌山県 https://www.instagram.com/p/DfOzDMFBQbI/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
+      "severity": "info"
+    },
+    "organizer_unlisted_rejected_post": {
+      "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
+      "count": 2,
+      "items": [
+        "@plants2306.fe 2026-12-12: 見送り plants2306-tsu-kokedama-ws-2026-12 が同じ投稿 DfgT-_dhBlr を挙げている",
+        "@wakayama_cactus_club 2027-01-17: 見送り wakayama-cactus-club-shinnenkai-2027-01 が同じ投稿 DfOzDMFBQbI を挙げている"
+      ],
+      "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },
     "organizer_watch_broken": {
