@@ -1,7 +1,27 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "items": [
+    {
+      "on": "2026-11-15",
+      "kind": "listed",
+      "slug": "nanayon-botanical-link-grand-open-chikuzen-2026-12",
+      "name": "ななヨン グランドオープンイベント",
+      "date": "2026-12-12",
+      "dateEnd": "2026-12-13",
+      "prefecture": "福岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-15",
+      "kind": "listed",
+      "slug": "flex-6th-anniversary-aonocraft-kakegawa-2026-12",
+      "name": "FLEX 6th ANNIVERSARY AONOCRAFT Store Event",
+      "date": "2026-12-13",
+      "dateEnd": "2026-12-13",
+      "prefecture": "静岡",
+      "detail": ""
+    },
     {
       "on": "2026-11-14",
       "kind": "listed",
@@ -1179,26 +1199,6 @@
       "name": "BORDER BREAK!! 11th",
       "date": "2026-12-05",
       "dateEnd": "2026-12-06",
-      "prefecture": "兵庫",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "bizarrefarm-spring-fes-10th-2027-03",
-      "name": "bizarrefarm SPRING FES 10th",
-      "date": "2027-03-27",
-      "dateEnd": "2027-03-28",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "gamagori-taniku-festa-hyogo-5th-2027-04",
-      "name": "第5回 がまごおり多肉フェスタ in 兵庫",
-      "date": "2027-04-18",
-      "dateEnd": "2027-04-18",
       "prefecture": "兵庫",
       "detail": ""
     }
