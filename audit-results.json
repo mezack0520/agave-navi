@@ -1,5 +1,5 @@
 {
-  "total": 779,
+  "total": 767,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -204,7 +204,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 112,
+      "count": 114,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "aki-no-taniku-picnic-ibusuki-2026-11",
@@ -252,7 +252,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 408,
+      "count": 410,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -300,7 +300,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 72,
+      "count": 70,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -742,7 +742,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 3 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -950,7 +950,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 72,
+      "count": 70,
       "items": [
         "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11",
         "2026-11-21 lier-taniku-festival-ichikawa-2026-11",
@@ -977,7 +977,6 @@
         "2026-12-10 lier-taniku-festival-kariya-2026-12",
         "2026-12-11 lier-taniku-festival-shimizu-2026-12",
         "2026-12-12 love-green-market-vol3-ichihara-2026-12",
-        "2026-12-12 nanayon-botanical-link-grand-open-chikuzen-2026-12",
         "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12",
         "2026-12-19 botanical-style-fukuoka-minato-2026-12",
         "2026-12-20 isij-tokyo-reikai-2026-12-20",
@@ -985,13 +984,14 @@
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-26 lier-taniku-festival-tokorozawa-2026-12",
         "2026-12-27 lier-taniku-festival-natori-2026-12",
-        "2026-12-27 yurutto-taniku-marche-2nd-inabe-2026-12",
         "2027-01-08 lier-taniku-festival-hyuga-2027-01",
         "2027-01-09 lier-taniku-festival-tamana-2027-01",
         "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
         "2027-01-10 picnic-garden-hatsuuri-sendai-2027-01",
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
-        "2027-01-16 yurutto-taniku-marche-3rd-2027-01"
+        "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
+        "2027-01-17 botanical-monsters-2027-okazaki",
+        "2027-01-17 chinki-plants-flea-market-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1184,21 +1184,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 12,
-      "items": [
-        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-11-21 lier-taniku-festival-ichikawa-2026-11: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-11-22 lier-taniku-festival-hamada-2026-11: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-11-23 lier-taniku-festival-yonago-2026-11: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/reel/DfwlkI8TEMw/（caption）",
-        "2026-12-04 lier-taniku-festival-niihama-2026-12: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-12-05 lier-taniku-festival-tokushima-2026-12: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-12-06 lier-taniku-festival-fukuyama-2026-12: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-12-10 lier-taniku-festival-kariya-2026-12: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-12-11 lier-taniku-festival-shimizu-2026-12: https://www.instagram.com/reel/DfwgcKlhuCN/（caption）",
-        "2026-12-12 nanayon-botanical-link-grand-open-chikuzen-2026-12: https://www.instagram.com/p/DeIv_2pv_q8/（caption）",
-        "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12: https://www.instagram.com/p/DfvVbpYkhYb/（caption）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
