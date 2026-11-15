@@ -298,6 +298,66 @@ def all_by_org(events):
     return by
 
 
+# 名前の先頭の語だけで当てるとき、語そのものが一般名なら当てない(「多肉 マルシェ」の「多肉」)
+_GENERIC_HEAD = {'多肉', '多肉植物', '植物', '塊根', 'アガベ', 'サボテン', '園芸', 'グリーン', 'ボタニカル',
+                 'マルシェ', 'フェス', 'イベント', '即売会', '販売会', 'plants', 'plant', 'botanical',
+                 'green', 'market', 'the', '縁日', '植物と', '植物販売会', '店頭即売会', 'プレミアム',
+                 # 英語の一般語と地名(本文に別の意味で出る)
+                 'agave', 'american', 'anthurium', 'back', 'bikaku', 'bizarre', 'border', 'bota', 'botanic',
+                 'bromeliad', 'camp', 'coco', 'code', 'collect', 'collection', 'cross', 'deep', 'direct',
+                 'dyckia', 'enjoy', 'eternal', 'exploring', 'flex', 'from', 'fuji', 'garden', 'gardens', 'good',
+                 'grace', 'grow', 'gunma', 'happy', 'hello', 'joyful', 'jungle', 'kagoshima', 'kisarazu',
+                 'kitakyushu', 'kyoto', 'life', 'little', 'love', 'mine', 'must', 'nagasaki', 'ordinary',
+                 'paradise', 'petit', 'picnic', 'piece', 'pine', 'plump', 'rare', 'roots', 'spicy', 'spine',
+                 'succulents', 'sunny', 'taniku', 'team', 'tiger', 'tottori', 'urban', 'walk', 'wild', 'wonder',
+                 'yamaguchi', 'yell'}
+# 同じ日に複数の催しがあり得る大都市は、市名だけでは当てない
+_BIG_CITIES = {'札幌市', '仙台市', 'さいたま市', '千葉市', '横浜市', '川崎市', '相模原市', '新潟市', '静岡市',
+               '浜松市', '名古屋市', '京都市', '大阪市', '堺市', '神戸市', '岡山市', '広島市', '北九州市',
+               '福岡市', '熊本市'}
+
+
+def name_head(e):
+    """名前の先頭の語(「HAZE -various genres marche-」→ haze、「植祭 植物で…」→ 植祭)。
+    name_key は先頭6字なので、短い名前に副題が続くと本文の「HAZE(茨城)」「植祭(静岡 つま恋)」に当たらない。
+    回数(第17回)と一般名は返さない"""
+    for t in re.split(r'[\s　（(【\[「『・/|~〜\-—–!！?？]+', norm(e.get('name') or '')):
+        t = t.strip().lower()
+        if not t or re.fullmatch(r'第?[\d一二三四五六七八九十壱弐参肆伍]+回?|vol\.?\d*|\d{4}年?', t):
+            continue
+        if (t in _GENERIC_HEAD or len(t) < 2 or (t.isascii() and len(t) < 4)
+                or (len(t) == 2 and not re.fullmatch(r'[一-龠]{2}', t))):
+            return ''
+        return t
+    return ''
+
+
+def date_windows(cap, iso):
+    """本文のうち、iso の日付(同じ月の±3日。「11/21.22」の2日目を含める)を書いた箇所の前後。小文字・空白なし"""
+    try:
+        mo, d = int(iso[5:7]), int(iso[8:10])
+    except ValueError:
+        return ''
+    t = norm(cap)
+    out = []
+    for m in _MD.finditer(t):
+        try:
+            mm, dd = int(m.group(1)), int(m.group(2) or m.group(3))
+        except (TypeError, ValueError):
+            continue
+        if mm == mo and abs(dd - d) <= 3:
+            out.append(t[max(0, m.start() - 12):m.end() + 24])
+    return ' / '.join(out).lower()
+
+
+def location_city(e):
+    """location の「◯◯県◯◯市」の市。大都市と東京23区は返さない"""
+    for _p, c in sitelib._PLACE_ADDR_CITY_RE.findall(norm(e.get('location') or '')):
+        if c.endswith('市') and len(c) >= 3 and c not in _BIG_CITIES:
+            return c
+    return ''
+
+
 def known_elsewhere(cap, iso, day_index, rejected_by_day, code=''):
     """その日付の話が、別の主催で掲載済みの回か、見送り済みの回を指しているか。
 
@@ -311,6 +371,16 @@ def known_elsewhere(cap, iso, day_index, rejected_by_day, code=''):
         k = name_key(e)
         v = norm(e.get('venue') or '').replace(' ', '').lower()
         if (k and len(k) >= 3 and k in cn) or (v and len(v) >= 4 and v[:8] in c):
+            return True
+        # 出店者の予定表は短い名前か開催地の市だけを書く(「11/21.22 HAZE(茨城)」「11/21 岡山県津山市」)。
+        # 語が短いので、その日付の前後(同じ予定の行)に出たときだけ当てる
+        near = date_windows(cap, iso)
+        h = name_head(e)
+        if h and near and (re.search(r'(?<![a-z])' + re.escape(h) + r'(?![a-z])', near)
+                           if h.isascii() else h in near.replace(' ', '')):
+            return True
+        city = location_city(e)
+        if city and city in near.replace(' ', ''):
             return True
         # 主催のアカウントに触れていれば、その主催の回の話(叢宴の出店者は
         # 「主催のぼっちさん @bocchi_syokudou」と書き、会場名は表記が揺れていた)
@@ -865,6 +935,19 @@ def self_test():
     chk('主催アカウントで既知', known_elsewhere('来月10/3に開催 主催のぼっちさん @bocchi_syokudou', '2026-10-03', di, {}), True)
     chk('@の落ちたメンションでも既知', known_elsewhere('主催のぼっちさん bocchi_syokudou 10/3', '2026-10-03', di, {}), True)
     chk('無関係なら未知', known_elsewhere('10/3に別の催し', '2026-10-03', di, {}), False)
+    di2 = {'2026-11-21': [{'slug': 'h', 'name': 'HAZE -various genres marche-（2026年11月）',
+                           'venue': '歩崎公園', 'location': '歩崎公園（茨城県かすみがうら市坂4784番地地先）'},
+                          {'slug': 't', 'name': '第17回 多肉だョ！全員集合 in 津山',
+                           'location': 'グリーンヒルズ津山リージョンセンター（岡山県津山市大田920）'}],
+           '2026-11-28': [{'slug': 's', 'name': '植祭 植物で暮らしを楽しくする（2026年11月）',
+                           'location': 'つま恋リゾート 彩の郷（静岡県掛川市満水2000）'},
+                          {'slug': 'g', 'name': '多肉 マルシェ', 'location': '市民ホール（大阪府大阪市北区1）'}]}
+    chk('名前の先頭の語で既知', known_elsewhere('【今後のスケジュール】 ･11/21.22 HAZE(茨城)', '2026-11-21', di2, {}), True)
+    chk('2字の名前でも既知', known_elsewhere('･11/28 植祭(静岡 つま恋)', '2026-11-28', di2, {}), True)
+    chk('開催地の市で既知', known_elsewhere('第4弾 11/21 岡山県津山市', '2026-11-21', di2, {}), True)
+    chk('一般名の先頭語では当てない', known_elsewhere('多肉の即売会 11/28', '2026-11-28', di2, {}), False)
+    chk('日付から離れた語では当てない', known_elsewhere('11/21 新作入荷。' + 'あ' * 40 + ' 先月は HAZE に出店', '2026-11-21', di2, {}), False)
+    chk('大都市の市名では当てない', known_elsewhere('11/28 大阪市で開催', '2026-11-28', di2, {}), False)
     _rj = {'2027-01-17': [{'name': '和歌山サボテンクラブ 新年会・総会', 'reason': '主催 (DfOzDMFBQbI) の新年会'}]}
     chk('見送りが同じ投稿を挙げていれば既知', known_elsewhere('新年会・総会は1/17(日)', '2027-01-17', {}, _rj, 'DfOzDMFBQbI'), True)
     chk('別の投稿なら名前で見る', known_elsewhere('新年会・総会は1/17(日)', '2027-01-17', {}, _rj, 'Xxxxxxxxxxx'), False)
