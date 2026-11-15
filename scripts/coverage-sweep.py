@@ -865,6 +865,9 @@ def build_index():
     for i in (rej.get('items') or []):
         d0 = str(i.get('eventDate') or '')[:10] or None
         d1 = str(i.get('eventDateEnd') or '')[:10] or None
+        # seriesWide: 毎月の交換会のように、同じ型で回を重ねるシリーズを1件で見送る記録。日付で絞らない
+        if i.get('seriesWide') is True:
+            d0 = d1 = None
         for n in [i.get('name') or ''] + [a for a in (i.get('aliases') or []) if a]:
             rejected.append((n, d0, d1))
     return by_day, rejected

@@ -1169,6 +1169,30 @@
    "target": "yurutto-taniku-marche-2nd-inabe-2026-12",
    "action": "fixed",
    "detail": "主催 @taniku.no.shizuku の告知 DfvxHS9n7ff で time 10:00〜15:00 を入れ、出典を同投稿に替え説明文を出店者紹介に合わせた"
+  },
+  {
+   "on": "2026-11-16",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "群馬第4交換会 11月場所 (2026-11-22)",
+   "action": "rejected",
+   "detail": "既存の見送り gunma-dai4-koukankai-2026-09(closedGatherings)と同じ交換会。記録に seriesWide を付け coverage-sweep が日付で絞らず当てるようにした"
+  },
+  {
+   "on": "2026-11-16",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "東海フラワーショウ2027 (2027-01-23)",
+   "action": "rejected",
+   "detail": "@okibota_2021 DfkOpfhAe7g。花の展示会で outOfScopeGenres"
+  },
+  {
+   "on": "2026-11-16",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "ヒナタ多肉園(めでる)のイベント (2026-11-22)",
+   "action": "reviewed",
+   "detail": "名称は多肉楽市 in高鍋と判明。主催 @succulent_room_m に告知なし。unverified 継続"
   }
  ]
 }
