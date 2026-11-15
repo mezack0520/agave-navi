@@ -1,5 +1,5 @@
 {
-  "total": 768,
+  "total": 764,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -1131,21 +1131,15 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 3,
-      "items": [
-        "@botalife_pachy 2026-11-21,2026-11-28: 【Euphorbia Fair開催のお知らせ】 ホリダ綴化株などイタリアユーフォルビア大量入荷に伴い、今週末からゲリラで https://www.instagram.com/p/DfjgjnJn3GU/",
-        "@lahainagarden 2026-11-21,2026-11-22: ★ 2026秋 寄せ植えphotoコンテスト📸5PLACE ⁡ 鳥取花回廊を スタートに 5会場にて 寄せ植えphoto https://www.instagram.com/p/Dfi9JMaFHHH/",
-        "@vandaka_plants 2026-11-21,2026-11-23: 艸植感 第4台灣國際 鹿角蕨大赏 過去に招待枠で出店したこともある 植物イベントが今年も開催されてます . . ▪️ばん https://www.instagram.com/p/Dfre8E2GqZU/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
     "organizer_unlisted_rejected_post": {
       "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
-      "count": 1,
-      "items": [
-        "@vandaka_plants 2026-11-21,2026-11-23: 見送り vandaka-plants-kyoto-eigyobi-2026-11 が同じ投稿 Dfre8E2GqZU を挙げている"
-      ],
+      "count": 0,
+      "items": [],
       "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },
