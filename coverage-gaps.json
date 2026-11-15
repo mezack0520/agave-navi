@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-15",
+  "sweptOn": "2026-11-16",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,30 +31,39 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 870,
-    "in_scope": 286,
-    "covered": 181,
-    "known_rejected": 105,
-    "truncated_resolved": 90,
-    "truncated_unresolved": 4,
+    "candidates": 796,
+    "in_scope": 254,
+    "covered": 156,
+    "known_rejected": 97,
+    "truncated_resolved": 45,
+    "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 146,
-    "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 100,
-    "in_scope_matome-blog": 7,
+    "in_scope_leafla": 126,
+    "truncated_unresolved_hits": 225,
+    "in_scope_nextmeet": 93,
+    "in_scope_matome-blog": 6,
     "in_scope_organizer-index": 4,
-    "in_scope_pukubook": 29,
-    "gaps_raw": 0
+    "in_scope_pukubook": 25,
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
     "11/13 追加 BOTAJAMが和歌山県の丸十家具で11月29...",
     "11/13 追加 新風会盆栽まつりが香川県高松市の北谷養成園で1...",
+    "11/13 追加 fiore soffitta POP UP S...",
     "11/12 追加 ONEDAY.factory® POP UPが...",
     "11/12 追加 奈良県三宅町のThe PlantsでChris..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-22",
+      "title": "群馬第4交換会 11月場所",
+      "source": "nextmeet",
+      "pref": "群馬",
+      "place": "JA前橋市荒砥支所 倉庫前の敷地 / 群馬県前橋市荒子町338-1"
+    }
+  ]
 }

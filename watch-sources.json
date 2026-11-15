@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-15 16:44 JST",
+ "generated": "2026-11-16 06:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 426,
-  "awaitingNextEdition": 491,
+  "awaitingNextEdition": 511,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 96,
@@ -61,16 +61,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "j_n_ishikawa",
-   "url": "https://www.instagram.com/j_n_ishikawa/",
-   "eventCount": 7,
-   "lastEventName": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "morinotanikuen",
    "url": "https://www.instagram.com/morinotanikuen/",
    "eventCount": 7,
@@ -121,16 +111,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "joyfulak_gardencenter",
-   "url": "https://www.instagram.com/joyfulak_gardencenter/",
-   "eventCount": 5,
-   "lastEventName": "はなみちるさんの多肉販売会（ジョイフルエーケー帯広店）",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "fuji_taniku",
    "url": "https://www.instagram.com/fuji_taniku/",
    "eventCount": 5,
@@ -156,16 +136,6 @@
    "eventCount": 5,
    "lastEventName": "enjoy place outside 3rd",
    "lastEventDate": "2027-05-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "botanical.botanical",
-   "url": "https://www.instagram.com/botanical.botanical/",
-   "eventCount": 4,
-   "lastEventName": "BOTANICAL BOTANICAL OKINAWA（第3回）",
-   "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -206,16 +176,6 @@
    "eventCount": 4,
    "lastEventName": "Green marché 花の湯（2027年6月）",
    "lastEventDate": "2027-06-06",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "taniku_moromoro_ichiba",
-   "url": "https://www.instagram.com/taniku_moromoro_ichiba/",
-   "eventCount": 3,
-   "lastEventName": "多肉もろもろ市場 vol.16（11月）",
-   "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -376,36 +336,6 @@
    "eventCount": 2,
    "lastEventName": "ボタらいふ Euphorbia Fair",
    "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "botapara_botanical_paradise",
-   "url": "https://www.instagram.com/botapara_botanical_paradise/",
-   "eventCount": 2,
-   "lastEventName": "Bota Para Vol.4",
-   "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "temo2929",
-   "url": "https://www.instagram.com/temo2929/",
-   "eventCount": 2,
-   "lastEventName": "多肉もぶれ vol.13",
-   "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "mellow_plants_coffee",
-   "url": "https://www.instagram.com/mellow_plants_coffee/",
-   "eventCount": 2,
-   "lastEventName": "AGAVE POP-UP（MELLOW PLANTS・2026年11月）",
-   "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -671,6 +601,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "j_n_ishikawa",
+   "url": "https://www.instagram.com/j_n_ishikawa/",
+   "eventCount": 7,
+   "lastEventName": "Jolie Selected Aroids 即売会（山新グランステージ水戸）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "_myoko_plants_market_",
    "url": "https://www.instagram.com/_myoko_plants_market_/",
    "eventCount": 5,
@@ -686,6 +626,16 @@
    "eventCount": 5,
    "lastEventName": "多肉園おひさま 多肉イベント in イオンモール日吉津",
    "lastEventDate": "2026-10-31",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "joyfulak_gardencenter",
+   "url": "https://www.instagram.com/joyfulak_gardencenter/",
+   "eventCount": 5,
+   "lastEventName": "はなみちるさんの多肉販売会（ジョイフルエーケー帯広店）",
+   "lastEventDate": "2026-11-14",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -741,6 +691,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "botanical.botanical",
+   "url": "https://www.instagram.com/botanical.botanical/",
+   "eventCount": 4,
+   "lastEventName": "BOTANICAL BOTANICAL OKINAWA（第3回）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -776,6 +736,16 @@
    "eventCount": 3,
    "lastEventName": "サボテン・アガベ・多肉・塊根植物 展示即売会（みのり花木センター 2026年10月）",
    "lastEventDate": "2026-10-24",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "taniku_moromoro_ichiba",
+   "url": "https://www.instagram.com/taniku_moromoro_ichiba/",
+   "eventCount": 3,
+   "lastEventName": "多肉もろもろ市場 vol.16（11月）",
+   "lastEventDate": "2026-11-15",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -1051,72 +1021,32 @@
    "apiStatus": "api"
   },
   {
-   "handle": "sekaijunosizuku",
-   "url": "https://www.instagram.com/sekaijunosizuku/",
-   "eventCount": 1,
-   "lastEventName": "世界樹の雫 大宮マルイ（2026年11月）",
-   "lastEventDate": "2026-11-13",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "the_botanical_show",
-   "url": "https://www.instagram.com/the_botanical_show/",
-   "eventCount": 1,
-   "lastEventName": "THE BOTANICAL SHOW 6TH",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kanik_jp",
-   "url": "https://www.instagram.com/kanik_jp/",
-   "eventCount": 1,
-   "lastEventName": "KANIK ポップアップ販売会",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "gardencenter_joyfulhonda",
-   "url": "https://www.instagram.com/gardencenter_joyfulhonda/",
-   "eventCount": 1,
-   "lastEventName": "植フェス GLOBAL PLANTS MARKET（JOYFUL FESTIVAL 千葉ニュータウン）",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "nagomi_marche_2023",
-   "url": "https://www.instagram.com/nagomi_marche_2023/",
-   "eventCount": 1,
-   "lastEventName": "和 -NAGOMI- 多肉と雑貨のガーデンマルシェ",
+   "handle": "botapara_botanical_paradise",
+   "url": "https://www.instagram.com/botapara_botanical_paradise/",
+   "eventCount": 2,
+   "lastEventName": "Bota Para Vol.4",
    "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
   {
-   "handle": "windplants_shop",
-   "url": "https://www.instagram.com/windplants_shop/",
-   "eventCount": 1,
-   "lastEventName": "植友広場 〜秋の陣〜 2026",
+   "handle": "temo2929",
+   "url": "https://www.instagram.com/temo2929/",
+   "eventCount": 2,
+   "lastEventName": "多肉もぶれ vol.13",
    "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
   {
-   "handle": "roots_plus_livingwithstyle",
-   "url": "https://www.instagram.com/roots_plus_livingwithstyle/",
-   "eventCount": 1,
-   "lastEventName": "Roots plus vol.1",
+   "handle": "mellow_plants_coffee",
+   "url": "https://www.instagram.com/mellow_plants_coffee/",
+   "eventCount": 2,
+   "lastEventName": "AGAVE POP-UP（MELLOW PLANTS・2026年11月）",
    "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
+   "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
   },
@@ -1125,36 +1055,6 @@
    "url": "https://www.instagram.com/meguru___museum/",
    "eventCount": 1,
    "lastEventName": "PLANTS POP UP at 螺旋珈琲（Heaven Green Factory × TT POTS）",
-   "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "hirata_ns.kokura",
-   "url": "https://www.instagram.com/hirata_ns.kokura/",
-   "eventCount": 1,
-   "lastEventName": "スピーシーズナーサリー 貴重品種販売会（平田ナーセリー小倉東店）",
-   "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "leafplus114",
-   "url": "https://www.instagram.com/leafplus114/",
-   "eventCount": 1,
-   "lastEventName": "緑の市2026（リーフプラス・広島）",
-   "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ssd_keydw",
-   "url": "https://www.instagram.com/ssd_keydw/",
-   "eventCount": 1,
-   "lastEventName": "第6回 Life with botanical",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": true,
    "priority": 1,
@@ -4256,6 +4156,46 @@
    "apiStatus": "api"
   },
   {
+   "handle": "sekaijunosizuku",
+   "url": "https://www.instagram.com/sekaijunosizuku/",
+   "eventCount": 1,
+   "lastEventName": "世界樹の雫 大宮マルイ（2026年11月）",
+   "lastEventDate": "2026-11-13",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "the_botanical_show",
+   "url": "https://www.instagram.com/the_botanical_show/",
+   "eventCount": 1,
+   "lastEventName": "THE BOTANICAL SHOW 6TH",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kanik_jp",
+   "url": "https://www.instagram.com/kanik_jp/",
+   "eventCount": 1,
+   "lastEventName": "KANIK ポップアップ販売会",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "gardencenter_joyfulhonda",
+   "url": "https://www.instagram.com/gardencenter_joyfulhonda/",
+   "eventCount": 1,
+   "lastEventName": "植フェス GLOBAL PLANTS MARKET（JOYFUL FESTIVAL 千葉ニュータウン）",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "hirata_ns.fukuoka",
    "url": "https://www.instagram.com/hirata_ns.fukuoka/",
    "eventCount": 1,
@@ -4281,6 +4221,66 @@
    "eventCount": 1,
    "lastEventName": "BOTANICAL JUNCTION",
    "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "nagomi_marche_2023",
+   "url": "https://www.instagram.com/nagomi_marche_2023/",
+   "eventCount": 1,
+   "lastEventName": "和 -NAGOMI- 多肉と雑貨のガーデンマルシェ",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "windplants_shop",
+   "url": "https://www.instagram.com/windplants_shop/",
+   "eventCount": 1,
+   "lastEventName": "植友広場 〜秋の陣〜 2026",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "roots_plus_livingwithstyle",
+   "url": "https://www.instagram.com/roots_plus_livingwithstyle/",
+   "eventCount": 1,
+   "lastEventName": "Roots plus vol.1",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "hirata_ns.kokura",
+   "url": "https://www.instagram.com/hirata_ns.kokura/",
+   "eventCount": 1,
+   "lastEventName": "スピーシーズナーサリー 貴重品種販売会（平田ナーセリー小倉東店）",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "leafplus114",
+   "url": "https://www.instagram.com/leafplus114/",
+   "eventCount": 1,
+   "lastEventName": "緑の市2026（リーフプラス・広島）",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "ssd_keydw",
+   "url": "https://www.instagram.com/ssd_keydw/",
+   "eventCount": 1,
+   "lastEventName": "第6回 Life with botanical",
+   "lastEventDate": "2026-11-15",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
@@ -4350,6 +4350,39 @@
    "monthsSinceLast": 0,
    "igHandle": "brew_by_mstr",
    "officialUrl": "https://www.instagram.com/brew_by_mstr/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "THE BOTANICAL SHOW 6TH",
+   "lastSlug": "the-botanical-show-6th-2026",
+   "lastDate": "2026-11-14",
+   "lastEnd": "2026-11-15",
+   "monthsSinceLast": 0,
+   "igHandle": "the_botanical_show",
+   "officialUrl": "https://www.instagram.com/the_botanical_show/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "HOBBY PLANTS FREAKS vol.6",
+   "lastSlug": "hobby-plants-freaks-vol6-2026-11",
+   "lastDate": "2026-11-14",
+   "lastEnd": "2026-11-15",
+   "monthsSinceLast": 0,
+   "igHandle": "nagasako_farm",
+   "officialUrl": "https://www.instagram.com/p/DeG8M8dJZ8p/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "多肉もろもろ市場 vol.16（11月）",
+   "lastSlug": "taniku-moromoro-vol16-2026-11",
+   "lastDate": "2026-11-15",
+   "lastEnd": "2026-11-15",
+   "monthsSinceLast": 0,
+   "igHandle": "taniku_moromoro_ichiba",
+   "officialUrl": "https://www.instagram.com/p/Ddkt_H6E9J-/",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4691,39 +4724,6 @@
    "monthsSinceLast": 0,
    "igHandle": "shabomaniac",
    "officialUrl": "https://www.instagram.com/p/DeL_K_BzYCt/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "Green Flea Market vol.2 & 1st Anniversary（Soraniwa RAKURAKUEN）",
-   "lastSlug": "green-flea-market-vol2-soraniwa-rakurakuen-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "soraniwa_rakurakuen",
-   "officialUrl": "https://www.instagram.com/p/Dd8tCuwk81q/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "シマムラ園芸×QSPLANT vol.9",
-   "lastSlug": "shimamura-engei-qsplant-vol9-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "qs_plant",
-   "officialUrl": "https://www.instagram.com/p/DeRWiZUmUMQ/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "DOLCE’S 多肉植物販売会（オザキフラワーパーク）",
-   "lastSlug": "dolces-taniku-hanbaikai-ozaki-flowerpark-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "ozakiflowerpark",
-   "officialUrl": "https://ozaki-flowerpark.co.jp/news/dolceshanbaikai",
    "recurring": false,
    "apiStatus": "api"
   }
