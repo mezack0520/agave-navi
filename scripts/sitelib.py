@@ -2805,6 +2805,59 @@ def announced_hours_for_event(caption, event_days, min_minutes=120):
     return [r for r in all_r if r in mine or r not in other]
 
 
+# 複数の催しを見出しで並べた投稿(出店予定の一覧)で、見出しにする行。【名前】か、絵文字で挟んだ「名前」
+_SECTION_HEAD = re.compile(r'^\W{0,4}[【「『][^】」』\n]{2,60}[】」』]\W{0,4}$')
+# 節の区切り行(⭐︎⭐︎⭐︎…、━━━、-——— など同じ記号の並び)
+_SECTION_RULE = re.compile(r'^[\s⭐︎☆★＊*━─\-—–=_~〜・]{5,}$')
+
+
+def event_section(caption, e):
+    """本文が見出しで2つ以上の催しを並べ、その1つがこの回の名前なら、その見出しから次の見出しか区切り行までを返す。
+    当たらなければ本文をそのまま返す。
+
+    浦部陽向園の告知(De5creYzXjg)は【金岡みどりのマルシェ】の節に時刻を書かず、下の節に
+    靱公園植木市 9時〜17時・甲子園口バル&マルシェ 10:00〜17:00 を並べる。本文全体を読むと
+    金岡の回(9:00〜15:00)が time_vs_organizer_post で鳴った(2026-11-17)。"""
+    cap = caption or ''
+    lines = cap.split('\n')
+    heads = [i for i, l in enumerate(lines) if _SECTION_HEAD.match(l.strip())]
+    if len(heads) < 2:
+        return cap
+    keys = event_name_keys(e)
+    if not keys:
+        return cap
+    for i in heads:
+        if any(k in name_key_text(lines[i]) for k in keys):
+            out = [lines[i]]
+            for l in lines[i + 1:]:
+                t = l.strip()
+                if _SECTION_HEAD.match(t) or _SECTION_RULE.match(t):
+                    break
+                out.append(l)
+            return '\n'.join(out)
+    return cap
+
+
+def _self_test_event_section():
+    """見出しで並べた投稿は、この回の節の時刻だけを読む(2026-11-17)。
+    返り値は食い違いの一覧(空なら合格)。audit.time_vs_organizer_post が毎回呼ぶ"""
+    bad = []
+    ev = {'name': '金岡みどりのマルシェ（2026年11月）', 'aliases': ['金岡みどりのマルシェ']}
+    cap = ('【金岡みどりのマルシェ】\n\n11月25日(水)〜30日(月)に開催いたします\n\n⭐︎⭐︎⭐︎⭐︎⭐︎⭐︎\n\n'
+           '🌹靱公園植木市🌹\n11月7日（土）〜11月23日(月)\n🕘9時〜17時まで🕘\n\n'
+           '🥘「第13回甲子園口バル&マルシェ」🥘\n11月14.15日(土日)\n10:00〜17:00\n\n'
+           '🍊「モロモロプランツ」🍊\n11月21日.22日(土日)\n両日10:00〜16:00')
+    if announced_hours(event_section(cap, ev)):
+        bad.append(('別の節の時刻を読んだ', announced_hours(event_section(cap, ev))))
+    ev2 = {'name': 'モロモロプランツ'}
+    if not announced_hours(event_section(cap, ev2)):
+        bad.append(('自分の節の時刻を落とした(検査が空振りする)',))
+    one = '【金岡みどりのマルシェ】\n11月25日\n9:00〜15:00\n⭐︎⭐︎⭐︎⭐︎⭐︎\n10:00〜17:00'
+    if event_section(one, ev) != one:
+        bad.append(('見出しが1つの投稿は本文全体を読む',))
+    return bad
+
+
 # 投稿の本文がその回を名前で指しているかを見る鍵。数字・記号・「第◯回」「vol.◯」を落とした先頭6字。
 # ig-organizer-watch.name_key は文字クラス [vol.Vol] で v・o・l を名前の途中からも落としており
 # (「Plant Freaks」→「PantFr」)、ラテン文字の名前の1割が本文に当たらなかった(2026-10-08)。

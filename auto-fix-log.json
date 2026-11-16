@@ -1272,11 +1272,11 @@
   },
   {
    "on": "2026-11-17",
-   "task": "agave-event-update",
+   "task": "event-monitor",
    "kind": "time_vs_organizer_post",
    "target": "kanaoka-midori-marche-2026-11",
-   "action": "skipped",
-   "detail": "time は正しい。CI の organizer-posts.json が本文を800字で切り、後半の金岡の時刻が落ちて前半の植木市の時刻と比べている。ig-organizer-watch.py の切り詰めを2200字にしたので次の daily で消える"
+   "action": "fixed",
+   "detail": "値は主催の最新告知(Dfn7Q9GzebC)どおり。誤検知のため、見出しで催しを並べた投稿は回の節だけを読む sitelib.event_section を監査に足した"
   }
  ]
 }

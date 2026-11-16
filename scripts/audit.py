@@ -3578,6 +3578,8 @@ def main():
     # 2026-10-24。協賛・ゲストの「来店予定 10:00〜12:00」を開催時間と読み、RARE PLANTS COLLECTION が鳴った
     for _bad in sitelib._self_test_guest_visit_hours():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_guest_visit_hours): {_bad}")
+    for _bad in sitelib._self_test_event_section():
+        _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_event_section): {_bad}")
     # 2026-11-03。過去の回の中止告知(isij.net の2024年の例会)が頁に残り、2026-12-20 の回が毎巡回鳴った。
     # check-cancelled.drop_past_notice の自己テスト。壊れると見張りの規則が黙って戻る
     try:
@@ -3615,8 +3617,10 @@ def main():
                 if _c in _posts_by_code:
                     # 会期の外の日付にだけ紐づく時刻は比べない(2026-10-10。巡業日程の投稿の冒頭にある
                     # 別の催し 12/19 の時刻で、高知 10/18 の回が鳴った)。sitelib.announced_hours_for_event
-                    _rr = sitelib.announced_hours_for_event(_posts_by_code[_c].get('caption') or '',
-                                                            sitelib.event_month_days(e))
+                    # 見出しで複数の催しを並べた投稿は、この回の節だけを読む(sitelib.event_section)
+                    _rr = sitelib.announced_hours_for_event(
+                        sitelib.event_section(_posts_by_code[_c].get('caption') or '', e),
+                        sitelib.event_month_days(e))
                     if _rr:
                         _cap_r |= set(_rr)
                         _src.append(_c)
