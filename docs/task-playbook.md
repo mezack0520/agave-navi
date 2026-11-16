@@ -183,7 +183,7 @@ push できなかった日の起動日は、パッチを当てた回が `task-ru
 | 主催の投稿に当サイトに無い日付(`organizer_unlisted_dates`) | 同上。ワークショップ単独などは workshopOnly で見送り。主催の日程変更なら既存の回を直す(§3.8) | listed / rejected / fixed |
 | 中止・延期の兆候(`organizer_cancel_signal` / `cancel_suspects`) | 投稿と公式頁を開く(§3.8)。中止なら cancelled にする。違えば `scripts/cancel-reviewed.json` | fixed / reviewed |
 | 再評価待ちの見送りが開催日を過ぎた(`rejected_revisit_expired`) | `revisit=false` にして理由に一文足す | fixed |
-| 再評価待ちの見送りが開催10日前を切ったのに見ていない(`rejected_revisit_due`) | 保留の理由に書いた一次情報(出店者の一覧、施設の告知)が出ていないかを見て、掲載するか見送りを確定する。出店者の一覧が出ていれば数える(breakdownPublished)。決められなければ `revisitedOn` に実行日、理由の末尾に見たことを一文 | listed / rejected / reviewed |
+| 再評価待ちの見送りが開催10日前を切ったのに見ていない(`rejected_revisit_due`)。30日以上動いていない(`rejected_revisit_stale`、info でメールに出ない)も agave-event-update が1日3件まで同じやり方で見る | 保留の理由に書いた一次情報(出店者の一覧、施設の告知)が出ていないかを見て、掲載するか見送りを確定する。出店者の一覧が出ていれば数える(breakdownPublished)。決められなければ `revisitedOn` に実行日、理由の末尾に見たことを一文 | listed / rejected / reviewed |
 | アイキャッチ候補(`eyecatch_candidates_pending`) | 画像を Read で見て `apply-eyecatch.py` で採否(§3.7) | fixed |
 | 内容の異常(`content_implausible` / `time_vs_organizer_post` / `time_vs_description` / `time_implausible`) | 主催の告知で確かめて直す。出典に無い値は消す。入場料に出店料や貸しスペース料が入る例が繰り返し出ている | fixed |
 | 主催の最新の告知と会期が1〜3日ずれる(`organizer_post_span_differs`、info) | 主催が会期を動かしたのか、上位の催しや別の回の会期なのかを投稿で見る。動かしたなら date / dateEnd / dateDisplay、説明文の会期、出典を直す | fixed / reviewed |
@@ -479,7 +479,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   scroll イベント、IntersectionObserver、CSS トランジションが動かない。
   `resize_window` で 375x812 にし、`scrollTo({top: …, behavior: 'instant'})` のあと `window.dispatchEvent(new Event('scroll'))` を足して見る。
   トップは `localStorage.removeItem('aen_region')` をしてから見る。終わったら desktop に戻してタブを閉じる。
-- アフィリエイトの正常な形。`.aff-shop-btn` は Amazon(`tag=aganavi-22`)と Yahoo!ショッピング。旧ID `agavenavi-22` が出たら旧版を疑う(`affiliate_dead_tag`)。
+- アフィリエイトの正常な形。`.aff-shop-btn` は Amazon(`tag=aganavi-22`)と Yahoo!ショッピング。楽天の商品が取れず `.rk-card` の無い行だけ楽天もボタンで出る。旧ID `agavenavi-22` が出たら旧版を疑う(`affiliate_dead_tag`)。
   `.aff-mercari` は詳細、タグ、ガイドの枠の先頭(`affiliate-links.json` のリンクはダッシュボードで作ったものをそのまま使う)。
   `.aff-bar` はスマホ幅だけに出て、デスクトップ幅では DOM に無いのが正常。
 

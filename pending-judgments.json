@@ -1,7 +1,21 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。 1件の項目: id(source:キー)、source、addedOn(YYYY-MM-DD)、question(問い)、facts(根拠。文字列の配列)、whyHuman(人の判断が要る理由)、proposal(listing-policy への追記案などの提案)。日次メールは sitelib.judgment_fields で読む。",
-  "items": [],
-  "updated": "2026-11-11",
+  "items": [
+    {
+      "id": "site-health-check:gsc-secret",
+      "source": "site-health-check",
+      "addedOn": "2026-11-16",
+      "question": "Search Console の取り込み用 Secret GSC_SA_KEY を設定する",
+      "facts": [
+        "11-16 の Search Console ワークフローは「Secret GSC_SA_KEY が無いので取得しない」で終わり、search-demand.json が作られていない",
+        "週次点検(プレイブック §6 の 3)の検索需要の手直しが止まっている。監査 search_demand_stale はファイルが一度できるまで鳴らない"
+      ],
+      "whyHuman": "サービスアカウントの作成、Search Console の権限付与、GitHub の Secret 登録は目崎のアカウントでしかできない",
+      "proposal": "docs/search-console.md の「最初の設定」1〜5を行う。設定後は会話のセッションが search-request.json を push して初回を回す",
+      "resolveWhen": "search-demand.json が repo にできたら resolved へ移す"
+    }
+  ],
+  "updated": "2026-11-16",
   "resolved": [
     {
       "id": "agave-navi-eyecatch:flyer-with-child-photo",
