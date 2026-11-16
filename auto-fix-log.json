@@ -2,24 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-17",
-   "task": "chat",
-   "kind": "time_vs_organizer_post",
-   "target": "BOTANICAL BOTANICAL OSAKA (2026-10-31)",
-   "action": "fixed",
-   "detail": "11/1 を主催の 10/16 告知(DejXu0xJU4F)の営業時間変更どおり 10:30〜16:30・当日券 12:30〜に。出典をその投稿に差し替え",
-   "mailedOn": "2026-10-18"
-  },
-  {
-   "on": "2026-10-17",
-   "task": "chat",
-   "kind": "time_vs_organizer_post",
-   "target": "アガベ展示即売会 ジョイフルエーケー大曲店 (2026-10-17)",
-   "action": "reviewed",
-   "detail": "掲載どおり 10:00〜12:00(告知 Dejqy4NE7Zm)。DejLwSkkyGQ の 14:00〜16:00 は大麻店の回(掲載済み)。監査が同じ主催の別の回の時刻を欠けと読んでいたので直した",
-   "mailedOn": "2026-10-18"
-  },
-  {
    "on": "2026-10-19",
    "task": "agave-event-update",
    "kind": "coverage_gaps",
@@ -1215,6 +1197,86 @@
    "action": "reviewed",
    "detail": "出店予定の HAZE・植祭・多肉だョ全員集合(津山・福山)で掲載済み。見張りが短い名前と開催地の市を日付の近くで当てるよう ig-organizer-watch.py を直した",
    "mailedOn": "2026-11-16"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "金岡みどりのマルシェ (2026-11-25)",
+   "action": "listed",
+   "detail": "主催 @yokoen_tk の告知 De5creYzXjg で裏取り"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ひだかさんげ (2026-11-29)",
+   "action": "listed",
+   "detail": "主催 @hidaka_sange の告知 DfuSAckJ26s で裏取り"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@gamagori_taniku_festa 2027-01-31",
+   "action": "listed",
+   "detail": "Dfx2qUGTZeS の次回告知から 第2回 in 浜松(1/31)と第7回 蒲郡(3/13-14)を掲載。第7回の保留記録は消した"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "gamagori-taniku-festa-7th-2027-03",
+   "action": "listed",
+   "detail": "主催の Dfx2qUGTZeS で 3/13.14(土日)が確定"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "cosmo-fes-3rd-kobayashi-2027-02",
+   "action": "reviewed",
+   "detail": "出店者募集 DfUbuacEvDn は出たが出店者一覧は未公開。継続"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "yell-green-oobachi-matsuri-2026-12",
+   "action": "reviewed",
+   "detail": "@yell_green に大鉢祭りの詳細はまだ。継続"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "greensnap-marche-odaiba-2026",
+   "action": "reviewed",
+   "detail": "本文の追記だけ。開催予定のまま"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "hanatomofesta-2026",
+   "action": "reviewed",
+   "detail": "ステージスケジュール公開の追記だけ。開催予定のまま"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "greensnap-marche-abc-hachioji-2026-11",
+   "action": "fixed",
+   "detail": "3回目の空振り。記録せず check-cancelled.py に grown_only(本文が増え開催日が残り中止の語が無い変化は数えない)を足した"
+  },
+  {
+   "on": "2026-11-17",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "kanaoka-midori-marche-2026-11",
+   "action": "skipped",
+   "detail": "time は正しい。CI の organizer-posts.json が本文を800字で切り、後半の金岡の時刻が落ちて前半の植木市の時刻と比べている。ig-organizer-watch.py の切り詰めを2200字にしたので次の daily で消える"
   }
  ]
 }

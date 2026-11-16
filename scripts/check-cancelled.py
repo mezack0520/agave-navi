@@ -689,9 +689,24 @@ def main():
             img_noisy = 0
         pages[slug]['imageOnlyChanges'] = img_noisy
 
+        # 本文が増え、この回の開催日がまだ頁に出ていて、中止の語も弱い語も無い回は
+        # 告知の追記(出演・体験・地図・タイムテーブル)なので「公式ページが変わった」に数えない。
+        # 中止の告知は語で拾う(strong / weak)。GreenSnap Marche と花友フェスタが
+        # 追記のたびに鳴り、同じ回に「開催予定のまま」を3回書くところだった。
+        _b_len, _a_len = bsig.get('textLen'), cmp_sig.get('textLen')
+        grown_only = (bool(changed) and '本文' in changed
+                      and not res['strong'] and not res['weak']
+                      and res.get('eventDateSeen') is True
+                      and isinstance(_b_len, int) and isinstance(_a_len, int)
+                      and _a_len >= _b_len)
+        if grown_only:
+            stats['grownSkipped'] = stats.get('grownSkipped', 0) + 1
+            stats.setdefault('grownSkippedSlugs', []).append(slug)
         why = []
         if res['strong']:
             why.append('中止・延期の語: ' + ' / '.join(res['strong']))
+        elif grown_only:
+            pass
         elif res['weak'] and changed:
             why.append('弱い語(' + ' / '.join(res['weak']) + ')＋ページが変わった')
         elif '画像' in changed and not (image_only and img_noisy > 2):
@@ -737,6 +752,9 @@ def main():
 
     print(f"巡回対象 {stats['targets']} 件 / 取得できた {stats['fetched']} 件")
     print(f"★ 中止の疑い: {len(suspects)}件")
+    if stats.get('grownSkipped'):
+        print(f"  本文の追記だけで数えなかった: {stats['grownSkipped']}件 "
+              + ', '.join(stats.get('grownSkippedSlugs', [])))
     for s in suspects:
         print(f"    {s['date']} {s['name'][:34]} — {s['why']}")
     if errors:

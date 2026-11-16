@@ -524,6 +524,9 @@ def _looks_like_own_announcement(cap):
 
 
 
+CAPTION_MAX = 2200
+
+
 def fetch_posts(ig_id, username, token):
     """最新投稿。image は原寸画像のURL(署名付きで期限があるので保存しない)"""
     bd, err = iglib.business_discovery(
@@ -534,7 +537,9 @@ def fetch_posts(ig_id, username, token):
         return None, err
     media = (bd.get('media') or {}).get('data') or []
     posts = [{'timestamp': m.get('timestamp'), 'permalink': m.get('permalink'),
-              'caption': (m.get('caption') or '')[:800],
+              # 本文は切らない(Instagram の上限は 2,200字)。800字で切っていた間は、450件ほどの投稿で
+              # 後半に書かれた回の日付と時刻が落ち、time_vs_organizer_post が前半の別の催しの時刻で鳴った
+              'caption': (m.get('caption') or '')[:CAPTION_MAX],
               'image': (m.get('thumbnail_url') if m.get('media_type') == 'VIDEO'
                         else m.get('media_url'))} for m in media]
     return posts, None
