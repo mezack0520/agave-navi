@@ -9,35 +9,12 @@
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "greensnap-marche-abc-hachioji-2026-11",
-      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
-      "date": "2026-11-21",
-      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
-      "slug": "greensnap-marche-odaiba-2026",
-      "name": "GreenSnap Marche お台場 2026",
-      "date": "2026-11-28",
-      "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    },
-    {
       "slug": "hanatomofesta-2026",
       "name": "第9回 花友フェスタ",
       "date": "2026-12-19",
       "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(本文・画像)",
+      "why": "公式ページが変わった(画像)",
       "changed": [
-        "本文",
         "画像"
       ]
     }
@@ -165,7 +142,7 @@
         "textLen": 6239,
         "imageCount": 81
       },
-      "prevTextLen": 5919,
+      "prevTextLen": 6239,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -279,7 +256,7 @@
         "textLen": 1277,
         "imageCount": 23
       },
-      "prevTextLen": 1131,
+      "prevTextLen": 1277,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -384,11 +361,11 @@
       "checkedOn": "2026-11-17",
       "signature": {
         "text": "32bb3280f2ae8c7d",
-        "images": "ba0c9608e1f45b4f",
+        "images": "975cba7204eed030",
         "textLen": 1166,
         "imageCount": 44
       },
-      "prevTextLen": 1129,
+      "prevTextLen": 1166,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -404,7 +381,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
+      "imageOnlyChanges": 1
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
