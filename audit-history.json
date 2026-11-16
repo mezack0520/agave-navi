@@ -1951,26 +1951,28 @@
   },
   {
    "date": "2026-11-17",
-   "urgent": {},
+   "urgent": {
+    "time_vs_organizer_post": 1
+   },
    "info": {
-    "coverage_gaps": 2,
-    "cancel_suspects": 3,
+    "coverage_gap_stale": 2,
+    "cancel_suspects": 1,
     "organizer_unlisted_dates": 1,
     "eyecatch_candidates_pending": 12,
-    "rejected_revisit_stale": 9
+    "rejected_revisit_stale": 6
    },
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 49,
     "upcoming_with_image": 113,
     "events_with_image": 410,
-    "upcoming_no_image": 70,
+    "upcoming_no_image": 78,
     "ongoing_events": 4,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 70
+    "eyecatch_backlog": 78
    },
-   "events": 797,
-   "upcoming": 183
+   "events": 805,
+   "upcoming": 191
   }
  ]
 }

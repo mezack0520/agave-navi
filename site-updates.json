@@ -1,7 +1,87 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-15",
+  "updated": "2026-11-17",
   "items": [
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "kanaoka-midori-marche-2026-11",
+      "name": "金岡みどりのマルシェ（2026年11月）",
+      "date": "2026-11-25",
+      "dateEnd": "2026-11-30",
+      "prefecture": "大阪",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "hidaka-sange-takaoka-2026-11",
+      "name": "ひだかさんげ（2026年11月）",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "宮崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "tanikkuri-shikokuzouen-2026-12",
+      "name": "タニックリ",
+      "date": "2026-12-13",
+      "dateEnd": "2026-12-13",
+      "prefecture": "茨城",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "cham-plants-hanbaikai-protoleaf-futako-2026-12",
+      "name": "cham_plants 植物販売会（プロトリーフ二子玉川本店）",
+      "date": "2026-12-19",
+      "dateEnd": "2026-12-19",
+      "prefecture": "東京",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "cham-plants-hanbaikai-protoleaf-yumegaoka-2026-12",
+      "name": "cham_plants 植物販売会（プロトリーフ ゆめが丘ソラトス店）",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "prefecture": "神奈川",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "gamagori-taniku-festa-hamamatsu-2nd-2027-01",
+      "name": "第2回 がまごおり多肉フェスタ in 浜松",
+      "date": "2027-01-31",
+      "dateEnd": "2027-01-31",
+      "prefecture": "静岡",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "gamagori-taniku-festa-7th-2027-03",
+      "name": "第7回 蒲郡多肉フェスタ",
+      "date": "2027-03-13",
+      "dateEnd": "2027-03-14",
+      "prefecture": "愛知",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-17",
+      "kind": "listed",
+      "slug": "biku-matsuri-vol2-ozman-2027-04",
+      "name": "麋祭 vol.02",
+      "date": "2027-04-11",
+      "dateEnd": "2027-04-11",
+      "prefecture": "静岡",
+      "detail": ""
+    },
     {
       "on": "2026-11-15",
       "kind": "listed",
@@ -1120,86 +1200,6 @@
       "date": "2026-10-25",
       "dateEnd": "2026-10-25",
       "prefecture": "静岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "ethan-plants-hanbaikai-ichikawa-2026-11",
-      "name": "イーサンプランツ 多肉植物販売会（イーサン祭）",
-      "date": "2026-11-03",
-      "dateEnd": "2026-11-03",
-      "prefecture": "千葉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "sand-hiroshima-2026-11",
-      "name": "垚 Sand（吹きガラス・民藝陶器・ビザールプランツの合同企画展）",
-      "date": "2026-11-20",
-      "dateEnd": "2026-11-22",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "nagoriba-naruto-uchinoumi-2026-11",
-      "name": "ナゴリバ in 鳴門ウチノ海総合公園",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-21",
-      "prefecture": "徳島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "nohara-green-marche-vol10-2026-11",
-      "name": "NOHARA green marche vol.10",
-      "date": "2026-11-21",
-      "dateEnd": "2026-11-22",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "tonys-fes-toshiwasure-2026-11",
-      "name": "年忘れTony'sFES2026",
-      "date": "2026-11-28",
-      "dateEnd": "2026-11-28",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "picnic-garden-sendai-2026-11",
-      "name": "ピクニックガーデン（せんだい農業園芸センター・2026年11月）",
-      "date": "2026-11-29",
-      "dateEnd": "2026-11-29",
-      "prefecture": "宮城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "king-plants-sunday-oroshimachi-2026-12",
-      "name": "キングプランツ in ホームセンターサンデー 卸町店",
-      "date": "2026-12-05",
-      "dateEnd": "2026-12-06",
-      "prefecture": "宮城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-15",
-      "kind": "listed",
-      "slug": "border-break-11th-2026-12",
-      "name": "BORDER BREAK!! 11th",
-      "date": "2026-12-05",
-      "dateEnd": "2026-12-06",
-      "prefecture": "兵庫",
       "detail": ""
     }
   ]
