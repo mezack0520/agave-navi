@@ -28,7 +28,7 @@
 import json
 import os
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sitelib  # noqa: E402
@@ -193,8 +193,8 @@ if send and _event != 'workflow_dispatch' and _state.get('lastMailedOn') == toda
 
 # 数字は1行。一覧は載せない(サイトを見れば分かる)
 _up = data.get('upcoming_events') or []
-_sat = now.date() + timedelta(days=(5 - now.weekday()) % 7)
-_sun = _sat + timedelta(days=1)
+# 週末の範囲は /this-weekend/ と同じ sitelib.weekend_span(土日+続く祝日)
+_ws, _we = sitelib.weekend_span(now.date())
 
 
 def _on_weekend(e):
@@ -203,11 +203,11 @@ def _on_weekend(e):
         b = datetime.strptime(e.get('dateEnd') or e.get('date', ''), '%Y-%m-%d').date()
     except ValueError:
         return False
-    return a <= _sun and b >= _sat
+    return a <= _we and b >= _ws
 
 
 if send:
-    lines.append(f"開催予定 {len(_up)}件 / 今週末（{_sat.month}/{_sat.day}-{_sun.day}）"
+    lines.append(f"開催予定 {len(_up)}件 / 今週末（{sitelib.span_md(_ws, _we)}）"
                  f"{sum(1 for e in _up if _on_weekend(e))}件")
     lines.append(f'{sitelib.DOMAIN}/this-weekend/')
 

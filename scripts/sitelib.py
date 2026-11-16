@@ -17,8 +17,8 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20261109a'
-JS_VERSION = '20261020b'
+CSS_VERSION = '20261116a'
+JS_VERSION = '20261116a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
 
@@ -76,6 +76,87 @@ def is_rest_day(d):
     if isinstance(d, str):
         d = date.fromisoformat(d[:10])
     return d.weekday() >= 5 or d in jp_holidays(d.year)
+
+
+def _as_date(d):
+    if isinstance(d, datetime):
+        return d.date()
+    if isinstance(d, str):
+        return date.fromisoformat(d[:10])
+    return d
+
+
+def weekend_blocks(since, count):
+    """since の日以降に終わる週末を、近い順に count 個 (始まり, 終わり) の date で返す。
+
+    週末は土日と、それに続く祝日のひとまとまり(2026-11-21 土〜23 月・祝)。
+    今週末・来週末の定義はここだけが持つ。トップの日程チップ、/this-weekend/、
+    日次メール、Instagram の週末投稿が読む。
+    """
+    since = _as_date(since)
+    out = []
+    sat = since + timedelta(days=5 - since.weekday() - 7)   # 前の週の土曜から見る
+    while len(out) < count:
+        if not out or sat > out[-1][1]:
+            s, e = sat, sat + timedelta(days=1)
+            while is_rest_day(s - timedelta(days=1)):
+                s -= timedelta(days=1)
+            while is_rest_day(e + timedelta(days=1)):
+                e += timedelta(days=1)
+            if e >= since:
+                out.append((s, e))
+        sat += timedelta(days=7)
+    return out
+
+
+def weekend_span(today, nth=0):
+    """今週末(nth=0)・来週末(nth=1)の (始まり, 終わり)。日曜や連休の最終日は、その日に終わる週末が今週末。"""
+    return weekend_blocks(today, nth + 1)[nth]
+
+
+def span_md(start, end, dow=False):
+    """日の範囲の短い表記。'11/21-23'、月をまたぐと '12/31-1/3'(カードの会期と同じ区切り)。
+
+    dow=True は曜日を付ける。2日なら '11/28(土)・29(日)'、3日以上は '11/21(土)〜23(月・祝)'。
+    """
+    start, end = _as_date(start), _as_date(end)
+
+    def one(d, with_month):
+        s = f'{d.month}/{d.day}' if with_month else str(d.day)
+        if dow:
+            s += '(' + WEEKDAYS_JA[d.weekday()] + ('・祝' if d in jp_holidays(d.year) else '') + ')'
+        return s
+    if start == end:
+        return one(start, True)
+    sep = ('・' if (end - start).days == 1 else '〜') if dow else '-'
+    return one(start, True) + sep + one(end, end.month != start.month)
+
+
+# トップの日程チップ。キーは URL の when= にも使う。
+WHEN_CHOICES = (('all', '全日程'), ('this-weekend', '今週末'),
+                ('next-weekend', '来週末'), ('this-month', '今月'))
+
+
+def date_filter_html(today=None, weeks=12):
+    """トップの日程チップ。地域・検索と掛け合わせて一覧を絞る(top-filter.js)。
+
+    週末の範囲は weekend_blocks から作り、data-weekends に先の分まで持たせる。
+    ビルドから日が経って閲覧されても、JS が閲覧日で今週末を選び直せる。
+    """
+    t = _as_date(today or today_jst())
+    blocks = [[s.isoformat(), e.isoformat(), span_md(s, e)]
+              for s, e in weekend_blocks(t, weeks)]
+    sub = {'this-weekend': blocks[0][2], 'next-weekend': blocks[1][2]}
+    chips = []
+    for key, name in WHEN_CHOICES:
+        on = key == 'all'
+        dates = f'<span class="when-dates">{html_escape(sub[key])}</span>' if key in sub else ''
+        chips.append(f'<button type="button" class="when-chip{" active" if on else ""}"'
+                     f' data-when="{key}" aria-pressed="{"true" if on else "false"}"'
+                     f' onclick="selectWhen(\'{key}\')">{html_escape(name)}{dates}</button>')
+    return ('<div class="when-filter" id="whenFilter" role="group" aria-label="日程で絞り込み"'
+            f' data-weekends="{_attr(json.dumps(blocks, ensure_ascii=False, separators=(",", ":")))}">'
+            + ''.join(chips) + '</div>')
 
 # Instagram の投稿URL。1グループ目が投稿ID。
 # fetch-event-images と list-missing-eyecatch が別々に持っていて、

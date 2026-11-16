@@ -35,6 +35,10 @@ fi
 # どちらのテストも見ていなかった。**生成前に落とす。
 python3 scripts/test-time-parity.py
 
+# 今週末・来週末の範囲(土日+続く祝日)。トップの日程チップ、/this-weekend/、
+# 日次メール、Instagram の週末投稿が sitelib.weekend_blocks を共有する。生成前に落とす
+python3 scripts/test-weekend.py
+
 # imageSource に残った Instagram 投稿IDを instagramPostId に写す。
 # **生成より前。** 写さないと詳細頁の埋め込みが出ず、
 # audit.instagram_embed_missing は「IGの値がある回」しか見ないので、

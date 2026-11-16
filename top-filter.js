@@ -1,49 +1,16 @@
-// トップの絞り込み。地域・都道府県・タグ・検索・更新のお知らせ。
-//
-// index.html の中に 420行のインラインで書いてあった(2026-09-08 に外出し)。
-// インラインだと版数が付かないのでキャッシュが更新されず、
-// list-ui.js / status-auto.js / nav.js との役割分担も見えなかった。
+// トップの絞り込み。地域・都道府県・日程・検索・更新のお知らせ。
 //
 // ここが持つのは「何を出すか」の判定だけ。
 //   もっと見るの段数        list-ui.js
-//   開催中/終了の振り分け   status-auto.js
-//   ハンバーガーの開閉      nav.js
+//   開催中/終了の振り分け・並び  status-auto.js
+//   「今日」               status-auto.js の AEN_TIME
+//   週末の範囲             sitelib.weekend_blocks(#whenFilter の data-weekends)
+//   ハンバーガー・行きたいの件数  nav.js
 // 同じ規則を2箇所に置くと、片方だけ直して直った気になる。
 //
-// HTMLの onclick 属性から呼ばれる関数(filterEvents / selectRegion /
-// selectPref / searchEvents / sortAndFilter)は素の function 宣言のまま
-// にしておく。classic script の関数宣言はグローバルになる。
-
-// ハンバーガーの開閉は nav.js?v=20260908g が単一実装。
-// 同じ15行が14ページにあり、生成ページには無かった
-// (2026-09-08)。
-
-// 地域の初期値は selectRegion 定義後に実行（後述）
-
-let activeTag = 'all';
-
-function filterEvents(tag) {
-    activeTag = tag;
-    const buttons = document.querySelectorAll('.filter-tab');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    // event.currentTarget でSVG子要素クリック時もボタン本体を取得
-    const clicked = event.currentTarget || event.target.closest('.filter-tab');
-    if (clicked) clicked.classList.add('active');
-    applyFilters();
-}
-
-function searchEvents(query) {
-    applyFilters(query);
-}
-
-// 並び替え・開催中/終了の振り分けは status-auto.js?v=20260908g (window.AEN_LIST) が単一実装。
-// ここに日付の解釈を再実装すると、会期の長い回の扱いが2通りに割れる。
-// 以前は getCardDate / autoExpireEvents / sortAndFilter を独自に持ち、
-// 開始日だけで並べていたため会期49日の展示が一覧の先頭に居座った(2026-08-20)。
-function sortAndFilter() {
-  if (window.AEN_LIST) window.AEN_LIST.arrange();
-  applyFilters();
-}
+// HTMLの onclick 属性から呼ばれる関数(selectRegion / selectPref /
+// selectWhen / searchEvents)は素の function 宣言のままにしておく。
+// classic script の関数宣言はグローバルになる。
 
 /* REGION-MAP:START 生成物。sitelib.PREF_TO_REGION から貼り替える */
 const regionMap = {"北海道": ["北海道"], "東北": ["青森", "岩手", "宮城", "秋田", "山形", "福島"], "関東": ["茨城", "栃木", "群馬", "埼玉", "千葉", "東京", "神奈川"], "北陸": ["新潟", "富山", "石川", "福井", "山梨", "長野"], "東海": ["岐阜", "静岡", "愛知", "三重"], "関西": ["滋賀", "京都", "大阪", "兵庫", "奈良", "和歌山"], "中国": ["鳥取", "島根", "岡山", "広島", "山口"], "四国": ["徳島", "香川", "愛媛", "高知"], "九州": ["福岡", "佐賀", "長崎", "熊本", "大分", "宮崎", "鹿児島", "沖縄"]};
@@ -52,6 +19,13 @@ const regionMap = {"北海道": ["北海道"], "東北": ["青森", "岩手", "�
 // エリアフィルター状態
 var activeRegion = 'all';
 var activePref = 'all';
+// 日程。保存しない。「今週末」を覚えておくと、翌週に開いた人が先週の続きで絞られる
+var activeWhen = 'all';
+var WHEN_KEYS = { 'all': 1, 'this-weekend': 1, 'next-weekend': 1, 'this-month': 1 };
+
+function searchEvents(query) {
+    applyFilters(query);
+}
 
 function selectRegion(region) {
     activeRegion = region;
@@ -88,7 +62,7 @@ function selectRegion(region) {
 
         // 該当地域の都道府県を取得
         var prefsInRegion = new Set();
-        document.querySelectorAll('#ongoingEventsGrid .event-card, #eventsGrid .event-card, #pastEventsGrid .event-card').forEach(function(card) {
+        document.querySelectorAll('#eventsGrid .event-card, #pastEventsGrid .event-card').forEach(function(card) {
             var cardRegion = card.getAttribute('data-region') || '';
             var cardPref = card.getAttribute('data-pref') || '';
             var regionText = card.querySelector('.event-region') ? card.querySelector('.event-region').textContent : '';
@@ -124,6 +98,68 @@ function selectPref(pref) {
     if (crumb) crumb.classList.toggle('active', pref === 'all');
     applyFilters();
 }
+
+// --- 日程 ---
+// 週末の範囲は Python 側(sitelib.weekend_blocks)が祝日込みで決め、
+// #whenFilter の data-weekends に [始まり, 終わり, 表記] で先の分まで持たせてある。
+// ここでは閲覧日(AEN_TIME)より後に終わるものを選ぶだけで、週末の規則は持たない。
+function weekendsAhead() {
+    var el = document.getElementById('whenFilter');
+    if (!el || !window.AEN_TIME) return [];
+    var today = window.AEN_TIME.todayJST();
+    var list = [];
+    try { list = JSON.parse(el.getAttribute('data-weekends') || '[]'); } catch (e) { list = []; }
+    return list.filter(function (b) { return b && b[1] >= today; });
+}
+
+function monthEnd(iso) {
+    var d = new Date(Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7), 0));  // 翌月の0日 = 今月の末日
+    return iso.slice(0, 8) + String(d.getUTCDate()).padStart(2, '0');
+}
+
+// [から, まで]。絞らないときは null
+function whenRange(key) {
+    if (key === 'all' || !window.AEN_TIME) return null;
+    var today = window.AEN_TIME.todayJST();
+    if (key === 'this-month') return [today, monthEnd(today)];
+    var b = weekendsAhead()[key === 'next-weekend' ? 1 : 0];
+    if (!b) return null;
+    return [b[0] < today ? today : b[0], b[1]];
+}
+
+// 会期が範囲に1日でも掛かれば出す。会期の長い展示も、その週末に開いていれば今週末に入る
+function cardInRange(card, range) {
+    var s = card.getAttribute('data-date') || '';
+    if (!s) return false;
+    var e = card.getAttribute('data-date-end') || s;
+    return s <= range[1] && e >= range[0];
+}
+
+// ビルドから日が経っていても、閲覧日の今週末・来週末に描き直す。範囲が無い週末は出さない
+function paintWhen() {
+    var ahead = weekendsAhead();
+    document.querySelectorAll('.when-chip').forEach(function (c) {
+        var key = c.getAttribute('data-when');
+        var on = key === activeWhen;
+        c.classList.toggle('active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        if (key === 'this-weekend' || key === 'next-weekend') {
+            var b = ahead[key === 'next-weekend' ? 1 : 0];
+            c.style.display = b ? '' : 'none';
+            var sp = c.querySelector('.when-dates');
+            if (b && sp && sp.textContent !== b[2]) sp.textContent = b[2];
+        }
+    });
+}
+
+function selectWhen(key) {
+    activeWhen = WHEN_KEYS[key] ? key : 'all';
+    if (activeWhen !== 'all' && !whenRange(activeWhen)) activeWhen = 'all';
+    paintWhen();
+    applyFilters();
+}
+
+paintWhen();
 
 // 地域の初期値復元
 (function initRegion() {
@@ -189,22 +225,22 @@ function applyFilters(query) {
     const searchVal = (query !== undefined ? query : document.getElementById('searchInput').value).trim().toLowerCase();
     const regionVal = activeRegion;
     const prefVal = activePref;
+    const range = whenRange(activeWhen);
 
     // 開催予定 + 終了イベント両方にフィルタ適用
-    const allCards = document.querySelectorAll('#ongoingEventsGrid .event-card, #eventsGrid .event-card, #pastEventsGrid .event-card');
+    const allCards = document.querySelectorAll('#eventsGrid .event-card, #pastEventsGrid .event-card');
     let delay = 0;
     let visibleUpcoming = 0;
+    let visibleMain = 0;
     let visiblePast = 0;
 
     allCards.forEach(card => {
-        const tags = (card.getAttribute('data-tags') || '').split(',');
         const title = card.querySelector('.event-title').textContent.toLowerCase();
         const desc = card.querySelector('.event-description') ? card.querySelector('.event-description').textContent.toLowerCase() : '';
         const date = card.querySelector('.event-date').textContent.toLowerCase();
         const region = card.querySelector('.event-region') ? card.querySelector('.event-region').textContent : '';
         const cardPref = card.getAttribute('data-pref') || '';
 
-        const tagMatch = activeTag === 'all' || activeTag === 'fav' || tags.includes(activeTag);
         const searchMatch = !searchVal || title.includes(searchVal) || desc.includes(searchVal) || date.includes(searchVal) || region.toLowerCase().includes(searchVal);
 
         // 地域フィルタ
@@ -220,8 +256,8 @@ function applyFilters(query) {
             prefMatch = cardPref === prefVal || region === prefVal;
         }
 
-        const favMatch = activeTag !== 'fav' || getFavs().includes(card.getAttribute('data-slug') || '');
-        const shouldShow = tagMatch && searchMatch && regionMatch && prefMatch && favMatch;
+        const whenMatch = !range || cardInRange(card, range);
+        const shouldShow = searchMatch && regionMatch && prefMatch && whenMatch;
 
         if (shouldShow) {
             card.classList.remove('filter-hide');
@@ -233,7 +269,10 @@ function applyFilters(query) {
             // 行ける場所の数を数えるところなので、中止を混ぜると
             // トップの145件と絞り込み時の件数で意味が食い違う
             if (card.closest('#pastEventsGrid')) { visiblePast++; }
-            else if (!card.classList.contains('event-cancelled')) { visibleUpcoming++; }
+            else {
+                visibleMain++;
+                if (!card.classList.contains('event-cancelled')) { visibleUpcoming++; }
+            }
         } else {
             card.classList.remove('filter-show');
             card.classList.add('filter-hide');
@@ -269,49 +308,28 @@ function applyFilters(query) {
     // なった状態の節がそのまま残り、4カラムの行がほぼ空になっていた
     // (2026-09-18 指摘)。「これから開催」の見出しも status-auto.js が持つ。
 
-    // 行きたい空状態表示
+    // 条件に合う回が無いとき。日程で絞っているときだけ外す導線を出す
     const emptyState = document.getElementById('emptyState');
     if (emptyState) {
-        if (activeTag === 'fav' && visibleUpcoming === 0) {
-            emptyState.classList.add('visible');
-            emptyState.style.display = 'block';
-        } else {
-            emptyState.classList.remove('visible');
-            emptyState.style.display = 'none';
-        }
+        const none = visibleMain === 0;
+        emptyState.classList.toggle('visible', none);
+        emptyState.style.display = none ? 'block' : 'none';
+        const clear = document.getElementById('whenClear');
+        if (clear) clear.style.display = activeWhen !== 'all' ? '' : 'none';
     }
 
-    // 絞り込んだ結果にも段数の制限をかける。
-    // 以前は絞ったら showAll() で全件出していた。関東を選ぶと50件が
-    // 一気に並び、「もっと見る」も消えた(2026-09-08 指摘)。
-    // 段数は list-ui.js が持つ。ここは「絞り終わったら描き直せ」だけ言う。
-    //
-    // **ここで呼ぶ。後付けのラッパーにしない。**
-    // 2026-09-10 まで、この呼び出しはファイル末尾で applyFilters を
-    // 包み直す形で足してあった。ところが localStorage からの地域復元
-    // (initRegion)はファイルの前半にあり、**包む前の applyFilters を
-    // 呼んでいた。** 結果、前回関東を選んだ人が翌日トップを開くと、
-    // 絞り込みは効くのにページャは全国のままで、最初の12枚のうち
-    // 関東の3枚しか出ない(件数だけ54件と出る)。
-    // 後から包む形は、包むより前にある呼び出しを必ず取りこぼす。
+    // 絞り込んだ結果にも段数の制限をかける。段数は list-ui.js が持つ。
+    // **ここで呼ぶ。後付けのラッパーにしない。**後から包む形は、
+    // 包むより前にある呼び出し(上の initRegion)を必ず取りこぼす。
     if (window.AEN_LIST_UI) window.AEN_LIST_UI.resetLoadMore();
 }
 
-// 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js?v=20260908g が単一実装。
-// ここでは「行きたい」絞り込み中の再描画だけをフックで受ける。
-window.AEN_ON_FAV_CHANGE = function() {
-    if (activeTag === 'fav') applyFilters();
-};
-
-// もっと見る(initLoadMore / loadMoreEvents / initPastLoadMore)は
-// list-ui.js が単一実装。件数も list-ui.js が持つ。
-// 絞り込み後の描き直しは applyFilters の末尾で呼ぶ(上のコメント)。
-
-// 初期表示(並び替え・もっと見る・行きたいの同期)は
-// list-ui.js?v=20260908g と status-auto.js?v=20260908g が行う。ここで先に呼ぶと
-// 規則を二重に持つことになる。
+// もっと見る(initLoadMore / loadMoreEvents / initPastLoadMore)と
+// 行きたい(getFavs / toggleFav / syncFavUI)は list-ui.js が単一実装。
+// 行きたいの件数バッジは nav.js が AEN_ON_FAV_CHANGE で塗る。ここで上書きしない。
 
 // ========== モバイル: カード下部行きたいバー + スワイプ ==========
+// 呼び出しと表示の同期は list-ui.js の初期化と syncFavUI から。
 function initMobileFav() {
     const cards = document.querySelectorAll('.event-card[data-slug]');
     cards.forEach(card => {
@@ -325,8 +343,6 @@ function initMobileFav() {
             e.preventDefault();
             toggleFav(e, slug);
         });
-
-        // 初期状態は list-ui.js?v=20260908g の syncFavUI が反映する
 
         // Swipe gesture
         let startX = 0, startY = 0, swiping = false;
@@ -364,51 +380,56 @@ function initMobileFav() {
     });
 }
 
-// バーの表示同期は list-ui.js?v=20260908g の syncFavUI が行う。
-// initMobileFav の呼び出しも list-ui.js?v=20260908g の初期化から。
-    // 初期の振り分け・並び替えは status-auto.js?v=20260908g が行う(規則の二重定義を避ける)。
-    
-
-
-// === URLパラメータ対応 (SEO & シェア用) ===
-/* === URLパラメータ対応 (SEO & シェア用) === */
+// === URLパラメータと計測 ===
+// 絞り込みの状態は URL に残す(共有と、詳細頁のパンくず /?region=関東&pref=東京 の受け口)。
+// 利用者が押したときだけ GA4 に送る。URL・localStorage からの復元は送らない。
+// 送るもの: filter_region / filter_pref / filter_date(filter_value)、search(search_term)。
+// filter_value の内訳を GA4 で見るには、管理画面でカスタム ディメンションに登録する。
 (function(){
+function track(name, params) {
+    try { if (typeof gtag === 'function') gtag('event', name, params); } catch (e) {}
+}
+// 1文字ごとに送らない。打ち終えて1.5秒止まった語を、同じ語は1回だけ
+var searchTimer = null, searchSent = '';
+function trackSearch(q) {
+    clearTimeout(searchTimer);
+    q = (q || '').trim();
+    if (!q) return;
+    searchTimer = setTimeout(function () {
+        if (q === searchSent) return;
+        searchSent = q;
+        track('search', { search_term: q });
+    }, 1500);
+}
 function updateURL(){
 var params=new URLSearchParams();
-if(activeTag&&activeTag!=='all') params.set('tag',activeTag);
 if(activeRegion&&activeRegion!=='all') params.set('region',activeRegion);
 if(activePref&&activePref!=='all') params.set('pref',activePref);
+if(activeWhen&&activeWhen!=='all') params.set('when',activeWhen);
 var q=document.getElementById('searchInput').value.trim();
 if(q) params.set('q',q);
 var url=params.toString()?location.pathname+'?'+params.toString():location.pathname;
-history.replaceState({tag:activeTag,region:activeRegion,pref:activePref,q:q},'',url);
+history.replaceState({region:activeRegion,pref:activePref,when:activeWhen,q:q},'',url);
 }
-// Wrap existing functions
-var _fE=window.filterEvents;
-window.filterEvents=function(tag){_fE(tag);updateURL();updateMeta();};
 var _sR=window.selectRegion;
-window.selectRegion=function(r){_sR(r);updateURL();updateMeta();};
+window.selectRegion=function(r){_sR(r);updateURL();track('filter_region',{filter_value:r});};
 var _sP=window.selectPref;
-window.selectPref=function(p){_sP(p);updateURL();updateMeta();};
+window.selectPref=function(p){_sP(p);updateURL();track('filter_pref',{filter_value:p});};
+var _sW=window.selectWhen;
+window.selectWhen=function(w){_sW(w);updateURL();track('filter_date',{filter_value:activeWhen});};
 var _sE=window.searchEvents;
-window.searchEvents=function(q){_sE(q);updateURL();updateMeta();};
-// popstate (back/forward)
-
-// AIO: カテゴリURLパラメータ時にtitle/metaを動的変更
-var tagMeta={"即売会":{t:"即売会 | アガベイベントナビ",d:"全国のアガベ・多肉植物・塊根植物の即売会イベント一覧。お気に入りの株を見つけに行こう。"},"マルシェ":{t:"マルシェ | アガベイベントナビ",d:"アガベ・多肉植物のマルシェ・フリーマーケットイベント一覧。気軽に植物に出会える場所。"},"大型":{t:"大型イベント | アガベイベントナビ",d:"天下一植物界やビッグバザールなど、全国の大型植物イベント一覧。大規模な即売会・展示会を一挙掲載。"},"展示会":{t:"展示会 | アガベイベントナビ",d:"アガベ・塊根植物・珍奇植物の展示会イベント一覧。希少種を観賞できるイベント情報。"}};
-var origTitle=document.title,origDesc=document.querySelector('meta[name="description"]').content;
-function updateMeta(){var p=new URLSearchParams(location.search);var tag=p.get("tag");if(tag&&tagMeta[tag]){document.title=tagMeta[tag].t;document.querySelector('meta[name="description"]').setAttribute("content",tagMeta[tag].d);}else{document.title=origTitle;document.querySelector('meta[name="description"]').setAttribute("content",origDesc);}}
+window.searchEvents=function(q){_sE(q);updateURL();trackSearch(q);};
+function setWhenFromURL(w){
+activeWhen=WHEN_KEYS[w]?w:'all';
+if(activeWhen!=='all'&&!whenRange(activeWhen)) activeWhen='all';
+paintWhen();
+}
 window.addEventListener('popstate',function(){
 var p=new URLSearchParams(location.search);
-var tag=p.get('tag')||'all';
 var region=p.get('region')||'all';
 var pref=p.get('pref')||'all';
 var q=p.get('q')||'';
-activeTag=tag;
-document.querySelectorAll('.filter-tab').forEach(function(b){
-  var oc=b.getAttribute('onclick')||'';
-  b.classList.toggle('active',oc.indexOf("'"+tag+"'")>-1||(tag==='all'&&oc.indexOf("'all'")>-1));
-});
+setWhenFromURL(p.get('when')||'all');
 if(region!==activeRegion) _sR(region);
 if(pref!==activePref) _sP(pref);
 document.getElementById('searchInput').value=q;
@@ -417,21 +438,13 @@ applyFilters(q||undefined);
 // Init from URL on load
 var p=new URLSearchParams(location.search);
 if(p.toString()){
-var tag=p.get('tag')||'all';
 var region=p.get('region')||'all';
 var pref=p.get('pref')||'all';
 var q=p.get('q')||'';
-if(tag!=='all'){
-  activeTag=tag;
-  document.querySelectorAll('.filter-tab').forEach(function(b){
-    var oc=b.getAttribute('onclick')||'';
-    b.classList.toggle('active',oc.indexOf("'"+tag+"'")>-1);
-  });
-}
+setWhenFromURL(p.get('when')||'all');
 if(region!=='all') _sR(region);
 if(pref!=='all') setTimeout(function(){_sP(pref);},50);
 if(q) document.getElementById('searchInput').value=q;
 applyFilters(q||undefined);
 }
-updateMeta();
 })();

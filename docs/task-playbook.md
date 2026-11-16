@@ -473,7 +473,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   JS は `new Date(Date.now() + 9*3600000)` に `getUTC*()` を使い、`getTimezoneOffset()` は使わない(`js_local_timezone_math`)。
 - 開催中の回は本体の一覧に混ぜ、件数で節を出し分けない。絞り込みのたびに変わる数を、読み込み時に1回だけ決める分岐の条件にしない。
 - スラッグは `sitelib` の `*_slug()`、会場の束ねは `sitelib.venue_key()`、都道府県と地域は `PREF_TO_REGION`、会場が未定かは `is_vague_venue()`、
-  画像が汎用かは `is_generic_image_url()`、休日かは `is_rest_day`(祝日を含む)で決める。写しを持たない。
+  画像が汎用かは `is_generic_image_url()`、休日かは `is_rest_day`(祝日を含む)、今週末・来週末は `weekend_span`(土日と続く祝日)で決める。写しを持たない。
 - 挿入系のスクリプトは冪等(除去してから挿入)にする。
 - 本番を組み込みブラウザで見るとき、ペインが隠れていると `innerWidth` が0、`document.hidden` が true で、
   scroll イベント、IntersectionObserver、CSS トランジションが動かない。

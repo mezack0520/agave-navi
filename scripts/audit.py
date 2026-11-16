@@ -2561,8 +2561,9 @@ def main():
                              '(バッジの数え方が単一実装から外れている)')
         elif '.event-card:not(.event-cancelled)' not in _m.group(1):
             _js_badge.append('AEN_COUNT.upcoming が中止の回を除外していない')
+        # 開催中の節を廃した(2026-09-18)ので一覧は1つ。数えるのは AEN_COUNT.upcoming だけ
         if re.search(r"countBadge\.textContent", _sa) and \
-           not re.search(r'AEN_COUNT\.upcoming\([^)]*\)\s*\+\s*AEN_COUNT\.upcoming', _sa):
+           not re.search(r'=\s*AEN_COUNT\.upcoming\([^)]*\)\s*;', _sa):
             _js_badge.append('バッジの代入が AEN_COUNT.upcoming を通っていない')
     add('js_badge_counts_cancelled', 'バッジをJSが数え直すとき中止の回を含めている',
         _js_badge,

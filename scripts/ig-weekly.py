@@ -28,7 +28,7 @@ import os
 import sys
 import time
 import urllib.request
-from datetime import datetime, timedelta
+from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sitelib  # noqa: E402
@@ -49,6 +49,7 @@ NAME_PX = 44
 
 REGION_ORDER = ['北海道', '東北', '関東', '北陸', '東海', '関西', '中国', '四国', '九州']
 WEEKDAY = '月火水木金土日'
+DOW_EN = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
 
 HASHTAGS = '#アガベ #塊根植物 #多肉植物 #植物イベント #アガベイベント'
 
@@ -56,19 +57,13 @@ HASHTAGS = '#アガベ #塊根植物 #多肉植物 #植物イベント #アガ�
 # ---------------------------------------------------------------- 対象の回
 
 def weekend_of(today):
-    """その週の土日。土日に走ったらその週末、平日なら次の土日。"""
-    wd = today.weekday()
-    if wd == 5:
-        sat = today
-    elif wd == 6:
-        sat = today - timedelta(days=1)
-    else:
-        sat = today + timedelta(days=5 - wd)
-    return sat, sat + timedelta(days=1)
+    """今週末の (始まり, 終わり)。範囲(土日+続く祝日)は sitelib.weekend_span だけが決める。
+    キャプションに載せる /this-weekend/ と同じ範囲になる。"""
+    return sitelib.weekend_span(today)
 
 
-def weekend_events(events, sat, sun):
-    s, u = sat.strftime('%Y-%m-%d'), sun.strftime('%Y-%m-%d')
+def weekend_events(events, ws, we):
+    s, u = ws.strftime('%Y-%m-%d'), we.strftime('%Y-%m-%d')
     out = []
     for e in events:
         d = e.get('date') or ''
@@ -85,11 +80,11 @@ def md(ds):
     return f'{dt.month}/{dt.day}({WEEKDAY[dt.weekday()]})'
 
 
-def date_label(e, sat, sun):
+def date_label(e, ws, we):
     """週末の中でその回がいつか。長期の回は『〜9/27』。"""
     d = e['date']
     de = e.get('dateEnd') or d
-    s = sat.strftime('%Y-%m-%d')
+    s = ws.strftime('%Y-%m-%d')
     if d < s:
         return '開催中〜' + md(de).split('(')[0]
     if d == de:
@@ -221,7 +216,7 @@ def _footer(img, draw):
     draw.text((W - 72 - draw.textlength(t, font=f), H - 72 - 36), t, font=f, fill=DIM)
 
 
-def render_cover(sat, sun, n, path):
+def render_cover(ws, we, n, path):
     from PIL import Image, ImageDraw
     img = Image.new('RGB', (W, H), BLACK)
     d = ImageDraw.Draw(img)
@@ -240,7 +235,7 @@ def render_cover(sat, sun, n, path):
         d.text(((W - d.textlength(text, font=f)) / 2, y), text, font=f, fill=col)
         y += size + 30
     f = _font(52, 'Bold')
-    t = f'{sat.month}.{sat.day} SAT — {sun.month}.{sun.day} SUN'
+    t = f'{ws.month}.{ws.day} {DOW_EN[ws.weekday()]} — {we.month}.{we.day} {DOW_EN[we.weekday()]}'
     d.text(((W - d.textlength(t, font=f)) / 2, y + 30), t, font=f, fill=IVORY)
     f = _font(40, 'Medium')
     t = f'全国 {n} 件　スワイプで地域別に'
@@ -282,7 +277,7 @@ def row_height(e, mode='normal'):
     return PILL_H + 14 + NAME_LH * len(_name_lines(e, mode)) + META_H + ROW_GAP
 
 
-def render_page(segments, sat, sun, page, pages, path, mode='normal'):
+def render_page(segments, ws, we, page, pages, path, mode='normal'):
     """地域の頁。segments は [(地域, [回,...]), ...]。
     先頭の地域は頁の見出しに、2つ目以降は頁の途中に見出しを立てる。
     user_tags に使う各行の中心座標(0..1)を、回の並び順で返す。"""
@@ -312,7 +307,7 @@ def render_page(segments, sat, sun, page, pages, path, mode='normal'):
             y += SEC_H - 86
         for i, e in enumerate(rows):
             y0 = y
-            lab = date_label(e, sat, sun)
+            lab = date_label(e, ws, we)
             pw = d.textlength(lab, font=f_date) + 40
             d.rounded_rectangle((72, y, 72 + pw, y + PILL_H), radius=PILL_H // 2, fill=IVORY)
             d.text((72 + 20, y + 5), lab, font=f_date, fill=BLACK)
@@ -343,11 +338,11 @@ def render_page(segments, sat, sun, page, pages, path, mode='normal'):
 WEEKEND_URL = f'{sitelib.DOMAIN}/this-weekend/'
 
 
-def caption(sat, sun, pages, n):
+def caption(ws, we, pages, n):
     # サイトのURLは冒頭の2行目に置く。Instagram は本文を「続きを読む」で
     # 畳むので、末尾に置くと開かないと見えない。本文のURLはタップできないが、
     # 長押しでコピーできる。タップできる経路はプロフィールのリンクだけ(2026-09-25)
-    head = (f'今週末 {sat.month}/{sat.day}(土)・{sun.month}/{sun.day}(日) の'
+    head = (f'今週末 {sitelib.span_md(ws, we, dow=True)} の'
             f'アガベ・塊根・多肉・サボテンのイベント {n}件\n'
             f'一覧と各回の詳細 → {WEEKEND_URL}\n\n')
     body = []
@@ -363,7 +358,7 @@ def caption(sat, sun, pages, n):
                     body.append('')
                 body.append(f'【{region}】')
             prev = region
-            body.append(f'{date_label(e, sat, sun)} {e.get("name")}（{e.get("prefecture")}）')
+            body.append(f'{date_label(e, ws, we)} {e.get("name")}（{e.get("prefecture")}）')
     body.append('')
     tail = ('会場・時間・出典は上のURLかプロフィールのリンクから。\n'
             '主催者の公式発信を確認して掲載しています。お出かけ前に主催者の最新情報もご確認ください。\n\n'
@@ -378,8 +373,8 @@ def caption(sat, sun, pages, n):
 # ---------------------------------------------------------------- build / publish
 
 def build(out, today):
-    sat, sun = weekend_of(today)
-    evs = weekend_events(sitelib.load_events(), sat, sun)
+    ws, we = weekend_of(today)
+    evs = weekend_events(sitelib.load_events(), ws, we)
     if not evs:
         print('今週末の回が0件。作らない')
         return None
@@ -393,15 +388,15 @@ def build(out, today):
     for fn in os.listdir(out):
         if fn.endswith('.jpg'):
             os.remove(os.path.join(out, fn))
-    manifest = {'weekend': sat.strftime('%Y-%m-%d'), 'count': len(evs), 'slides': [],
+    manifest = {'weekend': ws.strftime('%Y-%m-%d'), 'count': len(evs), 'slides': [],
                 'version': ver, 'mode': mode}
     cover = f'{ver}-01.jpg'
-    render_cover(sat, sun, len(evs), os.path.join(out, cover))
+    render_cover(ws, we, len(evs), os.path.join(out, cover))
     manifest['slides'].append({'file': cover, 'tags': []})
     for i, pg in enumerate(pages, start=1):
         fn = f'{ver}-{i + 1:02d}.jpg'
         rows = [e for _, rs in pg for e in rs]
-        centers = render_page(pg, sat, sun, i, len(pages), os.path.join(out, fn), mode)
+        centers = render_page(pg, ws, we, i, len(pages), os.path.join(out, fn), mode)
         tags = []
         for e, (x, y) in zip(rows, centers):
             u = (e.get('organizerIg') or '').strip().lstrip('@')
@@ -409,7 +404,7 @@ def build(out, today):
                 tags.append({'username': u, 'x': x, 'y': y})
         manifest['slides'].append({'file': fn, 'tags': tags[:20],
                                    'regions': [r for r, _ in pg]})
-    manifest['caption'] = caption(sat, sun, pages, len(evs))
+    manifest['caption'] = caption(ws, we, pages, len(evs))
     with open(os.path.join(out, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifest, f, ensure_ascii=False, indent=1)
     with open(os.path.join(out, 'caption.txt'), 'w', encoding='utf-8') as f:
@@ -522,8 +517,8 @@ def main():
     a = ap.parse_args()
     today = (datetime.strptime(a.date, '%Y-%m-%d') if a.date
              else datetime.strptime(sitelib.today_jst(), '%Y-%m-%d'))
-    sat, _ = weekend_of(today)
-    out = a.out or os.path.join(REPO, 'images', 'ig', sat.strftime('%Y-%m-%d'))
+    ws, _ = weekend_of(today)
+    out = a.out or os.path.join(REPO, 'images', 'ig', ws.strftime('%Y-%m-%d'))
     if a.mode == 'check':
         # 投稿しない回でもトークンと連携の生死だけは毎回確かめる。
         # 木曜の本番で初めて失効に気づくのを避ける。トークン自体は出さない。

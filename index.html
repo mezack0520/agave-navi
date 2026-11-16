@@ -41,9 +41,9 @@
     <link rel="preconnect" href="https://ck.jp.ap.valuecommerce.com" crossorigin>
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
-    <link rel="stylesheet" href="style.css?v=20261109a">
+    <link rel="stylesheet" href="style.css?v=20261116a">
     <!-- 一覧の共通UI(行きたい・もっと見る)。body内のインラインから呼ぶため head で同期読み込み -->
-    <script src="list-ui.js?v=20261020b"></script>
+    <script src="list-ui.js?v=20261116a"></script>
 
 
     <script type="application/ld+json">
@@ -371,8 +371,8 @@
   ]
 }
 </script>
-    <script src="/nav.js?v=20261020b" defer></script>
-    <script src="/outbound.js?v=20261020b" defer></script>
+    <script src="/nav.js?v=20261116a" defer></script>
+    <script src="/outbound.js?v=20261116a" defer></script>
 </head>
 <body>
     <header class="header">
@@ -423,12 +423,15 @@
             <section id="events" class="events-section">
                 <h1 class="section-heading">開催予定のアガベ・多肉植物・塊根植物イベント<span class="event-count" id="eventCount">184件</span></h1>
                 <p class="section-sub" style="color:var(--gray-500);font-size:0.82rem;margin:-0.5rem 0 1.5rem;line-height:1.6">アガベ・塊根植物（コーデックス）・多肉植物・珍奇植物・ビザールプランツの即売会やマルシェ、大型展示会の情報をまとめています。</p>
+<!-- DATE-FILTER:START 生成物。scripts/sync-index-cards.py が sitelib から貼り替える。手で書かない -->
+<div class="when-filter" id="whenFilter" role="group" aria-label="日程で絞り込み" data-weekends="[[&quot;2026-11-21&quot;,&quot;2026-11-23&quot;,&quot;11/21-23&quot;],[&quot;2026-11-28&quot;,&quot;2026-11-29&quot;,&quot;11/28-29&quot;],[&quot;2026-12-05&quot;,&quot;2026-12-06&quot;,&quot;12/5-6&quot;],[&quot;2026-12-12&quot;,&quot;2026-12-13&quot;,&quot;12/12-13&quot;],[&quot;2026-12-19&quot;,&quot;2026-12-20&quot;,&quot;12/19-20&quot;],[&quot;2026-12-26&quot;,&quot;2026-12-27&quot;,&quot;12/26-27&quot;],[&quot;2027-01-01&quot;,&quot;2027-01-03&quot;,&quot;1/1-3&quot;],[&quot;2027-01-09&quot;,&quot;2027-01-11&quot;,&quot;1/9-11&quot;],[&quot;2027-01-16&quot;,&quot;2027-01-17&quot;,&quot;1/16-17&quot;],[&quot;2027-01-23&quot;,&quot;2027-01-24&quot;,&quot;1/23-24&quot;],[&quot;2027-01-30&quot;,&quot;2027-01-31&quot;,&quot;1/30-31&quot;],[&quot;2027-02-06&quot;,&quot;2027-02-07&quot;,&quot;2/6-7&quot;]]"><button type="button" class="when-chip active" data-when="all" aria-pressed="true" onclick="selectWhen('all')">全日程</button><button type="button" class="when-chip" data-when="this-weekend" aria-pressed="false" onclick="selectWhen('this-weekend')">今週末<span class="when-dates">11/21-23</span></button><button type="button" class="when-chip" data-when="next-weekend" aria-pressed="false" onclick="selectWhen('next-weekend')">来週末<span class="when-dates">11/28-29</span></button><button type="button" class="when-chip" data-when="this-month" aria-pressed="false" onclick="selectWhen('this-month')">今月</button></div>
+<!-- DATE-FILTER:END -->
 
                 <div class="events-grid" id="eventsGrid">
                     <div class="empty-state" id="emptyState">
-                        <svg class="empty-state-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        <p class="empty-state-title">行きたいイベントがまだありません</p>
-                        <p class="empty-state-desc">気になるイベントのハートボタンをタップすると<br>ここに表示されます</p>
+                        <p class="empty-state-title">条件に合う開催予定のイベントはありません</p>
+                        <p class="empty-state-desc">日程やエリアを変えてみてください</p>
+                        <button type="button" class="empty-state-action" id="whenClear" onclick="selectWhen('all')">全日程で見る</button>
                     </div>
                     <!-- March 2026 -->
 <!-- April 2026 -->
@@ -3250,8 +3253,8 @@
     <svg class="svg-sprite" width="0" height="0" aria-hidden="true" style="position:absolute;overflow:hidden"><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol></svg>
   </footer>
 
-    <script src="/top-filter.js?v=20261020b" defer></script>
-<script src="status-auto.js?v=20261020b"></script>
-<script src="affiliate.js?v=20261020b"></script>
+    <script src="/top-filter.js?v=20261116a" defer></script>
+<script src="status-auto.js?v=20261116a"></script>
+<script src="affiliate.js?v=20261116a"></script>
 </body>
 </html>

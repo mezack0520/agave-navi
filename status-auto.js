@@ -158,26 +158,23 @@
     return { start: st, end: en || st };
   }
 
-  // 一覧の振り分けと並び替え。開催中の長期開催は「開催中」枠へ、
-  // 終了は「終了したイベント」へ、残りを一覧本体に置いて時系列に並べる。
+  // 一覧の振り分けと並び替え。終了は「終了したイベント」へ、残りを一覧本体に置いて
+  // 時系列に並べる。開催中は節を立てず本体に混ぜる。カードの「開催中 〜9/22」で分かり、
+  // AEN_TIME.listSortKey が開催中の回を「今日」の位置に置くので、会期の長い回が先頭に居座らない
   function arrangeList() {
     var grid = document.getElementById('eventsGrid');
     if (!grid) return;
-    var ongoingGrid = document.getElementById('ongoingEventsGrid');
     var pastGrid = document.getElementById('pastEventsGrid');
     var today = AEN_TIME.todayJST();
-    var orderEl = document.getElementById('sortOrder');
-    var desc = !!orderEl && orderEl.value === 'date-desc';
 
     var pools = [grid];
-    if (ongoingGrid) pools.push(ongoingGrid);
     if (pastGrid) pools.push(pastGrid);
     var cards = [];
     pools.forEach(function (g) {
       Array.prototype.push.apply(cards, Array.prototype.slice.call(g.querySelectorAll('.event-card')));
     });
 
-    var ongoing = [], main = [], past = [];
+    var main = [], past = [];
     cards.forEach(function (card) {
       var sp = cardSpan(card);
       card.__aenSpan = sp;
@@ -189,8 +186,7 @@
       } else {
         card.classList.remove('event-ended');
         if (card.getAttribute('data-status') === 'past') card.setAttribute('data-status', 'upcoming');
-        if (ongoingGrid && ph === 'ongoing' && AEN_TIME.isLongRun(sp.start, sp.end)) ongoing.push(card);
-        else main.push(card);
+        main.push(card);
       }
     });
 
@@ -198,51 +194,26 @@
       var t = c.querySelector('.event-title');
       return t ? t.textContent : '';
     }
-    // 開催中は専用の節を立てず、常に本体の一覧に混ぜる(2026-09-18)。
-    //
-    // 2026-09-08 に「1〜2件のときは節を立てない」を入れたが、**その判定は
-    // 読み込み時の絞り込み前の集合で1回しか走らない。**全国で6件あれば節が
-    // 立ち、そのまま関東で絞ると2件になって4カラムの行に2枚、残り空白という
-    // 形になる(2026-09-18 指摘)。top-filter.js 側は見えている枚数で
-    // 節の表示/非表示だけを切り替えており、混ぜる判断はやり直さない。
-    // 件数をしきい値にする限り、絞り込みのたびに同じことが起きる。
-    //
-    // 混ぜても分かる。カードに「開催中 〜9/22」のバッジが出ている。
-    // 並び順は AEN_TIME.listSortKey が開催中の回を「今日」の位置に置くので、
-    // 会期の長さで先頭に居座ることもない(別枠を作った 2026-08-20 の理由)。
-    main = main.concat(ongoing);
-    ongoing = [];
     main.sort(function (a, b) {
-      var r = AEN_TIME.cmpKey(AEN_TIME.listSortKey(a.__aenSpan.start, a.__aenSpan.end, today, nameOf(a)),
-                              AEN_TIME.listSortKey(b.__aenSpan.start, b.__aenSpan.end, today, nameOf(b)));
-      return desc ? -r : r;
+      return AEN_TIME.cmpKey(AEN_TIME.listSortKey(a.__aenSpan.start, a.__aenSpan.end, today, nameOf(a)),
+                             AEN_TIME.listSortKey(b.__aenSpan.start, b.__aenSpan.end, today, nameOf(b)));
     });
     past.sort(function (a, b) { return AEN_TIME.cmpKey([b.__aenSpan.end], [a.__aenSpan.end]); });
 
-    if (ongoingGrid) ongoing.forEach(function (c) { ongoingGrid.appendChild(c); });
     main.forEach(function (c) { grid.appendChild(c); });
     if (pastGrid) past.forEach(function (c) { pastGrid.appendChild(c); });
 
-    // 「開催中」の節は作らないので、残っている器があれば畳む。
-    // 古いHTMLがキャッシュから出てきた回でも空の見出しを出さない。
-    var oh = document.getElementById('ongoingHeading');
-    if (ongoingGrid) ongoingGrid.style.display = 'none';
-    if (oh) oh.style.display = 'none';
-    // 「これから開催」は、下に終了の節がある頁(ランディング)だけ残す。
-    // トップは h1 が「開催予定の…イベント」なので二重になる。
+    // 「これから開催」はランディングだけにある(トップは h1 が「開催予定の…イベント」)。
+    // 件数は読み込み時に開催予定へ振り分けた枚数
     var uh = document.getElementById('upcomingHeading');
     if (uh) {
-      var keep = !uh.hasAttribute('data-hide-when-no-ongoing');
-      uh.style.display = keep ? '' : 'none';
-      if (keep) {
-        var note = uh.querySelector('.section-heading-note');
-        if (!note) {
-          note = document.createElement('span');
-          note.className = 'section-heading-note';
-          uh.appendChild(note);
-        }
-        note.textContent = main.length + '件';
+      var note = uh.querySelector('.section-heading-note');
+      if (!note) {
+        note = document.createElement('span');
+        note.className = 'section-heading-note';
+        uh.appendChild(note);
       }
+      note.textContent = main.length + '件';
     }
   }
   window.AEN_LIST = { arrange: arrangeList };
@@ -317,9 +288,8 @@
       pastHeading0.style.display = '';
     }
     // 開催予定の件数を更新
-    var countBadge = document.querySelector('.section-heading .count-badge, .event-count');
+    var countBadge = document.querySelector('.event-count');
     var activeGrid = document.getElementById('eventsGrid');
-    var ongoingGrid0 = document.getElementById('ongoingEventsGrid');
     if (countBadge && activeGrid) {
       // 中止の回は数えない。status は日付だけで決まるので、中止が告知された
       // 回も開催日までは開催予定の枠に残る。Python 側の単一情報源は
@@ -327,7 +297,7 @@
       // 2026-09-13 に sync-index-cards.py の数え方だけを直したが、
       // **この行が閲覧者のブラウザで数え直して元に戻していた**
       // (repo の index.html は 157、本番の表示は 158。2026-09-14 に本番で発覚)。
-      var n = AEN_COUNT.upcoming(activeGrid) + AEN_COUNT.upcoming(ongoingGrid0);
+      var n = AEN_COUNT.upcoming(activeGrid);
       countBadge.textContent = n + '件';
     }
   }
@@ -359,32 +329,12 @@
     }
   }
 
-  // detail ページ: .detail-status-badge を更新（events.jsonから終了日も取得）
+  // detail ページ: .detail-status-badge を更新。日付は生成時に data-date / data-date-end へ入れてある。
+  // data-date-end が空なのは events.json に dateEnd の無い1日開催の回で、終わりは開始日と同じ
   var badge = document.querySelector('.detail-status-badge');
-  var detailDate = document.querySelector('.detail-meta-item, .eh-spec .info-value');
   if (badge) {
     var dateAttr = badge.getAttribute('data-date');
-    if (!dateAttr && detailDate) {
-      var match = detailDate.textContent.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
-      if (match) {
-        dateAttr = match[1] + '-' + match[2].padStart(2, '0') + '-' + match[3].padStart(2, '0');
-      }
-    }
     var dateEndAttr = badge.getAttribute('data-date-end') || '';
-    // data-date-endがない場合、events.jsonからslugで終了日を取得
-    if (dateAttr && !dateEndAttr) {
-      var slug = location.pathname.replace(/.*\//, '').replace(/\.html$/, '');
-      try {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/events.json', false);
-        xhr.send();
-        if (xhr.status === 200) {
-          var evts = JSON.parse(xhr.responseText);
-          var ev = evts.find(function(e) { return e.slug === slug; });
-          if (ev && ev.dateEnd) dateEndAttr = ev.dateEnd;
-        }
-      } catch(e) {}
-    }
     if (dateAttr) {
       var status = badge.getAttribute('data-cancelled')
         ? STATUS.cancelled : getStatus(dateAttr, dateEndAttr);

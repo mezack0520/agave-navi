@@ -11,7 +11,7 @@ SEOランディングページ一括生成
 - /venue/<slug>/      - 会場別(2件以上)
 """
 import os, re, json
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import defaultdict
 
 import sitelib
@@ -458,18 +458,15 @@ def main():
                    sorted(evs, key=lambda e:e.get('date','')), '../../'))  # start-date-ok: 年別アーカイブは開始日の時系列
         counters['archive_y']+=1
 
-    # this-weekend
-    wd = today.weekday()
-    if wd == 5: sat = today
-    elif wd == 6: sat = today - timedelta(days=1)
-    else: sat = today + timedelta(days=(5 - wd))
-    sun = sat + timedelta(days=1)
-    sat_d = sat.strftime('%Y-%m-%d'); sun_d = sun.strftime('%Y-%m-%d')
+    # this-weekend。週末の範囲(土日+続く祝日)は sitelib.weekend_span だけが決める。
+    # トップの日程チップ・日次メール・Instagram の週末投稿と同じ範囲になる
+    ws, wend = sitelib.weekend_span(today)
+    ws_d = ws.strftime('%Y-%m-%d'); wend_d = wend.strftime('%Y-%m-%d')
     we = []
     for e in events:
         d=e.get('date',''); de=e.get('dateEnd') or d
-        if d and de and d <= sun_d and de >= sat_d: we.append(e)
-    label = f'{sat.month}月{sat.day}日(土)・{sun.month}月{sun.day}日(日)'
+        if d and de and d <= wend_d and de >= ws_d: we.append(e)
+    label = sitelib.span_md(ws, wend, dow=True)
     write_page(os.path.join(REPO_ROOT, 'this-weekend', 'index.html'),
         render('今週末のアガベ・植物イベント', f'今週末({label})開催のイベント情報。',
                '今週末,アガベ,イベント', f'{DOMAIN}/this-weekend/',

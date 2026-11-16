@@ -27,7 +27,8 @@ from sitelib import (today_jst, is_recent_past, event_span,
                      LONG_RUN_DAYS, no_image_thumb, compact_date, html_escape,
                      list_sort_key, is_cancelled, cancel_label, is_upcoming,
                      updates_section_html, load_updates,
-                     updates_scopes, area_filter_html, region_map_js,
+                     updates_scopes, area_filter_html, date_filter_html,
+                     region_map_js,
                      time_consts_js, HEART_SVG, use_heart_sprite)
 EVENTS_JSON = os.path.join(ROOT, 'events.json')
 INDEX_HTML = os.path.join(ROOT, 'index.html')
@@ -324,20 +325,18 @@ def main():
                     f.write(_sas[:_he] + _w + _sas[_j:])
                 print('TIME-CONSTS: status-auto.js を更新')
 
+    # エリアと日程の絞り込み。どちらも sitelib が唯一の元
     for _tag, _body in (
             ('AREA-FILTER', area_filter_html(events)),
+            ('DATE-FILTER', date_filter_html(today_jst())),
     ):
-        _s = f'<!-- {_tag}:START' if _tag == 'AREA-FILTER' else f'/* {_tag}:START'
-        _e = f'<!-- {_tag}:END -->' if _tag == 'AREA-FILTER' else f'/* {_tag}:END */'
-        _i = html.find(_s)
-        _j = html.find(_e)
+        _i = html.find(f'<!-- {_tag}:START')
+        _j = html.find(f'<!-- {_tag}:END -->')
         if _i < 0 or _j <= _i:
             print(f'::warning::{_tag} の受け口が index.html に無い')
             continue
-        _he = html.find('*/' if _tag == 'REGION-MAP' else '-->', _i) + \
-            (2 if _tag == 'REGION-MAP' else 3)
-        _wrapped = '\n' + _body + '\n' if _tag == 'AREA-FILTER' \
-            else '\n        ' + _body + '\n        '
+        _he = html.find('-->', _i) + 3
+        _wrapped = '\n' + _body + '\n'
         if html[_he:_j] != _wrapped:
             html = html[:_he] + _wrapped + html[_j:]
             print(f'{_tag}: 更新')
