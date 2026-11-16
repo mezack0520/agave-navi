@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-16 19:29 JST",
+ "generated": "2026-11-17 06:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 426,
-  "awaitingNextEdition": 511,
+  "awaitingNextEdition": 512,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 96,
@@ -1047,16 +1047,6 @@
    "lastEventName": "AGAVE POP-UP（MELLOW PLANTS・2026年11月）",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "meguru___museum",
-   "url": "https://www.instagram.com/meguru___museum/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS POP UP at 螺旋珈琲（Heaven Green Factory × TT POTS）",
-   "lastEventDate": "2026-11-15",
-   "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
   },
@@ -4250,6 +4240,16 @@
    "url": "https://www.instagram.com/roots_plus_livingwithstyle/",
    "eventCount": 1,
    "lastEventName": "Roots plus vol.1",
+   "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "meguru___museum",
+   "url": "https://www.instagram.com/meguru___museum/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS POP UP at 螺旋珈琲（Heaven Green Factory × TT POTS）",
    "lastEventDate": "2026-11-15",
    "hasUpcoming": false,
    "priority": 2,

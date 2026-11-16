@@ -1,5 +1,5 @@
 {
-  "total": 761,
+  "total": 776,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -204,7 +204,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 114,
+      "count": 113,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "aki-no-taniku-picnic-ibusuki-2026-11",
@@ -768,12 +768,11 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 5,
+      "count": 4,
       "items": [
         "art-bikakushida-hankyu-umeda-2026-11(2026-11-11〜2026-11-17/7日/長期)",
         "botalife-euphorbia-fair-2026-11(2026-11-14〜2026-11-17/4日/長期)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
-        "plants-popup-rasen-coffee-osaka-2026-11(2026-11-15〜2026-11-16/2日)",
         "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -922,8 +921,11 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-11-25 金岡みどりのマルシェ",
+        "2026-11-29 ひだかさんげ"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1033,8 +1035,12 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-11-21 greensnap-marche-abc-hachioji-2026-11: 公式ページが変わった(本文・画像)",
+        "2026-11-28 greensnap-marche-odaiba-2026: 公式ページが変わった(本文・画像)",
+        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(本文・画像)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1131,8 +1137,10 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "@gamagori_taniku_festa 2027-01-31: おはようございます😊 第6回蒲郡多肉フェスタ 2日間ありがとうございました🙇 土日で天候が真逆という 主催者泣かせ😂のイ https://www.instagram.com/p/Dfx2qUGTZeS/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1180,8 +1188,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-11-21 lier-taniku-festival-ichikawa-2026-11: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-11-22 lier-taniku-festival-hamada-2026-11: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/p/DfzY7YFpHr3/（caption）",
+        "2026-11-23 lier-taniku-festival-yonago-2026-11: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/p/DfzFVx7k-1u/（caption）",
+        "2026-12-04 lier-taniku-festival-niihama-2026-12: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-12-05 lier-taniku-festival-tokushima-2026-12: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-12-06 lier-taniku-festival-fukuyama-2026-12: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-12-10 lier-taniku-festival-kariya-2026-12: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-12-11 lier-taniku-festival-shimizu-2026-12: https://www.instagram.com/reel/DfzdoECB8LW/（caption）",
+        "2026-12-26 lier-taniku-festival-tokorozawa-2026-12: https://www.instagram.com/reel/DfzdoECB8LW/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1313,10 +1334,8 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 1,
-      "items": [
-        "agave-event-update(daily) が動かなかった日: 2026-11-09（直近7日で1日）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
@@ -1513,15 +1532,15 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 9,
       "items": [
-        "cosmo-fes-3rd-kobayashi-2027-02: 最終評価 2026-10-12（35日前）",
-        "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12: 最終評価 2026-10-16（31日前）",
-        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（46日前）",
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（51日前）",
-        "lala-botaniq-vol2-2026-11: 最終評価 2026-10-07（40日前）",
-        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（35日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（51日前）",
-        "taniku-jam-kyoto-2027-01: 最終評価 2026-10-08（39日前）",
-        "yell-green-oobachi-matsuri-2026-12: 最終評価 2026-10-15（32日前）"
+        "cosmo-fes-3rd-kobayashi-2027-02: 最終評価 2026-10-12（36日前）",
+        "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12: 最終評価 2026-10-16（32日前）",
+        "gamagori-taniku-festa-7th-2027-03: 最終評価 2026-10-01（47日前）",
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（52日前）",
+        "lala-botaniq-vol2-2026-11: 最終評価 2026-10-07（41日前）",
+        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（36日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（52日前）",
+        "taniku-jam-kyoto-2027-01: 最終評価 2026-10-08（40日前）",
+        "yell-green-oobachi-matsuri-2026-12: 最終評価 2026-10-15（33日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"

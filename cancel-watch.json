@@ -1,17 +1,51 @@
 {
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
-  "sweptOn": "2026-11-16",
+  "sweptOn": "2026-11-17",
   "stats": {
     "targets": 17,
     "fetched": 17
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "greensnap-marche-abc-hachioji-2026-11",
+      "name": "GreenSnapMarche ABCハウジング八王子住宅公園",
+      "date": "2026-11-21",
+      "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
+      "why": "公式ページが変わった(本文・画像)",
+      "changed": [
+        "本文",
+        "画像"
+      ]
+    },
+    {
+      "slug": "greensnap-marche-odaiba-2026",
+      "name": "GreenSnap Marche お台場 2026",
+      "date": "2026-11-28",
+      "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
+      "why": "公式ページが変わった(本文・画像)",
+      "changed": [
+        "本文",
+        "画像"
+      ]
+    },
+    {
+      "slug": "hanatomofesta-2026",
+      "name": "第9回 花友フェスタ",
+      "date": "2026-12-19",
+      "url": "https://hanatomofesta.com/",
+      "why": "公式ページが変わった(本文・画像)",
+      "changed": [
+        "本文",
+        "画像"
+      ]
+    }
+  ],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "514ebb68e6da76f4",
         "images": "fe4c6d76032c77c3",
@@ -39,7 +73,7 @@
     },
     "art-bikakushida-hankyu-umeda-2026-11": {
       "url": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "f94e712580ad3474",
         "images": "856bad2713a20fea",
@@ -69,7 +103,7 @@
     },
     "rare-plants-collection-hankyu-umeda-2026-11": {
       "url": "https://rareplantsjapan.jp/2210",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "100cf574f90d44be",
         "images": "9fd5d8abafa5e59d",
@@ -96,7 +130,7 @@
     },
     "igashira-park-taniku-saboten-tenjikai-2026-11": {
       "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "78057ea5b186a006",
         "images": "af327c6276857b7d",
@@ -124,12 +158,12 @@
     },
     "greensnap-marche-abc-hachioji-2026-11": {
       "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
-        "text": "d76619be8e699318",
-        "images": "40856a439d1b4812",
-        "textLen": 5919,
-        "imageCount": 75
+        "text": "f2d3840e7aa2e177",
+        "images": "3df1500c30df4334",
+        "textLen": 6239,
+        "imageCount": 81
       },
       "prevTextLen": 5919,
       "sigScope": "article",
@@ -156,7 +190,7 @@
     },
     "isij-big-bazaar-2026-11-22": {
       "url": "http://isij.net/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "278633f85890d733",
         "images": "57da63a85c9c595f",
@@ -184,7 +218,7 @@
     },
     "midorigakuen-himeji-2026-11": {
       "url": "https://www.threads.com/@honoka.kakogawa",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "3e42e385075b9b56",
         "images": "e3b0c44298fc1c14",
@@ -209,7 +243,7 @@
     },
     "bsj-meeting-osaka-2026-11": {
       "url": "https://bromeliads.jp/news/news-13474/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "dd94fb51ed1cd2c7",
         "images": "dab212ea413af438",
@@ -238,12 +272,12 @@
     },
     "greensnap-marche-odaiba-2026": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
-        "text": "68e7765067693d0c",
-        "images": "30d9ee5af1433946",
-        "textLen": 1131,
-        "imageCount": 21
+        "text": "3f287f8e31bd76d9",
+        "images": "b0db96945b833635",
+        "textLen": 1277,
+        "imageCount": 23
       },
       "prevTextLen": 1131,
       "sigScope": "article",
@@ -266,7 +300,7 @@
     },
     "okibota-december-2026-sunshine": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/okibotadecember2026-in-sanshainshiti",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "a02fd17bb94b4d2d",
         "images": "5aaa6f1f74b31d2f",
@@ -294,7 +328,7 @@
     },
     "border-break-11th-2026-12": {
       "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "2dc8f0b75264992d",
         "images": "e3b0c44298fc1c14",
@@ -319,7 +353,7 @@
     },
     "bsj-soukai-nishishinjuku-2026-12": {
       "url": "https://bromeliads.jp/news/news-13496/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "23e024e83ea8f52c",
         "images": "4481156e5c3327bd",
@@ -347,12 +381,12 @@
     },
     "hanatomofesta-2026": {
       "url": "https://hanatomofesta.com/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
-        "text": "97d2b8fff8d42b4c",
-        "images": "3e522de29ebccc56",
-        "textLen": 1129,
-        "imageCount": 42
+        "text": "32bb3280f2ae8c7d",
+        "images": "ba0c9608e1f45b4f",
+        "textLen": 1166,
+        "imageCount": 44
       },
       "prevTextLen": 1129,
       "sigScope": "page",
@@ -370,11 +404,11 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 22
+      "imageOnlyChanges": 0
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "fe4b7498d127fc87",
         "images": "49ed9e187652c51c",
@@ -401,7 +435,7 @@
     },
     "isij-tokyo-reikai-2026-12-20": {
       "url": "http://isij.net/event",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "e92b4e3229222104",
         "images": "68f1147f1ae141ea",
@@ -433,7 +467,7 @@
     },
     "mandara-taniku-matsuri-hibikinada-2026-12": {
       "url": "https://note.com/mandara_medaka/n/n52786d54e55c",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "ff87f4b3d1bf8553",
         "images": "de4d1b33f1f0e517",
@@ -458,7 +492,7 @@
     },
     "isij-big-bazaar-2027-01-10": {
       "url": "http://isij.net/",
-      "checkedOn": "2026-11-16",
+      "checkedOn": "2026-11-17",
       "signature": {
         "text": "278633f85890d733",
         "images": "57da63a85c9c595f",

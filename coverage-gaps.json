@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-16",
+  "sweptOn": "2026-11-17",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -32,22 +32,22 @@
   "stats": {
     "fetched": 45,
     "candidates": 796,
-    "in_scope": 254,
-    "covered": 156,
-    "known_rejected": 98,
+    "in_scope": 258,
+    "covered": 161,
+    "known_rejected": 95,
     "truncated_resolved": 45,
     "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 126,
+    "in_scope_leafla": 122,
     "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 93,
+    "in_scope_nextmeet": 95,
     "in_scope_matome-blog": 6,
     "in_scope_organizer-index": 4,
-    "in_scope_pukubook": 25,
-    "gaps_raw": 0
+    "in_scope_pukubook": 31,
+    "gaps_raw": 2
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -57,5 +57,26 @@
     "11/12 追加 ONEDAY.factory® POP UPが...",
     "11/12 追加 奈良県三宅町のThe PlantsでChris..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-25",
+      "title": "金岡みどりのマルシェ",
+      "source": "pukubook",
+      "pref": "大阪",
+      "alts": [
+        "KANAOKA MIDORI NO MARCHE"
+      ],
+      "place": "大阪 / 金岡公園"
+    },
+    {
+      "date": "2026-11-29",
+      "title": "ひだかさんげ",
+      "source": "pukubook",
+      "pref": "宮崎",
+      "alts": [
+        "HIDAKA SANGE"
+      ],
+      "place": "宮崎 / 高岡ビタミン館"
+    }
+  ]
 }
