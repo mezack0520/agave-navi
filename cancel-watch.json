@@ -3,47 +3,11 @@
   "sweptOn": "2026-11-18",
   "stats": {
     "targets": 17,
-    "fetched": 17,
-    "grownSkipped": 1,
-    "grownSkippedSlugs": [
-      "greensnap-marche-abc-hachioji-2026-11"
-    ]
+    "fetched": 17
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "rare-plants-collection-hankyu-umeda-2026-11",
-      "name": "RARE PLANTS COLLECTION",
-      "date": "2026-11-18",
-      "url": "https://rareplantsjapan.jp/2210",
-      "why": "公式ページが変わった(本文: 952→931字 -3%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "hanatomofesta-2026",
-      "name": "第9回 花友フェスタ",
-      "date": "2026-12-19",
-      "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(画像)",
-      "changed": [
-        "画像"
-      ]
-    },
-    {
-      "slug": "mandara-taniku-matsuri-hibikinada-2026-12",
-      "name": "曼荼羅多肉まつり（響灘ビオトープ・2026年12月）",
-      "date": "2026-12-26",
-      "url": "https://note.com/mandara_medaka/n/n52786d54e55c",
-      "why": "公式ページが変わった(本文・画像)",
-      "changed": [
-        "本文",
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
@@ -82,7 +46,7 @@
         "textLen": 931,
         "imageCount": 6
       },
-      "prevTextLen": 952,
+      "prevTextLen": 931,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -137,7 +101,7 @@
         "textLen": 6322,
         "imageCount": 81
       },
-      "prevTextLen": 6239,
+      "prevTextLen": 6322,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -356,7 +320,7 @@
       "checkedOn": "2026-11-18",
       "signature": {
         "text": "32bb3280f2ae8c7d",
-        "images": "60f2823b78c42f6e",
+        "images": "5a4852b32409ac5b",
         "textLen": 1166,
         "imageCount": 44
       },
@@ -376,7 +340,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 2
+      "imageOnlyChanges": 3
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -446,7 +410,7 @@
         "textLen": 1506,
         "imageCount": 11
       },
-      "prevTextLen": 1515,
+      "prevTextLen": 1506,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -499,7 +463,7 @@
         "textLen": 5907,
         "imageCount": 168
       },
-      "prevTextLen": null,
+      "prevTextLen": 5907,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
