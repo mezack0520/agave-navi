@@ -300,7 +300,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   - name には県名まで書く。一般語1つだと掲載済みの回と衝突する。
   - `eventDate` は開始日。決定日を入れない。会期があれば `eventDateEnd` も書く。
   - 日付が未確定で見送った回は、日付が確定した日に記録ごと消して載せる。
-  - 毎月同じ型で開くシリーズ(交換会など)を1件で見送るときは `seriesWide: true` を付ける。coverage-sweep が日付で絞らずに当てる。
+  - 毎月同じ型で開くシリーズ(交換会など)を1件で見送るときは `seriesWide: true` を付ける。coverage-sweep と主催の見張り(`known_elsewhere`)が日付で絞らずに当てる。
   - 保留(`revisit=true`)は開催10日前に一度見て、掲載か見送りを確定する(`rejected_revisit_due`)。
     決められなければ `revisitedOn` と、理由の末尾に見たことを一文書く。開催日を過ぎたら `revisit=false`(`rejected_revisit_expired`)。
   - 会期の長い常設の掲載(PUKUBOOK の「注目イベント」など)は、1回の見送りでは毎回候補に出る。`listing-policy.json` の `precedents` に置く。

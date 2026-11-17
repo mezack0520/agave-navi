@@ -390,7 +390,8 @@ def known_elsewhere(cap, iso, day_index, rejected_by_day, code=''):
         if org and len(org) >= 4 and re.search(r'(?<![a-z0-9_.])' + re.escape(org) + r'(?![a-z0-9_])',
                                                norm(cap).lower()):
             return True
-    for r in rejected_by_day.get(iso, []):
+    # seriesWide の見送り(毎月の交換会など)は日付で絞らない(day_indexes の '*')
+    for r in rejected_by_day.get(iso, []) + rejected_by_day.get('*', []):
         # 見送りの記録がこの投稿を出典に挙げていれば既知(名前が本文に出ない回。和歌山サボテンクラブの新年会)
         if code and len(code) >= 8 and code in json.dumps(r, ensure_ascii=False):
             return True
@@ -416,6 +417,9 @@ def day_indexes(events, rejected_items):
             d += timedelta(days=1)
     # 見送りは会期の全日で引く(2日開催の2日目が残り続けた。sitelib.rejected_days)
     for r in rejected_items:
+        if r.get('seriesWide') is True:
+            ri.setdefault('*', []).append(r)
+            continue
         for iso in sitelib.rejected_days(r):
             ri.setdefault(iso, []).append(r)
     return di, ri
@@ -960,6 +964,10 @@ def self_test():
                                      {'2026-09-27': [{'name': '花と緑のフラワーオークション (2026-09-27・福岡)'}]}), True)
     _, ri = day_indexes([], [{'name': 'じゃんけん大会 (2026-10-03〜04 さくら植物園・千葉県)', 'eventDate': '2026-10-03'}])
     chk('見送りは会期の2日目も既知', known_elsewhere('じゃんけん大会開催します 10月4日', '2026-10-04', {}, ri), True)
+    _, ri = day_indexes([], [{'name': '群馬第4交換会 2026年9月場所 (2026-09-27 JA前橋市荒砥支所 倉庫前・群馬県前橋市)',
+                              'aliases': ['群馬第4交換会'], 'eventDate': '2026-09-27', 'seriesWide': True}])
+    chk('seriesWide の見送りは別の月の回も既知', known_elsewhere('【開催告知】群馬第4交換会 11月場所 11/22', '2026-11-22', {}, ri), True)
+    chk('seriesWide でも名前が無ければ未知', known_elsewhere('植物市 11/22', '2026-11-22', {}, ri), False)
     chk('月またぎの会期', sitelib.rejected_days({'name': 'X (2026-09-29〜10-01 会場)', 'eventDate': '2026-09-29'}),
         ['2026-09-29', '2026-09-30', '2026-10-01'])
     chk('eventDate と name が食い違えば eventDate だけ',

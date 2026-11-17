@@ -3488,6 +3488,17 @@ def main():
             _hit = sorted(set(_u.get('dates') or []) & set(sitelib.rejected_days(_r)))
             if _hit:
                 _ow_rej_left.append(f"@{_u.get('username','')} {','.join(_hit)}: 見送り {_r.get('key','')} が同じ投稿 {_m.group(1)} を挙げている")
+    # seriesWide の見送り(毎月の交換会)は日付を問わず名前で当たる。当たる投稿が候補に残っていれば同じ穴
+    _sw = [_r for _r in _rej_items if _r.get('seriesWide') is True]
+    for _u in ((_ow.get('signals') or {}).get('unlisted') or []):
+        _ex = re.sub(r'\s+', '', str(_u.get('excerpt') or '')).lower()
+        for _r in _sw:
+            for _nm in [_r.get('name') or ''] + list(_r.get('aliases') or []):
+                _k = re.sub(r'\s+', '', re.sub(r'\s*\(.*$', '', _nm)).lower()[:6]
+                if len(_k) >= 3 and _k in _ex:
+                    _ow_rej_left.append(f"@{_u.get('username','')} {','.join(_u.get('dates') or [])}: "
+                                        f"seriesWide の見送り {_r.get('key','')} の名前が投稿に出ている")
+                    break
     add('organizer_unlisted_rejected_post', '見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている',
         sorted(set(_ow_rej_left)),
         'ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、'
