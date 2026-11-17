@@ -1,4 +1,48 @@
 {
  "_note": "検索の需要の手直しの記録。タスクは scripts/search-demand.py --log / --revert で足す(プレイブック §6 の 3、§3.1)。search-demand.py がその語句の前後28日のクリック率で測り、search-demand.json の evaluations に出す",
- "items": []
+ "items": [
+  {
+   "id": "coverage:next:botajam-2026@2026-11-18",
+   "action": "coverage:next:botajam-2026",
+   "type": "coverage",
+   "page": "/events/botajam-2026.html",
+   "queries": [
+    "ボタンジャム2026",
+    "botajam",
+    "ボタンジャム 岐阜"
+   ],
+   "takenOn": "2026-11-18",
+   "by": "agave-event-update",
+   "change": "BOTAJAM の主催 @botajam2026 の最新投稿は 11/8 の当日案内まで。次回の告知は無い",
+   "noChange": true
+  },
+  {
+   "id": "coverage:next:purari-plants-vol3-2026-11@2026-11-18",
+   "action": "coverage:next:purari-plants-vol3-2026-11",
+   "type": "coverage",
+   "page": "/events/purari-plants-vol3-2026-11.html",
+   "queries": [
+    "ぶらりプランツ",
+    "ぶらりぷらんつ"
+   ],
+   "takenOn": "2026-11-18",
+   "by": "agave-event-update",
+   "change": "@burari_plants のプロフィールとグリッドに vol.4 の告知は無い",
+   "noChange": true
+  },
+  {
+   "id": "coverage:next:botanical-botanical-osaka-2026-10@2026-11-18",
+   "action": "coverage:next:botanical-botanical-osaka-2026-10",
+   "type": "coverage",
+   "page": "/events/botanical-botanical-osaka-2026-10.html",
+   "queries": [
+    "ボタニカルボタニカル 大阪",
+    "ボタニカルボタニカル大阪"
+   ],
+   "takenOn": "2026-11-18",
+   "by": "agave-event-update",
+   "change": "@botanical.botanical の最新は沖縄回(11/14-15)の案内まで。次の大阪回の告知は無い",
+   "noChange": true
+  }
+ ]
 }

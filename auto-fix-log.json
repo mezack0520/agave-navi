@@ -1303,6 +1303,38 @@
    "target": "P•A•F〜Plant addict Festa (2026-11-21)",
    "action": "fixed",
    "detail": "掲載済み plant-addict-festa-ishiuchi-pennon-2026-11。NextMeet が政令市の区だけを書く(広島県佐伯区)ため場所の照合で外れていた。coverage-sweep の place_ok を区と市で当たるよう直した"
+  },
+  {
+   "on": "2026-11-18",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "kodo-vol5-motoshima-2026-11",
+   "action": "listed",
+   "detail": "主催 @kodo_haru の告知 DfyJ6OokxLb で出店者一覧が出た。植物専門の出店が WH NURSERY・EARTHWALK PLANTS・GOCCIA PLANTS ほか6組で compositeEvents.includeIf(専門店3者以上)に当たる"
+  },
+  {
+   "on": "2026-11-18",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "bizarre-park-local-market-2026-11",
+   "action": "rejected",
+   "detail": "@bizarreparkmonthly_localmarket は最新投稿 DchcgnmKCwn のまま、内訳非公開・名称中立で見送りを確定(revisit=false)"
+  },
+  {
+   "on": "2026-11-18",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "多肉園おひさま アイシティ21 (2026-11-28)",
+   "action": "listed",
+   "detail": "主催 @tanikuen_ohisama の告知 Dfxw_x8TrIc で裏取り"
+  },
+  {
+   "on": "2026-11-18",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "THE BOTANICAL SHOW 海老名 (2027-04-03)",
+   "action": "listed",
+   "detail": "主催 @the_botanical_show の告知 DfzaeCdRkWC で裏取り"
   }
  ]
 }
