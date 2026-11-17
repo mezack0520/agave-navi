@@ -16,6 +16,12 @@
 
 設定したら、会話のセッションが `search-request.json` を push して初回を回す(PAT では workflow_dispatch が通らない)。
 
+## 今の設定(2026-11-17)
+
+- プロジェクト: 目崎の個人アカウントの agave-navi。サービスアカウントは agave-navi-gsc(ロール無し)
+- Search Console: https://agave-navi.com/ の URL プレフィックスのプロパティに「制限付き」。ドメインのプロパティは無い
+- 鍵は1本だけ有効にしておく。作り直したら古い鍵を消し、`GSC_SA_KEY` を貼り替える
+
 ## 公開について
 
 リポジトリは public なので、`search-demand.json` には表示10回未満の語句と、メール・電話番号の形の語句を書かない。

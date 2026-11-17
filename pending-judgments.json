@@ -1,21 +1,7 @@
 {
   "description": "要人間判断キュー。各スケジュールタスクが自動修正できない事項を積み、解消時に自ら削除する。健全性メール(health.yml)が毎日集約して通知する。idは source:キー 形式で重複積み上げ禁止。 1件の項目: id(source:キー)、source、addedOn(YYYY-MM-DD)、question(問い)、facts(根拠。文字列の配列)、whyHuman(人の判断が要る理由)、proposal(listing-policy への追記案などの提案)。日次メールは sitelib.judgment_fields で読む。",
-  "items": [
-    {
-      "id": "site-health-check:gsc-secret",
-      "source": "site-health-check",
-      "addedOn": "2026-11-16",
-      "question": "Search Console の取り込み用 Secret GSC_SA_KEY を設定する",
-      "facts": [
-        "11-16 の Search Console ワークフローは「Secret GSC_SA_KEY が無いので取得しない」で終わり、search-demand.json が作られていない",
-        "週次点検(プレイブック §6 の 3)の検索需要の手直しが止まっている。監査 search_demand_stale はファイルが一度できるまで鳴らない"
-      ],
-      "whyHuman": "サービスアカウントの作成、Search Console の権限付与、GitHub の Secret 登録は目崎のアカウントでしかできない",
-      "proposal": "docs/search-console.md の「最初の設定」1〜5を行う。設定後は会話のセッションが search-request.json を push して初回を回す",
-      "resolveWhen": "search-demand.json が repo にできたら resolved へ移す"
-    }
-  ],
-  "updated": "2026-11-16",
+  "items": [],
+  "updated": "2026-11-17",
   "resolved": [
     {
       "id": "agave-navi-eyecatch:flyer-with-child-photo",
@@ -190,6 +176,21 @@
       "resolveWhen": "list_triggers の5本の本文が docs/task-prompts.md と一致したら resolved へ移す",
       "decision": "2026-11-11、PC 4750GE につながった会話から update_trigger で5本の本文を docs/task-prompts.md の全文に置き換えた。5本とも「prompt re-signed by 4750GE」で反映し、フォルダ mzplants、承認の設定(auto)、スケジュール、実行の履歴は変わっていない。戻り値の本文が docs/task-prompts.md の各ブロックと1文字違わず一致することを確かめた。同じ会話で、つながる前に呼んだ1回目は needs_device_approval で何も変わらなかった。これを受けてプレイブック §1 の 7、task-prompts.md、日次メールの文面、audit.py の注記を「4750GE につながった会話が当てる」に直した",
       "resolvedOn": "2026-11-11"
+    },
+    {
+      "id": "site-health-check:gsc-secret",
+      "source": "site-health-check",
+      "addedOn": "2026-11-16",
+      "question": "Search Console の取り込み用 Secret GSC_SA_KEY を設定する",
+      "facts": [
+        "11-16 の Search Console ワークフローは「Secret GSC_SA_KEY が無いので取得しない」で終わり、search-demand.json が作られていない",
+        "週次点検(プレイブック §6 の 3)の検索需要の手直しが止まっている。監査 search_demand_stale はファイルが一度できるまで鳴らない"
+      ],
+      "whyHuman": "サービスアカウントの作成、Search Console の権限付与、GitHub の Secret 登録は目崎のアカウントでしかできない",
+      "proposal": "docs/search-console.md の「最初の設定」1〜5を行う。設定後は会話のセッションが search-request.json を push して初回を回す",
+      "resolveWhen": "search-demand.json が repo にできたら resolved へ移す",
+      "decision": "2026-11-17 設定した。Google Cloud は目崎の個人アカウントの既存プロジェクト agave-navi で Search Console API を有効にし、サービスアカウント agave-navi-gsc をロール無しで作った。Search Console の https://agave-navi.com/(URL プレフィックスのプロパティ)に制限付きで追加。鍵は1本だけ有効(最初に作った鍵は使う前に削除した)。目崎が GSC_SA_KEY に貼り、search-request.json の push で初回を回した。28日で表示 44,416・語句 1,713。初回の出力で、回の頁に着地した語句(富士山フェスタ など)を未掲載の手がかりに、名前を含まない語句(植物イベント 関東 2026 など)を特定の回・シリーズに数えていたので、search-demand.py の照合を直して取り直した",
+      "resolvedOn": "2026-11-17"
     }
   ]
 }

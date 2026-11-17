@@ -28,7 +28,8 @@ import unicodedata
 from datetime import timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sitelib import name_key_text, today_jst  # noqa: E402
+from sitelib import (name_key_text, today_jst, TAG_ROMAJI, REGION_ROMAJI,  # noqa: E402
+                     PREF_TO_REGION)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'search-demand.json')
@@ -42,6 +43,31 @@ TOP_N = 30
 EVENTISH = re.compile(r'(マルシェ|即売会|フェス|フェスタ|展示会|イベント|販売会|市|祭|フェア|ポップアップ|'
                       r'market|fes|fair|show|popup|pop up)', re.I)
 PRIVATE = re.compile(r'@|\d{2,4}-\d{2,4}-\d{3,4}|\d{10,}')
+
+# 検索語のうち、催しの名前ではない語。これを除いて何も残らない語句(「植物イベント 関東 2026」
+# 「アガベイベント 今日」)は、特定の回やシリーズを探した語句ではない。
+# 種類・植物・地域・県は sitelib の一覧から取る。名前の一部にも入るので、語を消すのは
+# 「名前を含む語句か」を決めるときだけで、名前との照合は語のまま行う
+_QUERY_WORDS = sorted(
+    {name_key_text(w) for w in (
+        list(TAG_ROMAJI) + list(REGION_ROMAJI) + list(PREF_TO_REGION)
+        + [p + s for p in PREF_TO_REGION for s in ('県', '府', '都')]
+        + ['イベント', '販売会', 'フェスタ', 'フェス', 'フェア', 'ポップアップ', '市', '祭', 'まつり',
+           'market', 'fes', 'fair', 'show', 'popup', 'pop up', 'event',
+           '植物', '多肉', '塊根', '観葉', '園芸', '盆栽', 'ビザールプランツ', 'プランツ',
+           '今日', '明日', '今週末', '週末', '今週', '来週', '今月', '来月', '開催', '予定', '日程',
+           '一覧', '情報', '最新', '近く', '全国', '会場', '場所', 'おすすめ'])
+     if name_key_text(w)}, key=len, reverse=True)
+_YEARISH = re.compile(r'20\d\d年?|\d{1,2}月|\d{1,2}日')
+_KANJI = re.compile(r'[\u4e00-\u9fff]')
+
+
+def name_part(token):
+    """語から催しの名前ではない語を除いた残り。残りが無い語は名前を含まない"""
+    r = _YEARISH.sub('', name_key_text(token))
+    for w in _QUERY_WORDS:
+        r = r.replace(w, '')
+    return r if len(r) >= (2 if _KANJI.search(r) else 3) else ''
 
 
 def _norm(s):
@@ -113,7 +139,13 @@ def analyze_demand(rows, events, rejected):
     qs.sort(key=lambda x: -x['impressions'])
 
     def specific(q):
-        return [t for t in _tokens(q) if name_key_text(t) not in generic]
+        # 名前を含まない語(「植物イベント」「2026」)は照合に使わない。「植物イベント」が
+        # 別名「丸十家具 植物イベント」の回に当たり、一般の語句がその回の語句に数えられていた(2026-11-17)
+        return [t for t in _tokens(q) if name_key_text(t) not in generic and name_part(t)]
+
+    def event_slug(page):
+        p = _path(page)
+        return p[len('/events/'):].rsplit('.', 1)[0] if p.startswith('/events/') else ''
 
     def match_listed(q):
         hits = set()
@@ -130,6 +162,10 @@ def analyze_demand(rows, events, rejected):
     hub_landed, series, unknown = [], [], []
     for q in qs:
         hits = match_listed(q['query'])
+        # 回の頁に着地した語句は、その回が載っている。名前の書き方が違っても(「富士山フェスタ」と
+        # 「フジサンフェスタ 2026秋」)取りこぼしの候補にしない
+        if event_slug(q['page']):
+            continue
         if 1 <= len(hits) <= 2 and is_hub(q['page']):
             hub_landed.append(dict(q, events=hits))
         elif 3 <= len(hits) <= 10 and is_hub(q['page']):
@@ -177,6 +213,10 @@ def _self_test():
           {'slug': 'a', 'name': 'ボタニカルマルシェ 富山'}, {'slug': 'b', 'name': 'ボタニカルマルシェ 金沢'},
           {'slug': 'c', 'name': 'ボタニカルマルシェ 福井'}, {'slug': 'd', 'name': 'ボタニカルマルシェ 京都'},
           {'slug': 'e', 'name': 'ボタニカルマルシェ 大阪'}]
+    ev += [{'slug': 'marujyu', 'name': 'kijimuna × BOTANY 植物販売会', 'aliases': ['丸十家具 植物イベント']},
+           {'slug': 'tanikkuri', 'name': 'タニックリ', 'aliases': ['タニックリ クリスマス多肉植物イベント']},
+           {'slug': 'shokubutsu-a', 'name': '春の植物イベント 岐阜'},
+           {'slug': 'fujisan-festa-2026-autumn', 'name': 'フジサンフェスタ 2026秋'}]
     rej = [{'name': '見送った多肉フェア(愛知)'}]
     rows = [
         {'query': '花友フェスタ 2026', 'page': 'https://agave-navi.com/', 'clicks': 1, 'impressions': 40, 'position': 9},
@@ -185,6 +225,12 @@ def _self_test():
         {'query': 'ボタニカルマルシェ', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 50, 'position': 3},
         {'query': '090-1234-5678', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 99, 'position': 5},
         {'query': 'まれな語', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 3, 'position': 5},
+        {'query': '植物イベント', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 30, 'position': 30},
+        {'query': '多肉植物イベント 関東 2026', 'page': 'https://agave-navi.com/region/kanto/',
+         'clicks': 0, 'impressions': 30, 'position': 30},
+        {'query': 'アガベイベント 今日', 'page': 'https://agave-navi.com/', 'clicks': 0, 'impressions': 30, 'position': 30},
+        {'query': '富士山フェスタ', 'page': 'https://agave-navi.com/events/fujisan-festa-2026-autumn.html',
+         'clicks': 0, 'impressions': 30, 'position': 30},
     ]
     out = analyze_demand(rows, ev, rej)
     bad = []
@@ -195,7 +241,11 @@ def _self_test():
     if [q['query'] for q in out['seriesLanded']] != ['ボタニカルマルシェ']:
         bad.append(('3回以上に当たるシリーズの名前', out['seriesLanded']))
     if [q['query'] for q in out['unknownEvents']] != ['ひみつの植物市']:
-        bad.append(('一般語・見送り済みは取りこぼし候補にしない', out['unknownEvents']))
+        bad.append(('一般語・見送り済み・回の頁に着地した語句は取りこぼし候補にしない', out['unknownEvents']))
+    _generic_q = {'植物イベント', '多肉植物イベント 関東 2026', 'アガベイベント 今日'}
+    if any(q['query'] in _generic_q for k in ('hubLanded', 'seriesLanded') for q in out[k]):
+        bad.append(('名前を含まない語句を特定の回・シリーズに数えない',
+                    [q['query'] for k in ('hubLanded', 'seriesLanded') for q in out[k]]))
     if any('090' in q['query'] for k in ('opportunities', 'hubLanded', 'seriesLanded', 'unknownEvents')
            for q in out[k]):
         bad.append(('電話番号の形は書かない',))
