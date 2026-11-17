@@ -490,21 +490,6 @@
    "priority": 7.35
   },
   {
-   "id": "event_page:bsj-meeting-osaka-2026-11",
-   "type": "event_page",
-   "page": "/events/bsj-meeting-osaka-2026-11.html",
-   "queries": [
-    "アガベ ミーティング 2027"
-   ],
-   "impressions": 35,
-   "clicks": 0,
-   "position": 6.4,
-   "gain": 3.5,
-   "landed": "/",
-   "by": "site-health-check",
-   "priority": 3.5
-  },
-  {
    "id": "event_page:midorigakuen-himeji-2026-11",
    "type": "event_page",
    "page": "/events/midorigakuen-himeji-2026-11.html",
@@ -518,6 +503,23 @@
    "landed": "/pref/hyogo/",
    "by": "site-health-check",
    "priority": 3.1
+  },
+  {
+   "id": "coverage:next:bsj-meeting-osaka-2026-11",
+   "type": "coverage",
+   "page": "/events/bsj-meeting-osaka-2026-11.html",
+   "queries": [
+    "アガベ ミーティング 2027"
+   ],
+   "impressions": 35,
+   "clicks": 0,
+   "position": 6.4,
+   "gain": 1.75,
+   "events": [
+    "bsj-meeting-osaka-2026-11"
+   ],
+   "by": "agave-event-update",
+   "priority": 1.75
   },
   {
    "id": "event_page:moromoro-plants-19th-izumi-2026-11",
