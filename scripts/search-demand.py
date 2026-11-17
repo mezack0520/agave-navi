@@ -289,23 +289,26 @@ def build_actions(body, log, events, today, factors):
                            'impressions': q['impressions'], 'clicks': q['clicks'],
                            'position': q['position'], 'gain': gain}, **extra)
 
-    def over(s):
+    def next_one(q, s):
+        """終わった回か、語句の年(「天下一植物界 2027」)がその回より先。探しているのは次の回"""
         e = by_slug.get(s) or {}
-        return (e.get('dateEnd') or e.get('date') or '') < today
+        ys = [int(y) for y in re.findall(r'20\d\d', _norm(q['query']))]
+        return (e.get('dateEnd') or e.get('date') or '') < today \
+            or (bool(ys) and max(ys) > int((e.get('date') or '0')[:4] or 0))
 
-    # 終わった回の名前で検索されているなら、直すのはその頁ではなく次の回の掲載。告知を探す
+    # 次の回を探している語句は、その回の頁ではなく次の回の掲載で応える。告知を探す
     for q in body['opportunities']:
         p, s = _path(q['page']), _event_slug(q['page'])
         gain = q['impressions'] * max(0.0, ctr(3) - ctr(q['position']))
         if not s:
             add('page', p, p, q, gain)
-        elif over(s):
+        elif next_one(q, s):
             add('coverage', f'next:{s}', p, q, q['impressions'] * ctr(5), events=[s])
         else:
             add('event_page', s, p, q, gain)
     for q in body['hubLanded']:
         s = pick_event(q['events'], by_slug, today)
-        if over(s):
+        if next_one(q, s):
             add('coverage', f'next:{s}', f'/events/{s}.html', q, q['impressions'] * ctr(5), events=[s])
         else:
             add('event_page', s, f'/events/{s}.html', q, q['impressions'] * ctr(3), landed=_path(q['page']))
@@ -550,7 +553,9 @@ def _self_test():
             'hubLanded': [{'query': '花友フェスタ', 'page': 'https://agave-navi.com/pref/osaka/', 'clicks': 0,
                            'impressions': 100, 'position': 9, 'events': ['old', 'hanatomo-2026']},
                           {'query': '花友フェスタ 2026春', 'page': 'https://agave-navi.com/', 'clicks': 0,
-                           'impressions': 50, 'position': 9, 'events': ['old']}],
+                           'impressions': 50, 'position': 9, 'events': ['old']},
+                          {'query': '花友フェスタ 2027', 'page': 'https://agave-navi.com/', 'clicks': 0,
+                           'impressions': 40, 'position': 9, 'events': ['hanatomo-2026']}],
             'seriesLanded': [], 'unknownEvents': []}
     evs = [{'slug': 'old', 'date': '2025-12-01'}, {'slug': 'hanatomo-2026', 'date': '2026-12-19'}]
     log = [{'id': 'page:/guides/y.html@2026-11-01', 'action': 'page:/guides/y.html', 'type': 'page',
@@ -571,6 +576,9 @@ def _self_test():
     nx = [a for a in acts if a['id'] == 'coverage:next:old']
     if not nx or nx[0]['queries'] != ['花友フェスタ 2025', '花友フェスタ 2026春'] or nx[0]['by'] != 'agave-event-update':
         bad.append(('終わった回の名前の検索は、次の回の掲載を探す指示にする', acts))
+    nx2 = [a for a in acts if a['id'] == 'coverage:next:hanatomo-2026']
+    if not nx2 or nx2[0]['queries'] != ['花友フェスタ 2027']:
+        bad.append(('回より先の年の検索は、次の回の掲載を探す指示にする', acts))
     if gx and ev_a and not gx[0]['priority'] < gx[0]['gain']:
         bad.append(('型の重みが priority に掛かる', gx))
     if any(a['by'] != ('agave-event-update' if a['type'] == 'coverage' else 'site-health-check') for a in acts):
