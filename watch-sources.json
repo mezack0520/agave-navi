@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-18 07:20 JST",
+ "generated": "2026-11-18 07:22 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 427,
-  "awaitingNextEdition": 512,
+  "igAccounts": 428,
+  "awaitingNextEdition": 511,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 97,
+  "igNeedsBrowser": 98,
   "igDead": 7
  },
  "igAccounts": [
@@ -89,6 +89,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "tanikuen_ohisama",
+   "url": "https://www.instagram.com/tanikuen_ohisama/",
+   "eventCount": 6,
+   "lastEventName": "多肉園おひさま 多肉イベント in アイシティ21",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
   },
   {
    "handle": "king.plants.slugger",
@@ -571,6 +581,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "the_botanical_show",
+   "url": "https://www.instagram.com/the_botanical_show/",
+   "eventCount": 2,
+   "lastEventName": "THE BOTANICAL SHOW（海老名駅西口）",
+   "lastEventDate": "2027-04-03",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "b.g_ozman",
    "url": "https://www.instagram.com/b.g_ozman/",
    "eventCount": 2,
@@ -635,16 +655,6 @@
    "url": "https://www.instagram.com/_myoko_plants_market_/",
    "eventCount": 5,
    "lastEventName": "妙高多肉市場 vol.16-17（妙高多肉大市）",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "tanikuen_ohisama",
-   "url": "https://www.instagram.com/tanikuen_ohisama/",
-   "eventCount": 5,
-   "lastEventName": "多肉園おひさま 多肉イベント in イオンモール日吉津",
    "lastEventDate": "2026-10-31",
    "hasUpcoming": false,
    "priority": 1,
@@ -1339,6 +1349,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "kodo_haru",
+   "url": "https://www.instagram.com/kodo_haru/",
+   "eventCount": 1,
+   "lastEventName": "鼓動 vol.5",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "chinki_syokubutu_5",
@@ -4166,16 +4186,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "the_botanical_show",
-   "url": "https://www.instagram.com/the_botanical_show/",
-   "eventCount": 1,
-   "lastEventName": "THE BOTANICAL SHOW 6TH",
-   "lastEventDate": "2026-11-14",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "kanik_jp",
    "url": "https://www.instagram.com/kanik_jp/",
    "eventCount": 1,
@@ -4327,17 +4337,6 @@
    "monthsSinceLast": 0,
    "igHandle": "greensnap.jp",
    "officialUrl": "https://greensnap.jp/event/events/greensnap-marche-%e8%b1%8a%e6%b4%b2-2026-autumn/",
-   "recurring": true,
-   "apiStatus": "api"
-  },
-  {
-   "series": "多肉園おひさま 多肉イベント in イオンモール日吉津",
-   "lastSlug": "tanikuen-ohisama-aeon-hiezu-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "tanikuen_ohisama",
-   "officialUrl": "https://www.instagram.com/p/DeGzgrYMA8d/",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4736,6 +4735,17 @@
    "officialUrl": "https://www.instagram.com/p/DeL_K_BzYCt/",
    "recurring": false,
    "apiStatus": "api"
+  },
+  {
+   "series": "Green Flea Market vol.2 & 1st Anniversary（Soraniwa RAKURAKUEN）",
+   "lastSlug": "green-flea-market-vol2-soraniwa-rakurakuen-2026-10",
+   "lastDate": "2026-10-31",
+   "lastEnd": "2026-11-01",
+   "monthsSinceLast": 0,
+   "igHandle": "soraniwa_rakurakuen",
+   "officialUrl": "https://www.instagram.com/p/Dd8tCuwk81q/",
+   "recurring": false,
+   "apiStatus": "api"
   }
  ],
  "officialSiteCandidates": [
@@ -4744,12 +4754,6 @@
    "url": "https://shaboten.co.jp/press/7561/",
    "eventName": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
    "eventDate": "2026-10-10"
-  },
-  {
-   "domain": "hankyu-dept.co.jp",
-   "url": "https://www.hankyu-dept.co.jp/honten/shopnews/detail/12713897_2067.html",
-   "eventName": "アートな植物ビカクシダ(阪急うめだ本店)",
-   "eventDate": "2026-11-11"
   },
   {
    "domain": "rareplantsjapan.jp",
@@ -4917,6 +4921,12 @@
    "domain": "flarie.jp",
    "url": "https://www.flarie.jp/news/jungle-marche-2026.html",
    "eventName": "ジャングルマルシェ2026",
+   "eventDate": "2026-06-06"
+  },
+  {
+   "domain": "event.joyfulhonda.com",
+   "url": "https://event.joyfulhonda.com/single-exp.php?id=12921&store=hitachinaka",
+   "eventName": "Happy Joyful",
    "eventDate": "2026-06-06"
   }
  ],
