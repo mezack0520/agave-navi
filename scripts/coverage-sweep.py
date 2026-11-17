@@ -1158,7 +1158,15 @@ def judge(t, key, source, by_day, rejected, days, ex=None):
 
     def place_ok(*where):
         om = next((m for m in map(muni_of, where) if m), '')
-        return not cm or not om or om == cm
+        if not cm or not om or om == cm:
+            return True
+        # 政令市の区を、向こうは県の直後に書く(NextMeet「広島県佐伯区」)。こちらの muni_of は市まで読む(広島市)。
+        # 区が相手の住所に出れば同じ場所とみなす
+        if cm.endswith('区') and om.endswith('市'):
+            return any(cm in unicodedata.normalize('NFKC', w or '') for w in where)
+        if om.endswith('区') and cm.endswith('市'):
+            return cm + om in unicodedata.normalize('NFKC', ex.get('place') or '')
+        return False
 
     # aliases は他所での呼び名。主催の表記(PLNTS RIDE)とアグリゲータの
     # 表記(Plants Ride)が違う回がある(2026-09-24)
@@ -1836,6 +1844,16 @@ def self_test(verbose=True):
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 場所での照合 {got}")
+    # 政令市の区だけを書く相手(NextMeet「広島県佐伯区」)。こちらは市と区
+    paf = {'slug': 'paf', 'name': 'P•A•F 〜Plant addict Festa', 'prefecture': '広島',
+           'location': '石内ペノン（広島県広島市佐伯区五日市町石内6500-1）'}
+    idx = {'2026-11-21': [paf]}
+    got = [judge('P•A•F〜Plant addict Festa', '2026-11-21', 'nextmeet', idx, [], 45, {'place': '石内ぺノン / 広島県佐伯区'}),
+           judge('P•A•F〜Plant addict Festa', '2026-11-21', 'nextmeet', idx, [], 45, {'place': '別会場 / 広島県安佐南区'})]
+    want = [('掲載済み', 'paf'), ('取りこぼし', '')]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 政令市の区での照合 {got}")
     # 見送りの注記の所在地も裏付けに使う
     rej = [('多肉植物販売会 (2026-11-08 道の駅 仁保の郷・山口県山口市)', '2026-11-08', None)]
     got = [judge('道の駅の多肉植物販売会 第2回', '2026-11-08', 'nextmeet', {}, rej, 45, {'place': '道の駅 / 山口県下関市'}),

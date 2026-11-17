@@ -1287,6 +1287,22 @@
    "action": "fixed",
    "detail": "値は主催の最新告知(Dfn7Q9GzebC)どおり。誤検知のため、見出しで催しを並べた投稿は回の節だけを読む sitelib.event_section を監査に足した",
    "mailedOn": "2026-11-17"
+  },
+  {
+   "on": "2026-11-18",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "rare-plants-collection-hankyu-umeda-2026-11",
+   "action": "fixed",
+   "detail": "主催 @rareplantsjapan2025 の告知 DfCGCHsyLSh(会期中 10:00〜20:00・入場無料)で time と admission を入れ、sourceUrl を同投稿に"
+  },
+  {
+   "on": "2026-11-18",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "P•A•F〜Plant addict Festa (2026-11-21)",
+   "action": "fixed",
+   "detail": "掲載済み plant-addict-festa-ishiuchi-pennon-2026-11。NextMeet が政令市の区だけを書く(広島県佐伯区)ため場所の照合で外れていた。coverage-sweep の place_ok を区と市で当たるよう直した"
   }
  ]
 }
