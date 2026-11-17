@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-17",
+  "sweptOn": "2026-11-18",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,23 +31,23 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 796,
+    "candidates": 791,
     "in_scope": 258,
-    "covered": 161,
-    "known_rejected": 95,
+    "covered": 165,
+    "known_rejected": 92,
     "truncated_resolved": 45,
     "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 122,
+    "in_scope_leafla": 119,
     "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 95,
+    "in_scope_nextmeet": 98,
     "in_scope_matome-blog": 6,
     "in_scope_organizer-index": 4,
     "in_scope_pukubook": 31,
-    "gaps_raw": 2
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -59,24 +59,11 @@
   ],
   "gaps": [
     {
-      "date": "2026-11-25",
-      "title": "金岡みどりのマルシェ",
-      "source": "pukubook",
-      "pref": "大阪",
-      "alts": [
-        "KANAOKA MIDORI NO MARCHE"
-      ],
-      "place": "大阪 / 金岡公園"
-    },
-    {
-      "date": "2026-11-29",
-      "title": "ひだかさんげ",
-      "source": "pukubook",
-      "pref": "宮崎",
-      "alts": [
-        "HIDAKA SANGE"
-      ],
-      "place": "宮崎 / 高岡ビタミン館"
+      "date": "2026-11-21",
+      "title": "P•A•F〜Plant addict Festa",
+      "source": "nextmeet",
+      "pref": "広島",
+      "place": "石内ぺノン / 広島県佐伯区"
     }
   ]
 }

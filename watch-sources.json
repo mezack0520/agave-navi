@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-17 15:54 JST",
+ "generated": "2026-11-18 06:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 427,
-  "awaitingNextEdition": 510,
+  "awaitingNextEdition": 512,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 97,
@@ -346,16 +346,6 @@
    "eventCount": 2,
    "lastEventName": "アートな植物ビカクシダ(阪急うめだ本店)",
    "lastEventDate": "2026-11-11",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "botalife_pachy",
-   "url": "https://www.instagram.com/botalife_pachy/",
-   "eventCount": 2,
-   "lastEventName": "ボタらいふ Euphorbia Fair",
-   "lastEventDate": "2026-11-14",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -1021,6 +1011,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "botalife_pachy",
+   "url": "https://www.instagram.com/botalife_pachy/",
+   "eventCount": 2,
+   "lastEventName": "ボタらいふ Euphorbia Fair",
+   "lastEventDate": "2026-11-14",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "jss_event_info",
    "url": "https://www.instagram.com/jss_event_info/",
    "eventCount": 2,
@@ -1408,7 +1408,7 @@
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "goodthings.jp",
