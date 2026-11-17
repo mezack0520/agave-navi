@@ -1989,6 +1989,8 @@ def main():
         'mail-state.json',
         # 検索の需要(2026-11-09)。Search Console から週1回作る。build-all.sh では作れない
         'search-demand.json',
+        # 検索の需要の手直しの記録(2026-11-17)。タスクが search-demand.py --log で足す
+        'search-actions.json',
     }
     # 分け方の判定は1つ。**remote の版に乗せて build-all.sh を回し直したとき、
     # この回の情報が失われるか。**失われるなら運ぶデータ、失われないなら生成物。
@@ -6057,6 +6059,43 @@ def main():
     add('search_demand_stale', '検索の需要(Search Console)の取り込みが止まっている', _sd_stale,
         'Actions の Search Console の実行ログを見る。401/403 ならサービスアカウントの鍵か、'
         'Search Console のユーザー権限を確かめる(docs/search-console.md)')
+
+    # 手直しの輪が回っているか(2026-11-17)。search-demand.json の actions は、by のタスクが直して
+    # search-actions.json に書き(週次点検は §6 の 3、毎朝の agave-event-update は §3.1)、約5週後から
+    # evaluations で測る。指示が出続けているのにタスクが手を付けない・戻すべき手直しを戻さない、は輪が止まっている
+    _sd_d = _sd if isinstance(_sd, dict) else {}
+    _sa_items = (load_json('search-actions.json', None) or {}).get('items') or []
+    _sa_idle, _sa_worse = [], []
+    for _task, _q in sorted((_sd_d.get('queues') or {}).items()):
+        if not _q.get('since'):
+            continue
+        _types = set(_q.get('types') or [])
+        _last = max((str(it.get('takenOn') or '') for it in _sa_items if it.get('type') in _types), default='')
+        try:
+            _idle = (_dtm.date.fromisoformat(today_jst()) - _dtm.date.fromisoformat(max(str(_q['since']), _last))).days
+        except ValueError:
+            continue
+        if _idle > int(_q.get('idleDays') or 14):
+            _n = sum(1 for a in _sd_d.get('actions') or [] if a.get('type') in _types)
+            _sa_idle.append(f"{_task}: 指示 {_n}件。最後の手直し {_last or 'なし'}(指示が出続けているのは {_q['since']} から)")
+    for _ev in _sd_d.get('evaluations') or []:
+        if not _ev.get('revert'):
+            continue
+        try:
+            _wd = (_dtm.date.fromisoformat(today_jst())
+                   - _dtm.date.fromisoformat(str(_ev.get('worseSince') or today_jst()))).days
+        except ValueError:
+            _wd = 0
+        if _wd > 7:
+            _b, _a = _ev.get('before') or {}, _ev.get('after') or {}
+            _sa_worse.append(f"{_ev.get('id')} クリック率 {_b.get('ctr')}→{_a.get('ctr')}"
+                             f"(悪化と測ったのは {_ev.get('worseSince')}。変更: {_ev.get('change')})")
+    add('search_actions_idle', '検索の需要の手直しが止まっている', _sa_idle,
+        'site-health-check はプレイブック §6 の 3、agave-event-update は §3.1 の検索の需要を行っていない。'
+        'actions を priority 順に直し、scripts/search-demand.py --log で記録する', severity='urgent')
+    add('search_action_worse', '悪化と測った頁の文言を戻していない', sorted(_sa_worse),
+        '変更を元の文言に戻し、scripts/search-demand.py --revert <id> で記録する(プレイブック §6 の 3)',
+        severity='urgent')
 
     # --- 頁の重さ(2026-11-09) ----------------------------------------------------
     # 一覧の頁はイベントの数に比例して重くなる。即売会タグと年のアーカイブは素の HTML で約1MB、

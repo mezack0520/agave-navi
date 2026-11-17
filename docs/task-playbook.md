@@ -258,6 +258,10 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   LEAFLA の参考サイト欄の IG 投稿は、別のイベントを指していることがある。見出しの催し名が同じ出店者の別の催しの名前のこともあり、名前は主催の告知から付け、アグリゲータの見出しは aliases に残す。
 - 一度も掲載したことのない主催は watch-sources に入らない。主催だと分かった handle は `watch-seeds.json` に足す(出店者の handle は足さない)。
   開いて存在しなかった handle は同じファイルの `deadHandles` に `checkedOn` 付きで足す。
+- `search-demand.json` の `actions` のうち `by` が `agave-event-update` のものは、検索されているのに載っていない催しの手がかり。`priority` の高い順に1日3件まで、その語句で検索して裏取りする。
+  `events` があるものは終わった回の名前で検索されている。その次の回の告知を主催の一次情報で探す。
+  見つかれば載せる。掲載済みの回の呼び名なら aliases に足す。どの場合も `python3 scripts/search-demand.py --log <id> --change '<したこと>'` で記録する。
+  載せなかった(告知が無い、催しでない)ときは `--no-change` を付ける。記録した指示は8週出ない。
 
 ### 3.2 載せる前の照合
 
@@ -560,8 +564,21 @@ add('key_name', '日本語のタイトル', items, note='対処のヒント', se
 
 1. 直近7日の `task-reports/` を読む。2回以上出た失敗は、§4 の順で恒久化する。
 2. `audit-history.json` の推移を見る。urgent が増えていれば原因を直す。何週も動かない項目は、対処されていないか検査が不適切かのどちらかを直す。
-3. `search-demand.json`(Search Console の直近28日)を読んで手を打つ。`hubLanded` は回の頁の題名と説明文、`seriesLanded` はシリーズの頁、
-   `opportunities` は順位を上げる手直し、`unknownEvents` は取りこぼしの裏取り(§3.1)に回す。ファイルが無いのは Secret 未設定(docs/search-console.md)。
+3. 検索の需要で直す。`search-demand.json` の `actions` のうち `by` が `site-health-check` のものを、`priority` の高い順に3件まで直す。
+   `priority` は見込みのクリック増に型ごとの成績(`typeFactors`)を掛けたもの。効かない型は自然に下がるので、並びのとおりに取る。
+   - `page`: 順位4〜20位の語句(`queries`)に、頁の題名・見出し・冒頭が答えているかを見て直す。ガイドは `guides_content/` の原稿、
+     一覧は `generate-landing-pages.py` と `scripts/landing-meta.json`、トップは `index.html`。URL と slug は変えない。
+   - `event_page`: これから開く回の頁。題名は `name` で主催の表記なので変えない。検索された書き方が `name` と違えば `aliases` に足し、
+     `description` の書き出しにその書き方を入れる。`landed` があるのは、回の名前で検索されたのに一覧に着地した語句。
+   - `series_page`: 同じ名前の回(`events`)が3回以上あるのに一覧に着地している。シリーズの頁は主催の頁(`/organizer/<handle>/`)で、
+     題名は回の `organizer` の書き方から作られる(`sitelib.organizer_pages`)。`organizerIg` が無い回は埋めて頁を立て(2件以上で立つ)、
+     `organizer` の書き方がばらばらなら主催の表記にそろえる。
+   - 1件ごとに `python3 scripts/search-demand.py --log <id> --change '<何をどう変えたか。文言は元の文言も>'` で記録し、変更と一緒に push する。
+     調べて変えなかったときは `--no-change` を付けて理由を書く。主催の頁を立てたら `--page /organizer/<handle>/`。
+     記録した指示は8週出ない。push で search-demand.json が取り直され、次の指示が繰り上がる。
+   - `evaluations` の `revert` が true のもの(頁の文言の手直しで、クリック率が下がった)は、`change` の元の文言に戻し、
+     `python3 scripts/search-demand.py --revert <id> --change '<何を戻したか>'` で記録する。ほかの型は事実の訂正なので戻さない。
+   - `actions` が空なのは、どれも直して8週以内か、伸びしろが無いとき。ファイルが無いのは Secret 未設定(docs/search-console.md)。
 4. `pending-judgments.json` が3件以上なら、人の判断が本当に要るかを見直す。要らないものは `listing-policy.json` に基準を書く。
 5. `task_run_gap` を見る(§3.12)。台帳に無いタスクがあれば足す。
    `work\` に残った `*-unpushed-*.json` と `*.patch` は、反映済みか期限切れかを見て回収する。

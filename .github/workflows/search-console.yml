@@ -2,7 +2,7 @@ name: Search Console
 
 # 検索の需要を週1回取り込む(2026-11-09)。scripts/search-demand.py が
 # Search Console の直近28日から search-demand.json を作り、月曜の週次点検
-# (site-health-check)が読んで手を打つ。
+# (site-health-check)と毎朝の agave-event-update が読んで手を打つ。
 # 必要な Secret: GSC_SA_KEY(サービスアカウントの JSON。手順は docs/search-console.md)。
 # Secret が無い間は何もしないで成功で終わる。
 
@@ -15,6 +15,8 @@ on:
       - 'scripts/search-demand.py'
       # 取り直しの合図。内容は何でもよい(PAT では workflow_dispatch が通らない)
       - 'search-request.json'
+      # 手直しの記録。取り直すと直した指示が消え、次の指示が繰り上がる
+      - 'search-actions.json'
   workflow_dispatch:
 
 concurrency:
