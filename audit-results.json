@@ -1630,6 +1630,20 @@
       "note": "Actions の Search Console の実行ログを見る。401/403 ならサービスアカウントの鍵か、Search Console のユーザー権限を確かめる(docs/search-console.md)",
       "severity": "urgent"
     },
+    "search_actions_idle": {
+      "title": "検索の需要の手直しが止まっている",
+      "count": 0,
+      "items": [],
+      "note": "site-health-check はプレイブック §6 の 3、agave-event-update は §3.1 の検索の需要を行っていない。actions を priority 順に直し、scripts/search-demand.py --log で記録する",
+      "severity": "urgent"
+    },
+    "search_action_worse": {
+      "title": "悪化と測った頁の文言を戻していない",
+      "count": 0,
+      "items": [],
+      "note": "変更を元の文言に戻し、scripts/search-demand.py --revert <id> で記録する(プレイブック §6 の 3)",
+      "severity": "urgent"
+    },
     "page_weight_over": {
       "title": "頁が重すぎる(転送の gzip か要素の数が上限を超えた)",
       "count": 0,
