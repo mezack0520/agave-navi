@@ -1,5 +1,5 @@
 {
- "_note": "Search Console の直近28日から作る(scripts/search-demand.py)。表示10回未満の語句と、メール・電話番号の形の語句は書かない。site-health-check が週次で読んで手を打つ",
+ "_note": "Search Console の直近28日から作る(scripts/search-demand.py)。表示10回未満の語句と、メール・電話番号の形の語句は書かない。actions は by のタスクが直して search-actions.json に書く(プレイブック §6 の 3、§3.1)",
  "generatedOn": "2026-11-17",
  "site": "https://agave-navi.com/",
  "range": [
@@ -278,25 +278,321 @@
    ]
   }
  ],
- "unknownEvents": [
-  {
-   "query": "ボタニカルイベント 2026",
-   "clicks": 3,
-   "impressions": 76,
-   "position": 5.6,
-   "page": "https://agave-navi.com/archive/2026/"
-  },
-  {
-   "query": "ボタニカルイベント",
-   "clicks": 0,
-   "impressions": 15,
-   "position": 5.3,
-   "page": "https://agave-navi.com/"
-  }
- ],
+ "unknownEvents": [],
  "totals": {
   "clicks": 1921,
   "impressions": 44416,
   "queries": 1713
- }
+ },
+ "actions": [
+  {
+   "id": "page:/guides/agave-winter-hardiness.html",
+   "type": "page",
+   "page": "/guides/agave-winter-hardiness.html",
+   "queries": [
+    "アガベ 冬越し 屋外",
+    "アガベ チタノタ 耐寒性",
+    "アガベ 耐寒性 一覧",
+    "アガベ 寒さ に強い品種",
+    "アガベ 耐寒性 最強",
+    "アガベ 耐寒温度",
+    "アガベ 寒さに強い",
+    "耐寒性のあるアガベ",
+    "アガベ 冬 屋外",
+    "チタノタ 耐寒性"
+   ],
+   "impressions": 4370,
+   "clicks": 45,
+   "position": 4.7,
+   "gain": 235.51,
+   "by": "site-health-check",
+   "priority": 235.51
+  },
+  {
+   "id": "page:/",
+   "type": "page",
+   "page": "/",
+   "queries": [
+    "アガベ イベント",
+    "植物イベント",
+    "植物 イベント",
+    "アガベイベント",
+    "多肉植物イベント 今日"
+   ],
+   "impressions": 2793,
+   "clicks": 294,
+   "position": 4.2,
+   "gain": 149.31,
+   "by": "site-health-check",
+   "priority": 149.31
+  },
+  {
+   "id": "coverage:next:botajam-2026",
+   "type": "coverage",
+   "page": "/events/botajam-2026.html",
+   "queries": [
+    "ボタンジャム2026",
+    "botajam",
+    "ボタンジャム 岐阜"
+   ],
+   "impressions": 1487,
+   "clicks": 73,
+   "position": 5.2,
+   "gain": 74.35,
+   "events": [
+    "botajam-2026"
+   ],
+   "by": "agave-event-update",
+   "priority": 74.35
+  },
+  {
+   "id": "page:/region/kanto/",
+   "type": "page",
+   "page": "/region/kanto/",
+   "queries": [
+    "植物イベント 2026 関東",
+    "多肉植物イベント 関東 2026"
+   ],
+   "impressions": 959,
+   "clicks": 31,
+   "position": 4.0,
+   "gain": 48.3,
+   "by": "site-health-check",
+   "priority": 48.3
+  },
+  {
+   "id": "coverage:next:purari-plants-vol3-2026-11",
+   "type": "coverage",
+   "page": "/events/purari-plants-vol3-2026-11.html",
+   "queries": [
+    "ぶらりプランツ",
+    "ぶらりぷらんつ"
+   ],
+   "impressions": 791,
+   "clicks": 21,
+   "position": 7.0,
+   "gain": 39.55,
+   "events": [
+    "purari-plants-vol3-2026-11"
+   ],
+   "by": "agave-event-update",
+   "priority": 39.55
+  },
+  {
+   "id": "page:/guides/adenium-wintering.html",
+   "type": "page",
+   "page": "/guides/adenium-wintering.html",
+   "queries": [
+    "アデニウム 耐寒温度"
+   ],
+   "impressions": 431,
+   "clicks": 2,
+   "position": 7.3,
+   "gain": 30.17,
+   "by": "site-health-check",
+   "priority": 30.17
+  },
+  {
+   "id": "coverage:next:botanical-botanical-osaka-2026-10",
+   "type": "coverage",
+   "page": "/events/botanical-botanical-osaka-2026-10.html",
+   "queries": [
+    "ボタニカルボタニカル 大阪",
+    "ボタニカルボタニカル大阪"
+   ],
+   "impressions": 573,
+   "clicks": 5,
+   "position": 8.1,
+   "gain": 28.65,
+   "events": [
+    "botanical-botanical-osaka-2026-10"
+   ],
+   "by": "agave-event-update",
+   "priority": 28.65
+  },
+  {
+   "id": "page:/region/kansai/",
+   "type": "page",
+   "page": "/region/kansai/",
+   "queries": [
+    "植物イベント 関西 2026"
+   ],
+   "impressions": 322,
+   "clicks": 4,
+   "position": 7.3,
+   "gain": 22.54,
+   "by": "site-health-check",
+   "priority": 22.54
+  },
+  {
+   "id": "coverage:next:himeji-cactus-goudou-sokubaikai-2026-10",
+   "type": "coverage",
+   "page": "/events/himeji-cactus-goudou-sokubaikai-2026-10.html",
+   "queries": [
+    "姫路カクタス"
+   ],
+   "impressions": 445,
+   "clicks": 3,
+   "position": 9.0,
+   "gain": 22.25,
+   "events": [
+    "himeji-cactus-goudou-sokubaikai-2026-10"
+   ],
+   "by": "agave-event-update",
+   "priority": 22.25
+  },
+  {
+   "id": "coverage:next:saidaiji-garden-taniku-event-2026-10",
+   "type": "coverage",
+   "page": "/events/saidaiji-garden-taniku-event-2026-10.html",
+   "queries": [
+    "西大寺ガーデン"
+   ],
+   "impressions": 294,
+   "clicks": 3,
+   "position": 8.5,
+   "gain": 14.7,
+   "events": [
+    "saidaiji-garden-taniku-event-2026-10"
+   ],
+   "by": "agave-event-update",
+   "priority": 14.7
+  },
+  {
+   "id": "coverage:next:yatchiro-plants-yatsushiro-2026-11",
+   "type": "coverage",
+   "page": "/events/yatchiro-plants-yatsushiro-2026-11.html",
+   "queries": [
+    "ヤッチロプランツ"
+   ],
+   "impressions": 222,
+   "clicks": 19,
+   "position": 4.4,
+   "gain": 11.1,
+   "events": [
+    "yatchiro-plants-yatsushiro-2026-11"
+   ],
+   "by": "agave-event-update",
+   "priority": 11.1
+  },
+  {
+   "id": "page:/region/tokai/",
+   "type": "page",
+   "page": "/region/tokai/",
+   "queries": [
+    "植物イベント 2026 東海"
+   ],
+   "impressions": 245,
+   "clicks": 11,
+   "position": 4.3,
+   "gain": 7.35,
+   "by": "site-health-check",
+   "priority": 7.35
+  },
+  {
+   "id": "event_page:bsj-meeting-osaka-2026-11",
+   "type": "event_page",
+   "page": "/events/bsj-meeting-osaka-2026-11.html",
+   "queries": [
+    "アガベ ミーティング 2027"
+   ],
+   "impressions": 35,
+   "clicks": 0,
+   "position": 6.4,
+   "gain": 3.5,
+   "landed": "/",
+   "by": "site-health-check",
+   "priority": 3.5
+  },
+  {
+   "id": "event_page:midorigakuen-himeji-2026-11",
+   "type": "event_page",
+   "page": "/events/midorigakuen-himeji-2026-11.html",
+   "queries": [
+    "緑楽宴"
+   ],
+   "impressions": 31,
+   "clicks": 0,
+   "position": 14.7,
+   "gain": 3.1,
+   "landed": "/pref/hyogo/",
+   "by": "site-health-check",
+   "priority": 3.1
+  },
+  {
+   "id": "event_page:moromoro-plants-19th-izumi-2026-11",
+   "type": "event_page",
+   "page": "/events/moromoro-plants-19th-izumi-2026-11.html",
+   "queries": [
+    "モロモロプランツ 2026"
+   ],
+   "impressions": 11,
+   "clicks": 0,
+   "position": 8.5,
+   "gain": 1.1,
+   "landed": "/archive/2026/",
+   "by": "site-health-check",
+   "priority": 1.1
+  },
+  {
+   "id": "coverage:next:tenkaichi-2026",
+   "type": "coverage",
+   "page": "/events/tenkaichi-2026.html",
+   "queries": [
+    "天下一植物界 2027"
+   ],
+   "impressions": 20,
+   "clicks": 0,
+   "position": 6.7,
+   "gain": 1.0,
+   "events": [
+    "tenkaichi-2026"
+   ],
+   "by": "agave-event-update",
+   "priority": 1.0
+  },
+  {
+   "id": "series_page:jolienursery",
+   "type": "series_page",
+   "page": "/region/kansai/",
+   "queries": [
+    "jolie nursery"
+   ],
+   "impressions": 10,
+   "clicks": 0,
+   "position": 9.9,
+   "gain": 1.0,
+   "events": [
+    "jolie-nursery-musashi-kanazawa-2026-10",
+    "jolie-nursery-musashi-niigata-2026-10",
+    "jolie-nursery-musashinoyouhinten-misato-2026-10",
+    "jolie-nursery-vivahome-ibaraki-2026-09",
+    "jolie-nursery-vivahome-toyosu-2026-11",
+    "kusa-paradise-hirata-nursery-odo-2026-11",
+    "rare-foliage-sale-protoleaf-futako-2026"
+   ],
+   "by": "site-health-check",
+   "priority": 1.0
+  }
+ ],
+ "queues": {
+  "site-health-check": {
+   "types": [
+    "page",
+    "event_page",
+    "series_page"
+   ],
+   "idleDays": 14,
+   "since": "2026-11-17"
+  },
+  "agave-event-update": {
+   "types": [
+    "coverage"
+   ],
+   "idleDays": 7,
+   "since": "2026-11-17"
+  }
+ },
+ "evaluations": [],
+ "typeFactors": {}
 }
