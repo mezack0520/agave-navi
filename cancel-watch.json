@@ -3,36 +3,11 @@
   "sweptOn": "2026-11-19",
   "stats": {
     "targets": 17,
-    "fetched": 17,
-    "grownSkipped": 1,
-    "grownSkippedSlugs": [
-      "rare-plants-collection-hankyu-umeda-2026-11"
-    ]
+    "fetched": 17
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "bsj-meeting-osaka-2026-11",
-      "name": "2026年 BSJミーティング大阪",
-      "date": "2026-11-23",
-      "url": "https://bromeliads.jp/news/news-13474/",
-      "why": "公式ページが変わった(本文: 1346→1344字 -1%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
-      "slug": "bsj-soukai-nishishinjuku-2026-12",
-      "name": "日本ブロメリア協会「総会」2026",
-      "date": "2026-12-06",
-      "url": "https://bromeliads.jp/news/news-13496/",
-      "why": "公式ページが変わった(本文: 1626→1624字 -1%)",
-      "changed": [
-        "本文"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10": {
       "url": "https://shaboten.co.jp/press/7561/",
@@ -71,7 +46,7 @@
         "textLen": 952,
         "imageCount": 6
       },
-      "prevTextLen": 931,
+      "prevTextLen": 952,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -98,7 +73,7 @@
         "textLen": 133,
         "imageCount": 3
       },
-      "prevTextLen": 144,
+      "prevTextLen": 133,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": "2026-11-12",
@@ -211,7 +186,7 @@
         "textLen": 1344,
         "imageCount": 6
       },
-      "prevTextLen": 1346,
+      "prevTextLen": 1344,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -321,7 +296,7 @@
         "textLen": 1624,
         "imageCount": 6
       },
-      "prevTextLen": 1626,
+      "prevTextLen": 1624,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -345,7 +320,7 @@
       "checkedOn": "2026-11-19",
       "signature": {
         "text": "32bb3280f2ae8c7d",
-        "images": "f113829a942da11f",
+        "images": "632a9a58cd78ecf1",
         "textLen": 1166,
         "imageCount": 44
       },
@@ -365,7 +340,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 5
+      "imageOnlyChanges": 6
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
