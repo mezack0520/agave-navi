@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19 06:41 JST",
+ "generated": "2026-11-19 07:19 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 428,
+  "igAccounts": 430,
   "awaitingNextEdition": 511,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 98,
+  "igNeedsBrowser": 100,
   "igDead": 7
  },
  "igAccounts": [
@@ -71,6 +71,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "tanikuen_ohisama",
+   "url": "https://www.instagram.com/tanikuen_ohisama/",
+   "eventCount": 7,
+   "lastEventName": "多肉園おひさま 多肉イベント in イオンモール鹿児島",
+   "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "morinotanikuen",
    "url": "https://www.instagram.com/morinotanikuen/",
    "eventCount": 7,
@@ -91,11 +101,11 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "tanikuen_ohisama",
-   "url": "https://www.instagram.com/tanikuen_ohisama/",
+   "handle": "joyfulak_gardencenter",
+   "url": "https://www.instagram.com/joyfulak_gardencenter/",
    "eventCount": 6,
-   "lastEventName": "多肉園おひさま 多肉イベント in アイシティ21",
-   "lastEventDate": "2026-11-28",
+   "lastEventName": "はなみちるさんの多肉即売会（ジョイフルエーケー大麻店）",
+   "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -656,16 +666,6 @@
    "eventCount": 5,
    "lastEventName": "妙高多肉市場 vol.16-17（妙高多肉大市）",
    "lastEventDate": "2026-10-31",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "joyfulak_gardencenter",
-   "url": "https://www.instagram.com/joyfulak_gardencenter/",
-   "eventCount": 5,
-   "lastEventName": "はなみちるさんの多肉販売会（ジョイフルエーケー帯広店）",
-   "lastEventDate": "2026-11-14",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -1431,6 +1431,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "tae_aomidori_3",
+   "url": "https://www.instagram.com/tae_aomidori_3/",
+   "eventCount": 1,
+   "lastEventName": "カドーレde多肉マルシェ",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "goodthings.jp",
    "url": "https://www.instagram.com/goodthings.jp/",
    "eventCount": 1,
@@ -1559,6 +1569,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "namba_plants",
+   "url": "https://www.instagram.com/namba_plants/",
+   "eventCount": 1,
+   "lastEventName": "第2回 えひめ多肉・植物雑貨展示販売会",
+   "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nb_garden2015",

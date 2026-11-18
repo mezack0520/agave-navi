@@ -1,7 +1,47 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "items": [
+    {
+      "on": "2026-11-19",
+      "kind": "listed",
+      "slug": "hanamichiru-taniku-sokubaikai-joyfulak-ooasa-2026-11",
+      "name": "はなみちるさんの多肉即売会（ジョイフルエーケー大麻店）",
+      "date": "2026-11-21",
+      "dateEnd": "2026-11-22",
+      "prefecture": "北海道",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-19",
+      "kind": "listed",
+      "slug": "cadore-de-taniku-marche-2026-11",
+      "name": "カドーレde多肉マルシェ",
+      "date": "2026-11-29",
+      "dateEnd": "2026-11-29",
+      "prefecture": "広島",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-19",
+      "kind": "listed",
+      "slug": "tanikuen-ohisama-aeonmall-kagoshima-2026-12",
+      "name": "多肉園おひさま 多肉イベント in イオンモール鹿児島",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-06",
+      "prefecture": "鹿児島",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-19",
+      "kind": "listed",
+      "slug": "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12",
+      "name": "第2回 えひめ多肉・植物雑貨展示販売会",
+      "date": "2026-12-13",
+      "dateEnd": "2026-12-13",
+      "prefecture": "愛媛",
+      "detail": ""
+    },
     {
       "on": "2026-11-18",
       "kind": "listed",
@@ -1160,46 +1200,6 @@
       "date": "2026-10-25",
       "dateEnd": "2026-10-25",
       "prefecture": "福島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "chiisana-shokubutsuen-vol3-fukuyama-2026-11",
-      "name": "ちいさな植物園 vol.3（なかの植物研究所）",
-      "date": "2026-11-03",
-      "dateEnd": "2026-11-03",
-      "prefecture": "広島",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "plants-market-hm-garden-utsunomiya-2026-11",
-      "name": "PLANTS MARKET（H&M GARDEN・宇都宮）",
-      "date": "2026-11-07",
-      "dateEnd": "2026-11-07",
-      "prefecture": "栃木",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "species-nursery-hirata-fukuoka-higashi-2026-11",
-      "name": "スピーシーズナーサリー 貴重品種販売会（平田ナーセリー福岡東店）",
-      "date": "2026-11-14",
-      "dateEnd": "2026-11-14",
-      "prefecture": "福岡",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "species-nursery-hirata-kokura-higashi-2026-11",
-      "name": "スピーシーズナーサリー 貴重品種販売会（平田ナーセリー小倉東店）",
-      "date": "2026-11-15",
-      "dateEnd": "2026-11-15",
-      "prefecture": "福岡",
       "detail": ""
     }
   ]
