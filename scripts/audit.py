@@ -2599,17 +2599,18 @@ def main():
         # 照合は巡回と同じ judge(2026-11-05)。以前は全部の候補を名前どうし(bare)で
         # 会期の掛かる全国の回に当てていたので、5文字以上の語1つで別の県の回に当たり、
         # 本物の取りこぼしを「掲載済みになった」と外していた(巡回の照合と同じ型)。
-        # 県・別名・場所は coverage-gaps.json の候補が持っている(GAP_HINTS)。見送りは見ない(掲載済みになった回だけを分ける)
-        _cov_by_day, _ = _csm.build_index()
+        # 県・別名・場所は coverage-gaps.json の候補が持っている(GAP_HINTS)。
+        # 巡回の後に見送りを記録した回も同じく分ける(次の巡回で消える)
+        _cov_by_day, _cov_rej = _csm.build_index()
         _cov_days = int(_cov.get('daysAhead') or 45)
         _keep = []
         for g in _cov_gaps:
             _gd = str(g.get('date') or '')
             _verdict, _ = _csm.judge(str(g.get('title') or ''), _gd, str(g.get('source') or ''),
-                                     _cov_by_day, [], _cov_days,
+                                     _cov_by_day, _cov_rej, _cov_days,
                                      {k: g[k] for k in _csm.GAP_HINTS if g.get(k)})
-            if _verdict == '掲載済み':
-                _cov_stale_items.append(f"{_gd} {str(g.get('title'))[:90]}")
+            if _verdict in ('掲載済み', '見送り'):
+                _cov_stale_items.append(f"{_gd} {str(g.get('title'))[:90]}({_verdict})")
             else:
                 _keep.append(g)
         _cov_gaps = _keep
@@ -2642,7 +2643,7 @@ def main():
         '記録を書くだけでは翌日も候補に出る',
         severity='urgent')
     _cov_items = [f"{g.get('date')} {str(g.get('title'))[:90]}" for g in _cov_gaps]
-    add('coverage_gap_stale', '取りこぼし候補のうち、巡回の後に掲載済みになった回(次の巡回で消える)',
+    add('coverage_gap_stale', '取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)',
         sorted(_cov_stale_items),
         '対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す',
         severity='info')

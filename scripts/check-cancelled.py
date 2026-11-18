@@ -689,16 +689,8 @@ def main():
             img_noisy = 0
         pages[slug]['imageOnlyChanges'] = img_noisy
 
-        # 本文が増え、この回の開催日がまだ頁に出ていて、中止の語も弱い語も無い回は
-        # 告知の追記(出演・体験・地図・タイムテーブル)なので「公式ページが変わった」に数えない。
-        # 中止の告知は語で拾う(strong / weak)。GreenSnap Marche と花友フェスタが
-        # 追記のたびに鳴り、同じ回に「開催予定のまま」を3回書くところだった。
         _b_len, _a_len = bsig.get('textLen'), cmp_sig.get('textLen')
-        grown_only = (bool(changed) and '本文' in changed
-                      and not res['strong'] and not res['weak']
-                      and res.get('eventDateSeen') is True
-                      and isinstance(_b_len, int) and isinstance(_a_len, int)
-                      and _a_len >= _b_len)
+        grown_only = body_change_benign(changed, res, _b_len, _a_len)
         if grown_only:
             stats['grownSkipped'] = stats.get('grownSkipped', 0) + 1
             stats.setdefault('grownSkippedSlugs', []).append(slug)
@@ -762,6 +754,28 @@ def main():
         for e in errors[:10]:
             print('    ' + e)
     return 0
+
+
+SMALL_SHRINK_CHARS = 20
+SMALL_SHRINK_PCT = 2
+
+
+def body_change_benign(changed, res, b_len, a_len):
+    """本文の変化を「公式ページが変わった」に数えないか。
+    この回の開催日がまだ頁に出ていて、中止の語も弱い語も無いことが前提。
+    - 本文が増えた: 告知の追記(出演・体験・地図・タイムテーブル)。画像が一緒に変わってもよい
+    - 本文だけが20字か2%以内で減った: 記事の外の新着欄・メニューの揺れ。
+      中止の告知は語で拾う(strong / weak)ので、語の無い小さな減りは中止の証拠にならない"""
+    if not changed or '本文' not in changed or res.get('strong') or res.get('weak'):
+        return False
+    if res.get('eventDateSeen') is not True:
+        return False
+    if not isinstance(b_len, int) or not isinstance(a_len, int):
+        return False
+    if a_len >= b_len:
+        return True
+    return (changed == ['本文']
+            and b_len - a_len <= max(SMALL_SHRINK_CHARS, b_len * SMALL_SHRINK_PCT // 100))
 
 
 # ---------------------------------------------------------------- self-test
@@ -1162,6 +1176,18 @@ def self_test(verbose=True):
     ]
     got = sorted(e.get('slug') for e, _ in watch_targets(evs, today))
     chk('対象は開催前・出典あり・SNS以外・未中止だけ', got, ['near'])
+
+    say('\n--- 本文の変化を数えないか ---')
+    _ok = {'strong': [], 'weak': [], 'eventDateSeen': True}
+    chk('増えた → 数えない', body_change_benign(['本文', '画像'], _ok, 1131, 1277), True)
+    chk('2字減った(BSJ 1346→1344) → 数えない', body_change_benign(['本文'], _ok, 1346, 1344), True)
+    chk('2%減った(2396→2385) → 数えない', body_change_benign(['本文'], _ok, 2396, 2385), True)
+    chk('大きく減った(3041→1334) → 数える', body_change_benign(['本文'], _ok, 3041, 1334), False)
+    chk('画像も変わって減った → 数える', body_change_benign(['本文', '画像'], _ok, 1346, 1344), False)
+    chk('開催日が消えた → 数える', body_change_benign(
+        ['本文'], dict(_ok, eventDateSeen=False), 1346, 1344), False)
+    chk('弱い語がある → 数える', body_change_benign(
+        ['本文'], dict(_ok, weak=['中止']), 1346, 1344), False)
 
     say('\n結果: ' + ('すべて通過' if ok else '★失敗あり'))
     return 0 if ok else 1

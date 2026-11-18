@@ -226,7 +226,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   候補が出た理由や当たった相手は `python3 scripts/coverage-sweep.py --explain --days 1` で見られる。
 - アグリゲータ3社(LEAFLA、NextMeet、PUKUBOOK)は互いに取りこぼす。
   会場公式のカレンダーにしか出ない大型の回もある(なばなの里、富山県中央植物園、京都パルスプラザの日本シャボテン大会)。
-- `coverage-gaps.json` は巡回した時点の写しで、その後に載せた回は `coverage_gap_stale` に分かれる。
+- `coverage-gaps.json` は巡回した時点の写しで、その後に載せた回と見送りを記録した回は `coverage_gap_stale` に分かれる。
   掲載済みの回が候補に残り続けるなら、アグリゲータ側の呼び名を該当の回の `aliases` に足す。
   auto-fix-log に書くだけでは消えない(`coverage_gap_logged_but_open`)。
 - `truncatedUnresolved`(途中で切れた見出し)は毎日1件ずつ既存に当てる。切れた見出しは範囲の判定にも同一の判定にも使えない。
@@ -423,7 +423,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 
 - 中止は条件を満たせば自動で反映される(`auto_cancel_ok`)。主催がその回の日付つきで中止を言い切り、延期などの語が無く、掲載日以降で開催日以前の投稿のとき。
   日次メールの「主催の告知で中止にした回（自動）」に出る。誤りなら eventStatus を戻し、`scripts/cancel-reviewed.json` に記録する。
-- `cancel_suspects` は公式ページが変わったことで鳴る。変化は中止の証拠ではない。本文が増えて開催日が残り、中止の語が無い変化は `check-cancelled.py` の grown_only が数えない。
+- `cancel_suspects` は公式ページが変わったことで鳴る。変化は中止の証拠ではない。開催日が残り中止の語が無い変化のうち、本文が増えたものと本文だけが20字か2%以内で減ったものは `check-cancelled.py` の `body_change_benign` が数えない。
   url と sourceUrl を開いて、会期の表記、本文の中止や延期の告知、メインビジュアルの画像を見る。
   判断は `cancel-reviewed.json`(slug、checkedOn、verdict、note)に書く。書かないと毎日同じものが並び、本物の変化が埋もれる。
 - 中止の語は、どの回のものかを前後の文で確かめる。過去の回の「中止のお知らせ」、同じ頁の別企画の雨天延期、出展者1組の取り止め、

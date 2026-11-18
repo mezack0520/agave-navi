@@ -1397,6 +1397,22 @@
    "target": "haioku-club-goccia-2026-autumn",
    "action": "fixed",
    "detail": "10月予定を過ぎ主催告知なし。revisit=false"
+  },
+  {
+   "on": "2026-11-19",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "bsj-meeting-osaka-2026-11",
+   "action": "reviewed",
+   "detail": "公式頁は会期・会場のままで中止・延期の語なし。本文-2字はサイト共通の枠の揺れ。小さな減りを数えないよう check-cancelled.py を直した"
+  },
+  {
+   "on": "2026-11-19",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "bsj-soukai-nishishinjuku-2026-12",
+   "action": "reviewed",
+   "detail": "公式頁は会期・会場のままで中止・延期の語なし。本文-2字はサイト共通の枠の揺れ。小さな減りを数えないよう check-cancelled.py を直した"
   }
  ]
 }
