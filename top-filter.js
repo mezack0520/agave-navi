@@ -381,7 +381,8 @@ function initMobileFav() {
 }
 
 // === URLパラメータと計測 ===
-// 絞り込みの状態は URL に残す(共有と、詳細頁のパンくず /?region=関東&pref=東京 の受け口)。
+// 絞り込みの状態は URL に残す(共有用)。サイト内のリンクはここを指さない。
+// canonical がトップなので評価が渡らない。地域・県は /region/ /pref/ の頁へ張る(2026-11-18)。
 // 利用者が押したときだけ GA4 に送る。URL・localStorage からの復元は送らない。
 // 送るもの: filter_region / filter_pref / filter_date(filter_value)、search(search_term)。
 // filter_value の内訳を GA4 で見るには、管理画面でカスタム ディメンションに登録する。

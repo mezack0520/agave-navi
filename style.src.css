@@ -633,7 +633,13 @@ body.no-scroll {
     border-color: var(--black);
 }
 
+/* 畳んだ丸の中に、プレースホルダの1文字目が覗いて虫眼鏡に重なっていた
+   (2026-11-18 指摘「ゴミみたいなの」)。畳んでいる間は出さない */
 .search-field input::placeholder {
+    color: transparent;
+}
+
+.search-field:focus-within input::placeholder {
     color: var(--gray-400);
 }
 
@@ -657,6 +663,9 @@ body.no-scroll {
     .search-field input:focus {
         border-color: var(--black);
     }
+    .search-field input::placeholder {
+        color: var(--gray-400);
+    }
 }
 
 /* 全国 > 地域 > 県 の1行。地域選択と県選択で同じ組み方にする。
@@ -668,12 +677,27 @@ body.no-scroll {
     flex-shrink: 0;
 }
 
-/* 日程のチップ。一覧の見出しの下に置く。固定しない(固定の帯は1段に収める) */
+/* 一覧の見出しの下の段。日程のチップと件数。固定しない(固定の帯は1段に収める)。
+   件数は見出しの中にあり、狭い画面で見出しを2行に折っていた(2026-11-18)。
+   入りきらない幅ではチップの側を横に送り、件数は常に見せる */
+.list-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: -0.25rem 0 1.25rem;
+}
+
 .when-filter {
     display: flex;
-    flex-wrap: wrap;
+    flex: 1;
+    min-width: 0;
     gap: 0.3rem;
-    margin: -0.25rem 0 1.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.when-filter::-webkit-scrollbar {
+    display: none;
 }
 
 .when-dates {
@@ -682,14 +706,24 @@ body.no-scroll {
     opacity: 0.75;
 }
 
-/* 360px 幅でも4つを1行に収める */
+/* スマホでは4つのチップと件数を1行に収める。360px まで */
+@media (max-width: 440px) {
+    .when-chip {
+        padding-left: 0.62rem;
+        padding-right: 0.62rem;
+    }
+}
+
 @media (max-width: 380px) {
     .when-filter {
-        gap: 0.25rem;
+        gap: 0.2rem;
     }
     .when-chip {
-        padding-left: 0.55rem;
-        padding-right: 0.55rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .when-dates {
+        font-size: 0.9em;
     }
 }
 
@@ -824,6 +858,12 @@ main {
     letter-spacing: 0.02em;
 }
 
+/* トップの見出しは狭い画面でも1行に収める(2026-11-18 指摘)。
+   22字が 360px 幅に入る大きさ。字数を変えたら 4vw も合わせる */
+.section-heading--fit {
+    font-size: min(1.1rem, 4vw);
+}
+
 .section-heading--sub {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
@@ -833,16 +873,13 @@ main {
 }
 
 .event-count {
-    /* 見出しが display:flex なので、縮められて「50」「件」に
-       折れていた(2026-09-08 SPで発生)。縮めない・折らない */
+    /* 縮めると「50」「件」に折れる(2026-09-08 SPで発生)。縮めない・折らない。
+       チップと並ぶので枠を付けない。付けると押せるチップに見える */
     flex-shrink: 0;
     white-space: nowrap;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--gray-400);
-    background: var(--gray-200);
-    padding: 0.15rem 0.6rem;
-    border-radius: 10px;
+    color: var(--gray-500);
 }
 
 .events-grid {
@@ -2415,6 +2452,9 @@ main {
 .section-note{font-size:.85rem;color:#6e6e6e;line-height:1.75;margin:.2em 0 1em}
 
 .mini-grid{display:grid;grid-template-columns:1fr;gap:.5rem;margin-top:.9em}
+/* 節の一覧の続き(会場の頁など)へのリンク */
+.section-more{margin:.8em 0 0;font-size:.85rem}
+.section-more a{color:#111;font-weight:600}
 .mini-card{display:flex;align-items:center;gap:.85rem;border:1px solid #e7e7e7;border-radius:9px;padding:.62rem .85rem;text-decoration:none;color:inherit;background:#fff;transition:border-color .15s,transform .15s,box-shadow .15s}
 .mini-card:hover{border-color:#111;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
 .mc-date{flex:none;width:4.2em;color:#111;border-right:1px solid #e8e8e8;padding-right:.7em;font-weight:800;font-size:.78rem;letter-spacing:.01em;font-variant-numeric:tabular-nums;line-height:1.3;align-self:stretch;display:flex;flex-direction:column;justify-content:center}

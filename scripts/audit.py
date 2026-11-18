@@ -4845,7 +4845,12 @@ def main():
     # sitemap_dead_entries は sitemap に載っているURLしか見ない。
     # ヘッダ・フッタ・ガイド・ランディングから貼っているリンクは対象外だった。
     _LINK = re.compile(r'(?:href|src)="([^"]+)"')
+    # 同じ走査で、頁どうしのリンク(<a> だけ)も数える(2026-11-18)。下の hub_unlinked と param_url_link
+    _ALINK = re.compile(r'<a\s[^>]*?href="([^"]+)"')
+    _PARAM = re.compile(r'^(?:https://agave-navi\.com)?/?(?:index\.html)?\?(?:[^"]*&(?:amp;)?)?(region|pref|when|tag)=')
     dead_links = defaultdict(set)
+    a_inbound = defaultdict(set)     # 頁(repo からの相対) → それへ <a> を張っている頁
+    param_links = defaultdict(set)   # 絞り込みの引数 → それへ <a> を張っている頁
     for path in glob.glob(rp('**', '*.html'), recursive=True):
         rel_html = os.path.relpath(path, REPO)
         if rel_html.startswith('templates' + os.sep):
@@ -4855,6 +4860,24 @@ def main():
                 body = f.read()
         except OSError:
             continue
+        for href in set(_ALINK.findall(body)):
+            m_p = _PARAM.match(href)
+            if m_p:
+                param_links[m_p.group(1)].add(rel_html)
+                continue
+            h = (href[len('https://agave-navi.com'):] or '/') if href.startswith('https://agave-navi.com') else href
+            if h.startswith(('http', '//', 'mailto:', 'tel:', 'javascript:', '#', '?')):
+                continue
+            t_ = h.split('#')[0].split('?')[0]
+            if not t_:
+                continue
+            tgt = (os.path.join(REPO, t_.lstrip('/')) if t_.startswith('/')
+                   else os.path.normpath(os.path.join(os.path.dirname(path), t_)))
+            if t_.endswith('/'):
+                tgt = os.path.join(tgt, 'index.html')
+            tgt = os.path.relpath(os.path.normpath(tgt), REPO)
+            if tgt != rel_html:
+                a_inbound[tgt].add(rel_html)
         for href in set(_LINK.findall(body)):
             if href.startswith(('http', '//', 'mailto:', 'tel:', 'javascript:', 'data:', '#')):
                 continue
@@ -4872,6 +4895,38 @@ def main():
     add('dead_internal_link', 'サイト内リンクの参照先が存在しない',
         sorted(f'{k} ← {len(v)}頁 (例 {sorted(v)[0]})' for k, v in dead_links.items()),
         '生成物の消し忘れか、リンク側がスラッグの変更に追随していない')
+
+    # --- 一覧の頁へのサイト内リンク(2026-11-18) ------------------------------
+    # 地域・県・会場・主催・今週末・今月の頁は、検索で拾わせるために作っている。
+    # ところが回の頁のパンくずとトップのチップはトップの絞り込み(/?region=)を指し、
+    # 会場の頁へは会場別の索引からしかリンクが無かった。絞り込みのURLは canonical が
+    # トップなので、そこへのリンクはこれらの頁に何も渡さない。
+    # インデックスさせる頁に、トップか回の頁から1本もリンクが無ければ鳴らす
+    _hub_bad = []
+    for _pat in ('region/*/index.html', 'pref/*/index.html', 'venue/*/index.html',
+                 'organizer/*/index.html', 'this-weekend/index.html', 'this-month/index.html'):
+        for _f in sorted(glob.glob(rp(*_pat.split('/')))):
+            _rel = os.path.relpath(_f, REPO)
+            try:
+                with open(_f, encoding='utf-8', errors='replace') as f:
+                    _head = f.read(6000)
+            except OSError:
+                continue
+            if 'noindex' in _head:
+                continue
+            _canon = re.search(r'<link rel="canonical" href="https://agave-navi\.com(/[^"]*)"', _head)
+            if _canon and _canon.group(1) != '/' + _rel[:-len('index.html')]:
+                continue  # 正規URLを別の頁に寄せた頁(1県だけの地域)
+            _src = a_inbound.get(_rel, set())
+            if not any(s == 'index.html' or s.startswith('events' + os.sep) for s in _src):
+                _hub_bad.append(f'/{_rel[:-len("index.html")]}(リンク元 {len(_src)}頁。トップ・回の頁からは無し)')
+    add('hub_unlinked', 'インデックスさせる一覧の頁に、トップと回の頁からリンクが無い', _hub_bad,
+        '回の頁(build-detail-pages.py)かトップ(sitelib の絞り込みのチップ)から、その頁への <a> を張る。'
+        '絞り込みのURL(/?region= など)へ張っても評価は渡らない')
+    add('param_url_link', 'サイト内リンクがトップの絞り込みのURLを指している',
+        sorted(f'{k}= ← {len(v)}頁 (例 {sorted(v)[0]})' for k, v in param_links.items()),
+        'canonical がトップなので、リンクの評価が地域・県・今週末の頁に渡らない。'
+        '/region/ /pref/ /this-weekend/ などの頁へ張る')
 
     # --- 出典ドメインの禁止規則 -----------------------------------------------
     # listing-policy.json の blockedUrlDomains は「url / sourceUrl に使ってはならない

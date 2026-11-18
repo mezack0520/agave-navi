@@ -466,25 +466,15 @@ def breadcrumb_items(ev):
     items = [sitelib.CRUMB_ROOT]
     region = (ev.get('region') or '').strip()
     pref = (ev.get('prefecture') or '').strip()
-    # 表示はトップの絞り込み、構造化データは実在する頁。
-    #
-    # **絞り込んで降りてきた人を、絞り込みのできない頁に出さない。**
-    # 一度 `/region/kansai/` `/pref/osaka/` に向けたが、あちらには
-    # 地域・県のチップが無いので、東京の回から千葉へ行けなくなる
-    # (2026-09-10 指摘)。次の県へ移れるのはトップの絞り込みだけ。
-    #
-    # 一方その絞り込みURLは canonical がトップなので、BreadcrumbList に
-    # 入れると「全国 > トップ > トップ > イベント名」に潰れる。
-    # そちらには実在してインデックスされる頁を出す。
+    # 表示も構造化データも実在する地域・県の頁。県の頁には隣の県へ移るチップがある
+    # (sitelib.area_crumb_html)。09-10〜11-18 は表示だけトップの絞り込みに向けていて、
+    # 評価が地域・県の頁に渡っていなかった(sitelib.crumb_parts)。
     # 47県・9地域とも generate-landing-pages.py が全イベントから作るので、
     # 詳細ページがある回の県・地域の頁は必ず存在する。
     if region:
-        items.append((region, f'/?region={quote(region)}',
-                      f'/region/{sitelib.region_slug(region)}/'))
+        items.append((region, f'/region/{sitelib.region_slug(region)}/'))
     if pref:
-        items.append((pref,
-                      f'/?region={quote(region)}&pref={quote(pref)}',
-                      f'/pref/{sitelib.pref_slug(pref)}/'))
+        items.append((pref, f'/pref/{sitelib.pref_slug(pref)}/'))
     items.append((ev.get('name') or '', None))
     return items
 
@@ -695,7 +685,7 @@ def build_page(template, ev, ctx):
         '{{dateEnd}}': date_end,
         '{{dateDisplayFull}}': make_date_display_full(ev),
         '{{region}}': region,
-        '{{regionEncoded}}': quote(region),
+        '{{regionUrl}}': f'/region/{sitelib.region_slug(region)}/' if region else '/',
         '{{venue}}': make_venue_value(ev),
         '{{prefectureRow}}': make_prefecture_row(ev),
         '{{description}}': html_escape(ev.get('description', '')),
@@ -1160,12 +1150,18 @@ def make_venue_history(ev, ctx):
     today = ctx['today']
     cards = ''.join(make_mini_card(e, today) for e in others)
     label = ctx['venue_labels'].get(k) or sitelib.venue_display(v)
+    # 同じ会場の回が2件以上なら会場の頁がある(generate-landing-pages と同じ束ね方)。
+    # 会場の頁へは回の頁からのリンクが無く、会場別の索引からしかたどれなかった(2026-11-18)
+    n = len(ctx['venues'].get(k, []))
+    more = (f'          <p class="section-more"><a href="/venue/{sitelib.venue_slug(k)}/">'
+            f'{html_escape(label)}のイベントをすべて見る({n}件)</a></p>\n')
     return (
         f'        <div class="detail-section detail-enriched">\n'
         f'          <h2 class="detail-section-title" data-kicker="VENUE">{html_escape(label)}で開催される他のイベント</h2>\n'
         f'          <p class="section-note">同じ会場での開催情報です。会場の雰囲気やアクセスの参考になります。</p>\n'
         f'          <div class="mini-grid">{cards}</div>\n'
-        f'        </div>\n'
+        + more
+        + '        </div>\n'
     )
 
 

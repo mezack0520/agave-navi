@@ -17,7 +17,7 @@ import json
 DOMAIN = 'https://agave-navi.com'
 DOMAIN_HOST = 'agave-navi.com'      # スキーム無しが要る場所(iCal の UID 等)
 JST = timezone(timedelta(hours=9))
-CSS_VERSION = '20261116b'
+CSS_VERSION = '20261118a'
 JS_VERSION = '20261116a'
 ADSENSE_CLIENT = 'ca-pub-0790348660030345'
 GA_ID = 'G-NKY8V1H8HY'
@@ -135,6 +135,13 @@ def span_md(start, end, dow=False):
 # トップの日程チップ。キーは URL の when= にも使う。
 WHEN_CHOICES = (('all', '全日程'), ('this-weekend', '今週末'),
                 ('next-weekend', '来週末'), ('this-month', '今月'))
+# 日程のチップのうち、同じ範囲の頁があるもの。チップをその頁へのリンクにする(2026-11-18)
+WHEN_PAGES = {'this-weekend': '/this-weekend/', 'this-month': '/this-month/'}
+
+
+def inplace_onclick(js):
+    """リンクのチップを押したとき、その場で絞る。Ctrl・Cmd・Shift を押しながらなら頁を開く"""
+    return f"if(!(event.ctrlKey||event.metaKey||event.shiftKey)){{{js};return false}}"
 
 
 def date_filter_html(today=None, weeks=12):
@@ -151,9 +158,15 @@ def date_filter_html(today=None, weeks=12):
     for key, name in WHEN_CHOICES:
         on = key == 'all'
         dates = f'<span class="when-dates">{html_escape(sub[key])}</span>' if key in sub else ''
-        chips.append(f'<button type="button" class="when-chip{" active" if on else ""}"'
-                     f' data-when="{key}" aria-pressed="{"true" if on else "false"}"'
-                     f' onclick="selectWhen(\'{key}\')">{html_escape(name)}{dates}</button>')
+        attrs = (f' class="when-chip{" active" if on else ""}" data-when="{key}"'
+                 f' aria-pressed="{"true" if on else "false"}"')
+        js = f"selectWhen('{key}')"
+        # 頁がある範囲はリンクにする。押すとその場で絞り、検索エンジンには頁へのリンクとして見せる
+        if key in WHEN_PAGES:
+            chips.append(f'<a href="{WHEN_PAGES[key]}" role="button"{attrs}'
+                         f' onclick="{_attr(inplace_onclick(js))}">{html_escape(name)}{dates}</a>')
+        else:
+            chips.append(f'<button type="button"{attrs} onclick="{_attr(js)}">{html_escape(name)}{dates}</button>')
     return ('<div class="when-filter" id="whenFilter" role="group" aria-label="日程で絞り込み"'
             f' data-weekends="{_attr(json.dumps(blocks, ensure_ascii=False, separators=(",", ":")))}">'
             + ''.join(chips) + '</div>')
@@ -1758,13 +1771,21 @@ def crumb_here(name):
 
 
 def crumb_button(name, onclick, *, active=False, node_id='', cls='pref-crumb',
-                 data=''):
+                 data='', href=''):
     """押して絞る段。トップのエリア絞り込みが使う。
 
-    行き先がリンクではなくJSなので button。見た目は上位・現在地と
-    同じ部品を使う。ここを div や span で作ると、同じ形のものが
-    別のCSSを持つ(それが .crumb-row / .region-tabs / .pref-row だった)。
+    見た目は上位・現在地と同じ部品を使う。ここを div や span で作ると、
+    同じ形のものが別のCSSを持つ(それが .crumb-row / .region-tabs / .pref-row だった)。
+
+    href があれば a にする。押すとその場で絞り(JS)、検索エンジンと
+    新しいタブで開く人には実在する頁へのリンクとして見せる(2026-11-18)。
+    button のままだと、トップから地域の頁へリンクが1本も無かった。
     """
+    if href:
+        return (f'<a href="{_attr(href)}" class="' + cls + (' active' if active else '') + '"'
+                + (f' id="{node_id}"' if node_id else '')
+                + ((' ' + data) if data else '')
+                + f' onclick="{_attr(inplace_onclick(onclick))}">{html_escape(name)}</a>')
     return ('<button class="' + cls + (' active' if active else '') + '"'
             + (f' id="{node_id}"' if node_id else '')
             + ((' ' + data) if data else '')
@@ -1801,21 +1822,17 @@ def crumb_bar_html(navs, search=True, live=False):
 
 
 def crumb_parts(item):
-    """パンくず1項目を (表示名, 可視リンク先, 構造化データのURL) に開く。
+    """パンくず1項目を (表示名, リンク先, 構造化データのURL) に開く。
 
-    項目は (名前, URL) か (名前, 可視URL, LD用URL) のどちらでもよい。
-    **2つ書けるのは、人の導線と検索の階層が一致しない場所があるため。**
-    詳細・県・地域の上位はトップの絞り込み(`/?region=関東&pref=東京`)を
-    指す。絞り込んで降りてきた人が次に隣の県へ行けるのはそこだけで、
-    `/pref/tokyo/` にはチップが無く袋小路になる(2026-09-10 指摘)。
-    一方その絞り込みURLは canonical がトップなので、BreadcrumbList に
-    入れると階層が潰れる。そちらには実在する `/pref/tokyo/` を出す。
+    2026-09-10 から 11-18 まで、詳細・県の頁の上位は、表示はトップの絞り込み
+    (`/?region=関東&pref=東京`)、構造化データは `/pref/tokyo/` と2通りに出していた。
+    県の頁にチップが無く、隣の県へ移れなかったため(09-10 指摘)。その間、
+    回の頁・トップから地域・県の頁へのリンクが無く、絞り込みのURLは canonical が
+    トップなので評価がどこにも渡っていなかった。県・地域の頁に area_crumb_html の
+    チップを置き、どちらも実在する頁を指すようにした。
 
     **items は1つ。**表示用とLD用でリストを別に組むと、片方だけ直る。
     """
-    if len(item) == 3:
-        name, url, ld = item
-        return name, url, (ld if ld is not None else url)
     name, url = item
     return name, url, url
 
@@ -1915,7 +1932,8 @@ def area_filter_html(events=None):
         if have is not None and r not in have:
             continue
         chips.append(crumb_button(r, f"selectRegion('{r}')", cls='region-tab',
-                                  data=f'data-region="{_attr(r)}"'))
+                                  data=f'data-region="{_attr(r)}"',
+                                  href=f'/region/{region_slug(r)}/'))
     region_nav = crumb_nav(
         [crumb_button('全国', "selectRegion('all')", active=True),
          '<div class="pref-chips" id="regionChips">' + ''.join(chips) + '</div>'],
@@ -1926,6 +1944,26 @@ def area_filter_html(events=None):
          '<div class="pref-chips" id="prefChips"></div>'],
         label='エリア絞り込み', node_id='prefRow', hidden=True)
     return crumb_bar_html([region_nav, pref_nav], live=True)
+
+
+def area_crumb_html(region, prefs, pref=None):
+    """地域・県の頁のパンくず。全国 > 地域 > 県のチップ(2026-11-18)。
+
+    トップの絞り込みと同じ並びを、実在する頁へのリンクで出す。回の頁のパンくずは
+    これらの頁を指すので、ここで隣の県へ移れないと袋小路になる(2026-09-10 指摘)。
+    prefs はその地域で頁がある県。並びは PREF_TO_REGION(北→南)。
+    県の頁では今の県を先頭に置く。帯は横に送る作りなので、並びのままだと
+    狭い画面で現在地が画面の外に出る(東京は関東の6番目)。
+    """
+    order = {p: i for i, p in enumerate(PREF_TO_REGION)}
+    nodes = [crumb_link(*CRUMB_ROOT),
+             crumb_link(region, f'/region/{region_slug(region)}/') if pref else crumb_here(region)]
+    chips = [f'<span class="pref-chip active" aria-current="page">{html_escape(p)}</span>' if p == pref
+             else f'<a class="pref-chip" href="/pref/{pref_slug(p)}/">{html_escape(p)}</a>'
+             for p in sorted(set(prefs), key=lambda p: (p != pref, order.get(p, 99)))]
+    if chips:
+        nodes.append('<div class="pref-chips">' + ''.join(chips) + '</div>')
+    return crumb_bar_html([crumb_nav(nodes)])
 
 
 # sitelib はどのスクリプトからも import されるので、リポジトリの根は

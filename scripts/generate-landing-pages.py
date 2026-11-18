@@ -160,7 +160,8 @@ CANONICALIZED_PATHS = []  # canonicalを他URLに向けた頁。noindexではな
 def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
            noindex=False, intro_html='', fallback_evs=None, rel_path=None,
            canonical_of=None, feed_href=None,
-           upd_region=None, upd_prefecture=None, aff_tags='', aff_mercari=False):
+           upd_region=None, upd_prefecture=None, aff_tags='', aff_mercari=False,
+           crumb_html=None):
     # canonical_of: 別URLと内容が完全に重複する頁で、正規URLをそちらに寄せる。
     # noindexにはしない(利用者には見える・リンクも辿らせる)が、
     # 自分自身を指さないcanonicalとsitemap掲載は矛盾するのでsitemapからは外す。
@@ -182,7 +183,8 @@ def render(title, desc, kw, canon, bc, h1, lead, evs, root='../../',
             '<link rel="stylesheet"',
             f'<link rel="alternate" type="application/rss+xml" '
             f'title="{html_escape(h1)}" href="{feed_href}">\n  <link rel="stylesheet"', 1)
-    bch = bc_html(bc)
+    # 構造化データは bc から、表示は渡されたものを使う。地域・県の頁は県のチップを足す
+    bch = crumb_html or bc_html(bc)
     today_str = datetime.now(JST).strftime('%Y-%m-%d')
     if evs:
         # 件数は各節の見出しに出るので「該当イベント: N件」の行は持たない。
@@ -358,20 +360,22 @@ def main():
         `/pref/` と `/region/` の索引そのものは、その頁自身のパンくずで
         「都道府県別」「地域別」を名乗る。
         """
-        from urllib.parse import quote
         r = region or sitelib.pref_to_region(pref)
         items = [sitelib.CRUMB_ROOT]
         if r:
-            # 表示はトップの絞り込み(隣の県へ移れる)、LDは実在する頁。
-            # 詳細ページと同じ規則。crumb_parts を見ること
-            items.append((r, f'/?region={quote(r)}',
-                          f'/region/{region_slug(r)}/'))
+            items.append((r, f'/region/{region_slug(r)}/'))
         items.append((pref, None))
         return items
 
     by_pref = defaultdict(list)
     for e in events:
         if e.get('prefecture'): by_pref[e['prefecture']].append(e)
+    # 県のチップに出す、その地域で頁がある県
+    prefs_of = defaultdict(set)
+    for p, evs in by_pref.items():
+        r = next((e.get('region') for e in evs if e.get('region')), None) or sitelib.pref_to_region(p)
+        if r:
+            prefs_of[r].add(p)
     for p, evs in by_pref.items():
         sl = pref_slug(p)
         region = next((e.get('region') for e in evs if e.get('region')), None)
@@ -381,6 +385,7 @@ def main():
         intro_html = f'<p>{facts}</p>' if facts else ''
         if region and region in REGION_ROMAJI:
             intro_html += f'<p>近隣で開催されるイベントは<a href="/region/{REGION_ROMAJI[region]}/">{region}地方のイベント一覧</a>からも探せます。</p>'
+        rg = region or sitelib.pref_to_region(p)
         write_page(os.path.join(REPO_ROOT, 'pref', sl, 'index.html'),
             render(f'{p}のアガベ・植物イベント', f'{p}で開催されるアガベ・多肉植物・塊根植物のイベント情報。{len(evs)}件掲載。',
                    f'{p},アガベ,多肉植物,イベント,即売会', f'{DOMAIN}/pref/{sl}/',
@@ -390,7 +395,8 @@ def main():
                    upcoming_then_past(evs), '../../',
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'pref/{sl}/index.html',
-                   upd_prefecture=p))
+                   upd_prefecture=p,
+                   crumb_html=sitelib.area_crumb_html(rg, prefs_of[rg], pref=p) if rg else None))
         counters['pref']+=1
 
     # Region pages
@@ -422,7 +428,7 @@ def main():
                    noindex=(len(evs) < THIN_THRESHOLD), intro_html=intro_html,
                    fallback_evs=fallback5, rel_path=f'region/{sl}/index.html',
                    canonical_of=canonical_of, feed_href=f'/feeds/region-{sl}.xml',
-                   upd_region=r))
+                   upd_region=r, crumb_html=sitelib.area_crumb_html(r, prefs_of[r])))
         counters['region']+=1
 
     # Archive YM
