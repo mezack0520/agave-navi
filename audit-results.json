@@ -1,5 +1,5 @@
 {
-  "total": 775,
+  "total": 784,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -768,8 +768,9 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 3,
+      "count": 4,
       "items": [
+        "igashira-park-taniku-saboten-tenjikai-2026-11(2026-11-19〜2026-11-22/4日/長期)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
         "rare-plants-collection-hankyu-umeda-2026-11(2026-11-18〜2026-11-24/7日/長期)",
         "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)"
@@ -920,8 +921,10 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-12-04 HAMACHO MIDORI MARKET"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1031,8 +1034,11 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-11-23 bsj-meeting-osaka-2026-11: 公式ページが変わった(本文: 1346→1344字 -1%)",
+        "2026-12-06 bsj-soukai-nishishinjuku-2026-12: 公式ページが変わった(本文: 1626→1624字 -1%)"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1178,9 +1184,12 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 1,
+      "count": 4,
       "items": [
-        "2026-11-28 tanikuen-ohisama-icity21-yamagata-2026-11: https://www.instagram.com/reel/Dfxw_x8TrIc/（sourcePost）"
+        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: https://www.instagram.com/p/Df3LVr_kw8b/（caption）",
+        "2026-11-28 tanikuen-ohisama-icity21-yamagata-2026-11: https://www.instagram.com/reel/Dfxw_x8TrIc/（sourcePost）",
+        "2027-01-31 gamagori-taniku-festa-hamamatsu-2nd-2027-01: https://www.instagram.com/p/Dfk9aA-k--Z/（caption）",
+        "2027-04-11 biku-matsuri-vol2-ozman-2027-04: https://www.instagram.com/reel/DfwYvK5RUoD/（sourcePost）"
       ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
@@ -1516,21 +1525,24 @@
     },
     "rejected_revisit_due": {
       "title": "再評価待ちの見送りが開催10日前を切ったのに見ていない",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "cadore-de-taniku-marche-2026-11: 開催 2026-11-29・最終評価 2026-11-15",
+        "lala-botaniq-vol2-2026-11: 開催 2026-11-29・最終評価 2026-10-07",
+        "niku-palette-festival-marugame-2026-11: 開催 2026-11-29・最終評価 2026-11-15"
+      ],
       "note": "出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない",
       "severity": "urgent"
     },
     "rejected_revisit_stale": {
       "title": "再評価待ちの見送りが30日以上動いていない",
-      "count": 6,
+      "count": 5,
       "items": [
-        "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12: 最終評価 2026-10-16（33日前）",
-        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（53日前）",
-        "lala-botaniq-vol2-2026-11: 最終評価 2026-10-07（42日前）",
-        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（37日前）",
-        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（53日前）",
-        "taniku-jam-kyoto-2027-01: 最終評価 2026-10-08（41日前）"
+        "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12: 最終評価 2026-10-16（34日前）",
+        "haioku-club-goccia-2026-autumn: 最終評価 2026-09-26（54日前）",
+        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（38日前）",
+        "neyagawa-botanical-festival-2026-10: 最終評価 2026-09-26（54日前）",
+        "taniku-jam-kyoto-2027-01: 最終評価 2026-10-08（42日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
