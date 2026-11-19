@@ -1019,6 +1019,22 @@ def main():
                     break
         return best
 
+    # 地名を共有していても施設が違う回(松山中央公園 / 松山城山公園)は、location の施設名と
+    # venue のどちらも他方を含まず、venue の頭4字が location に無いことで拾う。
+    # location の頭が住所のもの、英字とカナの書き分け、「◯◯の会場」は数えない。
+    _addr_head = re.compile(r'^(?:〒|\d|(?:' + '|'.join(_P2R) + r')(?:都|道|府|県))')
+
+    def _names_differ(venue, location):
+        venue = unicodedata.normalize('NFKC', venue or '').strip()
+        location = unicodedata.normalize('NFKC', location or '').strip()
+        head = re.split(r'[（(]', location)[0].strip()
+        nv, nh = _place_norm(venue).lower(), _place_norm(head).lower()
+        if not nv or not nh or _addr_head.match(head) or venue.endswith('の会場'):
+            return False
+        if nv in nh or nh in nv or nv[:4] in _place_norm(location).lower():
+            return False
+        return bool(re.search('[a-z]', nv)) == bool(re.search('[a-z]', nh))
+
     disagree = []
     for e in events:
         v = _place_norm((e.get('venue') or '').strip())
@@ -1028,7 +1044,7 @@ def main():
         if (e.get('venue') or '').strip() in _VAGUE or \
                 (e.get('location') or '').strip() in _VAGUE:
             continue
-        if _longest_common(v, loc) < 2:
+        if _longest_common(v, loc) < 2 or _names_differ(e['venue'], e['location']):
             disagree.append(f"{e['slug']}: venue=\"{e['venue'][:28]}\" と "
                             f"location=\"{e['location'][:28]}\" が別の施設名")
     add('venue_location_disagree', 'venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)',
