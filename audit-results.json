@@ -1,5 +1,5 @@
 {
-  "total": 786,
+  "total": 787,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -474,8 +474,10 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "green-days-matsuyama-vol3-2026: venue=\"松山中央公園\" と location=\"松山城山公園（堀之内）\" が別の施設名"
+      ],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },
