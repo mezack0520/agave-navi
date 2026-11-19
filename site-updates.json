@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-19",
+  "updated": "2026-11-20",
   "items": [
+    {
+      "on": "2026-11-20",
+      "kind": "listed",
+      "slug": "taniku-rakuichi-takanabe-2026-11",
+      "name": "多肉楽市 in 高鍋",
+      "date": "2026-11-22",
+      "dateEnd": "2026-11-22",
+      "prefecture": "宮崎",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-20",
+      "kind": "listed",
+      "slug": "green-gather-vol3-wakayama-2026-12",
+      "name": "GREEN GATHER vol.3",
+      "date": "2026-12-20",
+      "dateEnd": "2026-12-20",
+      "prefecture": "和歌山",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-20",
+      "kind": "listed",
+      "slug": "taniku-jam-kyoto-2nd-2027-01",
+      "name": "第2回 TANIKU JAM in京都",
+      "date": "2027-01-09",
+      "dateEnd": "2027-01-09",
+      "prefecture": "京都",
+      "detail": ""
+    },
     {
       "on": "2026-11-19",
       "kind": "listed",
@@ -1170,36 +1200,6 @@
       "date": "2026-10-18",
       "dateEnd": "2026-10-18",
       "prefecture": "宮城",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "grace-succulents-hanbaikai-yonezawa-2026-10",
-      "name": "Grace succulents 多肉植物販売会（米沢総合卸売センター）",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-24",
-      "prefecture": "山形",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "stan-botanical-gallery-team-abc-2026-10",
-      "name": "STAN BOTANICAL GALLERY 店内イベント（Team ABC）",
-      "date": "2026-10-24",
-      "dateEnd": "2026-10-25",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-16",
-      "kind": "listed",
-      "slug": "grace-succulents-hanbaikai-koriyama-2026-10",
-      "name": "Grace succulents 多肉植物販売会（郡山ユラックス熱海）",
-      "date": "2026-10-25",
-      "dateEnd": "2026-10-25",
-      "prefecture": "福島",
       "detail": ""
     }
   ]

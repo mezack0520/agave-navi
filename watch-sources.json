@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-20 07:15 JST",
+ "generated": "2026-11-20 07:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 430,
+  "igAccounts": 432,
   "awaitingNextEdition": 511,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 100,
+  "igNeedsBrowser": 102,
   "igDead": 7
  },
  "igAccounts": [
@@ -1291,6 +1291,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "medelu04",
+   "url": "https://www.instagram.com/medelu04/",
+   "eventCount": 1,
+   "lastEventName": "多肉楽市 in 高鍋",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "pachypo_no_en",
    "url": "https://www.instagram.com/pachypo_no_en/",
    "eventCount": 1,
@@ -1621,11 +1631,31 @@
    "apiStatus": "api"
   },
   {
+   "handle": "dining_bar_yoi",
+   "url": "https://www.instagram.com/dining_bar_yoi/",
+   "eventCount": 1,
+   "lastEventName": "GREEN GATHER vol.3",
+   "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "bakyuu.kitchen",
    "url": "https://www.instagram.com/bakyuu.kitchen/",
    "eventCount": 1,
    "lastEventName": "曼荼羅多肉まつり（響灘ビオトープ・2026年12月）",
    "lastEventDate": "2026-12-26",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tanikujam",
+   "url": "https://www.instagram.com/tanikujam/",
+   "eventCount": 1,
+   "lastEventName": "第2回 TANIKU JAM in京都",
+   "lastEventDate": "2027-01-09",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
@@ -1712,18 +1742,6 @@
    "priority": 1,
    "source": "seed",
    "seedWhy": "上と同じ主催の店舗別アカウント。回ごとに港店・緑店で内容が違うので両方見る",
-   "apiStatus": "api"
-  },
-  {
-   "handle": "tanikujam",
-   "url": "https://www.instagram.com/tanikujam/",
-   "eventCount": 0,
-   "lastEventName": "TANIKU JAM（多肉植物と雑貨のマルシェ・京都府宇治市）",
-   "lastEventDate": null,
-   "hasUpcoming": false,
-   "priority": 1,
-   "source": "seed",
-   "seedWhy": "第1回 TANIKU JAM in京都(2026-06-13 山城総合運動公園・30店舗・主催 @boo.ta29 / 協力 @irodoleaf.taniku)を当サイトは1件も掲載していない。2026-10-05 の Step0 で終了後に知った。共催の多肉屋いろどりーふが『第2回もやりたい、次は涼しくなってから』と書いており次回がありうる",
    "apiStatus": "api"
   },
   {
