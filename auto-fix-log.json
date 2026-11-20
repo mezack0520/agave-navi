@@ -1413,6 +1413,30 @@
    "action": "skipped",
    "detail": "ブラウザ要: 主催 @greendays_matsuyama の vol.3(2026-06-06)告知で会場が松山城山公園(堀之内)か松山中央公園かを確かめ、venue / location / mapQuery / 説明文をそろえる",
    "mailedOn": "2026-11-20"
+  },
+  {
+   "on": "2026-11-21",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "midorigakuen-himeji-2026-11",
+   "action": "reviewed",
+   "detail": "Df9HaBuGAYX の「11時〜 18時〜」は特売を出す時刻で開催時間ではない。time(1部10-16/2部17-21)のまま。開始時刻を並べた書き方を範囲と読まないよう sitelib.time_ranges を直した"
+  },
+  {
+   "on": "2026-11-21",
+   "task": "event-monitor",
+   "kind": "coverage_gap_logged_but_open",
+   "target": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO (2026-11-21)",
+   "action": "fixed",
+   "detail": "11-11 の COOLCACTUS POPUP の記録に語の部分一致(CACTUS)で当たった誤報。監査の照合を語どうしの一致に直した。候補は未掲載のまま"
+  },
+  {
+   "on": "2026-11-21",
+   "task": "event-monitor",
+   "kind": "needs_browser",
+   "target": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO (2026-11-21)",
+   "action": "skipped",
+   "detail": "ブラウザ要: LEAFLA 掲載(11/21-23)。yoshimura cactus と CALEE TOKYO の IG で主催の告知を探し、載せるか見送るか決める。監査の誤報で11-11から隠れていた"
   }
  ]
 }

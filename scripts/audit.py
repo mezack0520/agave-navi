@@ -2636,6 +2636,20 @@ def main():
     # events.json の name/aliases と合わず候補に残り続ける型。10-20 に「監査の照合漏れ」と記録したまま
     # events.json の aliases を直さなかったため、POPUP-STORE(STAN)・COLLABORATION(PLUMP) が
     # 10-22 まで毎日候補に出て、次の回が裏取りをやり直した。記録だけでは照合は直らない。
+    # 語の照合は語どうしの一致で見る。部分文字列だと COOLCACTUS の記録が
+    # YOSHIMURA CACTUS の候補に当たり、本物の取りこぼしを urgent の誤報に変える。
+    _COV_GENERIC = {'CACTUS', 'PLANTS', 'PLANT', 'MARKET', 'POPUP', 'STORE', 'SHOP',
+                    'FESTIVAL', 'FESTA', 'BOTANICAL', 'GARDEN', 'TOKYO', 'OSAKA',
+                    'マルシェ', 'イベント', '販売会', '即売会', '多肉植物', '塊根植物'}
+
+    def _cov_tokens(t):
+        return {w.upper() for w in re.split(r'[\s・/()（）「」【】|,、。~〜]+', t) if w}
+
+    def _cov_shared_token(gap_title, target):
+        tt = _cov_tokens(target)
+        return any(len(w) >= 6 and w not in _COV_GENERIC and w in tt
+                   for w in _cov_tokens(gap_title))
+
     _cov_logged = []
     try:
         _fl = load_json('auto-fix-log.json', {}).get('items') or []
@@ -2646,8 +2660,7 @@ def main():
                 if it.get('kind') != 'coverage_gaps':
                     continue
                 _tg = str(it.get('target') or '')
-                if _gd and _gd in _tg and (_gt in _tg or any(
-                        len(w) >= 6 and w in _tg for w in _gt.split())) and (
+                if _gd and _gd in _tg and (_gt in _tg or _cov_shared_token(_gt, _tg)) and (
                         it.get('action') == 'listed' or '掲載済み' in str(it.get('detail') or '')):
                     _cov_logged.append(f"{_gd} {_gt[:60]} ← {it.get('on')} に掲載済みと記録済み")
                     break
@@ -3610,6 +3623,8 @@ def main():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_guest_visit_hours): {_bad}")
     for _bad in sitelib._self_test_event_section():
         _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_event_section): {_bad}")
+    for _bad in sitelib._self_test_start_time_list():
+        _time_post_bad.append(f"自己テスト失敗(sitelib._self_test_start_time_list): {_bad}")
     # 2026-11-03。過去の回の中止告知(isij.net の2024年の例会)が頁に残り、2026-12-20 の回が毎巡回鳴った。
     # check-cancelled.drop_past_notice の自己テスト。壊れると見張りの規則が黙って戻る
     try:

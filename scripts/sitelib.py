@@ -2431,6 +2431,13 @@ _TR_CLOCK_A = _TR_AMPM + r'(\d{1,2})\s*(?::\s*(\d{2})|時\s*(半|\d{1,2}\s*分)?
 _TR_CLOCK_B = _TR_AMPM + r'(\d{1,2})\s*(?::\s*(\d{2})|時(?!間)\s*(半|\d{1,2}\s*分)?)'
 _TR_SEP = r'(?:[~\-〜‐‑–—―ーｰ−]+|から)'
 TIME_RANGE_RE = re.compile(r'(?<![\d:])' + _TR_CLOCK_A + r'\s*' + _TR_SEP + r'\s*' + _TR_CLOCK_B)
+_TR_SEP_START_RE = re.compile(r'[ \t]*' + _TR_SEP)
+
+
+def time_range_matches(text):
+    """TIME_RANGE_RE の一致のうち、時刻の範囲として読めるもの。
+    「11時〜 18時〜」のように後ろの時刻にも区切りが続くのは開始時刻の列で、範囲ではない。"""
+    return [m for m in TIME_RANGE_RE.finditer(text or '') if not _TR_SEP_START_RE.match(text, m.end())]
 # 告知に並ぶが、その回の開催時間ではない時刻の行(会場の店の営業時間)。
 # Bizarre Plants Maniax の告知は「10:00‐15:00」と会場の「営業時間9:00～18:00」を両方書く
 ANNOUNCED_HOURS_SKIP = ('営業時間',)
@@ -2454,7 +2461,7 @@ def time_ranges(text):
     """
     t = unicodedata.normalize('NFKC', text or '')
     out = []
-    for m in TIME_RANGE_RE.finditer(t):
+    for m in time_range_matches(t):
         a = _tr_minutes(m.group(1), m.group(2), m.group(3), m.group(4))
         b = _tr_minutes(m.group(5), m.group(6), m.group(7), m.group(8))
         if not (a[0] <= 24 and b[0] <= 24 and a[1] < 60 and b[1] < 60):
@@ -2658,13 +2665,13 @@ def announced_dated_hours(caption, month_days, min_minutes=120, place=None):
     for i, ln in enumerate(lines):
         if any(w in ln for w in ANNOUNCED_HOURS_SKIP):
             continue
-        ms = list(TIME_RANGE_RE.finditer(ln))
+        ms = time_range_matches(ln)
         if not ms:
             continue
         head = ''
         for j in range(i - 1, max(-1, i - 4), -1):
             if lines[j].strip():
-                if not TIME_RANGE_RE.search(lines[j]):
+                if not time_range_matches(lines[j]):
                     head = lines[j]
                 break
         # 企画の見出しは時刻の行の下に来ることもある(「10/24 19:00 - 22:00 / OPENING EVENT」)。
@@ -2874,6 +2881,27 @@ def event_section(caption, e):
                 out.append(l)
             return '\n'.join(out)
     return cap
+
+
+def _self_test_start_time_list():
+    """開始時刻を並べた「11時〜 18時〜」を開催時間の範囲と読まない(2026-11-21、緑楽宴 Df9HaBuGAYX)。
+    返り値は食い違いの一覧(空なら合格)。audit.time_vs_organizer_post が毎回呼ぶ"""
+    bad = []
+    acc = 'honoka.kakogawa'
+    cap = '11月22日\u3000緑楽宴イベント\n11時〜\u300018時〜\n数量限定ビカクシダのドワーフ特売'
+    ev = {'slug': 'mg', 'name': '緑楽宴', 'date': '2026-11-22', 'organizerIg': acc,
+          'time': '1部 10:00〜16:00／2部 17:00〜21:00'}
+    posts = {acc: [{'timestamp': '2026-11-20T07:26:18+0000', 'permalink': 'u1', 'caption': cap}]}
+    got = organizer_post_hours_missing(ev, posts)
+    if got:
+        bad.append(('開始時刻の列は範囲にしない', got))
+    posts2 = {acc: [{'timestamp': '2026-11-20T07:26:18+0000', 'permalink': 'u1',
+                     'caption': cap.replace('11時〜\u300018時〜', '11時〜18時')}]}
+    if not organizer_post_hours_missing(ev, posts2):
+        bad.append(('11時〜18時は従来どおり出る(検査が空振りしていない)',))
+    if time_ranges('9:00〜15:00\n-——') != [(540, 900)]:
+        bad.append(('次の行の区切り線で範囲を落とさない',))
+    return bad
 
 
 def _self_test_event_section():
@@ -3192,7 +3220,7 @@ def description_hours_missing(e, undated=False):
     t = e.get('time') or ''
     have = clock_minutes(t)
     out = []
-    for m in TIME_RANGE_RE.finditer(ds):
+    for m in time_range_matches(ds):
         rr = time_ranges(m.group(0))
         if not rr or rr[0][1] - rr[0][0] < 120:
             continue
