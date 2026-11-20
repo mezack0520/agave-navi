@@ -1,5 +1,5 @@
 {
-  "total": 787,
+  "total": 825,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -770,13 +770,33 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 6,
+      "count": 26,
       "items": [
+        "botanical-popup-ondo-kurate-2026-11(2026-11-21〜2026-11-22/2日)",
         "chinki-shokubutsu-market-yaeyama-vol2-2026-11(2026-11-20〜2026-11-21/2日)",
+        "coolcactus-popup-antidote-oimachi-2026-11(2026-11-21〜2026-11-23/3日)",
+        "fehn-5th-kakusen-en-ikebukuro-2026-11(2026-11-21〜2026-11-22/2日)",
+        "fuji-taniku-plants-marche-2026-11(2026-11-21〜2026-11-21/1日)",
+        "greensnap-marche-abc-hachioji-2026-11(2026-11-21〜2026-11-22/2日)",
+        "hanamichiru-taniku-sokubaikai-joyfulak-ooasa-2026-11(2026-11-21〜2026-11-22/2日)",
+        "hartn-fes-4th-hirata-kasuga-2026-11(2026-11-21〜2026-11-21/1日)",
+        "haze-various-genres-marche-2026-11(2026-11-21〜2026-11-22/2日)",
         "igashira-park-taniku-saboten-tenjikai-2026-11(2026-11-19〜2026-11-22/4日/長期)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
+        "lier-taniku-festival-ichikawa-2026-11(2026-11-21〜2026-11-21/1日)",
+        "lier-taniku-festival-shimonoseki-kikugawa-2026-11(2026-11-21〜2026-11-21/1日)",
+        "marutto-shokubutsu-fes-2026-11(2026-11-21〜2026-11-22/2日)",
+        "moromoro-plants-19th-izumi-2026-11(2026-11-21〜2026-11-22/2日)",
+        "nagoriba-naruto-uchinoumi-2026-11(2026-11-21〜2026-11-21/1日)",
+        "nohara-green-marche-vol10-2026-11(2026-11-21〜2026-11-22/2日)",
+        "picnic-garden-vol27-plaza-hana-fukushima-2026-11(2026-11-21〜2026-11-22/2日)",
+        "plant-addict-festa-ishiuchi-pennon-2026-11(2026-11-21〜2026-11-21/1日)",
+        "plump-plants-collab-ina-2026-11(2026-11-21〜2026-11-22/2日)",
         "rare-plants-collection-hankyu-umeda-2026-11(2026-11-18〜2026-11-24/7日/長期)",
         "sand-hiroshima-2026-11(2026-11-20〜2026-11-22/3日)",
+        "succulents-noel-showa-kinen-2026-11(2026-11-21〜2026-11-23/3日)",
+        "tanikudayo-zeninshugo-17th-tsuyama-2026-11(2026-11-21〜2026-11-21/1日)",
+        "tanushimaru-garden-shokubutsu-hanbaikai-vol5-2026-11(2026-11-21〜2026-11-22/2日)",
         "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -911,8 +931,10 @@
     },
     "coverage_gap_logged_but_open": {
       "title": "掲載済みと記録したのに取りこぼし候補に残っている回(events.json の aliases に他所での呼び名を足す)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-21 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO ← 2026-11-11 に掲載済みと記録済み"
+      ],
       "note": "該当イベントの aliases にアグリゲータ側の呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。記録を書くだけでは翌日も候補に出る",
       "severity": "urgent"
     },
@@ -925,8 +947,17 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 8,
+      "items": [
+        "2026-11-21 AGAVE OUTLET SALE（アガベ アウトレットセール）",
+        "2026-11-21 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+        "2026-11-22 SPIKE GREEN PLANET 柱サボテン大放出",
+        "2026-11-23 FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ）",
+        "2026-12-05 plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA",
+        "2026-12-05 花と植物フェア",
+        "2026-12-06 「第3回 あまんだ多肉 スマイルハートマルシェ」",
+        "2026-12-26 HOP（ビカクシダ販売会）"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1134,8 +1165,10 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "@greensnap.jp 2026-12-31: \\HAMACHO MIDORI MARKET🌿‬/ お気に入りの植物やお花に出会う、浜町の2日間。|12/4・5入場無料 https://www.instagram.com/p/Df9SGPjGY97/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1155,8 +1188,10 @@
     },
     "time_vs_organizer_post": {
       "title": "time が主催の告知投稿に書かれた時刻と食い違う・欠けている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "midorigakuen-himeji-2026-11: time「1部 10:00〜16:00／2部 17:00〜21:00」/ 告知に 11/22 11:00〜18:00 がある (Df9HaBuGAYX)"
+      ],
       "note": "告知の時刻に直す(日ごとに違えば「10:00〜18:00（最終日は17:00まで）」の形)。告知が後から時刻を変えたなら新しいほうに合わせる。出典がプロフィールや古い速報なら、時刻を書いた告知の投稿に sourceUrl を差し替える(紐づいた投稿と食い違って鳴り直すため)。enrich が書いた値なら、出所は sync-events / weekly-enrichment のログの Found: の行で分かる",
       "severity": "urgent"
     },
@@ -1183,8 +1218,16 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 7,
+      "items": [
+        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
+        "2026-11-21 lier-taniku-festival-ichikawa-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
+        "2026-11-22 lier-taniku-festival-hamada-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
+        "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/p/Df9WUnuuj1C/（caption）",
+        "2026-11-23 lier-taniku-festival-yonago-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
+        "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12: https://www.instagram.com/p/Df8iIJrj1oU/（caption）",
+        "2027-01-09 taniku-jam-kyoto-2nd-2027-01: https://www.instagram.com/reel/DetweShPe9J/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1528,7 +1571,7 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 1,
       "items": [
-        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（39日前）"
+        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（40日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"

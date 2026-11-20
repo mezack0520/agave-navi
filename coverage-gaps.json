@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-20",
+  "sweptOn": "2026-11-21",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,31 +31,81 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 772,
-    "in_scope": 250,
-    "covered": 167,
-    "known_rejected": 83,
-    "truncated_resolved": 45,
-    "truncated_unresolved": 5,
+    "candidates": 852,
+    "in_scope": 260,
+    "covered": 169,
+    "known_rejected": 78,
+    "truncated_resolved": 0,
+    "truncated_unresolved": 6,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 109,
-    "truncated_unresolved_hits": 225,
+    "in_scope_leafla": 119,
+    "truncated_unresolved_hits": 270,
     "in_scope_nextmeet": 99,
     "in_scope_matome-blog": 6,
     "in_scope_organizer-index": 5,
     "in_scope_pukubook": 31,
-    "gaps_raw": 0
+    "gaps_raw": 13
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/13 追加 BOTAJAMが和歌山県の丸十家具で11月29...",
-    "11/13 追加 新風会盆栽まつりが香川県高松市の北谷養成園で1...",
-    "11/13 追加 fiore soffitta POP UP S...",
-    "11/12 追加 ONEDAY.factory® POP UPが...",
-    "11/12 追加 奈良県三宅町のThe PlantsでChris..."
+    "11/20 追加 第3回ここのっとが三重県いなべ市のFUJIHU...",
+    "11/20 追加 沼ノ上農園でオージープランツ限定SUPER S...",
+    "11/20 追加 浜町みどりマーケットが12月4日・5日に開催、...",
+    "11/20 追加 gardenマルシェが千葉県八千代市で開催、盆...",
+    "11/20 追加 多肉と雑貨 第8回 農マルシェ開催、naoが9...",
+    "11/20 追加 そごう広島店 屋上 NETOHAで「ビオラの風..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-21",
+      "title": "AGAVE OUTLET SALE（アガベ アウトレットセール）",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-21",
+      "lastSeen": "2026-11-23",
+      "days": 3,
+      "title": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-22",
+      "title": "SPIKE GREEN PLANET 柱サボテン大放出",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-23",
+      "title": "FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ）",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-05",
+      "lastSeen": "2026-12-06",
+      "days": 2,
+      "title": "plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-05",
+      "lastSeen": "2026-12-06",
+      "days": 2,
+      "title": "花と植物フェア",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-06",
+      "title": "「第3回 あまんだ多肉 スマイルハートマルシェ」",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-26",
+      "lastSeen": "2026-12-27",
+      "days": 2,
+      "title": "HOP（ビカクシダ販売会）",
+      "source": "leafla"
+    }
+  ]
 }
