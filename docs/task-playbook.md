@@ -371,6 +371,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   ```
   `(none)` が返るアカウントは埋め込みを許可していない。`/p/<code>/` を fetch して `meta[name="description"]` を読む。
 - プロフィールは navigate して DOM の `a[href*="/p/"]` から拾う。プロフィールの HTML を fetch しても投稿リンクは入っていない。
+  グリッドはスクロールしても約45件(2か月ほど)で読み込みが止まる。それより古い回の告知は、出典や出店者の投稿の @メンションから投稿を当てて `embed/captioned` で読む。
   グリッドの `img.alt` にはチラシの文字が OCR 済みで入っていて、同じ主催の別の回も一緒に見える。
 - ペインが隠れていると投稿もグリッドも描画されない。navigate のあと `computer` の screenshot を1回撮ると `visible` になる。
   `browser_batch` は navigate → screenshot(scale 0.3)→ javascript の組を5つまで並べ、プロフィールは3秒待ってから拾う。
