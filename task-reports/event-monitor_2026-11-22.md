@@ -15,10 +15,12 @@
    - organizer_unlisted_rejected_post を見張りと同じく日付で絞らないようにした。直す前のデータで HAMACHO の1件を検出することを確認。
    - organizer_unlisted_dates は、巡回の後にその投稿を出典に載せた回が会期で日付を覆えば数えない(HOP の1件)。数えなかった件数を出力する。
 
+5. daily の巡回し直しで、取りこぼし候補の春日店・小戸店の行と HAMACHO の 12/31 が消えたことを確認。新たに出た @grace.succulents 11/28・29(福島市街なか交流館)は主催の告知 Df_jaXqyulB で裏取りし、日次メールの後に new-events.json で掲載。
+
 ## 残り
 - 11-21 は event-listing-review / agave-event-update / agave-navi-eyecatch が trigger 上は発火したが何も押していない(task_run_gap)。今日は3本とも動いた。
 - monster-plants-kagawa-2027-03 の保留が41日動いていない(rejected_revisit_stale、info)。agave-event-update の持ち分。
 - pending-judgments 0件、needs_browser の未処理 0件。
 
 ## 終わり
-- mail-request.json を push。clone 削除済み。
+- mail-request.json を push。health 成功、lastMailedOn 2026-11-22。clone 削除済み。
