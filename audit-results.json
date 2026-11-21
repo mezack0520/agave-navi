@@ -1,5 +1,5 @@
 {
-  "total": 833,
+  "total": 836,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -474,10 +474,8 @@
     },
     "venue_location_disagree": {
       "title": "venue と location が別々の施設名(片方が別イベントの貼り付けの疑い)",
-      "count": 1,
-      "items": [
-        "green-days-matsuyama-vol3-2026: venue=\"松山中央公園\" と location=\"松山城山公園（堀之内）\" が別の施設名"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で正しい会場を確認し、誤っている側を消す。同一建物内の区画なら venue を「建物名 区画」の形にまとめる",
       "severity": "info"
     },
@@ -943,33 +941,40 @@
     },
     "coverage_gap_logged_but_open": {
       "title": "掲載済みと記録したのに取りこぼし候補に残っている回(events.json の aliases に他所での呼び名を足す)",
-      "count": 0,
-      "items": [],
+      "count": 5,
+      "items": [
+        "2026-11-22 11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-08 ← 2026-11-22 に掲載済みと記録済み",
+        "2026-11-22 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO ← 2026-11-22 に掲載済みと記録済み",
+        "2026-11-23 FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ） ← 2026-11-22 に掲載済みと記録済み",
+        "2026-11-29 everybody plants ← 2026-11-22 に掲載済みと記録済み",
+        "2026-12-26 HOP（ビカクシダ販売会） ← 2026-11-22 に掲載済みと記録済み"
+      ],
       "note": "該当イベントの aliases にアグリゲータ側の呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。記録を書くだけでは翌日も候補に出る",
       "severity": "urgent"
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 7,
+      "items": [
+        "2026-11-22 SPIKE GREEN PLANET 柱サボテン大放出(見送り)",
+        "2026-11-22 base plantz BLACK FRIDAY SALE(見送り)",
+        "2026-11-22 味の素スタジアム フリーマーケット（ビカクシダ・アガベ販売出店）(見送り)",
+        "2026-12-04 2026年 中部広域グリーンフェスタ 年末謝恩大植木市(見送り)",
+        "2026-12-05 plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA(見送り)",
+        "2026-12-05 花と植物フェア(見送り)",
+        "2026-12-06 「第3回 あまんだ多肉 スマイルハートマルシェ」(見送り)"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 12,
+      "count": 5,
       "items": [
         "2026-11-22 11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-0814 福岡県春日市春日3-20(春日店) 〒819-0001",
-        "2026-11-22 SPIKE GREEN PLANET 柱サボテン大放出",
         "2026-11-22 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
-        "2026-11-22 base plantz BLACK FRIDAY SALE",
-        "2026-11-22 味の素スタジアム フリーマーケット（ビカクシダ・アガベ販売出店）",
         "2026-11-23 FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ）",
         "2026-11-29 everybody plants",
-        "2026-12-04 2026年 中部広域グリーンフェスタ 年末謝恩大植木市",
-        "2026-12-05 plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA",
-        "2026-12-05 花と植物フェア",
-        "2026-12-06 「第3回 あまんだ多肉 スマイルハートマルシェ」",
         "2026-12-26 HOP（ビカクシダ販売会）"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -1116,10 +1121,8 @@
     },
     "source_page_wrong_edition": {
       "title": "出典の頁がその回の開催日を書いていない",
-      "count": 1,
-      "items": [
-        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 出典 https://www.park-tochigi.com/igashira/greensalon/tenji は日付を2種名乗っているが、開催日(2026-11-19〜2026-11-22)が1度も出てこない"
-      ],
+      "count": 0,
+      "items": [],
       "note": "URLを開いて、日付・イベント名・会場がその回と一致するかを見る。同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。一致しないなら **url ごと外す**(残すと裏取り済みに見える)。その記事から採った imageUrl も別の回の写真なので一緒に外す。日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない",
       "severity": "urgent"
     },
