@@ -2,105 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "time_vs_organizer_post",
-   "target": "botanical-botanical-okinawa-2026-11",
-   "action": "fixed",
-   "detail": "主催 @botanical.botanical の告知 DewN-7SCeg8 で会場(アメリカンビレッジ)・時間・入場無料を確定。植物は約半数で基準内",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "rejected_revisit_expired",
-   "target": "more-coffee-more-plants-2026",
-   "action": "fixed",
-   "detail": "開催中に入ったが植物ブース内訳は未発表のまま。revisit=false",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "POPUP POPUP-STORE (2026-10-24)",
-   "action": "reviewed",
-   "detail": "STAN BOTANICAL GALLERY の stan-botanical-gallery-team-abc-2026-10 として掲載済み",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "COLLABORATION (2026-11-21)",
-   "action": "reviewed",
-   "detail": "plump-plants-collab-ina-2026-11 として掲載済み",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "第8回 多肉と雑貨 福山deマルシェ (2026-11-01)",
-   "action": "reviewed",
-   "detail": "fukuyama-de-marche-8th-2026-11 として掲載済み",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "organizer_unlisted_dates",
-   "target": "@notreatelier.29 2026-11-21",
-   "action": "listed",
-   "detail": "Succulents Noël 2026(主催 @succulentsnoel の告知 DeHRuaTv5Mv)を new-events.json に追加",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "organizer_unlisted_dates",
-   "target": "@lier_succulent 2026-11-07,2026-11-14,2026-11-15,2026-11-16",
-   "action": "reviewed",
-   "detail": "11/7 TaiShoDo は掲載済み。11/14-16 は日比谷公園ガーデニングショー等の出展告知で当サイトの対象外(ガーデニング・造園)",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "organizer_unlisted_dates",
-   "target": "@nagasako_farm 2026-10-23,2026-10-25,2026-10-30",
-   "action": "reviewed",
-   "detail": "オープンハウスの日常投稿。単独の催事告知ではない",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "agave-event-update",
-   "kind": "organizer_unlisted_dates",
-   "target": "@sprout_2010817 2026-10-24",
-   "action": "rejected",
-   "detail": "モスアート体験のワークショップ単独(workshopOnly)",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "event-monitor",
-   "kind": "coverage_gaps",
-   "target": "POPUP POPUP-STORE (2026-10-24) / COLLABORATION (2026-11-21)",
-   "action": "fixed",
-   "detail": "events.json の aliases に他所での呼び名を追加(stan-botanical-gallery-team-abc-2026-10 / plump-plants-collab-ina-2026-11)。10-20 の記録だけでは照合が直らず候補に残り続けた",
-   "mailedOn": "2026-10-22"
-  },
-  {
-   "on": "2026-10-22",
-   "task": "claude-session",
-   "kind": "dead_links",
-   "target": "第10回 ボタニカルライフ (2026-11-07) sourceUrl",
-   "action": "reviewed",
-   "detail": "bookkasama.com は 10-06〜10-21 の16回すべて 200。10-22 は 502 が続いている(中止の見張りでも 06:41・11:09 に 502)。頁が消えた返事ではなくサーバ側の障害なので、その日はリンク切れに数えない。check_events が 429/5xx を引き直さず1回でリンク切れにしていたのを直した(sitelib.probe_status で引き直し、429/5xx は3日続いたらリンク切れ)。10-24 も 502 ならメールに出る",
-   "mailedOn": "2026-10-23"
-  },
-  {
    "on": "2026-10-24",
    "task": "agave-event-update",
    "kind": "needs_browser",
@@ -1440,6 +1341,134 @@
    "action": "skipped",
    "detail": "ブラウザ要: LEAFLA 掲載(11/21-23)。yoshimura cactus と CALEE TOKYO の IG で主催の告知を探し、載せるか見送るか決める。監査の誤報で11-11から隠れていた",
    "mailedOn": "2026-11-21"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "source_page_wrong_edition",
+   "target": "igashira-park-taniku-saboten-tenjikai-2026-11",
+   "action": "fixed",
+   "detail": "施設の展示会頁が次の展示(蓮の写真展)に替わっていた。url/sourceUrl を主催 @igashirakouen の告知 Df3LVr_kw8b に差し替え"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "green-days-matsuyama-vol3-2026",
+   "action": "fixed",
+   "detail": "venue/mapQuery が vol.4 の会場(松山中央公園)になっていた。location と掲載時の説明文(主催告知から書いた城山公園)に揃えた。主催 IG のグリッドは6月まで読み込めず、Google は0件"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO (2026-11-22)",
+   "action": "listed",
+   "detail": "主催 @calee_official DftPAIKvCiz"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "FEEL BEETLE マルシェ (2026-11-23)",
+   "action": "listed",
+   "detail": "主催 @ryokuwakabu5525 DfhaJfPAUFf"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "everybody plants (2026-11-29)",
+   "action": "listed",
+   "detail": "主催 @everybodymilktea_okinawa Df0uOVqzPJ-"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "HOP（ビカクシダ販売会） (2026-12-26)",
+   "action": "listed",
+   "detail": "主催 @ozakiflowerpark Df9cHG-tIeV"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "味の素スタジアム フリーマーケット (2026-11-22)",
+   "action": "rejected",
+   "detail": "一般のフリマに出店者1組(compositeEvents)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "SPIKE GREEN PLANET 柱サボテン大放出 (2026-11-22)",
+   "action": "rejected",
+   "detail": "通常営業日の均一価格販売(storeSale.exclude)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "base plantz BLACK FRIDAY SALE (2026-11-22)",
+   "action": "rejected",
+   "detail": "全品15%OFFのみ(storeSale.exclude)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "2026年 中部広域グリーンフェスタ 年末謝恩大植木市 (2026-12-04)",
+   "action": "rejected",
+   "detail": "植木市(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA (2026-12-05)",
+   "action": "rejected",
+   "detail": "レジンのフィギュアの販売で植物の催しではない"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "花と植物フェア (2026-12-05)",
+   "action": "rejected",
+   "detail": "花屋のフェア、多肉の出店2店(compositeEvents)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "「第3回 あまんだ多肉 スマイルハートマルシェ」 (2026-12-06)",
+   "action": "rejected",
+   "detail": "ハンドメイド中心の総合マルシェ(hostedMarche)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "11月21日(土)10:00〜16:00|春日店 11月22日(日)… (2026-11-22)",
+   "action": "reviewed",
+   "detail": "平田ナーセリーの一覧頁を切り損ねた見出し。HRTN FES 4th 春日(11/21)・小戸(11/22)として掲載済み"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "needs_browser",
+   "target": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO (2026-11-21)",
+   "action": "fixed",
+   "detail": "掲載(new-events.json)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "nagoriba-maizuru-2026-11",
+   "action": "fixed",
+   "detail": "主催 @nagomitaniku DeHUJ0XE-b8 は4号棟。2号棟と書いていた venue/location/time/説明文を直し、出店者8組に"
   }
  ]
 }
