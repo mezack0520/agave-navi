@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-22 07:50 JST",
+ "generated": "2026-11-22 08:26 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 435,
   "awaitingNextEdition": 516,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 103,
+  "igNeedsBrowser": 100,
   "igDead": 7
  },
  "igAccounts": [
@@ -1228,7 +1228,7 @@
    "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "mahota029",
@@ -1338,7 +1338,7 @@
    "lastEventDate": "2026-11-23",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "bingo_botanical_base_official",
@@ -1488,7 +1488,7 @@
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "goodthings.jp",

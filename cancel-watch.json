@@ -2,14 +2,8 @@
   "_note": "開催予定の回について、主催者の出典に中止・延期の兆候が出ていないかを毎日見た結果。scripts/check-cancelled.py が書く。suspects は「人が見る理由がある」だけで、中止の証拠ではない。一次情報を確認して、中止なら events.json の eventStatus を cancelled にする(削除しない)。**画像の中の文字は読めない。**主催者が告知を画像で出す型は signature の変化でしか拾えないので、ノイズは織り込んでいる。errors が空でないときは巡回そのものが失敗しているので、suspects が0件でも「兆候なし」とは言えない。",
   "sweptOn": "2026-11-22",
   "stats": {
-    "targets": 17,
-    "fetched": 17,
-    "grownSkipped": 3,
-    "grownSkippedSlugs": [
-      "greensnap-marche-abc-hachioji-2026-11",
-      "isij-big-bazaar-2026-11-22",
-      "isij-big-bazaar-2027-01-10"
-    ]
+    "targets": 16,
+    "fetched": 16
   },
   "errors": [],
   "logicErrors": [],
@@ -70,34 +64,6 @@
       "textOnlyChanges": 2,
       "imageOnlyChanges": 0
     },
-    "igashira-park-taniku-saboten-tenjikai-2026-11": {
-      "url": "https://www.park-tochigi.com/igashira/greensalon/tenji",
-      "checkedOn": "2026-11-22",
-      "signature": {
-        "text": "f87085202a602e75",
-        "images": "75391bf3cdf5d89d",
-        "textLen": 634,
-        "imageCount": 38
-      },
-      "prevTextLen": null,
-      "sigScope": "page",
-      "sigRule": 2,
-      "scopeSince": "2026-11-22",
-      "strong": [],
-      "weak": [],
-      "datesNamed": 2,
-      "eventDateSeen": false,
-      "startDateIsPageMeta": false,
-      "wrongPlace": false,
-      "pagePrefs": [
-        "宮城",
-        "栃木"
-      ],
-      "firstSeenOn": "2026-10-26",
-      "badChars": 0,
-      "textOnlyChanges": 4,
-      "imageOnlyChanges": 0
-    },
     "greensnap-marche-abc-hachioji-2026-11": {
       "url": "https://greensnap.jp/event/events/greensnapmarche-abchousinghachioji/",
       "checkedOn": "2026-11-22",
@@ -139,7 +105,7 @@
         "textLen": 4760,
         "imageCount": 10
       },
-      "prevTextLen": 4771,
+      "prevTextLen": 4760,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -326,7 +292,7 @@
       "checkedOn": "2026-11-22",
       "signature": {
         "text": "32bb3280f2ae8c7d",
-        "images": "38690b2e88ac59aa",
+        "images": "272e4c39d3e44614",
         "textLen": 1166,
         "imageCount": 44
       },
@@ -346,7 +312,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 9
+      "imageOnlyChanges": 10
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -441,7 +407,7 @@
         "textLen": 4760,
         "imageCount": 10
       },
-      "prevTextLen": 4771,
+      "prevTextLen": 4760,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,

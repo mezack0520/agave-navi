@@ -1,5 +1,5 @@
 {
-  "total": 841,
+  "total": 827,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -742,7 +742,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 2 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 1 件を見た(親が手元に無い 1 件は判定していない)",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -843,11 +843,8 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 2,
-      "items": [
-        "オザキフラワーパーク(3件) → /venue/v-b6ec7b13/",
-        "プロトリーフゆめが丘ソラトス店(3件) → /venue/v-06d2243a/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -947,27 +944,15 @@
       "title": "掲載済みと記録したのに取りこぼし候補に残っている回(events.json の aliases に他所での呼び名を足す)",
       "count": 1,
       "items": [
-        "2026-11-22 11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-08 ← 2026-11-22 に掲載済みと記録済み"
+        "2026-11-22 開催予定 2026年11月21日(土)・22日(日) 福岡県春日市・福岡市西区|平田ナーセリー 春日店・小戸店 第4回  ← 2026-11-22 に掲載済みと記録済み"
       ],
       "note": "該当イベントの aliases にアグリゲータ側の呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。記録を書くだけでは翌日も候補に出る",
       "severity": "urgent"
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 11,
-      "items": [
-        "2026-11-22 SPIKE GREEN PLANET 柱サボテン大放出(見送り)",
-        "2026-11-22 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO(掲載済み)",
-        "2026-11-22 base plantz BLACK FRIDAY SALE(見送り)",
-        "2026-11-22 味の素スタジアム フリーマーケット（ビカクシダ・アガベ販売出店）(見送り)",
-        "2026-11-23 FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ）(掲載済み)",
-        "2026-11-29 everybody plants(掲載済み)",
-        "2026-12-04 2026年 中部広域グリーンフェスタ 年末謝恩大植木市(見送り)",
-        "2026-12-05 plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA(見送り)",
-        "2026-12-05 花と植物フェア(見送り)",
-        "2026-12-06 「第3回 あまんだ多肉 スマイルハートマルシェ」(見送り)",
-        "2026-12-26 HOP（ビカクシダ販売会）(掲載済み)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
@@ -975,7 +960,7 @@
       "title": "他所に出ていて当サイトに無いイベント候補",
       "count": 1,
       "items": [
-        "2026-11-22 11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-0814 福岡県春日市春日3-20(春日店) 〒819-0001"
+        "2026-11-22 開催予定 2026年11月21日(土)・22日(日) 福岡県春日市・福岡市西区|平田ナーセリー 春日店・小戸店 第4回 ハートンフェス FES2026 開催日時 11月21日(土)"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
@@ -1184,10 +1169,9 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 2,
+      "count": 1,
       "items": [
-        "@greensnap.jp 2026-12-31: \\HAMACHO MIDORI MARKET🌿‬/ お気に入りの植物やお花に出会う、浜町の2日間。|12/4・5入場無料 https://www.instagram.com/p/Df9SGPjGY97/",
-        "@ozakiflowerpark 2026-12-26,2026-12-27: 【HOP】 200枚以上の丈夫で長く楽しめる、選りすぐりのビカクシダが集結 ビカクシダとの”最初の一歩”をここから 定番 https://www.instagram.com/p/Df9cHG-tIeV/"
+        "@grace.succulents 2026-11-28: Grace Succulents|福島イベントのお知らせ 11月28日(土)・29日(日)の2日間、福島市街なか交流館で https://www.instagram.com/p/Df_jaXqyulB/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
