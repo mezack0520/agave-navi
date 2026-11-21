@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-22 07:19 JST",
+ "generated": "2026-11-22 07:21 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 432,
+  "igAccounts": 435,
   "awaitingNextEdition": 516,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 100,
+  "igNeedsBrowser": 103,
   "igDead": 7
  },
  "igAccounts": [
@@ -255,6 +255,16 @@
    "url": "https://www.instagram.com/earthwalk_plants/",
    "eventCount": 3,
    "lastEventName": "BOTANICAL STYLE -Fukuoka Minato-",
+   "lastEventDate": "2026-12-19",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "chanchanchikachanchan",
+   "url": "https://www.instagram.com/chanchanchikachanchan/",
+   "eventCount": 3,
+   "lastEventName": "キムタロウ さくら植物園店 クリスマスイベント",
    "lastEventDate": "2026-12-19",
    "hasUpcoming": true,
    "priority": 0,
@@ -521,6 +531,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "protoleaf.shop_yumegaoka",
+   "url": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
+   "eventCount": 2,
+   "lastEventName": "necomoss ビカクシダ販売会（プロトリーフ ゆめが丘ソラトス店）",
+   "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "plant.guild",
    "url": "https://www.instagram.com/plant.guild/",
    "eventCount": 2,
@@ -536,6 +556,16 @@
    "eventCount": 2,
    "lastEventName": "GREEN LINK(グリリン)",
    "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "ozakiflowerpark",
+   "url": "https://www.instagram.com/ozakiflowerpark/",
+   "eventCount": 2,
+   "lastEventName": "HOP（ビカクシダ販売会）",
+   "lastEventDate": "2026-12-26",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -816,16 +846,6 @@
    "eventCount": 2,
    "lastEventName": "鹿鳥風月（ゆくはし植物園 会場）",
    "lastEventDate": "2026-09-20",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "chanchanchikachanchan",
-   "url": "https://www.instagram.com/chanchanchikachanchan/",
-   "eventCount": 2,
-   "lastEventName": "第二回 アガベース",
-   "lastEventDate": "2026-09-26",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -1201,6 +1221,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "calee_official_store",
+   "url": "https://www.instagram.com/calee_official_store/",
+   "eventCount": 1,
+   "lastEventName": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "mahota029",
    "url": "https://www.instagram.com/mahota029/",
    "eventCount": 1,
@@ -1299,6 +1329,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "ryokuwakabu5525",
+   "url": "https://www.instagram.com/ryokuwakabu5525/",
+   "eventCount": 1,
+   "lastEventName": "FEEL BEETLE マルシェ",
+   "lastEventDate": "2026-11-23",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "bingo_botanical_base_official",
@@ -1439,6 +1479,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "everybodymilktea_okinawa",
+   "url": "https://www.instagram.com/everybodymilktea_okinawa/",
+   "eventCount": 1,
+   "lastEventName": "everybody plants",
+   "lastEventDate": "2026-11-29",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "goodthings.jp",
@@ -2714,16 +2764,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "protoleaf.shop_yumegaoka",
-   "url": "https://www.instagram.com/protoleaf.shop_yumegaoka/",
-   "eventCount": 1,
-   "lastEventName": "FELICITA × はちとあり 2社合同販売会",
-   "lastEventDate": "2026-09-19",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "ichigoichie_antique",
    "url": "https://www.instagram.com/ichigoichie_antique/",
    "eventCount": 1,
@@ -3858,16 +3898,6 @@
    "url": "https://www.instagram.com/qs_plant/",
    "eventCount": 1,
    "lastEventName": "シマムラ園芸×QSPLANT vol.9",
-   "lastEventDate": "2026-10-31",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ozakiflowerpark",
-   "url": "https://www.instagram.com/ozakiflowerpark/",
-   "eventCount": 1,
-   "lastEventName": "DOLCE’S 多肉植物販売会（オザキフラワーパーク）",
    "lastEventDate": "2026-10-31",
    "hasUpcoming": false,
    "priority": 2,
