@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22 08:27 JST",
+ "generated": "2026-11-22 08:29 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 435,
@@ -136,6 +136,16 @@
    "eventCount": 5,
    "lastEventName": "ボタニカル横丁（2026年11月）",
    "lastEventDate": "2026-11-22",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "grace.succulents",
+   "url": "https://www.instagram.com/grace.succulents/",
+   "eventCount": 5,
+   "lastEventName": "Grace succulents 多肉植物販売会（福島市街なか交流館）",
+   "lastEventDate": "2026-11-28",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -699,16 +709,6 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "grace.succulents",
-   "url": "https://www.instagram.com/grace.succulents/",
-   "eventCount": 4,
-   "lastEventName": "Grace succulents 多肉植物販売会（郡山ユラックス熱海）",
-   "lastEventDate": "2026-10-25",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
   },
   {
    "handle": "felicita_plants",

@@ -1,5 +1,5 @@
 {
-  "total": 827,
+  "total": 828,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -300,7 +300,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 69,
+      "count": 70,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -320,6 +320,7 @@
         "enjoy-place-outside-3rd-2027-05",
         "gamagori-taniku-festa-7th-2027-03",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
+        "grace-succulents-hanbaikai-fukushima-2026-11",
         "hop-bikakushida-ozaki-flowerpark-2026-12",
         "isij-big-bazaar-2027-03-14",
         "isij-big-bazaar-2027-05-23",
@@ -340,8 +341,7 @@
         "lier-taniku-festival-nagasaki-2027-01",
         "lier-taniku-festival-natori-2026-12",
         "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01",
-        "lier-taniku-festival-shimizu-2026-12"
+        "lier-taniku-festival-oda-2027-01"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -988,13 +988,14 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 69,
+      "count": 70,
       "items": [
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
         "2026-11-22 midorigakuen-himeji-2026-11",
         "2026-11-23 bsj-meeting-osaka-2026-11",
         "2026-11-28 botanical-journey-onomichi-2026-11",
+        "2026-11-28 grace-succulents-hanbaikai-fukushima-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
         "2026-11-29 botanoichi-senju-2026-11",
@@ -1028,8 +1029,7 @@
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
         "2027-01-17 botanical-monsters-2027-okazaki",
         "2027-01-17 chinki-plants-flea-market-2027-01",
-        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
-        "2027-01-23 lier-taniku-festival-ube-2027-01"
+        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1169,10 +1169,8 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
-      "items": [
-        "@grace.succulents 2026-11-28: Grace Succulents|福島イベントのお知らせ 11月28日(土)・29日(日)の2日間、福島市街なか交流館で https://www.instagram.com/p/Df_jaXqyulB/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
