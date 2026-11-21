@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-21 14:54 JST",
+ "generated": "2026-11-22 06:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 432,
-  "awaitingNextEdition": 511,
+  "awaitingNextEdition": 516,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 100,
@@ -129,16 +129,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "fuji_taniku",
-   "url": "https://www.instagram.com/fuji_taniku/",
-   "eventCount": 5,
-   "lastEventName": "FUJI TANIKU プランツマルシェ（2026年11月）",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
   },
   {
    "handle": "botayoko",
@@ -366,16 +356,6 @@
    "eventCount": 2,
    "lastEventName": "アートな植物ビカクシダ(阪急うめだ本店)",
    "lastEventDate": "2026-11-11",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "yamada_ishigaki",
-   "url": "https://www.instagram.com/yamada_ishigaki/",
-   "eventCount": 2,
-   "lastEventName": "珍奇植物マーケット in 八重山 vol.2",
-   "lastEventDate": "2026-11-20",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -666,6 +646,16 @@
    "eventCount": 5,
    "lastEventName": "妙高多肉市場 vol.16-17（妙高多肉大市）",
    "lastEventDate": "2026-10-31",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "fuji_taniku",
+   "url": "https://www.instagram.com/fuji_taniku/",
+   "eventCount": 5,
+   "lastEventName": "FUJI TANIKU プランツマルシェ（2026年11月）",
+   "lastEventDate": "2026-11-21",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -1081,6 +1071,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "yamada_ishigaki",
+   "url": "https://www.instagram.com/yamada_ishigaki/",
+   "eventCount": 2,
+   "lastEventName": "珍奇植物マーケット in 八重山 vol.2",
+   "lastEventDate": "2026-11-20",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "rareplantsjapan2025",
    "url": "https://www.instagram.com/rareplantsjapan2025/",
    "eventCount": 1,
@@ -1119,16 +1119,6 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
-  },
-  {
-   "handle": "plants.addict.festival",
-   "url": "https://www.instagram.com/plants.addict.festival/",
-   "eventCount": 1,
-   "lastEventName": "P•A•F 〜Plant addict Festa",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
   },
   {
    "handle": "haze_kasumigaura",
@@ -4342,6 +4332,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "plants.addict.festival",
+   "url": "https://www.instagram.com/plants.addict.festival/",
+   "eventCount": 1,
+   "lastEventName": "P•A•F 〜Plant addict Festa",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
   }
  ],
  "awaitingNextEdition": [
@@ -4430,6 +4430,28 @@
    "monthsSinceLast": 0,
    "igHandle": "taniku_moromoro_ichiba",
    "officialUrl": "https://www.instagram.com/p/Ddkt_H6E9J-/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "ナゴリバ in 鳴門ウチノ海総合公園",
+   "lastSlug": "nagoriba-naruto-uchinoumi-2026-11",
+   "lastDate": "2026-11-21",
+   "lastEnd": "2026-11-21",
+   "monthsSinceLast": 0,
+   "igHandle": "nagomitaniku",
+   "officialUrl": "https://www.instagram.com/p/DeWazGxEy7T/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "FUJI TANIKU プランツマルシェ（2026年11月）",
+   "lastSlug": "fuji-taniku-plants-marche-2026-11",
+   "lastDate": "2026-11-21",
+   "lastEnd": "2026-11-21",
+   "monthsSinceLast": 0,
+   "igHandle": "fuji_taniku",
+   "officialUrl": "https://www.instagram.com/p/DfVl1Stk4gY/",
    "recurring": true,
    "apiStatus": "api"
   },
@@ -4760,28 +4782,6 @@
    "monthsSinceLast": 0,
    "igHandle": "arakogawa_p",
    "officialUrl": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "Shabomaniac! POP-UP SHOP & OPEN GREENHOUSE",
-   "lastSlug": "shabomaniac-popup-saboru-inu-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "shabomaniac",
-   "officialUrl": "https://www.instagram.com/p/DeL_K_BzYCt/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "Green Flea Market vol.2 & 1st Anniversary（Soraniwa RAKURAKUEN）",
-   "lastSlug": "green-flea-market-vol2-soraniwa-rakurakuen-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "soraniwa_rakurakuen",
-   "officialUrl": "https://www.instagram.com/p/Dd8tCuwk81q/",
    "recurring": false,
    "apiStatus": "api"
   }

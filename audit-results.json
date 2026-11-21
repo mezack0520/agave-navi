@@ -1,5 +1,5 @@
 {
-  "total": 823,
+  "total": 833,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -204,7 +204,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 128,
+      "count": 122,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "aki-no-taniku-picnic-ibusuki-2026-11",
@@ -228,14 +228,12 @@
         "cham-plants-hanbaikai-protoleaf-yumegaoka-2026-12",
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chinki-shokubutsu-ichiba-vol10-2026-12",
-        "chinki-shokubutsu-market-yaeyama-vol2-2026-11",
         "collect-plants-2027-04",
         "coolcactus-popup-antidote-oimachi-2026-11",
         "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12",
         "enichi-vol18-bizenya-2026-11",
         "fehn-5th-kakusen-en-ikebukuro-2026-11",
         "flex-6th-anniversary-aonocraft-kakegawa-2026-12",
-        "fuji-taniku-plants-marche-2026-11",
         "fukuoka-green-party-8th-2027-05",
         "gamagori-taniku-festa-hamamatsu-2nd-2027-01",
         "garden-isle-taniku-fes-2nd-2026-12",
@@ -245,7 +243,9 @@
         "green-marche-hananoyu-fujinomiya-2026-12",
         "green-marche-hananoyu-fujinomiya-2027-02",
         "green-marche-hananoyu-fujinomiya-2027-04",
-        "green-marche-hananoyu-fujinomiya-2027-06"
+        "green-marche-hananoyu-fujinomiya-2027-06",
+        "greensnap-marche-abc-hachioji-2026-11",
+        "greensnap-marche-odaiba-2026"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -300,7 +300,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 71,
+      "count": 69,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -334,14 +334,14 @@
         "lier-taniku-festival-fukuyama-2027-01",
         "lier-taniku-festival-hamada-2026-11",
         "lier-taniku-festival-hyuga-2027-01",
-        "lier-taniku-festival-ichikawa-2026-11",
         "lier-taniku-festival-kariya-2026-12",
         "lier-taniku-festival-kitakyushu-2027-01",
         "lier-taniku-festival-nagasaki-2027-01",
         "lier-taniku-festival-natori-2026-12",
         "lier-taniku-festival-niihama-2026-12",
         "lier-taniku-festival-oda-2027-01",
-        "lier-taniku-festival-shimizu-2026-12"
+        "lier-taniku-festival-shimizu-2026-12",
+        "lier-taniku-festival-tamana-2027-01"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -770,33 +770,45 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 26,
+      "count": 38,
       "items": [
+        "aki-no-taniku-picnic-ibusuki-2026-11(2026-11-22〜2026-11-22/1日)",
+        "awajishima-taniku-smile-marche-3rd-2026(2026-11-22〜2026-11-22/1日)",
+        "botanical-day-in-titanota-vol3-2026-11(2026-11-22〜2026-11-22/1日)",
+        "botanical-day-vivahome-ibaraki-2026-11(2026-11-22〜2026-11-22/1日)",
         "botanical-popup-ondo-kurate-2026-11(2026-11-21〜2026-11-22/2日)",
-        "chinki-shokubutsu-market-yaeyama-vol2-2026-11(2026-11-20〜2026-11-21/2日)",
+        "botanical-yokocho-senju-2026-11(2026-11-22〜2026-11-22/1日)",
         "coolcactus-popup-antidote-oimachi-2026-11(2026-11-21〜2026-11-23/3日)",
+        "enichi-vol18-bizenya-2026-11(2026-11-22〜2026-11-22/1日)",
         "fehn-5th-kakusen-en-ikebukuro-2026-11(2026-11-21〜2026-11-22/2日)",
-        "fuji-taniku-plants-marche-2026-11(2026-11-21〜2026-11-21/1日)",
         "greensnap-marche-abc-hachioji-2026-11(2026-11-21〜2026-11-22/2日)",
         "hanamichiru-taniku-sokubaikai-joyfulak-ooasa-2026-11(2026-11-21〜2026-11-22/2日)",
-        "hartn-fes-4th-hirata-kasuga-2026-11(2026-11-21〜2026-11-21/1日)",
+        "hartn-fes-4th-hirata-odo-2026-11(2026-11-22〜2026-11-22/1日)",
         "haze-various-genres-marche-2026-11(2026-11-21〜2026-11-22/2日)",
+        "heartplants-kasugadou-collab-toyonaka-2026-11(2026-11-22〜2026-11-22/1日)",
         "igashira-park-taniku-saboten-tenjikai-2026-11(2026-11-19〜2026-11-22/4日/長期)",
+        "isij-big-bazaar-2026-11-22(2026-11-22〜2026-11-22/1日)",
+        "iwakuni-green-bazaar-6th-2026-11(2026-11-22〜2026-11-22/1日)",
         "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
-        "lier-taniku-festival-ichikawa-2026-11(2026-11-21〜2026-11-21/1日)",
-        "lier-taniku-festival-shimonoseki-kikugawa-2026-11(2026-11-21〜2026-11-21/1日)",
+        "ka78-kikakusai-6th-shimada-2026-11(2026-11-22〜2026-11-22/1日)",
+        "lier-taniku-festival-hamada-2026-11(2026-11-22〜2026-11-22/1日)",
         "marutto-shokubutsu-fes-2026-11(2026-11-21〜2026-11-22/2日)",
+        "midorigakuen-himeji-2026-11(2026-11-22〜2026-11-22/1日)",
+        "morino-tanikuen-hanbaikai-big-nabari-2026-11(2026-11-22〜2026-11-22/1日)",
         "moromoro-plants-19th-izumi-2026-11(2026-11-21〜2026-11-22/2日)",
-        "nagoriba-naruto-uchinoumi-2026-11(2026-11-21〜2026-11-21/1日)",
         "nohara-green-marche-vol10-2026-11(2026-11-21〜2026-11-22/2日)",
         "picnic-garden-vol27-plaza-hana-fukushima-2026-11(2026-11-21〜2026-11-22/2日)",
-        "plant-addict-festa-ishiuchi-pennon-2026-11(2026-11-21〜2026-11-21/1日)",
+        "plants-dive-vol6-tennoji-2026-11(2026-11-22〜2026-11-22/1日)",
         "plump-plants-collab-ina-2026-11(2026-11-21〜2026-11-22/2日)",
         "rare-plants-collection-hankyu-umeda-2026-11(2026-11-18〜2026-11-24/7日/長期)",
         "sand-hiroshima-2026-11(2026-11-20〜2026-11-22/3日)",
         "succulents-noel-showa-kinen-2026-11(2026-11-21〜2026-11-23/3日)",
-        "tanikudayo-zeninshugo-17th-tsuyama-2026-11(2026-11-21〜2026-11-21/1日)",
+        "taniku-handmade-marche-kushikino-vol2-2026-11(2026-11-22〜2026-11-22/1日)",
+        "taniku-rakuichi-takanabe-2026-11(2026-11-22〜2026-11-22/1日)",
+        "tanikudayo-zeninshugo-18th-fukuyama-2026-11(2026-11-22〜2026-11-22/1日)",
         "tanushimaru-garden-shokubutsu-hanbaikai-vol5-2026-11(2026-11-21〜2026-11-22/2日)",
+        "tick-tick-vol2-shikokuzouen-2026-11(2026-11-22〜2026-11-22/1日)",
+        "tokimeki-marche-kodaihasu-2026-11(2026-11-22〜2026-11-22/1日)",
         "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
@@ -945,12 +957,16 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 8,
+      "count": 12,
       "items": [
-        "2026-11-21 AGAVE OUTLET SALE（アガベ アウトレットセール）",
-        "2026-11-21 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+        "2026-11-22 11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-0814 福岡県春日市春日3-20(春日店) 〒819-0001",
         "2026-11-22 SPIKE GREEN PLANET 柱サボテン大放出",
+        "2026-11-22 YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+        "2026-11-22 base plantz BLACK FRIDAY SALE",
+        "2026-11-22 味の素スタジアム フリーマーケット（ビカクシダ・アガベ販売出店）",
         "2026-11-23 FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ）",
+        "2026-11-29 everybody plants",
+        "2026-12-04 2026年 中部広域グリーンフェスタ 年末謝恩大植木市",
         "2026-12-05 plant_obs 亀甲竜フィギュア POP UP in HIROSHIMA",
         "2026-12-05 花と植物フェア",
         "2026-12-06 「第3回 あまんだ多肉 スマイルハートマルシェ」",
@@ -982,10 +998,8 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 71,
+      "count": 69,
       "items": [
-        "2026-11-21 lier-taniku-festival-ichikawa-2026-11",
-        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11",
         "2026-11-21 succulents-noel-showa-kinen-2026-11",
         "2026-11-22 ka78-kikakusai-6th-shimada-2026-11",
         "2026-11-22 lier-taniku-festival-hamada-2026-11",
@@ -1023,7 +1037,9 @@
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
         "2027-01-17 botanical-monsters-2027-okazaki",
-        "2027-01-17 chinki-plants-flea-market-2027-01"
+        "2027-01-17 chinki-plants-flea-market-2027-01",
+        "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
+        "2027-01-23 lier-taniku-festival-ube-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1100,8 +1116,10 @@
     },
     "source_page_wrong_edition": {
       "title": "出典の頁がその回の開催日を書いていない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-19 igashira-park-taniku-saboten-tenjikai-2026-11: 出典 https://www.park-tochigi.com/igashira/greensalon/tenji は日付を2種名乗っているが、開催日(2026-11-19〜2026-11-22)が1度も出てこない"
+      ],
       "note": "URLを開いて、日付・イベント名・会場がその回と一致するかを見る。同じシリーズの前回の記事か、名前が同じだけの別サイトを掴んでいる。一致しないなら **url ごと外す**(残すと裏取り済みに見える)。その記事から採った imageUrl も別の回の写真なので一緒に外す。日付を画像でしか出さない頁は datesNamed=0 になり、ここには出ない",
       "severity": "urgent"
     },
@@ -1163,9 +1181,10 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
+      "count": 2,
       "items": [
-        "@greensnap.jp 2026-12-31: \\HAMACHO MIDORI MARKET🌿‬/ お気に入りの植物やお花に出会う、浜町の2日間。|12/4・5入場無料 https://www.instagram.com/p/Df9SGPjGY97/"
+        "@greensnap.jp 2026-12-31: \\HAMACHO MIDORI MARKET🌿‬/ お気に入りの植物やお花に出会う、浜町の2日間。|12/4・5入場無料 https://www.instagram.com/p/Df9SGPjGY97/",
+        "@ozakiflowerpark 2026-12-26,2026-12-27: 【HOP】 200枚以上の丈夫で長く楽しめる、選りすぐりのビカクシダが集結 ビカクシダとの”最初の一歩”をここから 定番 https://www.instagram.com/p/Df9cHG-tIeV/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -1214,13 +1233,12 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 7,
+      "count": 6,
       "items": [
-        "2026-11-21 lier-taniku-festival-shimonoseki-kikugawa-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
-        "2026-11-21 lier-taniku-festival-ichikawa-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
         "2026-11-22 lier-taniku-festival-hamada-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
         "2026-11-22 midorigakuen-himeji-2026-11: https://www.instagram.com/p/Df9WUnuuj1C/（caption）",
         "2026-11-23 lier-taniku-festival-yonago-2026-11: https://www.instagram.com/p/Df8OuZdBtXt/（caption）",
+        "2026-12-05 orais-party-2026-garden-messe-hachioji: https://www.instagram.com/p/Df_Laxuk1yv/（caption）",
         "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12: https://www.instagram.com/p/Df8iIJrj1oU/（caption）",
         "2027-01-09 taniku-jam-kyoto-2nd-2027-01: https://www.instagram.com/reel/DetweShPe9J/（sourcePost）"
       ],
@@ -1327,8 +1345,10 @@
     },
     "inquiry_review_gap": {
       "title": "event-listing-review の実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "event-listing-review が動かなかった日: 2026-11-21（直近7日で1日）"
+      ],
       "note": "reviewedHistory は起動日の記録で、scripts/record-run.py が起動直後に書く。抜けた日は、届いていた問い合わせがその日は誰にも見られていない。ただし 2026-09-02 までの空白は「走らなかった」ではなく「走ったが記録できていなかった」で、reviewedSince より前は判定しない。ゼロが続くとは限らない（Chromeの許可待ちで落ちる回がある）ため info",
       "severity": "info"
     },
@@ -1355,8 +1375,11 @@
     },
     "task_run_gap": {
       "title": "スケジュールタスクの実行が抜けた日",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "agave-event-update(daily) が動かなかった日: 2026-11-21（直近7日で1日）",
+        "agave-navi-eyecatch(daily) が動かなかった日: 2026-11-21（直近7日で1日）"
+      ],
       "note": "task-runs.json はタスクが毎回自分の実行日を書く台帳。スケジュール側の lastRunAt は最新1回しか持たないので、抜けた日は次の回が走った時点で検出できなくなる。成果物が無いまま終わった回もここに出ないので、この台帳が repo 側に残る唯一の生存記録になる。週次は曜日ではなく「7日の窓に1回あるか」で見る(起動の遅れで1日ずれるため)。event-listing-review は new-inquiries.json の reviewedHistory 側で見る。**複数のタスクが同じ日に抜けていたら、それはタスクごとの失敗ではなく環境側(スケジューラが起動しなかった)を疑う。**2026-09-03 と 09-04 は daily 2本と event-listing-review の3本が揃って抜けており、CI(daily.yml / health.yml)だけが走っていた。その場合ここには同じ日付が3行に分かれて出るので、3つの別々の問題に見える。**since 以降の記録が1件も無いタスクはここには出さない。**それは task_run_never_recorded が単独で出す別の問題(タスク側がrecord-run.py を呼んでいない)で、ここに並べると since からの日数ぶん積み上がって本物の抜けが埋もれる(2026-09-15 に分離)",
       "severity": "info"
     },
@@ -1567,7 +1590,7 @@
       "title": "再評価待ちの見送りが30日以上動いていない",
       "count": 1,
       "items": [
-        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（40日前）"
+        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（41日前）"
       ],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"

@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-21",
+  "sweptOn": "2026-11-22",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,45 +31,40 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 852,
-    "in_scope": 260,
-    "covered": 169,
-    "known_rejected": 78,
-    "truncated_resolved": 0,
+    "candidates": 900,
+    "in_scope": 234,
+    "covered": 146,
+    "known_rejected": 72,
+    "truncated_resolved": 90,
     "truncated_unresolved": 6,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 119,
+    "in_scope_leafla": 108,
     "truncated_unresolved_hits": 270,
-    "in_scope_nextmeet": 99,
-    "in_scope_matome-blog": 6,
+    "in_scope_nextmeet": 85,
+    "in_scope_matome-blog": 5,
     "in_scope_organizer-index": 5,
     "in_scope_pukubook": 31,
-    "gaps_raw": 13
+    "gaps_raw": 16
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/20 追加 第3回ここのっとが三重県いなべ市のFUJIHU...",
-    "11/20 追加 沼ノ上農園でオージープランツ限定SUPER S...",
-    "11/20 追加 浜町みどりマーケットが12月4日・5日に開催、...",
-    "11/20 追加 gardenマルシェが千葉県八千代市で開催、盆...",
-    "11/20 追加 多肉と雑貨 第8回 農マルシェ開催、naoが9...",
-    "11/20 追加 そごう広島店 屋上 NETOHAで「ビオラの風..."
+    "11/21 追加 マイちゃんのChimaChima寄せ植えワーク...",
+    "11/21 追加 土に還る言葉 vol.01「LET’S GET...",
+    "11/21 追加 VESSEL meets だいだら植物店（FL...",
+    "11/21 追加 みえ花と緑のふれあいフェスタが津市で11月28...",
+    "NEW 11月22日追加 マイちゃんのChimaChima寄せ植えワークショップが四国造園で12月19日に開催、セダム寄せ植えと作家制作の器を使用 2026年12月19日（土）、茨城県稲敷郡阿見町阿見5183の四国造園で「マイちゃんのChimaChima寄せ植え...",
+    "NEW 11月22日追加 土に還る言葉 vol.01「LET’S GET CLOSER TO THE PLANTS」が北海道東川町で11月28日・29日に開催 2026年11月28日（土）〜29日（日）、北海道東川町で「土に還る言葉 vol.01『LET’S GET CLO..."
   ],
   "gaps": [
     {
-      "date": "2026-11-21",
-      "title": "AGAVE OUTLET SALE（アガベ アウトレットセール）",
-      "source": "leafla"
-    },
-    {
-      "date": "2026-11-21",
-      "lastSeen": "2026-11-23",
-      "days": 3,
-      "title": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
-      "source": "leafla"
+      "date": "2026-11-22",
+      "title": "11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-0814 福岡県春日市春日3-20(春日店) 〒819-0001 福岡県福岡市西区小戸1-16-26(小戸店) イベント詳細を見る",
+      "source": "organizer-index",
+      "pref": "福岡",
+      "place": "11月21日(土)10:00〜16:00|春日店 11月22日(日)10:00〜16:00|小戸店 住所 〒816-0814 福岡県春日市春日3-20(春日店) 〒819-0001 福岡県福岡市西区小戸1-16-26(小戸店) イベント詳細を見る"
     },
     {
       "date": "2026-11-22",
@@ -77,9 +72,38 @@
       "source": "leafla"
     },
     {
+      "date": "2026-11-22",
+      "lastSeen": "2026-11-23",
+      "days": 2,
+      "title": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-22",
+      "title": "base plantz BLACK FRIDAY SALE",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-11-22",
+      "title": "味の素スタジアム フリーマーケット（ビカクシダ・アガベ販売出店）",
+      "source": "leafla"
+    },
+    {
       "date": "2026-11-23",
       "title": "FEEL BEETLE マルシェ（植物・多肉植物・塊根植物・観葉植物のマルシェ）",
       "source": "leafla"
+    },
+    {
+      "date": "2026-11-29",
+      "title": "everybody plants",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-04",
+      "title": "2026年 中部広域グリーンフェスタ 年末謝恩大植木市",
+      "source": "nextmeet",
+      "pref": "沖縄",
+      "place": "沖縄市農民研修センター / 沖縄県沖縄市字登川2380番地"
     },
     {
       "date": "2026-12-05",
