@@ -390,11 +390,14 @@ def known_elsewhere(cap, iso, day_index, rejected_by_day, code=''):
         if org and len(org) >= 4 and re.search(r'(?<![a-z0-9_.])' + re.escape(org) + r'(?![a-z0-9_])',
                                                norm(cap).lower()):
             return True
+    # 見送りの記録がこの投稿を出典に挙げていれば、投稿のどの日付も既知(名前が本文に出ない回。和歌山サボテンクラブの新年会)。
+    # 見送りの会期の外の日付(本文のスタンプラリーの期限など)も同じ投稿の話なので、日付で絞らない
+    if code and len(code) >= 8:
+        for rs in rejected_by_day.values():
+            if any(code in json.dumps(r, ensure_ascii=False) for r in rs):
+                return True
     # seriesWide の見送り(毎月の交換会など)は日付で絞らない(day_indexes の '*')
     for r in rejected_by_day.get(iso, []) + rejected_by_day.get('*', []):
-        # 見送りの記録がこの投稿を出典に挙げていれば既知(名前が本文に出ない回。和歌山サボテンクラブの新年会)
-        if code and len(code) >= 8 and code in json.dumps(r, ensure_ascii=False):
-            return True
         for nm in [r.get('name') or ''] + list(r.get('aliases') or []):
             k = norm(re.sub(r'\s*\(.*$', '', nm)).replace(' ', '').lower()[:6]
             if k and len(k) >= 3 and k in c:
@@ -956,6 +959,9 @@ def self_test():
     chk('開催地の市で既知', known_elsewhere('第4弾 11/21 岡山県津山市', '2026-11-21', di2, {}), True)
     chk('一般名の先頭語では当てない', known_elsewhere('多肉の即売会 11/28', '2026-11-28', di2, {}), False)
     chk('日付から離れた語では当てない', known_elsewhere('11/21 新作入荷。' + 'あ' * 40 + ' 先月は HAZE に出店', '2026-11-21', di2, {}), False)
+    _rj = {'2026-12-04': [{'name': 'HAMACHO MIDORI MARKET', 'reason': '主催の告知 Df9SGPjGY97 も同じ回'}]}
+    chk('見送りが挙げた投稿は会期の外の日付も既知', known_elsewhere('スタンプラリーは12/4〜12/31', '2026-12-31', {}, _rj, code='Df9SGPjGY97'), True)
+    chk('見送りが挙げていない投稿は会期の外で当てない', known_elsewhere('12/31 年越し市', '2026-12-31', {}, _rj, code='Dxxxxxxxxxx'), False)
     chk('大都市の市名では当てない', known_elsewhere('11/28 大阪市で開催', '2026-11-28', di2, {}), False)
     _rj = {'2027-01-17': [{'name': '和歌山サボテンクラブ 新年会・総会', 'reason': '主催 (DfOzDMFBQbI) の新年会'}]}
     chk('見送りが同じ投稿を挙げていれば既知', known_elsewhere('新年会・総会は1/17(日)', '2027-01-17', {}, _rj, 'DfOzDMFBQbI'), True)

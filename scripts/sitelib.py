@@ -389,6 +389,7 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
 # 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
 # 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
 _VENUE_ROMAJI_RAW = {'農マル園芸 吉備路農園':'noumaru-kibiji-noen',   # 3件(なごみ多肉の販売会・ノウマルシェ)
+                'オザキフラワーパーク':'ozaki-flower-park','プロトリーフ ゆめが丘ソラトス店':'protoleaf-yumegaoka-soratos',   # 3件
                 'まちの駅 笠間宿':'machinoeki-kasamajuku','南国ちゃたん たにくった':'nangoku-chatan-tanikutta','富嶽温泉 花の湯':'fugaku-onsen-hana-no-yu',   # 2026-11-05 3件以上でハッシュのままだった3会場(花の湯は location から区画「1Fエントランス」を外した。venue に残す)
                 '阪急うめだ本店':'hankyu-umeda-honten',   # 2026-11-02 location を区画なしに揃えて4件(GREEN AGE・コトコトステージ81・9階祝祭広場は venue)
                 'ガーデンプラザ華 福島店':'garden-plaza-hana-fukushima',   # 2026-10-25 ピクニックガーデン vol.27 で3件(読みは店の IG @gardenplazahana)
@@ -457,6 +458,8 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    'v-b6ec7b13': 'オザキフラワーパーク',
+    'v-06d2243a': 'プロトリーフ ゆめが丘ソラトス店',
     'v-f2260e2c': '農マル園芸 吉備路農園',
     # 2026-11-05 笠間宿・南国ちゃたん たにくった・富嶽温泉 花の湯がローマ字へ(ハッシュで立っていた頁)
     'v-ce02f6af': 'まちの駅 笠間宿',

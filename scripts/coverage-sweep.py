@@ -642,8 +642,9 @@ def org_dated_items(lines, today, horizon=ORG_INDEX_HORIZON, event_words=True):
     items, last_i, last_d = [], -99, None
     anchor, anchor_i = None, -99
     for i, line in enumerate(lines):
+        in_anchor = i - anchor_i <= 8
         ds, full = org_line_dates(line, today, horizon,
-                                  anchor=anchor if i - anchor_i <= 8 else None)
+                                  anchor=anchor if in_anchor else None)
         if full:
             anchor, anchor_i = min(full), i
         if not ds or any(w in line.lower() for w in _ORG_NOT_EVENT):
@@ -651,7 +652,10 @@ def org_dated_items(lines, today, horizon=ORG_INDEX_HORIZON, event_words=True):
         d0 = min(ds)
         if last_d is not None and i - last_i <= 8 and abs((d0 - last_d).days) <= 3:
             continue
-        ctx = ' '.join(lines[max(0, i - 1): i + 5])[:240]
+        # 年の無い日付が直前の年月日の見出しの続き(会期中で初日が過ぎた回の「2日目」の行)なら、
+        # 見出しは年月日の行から取る。日時の行から取ると名前の無い見出しになる(春日店・小戸店の行)
+        start = anchor_i if (not full and in_anchor) else i
+        ctx = ' '.join(lines[max(0, start - 1): start + 5])[:240]
         if event_words and not any(w in ctx.lower() for w in _ORG_EVENT_WORDS):
             continue
         items.append((d0.isoformat(), ctx))
@@ -1712,6 +1716,12 @@ def self_test(verbose=True):
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 日付の行と前後の行 {got}")
+    # 会期中で初日が過ぎた日は、2日目の「開催日時」の行から見出しを取らず、年月日の行から取る
+    got = [(d, 'ハートンフェス' in t) for d, t in org_dated_items(org_page_lines(jolie), date(2026, 11, 22))]
+    want = [('2026-11-22', True), ('2026-12-19', False)]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 会期中の2日目の見出し {got}")
     # 年の無い日付(花郷園の 11/7)と、放送日・発売日の行
     kagoen = ('<p>毎年春と秋に、珍奇植物を扱う生産者が一堂に会するイベントを開催。</p>'
               '<p>農場オープンデイ</p><p>11/7(土)・11/8(日) 10:00-16:00</p><p>駐車場:5台まで</p>'

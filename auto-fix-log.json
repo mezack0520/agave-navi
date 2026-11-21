@@ -1469,6 +1469,30 @@
    "target": "nagoriba-maizuru-2026-11",
    "action": "fixed",
    "detail": "主催 @nagomitaniku DeHUJ0XE-b8 は4号棟。2号棟と書いていた venue/location/time/説明文を直し、出店者8組に"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "event-monitor",
+   "kind": "venue_slug_romaji_candidates",
+   "target": "オザキフラワーパーク・プロトリーフ ゆめが丘ソラトス店",
+   "action": "fixed",
+   "detail": "3件になった2会場を sitelib の _VENUE_ROMAJI_RAW(ozaki-flower-park / protoleaf-yumegaoka-soratos)に足し、ハッシュの旧頁を _VENUE_REDIRECTS_RAW に残した"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "event-monitor",
+   "kind": "coverage_gap_logged_but_open",
+   "target": "11月21日(土)10:00〜16:00|春日店 11月22日(日)… (2026-11-22)",
+   "action": "fixed",
+   "detail": "coverage-sweep の主催一覧で、会期中に初日が過ぎた回の見出しを2日目の日時の行から取っていた。年月日の行から取るよう直した(第4回 ハートンフェス FES2026 として掲載済みの回に当たる)"
+  },
+  {
+   "on": "2026-11-22",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "@greensnap.jp HAMACHO MIDORI MARKET 2026-12-31",
+   "action": "fixed",
+   "detail": "12/31 はスタンプラリーの期限。見送り hamacho-midori-market-2026-12 に告知 Df9SGPjGY97 を書き、見張りが見送りの挙げた投稿を会期の外の日付でも既知とするよう直した"
   }
  ]
 }

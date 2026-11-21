@@ -3496,9 +3496,26 @@ def main():
         '投稿を開いて確認する。中止なら events.json の eventStatus を cancelled に'
         'して cancelledOn / cancelReason を入れる(削除しない)。空振りなら '
         'scripts/cancel-reviewed.json に判断を書けば黙る')
+    # 信号は巡回の時点の写し。巡回の後にその投稿を出典に載せた回が会期で日付を覆っていれば対応済み
+    def _ow_listed_after(_u):
+        _code = (re.search(r'/(?:p|reel)/([^/?#]+)', _u.get('permalink') or '') or [None, ''])[1]
+        _ds = _u.get('dates') or []
+        if len(_code) < 8 or not _ds:
+            return False
+        for _e in events:
+            if _code not in ' '.join(str(_e.get(k) or '') for k in
+                                     ('url', 'sourceUrl', 'instagramPostId', 'instagramUrl', 'imageSource')):
+                continue
+            _a, _b = _e.get('date') or '', _e.get('dateEnd') or _e.get('date') or ''
+            if _a and all(_a <= d <= _b for d in _ds):
+                return True
+        return False
+    _ow_unl_all = (_ow.get('signals') or {}).get('unlisted') or []
     _ow_unl = [f"@{_u.get('username','')} {','.join(_u.get('dates') or [])}: "
                f"{_u.get('excerpt','')[:60]} {_u.get('permalink','')}"
-               for _u in ((_ow.get('signals') or {}).get('unlisted') or [])]
+               for _u in _ow_unl_all if not _ow_listed_after(_u)]
+    if len(_ow_unl) < len(_ow_unl_all):
+        print(f'organizer_unlisted_dates: 巡回の後に掲載した回 {len(_ow_unl_all) - len(_ow_unl)}件を数えなかった')
     add('organizer_unlisted_dates', '主催者の最近の投稿に、当サイトに無い先の日付が出ている',
         _ow_unl,
         '次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。'
@@ -3515,7 +3532,8 @@ def main():
         for _r in _rej_items:
             if _m.group(1) not in json.dumps(_r, ensure_ascii=False):
                 continue
-            _hit = sorted(set(_u.get('dates') or []) & set(sitelib.rejected_days(_r)))
+            # 見送りが挙げた投稿なら、見送りの会期の外の日付(スタンプラリーの期限など)も既知
+            _hit = sorted(set(_u.get('dates') or []))
             if _hit:
                 _ow_rej_left.append(f"@{_u.get('username','')} {','.join(_hit)}: 見送り {_r.get('key','')} が同じ投稿 {_m.group(1)} を挙げている")
     # seriesWide の見送り(毎月の交換会)は日付を問わず名前で当たる。当たる投稿が候補に残っていれば同じ穴
