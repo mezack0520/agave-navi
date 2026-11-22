@@ -409,7 +409,7 @@
 
 <!-- AREA-FILTER:START 生成物。scripts/sync-index-cards.py が sitelib から貼り替える。手で書かない -->
   <div class="crumb-bar">
-    <nav class="breadcrumb" id="regionTabs" aria-label="エリア絞り込み"><button class="pref-crumb active" onclick="selectRegion('all')">全国</button><span class="pref-sep" aria-hidden="true">&gt;</span><div class="pref-chips" id="regionChips"><a href="/region/tohoku/" class="region-tab" data-region="東北" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('東北');return false}">東北</a><a href="/region/kanto/" class="region-tab" data-region="関東" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('関東');return false}">関東</a><a href="/region/hokuriku/" class="region-tab" data-region="北陸" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('北陸');return false}">北陸</a><a href="/region/tokai/" class="region-tab" data-region="東海" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('東海');return false}">東海</a><a href="/region/kansai/" class="region-tab" data-region="関西" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('関西');return false}">関西</a><a href="/region/chugoku/" class="region-tab" data-region="中国" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('中国');return false}">中国</a><a href="/region/shikoku/" class="region-tab" data-region="四国" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('四国');return false}">四国</a><a href="/region/kyushu/" class="region-tab" data-region="九州" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('九州');return false}">九州</a></div></nav>
+    <nav class="breadcrumb" id="regionTabs" aria-label="エリア絞り込み"><button class="pref-crumb active" onclick="selectRegion('all')">全国</button><span class="pref-sep" aria-hidden="true">&gt;</span><div class="pref-chips" id="regionChips"><a href="/region/hokkaido/" class="region-tab" data-region="北海道" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('北海道');return false}">北海道</a><a href="/region/tohoku/" class="region-tab" data-region="東北" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('東北');return false}">東北</a><a href="/region/kanto/" class="region-tab" data-region="関東" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('関東');return false}">関東</a><a href="/region/hokuriku/" class="region-tab" data-region="北陸" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('北陸');return false}">北陸</a><a href="/region/tokai/" class="region-tab" data-region="東海" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('東海');return false}">東海</a><a href="/region/kansai/" class="region-tab" data-region="関西" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('関西');return false}">関西</a><a href="/region/chugoku/" class="region-tab" data-region="中国" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('中国');return false}">中国</a><a href="/region/shikoku/" class="region-tab" data-region="四国" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('四国');return false}">四国</a><a href="/region/kyushu/" class="region-tab" data-region="九州" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectRegion('九州');return false}">九州</a></div></nav>
     <nav class="breadcrumb" id="prefRow" aria-label="エリア絞り込み" style="display:none"><button class="pref-crumb" onclick="selectRegion('all')">全国</button><span class="pref-sep" aria-hidden="true">&gt;</span><button class="pref-crumb" id="prefRegionCrumb" onclick="selectPref('all')"></button><span class="pref-sep" aria-hidden="true">&gt;</span><div class="pref-chips" id="prefChips"></div></nav>
     <div class="search-field"><input type="text" id="searchInput" placeholder="イベント名・会場で検索" aria-label="イベントを検索" oninput="searchEvents(this.value)"></div>
   </div>
@@ -424,7 +424,7 @@
 <!-- DATE-FILTER:START 生成物。scripts/sync-index-cards.py が sitelib から貼り替える。手で書かない -->
 <div class="when-filter" id="whenFilter" role="group" aria-label="日程で絞り込み" data-weekends="[[&quot;2026-11-21&quot;,&quot;2026-11-23&quot;,&quot;11/21-23&quot;],[&quot;2026-11-28&quot;,&quot;2026-11-29&quot;,&quot;11/28-29&quot;],[&quot;2026-12-05&quot;,&quot;2026-12-06&quot;,&quot;12/5-6&quot;],[&quot;2026-12-12&quot;,&quot;2026-12-13&quot;,&quot;12/12-13&quot;],[&quot;2026-12-19&quot;,&quot;2026-12-20&quot;,&quot;12/19-20&quot;],[&quot;2026-12-26&quot;,&quot;2026-12-27&quot;,&quot;12/26-27&quot;],[&quot;2027-01-01&quot;,&quot;2027-01-03&quot;,&quot;1/1-3&quot;],[&quot;2027-01-09&quot;,&quot;2027-01-11&quot;,&quot;1/9-11&quot;],[&quot;2027-01-16&quot;,&quot;2027-01-17&quot;,&quot;1/16-17&quot;],[&quot;2027-01-23&quot;,&quot;2027-01-24&quot;,&quot;1/23-24&quot;],[&quot;2027-01-30&quot;,&quot;2027-01-31&quot;,&quot;1/30-31&quot;],[&quot;2027-02-06&quot;,&quot;2027-02-07&quot;,&quot;2/6-7&quot;]]"><button type="button" class="when-chip active" data-when="all" aria-pressed="true" onclick="selectWhen('all')">全日程</button><a href="/this-weekend/" role="button" class="when-chip" data-when="this-weekend" aria-pressed="false" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectWhen('this-weekend');return false}">今週末<span class="when-dates">11/21-23</span></a><button type="button" class="when-chip" data-when="next-weekend" aria-pressed="false" onclick="selectWhen('next-weekend')">来週末<span class="when-dates">11/28-29</span></button><a href="/this-month/" role="button" class="when-chip" data-when="this-month" aria-pressed="false" onclick="if(!(event.ctrlKey||event.metaKey||event.shiftKey)){selectWhen('this-month');return false}">今月</a></div>
 <!-- DATE-FILTER:END -->
-<span class="event-count" id="eventCount">165件</span>
+<span class="event-count" id="eventCount">174件</span>
                 </div>
 
                 <div class="events-grid" id="eventsGrid">
@@ -2940,6 +2940,114 @@
           </div>
           <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
         </div>
+        <div class="event-card" data-tags="展示会,多肉植物" data-status="upcoming" data-region="関東" data-prefecture="東京" data-slug="toki-no-rinkaku-qusamura-samukawa-2026-11" data-date="2026-11-29" data-date-end="2026-12-06" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">東京</span><span class="eni-date">11.29</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'toki-no-rinkaku-qusamura-samukawa-2026-11')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2026.11.29-12.06</span><span class="event-status"></span></div>
+            <h2 class="event-title">時の輪郭 – 叢 と 寒川義雄</h2>
+            <p class="event-description">多肉植物・サボテンの専門店 叢(Qusamura)と陶芸家 寒川義雄の展覧会。叢の植物と寒川義雄の器によるインスタレーションを展示し、両者を組み合わせた一点ものの鉢植え作品を販売する。一般公開は11月29日と12月4日〜6日で、11月28日の特別公演は抽選制で受付を終えている。</p>
+            <div class="event-meta-row"><span class="event-region">東京</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,多肉植物" data-status="upcoming" data-region="東北" data-prefecture="岩手" data-slug="taniku-kanshasai-gpk-2026-12" data-date="2026-12-19" data-date-end="2026-12-20" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">岩手</span><span class="eni-date">12.19</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'taniku-kanshasai-gpk-2026-12')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2026.12.19-20</span><span class="event-status"></span></div>
+            <h2 class="event-title">多肉感謝祭2026（多肉屋GPK）</h2>
+            <p class="event-description">滝沢市の多肉屋GPKが一年の感謝を込めて開く2日間の店舗イベント。両日は店内商品の割引と多肉ガチャ200連発、19日はなごみプランツ(ビカクシダ・アガベ)やチーム六魂(エケベリア実生)などのPOPUP出店と、整理券制の多肉販売会、エケベリア育成チャレンジの発表会を行う。</p>
+            <div class="event-meta-row"><span class="event-region">岩手</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,塊根植物,アガベ" data-status="upcoming" data-region="東海" data-prefecture="静岡" data-slug="yaizu-plants-bonenkai-2026-12" data-date="2026-12-26" data-date-end="2026-12-27" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">静岡</span><span class="eni-date">12.26</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'yaizu-plants-bonenkai-2026-12')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2026.12.26-27</span><span class="event-status"></span></div>
+            <h2 class="event-title">焼津 植物忘年会 -PLANTS BONENKAI-</h2>
+            <p class="event-description">焼津市の塊根植物とアガベの店ボタらいふが、漁具倉庫を改装した焼津PORTERSで開く年末の2日間の植物マーケット。サボテン・アガベ・コーデックスをはじめ植物と鉢などの店が集まり、年末売りつくしとして20%OFFのセールも行う。出店者は追って主催が紹介する。</p>
+            <div class="event-meta-row"><span class="event-region">静岡</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,多肉植物,マルシェ" data-status="upcoming" data-region="中国" data-prefecture="広島" data-slug="fukuyama-de-marche-9th-2027-01" data-date="2027-01-10" data-date-end="2027-01-10" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">広島</span><span class="eni-date">1.10</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'fukuyama-de-marche-9th-2027-01')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2027.01.10</span><span class="event-status"></span></div>
+            <h2 class="event-title">第9回 多肉と雑貨 福山deマルシェ</h2>
+            <p class="event-description">多肉植物店の和〜なごみ〜が主催する福山deマルシェの第9回で、会場はエフピコアリーナふくやまのサブアリーナ。見元園芸、moriya succulent、てのひら多肉、たにくの一歩など多肉植物の店を中心に26組が出店し、2階フォワイエで飲食も販売する。</p>
+            <div class="event-meta-row"><span class="event-region">広島</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,多肉植物,マルシェ" data-status="upcoming" data-region="関西" data-prefecture="奈良" data-slug="magic-caravan-koryo-2027-01" data-date="2027-01-16" data-date-end="2027-01-17" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">奈良</span><span class="eni-date">1.16</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'magic-caravan-koryo-2027-01')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2027.01.16-17</span><span class="event-status"></span></div>
+            <h2 class="event-title">多肉と雑貨 MAGIC CARAVAN</h2>
+            <p class="event-description">庭の雑貨屋Aruru としょうplants が合同で立ち上げた新しい多肉植物と雑貨のイベントの初回。イズミヤショッピングセンター広陵の西側屋外駐車場に、県内外の多肉植物店と雑貨の作家が出店する。駐車場は500台以上で無料。</p>
+            <div class="event-meta-row"><span class="event-region">奈良</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="マルシェ,多肉植物,アガベ" data-status="upcoming" data-region="東海" data-prefecture="愛知" data-slug="roots-plus-vol2-2027-03" data-date="2027-03-07" data-date-end="2027-03-07" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">愛知</span><span class="eni-date">3.7</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'roots-plus-vol2-2027-03')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2027.03.07</span><span class="event-status"></span></div>
+            <h2 class="event-title">Roots plus vol.2</h2>
+            <p class="event-description">植物・古着・雑貨を横断する愛知のオールジャンル野外イベント Roots plus の2回目。主催は四国から北海道まで全国の出店者が集まるとしており、会場は未発表で近く発表される予定。発表され次第、当ページを更新する。</p>
+            <div class="event-meta-row"><span class="event-region">愛知</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,多肉植物" data-status="upcoming" data-region="四国" data-prefecture="香川" data-slug="taniku-mobure-vol14-2027-03" data-date="2027-03-07" data-date-end="2027-03-07" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">香川</span><span class="eni-date">3.7</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'taniku-mobure-vol14-2027-03')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2027.03.07</span><span class="event-status"></span></div>
+            <h2 class="event-title">多肉もぶれ vol.14</h2>
+            <p class="event-description">香川県で多肉植物の販売を行う temo が主催する多肉植物イベントの14回目。主催が vol.13 の終了の報告で次回を3月7日と告知した段階で、会場と時間は未発表。発表され次第、当ページを更新する。</p>
+            <div class="event-meta-row"><span class="event-region">香川</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,大型" data-status="upcoming" data-region="北海道" data-prefecture="北海道" data-slug="bota-para-sapporo-2027-04" data-date="2027-04-10" data-date-end="2027-04-11" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref l3">北海道</span><span class="eni-date">4.10</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'bota-para-sapporo-2027-04')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2027.04.10-11</span><span class="event-status"></span></div>
+            <h2 class="event-title">Bota Para 2027（2Days）</h2>
+            <p class="event-description">札幌の植物イベント Bota Para が初めて2日間で開く回。主催の frontierplants は日付とアクセスサッポロの会場だけを先に公表し、詳細と出展者の募集は後日とした。前回の Vol.4 は道内外と海外からの出店者に飲食ブースが並んだ。</p>
+            <div class="event-meta-row"><span class="event-region">北海道</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
+        <div class="event-card" data-tags="即売会,マルシェ,多肉植物" data-status="upcoming" data-region="東海" data-prefecture="静岡" data-slug="fujisan-garden-marche-2027-04" data-date="2027-04-10" data-date-end="2027-04-10" data-added-date="2026-11-23">
+          <div class="event-thumb event-no-image"><span class="eni-pref">静岡</span><span class="eni-date">4.10</span></div>
+          <button class="fav-btn" onclick="toggleFav(event,'fujisan-garden-marche-2027-04')" aria-label="行きたい"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+          <div class="swipe-hint"><div class="swipe-hint-icon"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></div></div>
+          <div class="event-card-body">
+            <div class="event-header"><span class="event-date">2027.04.10</span><span class="event-status"></span></div>
+            <h2 class="event-title">富士山Garden marche</h2>
+            <p class="event-description">静岡県富士宮市の富士ミルクランドで開かれる多肉植物中心の植物マルシェの春の回。出店の募集には枠を大きく上回る100件以上の申し込みがあり、出店者は抽選で決めて主催が発表する。</p>
+            <div class="event-meta-row"><span class="event-region">静岡</span></div>
+          </div>
+          <div class="card-fav-bar" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span>行きたい</span></div>
+        </div>
         </div><!-- /eventsGrid -->
 
 <div class="load-more-wrap" id="loadMoreWrap">
@@ -2965,7 +3073,7 @@
         </div>
     </main>
 
-<!-- UPDATES-SECTION:START 中身は scripts/sync-index-cards.py が site-updates.json から毎ビルド貼り替える。手で書かない --><section class="updates-section" id="updates" aria-labelledby="updatesHeading"><div class="updates-head"><h2 class="updates-title" id="updatesHeading">更新のお知らせ<span class="updates-note">掲載・中止・日程変更</span></h2><a class="updates-feed" href="feeds/updates.xml">RSSで受け取る</a></div><ul class="updates-list"><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/yoshimura-cactus-popup-calee-tokyo-2026-11.html">YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO</a></span><span class="upd-meta">東京</span></li><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/necomoss-bikakushida-protoleaf-yumegaoka-2026-12.html">necomoss ビカクシダ販売会（プロトリーフ ゆめが丘ソラトス店）</a></span><span class="upd-meta">神奈川</span></li><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/kimtaro-sakura-christmas-event-2026-12.html">キムタロウ さくら植物園店 クリスマスイベント</a></span><span class="upd-meta">千葉</span></li><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/hop-bikakushida-ozaki-flowerpark-2026-12.html">HOP（ビカクシダ販売会）</a></span><span class="upd-meta">東京</span></li><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/grace-succulents-hanbaikai-fukushima-2026-11.html">Grace succulents 多肉植物販売会（福島市街なか交流館）</a></span><span class="upd-meta">福島</span></li><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/feel-beetle-marche-kagoshima-2026-11.html">FEEL BEETLE マルシェ</a></span><span class="upd-meta">鹿児島</span></li><li class="upd-item"><span class="upd-date">11.22</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/everybody-plants-okinawa-2026-11.html">everybody plants</a></span><span class="upd-meta">沖縄</span></li><li class="upd-item"><span class="upd-date">11.20</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/taniku-rakuichi-takanabe-2026-11.html">多肉楽市 in 高鍋</a></span><span class="upd-meta">宮崎</span></li><li class="upd-item"><span class="upd-date">11.20</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/taniku-jam-kyoto-2nd-2027-01.html">第2回 TANIKU JAM in京都</a></span><span class="upd-meta">京都</span></li><li class="upd-item"><span class="upd-date">11.11</span><span class="upd-kind upd-changed">会場変更</span><span class="upd-title"><a href="events/nou-marche-8th-2026-12.html">多肉と雑貨 農マルシェ 第8回</a></span><span class="upd-meta">岡山 / 調整中 → 農マル園芸 吉備路農園</span></li></ul></section><!-- UPDATES-SECTION:END -->
+<!-- UPDATES-SECTION:START 中身は scripts/sync-index-cards.py が site-updates.json から毎ビルド貼り替える。手で書かない --><section class="updates-section" id="updates" aria-labelledby="updatesHeading"><div class="updates-head"><h2 class="updates-title" id="updatesHeading">更新のお知らせ<span class="updates-note">掲載・中止・日程変更</span></h2><a class="updates-feed" href="feeds/updates.xml">RSSで受け取る</a></div><ul class="updates-list"><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/yaizu-plants-bonenkai-2026-12.html">焼津 植物忘年会 -PLANTS BONENKAI-</a></span><span class="upd-meta">静岡</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/toki-no-rinkaku-qusamura-samukawa-2026-11.html">時の輪郭 – 叢 と 寒川義雄</a></span><span class="upd-meta">東京</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/taniku-mobure-vol14-2027-03.html">多肉もぶれ vol.14</a></span><span class="upd-meta">香川</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/taniku-kanshasai-gpk-2026-12.html">多肉感謝祭2026（多肉屋GPK）</a></span><span class="upd-meta">岩手</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/roots-plus-vol2-2027-03.html">Roots plus vol.2</a></span><span class="upd-meta">愛知</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/magic-caravan-koryo-2027-01.html">多肉と雑貨 MAGIC CARAVAN</a></span><span class="upd-meta">奈良</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/fukuyama-de-marche-9th-2027-01.html">第9回 多肉と雑貨 福山deマルシェ</a></span><span class="upd-meta">広島</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/fujisan-garden-marche-2027-04.html">富士山Garden marche</a></span><span class="upd-meta">静岡</span></li><li class="upd-item"><span class="upd-date">11.23</span><span class="upd-kind upd-listed">掲載</span><span class="upd-title"><a href="events/bota-para-sapporo-2027-04.html">Bota Para 2027（2Days）</a></span><span class="upd-meta">北海道</span></li><li class="upd-item"><span class="upd-date">11.11</span><span class="upd-kind upd-changed">会場変更</span><span class="upd-title"><a href="events/nou-marche-8th-2026-12.html">多肉と雑貨 農マルシェ 第8回</a></span><span class="upd-meta">岡山 / 調整中 → 農マル園芸 吉備路農園</span></li></ul></section><!-- UPDATES-SECTION:END -->
 
     <!-- サイトの説明。トップだけに置く。
          以前は灰色の箱に黒い縦線という作りで、キーワードを並べた
