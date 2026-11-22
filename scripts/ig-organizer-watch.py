@@ -115,6 +115,9 @@ _TICKET_CTX = re.compile(r'チケット|前売|入場券|整理券')
 _TICKET_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:\d{1,2}[:：]\d{2})?\s*'
                            r'(?:(?:より|から)?\s*(?:販売|発売)|(?:より|から)\s*[^\s]{0,20}(?:チケット|前売|入場券|整理券)[^\s]{0,14}(?:販売|発売))')
 _TICKET_LABEL_BEFORE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)(?:販売|発売)?(?:日)?\s*[：:]\s*$')
+# 前売りの販売の終わり「前売りチケットは11/23(月)24時まで」も開催日ではない(goodthings.jp BIZARRE PLANTS NIGHT)
+_TICKET_UNTIL_PRE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)[^\n。]{0,8}$')
+_TICKET_UNTIL_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:\d{1,2}(?:[:：]\d{2}|時))?\s*まで')
 # 落とした日付から「〜」でつながる会期の終わりも同じ扱い(受付期間 11/1〜11/15 の 11/15)
 _RANGE_CONT = re.compile(r'\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:\d{1,2}[:：]\d{2})?\s*[〜~\-–—ー]\s*')
 
@@ -159,7 +162,9 @@ def month_days(text):
         if _PERIOD_BEFORE.search(_pre) or (
                 ticket_ctx and (_SALE_PERIOD_BEFORE.search(_pre)
                                 or _TICKET_AFTER.search(text[m.end():m.end() + 50])
-                                or _TICKET_LABEL_BEFORE.search(text[max(0, m.start() - 12):m.start()]))):
+                                or _TICKET_LABEL_BEFORE.search(text[max(0, m.start() - 12):m.start()])
+                                or (_TICKET_UNTIL_PRE.search(text[max(0, m.start() - 16):m.start()])
+                                    and _TICKET_UNTIL_AFTER.search(text[m.end():m.end() + 16])))):
             last_drop = m.end()
             continue
         # 「募集は9月30日で締め切ります」のような締切日は開催日ではない
@@ -896,6 +901,9 @@ def self_test():
               '🎫優先入場券12/5(土)\u3000100枚限定\n販売期間\n11/15(日)21:00 〜 11/23(月•祝)24:00\n'
               '日時：2026年12月5日・6日\n入場料：¥500\n前売り券：11月15日販売')
     chk('チケットの販売日と販売期間は数えない', month_days(norm(_cap_t)), {(12, 5)})
+    chk('前売りの販売の終わりは数えない',
+        month_days(norm('📅 12/5(土) 17:00〜22:00 📅 12/6(日) 11:00〜16:00 ▼ 前売りチケットは11/23(月)24時まで')), {(12, 5), (12, 6)})
+    chk('前売りの語の無い「まで」の会期は落とさない', month_days(norm('チケット不要 多肉の販売会 11/21〜11/23まで')), {(11, 21), (11, 23)})
     chk('チケットの無い投稿の販売期間は落とさない', month_days(norm('多肉の販売会\n販売期間：11/21〜11/23')), {(11, 21), (11, 23)})
     chk('受付期間の後の行の開催日は落とさない', month_days(norm('受付期間：11/1〜11/15\n開催 11/21(土)')), {(11, 21)})
     chk('開催日の後のチケットの見出しで開催日を落とさない',

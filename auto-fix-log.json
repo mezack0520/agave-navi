@@ -1520,6 +1520,62 @@
    "target": "Grace succulents 多肉植物販売会（福島市街なか交流館） (2026-11-28)",
    "action": "listed",
    "detail": "主催 @grace.succulents の告知 Df_jaXqyulB で裏取り(11/28・29 各日12:30〜15:30)"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "VESSEL meets だいだら植物店（FLOWER WAGON POPUP） (2026-11-23)",
+   "action": "rejected",
+   "detail": "主催 @daidara.plants DgAHIY2OlZf。切り花の移動花屋POPUP(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "土に還る言葉 vol.01 (2026-11-28)",
+   "action": "rejected",
+   "detail": "土づくり・コンポストのプログラムで即売会ではない(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "浜町みどりマーケット (2026-12-04)",
+   "action": "reviewed",
+   "detail": "見送り済みの HAMACHO MIDORI MARKET。aliases に NextMeet の呼び名を足した。出展者は6組のまま"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "bsj-meeting-osaka-2026-11",
+   "action": "reviewed",
+   "detail": "公式頁は開催予定のまま。cancel-reviewed.json に記録"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "cancel_suspects",
+   "target": "hanatomofesta-2026",
+   "action": "fixed",
+   "detail": "公式頁は開催予定のまま。admission を前売1,500円・当日2,500円に直した"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "@goodthings.jp 2026-11-23",
+   "action": "fixed",
+   "detail": "11/23 は前売りチケットの販売の終わり。ig-organizer-watch.py の month_days が『前売り…は11/23まで』を落とすよう直した。掲載中の回の sourceUrl・admission・aliases を DgCfy7GRFr3 で更新"
+  },
+  {
+   "on": "2026-11-23",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "monster-plants-kagawa-2027-03",
+   "action": "reviewed",
+   "detail": "@heart_plants に新しい情報なし。revisitedOn を更新"
   }
  ]
 }
