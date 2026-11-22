@@ -246,6 +246,16 @@ def main():
         'watch-sources の次回待ちシリーズがキーごとに分かれる。'
         '本当に別のイベントなら名前で区別が付くようにする')
 
+    # 2d. 同じ主催(organizerIg)の回で主催名が記号・空白・括弧の併記だけ違う。規則は sitelib.organizer_name_variants。
+    _onv = [f"@{_h}: " + ' | '.join(f"「{_n}」 " + ', '.join(_sl) for _n, _sl in sorted(_g.items()))
+            for _h, _g in sitelib.organizer_name_variants(events)]
+    _onv += [f'自己テスト失敗(sitelib._self_test_organizer_name_variants): {_b}'
+             for _b in sitelib._self_test_organizer_name_variants()]
+    add('organizer_name_variant', '同じ主催の回で主催名の表記が割れている(記号・空白・括弧の併記)',
+        _onv,
+        '主催の告知の表記に揃える。主催の頁(/organizer/<handle>/)の題名は最多の表記を採るため、'
+        '割れていると題名が回の追加で入れ替わり、回の頁の主催欄も揃わない')
+
     # 3. 詳細ページの孤児と欠落
     files = {os.path.basename(f)[:-5] for f in glob.glob(rp('events', '*.html'))}
     add('orphan_detail_pages', 'events.jsonに無いのに残っている詳細ページ',

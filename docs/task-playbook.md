@@ -194,6 +194,7 @@ push できなかった日の起動日は、パッチを当てた回が `task-ru
 | 説明文が会場を別の県の施設として書く(`desc_venue_other_prefecture`) | 主催の告知で所在地を確かめ、説明文を location の住所どおりに直す。location / prefecture が違っていればそちらを直す | fixed |
 | 埋め込みやアイキャッチが前の回の投稿(`instagram_post_predates_edition`) | instagramPostId / instagramUrl なら外す。imageSource なら imageUrl と画像も外して `image-rejected.json` に記録し、この回の告知を主催の投稿で探し直す | fixed |
 | 同じシリーズの回で名称の表記が割れている(`series_name_variant`) | 主催の告知の表記に揃え、使わなくなった表記は aliases に残す。本当に別のイベントなら名前で区別が付くようにする | fixed |
+| 同じ主催の回で主催名の表記が割れている(`organizer_name_variant`) | 主催の告知か最新の回の表記に揃え、直した回の updatedAt を今日にする | fixed |
 | リンク切れ(開催前の回) | まず手元から HEAD と GET で引き直す。CI にだけ 204 や 429 を返す相手があり、生きていれば reviewed。切れていれば主催の新しい告知 URL に差し替える。サイトのトップも休止やメンテナンスの頁なら、主催の Instagram を url と organizerIg に入れ、画像がその告知頁のものなら告知頁を imageSource に残す。見つからなければ skipped に理由 | fixed / reviewed / skipped |
 | 詳細未定(TBD) | 主催の最新告知を見て、出ていれば埋めて `eventStatus` を外す | fixed / skipped |
 | 手でやる巡回が止まっている(`manual_sweep_stale`) | その巡回をやり、`manual-sweeps.json` を更新(§3.1) | fixed |

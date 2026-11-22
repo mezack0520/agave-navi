@@ -1153,6 +1153,74 @@ def organizer_pages(events):
     return out
 
 
+def _organizer_name_forms(name):
+    """主催名の比べ方。記号と空白を落とした全体、括弧を除いた部分、括弧の中身"""
+    import unicodedata
+    n = unicodedata.normalize('NFKC', str(name or '')).lower()
+    key = lambda s: re.sub(r'[^\w]|_', '', s)
+    full = key(n)
+    forms = {full}
+    m = re.fullmatch(r'\s*(.+?)\s*\((.+?)\)\s*', n)
+    if m:
+        forms |= {key(m.group(1)), key(m.group(2))}
+    forms.discard('')
+    return full, forms
+
+
+def organizer_name_variants(events):
+    """同じ organizerIg の回で、主催名が記号・空白・括弧の併記だけ違う組。
+
+    返り値: [(handle, {表記: [slug, ...]}), ...]
+    主催の頁の題名は最多の表記を採るので、割れていると題名が回によって変わり、回の頁の主催欄も揃わない。
+    店舗名の付け足し(「プロトリーフ」と「プロトリーフ二子玉川本店」)や共催の併記は別の表記として数えない。
+    """
+    by = {}
+    for e in events or []:
+        k = organizer_key(e)
+        nm = str(e.get('organizer') or '').strip()
+        if k and nm:
+            by.setdefault(k, {}).setdefault(nm, []).append(e.get('slug'))
+    out = []
+    for k, names in by.items():
+        if len(names) < 2:
+            continue
+        info = {nm: _organizer_name_forms(nm) for nm in names}
+        hit = {}
+        lst = sorted(names)
+        for i, a in enumerate(lst):
+            for b in lst[i + 1:]:
+                fa, sa = info[a]
+                fb, sb = info[b]
+                if fa == fb or fa in sb or fb in sa:
+                    hit[a] = names[a]
+                    hit[b] = names[b]
+        if hit:
+            out.append((k, hit))
+    return sorted(out)
+
+
+def _self_test_organizer_name_variants():
+    """organizer_name_variants の自己テスト。audit.organizer_name_variant が毎回呼ぶ。"""
+    bad = []
+    def ev(slug, org, ig='x'):
+        return {'slug': slug, 'organizer': org, 'organizerIg': ig}
+    cases = [
+        ('末尾の記号だけ違う', [ev('a', 'Heartplants'), ev('b', 'Heartplants.')], 1),
+        ('括弧の併記と中身だけ', [ev('a', 'temo（てものね）'), ev('b', 'てものね')], 1),
+        ('括弧の併記と外側だけ', [ev('a', 'temo（てものね）'), ev('b', 'temo')], 1),
+        ('空白だけ違う', [ev('a', 'Lier succulent'), ev('b', 'Lier.succulent')], 1),
+        ('店舗名の付け足しは数えない', [ev('a', 'プロトリーフ'), ev('b', 'プロトリーフ二子玉川本店')], 0),
+        ('共催の併記は数えない', [ev('a', 'ナガサコファーム'), ev('b', 'ナガサコファーム × n2_plants')], 0),
+        ('別の handle は数えない', [ev('a', 'Heartplants', 'x'), ev('b', 'Heartplants.', 'y')], 0),
+        ('同じ表記は数えない', [ev('a', 'てものね'), ev('b', 'てものね')], 0),
+    ]
+    for label, evs, want in cases:
+        got = len(organizer_name_variants(evs))
+        if got != want:
+            bad.append(f'{label}: 期待 {want}組 / 実際 {got}組')
+    return bad
+
+
 def organizer_page_url(handle):
     return f'/organizer/{handle}/'
 
