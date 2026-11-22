@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-22 16:56 JST",
+ "generated": "2026-11-23 06:40 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 435,
-  "awaitingNextEdition": 516,
+  "awaitingNextEdition": 546,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
   "igNeedsBrowser": 100,
@@ -101,16 +101,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "joyfulak_gardencenter",
-   "url": "https://www.instagram.com/joyfulak_gardencenter/",
-   "eventCount": 6,
-   "lastEventName": "はなみちるさんの多肉即売会（ジョイフルエーケー大麻店）",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "king.plants.slugger",
    "url": "https://www.instagram.com/king.plants.slugger/",
    "eventCount": 6,
@@ -131,16 +121,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "botayoko",
-   "url": "https://www.instagram.com/botayoko/",
-   "eventCount": 5,
-   "lastEventName": "ボタニカル横丁（2026年11月）",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
    "handle": "grace.succulents",
    "url": "https://www.instagram.com/grace.succulents/",
    "eventCount": 5,
@@ -159,16 +139,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
-  },
-  {
-   "handle": "tanikudayo.zeninsyuugou",
-   "url": "https://www.instagram.com/tanikudayo.zeninsyuugou/",
-   "eventCount": 4,
-   "lastEventName": "第18回 多肉だョ！全員集合 in 福山",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
   },
   {
    "handle": "plant_fks",
@@ -206,16 +176,6 @@
    "eventCount": 4,
    "lastEventName": "Green marché 花の湯（2027年6月）",
    "lastEventDate": "2027-06-06",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "hirata_ns.odo",
-   "url": "https://www.instagram.com/hirata_ns.odo/",
-   "eventCount": 3,
-   "lastEventName": "第4回 ハートンフェス（平田ナーセリー小戸店）",
-   "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -379,56 +339,6 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
-  },
-  {
-   "handle": "maruttomarche_chihika",
-   "url": "https://www.instagram.com/maruttomarche_chihika/",
-   "eventCount": 2,
-   "lastEventName": "まるっと植物fes!!",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "1012katsuyuki7",
-   "url": "https://www.instagram.com/1012katsuyuki7/",
-   "eventCount": 2,
-   "lastEventName": "第6回 KA78企画祭",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "banksia.111",
-   "url": "https://www.instagram.com/banksia.111/",
-   "eventCount": 2,
-   "lastEventName": "園日 Vol.18",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "heart_plants",
-   "url": "https://www.instagram.com/heart_plants/",
-   "eventCount": 2,
-   "lastEventName": "Heartplants. × KASUGADOU コラボイベント（大阪育成場）",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "katsumaru9",
-   "url": "https://www.instagram.com/katsumaru9/",
-   "eventCount": 2,
-   "lastEventName": "Tick-Tick vol.2 ディッキアPOPUP",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "personal"
   },
   {
    "handle": "yokoen_tk",
@@ -681,6 +591,16 @@
    "apiStatus": "personal"
   },
   {
+   "handle": "joyfulak_gardencenter",
+   "url": "https://www.instagram.com/joyfulak_gardencenter/",
+   "eventCount": 6,
+   "lastEventName": "はなみちるさんの多肉即売会（ジョイフルエーケー大麻店）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
    "handle": "_myoko_plants_market_",
    "url": "https://www.instagram.com/_myoko_plants_market_/",
    "eventCount": 5,
@@ -696,6 +616,16 @@
    "eventCount": 5,
    "lastEventName": "FUJI TANIKU プランツマルシェ（2026年11月）",
    "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "botayoko",
+   "url": "https://www.instagram.com/botayoko/",
+   "eventCount": 5,
+   "lastEventName": "ボタニカル横丁（2026年11月）",
+   "lastEventDate": "2026-11-22",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -751,6 +681,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "tanikudayo.zeninsyuugou",
+   "url": "https://www.instagram.com/tanikudayo.zeninsyuugou/",
+   "eventCount": 4,
+   "lastEventName": "第18回 多肉だョ！全員集合 in 福山",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "sakura_shokubutsuen",
    "url": "https://www.instagram.com/sakura_shokubutsuen/",
    "eventCount": 3,
@@ -796,6 +736,16 @@
    "eventCount": 3,
    "lastEventName": "多肉もろもろ市場 vol.16（11月）",
    "lastEventDate": "2026-11-15",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "hirata_ns.odo",
+   "url": "https://www.instagram.com/hirata_ns.odo/",
+   "eventCount": 3,
+   "lastEventName": "第4回 ハートンフェス（平田ナーセリー小戸店）",
+   "lastEventDate": "2026-11-22",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -1101,91 +1051,61 @@
    "apiStatus": "api"
   },
   {
+   "handle": "maruttomarche_chihika",
+   "url": "https://www.instagram.com/maruttomarche_chihika/",
+   "eventCount": 2,
+   "lastEventName": "まるっと植物fes!!",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "1012katsuyuki7",
+   "url": "https://www.instagram.com/1012katsuyuki7/",
+   "eventCount": 2,
+   "lastEventName": "第6回 KA78企画祭",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "banksia.111",
+   "url": "https://www.instagram.com/banksia.111/",
+   "eventCount": 2,
+   "lastEventName": "園日 Vol.18",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "heart_plants",
+   "url": "https://www.instagram.com/heart_plants/",
+   "eventCount": 2,
+   "lastEventName": "Heartplants. × KASUGADOU コラボイベント（大阪育成場）",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "katsumaru9",
+   "url": "https://www.instagram.com/katsumaru9/",
+   "eventCount": 2,
+   "lastEventName": "Tick-Tick vol.2 ディッキアPOPUP",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 1,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "rareplantsjapan2025",
    "url": "https://www.instagram.com/rareplantsjapan2025/",
    "eventCount": 1,
    "lastEventName": "RARE PLANTS COLLECTION",
    "lastEventDate": "2026-11-18",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "igashirakouen",
-   "url": "https://www.instagram.com/igashirakouen/",
-   "eventCount": 1,
-   "lastEventName": "多肉植物とサボテンの展示会（井頭公園）",
-   "lastEventDate": "2026-11-19",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "sand_hiroshima",
-   "url": "https://www.instagram.com/sand_hiroshima/",
-   "eventCount": 1,
-   "lastEventName": "垚 Sand（吹きガラス・民藝陶器・ビザールプランツの合同企画展）",
-   "lastEventDate": "2026-11-20",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "moro2_plants",
-   "url": "https://www.instagram.com/moro2_plants/",
-   "eventCount": 1,
-   "lastEventName": "モロモロプランツ 19th",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "haze_kasumigaura",
-   "url": "https://www.instagram.com/haze_kasumigaura/",
-   "eventCount": 1,
-   "lastEventName": "HAZE -various genres marche-（2026年11月）",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ondo_6465",
-   "url": "https://www.instagram.com/ondo_6465/",
-   "eventCount": 1,
-   "lastEventName": "BOTANICAL POP UP（ONDO・鞍手町）",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "plump_plants078",
-   "url": "https://www.instagram.com/plump_plants078/",
-   "eventCount": 1,
-   "lastEventName": "PLUMP 3社合同コラボイベント（伊那市）",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "noharaengei",
-   "url": "https://www.instagram.com/noharaengei/",
-   "eventCount": 1,
-   "lastEventName": "NOHARA green marche vol.10",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "plants_work",
-   "url": "https://www.instagram.com/plants_work/",
-   "eventCount": 1,
-   "lastEventName": "FEHN -Far East Haworthia Network- 第5回（鶴仙園池袋店）",
-   "lastEventDate": "2026-11-21",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
@@ -1211,111 +1131,11 @@
    "apiStatus": "api"
   },
   {
-   "handle": "bizmackie1115",
-   "url": "https://www.instagram.com/bizmackie1115/",
-   "eventCount": 1,
-   "lastEventName": "田主丸ガーデン植物販売会 Vol.5",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
    "handle": "calee_official_store",
    "url": "https://www.instagram.com/calee_official_store/",
    "eventCount": 1,
    "lastEventName": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
    "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "mahota029",
-   "url": "https://www.instagram.com/mahota029/",
-   "eventCount": 1,
-   "lastEventName": "第3回 淡路島多肉DEすまいるマルシェ",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "honoka.kakogawa",
-   "url": "https://www.instagram.com/honoka.kakogawa/",
-   "eventCount": 1,
-   "lastEventName": "緑楽宴",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ta29_handmade.marche",
-   "url": "https://www.instagram.com/ta29_handmade.marche/",
-   "eventCount": 1,
-   "lastEventName": "第2回 多肉とHandmade雑貨のマルシェ in 串木野",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "ta29picnic_kagoshima",
-   "url": "https://www.instagram.com/ta29picnic_kagoshima/",
-   "eventCount": 1,
-   "lastEventName": "秋の多肉ピクニック",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "kotetu_plants",
-   "url": "https://www.instagram.com/kotetu_plants/",
-   "eventCount": 1,
-   "lastEventName": "第6回 岩国グリーンバザール",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "plants_dive",
-   "url": "https://www.instagram.com/plants_dive/",
-   "eventCount": 1,
-   "lastEventName": "PLANTS DIVE vol.006 in 赤松種苗",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "spice_cafe_titanota",
-   "url": "https://www.instagram.com/spice_cafe_titanota/",
-   "eventCount": 1,
-   "lastEventName": "botanical day in titanota VOL.3",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "supervivahome_garden",
-   "url": "https://www.instagram.com/supervivahome_garden/",
-   "eventCount": 1,
-   "lastEventName": "ボタニカルデイ2026 ティランジアとアリ植物の販売会（スーパービバホーム茨木目垣店）",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "medelu04",
-   "url": "https://www.instagram.com/medelu04/",
-   "eventCount": 1,
-   "lastEventName": "多肉楽市 in 高鍋",
-   "lastEventDate": "2026-11-22",
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
@@ -4364,6 +4184,96 @@
    "apiStatus": "api"
   },
   {
+   "handle": "igashirakouen",
+   "url": "https://www.instagram.com/igashirakouen/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物とサボテンの展示会（井頭公園）",
+   "lastEventDate": "2026-11-19",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "sand_hiroshima",
+   "url": "https://www.instagram.com/sand_hiroshima/",
+   "eventCount": 1,
+   "lastEventName": "垚 Sand（吹きガラス・民藝陶器・ビザールプランツの合同企画展）",
+   "lastEventDate": "2026-11-20",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "moro2_plants",
+   "url": "https://www.instagram.com/moro2_plants/",
+   "eventCount": 1,
+   "lastEventName": "モロモロプランツ 19th",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "haze_kasumigaura",
+   "url": "https://www.instagram.com/haze_kasumigaura/",
+   "eventCount": 1,
+   "lastEventName": "HAZE -various genres marche-（2026年11月）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "ondo_6465",
+   "url": "https://www.instagram.com/ondo_6465/",
+   "eventCount": 1,
+   "lastEventName": "BOTANICAL POP UP（ONDO・鞍手町）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "plump_plants078",
+   "url": "https://www.instagram.com/plump_plants078/",
+   "eventCount": 1,
+   "lastEventName": "PLUMP 3社合同コラボイベント（伊那市）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "noharaengei",
+   "url": "https://www.instagram.com/noharaengei/",
+   "eventCount": 1,
+   "lastEventName": "NOHARA green marche vol.10",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "plants_work",
+   "url": "https://www.instagram.com/plants_work/",
+   "eventCount": 1,
+   "lastEventName": "FEHN -Far East Haworthia Network- 第5回（鶴仙園池袋店）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "bizmackie1115",
+   "url": "https://www.instagram.com/bizmackie1115/",
+   "eventCount": 1,
+   "lastEventName": "田主丸ガーデン植物販売会 Vol.5",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
    "handle": "plants.addict.festival",
    "url": "https://www.instagram.com/plants.addict.festival/",
    "eventCount": 1,
@@ -4372,6 +4282,96 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "mahota029",
+   "url": "https://www.instagram.com/mahota029/",
+   "eventCount": 1,
+   "lastEventName": "第3回 淡路島多肉DEすまいるマルシェ",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "honoka.kakogawa",
+   "url": "https://www.instagram.com/honoka.kakogawa/",
+   "eventCount": 1,
+   "lastEventName": "緑楽宴",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "ta29_handmade.marche",
+   "url": "https://www.instagram.com/ta29_handmade.marche/",
+   "eventCount": 1,
+   "lastEventName": "第2回 多肉とHandmade雑貨のマルシェ in 串木野",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "ta29picnic_kagoshima",
+   "url": "https://www.instagram.com/ta29picnic_kagoshima/",
+   "eventCount": 1,
+   "lastEventName": "秋の多肉ピクニック",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "kotetu_plants",
+   "url": "https://www.instagram.com/kotetu_plants/",
+   "eventCount": 1,
+   "lastEventName": "第6回 岩国グリーンバザール",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "plants_dive",
+   "url": "https://www.instagram.com/plants_dive/",
+   "eventCount": 1,
+   "lastEventName": "PLANTS DIVE vol.006 in 赤松種苗",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "spice_cafe_titanota",
+   "url": "https://www.instagram.com/spice_cafe_titanota/",
+   "eventCount": 1,
+   "lastEventName": "botanical day in titanota VOL.3",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "supervivahome_garden",
+   "url": "https://www.instagram.com/supervivahome_garden/",
+   "eventCount": 1,
+   "lastEventName": "ボタニカルデイ2026 ティランジアとアリ植物の販売会（スーパービバホーム茨木目垣店）",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "medelu04",
+   "url": "https://www.instagram.com/medelu04/",
+   "eventCount": 1,
+   "lastEventName": "多肉楽市 in 高鍋",
+   "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
   }
  ],
  "awaitingNextEdition": [
@@ -4484,6 +4484,72 @@
    "officialUrl": "https://www.instagram.com/p/DfVl1Stk4gY/",
    "recurring": true,
    "apiStatus": "api"
+  },
+  {
+   "series": "まるっと植物fes!!",
+   "lastSlug": "marutto-shokubutsu-fes-2026-11",
+   "lastDate": "2026-11-21",
+   "lastEnd": "2026-11-22",
+   "monthsSinceLast": 0,
+   "igHandle": "maruttomarche_chihika",
+   "officialUrl": "https://www.instagram.com/maruttomarche_chihika/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "ピクニックガーデン vol.27 in ガーデンプラザ華 福島店",
+   "lastSlug": "picnic-garden-vol27-plaza-hana-fukushima-2026-11",
+   "lastDate": "2026-11-21",
+   "lastEnd": "2026-11-22",
+   "monthsSinceLast": 0,
+   "igHandle": "picnic.king.plants",
+   "officialUrl": "https://www.instagram.com/picnic.king.plants/p/De0AmTFzhjY/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "11月のサボテン・多肉植物ビッグバザール",
+   "lastSlug": "isij-big-bazaar-2026-11-22",
+   "lastDate": "2026-11-22",
+   "lastEnd": "2026-11-22",
+   "monthsSinceLast": 0,
+   "igHandle": "isij_taniku",
+   "officialUrl": "http://isij.net/",
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "ボタニカル横丁（2026年11月）",
+   "lastSlug": "botanical-yokocho-senju-2026-11",
+   "lastDate": "2026-11-22",
+   "lastEnd": "2026-11-22",
+   "monthsSinceLast": 0,
+   "igHandle": "botayoko",
+   "officialUrl": null,
+   "recurring": true,
+   "apiStatus": "api"
+  },
+  {
+   "series": "第18回 多肉だョ！全員集合 in 福山",
+   "lastSlug": "tanikudayo-zeninshugo-18th-fukuyama-2026-11",
+   "lastDate": "2026-11-22",
+   "lastEnd": "2026-11-22",
+   "monthsSinceLast": 0,
+   "igHandle": "tanikudayo.zeninsyuugou",
+   "officialUrl": "https://www.instagram.com/p/DeOqmcgmt5r/",
+   "recurring": true,
+   "apiStatus": "personal"
+  },
+  {
+   "series": "PLANTS DIVE vol.006 in 赤松種苗",
+   "lastSlug": "plants-dive-vol6-tennoji-2026-11",
+   "lastDate": "2026-11-22",
+   "lastEnd": "2026-11-22",
+   "monthsSinceLast": 0,
+   "igHandle": "plants_dive",
+   "officialUrl": "https://www.instagram.com/plants_dive/",
+   "recurring": true,
+   "apiStatus": "personal"
   },
   {
    "series": "第10回 珍奇植物フリーマーケット",
@@ -4746,72 +4812,6 @@
    "monthsSinceLast": 0,
    "igHandle": "botanicgardenstoyama_official",
    "officialUrl": "https://www.bgtym.org/event/13014/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "妙高多肉市場 vol.16-17（妙高多肉大市）",
-   "lastSlug": "myoko-taniku-oichi-2026-11",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "_myoko_plants_market_",
-   "officialUrl": "https://www.instagram.com/p/DeMUU1Qibom/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "BOTANICBOMB vol.11",
-   "lastSlug": "botanicbomb-vol11-fukuchiyama-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "botanicbomb",
-   "officialUrl": "https://www.instagram.com/botanicbomb/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "NIGHTWALKER",
-   "lastSlug": "nightwalker-horie-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "driftwood.smokeywood",
-   "officialUrl": "https://www.instagram.com/driftwood.smokeywood/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "レアアロイド即売会（Jolie Nursery・ムサシ金沢店）",
-   "lastSlug": "jolie-nursery-musashi-kanazawa-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "j_n_ishikawa",
-   "officialUrl": "https://jolienursery.co.jp/pages/events",
-   "recurring": false,
-   "apiStatus": "personal"
-  },
-  {
-   "series": "多肉植物苗販売会＆寄せ植えワークショップ（道の駅 花の駅千曲川）",
-   "lastSlug": "hana-no-eki-chikumagawa-taniku-hanbaikai-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "0269plants",
-   "officialUrl": "https://www.instagram.com/p/Dd54fn4P7_x/",
-   "recurring": false,
-   "apiStatus": "api"
-  },
-  {
-   "series": "多肉＆ガーデンMARCHE（荒子川公園 秋まつり）",
-   "lastSlug": "taniku-garden-marche-arakogawa-2026-10",
-   "lastDate": "2026-10-31",
-   "lastEnd": "2026-11-01",
-   "monthsSinceLast": 0,
-   "igHandle": "arakogawa_p",
-   "officialUrl": "https://www.nga.or.jp/%e8%8d%92%e5%ad%90%e5%b7%9d%e5%85%ac%e5%9c%92%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88%e3%80%80up%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%e3%80%82-2/",
    "recurring": false,
    "apiStatus": "api"
   }
