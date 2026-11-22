@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-23 07:21 JST",
+ "generated": "2026-11-23 07:22 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 435,
+  "igAccounts": 436,
   "awaitingNextEdition": 546,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 100,
+  "igNeedsBrowser": 101,
   "igDead": 7
  },
  "igAccounts": [
@@ -2822,6 +2822,16 @@
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"
+  },
+  {
+   "handle": "qusamura_official",
+   "url": "https://www.instagram.com/qusamura_official/",
+   "eventCount": 1,
+   "lastEventName": "桑田卓郎と叢 展『多肉植物とプラ鉢』",
+   "lastEventDate": "2026-10-03",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nagoya_saboten",
