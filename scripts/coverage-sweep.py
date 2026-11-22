@@ -376,6 +376,35 @@ def muni_of(text):
     return ''
 
 
+def munis_of(text):
+    """文に並べて書かれた市区町村をすべて(「福岡県春日市・福岡市西区」→ [春日市, 福岡市])。
+    2か所の会場で開く回は、場所の文に市区町村を「・」で並べる。muni_of は最初の1つしか読まないので、
+    2か所目で開く日の掲載済みの回が場所の照合で外れ、取りこぼしに残った(2026-11-22 ハートンフェス。
+    名前は当たっていたので、記録どおり aliases を足しても消えなかった)。
+    県を書いた直後から読み、区切り(・、,/)の後に市区町村が続く限り読む。政令市は市まで"""
+    t = unicodedata.normalize('NFKC', text or '')
+    out = []
+    for m in _PREF_FULL_RE.finditer(t):
+        rest = _GUN_RE.sub('', t[m.end():].lstrip())
+        while True:
+            mm = _MUNI_RE.match(rest)
+            if not (mm and len(mm.group(0)) >= 2):
+                break
+            out.append(mm.group(0))
+            rest = rest[mm.end():]
+            ward = _WARD_RE.match(rest) if mm.group(0).endswith('市') else None
+            if ward:
+                rest = rest[ward.end():]
+            if rest[:1] not in ('・', '、', ',', '/', '／'):
+                break
+            rest = _GUN_RE.sub('', rest[1:].lstrip())
+    return list(dict.fromkeys(out))
+
+
+# 政令市の後ろの区(「福岡市西区」の「西区」)。munis_of が次の区切りまで読み飛ばす
+_WARD_RE = re.compile(r'[^\s\d()（）/／|｜・,、。:：〒市区町村]{1,4}区')
+
+
 def keep_title(by_day, extra, day, title, **hints):
     """(日付, 見出し) を積む。同じ日の同じ見出しは1回だけ。hints(alts・span・pref・place)は照合(judge)に渡す"""
     if title in by_day.setdefault(day, []):
@@ -1158,18 +1187,21 @@ def judge(t, key, source, by_day, rejected, days, ex=None):
     # NextMeet の月別の目視照合(nextmeet-monthly-check)が回るたびに見つけていた「同じ日の別の回に当たって
     # 取りこぼしが消える」を、目で見る代わりに機械で止める。どちらかが読めない当たりは従来どおり名前だけで決める。
     # 名前が同じでも場所が違えば当てない(「多肉植物販売会」のような一般名の回は、同じ週末に別の町でも開かれる)
-    cm = muni_of(ex.get('place') or '')
+    # 向こうの場所は会場が2か所なら市区町村が2つある(munis_of)。どれかに合えば同じ場所とみなす
+    cms = munis_of(ex.get('place') or '')
 
     def place_ok(*where):
         om = next((m for m in map(muni_of, where) if m), '')
-        if not cm or not om or om == cm:
+        if not cms or not om or om in cms:
             return True
-        # 政令市の区を、向こうは県の直後に書く(NextMeet「広島県佐伯区」)。こちらの muni_of は市まで読む(広島市)。
-        # 区が相手の住所に出れば同じ場所とみなす
-        if cm.endswith('区') and om.endswith('市'):
-            return any(cm in unicodedata.normalize('NFKC', w or '') for w in where)
-        if om.endswith('区') and cm.endswith('市'):
-            return cm + om in unicodedata.normalize('NFKC', ex.get('place') or '')
+        for cm in cms:
+            # 政令市の区を、向こうは県の直後に書く(NextMeet「広島県佐伯区」)。こちらの muni_of は市まで読む(広島市)。
+            # 区が相手の住所に出れば同じ場所とみなす
+            if cm.endswith('区') and om.endswith('市') and any(
+                    cm in unicodedata.normalize('NFKC', w or '') for w in where):
+                return True
+            if om.endswith('区') and cm.endswith('市') and cm + om in unicodedata.normalize('NFKC', ex.get('place') or ''):
+                return True
         return False
 
     # aliases は他所での呼び名。主催の表記(PLNTS RIDE)とアグリゲータの
@@ -1864,6 +1896,25 @@ def self_test(verbose=True):
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 政令市の区での照合 {got}")
+    # 会場が2か所の回(2026-11-22 ハートンフェス)。場所の文に市区町村が2つ並ぶ。2つ目で開く日の回にも当てる
+    got = [munis_of(x) for x in ('福岡県春日市・福岡市西区|平田ナーセリー 春日店・小戸店',
+                                 '大阪府大阪市住之江区南港北1丁目', '東京都江東区豊洲3丁目・夢の島', '会場未定')]
+    want = [['春日市', '福岡市'], ['大阪市'], ['江東区'], []]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 並べて書いた市区町村 {got}")
+    odo = {'slug': 'odo', 'name': '第4回 ハートンフェス（平田ナーセリー小戸店）', 'prefecture': '福岡',
+           'location': '平田ナーセリー小戸店（福岡県福岡市西区）'}
+    ht = ('開催予定 2026年11月21日(土)・22日(日) 福岡県春日市・福岡市西区|平田ナーセリー 春日店・小戸店 '
+          '第4回 ハートンフェス FES2026 開催日時 11月21日(土)10:00〜16:00|春日店')
+    got = [judge(ht, '2026-11-22', 'organizer-index', {'2026-11-22': [odo]}, [], 45,
+                 {'pref': '福岡', 'place': ht}),
+           judge(ht, '2026-11-22', 'organizer-index', {'2026-11-22': [dict(odo, location='別の店（福岡県久留米市）')]},
+                 [], 45, {'pref': '福岡', 'place': ht})]
+    want = [('掲載済み', 'odo'), ('取りこぼし', '')]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 会場が2か所の回 {got}")
     # 見送りの注記の所在地も裏付けに使う
     rej = [('多肉植物販売会 (2026-11-08 道の駅 仁保の郷・山口県山口市)', '2026-11-08', None)]
     got = [judge('道の駅の多肉植物販売会 第2回', '2026-11-08', 'nextmeet', {}, rej, 45, {'place': '道の駅 / 山口県下関市'}),

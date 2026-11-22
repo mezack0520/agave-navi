@@ -2650,6 +2650,21 @@ def main():
         return any(len(w) >= 6 and w not in _COV_GENERIC and w in tt
                    for w in _cov_tokens(gap_title))
 
+    # どこで外れているかを添える(2026-11-22)。名前は当たっているのに場所の照合で外れていた回
+    # (会場2か所のハートンフェス)に「aliases を足す」とだけ出し、朝のタスクが直せずに残した
+    def _cov_why(g):
+        try:
+            _h = {k: g[k] for k in _csm.GAP_HINTS if g.get(k)}
+            _args = (str(g.get('title') or ''), str(g.get('date') or ''), str(g.get('source') or ''),
+                     _cov_by_day, _cov_rej, _cov_days)
+            if _csm.judge(*_args, {k: v for k, v in _h.items() if k != 'place'})[0] == '掲載済み':
+                return '名前は当たる。場所の照合(coverage-sweep の judge・munis_of)で外れている'
+            if _csm.judge(*_args, {k: v for k, v in _h.items() if k not in ('place', 'pref')})[0] == '掲載済み':
+                return '名前は当たる。県の照合で外れている'
+        except Exception:
+            pass
+        return '名前が合わない。aliases に他所での呼び名を足す'
+
     _cov_logged = []
     try:
         _fl = load_json('auto-fix-log.json', {}).get('items') or []
@@ -2662,13 +2677,14 @@ def main():
                 _tg = str(it.get('target') or '')
                 if _gd and _gd in _tg and (_gt in _tg or _cov_shared_token(_gt, _tg)) and (
                         it.get('action') == 'listed' or '掲載済み' in str(it.get('detail') or '')):
-                    _cov_logged.append(f"{_gd} {_gt[:60]} ← {it.get('on')} に掲載済みと記録済み")
+                    _cov_logged.append(f"{_gd} {_gt[:60]} ← {it.get('on')} に掲載済みと記録済み。{_cov_why(g)}")
                     break
     except Exception:
         _cov_logged = []
-    add('coverage_gap_logged_but_open', '掲載済みと記録したのに取りこぼし候補に残っている回(events.json の aliases に他所での呼び名を足す)',
+    add('coverage_gap_logged_but_open', '掲載済みと記録したのに取りこぼし候補に残っている回',
         sorted(_cov_logged),
-        '該当イベントの aliases にアグリゲータ側の呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。'
+        '各行の末尾が外れている所。名前が合わないなら該当イベントの aliases に他所での呼び名を足す'
+        '(coverage-sweep.matches が name と aliases を照合する)。名前が当たるのに残るなら、照合(judge)の側を直す。'
         '記録を書くだけでは翌日も候補に出る',
         severity='urgent')
     _cov_items = [f"{g.get('date')} {str(g.get('title'))[:90]}" for g in _cov_gaps]
