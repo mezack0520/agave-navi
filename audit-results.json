@@ -1,5 +1,5 @@
 {
-  "total": 774,
+  "total": 767,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -927,11 +927,8 @@
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 4,
+      "count": 1,
       "items": [
-        "2026-11-23 VESSEL meets だいだら植物店（FLOWER WAGON POPUP）",
-        "2026-11-28 土に還る言葉 vol.01「LET’S GET CLOSER TO THE PLANTS」",
-        "2026-12-04 浜町みどりマーケット",
         "2026-12-19 多肉感謝祭2026（多肉屋GPK）"
       ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
@@ -1043,11 +1040,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
-      "items": [
-        "2026-11-23 bsj-meeting-osaka-2026-11: 公式ページが変わった(本文: 1344→1311字 -3%)",
-        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(本文・画像)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1144,10 +1138,9 @@
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 2,
+      "count": 1,
       "items": [
-        "@botalife_pachy 2026-12-26,2026-12-27: 🌵焼津 植物忘年会🌵 -PLANTS BONENKAI- 今年最後の、植物との出会い。 年末売りつくしSALE 🔥20% https://www.instagram.com/p/Df_8tmxSl18/",
-        "@goodthings.jp 2026-11-23: BIZARRE PLANTS NIGHT (&DAY)🪴 📅 12/5(土) 17:00〜22:00 📅 12/6(日) https://www.instagram.com/reel/DgCfy7GRFr3/"
+        "@botalife_pachy 2026-12-26,2026-12-27: 🌵焼津 植物忘年会🌵 -PLANTS BONENKAI- 今年最後の、植物との出会い。 年末売りつくしSALE 🔥20% https://www.instagram.com/p/Df_8tmxSl18/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
@@ -1549,10 +1542,8 @@
     },
     "rejected_revisit_stale": {
       "title": "再評価待ちの見送りが30日以上動いていない",
-      "count": 1,
-      "items": [
-        "monster-plants-kagawa-2027-03: 最終評価 2026-10-12（42日前）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を探し直して、掲載するか revisit を外すかを決める。今回も判断できなければ revisitedOn に実行日を書いて窓を開き直す（見たことの記録が無いと、見ていないのと区別が付かない）。日付が未確定の回はここでしか表に出ない（eventDate が無く期限を持てないため）",
       "severity": "info"
     },

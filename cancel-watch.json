@@ -3,33 +3,18 @@
   "sweptOn": "2026-11-23",
   "stats": {
     "targets": 13,
-    "fetched": 13,
-    "grownSkipped": 1,
-    "grownSkippedSlugs": [
-      "isij-big-bazaar-2027-01-10"
-    ]
+    "fetched": 13
   },
   "errors": [],
   "logicErrors": [],
   "suspects": [
     {
-      "slug": "bsj-meeting-osaka-2026-11",
-      "name": "2026年 BSJミーティング大阪",
-      "date": "2026-11-23",
-      "url": "https://bromeliads.jp/news/news-13474/",
-      "why": "公式ページが変わった(本文: 1344→1311字 -3%)",
-      "changed": [
-        "本文"
-      ]
-    },
-    {
       "slug": "hanatomofesta-2026",
       "name": "第9回 花友フェスタ",
       "date": "2026-12-19",
       "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(本文・画像)",
+      "why": "公式ページが変わった(画像)",
       "changed": [
-        "本文",
         "画像"
       ]
     }
@@ -99,7 +84,7 @@
         "textLen": 1311,
         "imageCount": 6
       },
-      "prevTextLen": 1344,
+      "prevTextLen": 1311,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -233,11 +218,11 @@
       "checkedOn": "2026-11-23",
       "signature": {
         "text": "94d2e5597bdd3b93",
-        "images": "7df409990b306870",
+        "images": "2d68e732b74b11fc",
         "textLen": 1162,
         "imageCount": 44
       },
-      "prevTextLen": 1166,
+      "prevTextLen": 1162,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -253,7 +238,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
+      "imageOnlyChanges": 1
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -348,7 +333,7 @@
         "textLen": 4771,
         "imageCount": 10
       },
-      "prevTextLen": 4760,
+      "prevTextLen": 4771,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
