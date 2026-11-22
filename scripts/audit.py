@@ -4139,11 +4139,7 @@ def main():
         except ValueError:
             pass
     # --- 回答シートの実測行数と処理済み件数の突き合わせ ---------------------
-    # gviz CSV でシートのデータ行を数えて processed と比べる手順は 2026-08-25 から
-    # 毎回やっているが、結果は task-reports の散文にしか残っていなかった。
-    # 読むコードが無いので、読み違えても「検算通過」と書けてしまう。
-    # プレイブックに「必ず数える」と書いた時点で検査にする、という自分の規則に反していた。
-    # そこで event-listing-review が実測値を new-inquiries.json に書き、ここで照合する。
+    # event-listing-review が回答シートの実測行数を new-inquiries.json に書き、ここで照合する。
     # 不変量: シートのデータ行 == 処理済み + 未処理。
     #   行 > 期待 … GASがフォーム送信を取りこぼしている(backfillFromSheet の出番)
     #   行 < 期待 … シートの読み取りに失敗している(0行や見出しだけで返る経路がある)
@@ -4197,13 +4193,8 @@ def main():
              '行数を書いていない')
 
     # --- 回答シートの実測が止まっていないか ---------------------------------
-    # sheetRows は「シートの実態をCI側に持ち込める唯一の材料」なのに、
-    # 2026-09-01 に書く側を GAS だけに寄せた結果、**GASが旧版で countSheetRows を
-    # 持たなかったため誰も書かなくなり、5日間だれも気づかなかった**(2026-09-06)。
-    # inquiry_sheet_row_mismatch は数字の整合しか見ないので、
-    # 更新が止まった固定値でも素通りする。値が古びること自体を見る検査が要る。
-    # 実測はタスクが Claude in Chrome から gviz CSV を読んで行う。
-    # 読めなかった回は日付を進めない規則なので、進んでいない=測れていない、で正しい。
+    # inquiry_sheet_row_mismatch は固定値でも素通りするので、値の古さを見る。
+    # 読めなかった回は日付を進めない規則なので、進んでいない=測れていない。
     inq_meas = []
     if _sco:
         if re.fullmatch(r'\d{4}-\d{2}-\d{2}', _sco):
@@ -4220,7 +4211,7 @@ def main():
             inq_meas.append(f'sheetCheckedOn={_sco} が日付として読めない')
     add('sheet_measurement_stale', '回答シートを誰も実測していない', inq_meas,
         note='sheetRows / sheetCheckedOn は event-listing-review が '
-             'Claude in Chrome から回答シートの gviz CSV を読んで書く'
+             'Google Sheets コネクタで回答シートを読んで書く(playbook §3.9)'
              '(GASの onFormSubmit も書くが、送信が無ければ動かない)。'
              '読めなかった回は日付を進めない。'
              '14日以上動いていないなら、シートの実態をCIに持ち込む経路が切れている')
