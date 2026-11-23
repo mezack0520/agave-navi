@@ -421,7 +421,7 @@ def main():
         if len(prefs_in) == 1:
             canonical_of = f'{DOMAIN}/pref/{pref_slug(prefs_in[0])}/'
         write_page(os.path.join(REPO_ROOT, 'region', sl, 'index.html'),
-            render(f'{r}のアガベ・植物イベント', f'{r}地方で開催されるアガベ・多肉植物のイベント情報。{len(evs)}件掲載。',
+            render(f'{r}の多肉植物・アガベイベント一覧({today_str[:4]}年)', f'{r}地方で開催される多肉植物・アガベ・塊根植物のイベント(即売会・マルシェ・展示会)情報。{len(evs)}件掲載。',
                    f'{r},アガベ,イベント', f'{DOMAIN}/region/{sl}/',
                    [sitelib.CRUMB_ROOT, (r, None)],
                    f'{r}地方のイベント', f'{r}地方で開催される植物イベント一覧。', upcoming_then_past(evs), '../../',

@@ -121,6 +121,68 @@
    "by": "agave-event-update",
    "change": "主催 @kato_engei_tokyo の11月以降の投稿は通常営業の案内だけで、次の催しの告知は無い",
    "noChange": true
+  },
+  {
+   "id": "page:/guides/agave-winter-hardiness.html@2026-11-23",
+   "action": "page:/guides/agave-winter-hardiness.html",
+   "type": "page",
+   "page": "/guides/agave-winter-hardiness.html",
+   "queries": [
+    "アガベ 耐寒性",
+    "アガベ 冬越し 屋外",
+    "アガベ チタノタ 耐寒性",
+    "アガベ耐寒性",
+    "アガベ 耐寒性 一覧",
+    "アガベ 寒さ に強い品種",
+    "アガベ 耐寒温度",
+    "アガベ 耐寒性 最強",
+    "アガベ 冬 屋外",
+    "耐寒性のあるアガベ",
+    "チタノタ 耐寒性",
+    "アガベ 寒さに強い"
+   ],
+   "takenOn": "2026-11-23",
+   "by": "site-health-check",
+   "change": "題名『アガベの耐寒性ガイド: 屋外越冬できる品種と室内必須種の見分け方』→『アガベの耐寒性一覧: 寒さに強い品種の耐寒温度と屋外越冬・室内必須の見分け方』。description を耐寒温度・品種別一覧・チタノタの書き出しに。本文の冒頭に既存の数値をまとめた『品種別の耐寒温度一覧』の表を追加"
+  },
+  {
+   "id": "page:/@2026-11-23",
+   "action": "page:/",
+   "type": "page",
+   "page": "/",
+   "queries": [
+    "アガベ イベント",
+    "植物イベント",
+    "植物 イベント",
+    "多肉植物イベント 今日"
+   ],
+   "takenOn": "2026-11-23",
+   "by": "site-health-check",
+   "change": "題名『アガベイベントナビ - アガベ・塊根植物・ビザールプランツのイベント情報』→『アガベイベントナビ - 全国のアガベ・多肉植物・塊根植物の植物イベント情報』(og:title も)。description に『植物イベント』と『今日・今週末に開催中のイベントもすぐ探せます』を追加"
+  },
+  {
+   "id": "page:/region/kanto/@2026-11-23",
+   "action": "page:/region/kanto/",
+   "type": "page",
+   "page": "/region/kanto/",
+   "queries": [
+    "多肉植物イベント 関東 2026"
+   ],
+   "takenOn": "2026-11-23",
+   "by": "site-health-check",
+   "change": "地方頁の題名の生成『{地方}のアガベ・植物イベント』→『{地方}の多肉植物・アガベイベント一覧({年}年)』、description『{地方}地方で開催されるアガベ・多肉植物のイベント情報』→『…多肉植物・アガベ・塊根植物のイベント(即売会・マルシェ・展示会)情報』。9地方すべてに効く(関西の指示も同じ変更)"
+  },
+  {
+   "id": "page:/region/kansai/@2026-11-23",
+   "action": "page:/region/kansai/",
+   "type": "page",
+   "page": "/region/kansai/",
+   "queries": [
+    "植物イベント 関西 2026"
+   ],
+   "takenOn": "2026-11-23",
+   "by": "site-health-check",
+   "change": "page:/region/kanto/ と同じ地方頁の題名・description の生成の変更で対応"
   }
  ]
 }
