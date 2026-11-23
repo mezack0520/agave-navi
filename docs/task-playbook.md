@@ -240,9 +240,9 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 - LEAFLA の新着は記事番号の連番で引ける(`/blogs/media/topics<番号>`)。leaf-laboratory.com のタブから前回の右端 +150 まで1件ずつ fetch する。
   並列にすると 429 で塞がる。最後の番号が 200 なら +50 ずつ伸ばし、404 が10件続いたら止める。
   h1、開催情報の表、参考サイト欄の IG 投稿を抜けば開かずに選別できる。見た右端をレポートに書く。
-- Google 検索は、google.com を開いたタブの javascript から `/search?hl=ja&tbs=qdr:w2&num=20&q=...` を fetch し、DOMParser で `a h3` を拾う。
-  1回の起動で30本前後が上限(間隔1.5〜2秒)。リダイレクトの頁になったら google.com へ1回 navigate し直すと戻る。
-  空の頁や CAPTCHA が出たら打ち切る。CAPTCHA は解かない。最初の fetch から `a h3` が0件の日は、主催公式のニュース頁(curl)と LEAFLA の連番で代える。
+- Google 検索は、タブを `https://www.google.com/search?hl=ja&tbs=qdr:w2&num=20&q=...` へ navigate し、javascript で `a h3` を拾う。
+  タブからの fetch は JS 必須のリダイレクト頁(「数秒たってもリダイレクトされない場合は」)しか返さず、`a h3` が0件になる。
+  1回の起動で30本前後が上限(間隔1.5〜2秒)。空の頁や CAPTCHA が出たら打ち切る。CAPTCHA は解かない。打ち切った日は主催公式のニュース頁(curl)と LEAFLA の連番で代える。
   Instagram のタブからは google.com を fetch できない(CORS)。WebSearch では Instagram の告知はほぼ拾えない。
 - 検索のスニペットは、別の投稿のキャプションや別の出店者の予定表を混ぜて出す。知識パネルの入場料と営業情報は出典にしない。
 - watch-sources の巡回(次回待ちのシリーズと、主催の IG のローテ)は日曜だけ行う。目崎の決定。

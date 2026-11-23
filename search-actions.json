@@ -183,6 +183,31 @@
    "takenOn": "2026-11-23",
    "by": "site-health-check",
    "change": "page:/region/kanto/ と同じ地方頁の題名・description の生成の変更で対応"
+  },
+  {
+   "id": "coverage:next:midorigakuen-himeji-2026-11@2026-11-24",
+   "action": "coverage:next:midorigakuen-himeji-2026-11",
+   "type": "coverage",
+   "page": "/events/midorigakuen-himeji-2026-11.html",
+   "queries": [
+    "緑楽宴"
+   ],
+   "takenOn": "2026-11-24",
+   "by": "agave-event-update",
+   "change": "次の回 緑楽宴mini in 明石(2027-05-02)を主催 @honoka.kakogawa DgEd9OCAOM0 で裏取りして掲載(midorigakuen-mini-akashi-2027-05)"
+  },
+  {
+   "id": "coverage:next:moromoro-plants-19th-izumi-2026-11@2026-11-24",
+   "action": "coverage:next:moromoro-plants-19th-izumi-2026-11",
+   "type": "coverage",
+   "page": "/events/moromoro-plants-19th-izumi-2026-11.html",
+   "queries": [
+    "モロモロプランツ 2026"
+   ],
+   "takenOn": "2026-11-24",
+   "by": "agave-event-update",
+   "change": "主催 @moro2_plants の最新12件は第19回の当日と前後の投稿だけで、第20回の告知は無い",
+   "noChange": true
   }
  ]
 }
