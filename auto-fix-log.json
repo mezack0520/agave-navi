@@ -2,96 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-24",
-   "task": "agave-event-update",
-   "kind": "needs_browser",
-   "target": "POPUP POPUP-STORE (2026-10-24)",
-   "action": "reviewed",
-   "detail": "掲載済み stan-botanical-gallery-team-abc-2026-10(aliases済み)",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "agave-event-update",
-   "kind": "needs_browser",
-   "target": "COLLABORATION (2026-11-21)",
-   "action": "reviewed",
-   "detail": "掲載済み plump-plants-collab-ina-2026-11(aliases済み)",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "agave-event-update",
-   "kind": "needs_browser",
-   "target": "2026-10-24 POPUP POPUP-STORE",
-   "action": "reviewed",
-   "detail": "掲載済み stan-botanical-gallery-team-abc-2026-10",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "agave-event-update",
-   "kind": "needs_browser",
-   "target": "2026-11-21 COLLABORATION",
-   "action": "reviewed",
-   "detail": "掲載済み plump-plants-collab-ina-2026-11",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "agave-event-update",
-   "kind": "step0",
-   "target": "OJISANS6 (2026-11-08)",
-   "action": "listed",
-   "detail": "@kato_engei_tokyo 告知 Delr1AjyRIO",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "agave-event-update",
-   "kind": "step0",
-   "target": "レア株ギャングスタ POPUP (2026-11-03)",
-   "action": "listed",
-   "detail": "@brooklynprojects_hh 告知 DeixnVmNdaj",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "event-monitor",
-   "kind": "desc_span_mismatch",
-   "target": "plants-and-coffee-hugcoffee-minamicho-2026-10",
-   "action": "fixed",
-   "detail": "主催の10/23夜の投稿『いよいよ明日から 10/24(土)〜11/1(日)』に合わせ開始日を10/23→10/24、説明文を9日間に",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "event-monitor",
-   "kind": "time_vs_organizer_post",
-   "target": "rare-plants-collection-hankyu-umeda-2026-11",
-   "action": "reviewed",
-   "detail": "告知の10:00〜12:00は協賛ブランド担当者の来店枠で開催時間ではない。検査を直した(誤検知)",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "event-monitor",
-   "kind": "needs_browser",
-   "target": "manual_sweep_stale: matome-blog",
-   "action": "skipped",
-   "detail": "ブラウザ要: まとめブログ(もすレコ。等)の期間まとめ記事を巡回し manual-sweeps.json を更新。最後は10/09",
-   "mailedOn": "2026-10-24"
-  },
-  {
-   "on": "2026-10-24",
-   "task": "claude-session",
-   "kind": "organizer_cancel_signal",
-   "target": "ROOTS MARKET (10/25 稲毛)",
-   "action": "fixed",
-   "detail": "主催 @vivi_succulent が前日に中止を告知(強風の予報)。中止にした。出典が公園の頁で主催のIGが登録されておらず、見張りが拾えていなかったので主催を足し、見張りの穴も塞いだ",
-   "mailedOn": "2026-10-25"
-  },
-  {
    "on": "2026-10-26",
    "task": "event-monitor",
    "kind": "rejected_revisit_expired",
@@ -1629,6 +1539,22 @@
    "action": "fixed",
    "detail": "主催名 てものね を多肉もぶれ2回と同じ temo（てものね）に揃えた",
    "mailedOn": "2026-11-23"
+  },
+  {
+   "on": "2026-11-24",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "hamacho-midori-market-2026-12",
+   "action": "rejected",
+   "detail": "主催 GreenSnap の頁で出展者6組を再確認。対象の植物を主に扱う店が無く見送り確定(revisit=false)"
+  },
+  {
+   "on": "2026-11-24",
+   "task": "agave-event-update",
+   "kind": "organizer_cancel_signal",
+   "target": "kkt-taniku-fes-vol6-machida-2026-11",
+   "action": "reviewed",
+   "detail": "DgFGszBo-a1 の見送りは福引の話で、今回は福引復活の告知。開催予定のまま。福引・抽選の見送りを中止語から外すよう check-cancelled.py を直した"
   }
  ]
 }
