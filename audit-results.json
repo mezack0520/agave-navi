@@ -1,5 +1,5 @@
 {
-  "total": 775,
+  "total": 771,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -749,7 +749,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1037,11 +1037,8 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 2,
-      "items": [
-        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)",
-        "2026-12-20 isij-tokyo-reikai-2026-12-20: 弱い語(中止)＋ページが変わった"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1131,10 +1128,8 @@
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
-      "count": 1,
-      "items": [
-        "2026-11-29 kkt-taniku-fes-vol6-machida-2026-11: @kktsucculentfes の 2026-11-23 の投稿に「開催を見送」 https://www.instagram.com/p/DgFGszBo-a1/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
       "severity": "urgent"
     },
@@ -1542,10 +1537,8 @@
     },
     "rejected_revisit_due": {
       "title": "再評価待ちの見送りが開催10日前を切ったのに見ていない",
-      "count": 1,
-      "items": [
-        "hamacho-midori-market-2026-12: 開催 2026-12-04・最終評価 2026-11-23"
-      ],
+      "count": 0,
+      "items": [],
       "note": "出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない",
       "severity": "urgent"
     },

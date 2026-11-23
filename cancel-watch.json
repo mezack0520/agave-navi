@@ -3,36 +3,11 @@
   "sweptOn": "2026-11-24",
   "stats": {
     "targets": 12,
-    "fetched": 12,
-    "grownSkipped": 1,
-    "grownSkippedSlugs": [
-      "isij-big-bazaar-2027-01-10"
-    ]
+    "fetched": 12
   },
   "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "hanatomofesta-2026",
-      "name": "第9回 花友フェスタ",
-      "date": "2026-12-19",
-      "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(画像)",
-      "changed": [
-        "画像"
-      ]
-    },
-    {
-      "slug": "isij-tokyo-reikai-2026-12-20",
-      "name": "I.S.I.J. 東京例会（2026年12月）",
-      "date": "2026-12-20",
-      "url": "http://isij.net/event",
-      "why": "弱い語(中止)＋ページが変わった",
-      "changed": [
-        "本文"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "rare-plants-collection-hankyu-umeda-2026-11": {
       "url": "https://rareplantsjapan.jp/2210",
@@ -98,7 +73,7 @@
         "textLen": 2409,
         "imageCount": 1
       },
-      "prevTextLen": null,
+      "prevTextLen": 2409,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -203,7 +178,7 @@
       "checkedOn": "2026-11-24",
       "signature": {
         "text": "94d2e5597bdd3b93",
-        "images": "1a326f1daa68ecf7",
+        "images": "6b81a1e2b4023671",
         "textLen": 1162,
         "imageCount": 44
       },
@@ -223,7 +198,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 2
+      "imageOnlyChanges": 3
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
@@ -261,7 +236,7 @@
         "textLen": 7203,
         "imageCount": 3
       },
-      "prevTextLen": 7199,
+      "prevTextLen": 7203,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -318,7 +293,7 @@
         "textLen": 4852,
         "imageCount": 10
       },
-      "prevTextLen": 4771,
+      "prevTextLen": 4852,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
