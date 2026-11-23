@@ -839,6 +839,13 @@
       "note": "会場名の表記が変わって当たらなくなった項目。消すか合わせる",
       "severity": "info"
     },
+    "tag_slug_romaji_candidates": {
+      "title": "掲載3件以上でURLがハッシュのままのタグ",
+      "count": 0,
+      "items": [],
+      "note": "sitelib.TAG_ROMAJI にローマ字を足し、旧slugを TAG_SLUG_REDIRECTS に残す(URLが変わるため)",
+      "severity": "info"
+    },
     "venue_redirect_broken": {
       "title": "会場ページの旧URL中継が壊れている",
       "count": 0,
