@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-23 15:06 JST",
+ "generated": "2026-11-24 06:41 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 437,
-  "awaitingNextEdition": 543,
+  "awaitingNextEdition": 550,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 102,
+  "igNeedsBrowser": 101,
   "igDead": 7
  },
  "igAccounts": [
@@ -448,7 +448,7 @@
    "lastEventDate": "2026-11-29",
    "hasUpcoming": true,
    "priority": 0,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "garden_messe",
@@ -1151,56 +1151,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "succulentsnoel",
-   "url": "https://www.instagram.com/succulentsnoel/",
-   "eventCount": 1,
-   "lastEventName": "Succulents Noël 2026",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "personal"
-  },
-  {
-   "handle": "antidote_oimachitracks",
-   "url": "https://www.instagram.com/antidote_oimachitracks/",
-   "eventCount": 1,
-   "lastEventName": "COOLCACTUS POPUP（ANTIDOTE 大井町トラックス店）",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "calee_official_store",
-   "url": "https://www.instagram.com/calee_official_store/",
-   "eventCount": 1,
-   "lastEventName": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
-   "lastEventDate": "2026-11-21",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "pachypo_no_en",
-   "url": "https://www.instagram.com/pachypo_no_en/",
-   "eventCount": 1,
-   "lastEventName": "パキポの園 －つなげる縁－ 井戸端集会",
-   "lastEventDate": "2026-11-23",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "ryokuwakabu5525",
-   "url": "https://www.instagram.com/ryokuwakabu5525/",
-   "eventCount": 1,
-   "lastEventName": "FEEL BEETLE マルシェ",
-   "lastEventDate": "2026-11-23",
-   "hasUpcoming": true,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "bingo_botanical_base_official",
    "url": "https://www.instagram.com/bingo_botanical_base_official/",
    "eventCount": 1,
@@ -1578,7 +1528,7 @@
    "lastEventDate": "2027-01-16",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "personal"
   },
   {
    "handle": "chibigo.fes",
@@ -4224,6 +4174,36 @@
    "apiStatus": "api"
   },
   {
+   "handle": "succulentsnoel",
+   "url": "https://www.instagram.com/succulentsnoel/",
+   "eventCount": 1,
+   "lastEventName": "Succulents Noël 2026",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "personal"
+  },
+  {
+   "handle": "antidote_oimachitracks",
+   "url": "https://www.instagram.com/antidote_oimachitracks/",
+   "eventCount": 1,
+   "lastEventName": "COOLCACTUS POPUP（ANTIDOTE 大井町トラックス店）",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "calee_official_store",
+   "url": "https://www.instagram.com/calee_official_store/",
+   "eventCount": 1,
+   "lastEventName": "YOSHIMURA CACTUS POP UP STORE in CALEE TOKYO",
+   "lastEventDate": "2026-11-21",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
    "handle": "moro2_plants",
    "url": "https://www.instagram.com/moro2_plants/",
    "eventCount": 1,
@@ -4389,6 +4369,26 @@
    "eventCount": 1,
    "lastEventName": "多肉楽市 in 高鍋",
    "lastEventDate": "2026-11-22",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "pachypo_no_en",
+   "url": "https://www.instagram.com/pachypo_no_en/",
+   "eventCount": 1,
+   "lastEventName": "パキポの園 －つなげる縁－ 井戸端集会",
+   "lastEventDate": "2026-11-23",
+   "hasUpcoming": false,
+   "priority": 2,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "ryokuwakabu5525",
+   "url": "https://www.instagram.com/ryokuwakabu5525/",
+   "eventCount": 1,
+   "lastEventName": "FEEL BEETLE マルシェ",
+   "lastEventDate": "2026-11-23",
    "hasUpcoming": false,
    "priority": 2,
    "apiStatus": "api"

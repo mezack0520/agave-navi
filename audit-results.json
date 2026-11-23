@@ -1,5 +1,5 @@
 {
-  "total": 780,
+  "total": 775,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -211,7 +211,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 102,
+      "count": 96,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -230,10 +230,8 @@
         "chinki-shokubutsu-fair-4th-kasugai-2026",
         "chinki-shokubutsu-ichiba-vol10-2026-12",
         "collect-plants-2027-04",
-        "coolcactus-popup-antidote-oimachi-2026-11",
         "ehime-taniku-shokubutsu-zakka-hanbaikai-2nd-2026-12",
         "everybody-plants-okinawa-2026-11",
-        "feel-beetle-marche-kagoshima-2026-11",
         "flex-6th-anniversary-aonocraft-kakegawa-2026-12",
         "fukuoka-green-party-8th-2027-05",
         "gamagori-taniku-festa-hamamatsu-2nd-2027-01",
@@ -252,7 +250,9 @@
         "happy-green-days-minaterrace-tochigi-2026-12",
         "hidaka-sange-takaoka-2026-11",
         "honwaka-pappa-4th-2026-12",
-        "hop-bikakushida-ozaki-flowerpark-2026-12"
+        "hop-bikakushida-ozaki-flowerpark-2026-12",
+        "iizuka-noen-popup-engeiya-tanaka-2026-11",
+        "isij-big-bazaar-2027-01-10"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
@@ -307,7 +307,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 72,
+      "count": 70,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -318,7 +318,6 @@
         "botanical-x-2027-03",
         "botanical-x-2027-09",
         "botanoichi-senju-2026-11",
-        "bsj-meeting-osaka-2026-11",
         "bsj-soukai-nishishinjuku-2026-12",
         "camp-park-garden-4-flarie-2027-04",
         "chinki-plants-flea-market-2027-01",
@@ -348,7 +347,8 @@
         "lier-taniku-festival-nagasaki-2027-01",
         "lier-taniku-festival-natori-2026-12",
         "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01"
+        "lier-taniku-festival-oda-2027-01",
+        "lier-taniku-festival-shimizu-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -775,18 +775,10 @@
     },
     "ongoing_events": {
       "title": "現在開催中のイベント(会期4日以上は一覧の「開催中」枠)",
-      "count": 10,
+      "count": 2,
       "items": [
-        "bsj-meeting-osaka-2026-11(2026-11-23〜2026-11-23/1日)",
-        "coolcactus-popup-antidote-oimachi-2026-11(2026-11-21〜2026-11-23/3日)",
-        "feel-beetle-marche-kagoshima-2026-11(2026-11-23〜2026-11-23/1日)",
-        "izu-shaboten-omoshiro-saboten-hinpyokai-13th-2026-10(2026-10-10〜2026-11-23/45日/長期)",
-        "lier-taniku-festival-yonago-2026-11(2026-11-23〜2026-11-23/1日)",
-        "pakipo-no-sono-idobata-2026-11(2026-11-23〜2026-11-23/1日)",
         "rare-plants-collection-hankyu-umeda-2026-11(2026-11-18〜2026-11-24/7日/長期)",
-        "succulents-noel-showa-kinen-2026-11(2026-11-21〜2026-11-23/3日)",
-        "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)",
-        "yoshimura-cactus-popup-calee-tokyo-2026-11(2026-11-21〜2026-11-23/3日)"
+        "urban-jungle-weeks-hankyu-umeda-2026-11(2026-11-04〜2026-11-24/21日/長期)"
       ],
       "note": "status は upcoming のままでよい。past にすると一覧から消える。開催期間中は必ず出るので、減らす対象ではない",
       "severity": "metric"
@@ -927,10 +919,8 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 1,
-      "items": [
-        "2026-12-19 多肉感謝祭2026（多肉屋GPK）(掲載済み)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
@@ -964,10 +954,8 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 72,
+      "count": 70,
       "items": [
-        "2026-11-21 succulents-noel-showa-kinen-2026-11",
-        "2026-11-23 bsj-meeting-osaka-2026-11",
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
@@ -1005,7 +993,9 @@
         "2027-01-17 chinki-plants-flea-market-2027-01",
         "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
         "2027-01-23 lier-taniku-festival-ube-2027-01",
-        "2027-01-24 lier-taniku-festival-oda-2027-01"
+        "2027-01-24 lier-taniku-festival-oda-2027-01",
+        "2027-01-25 lier-taniku-festival-fukuyama-2027-01",
+        "2027-02-20 enjoy-place-6th-2027-02"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1047,8 +1037,11 @@
     },
     "cancel_suspects": {
       "title": "載せた回に中止・延期の兆候がある",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "2026-12-19 hanatomofesta-2026: 公式ページが変わった(画像)",
+        "2026-12-20 isij-tokyo-reikai-2026-12-20: 弱い語(中止)＋ページが変わった"
+      ],
       "note": "一次情報を確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる。**削除しない。**URLを消すと共有リンクを踏んだ人に何も伝わらないまま当日を迎える。兆候が空振りだったときは何もしなくてよい(翌日の署名が基準になる)",
       "severity": "info"
     },
@@ -1138,15 +1131,21 @@
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-29 kkt-taniku-fes-vol6-machida-2026-11: @kktsucculentfes の 2026-11-23 の投稿に「開催を見送」 https://www.instagram.com/p/DgFGszBo-a1/"
+      ],
       "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
       "severity": "urgent"
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "@fukuoka_effect 2026-11-28: イベントのお知らせです♪ ⁡ 🌸🌸🌸🌸🌸 🌸🌸🌸🌸🌸 花と緑のフラワーオークション 開催のお知らせ📢✨ 🌸🌸🌸🌸🌸 🌸🌸 https://www.instagram.com/p/DgBnfDxhubp/",
+        "@honoka.kakogawa 2026-12-13,2027-04-16: 加古川市 穂ノ花の店長です。 姫路駅にぎわい交流広場 緑楽宴 出店者様 緑楽宴関係者様 お疲れ様でした🤭 楽しい一日を満 https://www.instagram.com/p/DgEd9OCAOM0/",
+        "@qusamura_official 2026-11-28: | 時の輪郭 PROLOGUE|特別公演 - 植物と音による即興インスタレーション ⁡ 叢 と 寒川義雄 特別出演|ha https://www.instagram.com/p/DfwFb6EzXvP/"
+      ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
@@ -1194,8 +1193,16 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 7,
+      "items": [
+        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/p/DgFVnfDk_Or/（caption）",
+        "2026-11-29 toki-no-rinkaku-qusamura-samukawa-2026-11: https://www.instagram.com/p/DfuDQcUT-lg/（caption）",
+        "2026-12-05 king-plants-sunday-oroshimachi-2026-12: https://www.instagram.com/reel/DgFcf5LyMU8/（caption）",
+        "2026-12-19 kimtaro-sakura-christmas-event-2026-12: https://www.instagram.com/p/DgFb9KBH_uC/（caption）",
+        "2026-12-26 yaizu-plants-bonenkai-2026-12: https://www.instagram.com/p/Df_8tmxSl18/（sourcePost）",
+        "2027-01-10 fukuyama-de-marche-9th-2027-01: https://www.instagram.com/p/DgC1qwak49S/（sourcePost）",
+        "2027-03-07 roots-plus-vol2-2027-03: https://www.instagram.com/p/Df_Ag4HoGkc/（sourcePost）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1535,8 +1542,10 @@
     },
     "rejected_revisit_due": {
       "title": "再評価待ちの見送りが開催10日前を切ったのに見ていない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "hamacho-midori-market-2026-12: 開催 2026-12-04・最終評価 2026-11-23"
+      ],
       "note": "出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない",
       "severity": "urgent"
     },

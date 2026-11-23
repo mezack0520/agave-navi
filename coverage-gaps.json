@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-23",
+  "sweptOn": "2026-11-24",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,37 +31,30 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 743,
-    "in_scope": 196,
-    "covered": 117,
-    "known_rejected": 77,
-    "truncated_resolved": 135,
-    "truncated_unresolved": 3,
+    "candidates": 707,
+    "in_scope": 183,
+    "covered": 114,
+    "known_rejected": 69,
+    "truncated_resolved": 90,
+    "truncated_unresolved": 4,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 96,
-    "truncated_unresolved_hits": 135,
-    "in_scope_nextmeet": 74,
+    "in_scope_leafla": 85,
+    "truncated_unresolved_hits": 180,
+    "in_scope_nextmeet": 73,
     "in_scope_matome-blog": 3,
     "in_scope_organizer-index": 3,
-    "in_scope_pukubook": 20,
-    "gaps_raw": 2
+    "in_scope_pukubook": 19,
+    "gaps_raw": 0
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/22 追加 第9回 多肉と雑貨 福山deマルシェ in エ...",
-    "11/22 追加 時の輪郭 — 叢 と 寒川義雄がCOLUMN ...",
-    "11/22 追加 多肉感謝祭2026（多肉屋GPK）が岩手県滝沢..."
+    "11/23 追加 タニトピア ～序章～が群馬県館林市の虹風船で1...",
+    "11/23 追加 RUSKA庭先 中辰園芸 ポインセチア販売会が...",
+    "11/23 追加 ヘリオス中古市 BIG SALEが春日部みどり...",
+    "11/23 追加 溝の口のMAZAKAで「MAZAKA MARK..."
   ],
-  "gaps": [
-    {
-      "date": "2026-12-19",
-      "lastSeen": "2026-12-20",
-      "days": 2,
-      "title": "多肉感謝祭2026（多肉屋GPK）",
-      "source": "leafla"
-    }
-  ]
+  "gaps": []
 }
