@@ -2384,6 +2384,23 @@ def main():
         unused_romaji, '会場名の表記が変わって当たらなくなった項目。消すか合わせる',
         severity='info')
 
+    # タグも同じ。index 対象のタグ頁がハッシュの URL のまま公開されると、後でローマ字にしたとき URL が変わる
+    _tag_n = defaultdict(int)
+    for e in events:
+        for t in set(e.get('tags') or []):
+            _tag_n[t] += 1
+    tag_cand = sorted(f'{t}({n}件) → /tag/{tag_slug(t)}/' for t, n in _tag_n.items()
+                      if n >= sitelib.LANDING_INDEX_MIN and tag_slug(t) not in sitelib.TAG_ROMAJI.values())
+    for _old, _t in sitelib.TAG_SLUG_REDIRECTS.items():
+        if _t not in sitelib.TAG_ROMAJI:
+            tag_cand.append(f'TAG_SLUG_REDIRECTS {_old} の宛先 {_t} が TAG_ROMAJI に無い')
+        elif not os.path.isfile(rp('tag', _old, 'index.html')):
+            tag_cand.append(f'{_old}: 中継頁が生成されていない')
+    add('tag_slug_romaji_candidates',
+        f'掲載{sitelib.LANDING_INDEX_MIN}件以上でURLがハッシュのままのタグ', tag_cand,
+        'sitelib.TAG_ROMAJI にローマ字を足し、旧slugを TAG_SLUG_REDIRECTS に残す(URLが変わるため)',
+        severity='info')
+
     # 中継頁の健全性。宛先が無い / 現役slugと衝突しているとリダイレクトが壊れる。
     rd_bad = []
     for old_slug, dest_key in VENUE_SLUG_REDIRECTS.items():

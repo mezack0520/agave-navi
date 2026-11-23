@@ -338,6 +338,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
   会場名が無く住所しか出さない主催には `venue` を作らない。`venue` の先頭に「会場：」のようなラベルを残さない。
 - 会場の掲載が3件目になったら、同じ回で `_VENUE_ROMAJI_RAW` と `_VENUE_REDIRECTS_RAW` を足す。2件まではハッシュの URL のまま(`sitelib.VENUE_ROMAJI_MIN_EVENTS`)。
   足した直後は `venue_redirect_broken` が daily の再生成まで1件出る。
+- タグの頁も3件で index 対象になる。そのとき `sitelib.TAG_ROMAJI` にローマ字を足し、旧 slug を `TAG_SLUG_REDIRECTS` に残す(`tag_slug_romaji_candidates`)。
 - `access` の出口名は、裏取りできなければ落として駅名だけ残す。
 - `url` と `sourceUrl` はその回の告知頁にする。施設のトップ頁や一覧の頁にすると、daily の日付照合と enrich が別の回の日付や時刻を書く。
   1頁に複数の回が並ぶ頁なら `autoDateUpdate: false` を入れる(`shared_source_page_multi_date`)。

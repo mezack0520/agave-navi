@@ -300,7 +300,7 @@ def index_page(out_path, title, desc, kw, canon, h1, lead, items, root='../'):
             f'{aff_js}</body>\n</html>\n')
     write_page(out_path, head + '\n' + body)
 
-THIN_THRESHOLD = 3  # 掲載イベントがこの件数未満のタグ/都道府県ページはnoindex
+THIN_THRESHOLD = sitelib.LANDING_INDEX_MIN  # 掲載イベントがこの件数未満のタグ/都道府県ページはnoindex
 
 def dyn_facts(evs, today_str):
     """イベント群から事実ベースの動的な紹介文を作る。"""
@@ -556,6 +556,17 @@ def main():
                    noindex=len(evs) < sitelib.ORGANIZER_INDEX_MIN,
                    intro_html=intro_html, rel_path=f'organizer/{h}/index.html'))
         counters['organizer'] += 1
+
+    # タグの旧URL(ローマ字を足す前のハッシュの slug)。宛先は sitelib.TAG_SLUG_REDIRECTS
+    live_tag_slugs = {tag_slug(t) for t in by_tag}
+    for old_slug, dest_tag in sitelib.TAG_SLUG_REDIRECTS.items():
+        if old_slug in live_tag_slugs:
+            continue
+        rel = f'tag/{old_slug}/index.html'
+        write_page(os.path.join(REPO_ROOT, 'tag', old_slug, 'index.html'),
+                   redirect_page(f'/tag/{tag_slug(dest_tag)}/', f'{dest_tag}のイベント一覧', root='../../'))
+        NOINDEX_PATHS.append(rel)
+        counters['tag_redirect'] += 1
 
     # 旧URLからの中継頁。GitHub Pages はサーバ側リダイレクトを持てないので
     # meta refresh + canonical + noindex の頁を置く。宛先は sitelib の

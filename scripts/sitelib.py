@@ -381,7 +381,14 @@ TAG_ROMAJI = {'即売会':'sokubaikai','マルシェ':'marche','大型':'big','�
               'コーデックス':'caudex','アガベ':'agave',
               '塊根植物':'kaikon','多肉植物':'succulent','サボテン':'cactus',
               'ビカクシダ':'platycerium','アロイド':'aroid','着生植物':'epiphyte',
-              'ナイトマーケット':'night-market'}
+              'ナイトマーケット':'night-market','ポップアップ':'popup',
+              'ビザールプランツ':'bizarre','観葉植物':'houseplant'}
+# タグ・県の一覧頁は掲載 LANDING_INDEX_MIN 件以上で index 対象になる(generate-landing-pages)。
+# index 対象になったタグにはローマ字を足し、足す前のハッシュの slug は TAG_SLUG_REDIRECTS に残す
+# (generate-landing-pages が中継頁を置く。audit tag_slug_romaji_candidates)。
+LANDING_INDEX_MIN = 3
+TAG_SLUG_REDIRECTS = {'tag-22145fa5': 'ポップアップ', 'tag-26e09946': 'ビザールプランツ',
+                      'tag-970617a1': '観葉植物'}
 # キーは venue_key() を通した形(NFKC・末尾の括弧書き除去・空白除去)で持つ。
 # 生の表記で持つと、同じ会場でも空白や住所の有無で引けなくなる。
 # 正規化は _VENUE_ROMAJI_RAW の定義直後にまとめてかける。
