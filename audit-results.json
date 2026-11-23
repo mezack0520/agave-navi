@@ -1,5 +1,5 @@
 {
-  "total": 782,
+  "total": 775,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -211,7 +211,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 96,
+      "count": 101,
       "items": [
         "aichin-shokusai-new-year-party-2027",
         "asamiya-tanikusai-xmas-market-2026-12",
@@ -220,6 +220,7 @@
         "biku-matsuri-vol2-ozman-2027-04",
         "bizarre-plants-night-day-2026-12",
         "bota-magic-2nd-wakayama-2027-04",
+        "bota-para-sapporo-2027-04",
         "botanic-front-fes-shikokuzouen-2026-11",
         "botanical-market-mie-vol11-matsusaka-2026-12",
         "botanical-tamba-2026",
@@ -234,6 +235,7 @@
         "everybody-plants-okinawa-2026-11",
         "flex-6th-anniversary-aonocraft-kakegawa-2026-12",
         "fukuoka-green-party-8th-2027-05",
+        "fukuyama-de-marche-9th-2027-01",
         "gamagori-taniku-festa-hamamatsu-2nd-2027-01",
         "garden-isle-taniku-fes-2nd-2026-12",
         "grace-succulents-hanbaikai-fukushima-2026-11",
@@ -250,16 +252,14 @@
         "happy-green-days-minaterrace-tochigi-2026-12",
         "hidaka-sange-takaoka-2026-11",
         "honwaka-pappa-4th-2026-12",
-        "hop-bikakushida-ozaki-flowerpark-2026-12",
-        "iizuka-noen-popup-engeiya-tanaka-2026-11",
-        "isij-big-bazaar-2027-01-10"
+        "hop-bikakushida-ozaki-flowerpark-2026-12"
       ],
       "note": "開催予定の母数と一緒に暦で減る。消失の検出は event_image_lost が行う",
       "severity": "metric"
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 438,
+      "count": 443,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-popup-mellow-plants-toon-2026-10",
@@ -296,22 +296,21 @@
         "bon31-ta29-aki-bonsai-taniku-sokubai-2026-11",
         "bota-bro-garden-agave-collection-izumo-2026-10",
         "bota-magic-2nd-wakayama-2027-04",
+        "bota-para-sapporo-2027-04",
         "bota-para-vol4-sapporo-2026-11",
         "botajam-2026",
         "botalife-4th-anniversary-popup-2026-09",
-        "botalife-euphorbia-fair-2026-11",
-        "botanic-bomb-10th-kyoto-2026"
+        "botalife-euphorbia-fair-2026-11"
       ],
       "note": "暦では減らない。減ったぶんは imageUrl の削除かイベントの削除",
       "severity": "metric"
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 73,
+      "count": 68,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
-        "bota-para-sapporo-2027-04",
         "botanical-journey-onomichi-2026-11",
         "botanical-monsters-2027-okazaki",
         "botanical-style-fukuoka-minato-2026-12",
@@ -327,7 +326,6 @@
         "enjoy-place-bangaihen-2026-12",
         "enjoy-place-outside-3rd-2027-05",
         "fujisan-garden-marche-2027-04",
-        "fukuyama-de-marche-9th-2027-01",
         "gamagori-taniku-festa-7th-2027-03",
         "gamagori-taniku-festa-hyogo-5th-2027-04",
         "isij-big-bazaar-2027-03-14",
@@ -348,7 +346,9 @@
         "lier-taniku-festival-nagasaki-2027-01",
         "lier-taniku-festival-natori-2026-12",
         "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01"
+        "lier-taniku-festival-oda-2027-01",
+        "lier-taniku-festival-shimizu-2026-12",
+        "lier-taniku-festival-tamana-2027-01"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -954,13 +954,12 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 73,
+      "count": 68,
       "items": [
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
         "2026-11-29 botanoichi-senju-2026-11",
-        "2026-11-29 toki-no-rinkaku-qusamura-samukawa-2026-11",
         "2026-12-04 lier-taniku-festival-niihama-2026-12",
         "2026-12-05 border-break-11th-2026-12",
         "2026-12-05 king-plants-sunday-oroshimachi-2026-12",
@@ -981,11 +980,9 @@
         "2026-12-20 nbgarden-festa-shizuoka-2026-12",
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-26 lier-taniku-festival-tokorozawa-2026-12",
-        "2026-12-26 yaizu-plants-bonenkai-2026-12",
         "2026-12-27 lier-taniku-festival-natori-2026-12",
         "2027-01-08 lier-taniku-festival-hyuga-2027-01",
         "2027-01-09 lier-taniku-festival-tamana-2027-01",
-        "2027-01-10 fukuyama-de-marche-9th-2027-01",
         "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
         "2027-01-10 picnic-garden-hatsuuri-sendai-2027-01",
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
@@ -995,7 +992,10 @@
         "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
         "2027-01-23 lier-taniku-festival-ube-2027-01",
         "2027-01-24 lier-taniku-festival-oda-2027-01",
-        "2027-01-25 lier-taniku-festival-fukuyama-2027-01"
+        "2027-01-25 lier-taniku-festival-fukuyama-2027-01",
+        "2027-02-20 enjoy-place-6th-2027-02",
+        "2027-02-20 reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02",
+        "2027-02-20 santafe-shunensai-2027-02"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1194,16 +1194,8 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 7,
-      "items": [
-        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/p/DgFVnfDk_Or/（caption）",
-        "2026-11-29 toki-no-rinkaku-qusamura-samukawa-2026-11: https://www.instagram.com/p/DfuDQcUT-lg/（caption）",
-        "2026-12-05 king-plants-sunday-oroshimachi-2026-12: https://www.instagram.com/reel/DgFcf5LyMU8/（caption）",
-        "2026-12-19 kimtaro-sakura-christmas-event-2026-12: https://www.instagram.com/p/DgFb9KBH_uC/（caption）",
-        "2026-12-26 yaizu-plants-bonenkai-2026-12: https://www.instagram.com/p/Df_8tmxSl18/（sourcePost）",
-        "2027-01-10 fukuyama-de-marche-9th-2027-01: https://www.instagram.com/p/DgC1qwak49S/（sourcePost）",
-        "2027-03-07 roots-plus-vol2-2027-03: https://www.instagram.com/p/Df_Ag4HoGkc/（sourcePost）"
-      ],
+      "count": 0,
+      "items": [],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
