@@ -1,5 +1,5 @@
 {
-  "total": 771,
+  "total": 780,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -307,7 +307,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 70,
+      "count": 72,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -322,6 +322,7 @@
         "camp-park-garden-4-flarie-2027-04",
         "chinki-plants-flea-market-2027-01",
         "chinki-plants-flea-market-2027-04",
+        "enichi-vol19-2027-03",
         "enjoy-place-6th-2027-02",
         "enjoy-place-bangaihen-2026-12",
         "enjoy-place-outside-3rd-2027-05",
@@ -347,8 +348,7 @@
         "lier-taniku-festival-nagasaki-2027-01",
         "lier-taniku-festival-natori-2026-12",
         "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01",
-        "lier-taniku-festival-shimizu-2026-12"
+        "lier-taniku-festival-oda-2027-01"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -749,7 +749,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -954,7 +954,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 70,
+      "count": 72,
       "items": [
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
@@ -1146,8 +1146,14 @@
     },
     "organizer_unlisted_rejected_post": {
       "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
-      "count": 0,
-      "items": [],
+      "count": 5,
+      "items": [
+        "@fukuoka_effect 2026-11-28: seriesWide の見送り fukuoka-effect-flower-auction-2026-11 の名前が投稿に出ている",
+        "@fukuoka_effect 2026-11-28: 見送り fukuoka-effect-flower-auction-2026-11 が同じ投稿 DgBnfDxhubp を挙げている",
+        "@honoka.kakogawa 2026-12-13,2027-04-16: 見送り hamimoro-kitaharima-2026-12 が同じ投稿 DgEd9OCAOM0 を挙げている",
+        "@honoka.kakogawa 2026-12-13,2027-04-16: 見送り shokuchu-shokubutsu-vol3-2027-02 が同じ投稿 DgEd9OCAOM0 を挙げている",
+        "@qusamura_official 2026-11-28: 見送り toki-no-rinkaku-prologue-2026-11 が同じ投稿 DfwFb6EzXvP を挙げている"
+      ],
       "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },

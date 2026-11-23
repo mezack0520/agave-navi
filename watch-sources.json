@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24 07:15 JST",
+ "generated": "2026-11-24 07:20 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 437,
@@ -306,6 +306,16 @@
    "eventCount": 3,
    "lastEventName": "叢宴 〜春の陣〜（春のボタニカルマーケット in 富士市中央公園）",
    "lastEventDate": "2027-03-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "banksia.111",
+   "url": "https://www.instagram.com/banksia.111/",
+   "eventCount": 3,
+   "lastEventName": "園日 Vol.19",
+   "lastEventDate": "2027-03-14",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -636,6 +646,16 @@
    "eventCount": 2,
    "lastEventName": "Collect Plants Vol.？（コレクトプランツ・2027年4月）",
    "lastEventDate": "2027-04-24",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "honoka.kakogawa",
+   "url": "https://www.instagram.com/honoka.kakogawa/",
+   "eventCount": 2,
+   "lastEventName": "緑楽宴mini in 明石",
+   "lastEventDate": "2027-05-02",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -1096,16 +1116,6 @@
    "eventCount": 2,
    "lastEventName": "まるっと植物fes!!",
    "lastEventDate": "2026-11-21",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "banksia.111",
-   "url": "https://www.instagram.com/banksia.111/",
-   "eventCount": 2,
-   "lastEventName": "園日 Vol.18",
-   "lastEventDate": "2026-11-22",
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "api"
@@ -4294,16 +4304,6 @@
    "apiStatus": "personal"
   },
   {
-   "handle": "honoka.kakogawa",
-   "url": "https://www.instagram.com/honoka.kakogawa/",
-   "eventCount": 1,
-   "lastEventName": "緑楽宴",
-   "lastEventDate": "2026-11-22",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
    "handle": "ta29_handmade.marche",
    "url": "https://www.instagram.com/ta29_handmade.marche/",
    "eventCount": 1,
@@ -4838,22 +4838,10 @@
  ],
  "officialSiteCandidates": [
   {
-   "domain": "shaboten.co.jp",
-   "url": "https://shaboten.co.jp/press/7561/",
-   "eventName": "第13回 おもしろサボテン品評会（伊豆シャボテン動物公園）",
-   "eventDate": "2026-10-10"
-  },
-  {
    "domain": "rareplantsjapan.jp",
    "url": "https://rareplantsjapan.jp/2210",
    "eventName": "RARE PLANTS COLLECTION",
    "eventDate": "2026-11-18"
-  },
-  {
-   "domain": "bromeliads.jp",
-   "url": "https://bromeliads.jp/news/news-13474/",
-   "eventName": "2026年 BSJミーティング大阪",
-   "eventDate": "2026-11-23"
   },
   {
    "domain": "greensnap.jp",
@@ -4878,6 +4866,12 @@
    "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
    "eventName": "BORDER BREAK!! 11th",
    "eventDate": "2026-12-05"
+  },
+  {
+   "domain": "bromeliads.jp",
+   "url": "https://bromeliads.jp/news/news-13496/",
+   "eventName": "日本ブロメリア協会「総会」2026",
+   "eventDate": "2026-12-06"
   },
   {
    "domain": "hanatomofesta.com",
@@ -5015,6 +5009,12 @@
    "domain": "botanicbomb.studio.site",
    "url": "https://botanicbomb.studio.site/",
    "eventName": "BOTANIC BOMB 10TH（ボタニックボム）",
+   "eventDate": "2026-06-07"
+  },
+  {
+   "domain": "himeji-kanko.jp",
+   "url": "https://www.himeji-kanko.jp/event/1620/",
+   "eventName": "姫路城 奇草天外な植物市",
    "eventDate": "2026-06-07"
   }
  ],
