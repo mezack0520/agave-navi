@@ -1998,10 +1998,7 @@
   },
   {
    "date": "2026-11-25",
-   "urgent": {
-    "organizer_cancel_signal": 1,
-    "time_vs_organizer_post": 1
-   },
+   "urgent": {},
    "info": {
     "coverage_gaps": 8,
     "organizer_unlisted_dates": 1,
@@ -2012,7 +2009,7 @@
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 49,
-    "upcoming_with_image": 99,
+    "upcoming_with_image": 98,
     "events_with_image": 443,
     "upcoming_no_image": 68,
     "ongoing_events": 1,
@@ -2020,7 +2017,7 @@
     "eyecatch_backlog": 68
    },
    "events": 834,
-   "upcoming": 167
+   "upcoming": 166
   }
  ]
 }
