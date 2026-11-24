@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-25 07:24 JST",
+ "generated": "2026-11-25 07:26 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 438,
+  "igAccounts": 439,
   "awaitingNextEdition": 552,
-  "officialSiteCandidates": 88,
+  "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 102,
+  "igNeedsBrowser": 103,
   "igDead": 7
  },
  "igAccounts": [
@@ -131,6 +131,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "felicita_plants",
+   "url": "https://www.instagram.com/felicita_plants/",
+   "eventCount": 5,
+   "lastEventName": "BOTANICAL LOVER（ボタラバ）",
+   "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "taniten_kengo202",
    "url": "https://www.instagram.com/taniten_kengo202/",
    "eventCount": 5,
@@ -156,6 +166,16 @@
    "eventCount": 4,
    "lastEventName": "cham_plants 植物販売会（プロトリーフ ゆめが丘ソラトス店）",
    "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "okibota_2021",
+   "url": "https://www.instagram.com/okibota_2021/",
+   "eventCount": 4,
+   "lastEventName": "オキボタ March 2027 in サンシャインシティ",
+   "lastEventDate": "2027-03-19",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -316,16 +336,6 @@
    "eventCount": 3,
    "lastEventName": "園日 Vol.19",
    "lastEventDate": "2027-03-14",
-   "hasUpcoming": true,
-   "priority": 0,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "okibota_2021",
-   "url": "https://www.instagram.com/okibota_2021/",
-   "eventCount": 3,
-   "lastEventName": "オキボタ March 2027 in サンシャインシティ",
-   "lastEventDate": "2027-03-19",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -719,16 +729,6 @@
    "hasUpcoming": false,
    "priority": 1,
    "apiStatus": "personal"
-  },
-  {
-   "handle": "felicita_plants",
-   "url": "https://www.instagram.com/felicita_plants/",
-   "eventCount": 4,
-   "lastEventName": "ビザールプランツ 名古屋ノ陣",
-   "lastEventDate": "2026-11-01",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
   },
   {
    "handle": "chiba_c_and_s_association",
@@ -1439,6 +1439,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "nishigawa.hokoten",
+   "url": "https://www.instagram.com/nishigawa.hokoten/",
+   "eventCount": 1,
+   "lastEventName": "ボタニカルガーデン in ホコテン！ 2026",
+   "lastEventDate": "2026-12-13",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "nb_garden2015",
@@ -4850,12 +4860,6 @@
  ],
  "officialSiteCandidates": [
   {
-   "domain": "rareplantsjapan.jp",
-   "url": "https://rareplantsjapan.jp/2210",
-   "eventName": "RARE PLANTS COLLECTION",
-   "eventDate": "2026-11-18"
-  },
-  {
    "domain": "greensnap.jp",
    "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
    "eventName": "GreenSnap Marche お台場 2026",
@@ -4884,6 +4888,18 @@
    "url": "https://bromeliads.jp/news/news-13496/",
    "eventName": "日本ブロメリア協会「総会」2026",
    "eventDate": "2026-12-06"
+  },
+  {
+   "domain": "city.okayama.jp",
+   "url": "https://www.city.okayama.jp/kankou/0000007281.html",
+   "eventName": "ボタニカルガーデン in ホコテン！ 2026",
+   "eventDate": "2026-12-13"
+  },
+  {
+   "domain": "threads.com",
+   "url": "https://www.threads.com/@felicita_plants/post/DgHkNrYkZ-1",
+   "eventName": "BOTANICAL LOVER（ボタラバ）",
+   "eventDate": "2026-12-13"
   },
   {
    "domain": "hanatomofesta.com",
@@ -5021,12 +5037,6 @@
    "domain": "botanicbomb.studio.site",
    "url": "https://botanicbomb.studio.site/",
    "eventName": "BOTANIC BOMB 10TH（ボタニックボム）",
-   "eventDate": "2026-06-07"
-  },
-  {
-   "domain": "himeji-kanko.jp",
-   "url": "https://www.himeji-kanko.jp/event/1620/",
-   "eventName": "姫路城 奇草天外な植物市",
    "eventDate": "2026-06-07"
   }
  ],
