@@ -1,5 +1,5 @@
 {
-  "total": 773,
+  "total": 775,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -98,6 +98,13 @@
       "items": [],
       "note": "@ や https://instagram.com/ を外し、handle だけにする",
       "severity": "urgent"
+    },
+    "series_organizer_ig_missing": {
+      "title": "同じシリーズの他の回に主催のIGがあるのに、この回だけ organizerIg が無い(主催の頁から漏れる)",
+      "count": 0,
+      "items": [],
+      "note": "organizerIg にシリーズの handle を入れ、updatedAt を今日にする",
+      "severity": "info"
     },
     "thin_fixable": {
       "title": "薄い判定で開催予定(出典あり・説明文を50字以上にすれば解消)",
@@ -749,7 +756,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -1154,8 +1161,11 @@
     },
     "organizer_unlisted_rejected_post": {
       "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
-      "count": 0,
-      "items": [],
+      "count": 2,
+      "items": [
+        "@protoleaf.shop_futakotamagawa 2026-12-01,2027-01-13,2027-01-27: seriesWide の見送り protoleaf-futako-yoseue-ws-2026-10 の名前が投稿に出ている",
+        "@protoleaf.shop_futakotamagawa 2026-12-01,2027-01-13,2027-01-27: 見送り protoleaf-futako-yoseue-ws-2026-10 が同じ投稿 DgHGogvEVoh を挙げている"
+      ],
       "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },

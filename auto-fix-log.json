@@ -1636,7 +1636,8 @@
    "kind": "organizer_cancel_signal",
    "target": "鼓動 vol.5 (2026-11-28)",
    "action": "fixed",
-   "detail": "主催 @kodo_haru DgH7S6VT6aL で天候による延期を確認。eventStatus=postponed、延期後の日程は未発表"
+   "detail": "主催 @kodo_haru DgH7S6VT6aL で天候による延期を確認。eventStatus=postponed、延期後の日程は未発表",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1644,7 +1645,8 @@
    "kind": "time_vs_organizer_post",
    "target": "金岡みどりのマルシェ（2026年11月） (2026-11-25)",
    "action": "fixed",
-   "detail": "誤検知。DgHGff2zZ2g の 11/29 10:00〜15:00 は同じ投稿の別の節(第4回珍奇植物フェア)の時刻。organizer_post_hours_missing が回の節だけを読むよう sitelib を直した"
+   "detail": "誤検知。DgHGff2zZ2g の 11/29 10:00〜15:00 は同じ投稿の別の節(第4回珍奇植物フェア)の時刻。organizer_post_hours_missing が回の節だけを読むよう sitelib を直した",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1652,7 +1654,8 @@
    "kind": "coverage_gaps",
    "target": "第7回 糸島ばりよか多肉市 (2026-12-06)",
    "action": "fixed",
-   "detail": "掲載済み。PUKUBOOK が志摩中央公園(糸島市)を「三重」と書き県の照合で外れていた。coverage-sweep.judge が会場名の一致で当てるよう直した"
+   "detail": "掲載済み。PUKUBOOK が志摩中央公園(糸島市)を「三重」と書き県の照合で外れていた。coverage-sweep.judge が会場名の一致で当てるよう直した",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1660,7 +1663,8 @@
    "kind": "coverage_gaps",
    "target": "BOTANICAL LOVER（ボタラバ） (2026-12-13)",
    "action": "listed",
-   "detail": "主催 @felicita_plants の Threads DgHkNrYkZ-1 で裏取り"
+   "detail": "主催 @felicita_plants の Threads DgHkNrYkZ-1 で裏取り",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1668,7 +1672,8 @@
    "kind": "coverage_gaps",
    "target": "ボタニカルガーデン in ホコテン！ 2026 (2026-12-13)",
    "action": "listed",
-   "detail": "主催の岡山市の公式頁(kankou/0000007281)と岡山観光WEBの出店者一覧で裏取り。多肉の店が多く compositeEvents の閾値を超える"
+   "detail": "主催の岡山市の公式頁(kankou/0000007281)と岡山観光WEBの出店者一覧で裏取り。多肉の店が多く compositeEvents の閾値を超える",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1676,7 +1681,8 @@
    "kind": "coverage_gaps",
    "target": "オキボタ with ハチクラ祭 in 岡山 2027 (2027-02-27)",
    "action": "listed",
-   "detail": "主催オーキッド＆ボタニカルの公式サイトで裏取り"
+   "detail": "主催オーキッド＆ボタニカルの公式サイトで裏取り",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1684,7 +1690,8 @@
    "kind": "coverage_gaps",
    "target": "植物を愛でる店主の集い (2026-11-28)",
    "action": "rejected",
-   "detail": "主催 @pepe_sanae DfyKk-rmhtf。花苗・宿根草が主題(outOfScopeGenres)"
+   "detail": "主催 @pepe_sanae DfyKk-rmhtf。花苗・宿根草が主題(outOfScopeGenres)",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1692,7 +1699,8 @@
    "kind": "coverage_gaps",
    "target": "トハメルカド境赤レンガ倉庫 第16回 (2026-12-27)",
    "action": "rejected",
-   "detail": "総合マーケット。第15回(植物約8%)と同じ判断"
+   "detail": "総合マーケット。第15回(植物約8%)と同じ判断",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1700,7 +1708,8 @@
    "kind": "coverage_gaps",
    "target": "世界らん展2027 (2027-02-04)",
    "action": "rejected",
-   "detail": "洋ラン(outOfScopeGenres)"
+   "detail": "洋ラン(outOfScopeGenres)",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1708,7 +1717,8 @@
    "kind": "coverage_gaps",
    "target": "BOTANICAL BOTANICAL GIFU (2027-04-10)",
    "action": "rejected",
-   "detail": "主催の告知が無く PUKUBOOK のみ。unverified・revisit"
+   "detail": "主催の告知が無く PUKUBOOK のみ。unverified・revisit",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1716,7 +1726,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "scan-organizer-posts 一覧(101投稿)",
    "action": "reviewed",
-   "detail": "掲載漏れなし。FUJIYAMA DAYS 冬・SEEDLING LABORATORY 値引きセールを見送りに記録"
+   "detail": "掲載漏れなし。FUJIYAMA DAYS 冬・SEEDLING LABORATORY 値引きセールを見送りに記録",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1724,7 +1735,8 @@
    "kind": "series_organizer_ig_missing",
    "target": "終了した回24件の organizerIg",
    "action": "fixed",
-   "detail": "同じシリーズの他の回が持つ主催IGを入れた(主催の頁の実績から漏れていた)。監査 series_organizer_ig_missing を追加"
+   "detail": "同じシリーズの他の回が持つ主催IGを入れた(主催の頁の実績から漏れていた)。監査 series_organizer_ig_missing を追加",
+   "mailedOn": "2026-11-25"
   },
   {
    "on": "2026-11-25",
@@ -1732,7 +1744,8 @@
    "kind": "organizer_unlisted_dates",
    "target": "オリジナル寄せ植えワークショップ (2026-12-01ほか プロトリーフ二子玉川)",
    "action": "rejected",
-   "detail": "workshopOnly。既存の見送り protoleaf-futako-yoseue-ws-2026-10 を seriesWide にし、投稿 DgHGogvEVoh を記録"
+   "detail": "workshopOnly。既存の見送り protoleaf-futako-yoseue-ws-2026-10 を seriesWide にし、投稿 DgHGogvEVoh を記録",
+   "mailedOn": "2026-11-25"
   }
  ]
 }
