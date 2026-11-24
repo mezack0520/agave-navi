@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-25 07:12 JST",
+ "generated": "2026-11-25 07:24 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 437,
+  "igAccounts": 438,
   "awaitingNextEdition": 552,
   "officialSiteCandidates": 88,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 101,
+  "igNeedsBrowser": 102,
   "igDead": 7
  },
  "igAccounts": [
@@ -1615,6 +1615,18 @@
    "source": "seed",
    "seedWhy": "TANIKU JAM の主催本人。告知は @tanikujam と同時にこちらにも出る",
    "apiStatus": "api"
+  },
+  {
+   "handle": "hanaden.k",
+   "url": "https://www.instagram.com/hanaden.k/",
+   "eventCount": 0,
+   "lastEventName": "花伝（福岡県久留米市の園芸店）",
+   "lastEventDate": null,
+   "hasUpcoming": false,
+   "priority": 1,
+   "source": "seed",
+   "seedWhy": "2026-11-21〜22 に自店で花伝多肉祭り2026(レア多肉・ビザールプランツ販売会とオークション)を開いたのを、終わってから Google の検索で知った。掲載が無く見張っていなかった",
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kumagaya_taniku_fes",
