@@ -1629,6 +1629,22 @@
    "action": "rejected",
    "detail": "所在地非公開で3回目。seriesWide で見送り",
    "mailedOn": "2026-11-24"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "organizer_cancel_signal",
+   "target": "鼓動 vol.5 (2026-11-28)",
+   "action": "fixed",
+   "detail": "主催 @kodo_haru DgH7S6VT6aL で天候による延期を確認。eventStatus=postponed、延期後の日程は未発表"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "金岡みどりのマルシェ（2026年11月） (2026-11-25)",
+   "action": "fixed",
+   "detail": "誤検知。DgHGff2zZ2g の 11/29 10:00〜15:00 は同じ投稿の別の節(第4回珍奇植物フェア)の時刻。organizer_post_hours_missing が回の節だけを読むよう sitelib を直した"
   }
  ]
 }

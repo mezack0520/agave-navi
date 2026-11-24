@@ -2993,6 +2993,18 @@ def _self_test_event_section():
            '🍊「モロモロプランツ」🍊\n11月21日.22日(土日)\n両日10:00〜16:00')
     if announced_hours(event_section(cap, ev)):
         bad.append(('別の節の時刻を読んだ', announced_hours(event_section(cap, ev))))
+    # 同じ投稿で別の節の催しが会期中の日付と時刻を持っても、この回の欠けにしない(2026-11-25、DgHGff2zZ2g)
+    acc = 'yokoen_tk'
+    cap3 = ('【靱公園植木市終了いたしました】\n明日25日(水)からは、金岡みどりのマルシェ開催です\n\n'
+            '🟢「金岡みどりのマルシェ」🟢\n\n11月25日（水）〜30日（月）\n\n期間中の平日\n25日〜27日、30日\n9:00〜15:00\n'
+            '-——————\n28.29日（土日）のみ9:00〜16:00\n\n'
+            '🪴「第4回珍奇植物フェア」🪴\n\n11月29日(日)\n10:00〜15:00\n名古屋ハウジングセンター春日井会場')
+    ev3 = {'slug': 'km', 'name': '金岡みどりのマルシェ（2026年11月）', 'aliases': ['金岡みどりのマルシェ'],
+           'date': '2026-11-25', 'dateEnd': '2026-11-30', 'organizerIg': acc,
+           'time': '9:00〜15:00（11/28・11/29は16:00まで）'}
+    got = organizer_post_hours_missing(ev3, {acc: [{'timestamp': '2026-11-24T10:00:00+0000', 'permalink': 'u3', 'caption': cap3}]})
+    if got:
+        bad.append(('別の節の催しの日付つき時刻を欠けにした', got))
     ev2 = {'name': 'モロモロプランツ'}
     if not announced_hours(event_section(cap, ev2)):
         bad.append(('自分の節の時刻を落とした(検査が空振りする)',))
@@ -3055,7 +3067,8 @@ def organizer_post_hours_missing(e, posts_by_account, org_events=()):
                 continue
             ts = p.get('timestamp') or ''
             place = ' '.join(str(e.get(k) or '') for k in ('venue', 'location', 'name'))
-            for d, rs in announced_dated_hours(cap, md, place=place).items():
+            # 見出しで複数の催しを並べた投稿は、この回の節だけを読む
+            for d, rs in announced_dated_hours(event_section(cap, e), md, place=place).items():
                 if d not in latest or ts > latest[d][0]:
                     latest[d] = (ts, rs, p.get('permalink') or '')
     sibling = {}
