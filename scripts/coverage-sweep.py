@@ -1158,6 +1158,16 @@ NAMED_SOURCES = ('nextmeet', 'matome-blog', 'organizer-index', 'pukubook')
 GAP_HINTS = ('pref', 'alts', 'place')
 
 
+def venue_of_place(place):
+    """「県 / 会場」の会場名(NFKC)。4字未満と、住所(数字か県市区町村の語を含む)は返さない"""
+    if '/' not in (place or ''):
+        return ''
+    v = unicodedata.normalize('NFKC', place.split('/', 1)[1]).strip()
+    if len(v) < 4 or re.search(r'[0-9〒]|[都道府県]|[市区町村]$', v):
+        return ''
+    return v
+
+
 def judge(t, key, source, by_day, rejected, days, ex=None):
     """見出し1件を (判定, 当たった相手) にする。判定は 掲載済み / 見送り / 取りこぼし。
     ex は情報源が見出しの外に持つ手がかり(2026-11-05)。
@@ -1182,7 +1192,11 @@ def judge(t, key, source, by_day, rejected, days, ex=None):
         cand = [e for v in by_day.values() for e in v]
     tp = pref_short(ex.get('pref'))
     if tp:
-        cand = [e for e in cand if pref_short(e.get('prefecture')) in ('', tp)]
+        # 向こうの県が誤っていても、会場名(「県 / 会場」の会場、4字以上)がこちらの location か venue に
+        # そのまま出る回は同じ場所とみなす。PUKUBOOK は糸島市の志摩中央公園を「三重」と書く(2026-11-25)
+        vn = venue_of_place(ex.get('place') or '')
+        cand = [e for e in cand if pref_short(e.get('prefecture')) in ('', tp)
+                or (vn and vn in unicodedata.normalize('NFKC', f"{e.get('location') or ''} {e.get('venue') or ''}"))]
     # 場所の裏付け(2026-11-06)。向こうの場所とこちらの location の市区町村が両方読めるなら、一致を求める。
     # NextMeet の月別の目視照合(nextmeet-monthly-check)が回るたびに見つけていた「同じ日の別の回に当たって
     # 取りこぼしが消える」を、目で見る代わりに機械で止める。どちらかが読めない当たりは従来どおり名前だけで決める。
@@ -1829,6 +1843,18 @@ def self_test(verbose=True):
     if got != want:
         ok = False
     _p(f"  {'OK ' if got == want else '★NG'} 英名・県での照合 {got}")
+    # 向こうの県が誤っていても会場名が location に出れば当てる。会場名が違えば従来どおり県で外す(2026-11-25)
+    bari = {'slug': 'bari', 'name': '第7回 糸島ばりよか多肉市', 'prefecture': '福岡',
+            'location': '志摩中央公園（福岡県糸島市志摩初）'}
+    bidx = {'2026-12-06': [bari]}
+    got = [judge('第7回 糸島ばりよか多肉市', '2026-12-06', 'pukubook', bidx, [], 45,
+                 {'pref': '三重', 'place': '三重 / 志摩中央公園'}),
+           judge('第7回 糸島ばりよか多肉市', '2026-12-06', 'pukubook', bidx, [], 45,
+                 {'pref': '三重', 'place': '三重 / 伊勢市観光文化会館'})]
+    want = [('掲載済み', 'bari'), ('取りこぼし', '')]
+    if got != want:
+        ok = False
+    _p(f"  {'OK ' if got == want else '★NG'} 県が誤った札を会場名で当てる {got}")
 
     _p('\n--- 県の読み取り(NextMeet・主催公式の一覧) ---')
     # NextMeet の月別の札(2026-11-05)。日付 → 県のリンク → h3 の順。県のリンクが無い札は空

@@ -1645,6 +1645,78 @@
    "target": "金岡みどりのマルシェ（2026年11月） (2026-11-25)",
    "action": "fixed",
    "detail": "誤検知。DgHGff2zZ2g の 11/29 10:00〜15:00 は同じ投稿の別の節(第4回珍奇植物フェア)の時刻。organizer_post_hours_missing が回の節だけを読むよう sitelib を直した"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "第7回 糸島ばりよか多肉市 (2026-12-06)",
+   "action": "fixed",
+   "detail": "掲載済み。PUKUBOOK が志摩中央公園(糸島市)を「三重」と書き県の照合で外れていた。coverage-sweep.judge が会場名の一致で当てるよう直した"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "BOTANICAL LOVER（ボタラバ） (2026-12-13)",
+   "action": "listed",
+   "detail": "主催 @felicita_plants の Threads DgHkNrYkZ-1 で裏取り"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "ボタニカルガーデン in ホコテン！ 2026 (2026-12-13)",
+   "action": "listed",
+   "detail": "主催の岡山市の公式頁(kankou/0000007281)と岡山観光WEBの出店者一覧で裏取り。多肉の店が多く compositeEvents の閾値を超える"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "オキボタ with ハチクラ祭 in 岡山 2027 (2027-02-27)",
+   "action": "listed",
+   "detail": "主催オーキッド＆ボタニカルの公式サイトで裏取り"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "植物を愛でる店主の集い (2026-11-28)",
+   "action": "rejected",
+   "detail": "主催 @pepe_sanae DfyKk-rmhtf。花苗・宿根草が主題(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "トハメルカド境赤レンガ倉庫 第16回 (2026-12-27)",
+   "action": "rejected",
+   "detail": "総合マーケット。第15回(植物約8%)と同じ判断"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "世界らん展2027 (2027-02-04)",
+   "action": "rejected",
+   "detail": "洋ラン(outOfScopeGenres)"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "BOTANICAL BOTANICAL GIFU (2027-04-10)",
+   "action": "rejected",
+   "detail": "主催の告知が無く PUKUBOOK のみ。unverified・revisit"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "scan-organizer-posts 一覧(101投稿)",
+   "action": "reviewed",
+   "detail": "掲載漏れなし。FUJIYAMA DAYS 冬・SEEDLING LABORATORY 値引きセールを見送りに記録"
   }
  ]
 }

@@ -32,6 +32,12 @@
       "label": "AONOCRAFT（静岡県掛川市・アガベと植物の店）",
       "why": "2026-12-13 に FLEX 6th ANNIVERSARY AONOCRAFT Store Event を自店で開く(DfqIg-WPQvy)。内田農園の投稿で見つけた主催で、まだ掲載が無い",
       "addedOn": "2026-11-15"
+    },
+    {
+      "handle": "hanaden.k",
+      "label": "花伝（福岡県久留米市の園芸店）",
+      "why": "2026-11-21〜22 に自店で花伝多肉祭り2026(レア多肉・ビザールプランツ販売会とオークション)を開いたのを、終わってから Google の検索で知った。掲載が無く見張っていなかった",
+      "addedOn": "2026-11-25"
     }
   ],
   "_deadHandles": "ブラウザで開いて『ページが見つかりません』だった handle。Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、API だけでは見分けられない。generate-watchlist.py がこの handle を apiStatus=dead にして igNeedsBrowser から外す。現行の handle が分かったら events.json の organizerIg を直し、ここから消す",
