@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-24",
+  "sweptOn": "2026-11-25",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,30 +31,97 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 707,
-    "in_scope": 183,
-    "covered": 114,
-    "known_rejected": 69,
-    "truncated_resolved": 90,
-    "truncated_unresolved": 4,
+    "candidates": 731,
+    "in_scope": 202,
+    "covered": 127,
+    "known_rejected": 66,
+    "truncated_resolved": 45,
+    "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 85,
-    "truncated_unresolved_hits": 180,
-    "in_scope_nextmeet": 73,
+    "in_scope_leafla": 84,
+    "truncated_unresolved_hits": 225,
+    "in_scope_nextmeet": 81,
     "in_scope_matome-blog": 3,
     "in_scope_organizer-index": 3,
-    "in_scope_pukubook": 19,
-    "gaps_raw": 0
+    "in_scope_pukubook": 31,
+    "gaps_raw": 9
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/23 追加 タニトピア ～序章～が群馬県館林市の虹風船で1...",
-    "11/23 追加 RUSKA庭先 中辰園芸 ポインセチア販売会が...",
-    "11/23 追加 ヘリオス中古市 BIG SALEが春日部みどり...",
-    "11/23 追加 溝の口のMAZAKAで「MAZAKA MARK..."
+    "11/24 追加 Grossoが手伝うレモングラスのしめ縄ワーク...",
+    "11/24 追加 植物を愛でる店主の集いがフラワーショップPEP...",
+    "11/24 追加 MAKERS STREET GARDENが北九...",
+    "11/24 追加 MENOSYAMAが薪窯の山（MAKIGAMA...",
+    "11/23 追加 タニトピア ～序章～が群馬県館林市の虹風船で1..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-28",
+      "lastSeen": "2026-11-29",
+      "days": 2,
+      "title": "植物を愛でる店主の集い",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-06",
+      "title": "第7回 糸島ばりよか多肉市",
+      "source": "pukubook",
+      "pref": "三重",
+      "alts": [
+        "Itoshima Bariyoka Succulents Market Vol.7"
+      ],
+      "place": "三重 / 志摩中央公園"
+    },
+    {
+      "date": "2026-12-13",
+      "title": "BOTANICAL LOVER（ボタラバ）",
+      "source": "nextmeet",
+      "pref": "東京",
+      "place": "東京都新宿区下落合2丁目5-15 1F"
+    },
+    {
+      "date": "2026-12-13",
+      "title": "ボタニカルガーデン in ホコテン！ 2026",
+      "source": "nextmeet",
+      "pref": "岡山",
+      "place": "西川緑道公園筋(西側市道)・野殿橋 / 〒700-0901 岡山県岡山市北区本町9-13付近"
+    },
+    {
+      "date": "2026-12-27",
+      "title": "トハメルカド境赤レンガ倉庫 第16回",
+      "source": "pukubook",
+      "pref": "群馬",
+      "alts": [
+        "Tohamercado Vol.16"
+      ],
+      "place": "群馬 / 境赤レンガ倉庫"
+    },
+    {
+      "date": "2027-02-04",
+      "title": "世界らん展2027 -花と緑の祭典-",
+      "source": "pukubook",
+      "pref": "東京",
+      "alts": [
+        "Japan Grand Prix International Orchid and Flower Show 2027"
+      ],
+      "place": "東京 / 東京ドームシティ プリズムホール"
+    },
+    {
+      "date": "2027-02-27",
+      "title": "オキボタ with ハチクラ祭 in 岡山 2027",
+      "source": "nextmeet",
+      "pref": "岡山",
+      "place": "CONVEX岡山 小展示場 / 〒701-0165 岡山県岡山市北区大内田675番地"
+    },
+    {
+      "date": "2027-04-10",
+      "title": "BOTANICAL BOTANICAL GIFU",
+      "source": "pukubook",
+      "pref": "岐阜",
+      "place": "岐阜 / 不明"
+    }
+  ]
 }
