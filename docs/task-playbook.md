@@ -345,6 +345,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 - `organizerIg` は handle だけを書く。@、URL、空白は入れない(`organizer_ig_format`)。
   **載せるときに主催の IG まで調べて入れる。**分からないと中止の告知を拾えない。無いと確かめた回は `organizerIgNone: true`(`organizer_ig_unknown`)。
   共催で施設が主催欄に並ぶ回は施設の IG を入れる。
+  終わった回も同じシリーズの回と同じ handle を入れる。主催の頁は organizerIg で束ねる(`series_organizer_ig_missing`)。
 - 告知か説明文に時刻があれば、載せるときに time を入れる。空のまま入れると `time_vs_description` が鳴る。
 - 説明文は50字以上(`sitelib.DESC_MIN_CHARS`)。字数を埋めるために日時、会場、入場料を書き足さない。スペック表に出ている。
   足すのは出店数、扱う植物のジャンル、企画。「次回開催」の年は書かない。所在地の語は location の住所から写し、会期は日付欄と揃える。

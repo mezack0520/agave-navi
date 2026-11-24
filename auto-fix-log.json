@@ -1717,6 +1717,22 @@
    "target": "scan-organizer-posts 一覧(101投稿)",
    "action": "reviewed",
    "detail": "掲載漏れなし。FUJIYAMA DAYS 冬・SEEDLING LABORATORY 値引きセールを見送りに記録"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "event-monitor",
+   "kind": "series_organizer_ig_missing",
+   "target": "終了した回24件の organizerIg",
+   "action": "fixed",
+   "detail": "同じシリーズの他の回が持つ主催IGを入れた(主催の頁の実績から漏れていた)。監査 series_organizer_ig_missing を追加"
+  },
+  {
+   "on": "2026-11-25",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "オリジナル寄せ植えワークショップ (2026-12-01ほか プロトリーフ二子玉川)",
+   "action": "rejected",
+   "detail": "workshopOnly。既存の見送り protoleaf-futako-yoseue-ws-2026-10 を seriesWide にし、投稿 DgHGogvEVoh を記録"
   }
  ]
 }

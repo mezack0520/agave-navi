@@ -473,6 +473,32 @@ def main():
     add('organizer_ig_format', 'organizerIg が handle の形でない(@・URL・空白入り。見張りが外れる)',
         sorted(_org_ig_bad), '@ や https://instagram.com/ を外し、handle だけにする', severity='urgent')
 
+    # 同じシリーズの他の回は主催の IG を持つのに、この回だけ organizerIg が無い。
+    # 主催の頁(sitelib.organizer_pages)は organizerIg で束ねるので、その回が頁の実績から漏れる。
+    # url / sourceUrl が別の handle のプロフィールを指す回は主催が別かもしれないので数えず、件数だけ出す
+    _sib = {}
+    for e in events:
+        _k = sitelib.normalize_series_name(e.get('name') or '')
+        if len(_k) >= 4:
+            _sib.setdefault(_k, []).append(e)
+    _ser_ig_miss, _ser_ig_conflict = [], 0
+    for _k, _evs in _sib.items():
+        _hs = {sitelib.organizer_key(e) for e in _evs} - {''}
+        if len(_hs) != 1:
+            continue
+        _h = next(iter(_hs))
+        for e in _evs:
+            if sitelib.organizer_key(e) or e.get('organizerIgNone') is True:
+                continue
+            if sitelib.organizer_ig_handles(e) - {_h}:
+                _ser_ig_conflict += 1
+                continue
+            _ser_ig_miss.append(f"{e.get('slug')} ({e.get('date')}): 同じシリーズの回は @{_h}")
+    if _ser_ig_conflict:
+        print(f'series_organizer_ig_missing: url が別の handle を指す回 {_ser_ig_conflict}件を数えなかった')
+    add('series_organizer_ig_missing', '同じシリーズの他の回に主催のIGがあるのに、この回だけ organizerIg が無い(主催の頁から漏れる)',
+        sorted(_ser_ig_miss), 'organizerIg にシリーズの handle を入れ、updatedAt を今日にする', severity='info')
+
     # 7. 薄い判定(noindex かつ収益枠なし)
     def is_thin(e):
         d = e.get('description') or ''
