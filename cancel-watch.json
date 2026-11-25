@@ -3,24 +3,11 @@
   "sweptOn": "2026-11-26",
   "stats": {
     "targets": 13,
-    "fetched": 12
+    "fetched": 13
   },
-  "errors": [
-    "border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html"
-  ],
+  "errors": [],
   "logicErrors": [],
-  "suspects": [
-    {
-      "slug": "hanatomofesta-2026",
-      "name": "第9回 花友フェスタ",
-      "date": "2026-12-19",
-      "url": "https://hanatomofesta.com/",
-      "why": "公式ページが変わった(画像)",
-      "changed": [
-        "画像"
-      ]
-    }
-  ],
+  "suspects": [],
   "pages": {
     "greensnap-marche-odaiba-2026": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
@@ -34,6 +21,7 @@
       "prevTextLen": 1583,
       "sigScope": "article",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -62,6 +50,7 @@
       "prevTextLen": 2409,
       "sigScope": "article",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -90,6 +79,7 @@
       "prevTextLen": 791,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -106,6 +96,32 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 1
     },
+    "border-break-11th-2026-12": {
+      "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
+      "checkedOn": "2026-11-26",
+      "signature": {
+        "text": "2dc8f0b75264992d",
+        "images": "e3b0c44298fc1c14",
+        "textLen": 51,
+        "imageCount": 0
+      },
+      "prevTextLen": null,
+      "sigScope": "page",
+      "sigRule": 2,
+      "imgRule": 1,
+      "scopeSince": null,
+      "strong": [],
+      "weak": [],
+      "datesNamed": 0,
+      "eventDateSeen": true,
+      "startDateIsPageMeta": false,
+      "wrongPlace": false,
+      "pagePrefs": [],
+      "firstSeenOn": "2026-11-26",
+      "badChars": 0,
+      "textOnlyChanges": 0,
+      "imageOnlyChanges": 0
+    },
     "bsj-soukai-nishishinjuku-2026-12": {
       "url": "https://bromeliads.jp/news/news-13496/",
       "checkedOn": "2026-11-26",
@@ -118,6 +134,7 @@
       "prevTextLen": 1671,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -146,6 +163,7 @@
       "prevTextLen": 1705,
       "sigScope": "article",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -173,6 +191,7 @@
       "prevTextLen": 7,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -191,13 +210,14 @@
       "checkedOn": "2026-11-26",
       "signature": {
         "text": "d384d64df8f1091b",
-        "images": "ea5497cd71944e5f",
+        "images": "1144b0f80a6040f2",
         "textLen": 1229,
         "imageCount": 44
       },
       "prevTextLen": 1229,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -225,6 +245,7 @@
       "prevTextLen": 777,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -252,6 +273,7 @@
       "prevTextLen": 7203,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [
@@ -284,6 +306,7 @@
       "prevTextLen": 1506,
       "sigScope": "article",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -309,6 +332,7 @@
       "prevTextLen": 4852,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
@@ -337,6 +361,7 @@
       "prevTextLen": 5976,
       "sigScope": "page",
       "sigRule": 2,
+      "imgRule": 1,
       "scopeSince": null,
       "strong": [],
       "weak": [],
