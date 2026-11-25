@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-25 16:20 JST",
+ "generated": "2026-11-26 06:40 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 439,
   "awaitingNextEdition": 552,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 103,
+  "igNeedsBrowser": 100,
   "igDead": 7
  },
  "igAccounts": [
@@ -1478,7 +1478,7 @@
    "lastEventDate": "2026-12-13",
    "hasUpcoming": true,
    "priority": 1,
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "nb_garden2015",
@@ -1666,7 +1666,7 @@
    "priority": 1,
    "source": "seed",
    "seedWhy": "2026-11-21〜22 に自店で花伝多肉祭り2026(レア多肉・ビザールプランツ販売会とオークション)を開いたのを、終わってから Google の検索で知った。掲載が無く見張っていなかった",
-   "apiStatus": "unchecked"
+   "apiStatus": "api"
   },
   {
    "handle": "kumagaya_taniku_fes",
@@ -2443,7 +2443,7 @@
    "lastEventDate": "2026-08-22",
    "hasUpcoming": false,
    "priority": 2,
-   "apiStatus": "personal"
+   "apiStatus": "api"
   },
   {
    "handle": "gardenplazahana",

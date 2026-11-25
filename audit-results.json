@@ -1,5 +1,5 @@
 {
-  "total": 775,
+  "total": 787,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -932,19 +932,17 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 3,
-      "items": [
-        "2026-12-13 BOTANICAL LOVER（ボタラバ）(掲載済み)",
-        "2026-12-13 ボタニカルガーデン in ホコテン！ 2026(掲載済み)",
-        "2027-02-27 オキボタ with ハチクラ祭 in 岡山 2027(掲載済み)"
-      ],
+      "count": 0,
+      "items": [],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-27 AGAVE DE KANPAI"
+      ],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -1145,27 +1143,28 @@
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-12-13 botanical-garden-hokoten-nishigawa-2026-12: @nishigawa.hokoten の 2026-10-24 の投稿に「中止いたします・中止のお知らせ」 https://www.instagram.com/p/De3-bgRk0ev/"
+      ],
       "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
       "severity": "urgent"
     },
     "organizer_unlisted_dates": {
       "title": "主催者の最近の投稿に、当サイトに無い先の日付が出ている",
-      "count": 1,
+      "count": 3,
       "items": [
-        "@protoleaf.shop_futakotamagawa 2026-12-01,2027-01-13,2027-01-27: 🌿【オリジナル寄せ植えワークショップのご案内です】🌿 ◆ワークショップの内容 お好きな苗を選び、講師のアドバイスを受けな https://www.instagram.com/p/DgHGogvEVoh/"
+        "@aichinn_syokusai 2027-01-23: 🌵 愛珍植祭 2027 NEW YEAR PARTY 🌵 🎫 先行入場チケット販売のご案内 【チケット料金】 1枚500 https://www.instagram.com/p/DgJGT6XkxJS/",
+        "@taniten_kengo202 2026-11-28: ☆ こんにちは♪ 関西での蚤の市には初出店になります どうぞ宜しくお願い致します🙇‍♂️ オリーブグリーンの軍用弾薬木箱 https://www.instagram.com/p/DgJwu8BkRkm/",
+        "@vivi_succulent 2026-12-20,2027-03-21: 10月台風の影響で中止になったイベントROOTS MARKET(ルーツマーケット)が2027年3月21日にリベンジ開催決 https://www.instagram.com/reel/DgHy5sGy57M/"
       ],
       "note": "次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。主催の新しい回なら掲載し、出店告知なら何もしない",
       "severity": "info"
     },
     "organizer_unlisted_rejected_post": {
       "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
-      "count": 2,
-      "items": [
-        "@protoleaf.shop_futakotamagawa 2026-12-01,2027-01-13,2027-01-27: seriesWide の見送り protoleaf-futako-yoseue-ws-2026-10 の名前が投稿に出ている",
-        "@protoleaf.shop_futakotamagawa 2026-12-01,2027-01-13,2027-01-27: 見送り protoleaf-futako-yoseue-ws-2026-10 が同じ投稿 DgHGogvEVoh を挙げている"
-      ],
+      "count": 0,
+      "items": [],
       "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },
@@ -1206,8 +1205,21 @@
     },
     "eyecatch_candidates_pending": {
       "title": "アイキャッチ候補が採否待ち",
-      "count": 0,
-      "items": [],
+      "count": 12,
+      "items": [
+        "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11: https://www.instagram.com/p/DgKLRKdk6FK/（caption）",
+        "2026-12-04 lier-taniku-festival-niihama-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）",
+        "2026-12-05 lier-taniku-festival-tokushima-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）",
+        "2026-12-05 king-plants-sunday-oroshimachi-2026-12: https://www.instagram.com/p/DgEXOuvyKvk/（caption）",
+        "2026-12-06 lier-taniku-festival-fukuyama-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）",
+        "2026-12-10 lier-taniku-festival-kariya-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）",
+        "2026-12-11 lier-taniku-festival-shimizu-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）",
+        "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12: https://www.instagram.com/p/DgKrJrUGt7Q/（caption）",
+        "2026-12-12 the-taniku-expo-osanbashi-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）",
+        "2026-12-13 botanical-lover-takadanobaba-2026-12: https://www.instagram.com/p/DgHkMgAkYdp/（caption）",
+        "2026-12-19 kimtaro-sakura-christmas-event-2026-12: https://www.instagram.com/p/DgKGsXBn1fs/（caption）",
+        "2026-12-26 lier-taniku-festival-tokorozawa-2026-12: https://www.instagram.com/p/DgJYbbpAeaY/（caption）"
+      ],
       "note": "staging/eyecatch/<slug>.jpg を1枚ずつ見て、来場者向けの告知なら python3 scripts/apply-eyecatch.py --approve <slug>、違えば --reject \"<slug>=理由\"。迷ったら捨てる",
       "severity": "info"
     },
@@ -1547,8 +1559,10 @@
     },
     "rejected_revisit_due": {
       "title": "再評価待ちの見送りが開催10日前を切ったのに見ていない",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "kasai-plants-market-2026-12: 開催 2026-12-06・最終評価 2026-11-22"
+      ],
       "note": "出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない",
       "severity": "urgent"
     },

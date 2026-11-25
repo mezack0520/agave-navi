@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-25",
+  "sweptOn": "2026-11-26",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,53 +31,39 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 731,
-    "in_scope": 202,
-    "covered": 128,
-    "known_rejected": 71,
+    "candidates": 771,
+    "in_scope": 217,
+    "covered": 149,
+    "known_rejected": 67,
     "truncated_resolved": 45,
     "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 84,
+    "in_scope_leafla": 80,
     "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 81,
+    "in_scope_nextmeet": 100,
     "in_scope_matome-blog": 3,
     "in_scope_organizer-index": 3,
     "in_scope_pukubook": 31,
-    "gaps_raw": 3
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
+    "11/25 追加 湘南T-SITEがGREEN CHRISTMA...",
+    "11/25 追加 SoerüGardenが四季の感謝SALE・秋...",
+    "11/25 追加 盆栽展 -BONSAI BANZAI-がYou...",
     "11/24 追加 Grossoが手伝うレモングラスのしめ縄ワーク...",
-    "11/24 追加 植物を愛でる店主の集いがフラワーショップPEP...",
-    "11/24 追加 MAKERS STREET GARDENが北九...",
-    "11/24 追加 MENOSYAMAが薪窯の山（MAKIGAMA...",
-    "11/23 追加 タニトピア ～序章～が群馬県館林市の虹風船で1..."
+    "11/24 追加 植物を愛でる店主の集いがフラワーショップPEP..."
   ],
   "gaps": [
     {
-      "date": "2026-12-13",
-      "title": "BOTANICAL LOVER（ボタラバ）",
+      "date": "2026-11-27",
+      "title": "AGAVE DE KANPAI",
       "source": "nextmeet",
-      "pref": "東京",
-      "place": "東京都新宿区下落合2丁目5-15 1F"
-    },
-    {
-      "date": "2026-12-13",
-      "title": "ボタニカルガーデン in ホコテン！ 2026",
-      "source": "nextmeet",
-      "pref": "岡山",
-      "place": "西川緑道公園筋(西側市道)・野殿橋 / 〒700-0901 岡山県岡山市北区本町9-13付近"
-    },
-    {
-      "date": "2027-02-27",
-      "title": "オキボタ with ハチクラ祭 in 岡山 2027",
-      "source": "nextmeet",
-      "pref": "岡山",
-      "place": "CONVEX岡山 小展示場 / 〒701-0165 岡山県岡山市北区大内田675番地"
+      "pref": "大阪",
+      "place": "キトアトリエ(tokidoki) / 大阪府大阪市城東区放出西3-1-32 奏ビル1-2F"
     }
   ]
 }
