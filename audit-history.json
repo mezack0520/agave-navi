@@ -2005,12 +2005,14 @@
   {
    "date": "2026-11-26",
    "urgent": {
-    "venue_slug_romaji_candidates": 1
+    "venue_slug_romaji_candidates": 1,
+    "time_vs_organizer_post": 1
    },
    "info": {
-    "coverage_gap_stale": 1,
-    "organizer_unlisted_dates": 3,
-    "organizer_unlisted_rejected_post": 1,
+    "coverage_gap_stale": 3,
+    "cancel_suspects": 1,
+    "cancel_watch_unreachable": 1,
+    "organizer_unlisted_dates": 1,
     "eyecatch_candidates_pending": 12,
     "inquiry_review_gap": 1,
     "task_run_gap": 2

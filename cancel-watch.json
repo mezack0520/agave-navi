@@ -3,16 +3,24 @@
   "sweptOn": "2026-11-26",
   "stats": {
     "targets": 13,
-    "fetched": 13,
-    "grownSkipped": 2,
-    "grownSkippedSlugs": [
-      "greensnap-marche-odaiba-2026",
-      "hanatomofesta-2026"
-    ]
+    "fetched": 12
   },
-  "errors": [],
+  "errors": [
+    "border-break-11th-2026-12: HTTP 429 https://borderbreak121415.blogspot.com/2026/07/blog-post.html"
+  ],
   "logicErrors": [],
-  "suspects": [],
+  "suspects": [
+    {
+      "slug": "hanatomofesta-2026",
+      "name": "第9回 花友フェスタ",
+      "date": "2026-12-19",
+      "url": "https://hanatomofesta.com/",
+      "why": "公式ページが変わった(画像)",
+      "changed": [
+        "画像"
+      ]
+    }
+  ],
   "pages": {
     "greensnap-marche-odaiba-2026": {
       "url": "https://greensnap.jp/event/events/greensnap-marche-odaiba-2026/",
@@ -23,7 +31,7 @@
         "textLen": 1583,
         "imageCount": 27
       },
-      "prevTextLen": 1277,
+      "prevTextLen": 1583,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -98,31 +106,6 @@
       "textOnlyChanges": 0,
       "imageOnlyChanges": 1
     },
-    "border-break-11th-2026-12": {
-      "url": "https://borderbreak121415.blogspot.com/2026/07/blog-post.html",
-      "checkedOn": "2026-11-26",
-      "signature": {
-        "text": "2dc8f0b75264992d",
-        "images": "e3b0c44298fc1c14",
-        "textLen": 51,
-        "imageCount": 0
-      },
-      "prevTextLen": 51,
-      "sigScope": "page",
-      "sigRule": 2,
-      "scopeSince": null,
-      "strong": [],
-      "weak": [],
-      "datesNamed": 0,
-      "eventDateSeen": true,
-      "startDateIsPageMeta": false,
-      "wrongPlace": false,
-      "pagePrefs": [],
-      "firstSeenOn": "2026-11-16",
-      "badChars": 0,
-      "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
-    },
     "bsj-soukai-nishishinjuku-2026-12": {
       "url": "https://bromeliads.jp/news/news-13496/",
       "checkedOn": "2026-11-26",
@@ -160,7 +143,7 @@
         "textLen": 1705,
         "imageCount": 9
       },
-      "prevTextLen": null,
+      "prevTextLen": 1705,
       "sigScope": "article",
       "sigRule": 2,
       "scopeSince": null,
@@ -187,7 +170,7 @@
         "textLen": 7,
         "imageCount": 0
       },
-      "prevTextLen": null,
+      "prevTextLen": 7,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -208,11 +191,11 @@
       "checkedOn": "2026-11-26",
       "signature": {
         "text": "d384d64df8f1091b",
-        "images": "44c5ca51373af817",
+        "images": "ea5497cd71944e5f",
         "textLen": 1229,
         "imageCount": 44
       },
-      "prevTextLen": 1162,
+      "prevTextLen": 1229,
       "sigScope": "page",
       "sigRule": 2,
       "scopeSince": null,
@@ -228,7 +211,7 @@
       "firstSeenOn": "2026-10-20",
       "badChars": 0,
       "textOnlyChanges": 0,
-      "imageOnlyChanges": 0
+      "imageOnlyChanges": 1
     },
     "tokai-okibota-2026": {
       "url": "https://h27664.wixsite.com/orchidbotanical/en/blank-4/tokaiokibota-2026",
