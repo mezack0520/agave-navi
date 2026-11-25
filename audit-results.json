@@ -1,5 +1,5 @@
 {
-  "total": 787,
+  "total": 793,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -314,8 +314,9 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 69,
+      "count": 72,
       "items": [
+        "agave-de-kanpai-kito-osaka-2026-11",
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
         "botanical-garden-hokoten-nishigawa-2026-12",
@@ -344,6 +345,7 @@
         "isij-big-bazaar-2027-11-28",
         "isij-tokyo-reikai-2026-12-20",
         "jusai-utsunomiya-spring-2027-05",
+        "kasai-plants-market-2026-12",
         "kasamajuku-tanikusai-2026-12",
         "kimtaro-sakura-christmas-event-2026-12",
         "king-plants-sunday-oroshimachi-2026-12",
@@ -353,9 +355,7 @@
         "lier-taniku-festival-kariya-2026-12",
         "lier-taniku-festival-kitakyushu-2027-01",
         "lier-taniku-festival-nagasaki-2027-01",
-        "lier-taniku-festival-natori-2026-12",
-        "lier-taniku-festival-niihama-2026-12",
-        "lier-taniku-festival-oda-2027-01"
+        "lier-taniku-festival-natori-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -819,8 +819,10 @@
     },
     "venue_slug_romaji_candidates": {
       "title": "掲載3件以上でURLがハッシュのままの会場",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "兵庫県立フラワーセンター(3件) → /venue/v-22c46406/"
+      ],
       "note": "sitelib._VENUE_ROMAJI_RAW にローマ字を足す。旧slugは必ず _VENUE_REDIRECTS_RAW に残す(URLが変わるため)",
       "severity": "urgent"
     },
@@ -932,17 +934,17 @@
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-27 AGAVE DE KANPAI(掲載済み)"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-11-27 AGAVE DE KANPAI"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -969,8 +971,9 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 69,
+      "count": 72,
       "items": [
+        "2026-11-27 agave-de-kanpai-kito-osaka-2026-11",
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
         "2026-11-28 spine-note-vol2-geek-of-fools-shimonoseki-2026-11",
@@ -981,6 +984,7 @@
         "2026-12-05 lier-taniku-festival-tokushima-2026-12",
         "2026-12-05 orais-party-2026-garden-messe-hachioji",
         "2026-12-06 bsj-soukai-nishishinjuku-2026-12",
+        "2026-12-06 kasai-plants-market-2026-12",
         "2026-12-06 kasamajuku-tanikusai-2026-12",
         "2026-12-06 lier-taniku-festival-fukuyama-2026-12",
         "2026-12-10 lier-taniku-festival-kariya-2026-12",
@@ -1008,9 +1012,7 @@
         "2027-01-17 yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
         "2027-01-23 lier-taniku-festival-ube-2027-01",
         "2027-01-24 lier-taniku-festival-oda-2027-01",
-        "2027-01-25 lier-taniku-festival-fukuyama-2027-01",
-        "2027-02-20 enjoy-place-6th-2027-02",
-        "2027-02-20 reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02"
+        "2027-01-25 lier-taniku-festival-fukuyama-2027-01"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1143,10 +1145,8 @@
     },
     "organizer_cancel_signal": {
       "title": "主催者のInstagramに中止・延期の告知が出ている",
-      "count": 1,
-      "items": [
-        "2026-12-13 botanical-garden-hokoten-nishigawa-2026-12: @nishigawa.hokoten の 2026-10-24 の投稿に「中止いたします・中止のお知らせ」 https://www.instagram.com/p/De3-bgRk0ev/"
-      ],
+      "count": 0,
+      "items": [],
       "note": "投稿を開いて確認する。中止なら events.json の eventStatus を cancelled にして cancelledOn / cancelReason を入れる(削除しない)。空振りなら scripts/cancel-reviewed.json に判断を書けば黙る",
       "severity": "urgent"
     },
@@ -1163,8 +1163,10 @@
     },
     "organizer_unlisted_rejected_post": {
       "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "@taniten_kengo202 2026-11-28: 見送り hirakata-nominoichi-6th-2026-11 が同じ投稿 DgJwu8BkRkm を挙げている"
+      ],
       "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },
@@ -1559,10 +1561,8 @@
     },
     "rejected_revisit_due": {
       "title": "再評価待ちの見送りが開催10日前を切ったのに見ていない",
-      "count": 1,
-      "items": [
-        "kasai-plants-market-2026-12: 開催 2026-12-06・最終評価 2026-11-22"
-      ],
+      "count": 0,
+      "items": [],
       "note": "出店者の一覧・施設の告知など、保留の理由に書いた一次情報が出ていないかを見て、掲載するか見送りを確定する。決められなければ revisitedOn に実行日を書き、理由の末尾に見たことを一文足す(その回は開催日まで出ない)。開催日を過ぎると rejected_revisit_expired に移り、もう掲載できない",
       "severity": "urgent"
     },

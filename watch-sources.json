@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-26 06:40 JST",
+ "generated": "2026-11-26 07:16 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 439,
-  "awaitingNextEdition": 552,
+  "igAccounts": 441,
+  "awaitingNextEdition": 551,
   "officialSiteCandidates": 89,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 100,
+  "igNeedsBrowser": 102,
   "igDead": 7
  },
  "igAccounts": [
@@ -601,6 +601,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "vivi_succulent",
+   "url": "https://www.instagram.com/vivi_succulent/",
+   "eventCount": 2,
+   "lastEventName": "ROOTS MARKET",
+   "lastEventDate": "2027-03-21",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
    "handle": "the_botanical_show",
    "url": "https://www.instagram.com/the_botanical_show/",
    "eventCount": 2,
@@ -1181,6 +1191,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "kito_osaka",
+   "url": "https://www.instagram.com/kito_osaka/",
+   "eventCount": 1,
+   "lastEventName": "AGAVE DE KANPAI",
+   "lastEventDate": "2026-11-27",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "bingo_botanical_base_official",
    "url": "https://www.instagram.com/bingo_botanical_base_official/",
    "eventCount": 1,
@@ -1409,6 +1429,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "succulentandflower.yui",
+   "url": "https://www.instagram.com/succulentandflower.yui/",
+   "eventCount": 1,
+   "lastEventName": "加西Plants Market 植物と雑貨と古いもの",
+   "lastEventDate": "2026-12-06",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "tanikurevolution",
@@ -3600,16 +3630,6 @@
    "url": "https://www.instagram.com/amepla_official/",
    "eventCount": 1,
    "lastEventName": "American and Plants（アメプラ）",
-   "lastEventDate": "2026-10-25",
-   "hasUpcoming": false,
-   "priority": 2,
-   "apiStatus": "api"
-  },
-  {
-   "handle": "vivi_succulent",
-   "url": "https://www.instagram.com/vivi_succulent/",
-   "eventCount": 1,
-   "lastEventName": "ROOTS MARKET",
    "lastEventDate": "2026-10-25",
    "hasUpcoming": false,
    "priority": 2,

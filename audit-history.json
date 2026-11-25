@@ -2005,12 +2005,12 @@
   {
    "date": "2026-11-26",
    "urgent": {
-    "organizer_cancel_signal": 1,
-    "rejected_revisit_due": 1
+    "venue_slug_romaji_candidates": 1
    },
    "info": {
-    "coverage_gaps": 1,
+    "coverage_gap_stale": 1,
     "organizer_unlisted_dates": 3,
+    "organizer_unlisted_rejected_post": 1,
     "eyecatch_candidates_pending": 12,
     "inquiry_review_gap": 1,
     "task_run_gap": 2
@@ -2020,13 +2020,13 @@
     "thin_archived": 49,
     "upcoming_with_image": 100,
     "events_with_image": 445,
-    "upcoming_no_image": 69,
+    "upcoming_no_image": 72,
     "ongoing_events": 1,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 69
+    "eyecatch_backlog": 72
    },
-   "events": 837,
-   "upcoming": 169
+   "events": 840,
+   "upcoming": 172
   }
  ]
 }
