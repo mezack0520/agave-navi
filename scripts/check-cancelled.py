@@ -92,6 +92,17 @@ def strip_html(html):
     return norm(h)
 
 
+# 画像URLの末尾のキャッシュ避け(?1795648812 や ?ver=1.2)。取得のたびに値が変わり、
+# 画像は同じでも署名が動く(hanatomofesta.com)。差し替えはパスの変化で拾う。
+_CACHEBUST = re.compile(r'\?(?:\d+|v(?:er)?=[\w.-]+)$', re.I)
+# 画像の署名の作り方の版。変えた初回は画像を比べない(全頁が「画像が変わった」で鳴るため)。
+IMG_RULE = 1
+
+
+def image_src(url):
+    return _CACHEBUST.sub('', norm(url))
+
+
 def image_tokens(html):
     """画像のURLとalt。告知が画像のとき、ファイル名やaltに手がかりが残る"""
     out = []
@@ -100,11 +111,11 @@ def image_tokens(html):
         src = (re.search(r'(?i)\bsrc\s*=\s*["\']([^"\']+)', tag) or [None, ''])[1]
         alt = (re.search(r'(?i)\balt\s*=\s*["\']([^"\']*)', tag) or [None, ''])[1]
         if src:
-            out.append(norm(src))
+            out.append(image_src(src))
         if alt:
             out.append(norm(alt))
     for m in re.finditer(r'(?i)<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', html or ''):
-        out.append(norm(m.group(1)))
+        out.append(image_src(m.group(1)))
     return out
 
 
@@ -301,7 +312,7 @@ def drop_live_status(text):
 
 
 def og_images(html):
-    return [norm(m.group(1)) for m in re.finditer(
+    return [image_src(m.group(1)) for m in re.finditer(
         r'(?i)<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
         html or '')]
 
@@ -631,7 +642,7 @@ def main():
         if bsig and not rescoped:
             if bsig.get('text') != cmp_sig['text'] and not reread:
                 changed.append('本文')
-            if bsig.get('images') != sig['images']:
+            if bsig.get('images') != sig['images'] and before.get('imgRule') == IMG_RULE:
                 changed.append('画像')
 
         # 前回の本文の長さを持ち回る(2026-09-15)。**署名はハッシュなので、
@@ -644,7 +655,7 @@ def main():
             # 比べると audit.cancel_watch_body_shrunk が鳴る。みずの森の PDF は
             # 化けた生バイト 660406字 → 本文 1642字で -100% と出た(2026-10-05)。
             'prevTextLen': (None if (reread or rescoped) else bsig.get('textLen')),
-            'sigScope': res['sigScope'], 'sigRule': SIG_RULE,
+            'sigScope': res['sigScope'], 'sigRule': SIG_RULE, 'imgRule': IMG_RULE,
             # 署名の範囲か作り方が変わった日。audit.cancel_review_repeated はこの日より
             # 前の「開催予定のまま」を数えない。範囲を直す前の空振りで、直した後の
             # 本物の変化まで「規則が直っていない」と鳴らさないため。
@@ -1023,6 +1034,11 @@ def self_test(verbose=True):
                   .replace('roots_market.png"></head>', 'roots_cancel.png"></head>'), _ev)
     chk('og:image の差し替えは画像の署名に出る',
         _a1['signature']['images'] != _a4['signature']['images'], True)
+    _cb1 = page_signature('<p>x</p><img src="/files/a.png?1795648812"><img src="/b.jpg?ver=6.1">')
+    _cb2 = page_signature('<p>x</p><img src="/files/a.png?1795648813"><img src="/b.jpg?ver=6.2">')
+    _cb3 = page_signature('<p>x</p><img src="/files/cancel.png?1795648813"><img src="/b.jpg?ver=6.2">')
+    chk('キャッシュ避けのクエリだけが変わっても画像の署名は同じ', _cb1['images'] == _cb2['images'], True)
+    chk('パスが変われば画像の署名は変わる', _cb1['images'] != _cb3['images'], True)
     _a5 = analyze(FIX_WP_ENTRY.replace('{news}', 'ROOTS MARKET 中止'), _ev)
     chk('新着欄に出た中止の告知も語は拾う', bool(_a5['strong'] or _a5['weak']), True)
     _two = FIX_WP_ENTRY.replace('{news}', 'X').replace(

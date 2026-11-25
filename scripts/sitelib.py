@@ -401,6 +401,7 @@ _VENUE_ROMAJI_RAW = {'農マル園芸 吉備路農園':'noumaru-kibiji-noen',   
                 '阪急うめだ本店':'hankyu-umeda-honten',   # 2026-11-02 location を区画なしに揃えて4件(GREEN AGE・コトコトステージ81・9階祝祭広場は venue)
                 'ガーデンプラザ華 福島店':'garden-plaza-hana-fukushima',   # 2026-10-25 ピクニックガーデン vol.27 で3件(読みは店の IG @gardenplazahana)
                 'グランメッセ熊本':'grandmesse-kumamoto',   # 2026-10-23 Collect Plants 2027-04 の回で3件
+                '兵庫県立フラワーセンター':'hyogo-flower-center',   # 加西Plants Market で3件
                 'せんだい農業園芸センター みどりの杜':'sendai-nogyo-engei-center',   # 2026-10-15 ピクニックガーデン11月の回で3件
                 '道の駅いちごの里よしみ':'michinoeki-ichigonosato-yoshimi',   # 2026-10-15 bizarrefarm SPRING FES 10th で3件
                 '五反田TOCビル':'gotanda-toc',   # 2026-10-08 キーを建物に(フロアは回ごとに変わる。旧キーは「五反田TOCビル 13階」)
@@ -465,6 +466,7 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    'v-22c46406': '兵庫県立フラワーセンター',
     'v-b6ec7b13': 'オザキフラワーパーク',
     'v-06d2243a': 'プロトリーフ ゆめが丘ソラトス店',
     'v-f2260e2c': '農マル園芸 吉備路農園',

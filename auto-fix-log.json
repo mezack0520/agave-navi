@@ -1793,6 +1793,38 @@
    "target": "大鉢祭り (2026-12-19)",
    "action": "rejected",
    "detail": "主催 @yell_green DgFF5VhOlnU。作家の植木鉢の販売で potteryAndVesselShows"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "event-monitor",
+   "kind": "time_vs_organizer_post",
+   "target": "緑楽宴mini in 明石 (2027-05-02)",
+   "action": "fixed",
+   "detail": "主催 @honoka.kakogawa の告知 DgEd9OCAOM0 の 10時〜16時に time を直した(掲載時の 10:00〜20:00 は誤り)"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "event-monitor",
+   "kind": "venue_slug_romaji_candidates",
+   "target": "兵庫県立フラワーセンター",
+   "action": "fixed",
+   "detail": "3件になったので会場URLを /venue/hyogo-flower-center/ にし、旧 v-22c46406 を中継に残した"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "第9回 花友フェスタ (2026-12-19)",
+   "action": "reviewed",
+   "detail": "hanatomofesta.com は 12/19 のままで中止・延期の語なし。画像URLのキャッシュ避けの数字が取得のたびに変わって鳴っていたので、check-cancelled.py で末尾の ?数字 と ?ver= を落として比べるようにした"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "event-monitor",
+   "kind": "organizer_unlisted_dates",
+   "target": "@vivi_succulent 2026-12-20",
+   "action": "reviewed",
+   "detail": "12/20 は ROOTS MARKET の出店者募集の締切。ig-organizer-watch.py で『募集期間は只今より、◯月◯日まで』を落とすようにした。3/21 は掲載済み"
   }
  ]
 }
