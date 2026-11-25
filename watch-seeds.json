@@ -38,6 +38,12 @@
       "label": "花伝（福岡県久留米市の園芸店）",
       "why": "2026-11-21〜22 に自店で花伝多肉祭り2026(レア多肉・ビザールプランツ販売会とオークション)を開いたのを、終わってから Google の検索で知った。掲載が無く見張っていなかった",
       "addedOn": "2026-11-25"
+    },
+    {
+      "handle": "kito_osaka",
+      "label": "キトアトリエ（大阪市城東区放出・一枚板の工房）",
+      "why": "AGAVE DE KANPAI(アガベとアガベスピリッツのイベント)を9月から毎月のように自分の場所で開く。2026-11-27 回を coverage_gaps で見つけるまで見張っていなかった",
+      "addedOn": "2026-11-26"
     }
   ],
   "_deadHandles": "ブラウザで開いて『ページが見つかりません』だった handle。Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、API だけでは見分けられない。generate-watchlist.py がこの handle を apiStatus=dead にして igNeedsBrowser から外す。現行の handle が分かったら events.json の organizerIg を直し、ここから消す",

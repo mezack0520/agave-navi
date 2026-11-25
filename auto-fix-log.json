@@ -2,15 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-26",
-   "task": "event-monitor",
-   "kind": "rejected_revisit_expired",
-   "target": "mishima-takaoka-shokubutsu-ikimono-vol8-2026-10",
-   "action": "fixed",
-   "detail": "開催日超過のため revisit=false にして見送り確定",
-   "mailedOn": "2026-10-26"
-  },
-  {
    "on": "2026-10-28",
    "task": "agave-event-update",
    "kind": "time_vs_organizer_post",
@@ -1746,6 +1737,62 @@
    "action": "rejected",
    "detail": "workshopOnly。既存の見送り protoleaf-futako-yoseue-ws-2026-10 を seriesWide にし、投稿 DgHGogvEVoh を記録",
    "mailedOn": "2026-11-25"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "organizer_cancel_signal",
+   "target": "ボタニカルガーデン in ホコテン！ 2026 (2026-12-13)",
+   "action": "reviewed",
+   "detail": "投稿 De3-bgRk0ev は10/25回の中止。末尾の次回日付で鳴った。ig-organizer-watch.py の照合から『次回は◯月◯日』を除外"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "AGAVE DE KANPAI (2026-11-27)",
+   "action": "listed",
+   "detail": "主催 @kito_osaka の告知 Df9bc6KgRGG で裏取り。出店5者中 植物2者(4割)"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_due",
+   "target": "加西PLANTS MARKET (2026-12-06)",
+   "action": "listed",
+   "detail": "主催は @succulentandflower.yui と @kokonoha.kasai。告知 DfWu364Pqd3 で裏取り"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "ROOTS MARKET (2027-03-21)",
+   "action": "listed",
+   "detail": "@vivi_succulent DgHy5sGy57M。10/25 中止回のやり直し"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "第6回 枚方 蚤の市 (2026-11-28)",
+   "action": "rejected",
+   "detail": "出店者 @taniten_kengo202 の告知。古道具の蚤の市で compositeEvents"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "organizer_unlisted_dates",
+   "target": "愛珍植祭 2027 NEW YEAR PARTY (2027-01-23)",
+   "action": "fixed",
+   "detail": "1/23 は整理券の前日販売日。ig-organizer-watch.py で前日・先行販売の見出しの日付を落とすようにした"
+  },
+  {
+   "on": "2026-11-26",
+   "task": "agave-event-update",
+   "kind": "rejected_revisit_stale",
+   "target": "大鉢祭り (2026-12-19)",
+   "action": "rejected",
+   "detail": "主催 @yell_green DgFF5VhOlnU。作家の植木鉢の販売で potteryAndVesselShows"
   }
  ]
 }

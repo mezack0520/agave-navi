@@ -114,6 +114,8 @@ _TICKET_CTX = re.compile(r'チケット|前売|入場券|整理券')
 # 「11/15(日)21:00より 前売りオンラインチケットを発売」「前売り券:11月15日販売」
 _TICKET_AFTER = re.compile(r'^\s*(?:[（(][^)）]{1,4}[)）])?\s*(?:\d{1,2}[:：]\d{2})?\s*'
                            r'(?:(?:より|から)?\s*(?:販売|発売)|(?:より|から)\s*[^\s]{0,20}(?:チケット|前売|入場券|整理券)[^\s]{0,14}(?:販売|発売))')
+# 整理券・チケットの「前日販売」「先行販売」の見出し(当日販売の日付は開催日なので残す)に続く日付(愛珍植祭 DgJGT6XkxJS の前日販売 1/23)
+_TICKET_DAYSALE_BEFORE = re.compile(r'(?:前日|先行)販売\s*[：:]?\s*(?:\d{4}\s*年)?\s*$')
 _TICKET_LABEL_BEFORE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)(?:販売|発売)?(?:日)?\s*[：:]\s*$')
 # 前売りの販売の終わり「前売りチケットは11/23(月)24時まで」も開催日ではない(goodthings.jp BIZARRE PLANTS NIGHT)
 _TICKET_UNTIL_PRE = re.compile(r'(?:チケット|前売り?券?|整理券|入場券)[^\n。]{0,8}$')
@@ -149,6 +151,16 @@ def staff_work_days(cap, mds, known_md, today):
     return out
 
 
+# 中止のお知らせの末尾に書く次回の日付は、中止された回ではない。
+# 「10月25日のホコテンは中止いたします。次回は12月13日(日)に開催予定です」で 12/13 の回が鳴った
+_NEXT_DATE = re.compile(r'次回[^。]{0,15}?(?<!\d)\d{1,2}\s*(?:月\s*\d{1,2}\s*日?|/\s*\d{1,2}(?!\d))')
+
+
+def cancel_month_days(text):
+    """中止の照合に使う (月, 日)。『次回は◯月◯日』の日付を除く"""
+    return month_days(_NEXT_DATE.sub(' ', text))
+
+
 def month_days(text):
     """本文に出る (月, 日)。『9月26日』『9/26』。年やURLの数字は拾わない"""
     out = set()
@@ -163,6 +175,7 @@ def month_days(text):
                 ticket_ctx and (_SALE_PERIOD_BEFORE.search(_pre)
                                 or _TICKET_AFTER.search(text[m.end():m.end() + 50])
                                 or _TICKET_LABEL_BEFORE.search(text[max(0, m.start() - 12):m.start()])
+                                or _TICKET_DAYSALE_BEFORE.search(_pre)
                                 or (_TICKET_UNTIL_PRE.search(text[max(0, m.start() - 16):m.start()])
                                     and _TICKET_UNTIL_AFTER.search(text[m.end():m.end() + 16])))):
             last_drop = m.end()
@@ -465,8 +478,9 @@ def analyze_posts(username, posts, org_events, all_org_events, today, day_index=
             blob = drop_conditional(cap)
             words = sorted({w for w in CANCEL_WORDS if w in blob})
             if words:
+                cmds = cancel_month_days(cap)
                 for e in org_events:
-                    hit_date = bool(event_md(e) & mds)
+                    hit_date = bool(event_md(e) & cmds)
                     k = name_key(e)
                     hit_name = bool(k) and k in sitelib.name_key_text(cap)
                     # 投稿がこの回を指していると言えるときだけ鳴らす。

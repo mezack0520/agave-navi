@@ -372,6 +372,12 @@
       "checkedOn": "2026-11-24",
       "verdict": "開催予定のまま",
       "note": "@kktsucculentfes DgFGszBo-a1 の「開催を見送」は福引をここ数回見送っていたという文で、今回は福引復活の告知。本文末尾も 2026/11/29 10時〜15時 町田シバヒロのまま。check-cancelled.py の SUBPROGRAM_CANCEL に福引・抽選を足した"
+    },
+    {
+      "slug": "botanical-garden-hokoten-nishigawa-2026-12",
+      "checkedOn": "2026-11-26",
+      "verdict": "開催予定のまま",
+      "note": "@nishigawa.hokoten De3-bgRk0ev は 10/25 回の台風による中止の告知で、末尾に『次回は12月13日（日）に開催予定』。12/13 の回の中止ではない。ig-organizer-watch.py で『次回は◯月◯日』の日付を中止の照合から外した"
     }
   ]
 }
