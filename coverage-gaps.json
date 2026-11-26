@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-26",
+  "sweptOn": "2026-11-27",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,23 +31,23 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 771,
-    "in_scope": 217,
-    "covered": 152,
-    "known_rejected": 65,
+    "candidates": 763,
+    "in_scope": 215,
+    "covered": 153,
+    "known_rejected": 61,
     "truncated_resolved": 45,
     "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
     "fetched_matome": 1,
     "fetched_organizer_index": 5,
     "fetched_pukubook": 13,
-    "in_scope_leafla": 80,
+    "in_scope_leafla": 77,
     "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 100,
+    "in_scope_nextmeet": 101,
     "in_scope_matome-blog": 3,
     "in_scope_organizer-index": 3,
     "in_scope_pukubook": 31,
-    "gaps_raw": 0
+    "gaps_raw": 1
   },
   "errors": [],
   "truncatedUnresolved": [
@@ -57,5 +57,13 @@
     "11/24 追加 Grossoが手伝うレモングラスのしめ縄ワーク...",
     "11/24 追加 植物を愛でる店主の集いがフラワーショップPEP..."
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "date": "2026-11-28",
+      "title": "POPUP 多肉植物 POPUP",
+      "source": "nextmeet",
+      "pref": "鹿児島",
+      "place": "イオンモールKAGOSHIMA BAY 1F 水の広場 / 鹿児島県鹿児島市東開町7"
+    }
+  ]
 }
