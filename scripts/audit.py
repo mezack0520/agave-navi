@@ -3579,12 +3579,20 @@ def main():
             if _a and all(_a <= d <= _b for d in _ds):
                 return True
         return False
+    # 巡回の後(decided >= 写しの checkedOn)に見送った投稿も対応済み。見張りが見送りを読めるのは次の取得から
+    _rej_items = (load_json('rejected-events.json', {}) or {}).get('items') or []
+
+    def _ow_rejected_after(_u):
+        _m = re.search(r'/(?:p|reel|tv)/([A-Za-z0-9_-]{8,})', _u.get('permalink') or '')
+        return bool(_m and _ow_on) and any(
+            (_r.get('decided') or '') >= _ow_on and _m.group(1) in json.dumps(_r, ensure_ascii=False)
+            for _r in _rej_items)
     _ow_unl_all = (_ow.get('signals') or {}).get('unlisted') or []
     _ow_unl = [f"@{_u.get('username','')} {','.join(_u.get('dates') or [])}: "
                f"{_u.get('excerpt','')[:60]} {_u.get('permalink','')}"
-               for _u in _ow_unl_all if not _ow_listed_after(_u)]
+               for _u in _ow_unl_all if not _ow_listed_after(_u) and not _ow_rejected_after(_u)]
     if len(_ow_unl) < len(_ow_unl_all):
-        print(f'organizer_unlisted_dates: 巡回の後に掲載した回 {len(_ow_unl_all) - len(_ow_unl)}件を数えなかった')
+        print(f'organizer_unlisted_dates: 巡回の後に掲載・見送りした回 {len(_ow_unl_all) - len(_ow_unl)}件を数えなかった')
     add('organizer_unlisted_dates', '主催者の最近の投稿に、当サイトに無い先の日付が出ている',
         _ow_unl,
         '次回の告知か、別イベントへの出店告知か、過去の回の振り返りか。'
@@ -3592,7 +3600,8 @@ def main():
         severity='info')
     # 見送りの記録が出典に挙げた投稿が、その日付のまま取りこぼし候補に残っている。
     # 見張りが見送りと投稿を突き合わせられていない(ig-organizer-watch.known_elsewhere)。
-    _rej_items = (load_json('rejected-events.json', {}) or {}).get('items') or []
+    # 写しより後の見送りは見張りがまだ読んでいないので数えない
+    _rej_items = [_r for _r in _rej_items if not _ow_on or (_r.get('decided') or '') < _ow_on]
     _ow_rej_left = []
     for _u in ((_ow.get('signals') or {}).get('unlisted') or []):
         _m = re.search(r'/(?:p|reel|tv)/([A-Za-z0-9_-]{8,})', _u.get('permalink') or '')
@@ -3618,8 +3627,7 @@ def main():
                     break
     add('organizer_unlisted_rejected_post', '見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている',
         sorted(set(_ow_rej_left)),
-        'ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、'
-        '直した翌日の daily までは残る',
+        'ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。写しより前に決めた見送りだけを数える',
         severity='info')
     _ow_broken = []
     if not _ow_on:
@@ -5795,6 +5803,9 @@ def main():
             continue
         # wraptas は画像を共有バケット(s3 の wraptas-prod/<サイト名>/)に置く。自サイトが wraptas で、パスのサイト名が同じなら持ち主は同じ
         if 'amazonaws.com' in _ih and '/wraptas-prod/' in e['imageUrl'] and any(o.endswith('.wraptas.site') and o.split('.')[0] in e['imageUrl'] for o in _own):
+            continue
+        # イオンモールの各館サイト(aeonmall.com、aeon-kyushu.info)は og:image を自社 CDN の image-cdn.aeonmall.jp に置く
+        if _ih == 'image-cdn.aeonmall.jp' and any(o.endswith(('aeonmall.com', 'aeonmall.jp', 'aeon-kyushu.info')) for o in _own):
             continue
         if any((_o, _ih) in _img_pairs for _o in _own):
             continue
