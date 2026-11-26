@@ -2,11 +2,11 @@
  "generated": "2026-11-27 07:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 442,
+  "igAccounts": 444,
   "awaitingNextEdition": 551,
-  "officialSiteCandidates": 89,
+  "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 101,
+  "igNeedsBrowser": 103,
   "igDead": 7
  },
  "igAccounts": [
@@ -569,6 +569,16 @@
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "personal"
+  },
+  {
+   "handle": "youme_ta29_youme",
+   "url": "https://www.instagram.com/youme_ta29_youme/",
+   "eventCount": 2,
+   "lastEventName": "タニトピア ～第一章～",
+   "lastEventDate": "2027-01-10",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "urinchi2026",
@@ -1259,6 +1269,16 @@
    "hasUpcoming": true,
    "priority": 1,
    "apiStatus": "api"
+  },
+  {
+   "handle": "aeonmall.kagoshima.bay",
+   "url": "https://www.instagram.com/aeonmall.kagoshima.bay/",
+   "eventCount": 1,
+   "lastEventName": "多肉植物 POPUP（イオンモールKAGOSHIMA BAY）",
+   "lastEventDate": "2026-11-28",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
   },
   {
    "handle": "chinki_syokubutu_5",

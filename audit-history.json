@@ -2006,30 +2006,28 @@
   },
   {
    "date": "2026-11-27",
-   "urgent": {
-    "coverage_gap_logged_but_open": 1,
-    "new_events_unmerged": 3
-   },
+   "urgent": {},
    "info": {
-    "coverage_gaps": 1,
+    "coverage_gap_stale": 1,
     "organizer_unlisted_dates": 2,
     "organizer_unlisted_rejected_post": 3,
     "eyecatch_candidates_pending": 4,
     "inquiry_review_gap": 1,
-    "task_run_gap": 2
+    "task_run_gap": 2,
+    "image_host_unrelated": 1
    },
    "metric": {
     "thin_past_with_source": 33,
     "thin_archived": 49,
-    "upcoming_with_image": 103,
-    "events_with_image": 448,
-    "upcoming_no_image": 69,
+    "upcoming_with_image": 104,
+    "events_with_image": 449,
+    "upcoming_no_image": 71,
     "ongoing_events": 2,
     "workflow_secrets": 7,
-    "eyecatch_backlog": 69
+    "eyecatch_backlog": 71
    },
-   "events": 840,
-   "upcoming": 172
+   "events": 843,
+   "upcoming": 175
   }
  ]
 }

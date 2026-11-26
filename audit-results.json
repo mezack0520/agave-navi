@@ -1,5 +1,5 @@
 {
-  "total": 790,
+  "total": 793,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -218,7 +218,7 @@
     },
     "upcoming_with_image": {
       "title": "開催予定でimageUrlがある",
-      "count": 103,
+      "count": 104,
       "items": [
         "agave-de-kanpai-kito-osaka-2026-11",
         "aichin-shokusai-new-year-party-2027",
@@ -266,7 +266,7 @@
     },
     "events_with_image": {
       "title": "imageUrlがある全イベント",
-      "count": 448,
+      "count": 449,
       "items": [
         "agabase-2nd-tomisato-2026-09",
         "agave-de-kanpai-kito-osaka-2026-11",
@@ -314,7 +314,7 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 69,
+      "count": 71,
       "items": [
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
@@ -756,7 +756,7 @@
       "title": "CIのコミットが触るのに、生成物にもデータにも分類されていないパス",
       "count": 0,
       "items": [],
-      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 4 件を見た(親が手元に無い 1 件は判定していない)",
+      "note": "scripts/ci-generated-paths.txt に足す(次の巡回が上書きする観測結果なら)か、audit.py の _CI_CARRY_DATA に足す(失うと困るデータなら)。どちらにも無いと ci-push.sh が「運ぶべきデータ」と誤判定し、同時に走った回と衝突したときに daily ごと落ちる。直近の CI コミット 5 件を見た",
       "severity": "urgent"
     },
     "ci_job_no_timeout": {
@@ -926,26 +926,24 @@
     },
     "coverage_gap_logged_but_open": {
       "title": "掲載済みと記録したのに取りこぼし候補に残っている回",
-      "count": 1,
-      "items": [
-        "2026-11-28 POPUP 多肉植物 POPUP ← 2026-11-27 に掲載済みと記録済み。名前が合わない。aliases に他所での呼び名を足す"
-      ],
+      "count": 0,
+      "items": [],
       "note": "各行の末尾が外れている所。名前が合わないなら該当イベントの aliases に他所での呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。名前が当たるのに残るなら、照合(judge)の側を直す。記録を書くだけでは翌日も候補に出る",
       "severity": "urgent"
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-28 POPUP 多肉植物 POPUP(掲載済み)"
+      ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-11-28 POPUP 多肉植物 POPUP"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -972,7 +970,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 69,
+      "count": 71,
       "items": [
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
@@ -999,10 +997,12 @@
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-26 lier-taniku-festival-tokorozawa-2026-12",
         "2026-12-27 lier-taniku-festival-natori-2026-12",
+        "2026-12-27 tanitopia-joshou-tatebayashi-2026-12",
         "2027-01-08 lier-taniku-festival-hyuga-2027-01",
         "2027-01-09 lier-taniku-festival-tamana-2027-01",
         "2027-01-10 lier-taniku-festival-nagasaki-2027-01",
         "2027-01-10 picnic-garden-hatsuuri-sendai-2027-01",
+        "2027-01-10 tanitopia-daiisshou-fukaya-2027-01",
         "2027-01-11 lier-taniku-festival-kitakyushu-2027-01",
         "2027-01-16 yurutto-taniku-marche-3rd-2027-01",
         "2027-01-17 botanical-monsters-2027-okazaki",
@@ -1011,9 +1011,7 @@
         "2027-01-23 lier-taniku-festival-ube-2027-01",
         "2027-01-24 lier-taniku-festival-oda-2027-01",
         "2027-01-25 lier-taniku-festival-fukuyama-2027-01",
-        "2027-02-20 enjoy-place-6th-2027-02",
-        "2027-02-20 reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02",
-        "2027-02-20 santafe-shunensai-2027-02"
+        "2027-02-20 enjoy-place-6th-2027-02"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"
@@ -1076,12 +1074,8 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 3,
-      "items": [
-        "2026-11-28 taniku-popup-aeonmall-kagoshima-bay-2026-11: new-events.json に残ったまま events.json に無い",
-        "2026-12-27 tanitopia-joshou-tatebayashi-2026-12: new-events.json に残ったまま events.json に無い",
-        "2027-01-10 tanitopia-daiisshou-fukaya-2027-01: new-events.json に残ったまま events.json に無い"
-      ],
+      "count": 0,
+      "items": [],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
@@ -1594,8 +1588,10 @@
     },
     "image_host_unrelated": {
       "title": "開催予定の画像が、その回のどの頁とも別のホストにある",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-28 taniku-popup-aeonmall-kagoshima-bay-2026-11: image-cdn.aeonmall.jp（url=kagoshimabay.aeon-kyushu.info / sourceUrl=kagoshimabay.aeon-kyushu.info）"
+      ],
       "note": "画像を開いてその回の告知かを見る。別物なら imageUrl を消し、scripts/image-rejected.json に {imageUrl, reason, on} を足す(enrich が書き戻さなくなる)。正しければそのままでよい",
       "severity": "info"
     },

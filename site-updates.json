@@ -1,7 +1,37 @@
 {
   "_note": "events.json の差分の記録。scripts/track-updates.py が build-all.sh の先頭で積む。TOPの更新欄と feeds/updates.xml の元。来場の判断が変わることだけを採る(掲載/中止/延期/取り消し/日程変更/会場変更)。status の upcoming→past、説明文・画像・タグの変化は採らない。広く採るとノイズで埋まって読まれなくなる。保持は直近120件。",
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "items": [
+    {
+      "on": "2026-11-27",
+      "kind": "listed",
+      "slug": "taniku-popup-aeonmall-kagoshima-bay-2026-11",
+      "name": "多肉植物 POPUP（イオンモールKAGOSHIMA BAY）",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-29",
+      "prefecture": "鹿児島",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-27",
+      "kind": "listed",
+      "slug": "tanitopia-joshou-tatebayashi-2026-12",
+      "name": "タニトピア ～序章～",
+      "date": "2026-12-27",
+      "dateEnd": "2026-12-27",
+      "prefecture": "群馬",
+      "detail": ""
+    },
+    {
+      "on": "2026-11-27",
+      "kind": "listed",
+      "slug": "tanitopia-daiisshou-fukaya-2027-01",
+      "name": "タニトピア ～第一章～",
+      "date": "2027-01-10",
+      "dateEnd": "2027-01-10",
+      "prefecture": "埼玉",
+      "detail": ""
+    },
     {
       "on": "2026-11-26",
       "kind": "listed",
@@ -1170,36 +1200,6 @@
       "date": "2026-11-01",
       "dateEnd": "2026-11-01",
       "prefecture": "山口",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-31",
-      "kind": "listed",
-      "slug": "reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02",
-      "name": "レプタイルズフィーバー2027 Winter×変態植物倶楽部FES Vol.1",
-      "date": "2027-02-20",
-      "dateEnd": "2027-02-21",
-      "prefecture": "大阪",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-30",
-      "kind": "listed",
-      "slug": "bizarre-plants-fair-brew-by-mstr-2026-11-01",
-      "name": "Bizarre Plants Fair",
-      "date": "2026-11-01",
-      "dateEnd": "2026-11-01",
-      "prefecture": "埼玉",
-      "detail": ""
-    },
-    {
-      "on": "2026-10-30",
-      "kind": "listed",
-      "slug": "bizarre-plants-fair-brew-by-mstr-2026-11-08",
-      "name": "Bizarre Plants Fair",
-      "date": "2026-11-08",
-      "dateEnd": "2026-11-08",
-      "prefecture": "埼玉",
       "detail": ""
     }
   ]
