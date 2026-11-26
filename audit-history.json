@@ -2006,10 +2006,14 @@
   },
   {
    "date": "2026-11-27",
-   "urgent": {},
+   "urgent": {
+    "coverage_gap_logged_but_open": 1,
+    "new_events_unmerged": 3
+   },
    "info": {
     "coverage_gaps": 1,
     "organizer_unlisted_dates": 2,
+    "organizer_unlisted_rejected_post": 3,
     "eyecatch_candidates_pending": 4,
     "inquiry_review_gap": 1,
     "task_run_gap": 2

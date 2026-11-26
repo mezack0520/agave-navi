@@ -1,5 +1,5 @@
 {
-  "total": 783,
+  "total": 790,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -926,8 +926,10 @@
     },
     "coverage_gap_logged_but_open": {
       "title": "掲載済みと記録したのに取りこぼし候補に残っている回",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "2026-11-28 POPUP 多肉植物 POPUP ← 2026-11-27 に掲載済みと記録済み。名前が合わない。aliases に他所での呼び名を足す"
+      ],
       "note": "各行の末尾が外れている所。名前が合わないなら該当イベントの aliases に他所での呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。名前が当たるのに残るなら、照合(judge)の側を直す。記録を書くだけでは翌日も候補に出る",
       "severity": "urgent"
     },
@@ -1074,8 +1076,12 @@
     },
     "new_events_unmerged": {
       "title": "new-events.json が取り込まれずに残っている",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "2026-11-28 taniku-popup-aeonmall-kagoshima-bay-2026-11: new-events.json に残ったまま events.json に無い",
+        "2026-12-27 tanitopia-joshou-tatebayashi-2026-12: new-events.json に残ったまま events.json に無い",
+        "2027-01-10 tanitopia-daiisshou-fukaya-2027-01: new-events.json に残ったまま events.json に無い"
+      ],
       "note": "sync-events.yml は取り込んだらこのファイルを消す。残っているなら取り込みが走っていない。Actions で Sync New Events が cancelled になっていないか見る。**events.json と new-events.json を同じ push に入れないこと。**再実行の手段は new-events.json を単独で push し直すこと(workflow_dispatch は PAT でも403)",
       "severity": "urgent"
     },
@@ -1161,8 +1167,12 @@
     },
     "organizer_unlisted_rejected_post": {
       "title": "見送り済みの投稿の日付が、主催の見張りの取りこぼし候補に残っている",
-      "count": 0,
-      "items": [],
+      "count": 3,
+      "items": [
+        "@ohana._.garden 2027-03-07: 見送り nara-kite-marche-2nd-2027-03 が同じ投稿 DgJg8qnhmrW を挙げている",
+        "@saitamasabotenclub 2026-12-06: seriesWide の見送り saitama-saboten-club-reikai の名前が投稿に出ている",
+        "@saitamasabotenclub 2026-12-06: 見送り saitama-saboten-club-reikai が同じ投稿 DgMvwIRBJub を挙げている"
+      ],
       "note": "ig-organizer-watch.known_elsewhere が見送りと投稿を突き合わせていない。organizer-posts.json は daily の写しなので、直した翌日の daily までは残る",
       "severity": "info"
     },
