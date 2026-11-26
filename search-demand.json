@@ -1,102 +1,109 @@
 {
  "_note": "Search Console の直近28日から作る(scripts/search-demand.py)。表示10回未満の語句と、メール・電話番号の形の語句は書かない。actions は by のタスクが直して search-actions.json に書く(プレイブック §6 の 3、§3.1)",
- "generatedOn": "2026-11-26",
+ "generatedOn": "2026-11-27",
  "site": "https://agave-navi.com/",
  "range": [
-  "2026-10-27",
-  "2026-11-23"
+  "2026-10-28",
+  "2026-11-24"
  ],
  "opportunities": [
   {
    "query": "アガベ 耐寒性",
    "clicks": 36,
-   "impressions": 3249,
-   "position": 4.8,
+   "impressions": 3167,
+   "position": 4.9,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "アガベ 冬越し 屋外",
-   "clicks": 25,
-   "impressions": 1909,
+   "clicks": 26,
+   "impressions": 1953,
    "position": 5.1,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "ボタンジャム2026",
    "clicks": 38,
-   "impressions": 998,
+   "impressions": 1016,
    "position": 5.2,
    "page": "https://agave-navi.com/events/botajam-2026.html"
   },
   {
    "query": "植物イベント",
-   "clicks": 25,
-   "impressions": 845,
+   "clicks": 23,
+   "impressions": 840,
    "position": 7.3,
    "page": "https://agave-navi.com/"
   },
   {
    "query": "アガベ チタノタ 耐寒性",
    "clicks": 0,
-   "impressions": 732,
+   "impressions": 708,
    "position": 9.2,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "アガベ耐寒性",
    "clicks": 7,
-   "impressions": 722,
-   "position": 4.8,
+   "impressions": 688,
+   "position": 4.9,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "植物 イベント",
    "clicks": 13,
-   "impressions": 587,
-   "position": 8.1,
+   "impressions": 597,
+   "position": 8.2,
    "page": "https://agave-navi.com/"
   },
   {
    "query": "アデニウム 耐寒温度",
    "clicks": 2,
-   "impressions": 458,
+   "impressions": 428,
    "position": 7.0,
    "page": "https://agave-navi.com/guides/adenium-wintering.html"
   },
   {
    "query": "アガベ 耐寒温度",
    "clicks": 1,
-   "impressions": 440,
+   "impressions": 418,
    "position": 6.2,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "アガベイベント",
-   "clicks": 80,
-   "impressions": 402,
+   "clicks": 78,
+   "impressions": 400,
    "position": 5.1,
    "page": "https://agave-navi.com/"
   },
   {
    "query": "多肉植物イベント 関東 2026",
    "clicks": 4,
-   "impressions": 400,
+   "impressions": 394,
    "position": 7.8,
    "page": "https://agave-navi.com/region/kanto/"
   },
   {
    "query": "アガベ 寒さ に強い品種",
    "clicks": 4,
-   "impressions": 365,
-   "position": 5.6,
+   "impressions": 378,
+   "position": 5.7,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "多肉植物イベント 今日",
    "clicks": 12,
-   "impressions": 356,
+   "impressions": 351,
    "position": 5.5,
    "page": "https://agave-navi.com/"
+  },
+  {
+   "query": "アガベ 冬 屋外",
+   "clicks": 4,
+   "impressions": 342,
+   "position": 5.0,
+   "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "アガベ 耐寒性 最強",
@@ -106,115 +113,108 @@
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
-   "query": "アガベ 冬 屋外",
-   "clicks": 4,
-   "impressions": 331,
-   "position": 5.0,
-   "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
-  },
-  {
    "query": "西大寺ガーデン",
    "clicks": 3,
-   "impressions": 326,
+   "impressions": 328,
    "position": 8.7,
    "page": "https://agave-navi.com/events/saidaiji-garden-taniku-event-2026-10.html"
   },
   {
-   "query": "姫路カクタス",
-   "clicks": 2,
-   "impressions": 321,
-   "position": 9.2,
-   "page": "https://agave-navi.com/events/himeji-cactus-goudou-sokubaikai-2026-10.html"
-  },
-  {
    "query": "ぶらりぷらんつ",
    "clicks": 4,
-   "impressions": 317,
+   "impressions": 310,
    "position": 8.3,
    "page": "https://agave-navi.com/events/purari-plants-vol3-2026-11.html"
   },
   {
+   "query": "姫路カクタス",
+   "clicks": 2,
+   "impressions": 307,
+   "position": 9.1,
+   "page": "https://agave-navi.com/events/himeji-cactus-goudou-sokubaikai-2026-10.html"
+  },
+  {
    "query": "植物イベント 関西 2026",
-   "clicks": 5,
-   "impressions": 301,
+   "clicks": 4,
+   "impressions": 298,
    "position": 6.9,
    "page": "https://agave-navi.com/region/kansai/"
   },
   {
-   "query": "ぶらりプランツ",
-   "clicks": 10,
-   "impressions": 298,
-   "position": 6.9,
-   "page": "https://agave-navi.com/events/purari-plants-vol3-2026-11.html"
-  },
-  {
    "query": "botajam",
    "clicks": 32,
-   "impressions": 283,
+   "impressions": 280,
    "position": 5.6,
    "page": "https://agave-navi.com/events/botajam-2026.html"
   },
   {
-   "query": "アガベ 耐寒性 一覧",
+   "query": "ぶらりプランツ",
    "clicks": 9,
-   "impressions": 273,
-   "position": 4.7,
+   "impressions": 280,
+   "position": 6.9,
+   "page": "https://agave-navi.com/events/purari-plants-vol3-2026-11.html"
+  },
+  {
+   "query": "アガベ 屋外 冬",
+   "clicks": 2,
+   "impressions": 275,
+   "position": 4.4,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "ボタンジャム 岐阜",
    "clicks": 3,
-   "impressions": 271,
+   "impressions": 270,
    "position": 7.4,
    "page": "https://agave-navi.com/events/botajam-2026.html"
   },
   {
    "query": "チタノタ 耐寒性",
    "clicks": 0,
-   "impressions": 261,
+   "impressions": 254,
    "position": 8.8,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   },
   {
    "query": "ボタニカルボタニカル大阪",
    "clicks": 1,
-   "impressions": 256,
+   "impressions": 253,
    "position": 9.4,
    "page": "https://agave-navi.com/events/botanical-botanical-osaka-2026-10.html"
   },
   {
-   "query": "植物イベント 2026 東海",
+   "query": "アガベ 耐寒性 一覧",
    "clicks": 9,
-   "impressions": 255,
+   "impressions": 248,
+   "position": 4.8,
+   "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
+  },
+  {
+   "query": "植物イベント 2026 東海",
+   "clicks": 8,
+   "impressions": 248,
    "position": 4.0,
    "page": "https://agave-navi.com/region/tokai/"
   },
   {
    "query": "多肉植物 イベント",
    "clicks": 9,
-   "impressions": 251,
+   "impressions": 245,
    "position": 7.6,
    "page": "https://agave-navi.com/"
   },
   {
-   "query": "アガベ 寒さに強い",
-   "clicks": 0,
-   "impressions": 251,
-   "position": 5.7,
-   "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
-  },
-  {
-   "query": "アガベ 屋外 冬",
-   "clicks": 2,
-   "impressions": 250,
-   "position": 4.4,
-   "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
-  },
-  {
    "query": "耐寒性のあるアガベ",
    "clicks": 1,
-   "impressions": 250,
-   "position": 6.0,
+   "impressions": 244,
+   "position": 6.1,
+   "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
+  },
+  {
+   "query": "アガベ 寒さに強い",
+   "clicks": 0,
+   "impressions": 239,
+   "position": 5.7,
    "page": "https://agave-navi.com/guides/agave-winter-hardiness.html"
   }
  ],
@@ -222,7 +222,7 @@
   {
    "query": "カトーエンゲー東京",
    "clicks": 1,
-   "impressions": 46,
+   "impressions": 52,
    "position": 10.0,
    "page": "https://agave-navi.com/organizer/kato_engei_tokyo/",
    "events": [
@@ -242,9 +242,9 @@
   },
   {
    "query": "緑楽宴",
-   "clicks": 0,
+   "clicks": 1,
    "impressions": 26,
-   "position": 16.2,
+   "position": 16.0,
    "page": "https://agave-navi.com/pref/hyogo/",
    "events": [
     "midorigakuen-himeji-2026-11",
@@ -254,11 +254,21 @@
   {
    "query": "天下一植物界 2027",
    "clicks": 0,
-   "impressions": 18,
-   "position": 7.3,
+   "impressions": 17,
+   "position": 7.5,
    "page": "https://agave-navi.com/pref/osaka/",
    "events": [
     "tenkaichi-2026"
+   ]
+  },
+  {
+   "query": "imama",
+   "clicks": 0,
+   "impressions": 12,
+   "position": 7.0,
+   "page": "https://agave-navi.com/organizer/imama.jp/",
+   "events": [
+    "imama-ennichi-kagurazaka-2026-10"
    ]
   },
   {
@@ -286,8 +296,8 @@
   {
    "query": "平田ナーセリー イベント",
    "clicks": 1,
-   "impressions": 19,
-   "position": 8.4,
+   "impressions": 20,
+   "position": 8.2,
    "page": "https://agave-navi.com/organizer/hirata_ns.odo/",
    "events": [
     "hartn-fes-4th-hirata-kasuga-2026-11",
@@ -296,36 +306,48 @@
     "species-nursery-hirata-fukuoka-higashi-2026-11",
     "species-nursery-hirata-kokura-higashi-2026-11"
    ]
+  },
+  {
+   "query": "山奥屋 多肉",
+   "clicks": 1,
+   "impressions": 11,
+   "position": 11.2,
+   "page": "https://agave-navi.com/organizer/yamaokuya_ta29/",
+   "events": [
+    "yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
+    "yamaokuya-tandoku-hanbaikai-osaki-2026-10",
+    "yamaokuya-tandoku-hanbaikai-sakura-2026-11"
+   ]
   }
  ],
  "unknownEvents": [
   {
    "query": "四国造園 イベント",
    "clicks": 2,
-   "impressions": 22,
-   "position": 6.4,
+   "impressions": 26,
+   "position": 6.1,
    "page": "https://agave-navi.com/venue/shikoku-zouen/"
-  },
-  {
-   "query": "まちの駅笠間宿イベント",
-   "clicks": 0,
-   "impressions": 13,
-   "position": 10.8,
-   "page": "https://agave-navi.com/venue/machinoeki-kasamajuku/"
   },
   {
    "query": "よってって南紀の台 イベント",
    "clicks": 0,
-   "impressions": 12,
+   "impressions": 14,
    "position": 9.2,
    "page": "https://agave-navi.com/venue/yotte-nankinodai/"
   },
   {
    "query": "つま恋 植物 イベント",
    "clicks": 0,
-   "impressions": 10,
-   "position": 8.7,
+   "impressions": 13,
+   "position": 8.2,
    "page": "https://agave-navi.com/pref/shizuoka/"
+  },
+  {
+   "query": "まちの駅笠間宿イベント",
+   "clicks": 0,
+   "impressions": 12,
+   "position": 10.8,
+   "page": "https://agave-navi.com/venue/machinoeki-kasamajuku/"
   },
   {
    "query": "南紀の台 よって っ て イベント",
@@ -333,12 +355,19 @@
    "impressions": 10,
    "position": 9.0,
    "page": "https://agave-navi.com/venue/yotte-nankinodai/"
+  },
+  {
+   "query": "植栽イベント",
+   "clicks": 0,
+   "impressions": 10,
+   "position": 9.2,
+   "page": "https://agave-navi.com/"
   }
  ],
  "totals": {
-  "clicks": 1891,
-  "impressions": 47068,
-  "queries": 1798
+  "clicks": 1877,
+  "impressions": 46766,
+  "queries": 1809
  },
  "actions": [
   {
@@ -348,12 +377,12 @@
    "queries": [
     "アデニウム 耐寒温度"
    ],
-   "impressions": 458,
+   "impressions": 428,
    "clicks": 2,
    "position": 7.0,
-   "gain": 32.06,
+   "gain": 29.96,
    "by": "site-health-check",
-   "priority": 32.06
+   "priority": 29.96
   },
   {
    "id": "page:/region/tokai/",
@@ -362,12 +391,12 @@
    "queries": [
     "植物イベント 2026 東海"
    ],
-   "impressions": 255,
-   "clicks": 9,
+   "impressions": 248,
+   "clicks": 8,
    "position": 4.0,
-   "gain": 7.65,
+   "gain": 7.44,
    "by": "site-health-check",
-   "priority": 7.65
+   "priority": 7.44
   },
   {
    "id": "event_page:midorigakuen-mini-akashi-2027-05",
@@ -377,8 +406,8 @@
     "緑楽宴"
    ],
    "impressions": 26,
-   "clicks": 0,
-   "position": 16.2,
+   "clicks": 1,
+   "position": 16.0,
    "gain": 2.6,
    "landed": "/pref/hyogo/",
    "by": "site-health-check",
@@ -391,10 +420,10 @@
    "queries": [
     "平田ナーセリー イベント"
    ],
-   "impressions": 19,
+   "impressions": 20,
    "clicks": 1,
-   "position": 8.4,
-   "gain": 1.9,
+   "position": 8.2,
+   "gain": 2.0,
    "events": [
     "hartn-fes-4th-hirata-kasuga-2026-11",
     "hartn-fes-4th-hirata-odo-2026-11",
@@ -403,46 +432,54 @@
     "species-nursery-hirata-kokura-higashi-2026-11"
    ],
    "by": "site-health-check",
-   "priority": 1.9
+   "priority": 2.0
   },
   {
-   "id": "coverage:四国造園イベント",
-   "type": "coverage",
-   "page": "/venue/shikoku-zouen/",
+   "id": "series_page:山奥屋多肉",
+   "type": "series_page",
+   "page": "/organizer/yamaokuya_ta29/",
    "queries": [
-    "四国造園 イベント"
+    "山奥屋 多肉"
    ],
-   "impressions": 22,
-   "clicks": 2,
-   "position": 6.4,
+   "impressions": 11,
+   "clicks": 1,
+   "position": 11.2,
    "gain": 1.1,
-   "by": "agave-event-update",
+   "events": [
+    "yamaokuya-tandoku-hanbaikai-nirasaki-2027-01",
+    "yamaokuya-tandoku-hanbaikai-osaki-2026-10",
+    "yamaokuya-tandoku-hanbaikai-sakura-2026-11"
+   ],
+   "by": "site-health-check",
    "priority": 1.1
   },
   {
-   "id": "coverage:つま恋植物イベント",
+   "id": "coverage:next:imama-ennichi-kagurazaka-2026-10",
    "type": "coverage",
-   "page": "/pref/shizuoka/",
+   "page": "/events/imama-ennichi-kagurazaka-2026-10.html",
    "queries": [
-    "つま恋 植物 イベント"
+    "imama"
    ],
-   "impressions": 10,
+   "impressions": 12,
    "clicks": 0,
-   "position": 8.7,
-   "gain": 0.5,
+   "position": 7.0,
+   "gain": 0.6,
+   "events": [
+    "imama-ennichi-kagurazaka-2026-10"
+   ],
    "by": "agave-event-update",
-   "priority": 0.5
+   "priority": 0.6
   },
   {
-   "id": "coverage:南紀の台よってってイベント",
+   "id": "coverage:植栽イベント",
    "type": "coverage",
-   "page": "/venue/yotte-nankinodai/",
+   "page": "/",
    "queries": [
-    "南紀の台 よって っ て イベント"
+    "植栽イベント"
    ],
    "impressions": 10,
    "clicks": 0,
-   "position": 9.0,
+   "position": 9.2,
    "gain": 0.5,
    "by": "agave-event-update",
    "priority": 0.5
