@@ -1,6 +1,6 @@
 {
-  "check_date": "2026-11-26",
-  "total_events": 840,
+  "check_date": "2026-11-27",
+  "total_events": 843,
   "dead_links": [],
   "unreachable": [],
   "tbd_events": [
@@ -5627,6 +5627,33 @@
       "location": "五反田TOCビル",
       "eventStatus": "confirmed",
       "sourceUrl": "http://isij.net/"
+    },
+    {
+      "slug": "taniku-popup-aeonmall-kagoshima-bay-2026-11",
+      "name": "多肉植物 POPUP（イオンモールKAGOSHIMA BAY）",
+      "date": "2026-11-28",
+      "dateEnd": "2026-11-29",
+      "location": "イオンモールKAGOSHIMA BAY（鹿児島県鹿児島市東開町7）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://kagoshimabay.aeon-kyushu.info/event/45d18466-9c68-46bd-961c-cd1aa25133c6"
+    },
+    {
+      "slug": "tanitopia-joshou-tatebayashi-2026-12",
+      "name": "タニトピア ～序章～",
+      "date": "2026-12-27",
+      "dateEnd": "2026-12-27",
+      "location": "虹風船 館林店（群馬県館林市野辺町1028-2）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Df0_hoHzmmU/"
+    },
+    {
+      "slug": "tanitopia-daiisshou-fukaya-2027-01",
+      "name": "タニトピア ～第一章～",
+      "date": "2027-01-10",
+      "dateEnd": "2027-01-10",
+      "location": "深谷グリーンパーク（埼玉県深谷市樫合763）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.threads.com/@youme_ta29_youme/post/DfsvWv0nDFU"
     }
   ],
   "today_events": [
@@ -5638,6 +5665,15 @@
       "location": "金岡公園体育館（大阪府堺市北区）",
       "eventStatus": "confirmed",
       "sourceUrl": "https://www.instagram.com/p/De5creYzXjg/"
+    },
+    {
+      "slug": "agave-de-kanpai-kito-osaka-2026-11",
+      "name": "AGAVE DE KANPAI",
+      "date": "2026-11-27",
+      "dateEnd": "2026-11-29",
+      "location": "キトアトリエ（大阪府大阪市城東区放出西3-1-32）",
+      "eventStatus": "confirmed",
+      "sourceUrl": "https://www.instagram.com/p/Df9bc6KgRGG/"
     }
   ],
   "url_results": [
@@ -5773,6 +5809,14 @@
       "slug": "jusai-utsunomiya-spring-2027-05",
       "name": "樹祭 宇都宮 春 2027",
       "sourceUrl": "https://jusai.link/news",
+      "field": "sourceUrl",
+      "statusCode": 200,
+      "alive": true
+    },
+    {
+      "slug": "taniku-popup-aeonmall-kagoshima-bay-2026-11",
+      "name": "多肉植物 POPUP（イオンモールKAGOSHIMA BAY）",
+      "sourceUrl": "https://kagoshimabay.aeon-kyushu.info/event/45d18466-9c68-46bd-961c-cd1aa25133c6",
       "field": "sourceUrl",
       "statusCode": 200,
       "alive": true
