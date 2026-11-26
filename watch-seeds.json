@@ -44,6 +44,12 @@
       "label": "キトアトリエ（大阪市城東区放出・一枚板の工房）",
       "why": "AGAVE DE KANPAI(アガベとアガベスピリッツのイベント)を9月から毎月のように自分の場所で開く。2026-11-27 回を coverage_gaps で見つけるまで見張っていなかった",
       "addedOn": "2026-11-26"
+    },
+    {
+      "handle": "yurinoki_succulent",
+      "label": "ゆりのきサキュレント（多肉植物の生産者）",
+      "why": "多肉屋YOU&ME工房と共同でタニトピアを主催する。序章(2026-12-27)の告知はこのアカウントにだけ出た",
+      "addedOn": "2026-11-27"
     }
   ],
   "_deadHandles": "ブラウザで開いて『ページが見つかりません』だった handle。Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、API だけでは見分けられない。generate-watchlist.py がこの handle を apiStatus=dead にして igNeedsBrowser から外す。現行の handle が分かったら events.json の organizerIg を直し、ここから消す",

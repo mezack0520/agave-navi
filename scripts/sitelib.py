@@ -396,6 +396,7 @@ TAG_SLUG_REDIRECTS = {'tag-22145fa5': 'ポップアップ', 'tag-26e09946': 'ビ
 # 「サンシャインシティ文化会館ビル 2階 展示ホールD-1〜4」等で、この完全一致キーに
 # 当たる回が無く、頁が立たない死んだ対応だった(audit venue_romaji_unused が検出)。
 _VENUE_ROMAJI_RAW = {'農マル園芸 吉備路農園':'noumaru-kibiji-noen',   # 3件(なごみ多肉の販売会・ノウマルシェ)
+                '深谷グリーンパーク':'fukaya-green-park',   # 2026-11-27 タニトピア第一章で3件
                 'オザキフラワーパーク':'ozaki-flower-park','プロトリーフ ゆめが丘ソラトス店':'protoleaf-yumegaoka-soratos',   # 3件
                 'まちの駅 笠間宿':'machinoeki-kasamajuku','南国ちゃたん たにくった':'nangoku-chatan-tanikutta','富嶽温泉 花の湯':'fugaku-onsen-hana-no-yu',   # 2026-11-05 3件以上でハッシュのままだった3会場(花の湯は location から区画「1Fエントランス」を外した。venue に残す)
                 '阪急うめだ本店':'hankyu-umeda-honten',   # 2026-11-02 location を区画なしに揃えて4件(GREEN AGE・コトコトステージ81・9階祝祭広場は venue)
@@ -466,6 +467,7 @@ VENUE_ROMAJI_MIN_EVENTS = 3
 # GitHub Pages はサーバ側リダイレクトを持てないので、
 # generate-landing-pages.py が meta refresh + canonical の中継頁を出す。
 _VENUE_REDIRECTS_RAW = {
+    'v-ff75db2f': '深谷グリーンパーク',
     'v-22c46406': '兵庫県立フラワーセンター',
     'v-b6ec7b13': 'オザキフラワーパーク',
     'v-06d2243a': 'プロトリーフ ゆめが丘ソラトス店',

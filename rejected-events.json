@@ -3406,19 +3406,6 @@
    "reason": "vendorAnnouncementsOnly。出店者 @honoka.kakogawa の予定表 DgEd9OCAOM0 にだけある(2/27 10:00〜16:00・2/28 10:00〜15:30、エアロスペース 南あわじ市中条中筋2071-1)。主催は未特定"
   },
   {
-   "key": "tanitopia-joshou-tatebayashi-2026-12",
-   "name": "タニトピア ～序章～ (2026-12-27 虹風船・群馬県館林市)",
-   "aliases": [
-    "タニトピア",
-    "タニトピア序章"
-   ],
-   "reasonType": "unverified",
-   "revisit": true,
-   "eventDate": "2026-12-27",
-   "decided": "2026-11-24",
-   "reason": "LEAFLA topics7431 から。告知は生産者 @yurinoki_succulent の Df0_hoHzmmU(12/27 9:30〜14:30 虹風船、主催 タニトピア実行委員会)だけで、主催のアカウントが見つからない。多肉が主題の催し。主催の告知が出たら載せる"
-  },
-  {
    "key": "lahaina-rahachu-christmas-2026-12",
    "name": "らはちゅうクリスマス (2026-12-13 LahainaGarden・滋賀県日野町)",
    "aliases": [
@@ -3429,7 +3416,8 @@
    "revisit": true,
    "eventDate": "2026-12-13",
    "decided": "2026-11-24",
-   "reason": "主催 @lahainagarden Df3B1OoEsaa に「12月13日（日）はらはちゅうクリスマス」とだけあり、会場・時間・出店の内容が出ていない。10月の らはちゅ〜Holiday(掲載)と同じ型の告知が出たら載せる"
+   "reason": "主催 @lahainagarden Df3B1OoEsaa に「12月13日（日）はらはちゅうクリスマス」とだけあり、会場・時間・出店の内容が出ていない。10月の らはちゅ〜Holiday(掲載)と同じ型の告知が出たら載せる。2026-11-27: 主催の12月カレンダー DgN7zTtkgiG に「らはちゅ〜クリスマス 12/13（日）10:00~14:00」と時間だけ出た。出店の内容はまだ無い",
+   "revisitedOn": "2026-11-27"
   },
   {
    "key": "bikamori-house-sokubai-2026-12",
@@ -3564,6 +3552,83 @@
    "eventDateEnd": "2026-12-20",
    "decided": "2026-11-26",
    "reason": "会場公式 sunsetbeachpark.jp(2026-11-16 告知)は、メッセージツリー・イルミネーション・キャンドルナイト・限定メニューとクリスマスマルシェ(屋台・ワークショップ・物販、15〜20時)を並べたクリスマス企画。出店募集も『花や植物、メキシコ』の総合で、対象の植物の即売が主役ではない。同じ施設の DÍA DE LOS MUERTOS と同じ compositeEvents"
+  },
+  {
+   "key": "saitama-saboten-club-reikai",
+   "name": "埼玉サボテンクラブ 例会 (むさしの村さくらホール・埼玉県加須市)",
+   "aliases": [
+    "埼玉サボテンクラブ 12月の例会",
+    "埼玉サボテンクラブ 例会"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "seriesWide": true,
+   "eventDate": "2026-12-06",
+   "decided": "2026-11-27",
+   "reason": "主催 @saitamasabotenclub DgMvwIRBJub の12月例会(2026-12-06)は当日会費1500円(交換苗10点以上持参で無料)、品評会と交換会(荷主順はくじ引き)、新規会員の入会受付で、即売の記載が無い。closedGatherings の交換会単独。毎月同じ型で開く"
+  },
+  {
+   "key": "nara-kite-marche-2nd-2027-03",
+   "name": "第二回 奈良来てマルシェ (2027-03-07 奈良公園バスターミナル・奈良県奈良市)",
+   "aliases": [
+    "奈良来てマルシェ",
+    "第二回奈良来てマルシェ"
+   ],
+   "reasonType": "undisclosed",
+   "revisit": true,
+   "eventDate": "2027-03-07",
+   "decided": "2026-11-27",
+   "reason": "主催 @ohana._.garden DgJg8qnhmrW。2027-03-07 10〜16時、奈良公園バスターミナル1・2階と奈良県庁前回廊、入場無料。『植物と雑貨のマルシェ』で物販・ワークショップ・寄せ植えの講演会。出店者リストは後日公開とあり、対象の植物の比率が分からない(compositeEvents)。リストが出たら数える"
+  },
+  {
+   "key": "industrial-works-hyogo-popup-2026-12",
+   "name": "INDUSTRIAL WORKS HYOGO POPUP STORE (2026-12-12〜13 兵庫県明石市)",
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-12-12",
+   "eventDateEnd": "2026-12-13",
+   "decided": "2026-11-27",
+   "reason": "主催 @industrial_works_hyogo DgHevqkzOhi。インテリア店の店頭ポップアップで、出店はお花・植物の @happa_son 1店とフード・コーヒー。対象の植物が主題ではない(compositeEvents)"
+  },
+  {
+   "key": "chiisana-collab-de-marche-aoba-2026-12",
+   "name": "小さなコラボdeマルシェ (2026-12-18・24・25 青葉シンボルロード・静岡県静岡市)",
+   "aliases": [
+    "小さなコラボdeマルシェ",
+    "コラボdeマルシェ"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-12-18",
+   "eventDateEnd": "2026-12-25",
+   "decided": "2026-11-27",
+   "reason": "主催 @collab_de_marche DgJMtBgS1rP。飲食・物販・ワークショップの全ジャンル出店可の総合マルシェで、植物が主題ではない(compositeEvents)"
+  },
+  {
+   "key": "kagoen-openday-2026-12",
+   "name": "花郷園 オープンデイ (2026-12-12)",
+   "aliases": [
+    "花郷園 オープンディ"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-12-12",
+   "decided": "2026-11-27",
+   "reason": "主催 @kagoen_nursery DgH3KNyRKbR。チベタヌス(クリスマスローズの原種)の予約制の苗販売と、ベゴニア・クリスマスローズの販売。主題がガーデニングの草花(outOfScopeGenres)"
+  },
+  {
+   "key": "shonan-tsite-green-christmas-market-2026",
+   "name": "GREEN CHRISTMAS MARKET (2026-12-12〜13 湘南T-SITE・神奈川県藤沢市)",
+   "aliases": [
+    "GREEN CHRISTMAS MARKET",
+    "湘南T-SITE GREEN CHRISTMAS MARKET"
+   ],
+   "reasonType": "policy",
+   "revisit": false,
+   "eventDate": "2026-12-12",
+   "eventDateEnd": "2026-12-13",
+   "decided": "2026-11-27",
+   "reason": "LEAFLA の切れた見出し(11/25 追加 湘南T-SITEがGREEN CHRISTMA...)。主催 湘南T-SITE(@shonan_t_site)のクリスマスの野外マーケットで、テーマ『GREEN』は針葉樹や木の実のリース作り・焼き菓子・音楽の総合催事。対象の植物が主題ではない(compositeEvents)"
   }
  ],
  "_reasonTypes": {
@@ -3572,6 +3637,6 @@
   "undisclosed": "一次情報はあるが判断材料(出店内訳など)が非公開で基準に当てはめられない。内訳が公開されたら再評価する",
   "cancelled": "主催者の一次情報で中止・休会が確認できた回。アグリゲータが掲載を続けていても再提案しない"
  },
- "updated": "2026-11-05",
+ "updated": "2026-11-27",
  "_note": "1件の形: {key, name, decided, reason, reasonType, revisit?, eventDate?, revisitedOn?}。eventDate は開催日(名称に書いてある回だけ。日付未確定が見送り理由の回は空でよい)。revisit=true は「一次情報が出たら再評価する」保留。再評価したら revisitedOn に実行日を書く。監査の rejected_revisit_expired が eventDate を過ぎた保留を、rejected_revisit_stale が最終評価から30日以上動いていない保留を拾う。reasonType は _reasonTypes の語彙だけを使う(監査 rejected_reason_vocab)。"
 }
