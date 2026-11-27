@@ -2,60 +2,6 @@
  "_note": "日次メールの項目を朝のタスクが直した記録。scripts/log-fix.py が書き、build-health-mail.py が未送信分を「今日直したもの」に出して mailedOn を付ける",
  "items": [
   {
-   "on": "2026-10-28",
-   "task": "agave-event-update",
-   "kind": "time_vs_organizer_post",
-   "target": "morino-tanikuen-hanbaikai-big-nabari-2026-11",
-   "action": "fixed",
-   "detail": "主催告知 De_0Hp6H2zq で 10:30〜14:00 を確認し time を補完",
-   "mailedOn": "2026-10-28"
-  },
-  {
-   "on": "2026-10-28",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "秋の盆栽＆多肉 即売会 Bon31＆Ta29Cafe (2026-11-03)",
-   "action": "listed",
-   "detail": "主催 @bon31_ta29 De8WHa5htTi で裏取り(Step0)",
-   "mailedOn": "2026-10-28"
-  },
-  {
-   "on": "2026-10-28",
-   "task": "agave-event-update",
-   "kind": "coverage_gaps",
-   "target": "ビカ森ハウス 即売会 (2026-11-08)",
-   "action": "rejected",
-   "detail": "会場の所在地が非公開(10/11-12回と同じ)。undisclosed",
-   "mailedOn": "2026-10-28"
-  },
-  {
-   "on": "2026-10-28",
-   "task": "agave-event-update",
-   "kind": "needs_browser",
-   "target": "manual_sweep_stale: matome-blog",
-   "action": "reviewed",
-   "detail": "10-25 から coverage-sweep.py が毎日自動で読む(sweptSources.matome-blog ok)。手巡回は不要",
-   "mailedOn": "2026-10-28"
-  },
-  {
-   "on": "2026-10-28",
-   "task": "event-monitor",
-   "kind": "cancel_suspects",
-   "target": "isij-tokyo-reikai-2026-12-20",
-   "action": "reviewed",
-   "detail": "中止のお知らせは2024-08-25の回の文言。2026-12-20は開催告知のまま",
-   "mailedOn": "2026-10-28"
-  },
-  {
-   "on": "2026-10-28",
-   "task": "event-monitor",
-   "kind": "needs_browser",
-   "target": "coverage_gaps 6件(花のある暮らし10/28・笹の雪POP UP 10/31・ときわミュージアム11/1・URBAN JUNGLE WEEKS 11/4・sweet jungle 11/14・PLANTS DIVE vol.006 11/22)",
-   "action": "skipped",
-   "detail": "ブラウザ要: 主催の一次情報(IG/公式)で掲載可否を確かめる。PLANTS DIVE は vol5 奈良のみ掲載済みで vol.006 赤松種苗は未掲載",
-   "mailedOn": "2026-10-28"
-  },
-  {
    "on": "2026-10-29",
    "task": "event-monitor",
    "kind": "time_vs_organizer_post",
@@ -1881,6 +1827,38 @@
    "action": "listed",
    "detail": "主催 タニトピア実行委員会の @youme_ta29_youme(Threads DfsvWv0nDFU)で裏取り",
    "mailedOn": "2026-11-27"
+  },
+  {
+   "on": "2026-11-28",
+   "task": "agave-event-update",
+   "kind": "time_vs_organizer_post",
+   "target": "roots-plus-vol2-2027-03",
+   "action": "fixed",
+   "detail": "主催 @roots_plus_livingwithstyle DgPB113lJ2R(会場決定)で time 10:00〜16:00、会場 天王川公園、confirmed に。出典も差し替え"
+  },
+  {
+   "on": "2026-11-28",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "AMONG PLANTS - 植物を愛でる - (2026-11-28)",
+   "action": "rejected",
+   "detail": "主催 @fukiage_unison Dfg4jv9md8_。植物の出店は各日1店で compositeEvents"
+  },
+  {
+   "on": "2026-11-28",
+   "task": "agave-event-update",
+   "kind": "coverage_gaps",
+   "target": "麋角植物作業室 TOUR 2026 (2026-12-12)",
+   "action": "listed",
+   "detail": "主催 @pine.field.garage Dft0hwGFMte / @tompots_501 DgMquNXyY-G で裏取り"
+  },
+  {
+   "on": "2026-11-28",
+   "task": "agave-event-update",
+   "kind": "truncated_unresolved",
+   "target": "関根京子展覧会 (2026-12-05)",
+   "action": "rejected",
+   "detail": "作家の作品展。主題が対象の植物でない"
   }
  ]
 }

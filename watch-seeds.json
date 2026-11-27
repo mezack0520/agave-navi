@@ -50,6 +50,12 @@
       "label": "ゆりのきサキュレント（多肉植物の生産者）",
       "why": "多肉屋YOU&ME工房と共同でタニトピアを主催する。序章(2026-12-27)の告知はこのアカウントにだけ出た",
       "addedOn": "2026-11-27"
+    },
+    {
+      "handle": "toningogo",
+      "label": "たにちゅー（多肉植物の出店者・TANICHU）",
+      "why": "Green Heads Nursery と TANICHU × Green Heads Nursery 草納め忘年会(2026-12-20 シマムラ園芸)を開く。告知は本人のアカウントに出た",
+      "addedOn": "2026-11-28"
     }
   ],
   "_deadHandles": "ブラウザで開いて『ページが見つかりません』だった handle。Business Discovery は個人アカウントと存在しないアカウントを同じ code 110 で返すので、API だけでは見分けられない。generate-watchlist.py がこの handle を apiStatus=dead にして igNeedsBrowser から外す。現行の handle が分かったら events.json の organizerIg を直し、ここから消す",
