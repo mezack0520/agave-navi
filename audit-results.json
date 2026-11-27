@@ -1,5 +1,5 @@
 {
-  "total": 817,
+  "total": 821,
   "findings": {
     "duplicate_slugs": {
       "title": "events.json内のslug重複",
@@ -314,8 +314,9 @@
     },
     "upcoming_no_image": {
       "title": "開催予定でimageUrlが無い",
-      "count": 69,
+      "count": 71,
       "items": [
+        "bikaku-shokubutsu-sagyoshitsu-naha-2026-12",
         "bizarrefarm-spring-fes-10th-2027-03",
         "border-break-11th-2026-12",
         "botanical-garden-hokoten-nishigawa-2026-12",
@@ -354,8 +355,7 @@
         "lier-taniku-festival-natori-2026-12",
         "lier-taniku-festival-niihama-2026-12",
         "lier-taniku-festival-oda-2027-01",
-        "lier-taniku-festival-shimizu-2026-12",
-        "lier-taniku-festival-tamana-2027-01"
+        "lier-taniku-festival-shimizu-2026-12"
       ],
       "note": "新規イベントは必ず画像なしで入るので、この件数はゼロにならない。カード側は県名と開催日を出す枠になっており(2026-08-24)、画像が無いこと自体は表示の不具合ではない。出典が og:image を出しているのに拾えていないなら backfill-images.py 側の問題",
       "severity": "metric"
@@ -846,8 +846,10 @@
     },
     "venue_key_split": {
       "title": "同じ施設が会場ページで割れている(location に区画まで書いている)",
-      "count": 0,
-      "items": [],
+      "count": 1,
+      "items": [
+        "沖縄 ESTINATEHOTEL(1件) / ESTINATEHOTELNAHA(1件)"
+      ],
       "note": "location を施設名(＋住所の括弧書き)に揃え、区画は venue に「施設名 区画」で書く(venue が無い回は旧 location の名前部分を venue に移す。消すと区画が分からなくなる)。頁が立っていた旧slugは sitelib._VENUE_REDIRECTS_RAW に残し、3件以上になった会場は _VENUE_ROMAJI_RAW に足す。別の施設なら sitelib.VENUE_SPLIT_OK に理由付きで足す",
       "severity": "urgent"
     },
@@ -945,28 +947,25 @@
     },
     "coverage_gap_logged_but_open": {
       "title": "掲載済みと記録したのに取りこぼし候補に残っている回",
-      "count": 1,
-      "items": [
-        "2026-12-12 麋角植物作業室 TOUR 2026 ← 2026-11-28 に掲載済みと記録済み。名前が合わない。aliases に他所での呼び名を足す"
-      ],
+      "count": 0,
+      "items": [],
       "note": "各行の末尾が外れている所。名前が合わないなら該当イベントの aliases に他所での呼び名を足す(coverage-sweep.matches が name と aliases を照合する)。名前が当たるのに残るなら、照合(judge)の側を直す。記録を書くだけでは翌日も候補に出る",
       "severity": "urgent"
     },
     "coverage_gap_stale": {
       "title": "取りこぼし候補のうち、巡回の後に掲載済み・見送りになった回(次の巡回で消える)",
-      "count": 1,
+      "count": 2,
       "items": [
-        "2026-11-28 AMONG PLANTS - 植物を愛でる -(見送り)"
+        "2026-11-28 AMONG PLANTS - 植物を愛でる -(見送り)",
+        "2026-12-12 麋角植物作業室 TOUR 2026(掲載済み)"
       ],
       "note": "対応不要。候補から外してある。常時出るなら coverage-sweep.matches の照合を見直す",
       "severity": "info"
     },
     "coverage_gaps": {
       "title": "他所に出ていて当サイトに無いイベント候補",
-      "count": 1,
-      "items": [
-        "2026-12-12 麋角植物作業室 TOUR 2026"
-      ],
+      "count": 0,
+      "items": [],
       "note": "一次情報で裏取りして、掲載するか rejected-events.json に落とす。見送ったものは rejected に入れれば翌日から候補に出なくなる",
       "severity": "info"
     },
@@ -993,7 +992,7 @@
     },
     "eyecatch_backlog": {
       "title": "開催予定でアイキャッチが無い回",
-      "count": 69,
+      "count": 71,
       "items": [
         "2026-11-28 botanical-journey-onomichi-2026-11",
         "2026-11-28 shifuku-no-taniku-monogatari-fuji-2026-11",
@@ -1009,6 +1008,7 @@
         "2026-12-06 lier-taniku-festival-fukuyama-2026-12",
         "2026-12-10 lier-taniku-festival-kariya-2026-12",
         "2026-12-11 lier-taniku-festival-shimizu-2026-12",
+        "2026-12-12 bikaku-shokubutsu-sagyoshitsu-naha-2026-12",
         "2026-12-12 love-green-market-vol3-ichihara-2026-12",
         "2026-12-12 plant-guild-popup-vol6-fukuchiyama-2026-12",
         "2026-12-12 the-taniku-expo-osanbashi-2026-12",
@@ -1017,6 +1017,7 @@
         "2026-12-19 kimtaro-sakura-christmas-event-2026-12",
         "2026-12-20 isij-tokyo-reikai-2026-12-20",
         "2026-12-20 nbgarden-festa-shizuoka-2026-12",
+        "2026-12-20 tanichu-green-heads-kusaosame-shimamura-2026-12",
         "2026-12-26 enjoy-place-bangaihen-2026-12",
         "2026-12-26 lier-taniku-festival-tokorozawa-2026-12",
         "2026-12-27 lier-taniku-festival-natori-2026-12",
@@ -1032,9 +1033,7 @@
         "2027-01-23 lier-taniku-festival-ube-2027-01",
         "2027-01-24 lier-taniku-festival-oda-2027-01",
         "2027-01-25 lier-taniku-festival-fukuyama-2027-01",
-        "2027-02-20 enjoy-place-6th-2027-02",
-        "2027-02-20 reptiles-fever-hentai-shokubutsu-fes-vol1-intex-osaka-2027-02",
-        "2027-02-20 santafe-shunensai-2027-02"
+        "2027-02-20 enjoy-place-6th-2027-02"
       ],
       "note": "scripts/list-missing-eyecatch.py で経路ごとに分かれる。igProfile は定期タスク agave-navi-eyecatch が少しずつ埋める。web は backfill-images.py が既に失敗した回なので、出典そのものを見直さないと埋まらない",
       "severity": "metric"

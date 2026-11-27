@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28 07:16 JST",
+ "generated": "2026-11-28 07:17 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
   "igAccounts": 445,
@@ -226,6 +226,16 @@
    "eventCount": 3,
    "lastEventName": "Plant & Pot SOLO Vol.3",
    "lastEventDate": "2026-12-05",
+   "hasUpcoming": true,
+   "priority": 0,
+   "apiStatus": "api"
+  },
+  {
+   "handle": "tompots_501",
+   "url": "https://www.instagram.com/tompots_501/",
+   "eventCount": 3,
+   "lastEventName": "麋角植物作業室 TOUR 2026 沖縄",
+   "lastEventDate": "2026-12-12",
    "hasUpcoming": true,
    "priority": 0,
    "apiStatus": "api"
@@ -951,16 +961,6 @@
    "apiStatus": "api"
   },
   {
-   "handle": "tompots_501",
-   "url": "https://www.instagram.com/tompots_501/",
-   "eventCount": 2,
-   "lastEventName": "麋角植物作業室 at pigment 名古屋",
-   "lastEventDate": "2026-10-17",
-   "hasUpcoming": false,
-   "priority": 1,
-   "apiStatus": "api"
-  },
-  {
    "handle": "38_ten_",
    "url": "https://www.instagram.com/38_ten_/",
    "eventCount": 2,
@@ -1581,6 +1581,16 @@
    "apiStatus": "api"
   },
   {
+   "handle": "toningogo",
+   "url": "https://www.instagram.com/toningogo/",
+   "eventCount": 1,
+   "lastEventName": "TANICHU × Green Heads Nursery 草納め忘年会",
+   "lastEventDate": "2026-12-20",
+   "hasUpcoming": true,
+   "priority": 1,
+   "apiStatus": "unchecked"
+  },
+  {
    "handle": "bakyuu.kitchen",
    "url": "https://www.instagram.com/bakyuu.kitchen/",
    "eventCount": 1,
@@ -1729,18 +1739,6 @@
    "source": "seed",
    "seedWhy": "多肉屋YOU&ME工房と共同でタニトピアを主催する。序章(2026-12-27)の告知はこのアカウントにだけ出た",
    "apiStatus": "api"
-  },
-  {
-   "handle": "toningogo",
-   "url": "https://www.instagram.com/toningogo/",
-   "eventCount": 0,
-   "lastEventName": "たにちゅー（多肉植物の出店者・TANICHU）",
-   "lastEventDate": null,
-   "hasUpcoming": false,
-   "priority": 1,
-   "source": "seed",
-   "seedWhy": "Green Heads Nursery と TANICHU × Green Heads Nursery 草納め忘年会(2026-12-20 シマムラ園芸)を開く。告知は本人のアカウントに出た",
-   "apiStatus": "unchecked"
   },
   {
    "handle": "kumagaya_taniku_fes",
@@ -4930,6 +4928,12 @@
    "eventDate": "2026-11-28"
   },
   {
+   "domain": "kagoshimabay.aeon-kyushu.info",
+   "url": "https://kagoshimabay.aeon-kyushu.info/event/45d18466-9c68-46bd-961c-cd1aa25133c6",
+   "eventName": "多肉植物 POPUP（イオンモールKAGOSHIMA BAY）",
+   "eventDate": "2026-11-28"
+  },
+  {
    "domain": "qusamura.com",
    "url": "https://qusamura.com/information/exhibition/3802/",
    "eventName": "時の輪郭 – 叢 と 寒川義雄",
@@ -5096,12 +5100,6 @@
    "url": "https://event.joyfulhonda.com/single-exp.php?id=12921&store=hitachinaka",
    "eventName": "Happy Joyful",
    "eventDate": "2026-06-06"
-  },
-  {
-   "domain": "botanicbomb.studio.site",
-   "url": "https://botanicbomb.studio.site/",
-   "eventName": "BOTANIC BOMB 10TH（ボタニックボム）",
-   "eventDate": "2026-06-07"
   }
  ],
  "unresolvedIgHandles": []
