@@ -29,7 +29,8 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, 'scripts'))
-from sitelib import is_quality_image_url, pref_to_region   # noqa: E402
+from sitelib import (is_quality_image_url, pref_to_region,   # noqa: E402
+                     is_vague_venue, venue_key, venue_split_groups)
 
 
 def fix_region(e):
@@ -126,6 +127,21 @@ def merge(events, new_events):
     events.sort(key=lambda e: (0 if e.get('status') == 'upcoming' else 1,
                                e.get('date', '')))
     return events, added, updated
+
+
+def venue_splits_by(events, slugs):
+    """slugs の回が既存の回と会場ページで割れる組(audit venue_key_split と同じ判定)。"""
+    slugs = set(slugs)
+    keys = {}
+    for e in events:
+        loc = (e.get('location') or '').strip()
+        if not is_vague_venue(loc):
+            keys.setdefault(venue_key(loc), []).append(e.get('slug'))
+    out = []
+    for pref, _short, ks in venue_split_groups(events):
+        if any(s in slugs for k in ks for s in keys.get(k, [])):
+            out.append(f'{pref} ' + ' / '.join(f'{k}({",".join(keys.get(k, []))})' for k in ks))
+    return out
 
 
 def self_test():
@@ -242,6 +258,9 @@ def main():
         print(f'Updated {len(updated)}: {", ".join(updated)}')
     if not added and not updated:
         print('No changes.')
+    # 載せた回の location が既存の会場と表記違いで割れたら、その場で出す(翌朝の監査を待たない)
+    for s in venue_splits_by(events, added + updated):
+        print(f'VENUE-SPLIT: {s} → location を同じ施設の表記に揃える(audit venue_key_split)')
     return 0
 
 

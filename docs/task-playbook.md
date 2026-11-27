@@ -273,6 +273,7 @@ python3 scripts/log-fix.py --task agave-event-update --kind coverage_gaps \
 - 同じ会場、同じ日に別の主催が並べて開く回は二重掲載ではない。主催と告知の投稿が別なら、併催として `coexistsWith` を書く。
 - 2会場の回と巡業は、会場ごとに別の回にする。同じ name の開催予定が並ぶときは name に日か会場を足す(`same_name_upcoming`)。
 - 載せたら、同じ回の見送り記録を消す(`rejected_but_listed`)。
+- 載せた回の location が既存の会場と表記違い(「ESTINATE HOTEL」と「ESTINATE HOTEL NAHA」)で割れると、`merge-new-events.py` が `VENUE-SPLIT:` を出す。同じ施設なら古い回の location と mapQuery を新しい回の表記に揃える(`venue_key_split`)。
 - 1投稿から複数の回を立てたときと、会場の掲載が3件目になるときは、押す前にコピーした clone で merge と audit を回し、
   `duplicate_event_entry`、`venue_slug_romaji_candidates`、`time_vs_organizer_post` を見る。
 

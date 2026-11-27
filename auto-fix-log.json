@@ -1859,6 +1859,22 @@
    "target": "関根京子展覧会 (2026-12-05)",
    "action": "rejected",
    "detail": "作家の作品展。主題が対象の植物でない"
+  },
+  {
+   "on": "2026-11-28",
+   "task": "event-monitor",
+   "kind": "venue_key_split",
+   "target": "must-buy-market-okinawa-2026-05",
+   "action": "fixed",
+   "detail": "location を ESTINATE HOTEL → ESTINATE HOTEL NAHA（沖縄県那覇市松山2丁目3-11）に揃え mapQuery を追加。12/12 麋角植物作業室 沖縄と同じ施設。merge-new-events.py が載せた時点で VENUE-SPLIT を出すようにした"
+  },
+  {
+   "on": "2026-11-28",
+   "task": "event-monitor",
+   "kind": "cancel_suspects",
+   "target": "botanical-monsters-2027-okazaki",
+   "action": "reviewed",
+   "detail": "公式は 2027/1/17 のまま。中止の語は荒天中止の条件文だけ。cancel-reviewed.json に記録"
   }
  ]
 }
