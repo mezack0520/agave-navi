@@ -1,6 +1,6 @@
 {
   "_note": "他所のアグリゲータに出ていて当サイトに無いイベントの候補。scripts/coverage-sweep.py が毎日書き出す。一次情報で裏取りして、掲載するか rejected-events.json に落とす。errors が空でないときは巡回そのものが失敗しているので、gaps が0件でも「取りこぼしなし」とは言えない。",
-  "sweptOn": "2026-11-27",
+  "sweptOn": "2026-11-28",
   "sweptSources": {
     "leafla": {
       "ok": true,
@@ -31,10 +31,10 @@
   "daysAhead": 45,
   "stats": {
     "fetched": 45,
-    "candidates": 763,
-    "in_scope": 215,
+    "candidates": 798,
+    "in_scope": 216,
     "covered": 153,
-    "known_rejected": 61,
+    "known_rejected": 59,
     "truncated_resolved": 45,
     "truncated_unresolved": 5,
     "fetched_nextmeet": 4,
@@ -43,27 +43,34 @@
     "fetched_pukubook": 13,
     "in_scope_leafla": 77,
     "truncated_unresolved_hits": 225,
-    "in_scope_nextmeet": 101,
+    "in_scope_nextmeet": 102,
     "in_scope_matome-blog": 3,
     "in_scope_organizer-index": 3,
     "in_scope_pukubook": 31,
-    "gaps_raw": 1
+    "gaps_raw": 4
   },
   "errors": [],
   "truncatedUnresolved": [
-    "11/25 追加 湘南T-SITEがGREEN CHRISTMA...",
-    "11/25 追加 SoerüGardenが四季の感謝SALE・秋...",
-    "11/25 追加 盆栽展 -BONSAI BANZAI-がYou...",
-    "11/24 追加 Grossoが手伝うレモングラスのしめ縄ワーク...",
-    "11/24 追加 植物を愛でる店主の集いがフラワーショップPEP..."
+    "11/27 追加 第2回 がまごおり多肉フェスタ in 浜松が2...",
+    "11/27 追加 関根京子展覧会がgardens umekita...",
+    "11/27 追加 麋角植物作業室 TOUR 2026が沖縄那覇で...",
+    "11/27 追加 世界の路地裏マルシェin東京が12月5日に開催...",
+    "11/27 追加 城下のMACHIBITO 2026が愛媛県大洲..."
   ],
   "gaps": [
     {
       "date": "2026-11-28",
-      "title": "POPUP 多肉植物 POPUP",
-      "source": "nextmeet",
-      "pref": "鹿児島",
-      "place": "イオンモールKAGOSHIMA BAY 1F 水の広場 / 鹿児島県鹿児島市東開町7"
+      "lastSeen": "2026-11-29",
+      "days": 2,
+      "title": "AMONG PLANTS - 植物を愛でる -",
+      "source": "leafla"
+    },
+    {
+      "date": "2026-12-12",
+      "lastSeen": "2026-12-13",
+      "days": 2,
+      "title": "麋角植物作業室 TOUR 2026",
+      "source": "leafla"
     }
   ]
 }

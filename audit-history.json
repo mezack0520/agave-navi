@@ -2,24 +2,6 @@
  "_note": "監査結果の推移。scripts/audit.py が追記する。直近90件のみ保持。改善/悪化の判断に使う。",
  "runs": [
   {
-   "date": "2026-08-30",
-   "urgent": {},
-   "info": {
-    "coverage_gaps": 24,
-    "inquiry_review_gap": 1,
-    "rejected_revisit_stale": 3
-   },
-   "metric": {
-    "thin_past_with_source": 34,
-    "thin_archived": 48,
-    "upcoming_with_image": 33,
-    "upcoming_no_image": 99,
-    "ongoing_events": 10,
-    "workflow_secrets": 6
-   },
-   "events": 367
-  },
-  {
    "date": "2026-08-31",
    "urgent": {},
    "info": {
@@ -2019,6 +2001,31 @@
     "events_with_image": 451,
     "upcoming_no_image": 69,
     "ongoing_events": 2,
+    "workflow_secrets": 7,
+    "eyecatch_backlog": 69
+   },
+   "events": 843,
+   "upcoming": 175
+  },
+  {
+   "date": "2026-11-28",
+   "urgent": {
+    "time_vs_organizer_post": 1
+   },
+   "info": {
+    "coverage_gaps": 2,
+    "cancel_suspects": 1,
+    "eyecatch_candidates_pending": 12,
+    "inquiry_review_gap": 1,
+    "task_run_gap": 2
+   },
+   "metric": {
+    "thin_past_with_source": 33,
+    "thin_archived": 49,
+    "upcoming_with_image": 106,
+    "events_with_image": 451,
+    "upcoming_no_image": 69,
+    "ongoing_events": 21,
     "workflow_secrets": 7,
     "eyecatch_backlog": 69
    },
