@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-28 06:40 JST",
+ "generated": "2026-11-28 07:16 JST",
  "description": "events.jsonから自動導出されるウォッチ対象。このファイルは手動編集しない(毎日のビルドで再生成)。手で足したい主催は watch-seeds.json に書く(掲載実績が無い主催がウォッチに入る唯一の経路)。",
  "stats": {
-  "igAccounts": 444,
+  "igAccounts": 445,
   "awaitingNextEdition": 551,
   "officialSiteCandidates": 90,
   "unresolvedIgHandles": 0,
-  "igNeedsBrowser": 101,
+  "igNeedsBrowser": 102,
   "igDead": 7
  },
  "igAccounts": [
@@ -1729,6 +1729,18 @@
    "source": "seed",
    "seedWhy": "多肉屋YOU&ME工房と共同でタニトピアを主催する。序章(2026-12-27)の告知はこのアカウントにだけ出た",
    "apiStatus": "api"
+  },
+  {
+   "handle": "toningogo",
+   "url": "https://www.instagram.com/toningogo/",
+   "eventCount": 0,
+   "lastEventName": "たにちゅー（多肉植物の出店者・TANICHU）",
+   "lastEventDate": null,
+   "hasUpcoming": false,
+   "priority": 1,
+   "source": "seed",
+   "seedWhy": "Green Heads Nursery と TANICHU × Green Heads Nursery 草納め忘年会(2026-12-20 シマムラ園芸)を開く。告知は本人のアカウントに出た",
+   "apiStatus": "unchecked"
   },
   {
    "handle": "kumagaya_taniku_fes",
